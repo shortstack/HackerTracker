@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:layout_marginTop="0dp"
+              android:padding="0dp"
+              android:background="@drawable/bg"
+        >
+
+    <ImageView
+            android:src="@drawable/top_contests"
+            style="@style/activityHeader"
+            android:id="@+id/top_contests"
+  />
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:padding="10dp"
+            android:layout_below="@id/top_contests"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+        <RelativeLayout
+                style="@style/day1TextView"
+                android:id="@+id/day1Layout"
+                android:orientation="horizontal"
+                >
+            <TextView
+                    style="@style/dayText"
+                    android:id="@+id/day1"
+                    android:layout_alignParentLeft="true"
+                    />
+            <TextView
+                    style="@style/dayCollapse"
+                    android:id="@+id/collapseExpand1"
+                    android:text="[+]"
+                    android:layout_alignParentRight="true"
+                    />
+        </RelativeLayout>
+        <ListView android:id="@+id/contests_day1"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_below="@id/day1"
+                  android:divider="@null"
+                  android:dividerHeight="5dp"
+                  android:scrollbars="vertical"
+                  android:cacheColorHint="@android:color/transparent"
+                  android:background="@android:color/transparent"
+                  android:overScrollFooter="@null"
+                  android:visibility="gone"/>
+
+
+        <RelativeLayout
+                style="@style/day2TextView"
+                android:id="@+id/day2Layout"
+                android:orientation="horizontal"
+                >
+            <TextView
+                    style="@style/dayText"
+                    android:id="@+id/day2"
+                    android:layout_alignParentLeft="true"
+                    />
+            <TextView
+                    style="@style/dayCollapse"
+                    android:id="@+id/collapseExpand2"
+                    android:text="[+]"
+                    android:layout_alignParentRight="true"
+                    />
+        </RelativeLayout>
+        <ListView android:id="@+id/contests_day2"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_below="@id/day2"
+                  android:divider="@null"
+                  android:dividerHeight="5dp"
+                  android:scrollbars="vertical"
+                  android:cacheColorHint="@android:color/transparent"
+                  android:background="@android:color/transparent"
+                  android:overScrollFooter="@null"
+                  android:visibility="gone"/>
+
+
+        <RelativeLayout
+                style="@style/day3TextView"
+                android:id="@+id/day3Layout"
+                android:orientation="horizontal"
+                >
+            <TextView
+                    style="@style/dayText"
+                    android:id="@+id/day3"
+                    android:layout_alignParentLeft="true"
+                    />
+            <TextView
+                    style="@style/dayCollapse"
+                    android:id="@+id/collapseExpand3"
+                    android:text="[+]"
+                    android:layout_alignParentRight="true"
+                    />
+        </RelativeLayout>
+        <ListView android:id="@+id/contests_day3"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_below="@id/day3"
+                  android:divider="@null"
+                  android:dividerHeight="5dp"
+                  android:scrollbars="vertical"
+                  android:cacheColorHint="@android:color/transparent"
+                  android:background="@android:color/transparent"
+                  android:overScrollFooter="@null"
+                  android:visibility="gone"/>
+
+
+        <RelativeLayout
+                style="@style/day4TextView"
+                android:id="@+id/day4Layout"
+                android:orientation="horizontal"
+                >
+            <TextView
+                    style="@style/dayText"
+                    android:id="@+id/day4"
+                    android:layout_alignParentLeft="true"
+                    />
+            <TextView
+                    style="@style/dayCollapse"
+                    android:id="@+id/collapseExpand4"
+                    android:text="[+]"
+                    android:layout_alignParentRight="true"
+                    />
+        </RelativeLayout>
+        <ListView android:id="@+id/contests_day4"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:layout_below="@id/day4"
+                  android:divider="@null"
+                  android:dividerHeight="5dp"
+                  android:scrollbars="vertical"
+                  android:cacheColorHint="@android:color/transparent"
+                  android:background="@android:color/transparent"
+                  android:overScrollFooter="@null"
+                  android:visibility="gone"/>
+
+
+    </LinearLayout>
+
+</LinearLayout>
+

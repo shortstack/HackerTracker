@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/layout_root"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:orientation="vertical">
+
+    <ScrollView
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:id="@+id/scroll"
+            >
+        <LinearLayout android:orientation="vertical"
+                      android:scrollbars="vertical"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:scrollbarAlwaysDrawVerticalTrack="true">
+        <TextView android:id="@+id/text"
+                  android:layout_width="wrap_content"
+                  android:layout_height="wrap_content"
+                  android:textColor="#FFF"
+                  android:textSize="16dp"
+                  android:padding="10dp"
+                />
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/scroll"
+            android:layout_marginTop="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+        <ImageView android:id="@+id/image_demo"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:paddingLeft="5dp"
+                   android:paddingRight="5dp"
+                   android:gravity="center"
+                />
+        <ImageView android:id="@+id/image_tool"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:paddingLeft="5dp"
+                   android:paddingRight="5dp"
+                   android:gravity="center"
+                />
+        <ImageView android:id="@+id/image_exploit"
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:paddingLeft="5dp"
+                   android:paddingRight="5dp"
+                   android:gravity="center"
+                />
+    </LinearLayout>
+
+</LinearLayout>
