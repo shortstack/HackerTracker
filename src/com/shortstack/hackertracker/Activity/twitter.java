@@ -1,8 +1,10 @@
 package com.shortstack.hackertracker.Activity;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.ListView;
 import com.shortstack.hackertracker.Adapter.tweetAdapter;
@@ -19,44 +21,63 @@ public class twitter extends Activity {
     public List<twitter4j.Status> tweets;
     public twitter4j.Status tweetData[];
     public tweetAdapter adapter;
+    public ProgressDialog progress;
+
+    public interface Callback {
+
+        void run(Object result);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.twitter);
 
-        List<twitter4j.Status> result = null;
-        try {
-           result = new getTweets().execute().get();
-        } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (ExecutionException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+        progress = new ProgressDialog(this);
+        progress.setTitle("Searching Tweets");
+        progress.setMessage("Please wait...");
 
-        if (!((result).size() < 1)) {
-            tweets = result;
 
-            tweetData = tweets.toArray(new twitter4j.Status[tweets.size()]);
+        getTweets request = new getTweets(new Callback() {
+           public void run(Object result) {
 
-            adapter = new tweetAdapter(getApplicationContext(), R.layout.tweet, tweetData);
 
-            tweetListView = (ListView) findViewById(R.id.listView);
+                if (!(((List<twitter4j.Status>) result).size() < 1)) {
+                    tweets = (List<twitter4j.Status>) result;
 
-            tweetListView.setAdapter(adapter);
-        }
+                    tweetData = tweets.toArray(new twitter4j.Status[tweets.size()]);
+
+                    adapter = new tweetAdapter(getApplicationContext(), R.layout.tweet, tweetData);
+
+                    tweetListView = (ListView) findViewById(R.id.listView);
+
+                    tweetListView.setAdapter(adapter);
+                }
+
+           }});
+        request.execute();
 
     }
 
 
 
+    public class getTweets extends AsyncTask<Void, Void, Object> {
 
-    public class getTweets extends AsyncTask<Void, Void, List<twitter4j.Status>> {
+        public Object tweetList;
 
-        public List<twitter4j.Status> tweetList;
+        Callback callback;
+        public getTweets(Callback callback){
+            this.callback = callback;
+        }
+
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progress.show();
+        }
 
         @Override
-        protected List<twitter4j.Status> doInBackground(Void... arg0) {
+        protected Object doInBackground(Void... arg0) {
+
             ConfigurationBuilder cb = new ConfigurationBuilder();
             cb.setDebugEnabled(true)
                     .setOAuthConsumerKey("ZU1e66hITLMNn5RtVdSeSA")
@@ -66,7 +87,7 @@ public class twitter extends Activity {
             TwitterFactory tf = new TwitterFactory(cb.build());
             Twitter twitter = tf.getInstance();
             try {
-                Query query = new Query("defcon");
+                Query query = new Query("#defcon");
                 QueryResult result;
                 result = twitter.search(query);
                 tweetList = result.getTweets();
@@ -75,9 +96,15 @@ public class twitter extends Activity {
                 Log.v("tweet","Failed to search tweets: " + te.getMessage());
             }
 
+
+            progress.dismiss();
             return tweetList;
         }
 
+        protected void onPostExecute(Object result) {
+            callback.run(result);
+            progress.dismiss();
+        }
 
     }
 
