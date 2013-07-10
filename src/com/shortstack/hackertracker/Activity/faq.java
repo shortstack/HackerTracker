@@ -1,6 +1,7 @@
-package com.shortstack.hackertracker;
+package com.shortstack.hackertracker.Activity;
 
 import android.os.Bundle;
+import com.shortstack.hackertracker.R;
 
 /**
  * Created with IntelliJ IDEA.

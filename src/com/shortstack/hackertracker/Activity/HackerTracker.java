@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker;
+package com.shortstack.hackertracker.Activity;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,9 +10,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
-import android.widget.Toast;
+import com.shortstack.hackertracker.Adapter.dbAdapter;
+import com.shortstack.hackertracker.R;
 
 import java.io.IOException;
 

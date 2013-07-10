@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker;
+package com.shortstack.hackertracker.Activity;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -11,9 +11,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import com.shortstack.hackertracker.R;
 
 import java.io.*;
-import java.nio.channels.FileChannel;
 
 /**
  * Created with IntelliJ IDEA.

@@ -1,8 +1,9 @@
-package com.shortstack.hackertracker;
+package com.shortstack.hackertracker.Activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import com.shortstack.hackertracker.R;
 
 /**
  * Created with IntelliJ IDEA.
@@ -11,7 +12,7 @@ import android.os.Bundle;
  * Time: 2:26 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Splash extends Activity {
+public class splash extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class Splash extends Activity {
                      * Called after splash times up. Do some action after splash
                      * times up. Here we moved to another main activity class
                      */
-                    startActivity(new Intent(Splash.this,
+                    startActivity(new Intent(splash.this,
                             HackerTracker.class));
                     finish();
                 }

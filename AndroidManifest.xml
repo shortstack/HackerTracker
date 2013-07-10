@@ -5,7 +5,7 @@
           android:versionName="1.0">
     <uses-sdk android:minSdkVersion="8"/>
     <application android:label="@string/app_name" android:icon="@drawable/icon">
-        <activity android:name="com.shortstack.hackertracker.Splash"
+        <activity android:name=".Activity.splash"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.NoTitleBar">
@@ -14,7 +14,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.shortstack.hackertracker.HackerTracker"
+        <activity android:name=".Activity.HackerTracker"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden|adjustPan"
@@ -26,27 +26,27 @@
         </activity>
         <activity android:name="com.google.ads.AdActivity"
                   android:configChanges="keyboard|keyboardHidden|orientation"/>
-        <activity android:name="com.shortstack.hackertracker.contests"
+        <activity android:name=".Activity.contests"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden|adjustPan"
                   android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name="com.shortstack.hackertracker.maps"
+        <activity android:name=".Activity.maps"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden|adjustPan"
                   android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name="com.shortstack.hackertracker.twitter"
+        <activity android:name=".Activity.twitter"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden|adjustPan"
                   android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name="com.shortstack.hackertracker.entertainment"
+        <activity android:name=".Activity.entertainment"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden|adjustPan"
                   android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name="com.shortstack.hackertracker.faq"
+        <activity android:name=".Activity.faq"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden|adjustPan"
                   android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name="com.shortstack.hackertracker.speakers"
+        <activity android:name=".Activity.speakers"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden|adjustPan"
                   android:theme="@android:style/Theme.NoTitleBar"/>

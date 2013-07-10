@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker;
+package com.shortstack.hackertracker.Adapter;
 
 import android.content.Context;
 import android.database.SQLException;
