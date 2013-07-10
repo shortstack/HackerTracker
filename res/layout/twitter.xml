@@ -11,7 +11,7 @@
     <ImageView
             android:src="@drawable/top_twitter"
             style="@style/activityHeader"
-            android:id="@+id/top_twitter"/>
+             android:id="@+id/top_twitter"/>
 
 
 
@@ -24,7 +24,8 @@
                 android:scrollbars="vertical"
                 android:cacheColorHint="@android:color/transparent"
                 android:background="@android:color/transparent"
-                android:overScrollFooter="@null" />
+                android:overScrollFooter="@null"
+                android:scrollbarThumbVertical="@drawable/scrollbar"/>
 
 
 </LinearLayout>

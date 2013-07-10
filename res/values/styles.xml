@@ -80,5 +80,19 @@
         <item name="android:layout_marginBottom">2dp</item>
         <item name="android:layout_marginLeft">5dp</item>
     </style>
-
+    <style name="icon">
+        <item name="android:layout_width">120dp</item>
+        <item name="android:layout_height">120dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">10dp</item>
+    </style>
+    <style name="tweetUser">
+        <item name="android:textColor">#92bd17</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">18dp</item>
+    </style>
+    <style name="tweetText">
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">18dp</item>
+    </style>
 </resources>

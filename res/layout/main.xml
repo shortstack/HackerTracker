@@ -3,8 +3,6 @@
     android:orientation="vertical"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:layout_marginTop="0dp"
-    android:padding="0dp"
     android:background="@drawable/bg"
     >
 
@@ -13,83 +11,65 @@
             style="@style/activityHeader"
             android:id="@+id/top"/>
 
-   <ScrollView
-           android:layout_width="fill_parent"
-           android:layout_height="fill_parent">
-    <LinearLayout
+    <ScrollView
             android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:padding="30dp"
-            android:layout_below="@id/top"
-            android:layout_marginTop="0dp"
-            android:orientation="horizontal">
+            android:layout_height="fill_parent">
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center_horizontal"
+            android:baselineAligned="false">
 
 
         <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_weight="1"
                 android:gravity="left"
                 android:orientation="vertical">
 
             <Button
                     android:id="@+id/speakers"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:background="@drawable/icon_speakers"
-                    android:gravity="center"/>
+                    style="@style/icon"
+                    android:background="@drawable/icon_speakers"/>
 
             <Button
                     android:id="@+id/contests"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    style="@style/icon"
                     android:layout_below="@id/speakers"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/icon_contests"
-                    android:gravity="center"/>
+                    android:background="@drawable/icon_contests"/>
 
             <Button
                     android:id="@+id/faq"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    style="@style/icon"
                     android:layout_below="@id/contests"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/icon_faq"
-                    android:gravity="center"/>
+                    android:background="@drawable/icon_faq"/>
 
         </LinearLayout>
 
         <LinearLayout
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:layout_weight="1"
                 android:gravity="right"
                 android:orientation="vertical">
 
             <Button
                     android:id="@+id/entertainment"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
-                    android:background="@drawable/icon_entertainment"
-                    android:gravity="center"/>
+                    style="@style/icon"
+                    android:background="@drawable/icon_entertainment"/>
 
             <Button
                     android:id="@+id/twitter"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    style="@style/icon"
                     android:layout_below="@id/entertainment"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/icon_twitter"
-                    android:gravity="center"/>
+                    android:background="@drawable/icon_twitter"/>
 
             <Button
                     android:id="@+id/maps"
-                    android:layout_width="120dp"
-                    android:layout_height="120dp"
+                    style="@style/icon"
                     android:layout_below="@id/twitter"
-                    android:layout_marginTop="15dp"
-                    android:background="@drawable/icon_maps"
-                    android:gravity="center"/>
+                    android:background="@drawable/icon_maps"/>
 
         </LinearLayout>
 

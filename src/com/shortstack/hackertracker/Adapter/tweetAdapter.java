@@ -1,10 +1,13 @@
 package com.shortstack.hackertracker.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.shortstack.hackertracker.R;
 
@@ -42,6 +45,7 @@ public class tweetAdapter extends ArrayAdapter<twitter4j.Status> {
             holder = new TweetHolder();
             holder.userName = (TextView) row.findViewById(R.id.userName);
             holder.tweet = (TextView) row.findViewById(R.id.tweet);
+            holder.tweetLayout = (LinearLayout) row.findViewById(R.id.tweetLayout);
             row.setTag(holder);
 
 
@@ -61,6 +65,18 @@ public class tweetAdapter extends ArrayAdapter<twitter4j.Status> {
             // set event title
             holder.tweet.setText(tweet.getText());
 
+            // set onclick listener for tweet
+            holder.tweetLayout.setOnClickListener(new View.OnClickListener() {
+                public void onClick(View v) {
+                    Intent intent = new Intent();
+                    intent.setAction(Intent.ACTION_VIEW);
+                    intent.addCategory(Intent.CATEGORY_BROWSABLE);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.setData(Uri.parse("http://twitter.com/" + tweet.getUser().getScreenName() + "/status/" + tweet.getId()));
+                    getContext().startActivity(intent);
+                }
+            });
+
 
         } else {
             holder.userName.setText("No tweets found");
@@ -72,5 +88,6 @@ public class tweetAdapter extends ArrayAdapter<twitter4j.Status> {
     static class TweetHolder {
         TextView userName;
         TextView tweet;
+        LinearLayout tweetLayout;
     }
 }
