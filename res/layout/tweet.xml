@@ -4,10 +4,10 @@
               android:layout_width="fill_parent"
               android:layout_height="?android:attr/listPreferredItemHeight"
               android:padding="6dip">
-    <TextView android:id="@+id/toptext" android:layout_width="fill_parent"
+    <TextView android:id="@+id/userName" android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               android:gravity="center_vertical" android:singleLine="true" />
     <TextView android:layout_width="fill_parent"
-              android:layout_height="wrap_content"  android:id="@+id/bottomtext"
+              android:layout_height="wrap_content"  android:id="@+id/tweet"
               android:singleLine="true" />
 </LinearLayout>
