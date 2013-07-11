@@ -159,6 +159,7 @@ public class Contests extends HackerTracker {
                     contest.setTitle(myCursor.getString((myCursor.getColumnIndex("title"))));
                     contest.setBody(myCursor.getString((myCursor.getColumnIndex("body"))));
                     contest.setDate(myCursor.getString((myCursor.getColumnIndex("date"))));
+                    contest.setForum(myCursor.getString((myCursor.getColumnIndex("forum"))));
                     contest.setEndTime(myCursor.getString((myCursor.getColumnIndex("endTime"))));
                     contest.setStartTime(myCursor.getString((myCursor.getColumnIndex("startTime"))));
                     contest.setLocation(myCursor.getString((myCursor.getColumnIndex("location"))));

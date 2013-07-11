@@ -3,6 +3,9 @@ package com.shortstack.hackertracker.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.text.SpannableString;
+import android.text.method.LinkMovementMethod;
+import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -89,6 +92,10 @@ public class EventAdapter extends ArrayAdapter<Event> {
                         sb.append(body + " \n\n");
                     }
 
+                    // make links
+                    final SpannableString s = new SpannableString(sb);
+                    Linkify.addLinks(s, Linkify.ALL);
+
                     // build alert dialog layout
                     LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     View layout = inflater.inflate(R.layout.entertainment_details,
@@ -109,6 +116,10 @@ public class EventAdapter extends ArrayAdapter<Event> {
                         }
                     });
                     alertDialog.show();
+
+                    // make the textview clickable
+                    ((TextView) alertDialog.findViewById(R.id.text)).setMovementMethod(LinkMovementMethod.getInstance());
+
                 }
             };
             holder.eventLayout.setOnClickListener(shareOnClickListener);
