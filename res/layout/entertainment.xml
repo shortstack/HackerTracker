@@ -41,7 +41,7 @@
         </RelativeLayout>
         <ListView android:id="@+id/entertainment_day1"
                   android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
+                  android:layout_height="fill_parent"
                   android:layout_below="@id/day1"
                   android:divider="@null"
                   android:dividerHeight="5dp"
@@ -71,7 +71,7 @@
         </RelativeLayout>
         <ListView android:id="@+id/entertainment_day2"
                   android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
+                  android:layout_height="fill_parent"
                   android:layout_below="@id/day2"
                   android:divider="@null"
                   android:dividerHeight="5dp"
@@ -101,7 +101,7 @@
         </RelativeLayout>
         <ListView android:id="@+id/entertainment_day3"
                   android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
+                  android:layout_height="fill_parent"
                   android:layout_below="@id/day3"
                   android:divider="@null"
                   android:dividerHeight="5dp"
@@ -131,7 +131,7 @@
         </RelativeLayout>
         <ListView android:id="@+id/entertainment_day4"
                   android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
+                  android:layout_height="fill_parent"
                   android:layout_below="@id/day4"
                   android:divider="@null"
                   android:dividerHeight="5dp"
