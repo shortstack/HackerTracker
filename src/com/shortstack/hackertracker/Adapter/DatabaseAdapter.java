@@ -18,7 +18,7 @@ import java.io.OutputStream;
  * Time: 5:52 PM
  * To change this template use File | Settings | File Templates.
  */
-public class dbAdapter extends SQLiteOpenHelper {
+public class DatabaseAdapter extends SQLiteOpenHelper {
 
     //The Android's default system path of your application database.
     private static String DB_PATH = "/data/data/com.shortstack.hackertracker/databases/";
@@ -53,7 +53,7 @@ public class dbAdapter extends SQLiteOpenHelper {
      * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
      * @param context
      */
-    public dbAdapter(Context context)  {
+    public DatabaseAdapter(Context context)  {
 
         super(context, DB_NAME, null, 1);
         this.myContext = context;

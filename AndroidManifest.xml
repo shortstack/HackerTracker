@@ -5,7 +5,7 @@
           android:versionName="1.0">
     <uses-sdk android:minSdkVersion="8"/>
     <application android:label="@string/app_name" android:icon="@drawable/icon">
-        <activity android:name=".Activity.splash"
+        <activity android:name=".Activity.Splash"
                   android:label="@string/app_name"
                   android:screenOrientation="portrait"
                   android:theme="@android:style/Theme.NoTitleBar">
@@ -24,29 +24,27 @@
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
-        <activity android:name="com.google.ads.AdActivity"
-                  android:configChanges="keyboard|keyboardHidden|orientation"/>
-        <activity android:name=".Activity.contests"
+        <activity android:name=".Activity.Contests"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden|adjustPan"
                   android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name=".Activity.maps"
+        <activity android:name=".Activity.Maps"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden|adjustPan"
                   android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name=".Activity.twitter"
+        <activity android:name=".Activity.TwitterFeed"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden|adjustPan"
                   android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name=".Activity.entertainment"
+        <activity android:name=".Activity.Entertainment"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden|adjustPan"
                   android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name=".Activity.faq"
+        <activity android:name=".Activity.Faq"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden|adjustPan"
                   android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name=".Activity.speakers"
+        <activity android:name=".Activity.Speakers"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden|adjustPan"
                   android:theme="@android:style/Theme.NoTitleBar"/>

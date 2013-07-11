@@ -4,23 +4,21 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.util.Log;
 import android.widget.ListView;
-import com.shortstack.hackertracker.Adapter.tweetAdapter;
+import com.shortstack.hackertracker.Adapter.TweetAdapter;
 import com.shortstack.hackertracker.R;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
 import java.util.List;
-import java.util.concurrent.ExecutionException;
 
-public class twitter extends Activity {
+public class TwitterFeed extends Activity {
 
     public ListView tweetListView;
     public List<twitter4j.Status> tweets;
     public twitter4j.Status tweetData[];
-    public tweetAdapter adapter;
+    public TweetAdapter adapter;
     public ProgressDialog progress;
 
     public interface Callback {
@@ -47,7 +45,7 @@ public class twitter extends Activity {
 
                     tweetData = tweets.toArray(new twitter4j.Status[tweets.size()]);
 
-                    adapter = new tweetAdapter(getApplicationContext(), R.layout.tweet, tweetData);
+                    adapter = new TweetAdapter(getApplicationContext(), R.layout.tweet, tweetData);
 
                     tweetListView = (ListView) findViewById(R.id.listView);
 

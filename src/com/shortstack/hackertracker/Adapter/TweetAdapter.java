@@ -19,13 +19,13 @@ import com.shortstack.hackertracker.R;
  * Time: 9:20 AM
  * Description:
  */
-public class tweetAdapter extends ArrayAdapter<twitter4j.Status> {
+public class TweetAdapter extends ArrayAdapter<twitter4j.Status> {
 
     Context context;
     int layoutResourceId;
     twitter4j.Status data[] = null;
 
-    public tweetAdapter(Context context, int layoutResourceId, twitter4j.Status[] data) {
+    public TweetAdapter(Context context, int layoutResourceId, twitter4j.Status[] data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;

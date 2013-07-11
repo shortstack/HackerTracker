@@ -10,7 +10,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import com.shortstack.hackertracker.Adapter.dbAdapter;
+import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.R;
 
 import java.io.IOException;
@@ -18,7 +18,7 @@ import java.io.IOException;
 public class HackerTracker extends Activity
 {
 
-    public dbAdapter myDbHelper;
+    public DatabaseAdapter myDbHelper;
 
     public void setMainScreen() {
 
@@ -28,7 +28,7 @@ public class HackerTracker extends Activity
         btnSpeakers.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(HackerTracker.this,
-                        speakers.class));
+                        Speakers.class));
 
             }
         });
@@ -39,7 +39,7 @@ public class HackerTracker extends Activity
         btnEntertainment.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(HackerTracker.this,
-                        entertainment.class));
+                        Entertainment.class));
 
             }
         });
@@ -50,7 +50,7 @@ public class HackerTracker extends Activity
         btnMaps.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(HackerTracker.this,
-                        maps.class));
+                        Maps.class));
 
             }
         });
@@ -61,7 +61,7 @@ public class HackerTracker extends Activity
         btnTwitter.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(HackerTracker.this,
-                        twitter.class));
+                        TwitterFeed.class));
 
             }
         });
@@ -72,7 +72,7 @@ public class HackerTracker extends Activity
         btnContests.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(HackerTracker.this,
-                        contests.class));
+                        Contests.class));
 
             }
         });
@@ -83,14 +83,14 @@ public class HackerTracker extends Activity
         btnFaq.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(HackerTracker.this,
-                        faq.class));
+                        Faq.class));
 
             }
         });
 
         // set up database
 
-        myDbHelper = new dbAdapter(this);
+        myDbHelper = new DatabaseAdapter(this);
 
         try {
 

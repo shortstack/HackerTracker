@@ -10,7 +10,7 @@ import com.shortstack.hackertracker.R;
  * Time: 2:25 PM
  * To change this template use File | Settings | File Templates.
  */
-public class faq extends HackerTracker {
+public class Faq extends HackerTracker {
 
     /** Called when the activity is first created. */
     @Override

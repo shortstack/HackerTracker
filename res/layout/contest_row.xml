@@ -1,4 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-          android:id="@+id/text"
-          style="@style/dropDownListView"/>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              style="@style/row"
+              android:id="@+id/contestLayout">
+    <TextView android:id="@+id/title" android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              style="@style/title"
+              android:text="test"
+              android:gravity="center_vertical" android:singleLine="true" />
+    <TextView android:layout_width="fill_parent"
+              android:layout_height="wrap_content"  android:id="@+id/location"
+              style="@style/location"
+              android:text="test" />
+</LinearLayout>

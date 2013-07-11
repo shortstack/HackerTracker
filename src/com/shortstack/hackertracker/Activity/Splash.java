@@ -12,7 +12,7 @@ import com.shortstack.hackertracker.R;
  * Time: 2:26 PM
  * To change this template use File | Settings | File Templates.
  */
-public class splash extends Activity {
+public class Splash extends Activity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -44,7 +44,7 @@ public class splash extends Activity {
                      * Called after splash times up. Do some action after splash
                      * times up. Here we moved to another main activity class
                      */
-                    startActivity(new Intent(splash.this,
+                    startActivity(new Intent(Splash.this,
                             HackerTracker.class));
                     finish();
                 }

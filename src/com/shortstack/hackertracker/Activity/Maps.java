@@ -22,7 +22,7 @@ import java.io.*;
  * Time: 2:26 PM
  * To change this template use File | Settings | File Templates.
  */
-public class maps extends HackerTracker {
+public class Maps extends HackerTracker {
 
     private static Context context;
 
@@ -67,7 +67,7 @@ public class maps extends HackerTracker {
 
         // copy pdf files to sdcard
 
-        maps.context = getApplicationContext();
+        Maps.context = getApplicationContext();
         copyAssets(context);
 
         // button listener for defcon map
@@ -76,7 +76,7 @@ public class maps extends HackerTracker {
         button_dcmap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                AlertDialog.Builder pdfConfirm = new AlertDialog.Builder(maps.this);
+                AlertDialog.Builder pdfConfirm = new AlertDialog.Builder(Maps.this);
                 pdfConfirm.setTitle("Map Requires PDF Reader");
                 pdfConfirm.setMessage("Do you have a PDF reader installed?");
                 pdfConfirm.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -108,7 +108,7 @@ public class maps extends HackerTracker {
         Button button_riomap = (Button)findViewById(R.id.button_riomap);
         button_riomap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                AlertDialog.Builder pdfConfirm = new AlertDialog.Builder(maps.this);
+                AlertDialog.Builder pdfConfirm = new AlertDialog.Builder(Maps.this);
                 pdfConfirm.setTitle("Map Requires PDF Reader");
                 pdfConfirm.setMessage("Do you have a PDF reader installed?");
                 pdfConfirm.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
@@ -138,6 +138,6 @@ public class maps extends HackerTracker {
     }
 
     public static Context getAppContext() {
-        return maps.context;
+        return Maps.context;
     }
 }

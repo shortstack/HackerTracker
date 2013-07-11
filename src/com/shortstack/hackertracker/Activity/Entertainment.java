@@ -8,8 +8,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
-import com.shortstack.hackertracker.Adapter.dbAdapter;
+import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
+import com.shortstack.hackertracker.Adapter.EventAdapter;
+import com.shortstack.hackertracker.Model.Event;
+import com.shortstack.hackertracker.Model.Speaker;
 import com.shortstack.hackertracker.R;
+import org.apache.commons.lang3.BooleanUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,12 +25,12 @@ import com.shortstack.hackertracker.R;
  * Time: 2:26 PM
  * To change this template use File | Settings | File Templates.
  */
-public class entertainment extends HackerTracker {
+public class Entertainment extends HackerTracker {
 
-    public AlertDialog.Builder builder;
-    public AlertDialog alertDialog;
+    public Event[] eventData;
+    public EventAdapter adapter;
+    public ListView eventsDay1;
 
-    /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -79,63 +86,108 @@ public class entertainment extends HackerTracker {
         cursorDates.moveToNext();
         day4.setText(cursorDates.getString(cursorDates.getColumnIndex("day")) + ", " + cursorDates.getString(cursorDates.getColumnIndex("month")) + " " + cursorDates.getString(cursorDates.getColumnIndex("date")));
 
-        //query database for entertainment
-        SQLiteDatabase dbEntertainment = myDbHelper.getReadableDatabase();
-        Cursor cursorEntertainmentDay1 = dbEntertainment.query("entertainment", new String[]{"_id", "title", "body", "startTime", "endTime", "date", "location"},
-                "date like " + "'1'", null, null, null, "startTime");
-        Cursor cursorEntertainmentDay2 = dbEntertainment.query("entertainment", new String[] {"_id", "title", "body", "startTime", "endTime", "date", "location"},
-                "date like " + "'2'", null, null, null, "startTime");
-        Cursor cursorEntertainmentDay3 = dbEntertainment.query("entertainment", new String[] {"_id", "title", "body", "startTime", "endTime", "date", "location"},
-                "date like " + "'3'", null, null, null, "startTime");
-        Cursor cursorEntertainmentDay4 = dbEntertainment.query("entertainment", new String[] {"_id", "title", "body", "startTime", "endTime", "date", "location"},
-                "date like " + "'4'", null, null, null, "startTime");
+        //query database for events
+        SQLiteDatabase dbSpeakers = myDbHelper.getReadableDatabase();
 
-        // set up listviews
-        final ListView listContent1 = (ListView)findViewById(R.id.entertainment_day1);
-        final ListView listContent2 = (ListView)findViewById(R.id.entertainment_day2);
-        final ListView listContent3 = (ListView)findViewById(R.id.entertainment_day3);
-        final ListView listContent4 = (ListView)findViewById(R.id.entertainment_day4);
-        startManagingCursor(cursorEntertainmentDay1);
-        startManagingCursor(cursorEntertainmentDay2);
-        startManagingCursor(cursorEntertainmentDay3);
-        startManagingCursor(cursorEntertainmentDay4);
+        // populate day 1
+        List<Event> events = getEventsByDate("1");
+        if (!(events.size() < 1)) {
 
-        // put entertainment data into listview
-        String[] fromEntertainment = new String[]{dbAdapter.KEY_TITLE};
-        int[] toEntertainment = new int[]{R.id.text};
-        SimpleCursorAdapter cursorAdapter1 =
-                new SimpleCursorAdapter(this, R.layout.entertainment_row, cursorEntertainmentDay1, fromEntertainment, toEntertainment);
-        listContent1.setAdapter(cursorAdapter1); // day 1
-        listContent1.setOnItemClickListener(listContentOnItemClickListener);
-        SimpleCursorAdapter cursorAdapter2 =
-                new SimpleCursorAdapter(this, R.layout.entertainment_row, cursorEntertainmentDay2, fromEntertainment, toEntertainment);
-        listContent2.setAdapter(cursorAdapter2); // day 2
-        listContent2.setOnItemClickListener(listContentOnItemClickListener);
-        SimpleCursorAdapter cursorAdapter3 =
-                new SimpleCursorAdapter(this, R.layout.entertainment_row, cursorEntertainmentDay3, fromEntertainment, toEntertainment);
-        listContent3.setAdapter(cursorAdapter3); // day 3
-        listContent3.setOnItemClickListener(listContentOnItemClickListener);
-        SimpleCursorAdapter cursorAdapter4 =
-                new SimpleCursorAdapter(this, R.layout.entertainment_row, cursorEntertainmentDay4, fromEntertainment, toEntertainment);
-        listContent4.setAdapter(cursorAdapter4); // day 4
-        listContent4.setOnItemClickListener(listContentOnItemClickListener);
+            eventData = events.toArray(new Event[events.size()]);
 
+            adapter = new EventAdapter(getApplicationContext(), R.layout.entertainment_row, eventData);
+
+            eventsDay1 = (ListView) findViewById(R.id.entertainment_day1);
+
+            eventsDay1.setAdapter(adapter);
+        }
+
+        // populate day 2
+        List<Event> events2 = getEventsByDate("2");
+        if (!(events2.size() < 1)) {
+
+            eventData = events2.toArray(new Event[events2.size()]);
+
+            adapter = new EventAdapter(getApplicationContext(), R.layout.entertainment_row, eventData);
+
+            eventsDay1 = (ListView) findViewById(R.id.entertainment_day2);
+
+            eventsDay1.setAdapter(adapter);
+        }
+
+        // populate day 3
+        List<Event> events3 = getEventsByDate("3");
+        if (!(events3.size() < 1)) {
+
+            eventData = events3.toArray(new Event[events3.size()]);
+
+            adapter = new EventAdapter(getApplicationContext(), R.layout.entertainment_row, eventData);
+
+            eventsDay1 = (ListView) findViewById(R.id.entertainment_day3);
+
+            eventsDay1.setAdapter(adapter);
+        }
+
+        // populate day 4
+        List<Event> events4 = getEventsByDate("4");
+        if (!(events4.size() < 1)) {
+
+            eventData = events4.toArray(new Event[events4.size()]);
+
+            adapter = new EventAdapter(getApplicationContext(), R.layout.entertainment_row, eventData);
+
+            eventsDay1 = (ListView) findViewById(R.id.entertainment_day4);
+
+            eventsDay1.setAdapter(adapter);
+        }
 
         // close databases
         dbDates.close();
-        dbEntertainment.close();
+        dbSpeakers.close();
 
     }
 
-    // toggle day 1 entertainment
+
+    // get list of events by the day
+    public List<Event> getEventsByDate(String day) {
+        String[] args={day};
+        ArrayList<Event> result = new ArrayList<Event>();
+        SQLiteDatabase db = myDbHelper.getWritableDatabase();
+
+        Cursor myCursor = db.rawQuery("SELECT * FROM entertainment WHERE date=?", args);
+
+        try{
+            if (myCursor.moveToFirst()){
+                do{
+                    Event event = new Event();
+                    event.setTitle(myCursor.getString((myCursor.getColumnIndex("title"))));
+                    event.setBody(myCursor.getString((myCursor.getColumnIndex("body"))));
+                    event.setDate(myCursor.getString((myCursor.getColumnIndex("date"))));
+                    event.setEndTime(myCursor.getString((myCursor.getColumnIndex("endTime"))));
+                    event.setStartTime(myCursor.getString((myCursor.getColumnIndex("startTime"))));
+                    event.setLocation(myCursor.getString((myCursor.getColumnIndex("location"))));
+
+                    result.add(event);
+                }while(myCursor.moveToNext());
+            }
+        }finally{
+            myCursor.close();
+        }
+        db.close();
+        return result;
+    }
+
+
+
+
+    // toggle day 1 events
     private void showListView1(){
         TextView collapseExpand = (TextView)findViewById(R.id.collapseExpand1);
-        RelativeLayout day1Layout = (RelativeLayout)findViewById(R.id.day1Layout);
         RelativeLayout day2Layout = (RelativeLayout)findViewById(R.id.day2Layout);
         RelativeLayout day3Layout = (RelativeLayout)findViewById(R.id.day3Layout);
         RelativeLayout day4Layout = (RelativeLayout)findViewById(R.id.day4Layout);
         ListView entertainment_day1 = (ListView) findViewById(R.id.entertainment_day1);
-        if (entertainment_day1.getVisibility() == View.VISIBLE) {
+        if(entertainment_day1.getVisibility() == View.VISIBLE) {
             entertainment_day1.setVisibility(View.GONE);
             day2Layout.setVisibility(View.VISIBLE);
             day3Layout.setVisibility(View.VISIBLE);
@@ -150,7 +202,7 @@ public class entertainment extends HackerTracker {
         }
     }
 
-    // toggle day 2 entertainment
+    // toggle day 2 events
     private void showListView2(){
         TextView collapseExpand = (TextView)findViewById(R.id.collapseExpand2);
         RelativeLayout day1Layout = (RelativeLayout)findViewById(R.id.day1Layout);
@@ -172,7 +224,7 @@ public class entertainment extends HackerTracker {
         }
     }
 
-    // toggle day 3 entertainment
+    // toggle day 3 events
     private void showListView3(){
         TextView collapseExpand = (TextView)findViewById(R.id.collapseExpand3);
         RelativeLayout day1Layout = (RelativeLayout)findViewById(R.id.day1Layout);
@@ -194,7 +246,7 @@ public class entertainment extends HackerTracker {
         }
     }
 
-    // toggle day 4 entertainment
+    // toggle day 4 events
     private void showListView4(){
         TextView collapseExpand = (TextView)findViewById(R.id.collapseExpand4);
         RelativeLayout day1Layout = (RelativeLayout)findViewById(R.id.day1Layout);
@@ -216,51 +268,5 @@ public class entertainment extends HackerTracker {
         }
     }
 
-    // click listeners for listview items to show entertainment details
-    private ListView.OnItemClickListener listContentOnItemClickListener = new ListView.OnItemClickListener(){
-
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            // get entertainment details from cursor
-            Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-            String title = cursor.getString(cursor.getColumnIndex(dbAdapter.KEY_TITLE));
-            String body = cursor.getString(cursor.getColumnIndex(dbAdapter.KEY_BODY));
-
-            String startTime = cursor.getString(cursor.getColumnIndex(dbAdapter.KEY_STARTTIME));
-            String endTime = cursor.getString(cursor.getColumnIndex(dbAdapter.KEY_ENDTIME));
-            String location = cursor.getString(cursor.getColumnIndex(dbAdapter.KEY_LOCATION));
-
-            // build entertainment details into string
-            StringBuilder sb = new StringBuilder();
-            sb.append("Start Time: " + startTime + " \n");
-            sb.append("End Time: " + endTime + " \n");
-            sb.append("Location: " + location + " \n\n");
-            if (body != null) {
-                sb.append(body);
-            }
-
-            // build alert dialog layout
-            Context mContext = getApplicationContext();
-            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.entertainment_details,
-                    (ViewGroup) findViewById(R.id.layout_root));
-
-            // assign values to layout parts
-            TextView text = (TextView) layout.findViewById(R.id.text);
-            text.setText(sb);
-
-            // set up & show alert dialog
-            builder = new AlertDialog.Builder(entertainment.this);
-            builder.setView(layout);
-            builder.setTitle(title.split("- ")[1]);
-            alertDialog = builder.create();
-            alertDialog.setButton("Close", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            alertDialog.show();
-        }};
 
 }

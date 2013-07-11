@@ -8,8 +8,15 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
-import com.shortstack.hackertracker.Adapter.dbAdapter;
+import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
+import com.shortstack.hackertracker.Adapter.SpeakerAdapter;
+import com.shortstack.hackertracker.Adapter.TweetAdapter;
+import com.shortstack.hackertracker.Model.Speaker;
 import com.shortstack.hackertracker.R;
+import org.apache.commons.lang3.BooleanUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -18,12 +25,12 @@ import com.shortstack.hackertracker.R;
  * Time: 2:26 PM
  * To change this template use File | Settings | File Templates.
  */
-public class speakers extends HackerTracker {
+public class Speakers extends HackerTracker {
 
-    public AlertDialog.Builder builder;
-    public AlertDialog alertDialog;
+    public Speaker[] speakerData;
+    public SpeakerAdapter adapter;
+    public ListView speakersDay1;
 
-    /** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -35,7 +42,7 @@ public class speakers extends HackerTracker {
         Cursor cursorDates = dbDates.query("dates", new String[] {"_id", "day", "month", "date"},
                 null, null, null, null, null);
 
-        // set up textviews for dates
+        //set up textviews for dates
         TextView day1 = (TextView)findViewById(R.id.day1);
         TextView day2 = (TextView)findViewById(R.id.day2);
         TextView day3 = (TextView)findViewById(R.id.day3);
@@ -81,50 +88,102 @@ public class speakers extends HackerTracker {
 
         //query database for speakers
         SQLiteDatabase dbSpeakers = myDbHelper.getReadableDatabase();
-        Cursor cursorSpeakersDay1 = dbSpeakers.query("speakers", new String[] {"_id", "title", "body", "speaker", "startTime", "endTime", "date", "location", "demo", "tool", "exploit"},
-              "date like " + "'1'", null, null, null, "startTime");
-        Cursor cursorSpeakersDay2 = dbSpeakers.query("speakers", new String[] {"_id", "title", "body", "speaker", "startTime", "endTime", "date", "location", "demo", "tool", "exploit"},
-              "date like " + "'2'", null, null, null, "startTime");
-        Cursor cursorSpeakersDay3 = dbSpeakers.query("speakers", new String[] {"_id", "title", "body", "speaker", "startTime", "endTime", "date", "location", "demo", "tool", "exploit"},
-              "date like " + "'3'", null, null, null, "startTime");
-        Cursor cursorSpeakersDay4 = dbSpeakers.query("speakers", new String[] {"_id", "title", "body", "speaker", "startTime", "endTime", "date", "location", "demo", "tool", "exploit"},
-                "date like " + "'4'", null, null, null, "startTime");
 
-        // set up listviews
-        final ListView listContent1 = (ListView)findViewById(R.id.speakers_day1);
-        final ListView listContent2 = (ListView)findViewById(R.id.speakers_day2);
-        final ListView listContent3 = (ListView)findViewById(R.id.speakers_day3);
-        final ListView listContent4 = (ListView)findViewById(R.id.speakers_day4);
-        startManagingCursor(cursorSpeakersDay1);
-        startManagingCursor(cursorSpeakersDay2);
-        startManagingCursor(cursorSpeakersDay3);
-        startManagingCursor(cursorSpeakersDay4);
+        // populate day 1
+        List<Speaker> speakers = getSpeakersByDate("1");
+        if (!(speakers.size() < 1)) {
 
-        // put speaker data into listview
-        String[] fromSpeakers = new String[]{dbAdapter.KEY_TITLE};
-        int[] toSpeakers = new int[]{R.id.text};
-        SimpleCursorAdapter cursorAdapter1 =
-              new SimpleCursorAdapter(this, R.layout.speaker_row, cursorSpeakersDay1, fromSpeakers, toSpeakers);
-        listContent1.setAdapter(cursorAdapter1); // day 1
-        listContent1.setOnItemClickListener(listContentOnItemClickListener);
-        SimpleCursorAdapter cursorAdapter2 =
-              new SimpleCursorAdapter(this, R.layout.speaker_row, cursorSpeakersDay2, fromSpeakers, toSpeakers);
-        listContent2.setAdapter(cursorAdapter2); // day 2
-        listContent2.setOnItemClickListener(listContentOnItemClickListener);
-        SimpleCursorAdapter cursorAdapter3 =
-                new SimpleCursorAdapter(this, R.layout.speaker_row, cursorSpeakersDay3, fromSpeakers, toSpeakers);
-        listContent3.setAdapter(cursorAdapter3); // day 3
-        listContent3.setOnItemClickListener(listContentOnItemClickListener);
-        SimpleCursorAdapter cursorAdapter4 =
-                new SimpleCursorAdapter(this, R.layout.speaker_row, cursorSpeakersDay4, fromSpeakers, toSpeakers);
-        listContent4.setAdapter(cursorAdapter4); // day 4
-        listContent4.setOnItemClickListener(listContentOnItemClickListener);
+            speakerData = speakers.toArray(new Speaker[speakers.size()]);
+
+            adapter = new SpeakerAdapter(getApplicationContext(), R.layout.speaker_row, speakerData);
+
+            speakersDay1 = (ListView) findViewById(R.id.speakers_day1);
+
+            speakersDay1.setAdapter(adapter);
+        }
+
+        // populate day 2
+        List<Speaker> speakers2 = getSpeakersByDate("2");
+        if (!(speakers2.size() < 1)) {
+
+            speakerData = speakers2.toArray(new Speaker[speakers2.size()]);
+
+            adapter = new SpeakerAdapter(getApplicationContext(), R.layout.speaker_row, speakerData);
+
+            speakersDay1 = (ListView) findViewById(R.id.speakers_day2);
+
+            speakersDay1.setAdapter(adapter);
+        }
+
+        // populate day 3
+        List<Speaker> speakers3 = getSpeakersByDate("3");
+        if (!(speakers3.size() < 1)) {
+
+            speakerData = speakers3.toArray(new Speaker[speakers3.size()]);
+
+            adapter = new SpeakerAdapter(getApplicationContext(), R.layout.speaker_row, speakerData);
+
+            speakersDay1 = (ListView) findViewById(R.id.speakers_day3);
+
+            speakersDay1.setAdapter(adapter);
+        }
+
+        // populate day 4
+        List<Speaker> speakers4 = getSpeakersByDate("4");
+        if (!(speakers4.size() < 1)) {
+
+            speakerData = speakers4.toArray(new Speaker[speakers4.size()]);
+
+            adapter = new SpeakerAdapter(getApplicationContext(), R.layout.speaker_row, speakerData);
+
+            speakersDay1 = (ListView) findViewById(R.id.speakers_day4);
+
+            speakersDay1.setAdapter(adapter);
+        }
 
         // close databases
         dbDates.close();
         dbSpeakers.close();
 
     }
+
+
+    // get list of speakers by the day
+    public List<Speaker> getSpeakersByDate(String day) {
+        String[] args={day};
+        ArrayList<Speaker> result = new ArrayList<Speaker>();
+        SQLiteDatabase db = myDbHelper.getWritableDatabase();
+
+        Cursor myCursor = db.rawQuery("SELECT * FROM speakers WHERE date=?", args);
+
+        try{
+            if (myCursor.moveToFirst()){
+                do{
+                    Speaker speaker = new Speaker();
+                    speaker.setTitle(myCursor.getString((myCursor.getColumnIndex("title"))));
+                    speaker.setBody(myCursor.getString((myCursor.getColumnIndex("body"))));
+                    speaker.setSpeaker(myCursor.getString((myCursor.getColumnIndex("speaker"))));
+                    speaker.setDate(myCursor.getString((myCursor.getColumnIndex("date"))));
+                    speaker.setEndTime(myCursor.getString((myCursor.getColumnIndex("endTime"))));
+                    speaker.setStartTime(myCursor.getString((myCursor.getColumnIndex("startTime"))));
+                    speaker.setLocation(myCursor.getString((myCursor.getColumnIndex("location"))));
+                    speaker.setDemo(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("demo"))))));
+                    speaker.setExploit(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("exploit"))))));
+                    speaker.setTool(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("tool"))))));
+                    speaker.setInfo(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("info"))))));
+
+                    result.add(speaker);
+                }while(myCursor.moveToNext());
+            }
+        }finally{
+            myCursor.close();
+        }
+        db.close();
+        return result;
+    }
+
+
+
 
     // toggle day 1 speakers
     private void showListView1(){
@@ -215,71 +274,5 @@ public class speakers extends HackerTracker {
      }
 
 
-    // click listeners for listview items to show speaker details
-    private ListView.OnItemClickListener listContentOnItemClickListener = new ListView.OnItemClickListener(){
-
-        @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-            // get speaker details from cursor
-            Cursor cursor = (Cursor) parent.getItemAtPosition(position);
-            String title = cursor.getString(cursor.getColumnIndex(dbAdapter.KEY_TITLE));
-            String body = cursor.getString(cursor.getColumnIndex(dbAdapter.KEY_BODY));
-            String speaker = cursor.getString(cursor.getColumnIndex(dbAdapter.KEY_NAME));
-
-            String startTime = cursor.getString(cursor.getColumnIndex(dbAdapter.KEY_STARTTIME));
-            String endTime = cursor.getString(cursor.getColumnIndex(dbAdapter.KEY_ENDTIME));
-            String location = cursor.getString(cursor.getColumnIndex(dbAdapter.KEY_LOCATION));
-
-            String demo = cursor.getString(cursor.getColumnIndex(dbAdapter.KEY_DEMO));
-            String tool = cursor.getString(cursor.getColumnIndex(dbAdapter.KEY_TOOL));
-            String exploit = cursor.getString(cursor.getColumnIndex(dbAdapter.KEY_EXPLOIT));
-
-            // build speaker details into string
-            StringBuilder sb = new StringBuilder();
-            sb.append("Start Time: " + startTime + " \n");
-            sb.append("End Time: " + endTime + " \n");
-            sb.append("Location: " + location + " \n\n");
-            if (body != null) {
-                sb.append(body + " \n\n");
-            }
-            sb.append("By " + speaker);
-
-            // build alert dialog layout
-            Context mContext = getApplicationContext();
-            LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(LAYOUT_INFLATER_SERVICE);
-            View layout = inflater.inflate(R.layout.speaker_details,
-                    (ViewGroup) findViewById(R.id.layout_root));
-
-            // assign values to layout parts
-            TextView text = (TextView) layout.findViewById(R.id.text);
-            text.setText(sb);
-
-            // display images if applicable
-            if (demo.equals("1")) {
-                ImageView image = (ImageView) layout.findViewById(R.id.image_demo);
-                image.setImageResource(R.drawable.icon_demo);
-            }
-            if (tool.equals("1")) {
-                ImageView image = (ImageView) layout.findViewById(R.id.image_tool);
-                image.setImageResource(R.drawable.icon_tool);
-            }
-            if (exploit.equals("1")) {
-                ImageView image = (ImageView) layout.findViewById(R.id.image_exploit);
-                image.setImageResource(R.drawable.icon_exploit);
-            }
-
-            // set up & show alert dialog
-            builder = new AlertDialog.Builder(speakers.this);
-            builder.setView(layout);
-            builder.setTitle(title.split("- ")[1]);
-            alertDialog = builder.create();
-            alertDialog.setButton("Close", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            alertDialog.show();
-        }};
 
 }
