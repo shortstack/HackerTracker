@@ -6,8 +6,10 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.ListView;
+import android.widget.Toast;
 import com.shortstack.hackertracker.Adapter.TweetAdapter;
 import com.shortstack.hackertracker.R;
+import com.shortstack.hackertracker.Utils.Connectivity;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -31,29 +33,35 @@ public class TwitterFeed extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.twitter);
 
-        progress = new ProgressDialog(this);
-        progress.setTitle("Searching Tweets");
-        progress.setMessage("Please wait...");
+        if (Connectivity.isConnected(this.getApplicationContext()) || Connectivity.isConnectedMobile(this.getApplicationContext()) || Connectivity.isConnectedWifi(this.getApplicationContext())) {
+
+            progress = new ProgressDialog(this);
+            progress.setTitle("Searching Tweets");
+            progress.setMessage("Please wait...");
 
 
-        getTweets request = new getTweets(new Callback() {
-           public void run(Object result) {
+            getTweets request = new getTweets(new Callback() {
+               public void run(Object result) {
 
 
-                if (!(((List<twitter4j.Status>) result).size() < 1)) {
-                    tweets = (List<twitter4j.Status>) result;
+                    if (!(((List<twitter4j.Status>) result).size() < 1)) {
+                        tweets = (List<twitter4j.Status>) result;
 
-                    tweetData = tweets.toArray(new twitter4j.Status[tweets.size()]);
+                        tweetData = tweets.toArray(new twitter4j.Status[tweets.size()]);
 
-                    adapter = new TweetAdapter(getApplicationContext(), R.layout.tweet, tweetData);
+                        adapter = new TweetAdapter(getApplicationContext(), R.layout.tweet, tweetData);
 
-                    tweetListView = (ListView) findViewById(R.id.listView);
+                        tweetListView = (ListView) findViewById(R.id.listView);
 
-                    tweetListView.setAdapter(adapter);
-                }
+                        tweetListView.setAdapter(adapter);
+                    }
 
-           }});
-        request.execute();
+               }});
+            request.execute();
+        } else {
+            Toast.makeText(getApplicationContext(),"No Network Connection", Toast.LENGTH_SHORT).show();
+            finish();
+        }
 
     }
 
