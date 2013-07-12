@@ -16,7 +16,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/log4j-1.2.17.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/log4j-1.2.17.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -25,7 +25,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/twitter4j-async-3.0.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/twitter4j-async-3.0.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -34,7 +34,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/twitter4j-core-3.0.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/twitter4j-core-3.0.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -43,7 +43,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/twitter4j-examples-3.0.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/twitter4j-examples-3.0.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -52,7 +52,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/twitter4j-media-support-3.0.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/twitter4j-media-support-3.0.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -61,7 +61,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/twitter4j-stream-3.0.3.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/twitter4j-stream-3.0.3.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -70,7 +70,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/commons-lang3-3.1.jar!/" />
+          <root url="jar://$MODULE_DIR$/lib/commons-lang3-3.1.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
