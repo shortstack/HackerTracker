@@ -37,11 +37,6 @@ public class Speakers extends HackerTracker {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.speakers);
 
-        //query database for dates
-        SQLiteDatabase dbDates = myDbHelper.getReadableDatabase();
-        Cursor cursorDates = dbDates.query("dates", new String[] {"_id", "day", "month", "date"},
-                null, null, null, null, null);
-
         //set up textviews for dates
         TextView day1 = (TextView)findViewById(R.id.day1);
         TextView day2 = (TextView)findViewById(R.id.day2);
@@ -77,14 +72,10 @@ public class Speakers extends HackerTracker {
         });
 
         // put dates into textviews
-        cursorDates.moveToFirst();
-        day1.setText(cursorDates.getString(cursorDates.getColumnIndex("day")) + ", " + cursorDates.getString(cursorDates.getColumnIndex("month")) + " " + cursorDates.getString(cursorDates.getColumnIndex("date")));
-        cursorDates.moveToNext();
-        day2.setText(cursorDates.getString(cursorDates.getColumnIndex("day")) + ", " + cursorDates.getString(cursorDates.getColumnIndex("month")) + " " + cursorDates.getString(cursorDates.getColumnIndex("date")));
-        cursorDates.moveToNext();
-        day3.setText(cursorDates.getString(cursorDates.getColumnIndex("day")) + ", " + cursorDates.getString(cursorDates.getColumnIndex("month")) + " " + cursorDates.getString(cursorDates.getColumnIndex("date")));
-        cursorDates.moveToNext();
-        day4.setText(cursorDates.getString(cursorDates.getColumnIndex("day")) + ", " + cursorDates.getString(cursorDates.getColumnIndex("month")) + " " + cursorDates.getString(cursorDates.getColumnIndex("date")));
+        day1.setText(getDates("1"));
+        day2.setText(getDates("2"));
+        day3.setText(getDates("3"));
+        day4.setText(getDates("4"));
 
         //query database for speakers
         SQLiteDatabase dbSpeakers = myDbHelper.getReadableDatabase();
@@ -142,7 +133,6 @@ public class Speakers extends HackerTracker {
         }
 
         // close databases
-        dbDates.close();
         dbSpeakers.close();
 
     }
@@ -167,10 +157,10 @@ public class Speakers extends HackerTracker {
                     speaker.setEndTime(myCursor.getString((myCursor.getColumnIndex("endTime"))));
                     speaker.setStartTime(myCursor.getString((myCursor.getColumnIndex("startTime"))));
                     speaker.setLocation(myCursor.getString((myCursor.getColumnIndex("location"))));
-                    speaker.setDemo(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("demo"))))));
-                    speaker.setExploit(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("exploit"))))));
-                    speaker.setTool(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("tool"))))));
-                    speaker.setInfo(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("info"))))));
+               //     speaker.setDemo(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("demo"))))));
+              //      speaker.setExploit(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("exploit"))))));
+              ///      speaker.setTool(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("tool"))))));
+               //     speaker.setInfo(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("info"))))));
 
                     result.add(speaker);
                 }while(myCursor.moveToNext());

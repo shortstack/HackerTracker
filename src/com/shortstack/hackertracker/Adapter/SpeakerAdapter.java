@@ -79,10 +79,17 @@ public class SpeakerAdapter extends ArrayAdapter<Speaker> {
                         String endTime =  speaker.getEndTime();
                         String location = speaker.getLocation();
 
-                        Boolean demo = speaker.getDemo();
-                        Boolean tool = speaker.getTool();
-                        Boolean exploit = speaker.getExploit();
-                        Boolean info = speaker.getInfo();
+                        Boolean demo = false;
+                        Boolean tool = false;
+                        Boolean exploit = false;
+                        Boolean info = false;
+
+                        if (speaker.getDemo() != null && speaker.getTool() != null && speaker.getExploit() != null && speaker.getInfo() != null) {
+                            demo = speaker.getDemo();
+                            tool = speaker.getTool();
+                            exploit = speaker.getExploit();
+                            info = speaker.getInfo();
+                        }
 
                         // build speaker details into string
                         StringBuilder sb = new StringBuilder();
