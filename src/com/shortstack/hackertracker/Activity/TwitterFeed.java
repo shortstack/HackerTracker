@@ -8,6 +8,7 @@ import android.util.Log;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.shortstack.hackertracker.Adapter.TweetAdapter;
+import com.shortstack.hackertracker.Model.Key;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.Connectivity;
 import twitter4j.*;
@@ -86,10 +87,10 @@ public class TwitterFeed extends Activity {
 
             ConfigurationBuilder cb = new ConfigurationBuilder();
             cb.setDebugEnabled(true)
-                    .setOAuthConsumerKey("ZU1e66hITLMNn5RtVdSeSA")
-                    .setOAuthConsumerSecret("pvi8ZTGi6LgZdKjb04vSMXKa8Rb07V5fziyF8856PwY")
-                    .setOAuthAccessToken("8094902-wyRdtNsRgjYLO1EUPhGuHPyh52wUCFXgaGv291Lrlr")
-                    .setOAuthAccessTokenSecret("7SPrqk8Xe8rzYnZrCGrL7dCAe8vshmsfvNmGidDRM");
+                    .setOAuthConsumerKey(Key.consumerKey)
+                    .setOAuthConsumerSecret(Key.consumerSecret)
+                    .setOAuthAccessToken(Key.OAuthAccessToken)
+                    .setOAuthAccessTokenSecret(Key.OAuthAccessTokenSecret);
             TwitterFactory tf = new TwitterFactory(cb.build());
             Twitter twitter = tf.getInstance();
             try {

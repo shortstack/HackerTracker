@@ -37,11 +37,6 @@ public class Entertainment extends HackerTracker {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.entertainment);
 
-        //query database for dates
-        SQLiteDatabase dbDates = myDbHelper.getReadableDatabase();
-        Cursor cursorDates = dbDates.query("dates", new String[] {"_id", "day", "month", "date"},
-                null, null, null, null, null);
-
         //set up textviews for dates
         TextView day1 = (TextView)findViewById(R.id.day1);
         TextView day2 = (TextView)findViewById(R.id.day2);
@@ -77,14 +72,10 @@ public class Entertainment extends HackerTracker {
         });
 
         // put dates into textviews
-        cursorDates.moveToFirst();
-        day1.setText(cursorDates.getString(cursorDates.getColumnIndex("day")) + ", " + cursorDates.getString(cursorDates.getColumnIndex("month")) + " " + cursorDates.getString(cursorDates.getColumnIndex("date")));
-        cursorDates.moveToNext();
-        day2.setText(cursorDates.getString(cursorDates.getColumnIndex("day")) + ", " + cursorDates.getString(cursorDates.getColumnIndex("month")) + " " + cursorDates.getString(cursorDates.getColumnIndex("date")));
-        cursorDates.moveToNext();
-        day3.setText(cursorDates.getString(cursorDates.getColumnIndex("day")) + ", " + cursorDates.getString(cursorDates.getColumnIndex("month")) + " " + cursorDates.getString(cursorDates.getColumnIndex("date")));
-        cursorDates.moveToNext();
-        day4.setText(cursorDates.getString(cursorDates.getColumnIndex("day")) + ", " + cursorDates.getString(cursorDates.getColumnIndex("month")) + " " + cursorDates.getString(cursorDates.getColumnIndex("date")));
+        day1.setText(getDates("1"));
+        day2.setText(getDates("2"));
+        day3.setText(getDates("3"));
+        day4.setText(getDates("4"));
 
         //query database for events
         SQLiteDatabase dbSpeakers = myDbHelper.getReadableDatabase();
@@ -142,7 +133,6 @@ public class Entertainment extends HackerTracker {
         }
 
         // close databases
-        dbDates.close();
         dbSpeakers.close();
 
     }
@@ -154,7 +144,7 @@ public class Entertainment extends HackerTracker {
         ArrayList<Event> result = new ArrayList<Event>();
         SQLiteDatabase db = myDbHelper.getWritableDatabase();
 
-        Cursor myCursor = db.rawQuery("SELECT * FROM entertainment WHERE date=?", args);
+        Cursor myCursor = db.rawQuery("SELECT * FROM entertainment WHERE date=? ORDER BY startTime", args);
 
         try{
             if (myCursor.moveToFirst()){

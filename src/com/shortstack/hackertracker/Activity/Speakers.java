@@ -144,7 +144,7 @@ public class Speakers extends HackerTracker {
         ArrayList<Speaker> result = new ArrayList<Speaker>();
         SQLiteDatabase db = myDbHelper.getWritableDatabase();
 
-        Cursor myCursor = db.rawQuery("SELECT * FROM speakers WHERE date=?", args);
+        Cursor myCursor = db.rawQuery("SELECT * FROM speakers WHERE date=? ORDER BY startTime", args);
 
         try{
             if (myCursor.moveToFirst()){
