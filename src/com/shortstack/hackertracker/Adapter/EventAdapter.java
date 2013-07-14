@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.*;
-import com.shortstack.hackertracker.Activity.Entertainment;
 import com.shortstack.hackertracker.Model.Event;
 import com.shortstack.hackertracker.R;
 
@@ -34,7 +33,6 @@ public class EventAdapter extends ArrayAdapter<Event> {
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.data = data;
-
     }
 
     @Override
@@ -70,46 +68,39 @@ public class EventAdapter extends ArrayAdapter<Event> {
             // set location
             holder.location.setText(event.getLocation());
 
-
             // set onclicklistener for share button
             final View finalRow = row;
             final View.OnClickListener shareOnClickListener = new View.OnClickListener() {
                 public void onClick(View v) {
+
                     // get event details
                     String title = event.getTitle();
                     String body = event.getBody();
-
                     String startTime = event.getStartTime();
                     String endTime =  event.getEndTime();
                     String location = event.getLocation();
 
-                    // build event details into string
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("Start Time: " + startTime + " \n");
-                    sb.append("End Time: " + endTime + " \n");
-                    sb.append("Location: " + location + " \n\n");
-                    if (body != null) {
-                        sb.append(body + " \n\n");
-                    }
-
-                    // make links
-                    final SpannableString s = new SpannableString(sb);
-                    Linkify.addLinks(s, Linkify.ALL);
-
-                    // build alert dialog layout
+                    // build layout
                     LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     View layout = inflater.inflate(R.layout.entertainment_details,
                             (ViewGroup) finalRow.findViewById(R.id.layout_root));
 
-                    // assign values to layout parts
-                    TextView text = (TextView) layout.findViewById(R.id.text);
-                    text.setText(sb);
+                    // declare layout parts
+                    TextView titleText = (TextView) layout.findViewById(R.id.title);
+                    TextView timeText = (TextView) layout.findViewById(R.id.time);
+                    TextView locationText = (TextView) layout.findViewById(R.id.location);
+                    TextView bodyText = (TextView) layout.findViewById(R.id.body);
+
+                    // enter values
+                    titleText.setText(title.split("- ")[1]);
+                    timeText.setText("Time: " + startTime + " - " + endTime);
+                    locationText.setText("Location: " + location);
+                    bodyText.setText(body);
 
                     // set up & show alert dialog
                     builder = new AlertDialog.Builder( v.getRootView().getContext());
-                    builder.setView(layout);
-                    builder.setTitle(title.split("- ")[1]);
                     alertDialog = builder.create();
+                    alertDialog.setView(layout, 0, 0, 0, 0);
                     alertDialog.setButton("Close", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -117,8 +108,6 @@ public class EventAdapter extends ArrayAdapter<Event> {
                     });
                     alertDialog.show();
 
-                    // make the textview clickable
-                    ((TextView) alertDialog.findViewById(R.id.text)).setMovementMethod(LinkMovementMethod.getInstance());
 
                 }
             };

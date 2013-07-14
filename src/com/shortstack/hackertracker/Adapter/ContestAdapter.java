@@ -68,50 +68,42 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
             // set location
             holder.location.setText(contest.getLocation());
 
-
             // set onclicklistener for share button
             final View finalRow = row;
             final View.OnClickListener shareOnClickListener = new View.OnClickListener() {
                 public void onClick(View v) {
+
                     // get contest details
                     String title = contest.getTitle();
                     String body = contest.getBody();
-
                     String startTime = contest.getStartTime();
                     String endTime =  contest.getEndTime();
                     String location = contest.getLocation();
                     String forum = contest.getForum();
 
-                    // build contest details into string
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("Start Time: " + startTime + " \n");
-                    sb.append("End Time: " + endTime + " \n");
-                    sb.append("Location: " + location + " \n\n");
-                    if (forum != null ) {
-                        sb.append("Forum: \n\n" + forum + "\n\n");
-                    }
-                    if (body != null) {
-                        sb.append(body + " \n\n");
-                    }
-
-                    // make links
-                    final SpannableString s = new SpannableString(sb);
-                    Linkify.addLinks(s, Linkify.ALL);
-
-                    // build alert dialog layout
+                    // build layout
                     LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
                     View layout = inflater.inflate(R.layout.contest_details,
                             (ViewGroup) finalRow.findViewById(R.id.layout_root));
 
-                    // assign values to layout parts
-                    TextView text = (TextView) layout.findViewById(R.id.text);
-                    text.setText(sb);
+                    // declare layout parts
+                    TextView titleText = (TextView) layout.findViewById(R.id.title);
+                    TextView timeText = (TextView) layout.findViewById(R.id.time);
+                    TextView locationText = (TextView) layout.findViewById(R.id.location);
+                    //TextView forumText = (TextView) layout.findViewById(R.id.forum);
+                    TextView bodyText = (TextView) layout.findViewById(R.id.body);
+
+                    // enter values
+                    titleText.setText(title);
+                    timeText.setText("Time: " + startTime + " - " + endTime);
+                    locationText.setText("Location: " + location);
+                    //forumText.setText("Forum: " + forumLinkedText);
+                    bodyText.setText(body);
 
                     // set up & show alert dialog
                     builder = new AlertDialog.Builder( v.getRootView().getContext());
-                    builder.setView(layout);
-                    builder.setTitle(title.split("- ")[1]);
                     alertDialog = builder.create();
+                    alertDialog.setView(layout, 0, 0, 0, 0);
                     alertDialog.setButton("Close", new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -119,8 +111,7 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
                     });
                     alertDialog.show();
 
-                    // make the textview clickable
-                    ((TextView) alertDialog.findViewById(R.id.text)).setMovementMethod(LinkMovementMethod.getInstance());
+
                 }
             };
             holder.contestLayout.setOnClickListener(shareOnClickListener);

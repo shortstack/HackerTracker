@@ -41,10 +41,10 @@
                     android:background="@drawable/icon_contests"/>
 
             <Button
-                    android:id="@+id/faq"
+                    android:id="@+id/vendors"
                     style="@style/icon"
                     android:layout_below="@id/contests"
-                    android:background="@drawable/icon_faq"/>
+                    android:background="@drawable/icon_vendors"/>
 
         </LinearLayout>
 

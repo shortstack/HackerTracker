@@ -13,10 +13,9 @@ import java.io.OutputStream;
 
 /**
  * Created with IntelliJ IDEA.
- * User: root
+ * User: Whitney Champion
  * Date: 8/29/12
  * Time: 5:52 PM
- * To change this template use File | Settings | File Templates.
  */
 public class DatabaseAdapter extends SQLiteOpenHelper {
 

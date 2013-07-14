@@ -17,10 +17,9 @@ import java.io.*;
 
 /**
  * Created with IntelliJ IDEA.
- * User: root
+ * User: Whitney Champion
  * Date: 8/29/12
  * Time: 2:26 PM
- * To change this template use File | Settings | File Templates.
  */
 public class Maps extends HackerTracker {
 

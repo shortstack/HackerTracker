@@ -9,16 +9,16 @@
         >
 
     <ImageView
-            android:src="@drawable/top_faq"
+            android:src="@drawable/top_vendors"
             style="@style/activityHeader"
-            android:id="@+id/top_faq"
+            android:id="@+id/top_vendors"
         />
 
     <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:padding="30dp"
-            android:layout_below="@id/top_faq"
+            android:layout_below="@id/top_vendors"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 

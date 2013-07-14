@@ -11,7 +11,7 @@
     <ImageView
             android:src="@drawable/top_twitter"
             style="@style/activityHeader"
-             android:id="@+id/top_twitter"/>
+            android:id="@+id/top_twitter"/>
 
 
 

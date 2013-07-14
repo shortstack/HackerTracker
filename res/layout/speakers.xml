@@ -3,8 +3,6 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:layout_marginTop="0dp"
-              android:padding="0dp"
               android:background="@drawable/bg"
         >
 
@@ -17,7 +15,6 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:padding="10dp"
-            android:layout_below="@id/top_speakers"
             android:layout_marginTop="10dp"
             android:orientation="vertical">
 
@@ -34,14 +31,13 @@
              <TextView
                      style="@style/dayCollapse"
                      android:id="@+id/collapseExpand1"
-                     android:text="[+]"
+                     android:text="@string/expand"
                      android:layout_alignParentRight="true"
                      />
          </RelativeLayout>
          <ListView android:id="@+id/speakers_day1"
                   android:layout_width="fill_parent"
                   android:layout_height="fill_parent"
-                  android:layout_below="@id/day1"
                   android:divider="@null"
                   android:dividerHeight="5dp"
                   android:scrollbars="vertical"
@@ -63,14 +59,13 @@
             <TextView
                     style="@style/dayCollapse"
                     android:id="@+id/collapseExpand2"
-                    android:text="[+]"
+                    android:text="@string/expand"
                     android:layout_alignParentRight="true"
                     />
         </RelativeLayout>
         <ListView android:id="@+id/speakers_day2"
                   android:layout_width="fill_parent"
                   android:layout_height="fill_parent"
-                  android:layout_below="@id/day2"
                   android:divider="@null"
                   android:dividerHeight="5dp"
                   android:scrollbars="vertical"
@@ -93,14 +88,13 @@
              <TextView
                      style="@style/dayCollapse"
                      android:id="@+id/collapseExpand3"
-                     android:text="[+]"
+                     android:text="@string/expand"
                      android:layout_alignParentRight="true"
                      />
          </RelativeLayout>
         <ListView android:id="@+id/speakers_day3"
                   android:layout_width="fill_parent"
                   android:layout_height="fill_parent"
-                  android:layout_below="@id/day3"
                   android:divider="@null"
                   android:dividerHeight="5dp"
                   android:scrollbars="vertical"
@@ -123,14 +117,13 @@
              <TextView
                      style="@style/dayCollapse"
                      android:id="@+id/collapseExpand4"
-                     android:text="[+]"
+                     android:text="@string/expand"
                      android:layout_alignParentRight="true"
                      />
          </RelativeLayout>
         <ListView android:id="@+id/speakers_day4"
                   android:layout_width="fill_parent"
                   android:layout_height="fill_parent"
-                  android:layout_below="@id/day4"
                   android:divider="@null"
                   android:dividerHeight="5dp"
                   android:scrollbars="vertical"

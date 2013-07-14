@@ -40,11 +40,15 @@
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden|adjustPan"
                   android:theme="@android:style/Theme.NoTitleBar"/>
-        <activity android:name=".Activity.Faq"
+        <activity android:name=".Activity.Vendors"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden|adjustPan"
                   android:theme="@android:style/Theme.NoTitleBar"/>
         <activity android:name=".Activity.Speakers"
+                  android:screenOrientation="portrait"
+                  android:windowSoftInputMode="stateHidden|adjustPan"
+                  android:theme="@android:style/Theme.NoTitleBar"/>
+        <activity android:name=".Activity.About"
                   android:screenOrientation="portrait"
                   android:windowSoftInputMode="stateHidden|adjustPan"
                   android:theme="@android:style/Theme.NoTitleBar"/>

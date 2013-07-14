@@ -2,37 +2,39 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:id="@+id/layout_root"
+              style="@style/detailsLayout"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
               android:orientation="vertical">
 
+    <TextView android:id="@+id/title"
+              style="@style/details_title"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+            />
+    <TextView android:id="@+id/time"
+              style="@style/details_time"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"        />
+
+    <TextView android:id="@+id/location"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              style="@style/details_location"
+            />
+
+
     <ScrollView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:id="@+id/scroll"
             >
-        <LinearLayout android:orientation="vertical"
-                      android:scrollbars="vertical"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:scrollbarAlwaysDrawVerticalTrack="true">
-            <TextView android:id="@+id/text"
-                      android:layout_width="wrap_content"
-                      android:layout_height="wrap_content"
-                      android:textColor="#FFF"
-                      android:textSize="16dp"
-                      android:padding="10dp"
-                    />
-        </LinearLayout>
+        <TextView android:id="@+id/body"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  style="@style/details_body"
+                  android:linksClickable="true"
+                />
     </ScrollView>
-
-    <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/scroll"
-            android:layout_marginTop="10dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-    </LinearLayout>
 
 </LinearLayout>

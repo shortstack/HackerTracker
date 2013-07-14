@@ -83,13 +83,13 @@ public class HackerTracker extends Activity
             }
         });
 
-        // button listener for faq
+        // button listener for vendors
 
-        Button btnFaq = (Button)findViewById(R.id.faq);
+        Button btnFaq = (Button)findViewById(R.id.vendors);
         btnFaq.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 startActivity(new Intent(HackerTracker.this,
-                        Faq.class));
+                        Vendors.class));
 
             }
         });
@@ -138,6 +138,10 @@ public class HackerTracker extends Activity
             case R.id.main:
                 startActivity(new Intent(HackerTracker.this,
                         HackerTracker.class));
+                break;
+            case R.id.about:
+                startActivity(new Intent(HackerTracker.this,
+                        About.class));
                 break;
             case R.id.help:
                 AlertDialog.Builder help = new AlertDialog.Builder(HackerTracker

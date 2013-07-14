@@ -4,6 +4,8 @@
 
     <item android:id="@+id/main"
           android:title="Main" />
+    <item android:id="@+id/about"
+          android:title="About" />
     <item android:id="@+id/help"
           android:title="Help" />
 

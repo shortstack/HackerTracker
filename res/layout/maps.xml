@@ -3,8 +3,6 @@
               android:orientation="vertical"
               android:layout_width="fill_parent"
               android:layout_height="fill_parent"
-              android:layout_marginTop="0dp"
-              android:padding="0dp"
               android:background="@drawable/bg"
         >
 
@@ -17,7 +15,6 @@
     <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:layout_below="@id/top_maps"
             android:layout_marginTop="0dp"
             android:orientation="vertical"
             android:gravity="center">
@@ -35,7 +32,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_dcmap"
-                android:layout_below="@id/crop_dcmap"
                 android:layout_marginTop="10dp"
                 android:id="@+id/button_dcmap"
                 android:gravity="center"/>
@@ -44,7 +40,6 @@
                 android:src="@drawable/crop_riomap"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/button_dcmap"
                 android:layout_marginTop="10dp"
                 android:layout_weight="1"
                 android:id="@+id/crop_riomap"
@@ -54,7 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_riomap"
-                android:layout_below="@id/crop_riomap"
                 android:layout_marginTop="10dp"
                 android:id="@+id/button_riomap"
                 android:gravity="center"/>

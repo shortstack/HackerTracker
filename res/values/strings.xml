@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Hacker Tracker</string>
+    <string name="expand">[+]</string>
+    <string name="collapse">[-]</string>
+    <string name="about"></string>
 </resources>

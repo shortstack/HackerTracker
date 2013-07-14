@@ -20,10 +20,9 @@ import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
- * User: root
+ * User: Whitney Champion
  * Date: 8/29/12
  * Time: 2:26 PM
- * To change this template use File | Settings | File Templates.
  */
 public class Speakers extends HackerTracker {
 
@@ -157,10 +156,10 @@ public class Speakers extends HackerTracker {
                     speaker.setEndTime(myCursor.getString((myCursor.getColumnIndex("endTime"))));
                     speaker.setStartTime(myCursor.getString((myCursor.getColumnIndex("startTime"))));
                     speaker.setLocation(myCursor.getString((myCursor.getColumnIndex("location"))));
-               //     speaker.setDemo(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("demo"))))));
-              //      speaker.setExploit(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("exploit"))))));
-              ///      speaker.setTool(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("tool"))))));
-               //     speaker.setInfo(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("info"))))));
+                    speaker.setDemo(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("demo"))))));
+                    speaker.setExploit(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("exploit"))))));
+                    speaker.setTool(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("tool"))))));
+                    speaker.setInfo(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("info"))))));
 
                     result.add(speaker);
                 }while(myCursor.moveToNext());
