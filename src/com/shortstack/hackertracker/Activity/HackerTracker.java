@@ -144,18 +144,10 @@ public class HackerTracker extends Activity
                         About.class));
                 break;
             case R.id.help:
-                AlertDialog.Builder help = new AlertDialog.Builder(HackerTracker
-                        .this);
-                help.setTitle("Hacker Tracker Help");
-                help.setMessage("Help Info Goes Here");
-                help.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.cancel();
-
-                    } });
-                help.show();
+                startActivity(new Intent(HackerTracker.this,
+                        Help.class));
                 break;
+
         }
         return true;
     }

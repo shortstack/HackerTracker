@@ -7,7 +7,7 @@
         >
 
     <ImageView
-            android:src="@drawable/top_about"
+            android:src="@drawable/top_help"
             style="@style/activityHeader"
             android:id="@+id/top_about"
         />
@@ -21,9 +21,8 @@
 
                   <TextView android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
-                          style="@style/aboutText"
-                          android:text="@string/about"
-                          android:autoLink="web"/>
+                          style="@style/helpText"
+                          android:text="@string/help"/>
 
     </LinearLayout>
 

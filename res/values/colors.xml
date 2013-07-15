@@ -3,4 +3,9 @@
     <color name="lime">#92bd17</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
+    <color name="light_lime">#bee116</color>
+    <color name="day3">#6b900f</color>
+    <color name="day4">#5a7713</color>
+    <color name="day2">#80ab16</color>
+    <color name="day1">#8cbb18</color>
 </resources>

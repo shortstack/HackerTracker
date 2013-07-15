@@ -6,9 +6,7 @@ import android.content.DialogInterface;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.*;
 import android.widget.*;
 import com.shortstack.hackertracker.Model.Contest;
 import com.shortstack.hackertracker.R;
@@ -92,6 +90,7 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
                     TextView locationText = (TextView) layout.findViewById(R.id.location);
                     //TextView forumText = (TextView) layout.findViewById(R.id.forum);
                     TextView bodyText = (TextView) layout.findViewById(R.id.body);
+                    Button closeButton = (Button) layout.findViewById(R.id.closeButton);
 
                     // enter values
                     titleText.setText(title);
@@ -104,11 +103,14 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
                     builder = new AlertDialog.Builder( v.getRootView().getContext());
                     alertDialog = builder.create();
                     alertDialog.setView(layout, 0, 0, 0, 0);
-                    alertDialog.setButton("Close", new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
+                    closeButton.setOnClickListener(new View.OnClickListener() {
+                        public void onClick(View v) {
+                            alertDialog.dismiss();
                         }
                     });
+                    Window window = alertDialog.getWindow();
+                    window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+                    window.setGravity(Gravity.CENTER);
                     alertDialog.show();
 
 

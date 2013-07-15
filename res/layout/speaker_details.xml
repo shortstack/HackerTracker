@@ -30,13 +30,12 @@
 
     <ScrollView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="180dp"
             android:id="@+id/scroll"
             >
         <TextView android:id="@+id/body"
-                  android:layout_width="fill_parent"
-                  android:layout_height="wrap_content"
                   style="@style/details_body"
+                  android:autoLink="web"
                   android:linksClickable="true"
                 />
     </ScrollView>
@@ -46,6 +45,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/scroll"
+            android:layout_weight="1"
             android:layout_marginTop="10dp"
             android:gravity="center"
             android:orientation="horizontal">
@@ -72,6 +72,13 @@
                    android:gravity="center"
                 />
     </LinearLayout>
+
+    <Button android:id="@+id/closeButton"
+            style="@style/details_button"
+            android:text="@string/close"
+            android:layout_weight="1"
+            />
+
 
 </LinearLayout>
 

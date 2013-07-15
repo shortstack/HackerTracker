@@ -26,15 +26,21 @@
 
     <ScrollView
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="180dp"
             android:id="@+id/scroll"
             >
                 <TextView android:id="@+id/body"
-                      android:layout_width="fill_parent"
-                      android:layout_height="wrap_content"
                       style="@style/details_body"
                       android:linksClickable="true"
+                      android:autoLink="web"
+
                     />
     </ScrollView>
+
+    <Button android:id="@+id/closeButton"
+            style="@style/details_button"
+            android:text="@string/close"
+            />
+
 
 </LinearLayout>

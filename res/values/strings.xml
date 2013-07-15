@@ -3,5 +3,8 @@
     <string name="app_name">Hacker Tracker</string>
     <string name="expand">[+]</string>
     <string name="collapse">[-]</string>
-    <string name="about"></string>
+    <string name="help"></string>
+    <string name="about">Hi :) I\'m Whitney, aka short stack.\n\nI started making this app about a year ago, when I would miss my first DEF CON in 4 years.\n\nI wanted to give something back to a community who has taught me so much, and allowed me to meet such great people. I worked on it in my "spare time", which is few and far between these days, with 10 month old, and a career.
+        \n\nSo if you find any errors/typos/etc, or have any suggestions, shoot me a message. I can be found on the interwebs at http://twitter.com/</string>
+    <string name="close">Close</string>
 </resources>
