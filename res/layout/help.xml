@@ -12,14 +12,17 @@
             android:id="@+id/top_about"
         />
 
-    <ScrollView
+   <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:padding="30dp"
         android:layout_marginTop="10dp"
         android:id="@+id/scroll"
         >
-
+        <TextView android:layout_width="fill_parent"
+                          android:layout_height="wrap_content"
+                          style="@style/helpText"
+                          android:text="@string/help"/>
     </ScrollView>
 
 </LinearLayout>
