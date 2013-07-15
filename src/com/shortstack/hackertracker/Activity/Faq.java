@@ -9,13 +9,13 @@ import com.shortstack.hackertracker.R;
  * Date: 7/14/13
  * Time: 12:08 PM
  */
-public class Help extends HackerTracker {
+public class Faq extends HackerTracker {
 
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.help);
+        setContentView(R.layout.faq);
 
 
     }

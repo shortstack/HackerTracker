@@ -22,7 +22,10 @@
         <TextView android:layout_width="fill_parent"
                           android:layout_height="wrap_content"
                           style="@style/helpText"
-                          android:text="@string/help"/>
+                          android:linksClickable="true"
+                          android:autoLink="web"
+                          android:textColorLink="@color/light_lime"
+                          android:text="@string/faq"/>
     </ScrollView>
 
 </LinearLayout>

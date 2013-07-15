@@ -1,8 +1,6 @@
 package com.shortstack.hackertracker.Activity;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,13 +14,9 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
-import com.shortstack.hackertracker.Model.Speaker;
 import com.shortstack.hackertracker.R;
-import org.apache.commons.lang3.BooleanUtils;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class HackerTracker extends Activity
 {
@@ -146,9 +140,9 @@ public class HackerTracker extends Activity
                 startActivity(new Intent(HackerTracker.this,
                         About.class));
                 break;
-            case R.id.help:
+            case R.id.faq:
                 startActivity(new Intent(HackerTracker.this,
-                        Help.class));
+                        Faq.class));
                 break;
 
         }

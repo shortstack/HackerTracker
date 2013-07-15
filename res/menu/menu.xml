@@ -6,7 +6,7 @@
           android:title="Main" />
     <item android:id="@+id/about"
           android:title="About" />
-    <item android:id="@+id/help"
-          android:title="Help" />
+    <item android:id="@+id/faq"
+          android:title="FAQ" />
 
 </menu>
