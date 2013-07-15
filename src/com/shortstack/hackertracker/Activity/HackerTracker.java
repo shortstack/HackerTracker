@@ -12,6 +12,9 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Model.Speaker;
 import com.shortstack.hackertracker.R;
@@ -181,5 +184,89 @@ public class HackerTracker extends Activity
         return fullDate;
     }
 
+
+    // toggle day 1
+    public void showListView1(ListView listView){
+        TextView collapseExpand = (TextView)findViewById(R.id.collapseExpand1);
+        RelativeLayout day2Layout = (RelativeLayout)findViewById(R.id.day2Layout);
+        RelativeLayout day3Layout = (RelativeLayout)findViewById(R.id.day3Layout);
+        RelativeLayout day4Layout = (RelativeLayout)findViewById(R.id.day4Layout);
+        if(listView.getVisibility() == View.VISIBLE) {
+            listView.setVisibility(View.GONE);
+            day2Layout.setVisibility(View.VISIBLE);
+            day3Layout.setVisibility(View.VISIBLE);
+            day4Layout.setVisibility(View.VISIBLE);
+            collapseExpand.setText("[+]");
+        } else {
+            listView.setVisibility(View.VISIBLE);
+            day2Layout.setVisibility(View.GONE);
+            day3Layout.setVisibility(View.GONE);
+            day4Layout.setVisibility(View.GONE);
+            collapseExpand.setText("[-]");
+        }
+    }
+
+    // toggle day 2
+    public void showListView2(ListView listView){
+        TextView collapseExpand = (TextView)findViewById(R.id.collapseExpand2);
+        RelativeLayout day1Layout = (RelativeLayout)findViewById(R.id.day1Layout);
+        RelativeLayout day3Layout = (RelativeLayout)findViewById(R.id.day3Layout);
+        RelativeLayout day4Layout = (RelativeLayout)findViewById(R.id.day4Layout);
+         if(listView.getVisibility() == View.VISIBLE) {
+            listView.setVisibility(View.GONE);
+            day1Layout.setVisibility(View.VISIBLE);
+            day3Layout.setVisibility(View.VISIBLE);
+            day4Layout.setVisibility(View.VISIBLE);
+            collapseExpand.setText("[+]");
+        } else {
+             listView.setVisibility(View.VISIBLE);
+            day1Layout.setVisibility(View.GONE);
+            day3Layout.setVisibility(View.GONE);
+            day4Layout.setVisibility(View.GONE);
+            collapseExpand.setText("[-]");
+        }
+    }
+
+    // toggle day 3
+    public void showListView3(ListView listView){
+        TextView collapseExpand = (TextView)findViewById(R.id.collapseExpand3);
+        RelativeLayout day1Layout = (RelativeLayout)findViewById(R.id.day1Layout);
+        RelativeLayout day2Layout = (RelativeLayout)findViewById(R.id.day2Layout);
+        RelativeLayout day4Layout = (RelativeLayout)findViewById(R.id.day4Layout);
+        if(listView.getVisibility() == View.VISIBLE) {
+            listView.setVisibility(View.GONE);
+            day1Layout.setVisibility(View.VISIBLE);
+            day2Layout.setVisibility(View.VISIBLE);
+            day4Layout.setVisibility(View.VISIBLE);
+            collapseExpand.setText("[+]");
+        } else {
+            listView.setVisibility(View.VISIBLE);
+            day1Layout.setVisibility(View.GONE);
+            day2Layout.setVisibility(View.GONE);
+            day4Layout.setVisibility(View.GONE);
+            collapseExpand.setText("[-]");
+        }
+    }
+
+    // toggle day 4
+    public void showListView4(ListView listView){
+        TextView collapseExpand = (TextView)findViewById(R.id.collapseExpand4);
+        RelativeLayout day1Layout = (RelativeLayout)findViewById(R.id.day1Layout);
+        RelativeLayout day2Layout = (RelativeLayout)findViewById(R.id.day2Layout);
+        RelativeLayout day3Layout = (RelativeLayout)findViewById(R.id.day3Layout);
+        if(listView.getVisibility() == View.VISIBLE) {
+            listView.setVisibility(View.GONE);
+            day1Layout.setVisibility(View.VISIBLE);
+            day2Layout.setVisibility(View.VISIBLE);
+            day3Layout.setVisibility(View.VISIBLE);
+            collapseExpand.setText("[+]");
+        } else {
+            listView.setVisibility(View.VISIBLE);
+            day1Layout.setVisibility(View.GONE);
+            day2Layout.setVisibility(View.GONE);
+            day3Layout.setVisibility(View.GONE);
+            collapseExpand.setText("[-]");
+        }
+    }
 
 }

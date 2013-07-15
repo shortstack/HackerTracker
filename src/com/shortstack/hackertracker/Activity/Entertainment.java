@@ -51,22 +51,22 @@ public class Entertainment extends HackerTracker {
         // button listeners for textviews
         day1Layout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                showListView1();
+                showListView1((ListView) findViewById(R.id.entertainment_day1));
             }
         });
         day2Layout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                showListView2();
+                showListView2((ListView) findViewById(R.id.entertainment_day2));
             }
         });
         day3Layout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                showListView3();
+                showListView3((ListView) findViewById(R.id.entertainment_day3));
             }
         });
         day4Layout.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                showListView4();
+                showListView4((ListView) findViewById(R.id.entertainment_day4));
             }
         });
 
@@ -168,94 +168,6 @@ public class Entertainment extends HackerTracker {
 
 
 
-
-    // toggle day 1 events
-    private void showListView1(){
-        TextView collapseExpand = (TextView)findViewById(R.id.collapseExpand1);
-        RelativeLayout day2Layout = (RelativeLayout)findViewById(R.id.day2Layout);
-        RelativeLayout day3Layout = (RelativeLayout)findViewById(R.id.day3Layout);
-        RelativeLayout day4Layout = (RelativeLayout)findViewById(R.id.day4Layout);
-        ListView entertainment_day1 = (ListView) findViewById(R.id.entertainment_day1);
-        if(entertainment_day1.getVisibility() == View.VISIBLE) {
-            entertainment_day1.setVisibility(View.GONE);
-            day2Layout.setVisibility(View.VISIBLE);
-            day3Layout.setVisibility(View.VISIBLE);
-            day4Layout.setVisibility(View.VISIBLE);
-            collapseExpand.setText("[+]");
-        } else {
-            entertainment_day1.setVisibility(View.VISIBLE);
-            day2Layout.setVisibility(View.GONE);
-            day3Layout.setVisibility(View.GONE);
-            day4Layout.setVisibility(View.GONE);
-            collapseExpand.setText("[-]");
-        }
-    }
-
-    // toggle day 2 events
-    private void showListView2(){
-        TextView collapseExpand = (TextView)findViewById(R.id.collapseExpand2);
-        RelativeLayout day1Layout = (RelativeLayout)findViewById(R.id.day1Layout);
-        RelativeLayout day3Layout = (RelativeLayout)findViewById(R.id.day3Layout);
-        RelativeLayout day4Layout = (RelativeLayout)findViewById(R.id.day4Layout);
-        ListView entertainment_day2 = (ListView) findViewById(R.id.entertainment_day2);
-        if(entertainment_day2.getVisibility() == View.VISIBLE) {
-            entertainment_day2.setVisibility(View.GONE);
-            day1Layout.setVisibility(View.VISIBLE);
-            day3Layout.setVisibility(View.VISIBLE);
-            day4Layout.setVisibility(View.VISIBLE);
-            collapseExpand.setText("[+]");
-        } else {
-            entertainment_day2.setVisibility(View.VISIBLE);
-            day1Layout.setVisibility(View.GONE);
-            day3Layout.setVisibility(View.GONE);
-            day4Layout.setVisibility(View.GONE);
-            collapseExpand.setText("[-]");
-        }
-    }
-
-    // toggle day 3 events
-    private void showListView3(){
-        TextView collapseExpand = (TextView)findViewById(R.id.collapseExpand3);
-        RelativeLayout day1Layout = (RelativeLayout)findViewById(R.id.day1Layout);
-        RelativeLayout day2Layout = (RelativeLayout)findViewById(R.id.day2Layout);
-        RelativeLayout day4Layout = (RelativeLayout)findViewById(R.id.day4Layout);
-        ListView entertainment_day3 = (ListView) findViewById(R.id.entertainment_day3);
-        if(entertainment_day3.getVisibility() == View.VISIBLE) {
-            entertainment_day3.setVisibility(View.GONE);
-            day1Layout.setVisibility(View.VISIBLE);
-            day2Layout.setVisibility(View.VISIBLE);
-            day4Layout.setVisibility(View.VISIBLE);
-            collapseExpand.setText("[+]");
-        } else {
-            entertainment_day3.setVisibility(View.VISIBLE);
-            day1Layout.setVisibility(View.GONE);
-            day2Layout.setVisibility(View.GONE);
-            day4Layout.setVisibility(View.GONE);
-            collapseExpand.setText("[-]");
-        }
-    }
-
-    // toggle day 4 events
-    private void showListView4(){
-        TextView collapseExpand = (TextView)findViewById(R.id.collapseExpand4);
-        RelativeLayout day1Layout = (RelativeLayout)findViewById(R.id.day1Layout);
-        RelativeLayout day2Layout = (RelativeLayout)findViewById(R.id.day2Layout);
-        RelativeLayout day3Layout = (RelativeLayout)findViewById(R.id.day3Layout);
-        ListView entertainment_day4 = (ListView) findViewById(R.id.entertainment_day4);
-        if(entertainment_day4.getVisibility() == View.VISIBLE) {
-            entertainment_day4.setVisibility(View.GONE);
-            day1Layout.setVisibility(View.VISIBLE);
-            day2Layout.setVisibility(View.VISIBLE);
-            day3Layout.setVisibility(View.VISIBLE);
-            collapseExpand.setText("[+]");
-        } else {
-            entertainment_day4.setVisibility(View.VISIBLE);
-            day1Layout.setVisibility(View.GONE);
-            day2Layout.setVisibility(View.GONE);
-            day3Layout.setVisibility(View.GONE);
-            collapseExpand.setText("[-]");
-        }
-    }
 
 
 }
