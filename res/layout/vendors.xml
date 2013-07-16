@@ -30,7 +30,7 @@
                   android:cacheColorHint="@android:color/transparent"
                   android:background="@android:color/transparent"
                   android:overScrollFooter="@null"
-                  android:visibility="gone"/>
+                  />
 
     </LinearLayout>
 

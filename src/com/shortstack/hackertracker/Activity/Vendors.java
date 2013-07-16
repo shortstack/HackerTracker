@@ -34,8 +34,6 @@ public class Vendors extends HackerTracker {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.vendors);
 
-        //query database for vendors
-        SQLiteDatabase dbVendors = myDbHelper.getReadableDatabase();
 
         // populate vendors
         List<Vendor> vendors = getVendors();
