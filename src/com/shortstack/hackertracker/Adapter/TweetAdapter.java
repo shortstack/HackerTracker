@@ -65,14 +65,14 @@ public class TweetAdapter extends ArrayAdapter<twitter4j.Status> {
             // set event title
             holder.tweet.setText(tweet.getText());
 
-            // set onclick listener for tweet
-            holder.tweetLayout.setOnClickListener(new View.OnClickListener() {
+            // set onclick listener for username
+            holder.userName.setOnClickListener(new View.OnClickListener() {
                 public void onClick(View v) {
                     Intent intent = new Intent();
                     intent.setAction(Intent.ACTION_VIEW);
                     intent.addCategory(Intent.CATEGORY_BROWSABLE);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                    intent.setData(Uri.parse("http://twitter.com/" + tweet.getUser().getScreenName() + "/status/" + tweet.getId()));
+                    intent.setData(Uri.parse("http://twitter.com/" + tweet.getUser().getScreenName()));
                     getContext().startActivity(intent);
                 }
             });

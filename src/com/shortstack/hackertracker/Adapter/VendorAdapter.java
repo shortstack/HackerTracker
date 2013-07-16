@@ -2,12 +2,16 @@ package com.shortstack.hackertracker.Adapter;
 
 import android.app.AlertDialog;
 import android.content.Context;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.view.*;
 import android.widget.*;
 import com.shortstack.hackertracker.Activity.Vendors;
 import com.shortstack.hackertracker.Model.Vendor;
 import com.shortstack.hackertracker.R;
+import junit.framework.Assert;
+
+import java.lang.reflect.Field;
 
 /**
  * Created with IntelliJ IDEA.
@@ -71,8 +75,8 @@ public class VendorAdapter extends ArrayAdapter<Vendor> {
 
             // set logo
             String logo = vendor.getLogo();
-            int resID = context.getResources().getIdentifier("drawable/logos/"+logo , "drawable", context.getPackageName());
-            holder.logo.setImageResource(resID);
+            int imageResource = getDrawable(context,logo);
+            holder.logo.setImageResource(imageResource);
 
 
         } else {
@@ -89,6 +93,16 @@ public class VendorAdapter extends ArrayAdapter<Vendor> {
         ImageView logo;
         LinearLayout vendorLayout;
     }
+
+    public static int getDrawable(Context context, String name)
+    {
+        Assert.assertNotNull(context);
+        Assert.assertNotNull(name);
+
+        return context.getResources().getIdentifier(name,
+                "drawable", context.getPackageName());
+    }
+
 }
 
 

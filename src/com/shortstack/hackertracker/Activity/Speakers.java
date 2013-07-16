@@ -85,7 +85,7 @@ public class Speakers extends HackerTracker {
 
             speakerData = speakers.toArray(new Speaker[speakers.size()]);
 
-            adapter = new SpeakerAdapter(getApplicationContext(), R.layout.speaker_row, speakerData);
+            adapter = new SpeakerAdapter(this, R.layout.speaker_row, speakerData);
 
             speakersDay1 = (ListView) findViewById(R.id.speakers_day1);
 
@@ -98,7 +98,7 @@ public class Speakers extends HackerTracker {
 
             speakerData = speakers2.toArray(new Speaker[speakers2.size()]);
 
-            adapter = new SpeakerAdapter(getApplicationContext(), R.layout.speaker_row, speakerData);
+            adapter = new SpeakerAdapter(this, R.layout.speaker_row, speakerData);
 
             speakersDay1 = (ListView) findViewById(R.id.speakers_day2);
 
@@ -111,7 +111,7 @@ public class Speakers extends HackerTracker {
 
             speakerData = speakers3.toArray(new Speaker[speakers3.size()]);
 
-            adapter = new SpeakerAdapter(getApplicationContext(), R.layout.speaker_row, speakerData);
+            adapter = new SpeakerAdapter(this, R.layout.speaker_row, speakerData);
 
             speakersDay1 = (ListView) findViewById(R.id.speakers_day3);
 
@@ -124,7 +124,7 @@ public class Speakers extends HackerTracker {
 
             speakerData = speakers4.toArray(new Speaker[speakers4.size()]);
 
-            adapter = new SpeakerAdapter(getApplicationContext(), R.layout.speaker_row, speakerData);
+            adapter = new SpeakerAdapter(this, R.layout.speaker_row, speakerData);
 
             speakersDay1 = (ListView) findViewById(R.id.speakers_day4);
 

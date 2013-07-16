@@ -81,7 +81,7 @@ public class Contests extends HackerTracker {
 
             contestData = contests.toArray(new Contest[contests.size()]);
 
-            adapter = new ContestAdapter(getApplicationContext(), R.layout.contest_row, contestData);
+            adapter = new ContestAdapter(this, R.layout.contest_row, contestData);
 
             contestsDay1 = (ListView) findViewById(R.id.contests_day1);
 
@@ -94,7 +94,7 @@ public class Contests extends HackerTracker {
 
             contestData = contests2.toArray(new Contest[contests2.size()]);
 
-            adapter = new ContestAdapter(getApplicationContext(), R.layout.contest_row, contestData);
+            adapter = new ContestAdapter(this, R.layout.contest_row, contestData);
 
             contestsDay1 = (ListView) findViewById(R.id.contests_day2);
 
@@ -107,7 +107,7 @@ public class Contests extends HackerTracker {
 
             contestData = contests3.toArray(new Contest[contests3.size()]);
 
-            adapter = new ContestAdapter(getApplicationContext(), R.layout.contest_row, contestData);
+            adapter = new ContestAdapter(this, R.layout.contest_row, contestData);
 
             contestsDay1 = (ListView) findViewById(R.id.contests_day3);
 
@@ -120,7 +120,7 @@ public class Contests extends HackerTracker {
 
             contestData = contests4.toArray(new Contest[contests4.size()]);
 
-            adapter = new ContestAdapter(getApplicationContext(), R.layout.contest_row, contestData);
+            adapter = new ContestAdapter(this, R.layout.contest_row, contestData);
 
             contestsDay1 = (ListView) findViewById(R.id.contests_day4);
 

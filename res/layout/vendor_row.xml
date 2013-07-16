@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:orientation="vertical"
-              style="@style/row"
+              style="@style/vendor_row"
               android:id="@+id/vendorLayout">
-    <ImageView android:layout_width="fill_parent"
+    <ImageView android:layout_width="wrap_content"
                android:layout_height="wrap_content"  android:id="@+id/vendor_logo"
-               style="@style/vendor_logo"/>
+               style="@style/vendor_logo"
+               android:src="@drawable/aclu"
+               android:layout_gravity="center"
+               android:scaleType="fitXY"/>
     <TextView android:id="@+id/vendor_title" android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               style="@style/vendor_title"
@@ -14,6 +17,8 @@
     <TextView android:layout_width="fill_parent"
               android:layout_height="wrap_content"  android:id="@+id/vendor_website"
               style="@style/vendor_website"
+              android:linksClickable="true"
+              android:autoLink="web"
               android:text="test" />
     <TextView android:layout_width="fill_parent"
               android:layout_height="wrap_content"  android:id="@+id/vendor_body"

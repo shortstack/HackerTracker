@@ -12,6 +12,8 @@
               android:gravity="center_vertical" android:singleLine="true" />
     <TextView android:layout_width="fill_parent"
               android:layout_height="wrap_content"  android:id="@+id/tweet"
+              android:linksClickable="true"
+              android:autoLink="web"
               style="@style/tweetText"
               android:text="test" />
 </LinearLayout>

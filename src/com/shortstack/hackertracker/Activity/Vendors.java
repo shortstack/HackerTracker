@@ -41,7 +41,7 @@ public class Vendors extends HackerTracker {
 
             vendorData = vendors.toArray(new Vendor[vendors.size()]);
 
-            adapter = new VendorAdapter(getApplicationContext(), R.layout.vendor_row, vendorData);
+            adapter = new VendorAdapter(this, R.layout.vendor_row, vendorData);
 
             vendorsList = (ListView) findViewById(R.id.vendors);
 

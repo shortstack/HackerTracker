@@ -85,7 +85,7 @@ public class Entertainment extends HackerTracker {
 
             eventData = events.toArray(new Event[events.size()]);
 
-            adapter = new EventAdapter(getApplicationContext(), R.layout.entertainment_row, eventData);
+            adapter = new EventAdapter(this, R.layout.entertainment_row, eventData);
 
             eventsDay1 = (ListView) findViewById(R.id.entertainment_day1);
 
@@ -98,7 +98,7 @@ public class Entertainment extends HackerTracker {
 
             eventData = events2.toArray(new Event[events2.size()]);
 
-            adapter = new EventAdapter(getApplicationContext(), R.layout.entertainment_row, eventData);
+            adapter = new EventAdapter(this, R.layout.entertainment_row, eventData);
 
             eventsDay1 = (ListView) findViewById(R.id.entertainment_day2);
 
@@ -111,7 +111,7 @@ public class Entertainment extends HackerTracker {
 
             eventData = events3.toArray(new Event[events3.size()]);
 
-            adapter = new EventAdapter(getApplicationContext(), R.layout.entertainment_row, eventData);
+            adapter = new EventAdapter(this, R.layout.entertainment_row, eventData);
 
             eventsDay1 = (ListView) findViewById(R.id.entertainment_day3);
 
@@ -124,7 +124,7 @@ public class Entertainment extends HackerTracker {
 
             eventData = events4.toArray(new Event[events4.size()]);
 
-            adapter = new EventAdapter(getApplicationContext(), R.layout.entertainment_row, eventData);
+            adapter = new EventAdapter(this, R.layout.entertainment_row, eventData);
 
             eventsDay1 = (ListView) findViewById(R.id.entertainment_day4);
 

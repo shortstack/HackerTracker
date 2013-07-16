@@ -51,7 +51,7 @@ public class TwitterFeed extends Activity {
 
                         tweetData = tweets.toArray(new twitter4j.Status[tweets.size()]);
 
-                        adapter = new TweetAdapter(getApplicationContext(), R.layout.tweet, tweetData);
+                        adapter = new TweetAdapter(TwitterFeed.this, R.layout.tweet, tweetData);
 
                         tweetListView = (PullToRefresh) findViewById(R.id.listView);
 
@@ -78,7 +78,7 @@ public class TwitterFeed extends Activity {
 
                                                 tweetData = tweets.toArray(new twitter4j.Status[tweets.size()]);
 
-                                                adapter = new TweetAdapter(getApplicationContext(), R.layout.tweet, tweetData);
+                                                adapter = new TweetAdapter(TwitterFeed.this, R.layout.tweet, tweetData);
 
                                                 tweetListView = (PullToRefresh) findViewById(R.id.listView);
 
