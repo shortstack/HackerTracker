@@ -23,6 +23,12 @@
               style="@style/details_location"
             />
 
+    <TextView android:id="@+id/forum"
+              android:layout_width="fill_parent"
+              android:layout_height="wrap_content"
+              style="@style/details_forum"
+            />
+
 
     <ScrollView
             android:layout_width="fill_parent"

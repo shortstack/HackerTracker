@@ -54,7 +54,7 @@ public class SpeakerAdapter extends ArrayAdapter<Speaker> {
             final Speaker speaker = data[position];
 
 
-            // if tweets in list, populate data
+            // if speakers in list, populate data
             if (speaker.getTitle() != null) {
 
                 // set title

@@ -88,7 +88,7 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
                     TextView titleText = (TextView) layout.findViewById(R.id.title);
                     TextView timeText = (TextView) layout.findViewById(R.id.time);
                     TextView locationText = (TextView) layout.findViewById(R.id.location);
-                    //TextView forumText = (TextView) layout.findViewById(R.id.forum);
+                    TextView forumText = (TextView) layout.findViewById(R.id.forum);
                     TextView bodyText = (TextView) layout.findViewById(R.id.body);
                     Button closeButton = (Button) layout.findViewById(R.id.closeButton);
 
@@ -96,7 +96,7 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
                     titleText.setText(title);
                     timeText.setText("Time: " + startTime + " - " + endTime);
                     locationText.setText("Location: " + location);
-                    //forumText.setText("Forum: " + forumLinkedText);
+                    forumText.setText("Forum: " + forum);
                     bodyText.setText(body);
 
                     // set up & show alert dialog

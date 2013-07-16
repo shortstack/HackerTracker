@@ -18,11 +18,19 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
             android:padding="30dp"
-            android:layout_below="@id/top_vendors"
             android:layout_marginTop="10dp"
             android:orientation="horizontal">
 
-
+        <ListView android:id="@+id/vendors"
+                  android:layout_width="fill_parent"
+                  android:layout_height="fill_parent"
+                  android:divider="@null"
+                  android:dividerHeight="5dp"
+                  android:scrollbars="vertical"
+                  android:cacheColorHint="@android:color/transparent"
+                  android:background="@android:color/transparent"
+                  android:overScrollFooter="@null"
+                  android:visibility="gone"/>
 
     </LinearLayout>
 
