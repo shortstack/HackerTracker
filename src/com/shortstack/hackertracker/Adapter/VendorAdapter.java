@@ -71,8 +71,8 @@ public class VendorAdapter extends ArrayAdapter<Vendor> {
 
             // set logo
             String logo = vendor.getLogo();
-            int resID = context.getResources().getIdentifier(logo , "id", "com.shortstack.hackertracker");
-            holder.logo.setBackgroundResource(resID);
+            int resID = context.getResources().getIdentifier("drawable/logos/"+logo , "drawable", context.getPackageName());
+            holder.logo.setImageResource(resID);
 
 
         } else {
