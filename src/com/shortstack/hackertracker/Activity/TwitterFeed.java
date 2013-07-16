@@ -11,6 +11,7 @@ import com.shortstack.hackertracker.Adapter.TweetAdapter;
 import com.shortstack.hackertracker.Model.Key;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.Connectivity;
+import com.shortstack.hackertracker.Utils.PullToRefresh;
 import twitter4j.*;
 import twitter4j.conf.ConfigurationBuilder;
 
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class TwitterFeed extends Activity {
 
-    public ListView tweetListView;
+    public PullToRefresh tweetListView;
     public List<twitter4j.Status> tweets;
     public twitter4j.Status tweetData[];
     public TweetAdapter adapter;
@@ -52,9 +53,57 @@ public class TwitterFeed extends Activity {
 
                         adapter = new TweetAdapter(getApplicationContext(), R.layout.tweet, tweetData);
 
-                        tweetListView = (ListView) findViewById(R.id.listView);
+                        tweetListView = (PullToRefresh) findViewById(R.id.listView);
 
                         tweetListView.setAdapter(adapter);
+
+                        tweetListView.setOnRefreshListener(new PullToRefresh.OnRefreshListener() {
+
+                            @Override
+                            public void onRefresh() {
+
+                                if (Connectivity.isConnected(TwitterFeed.this) || Connectivity.isConnectedMobile(TwitterFeed.this) || Connectivity.isConnectedWifi(TwitterFeed.this)) {
+
+                                    progress = new ProgressDialog(TwitterFeed.this);
+                                    progress.setTitle("Searching Tweets");
+                                    progress.setMessage("Please wait...");
+
+
+                                    getTweets request = new getTweets(new Callback() {
+                                        public void run(Object result) {
+
+
+                                            if (!(((List<twitter4j.Status>) result).size() < 1)) {
+                                                tweets = (List<twitter4j.Status>) result;
+
+                                                tweetData = tweets.toArray(new twitter4j.Status[tweets.size()]);
+
+                                                adapter = new TweetAdapter(getApplicationContext(), R.layout.tweet, tweetData);
+
+                                                tweetListView = (PullToRefresh) findViewById(R.id.listView);
+
+                                                tweetListView.setAdapter(adapter);
+                                            }
+
+                                        }});
+                                    request.execute();
+                                } else {
+                                    Toast.makeText(getApplicationContext(),"No Network Connection", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+
+
+                                tweetListView.postDelayed(new Runnable() {
+
+
+                                    @Override
+                                    public void run() {
+                                        tweetListView.onRefreshComplete();
+                                    }
+                                }, 2000);
+                            }
+                        });
+
                     }
 
                }});
@@ -63,6 +112,8 @@ public class TwitterFeed extends Activity {
             Toast.makeText(getApplicationContext(),"No Network Connection", Toast.LENGTH_SHORT).show();
             finish();
         }
+
+
 
     }
 
@@ -94,7 +145,9 @@ public class TwitterFeed extends Activity {
             TwitterFactory tf = new TwitterFactory(cb.build());
             Twitter twitter = tf.getInstance();
             try {
-                Query query = new Query("#defcon");
+                Query query = new Query("(#defcon) OR (@_defcon_) OR (#dc21) OR (#defcon21)");
+                query.setResultType("MIXED");
+                query.setCount(20);
                 QueryResult result;
                 result = twitter.search(query);
                 tweetList = result.getTweets();
@@ -114,6 +167,8 @@ public class TwitterFeed extends Activity {
         }
 
     }
+
+
 
 
 }

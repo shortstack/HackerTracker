@@ -7,9 +7,9 @@
         >
 
     <ImageView
-            android:src="@drawable/top_help"
+            android:src="@drawable/top_faq"
             style="@style/activityHeader"
-            android:id="@+id/top_about"
+            android:id="@+id/top_faq"
         />
 
    <ScrollView

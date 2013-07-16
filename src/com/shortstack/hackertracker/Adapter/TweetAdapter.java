@@ -90,4 +90,6 @@ public class TweetAdapter extends ArrayAdapter<twitter4j.Status> {
         TextView tweet;
         LinearLayout tweetLayout;
     }
+
+
 }

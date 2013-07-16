@@ -17,7 +17,7 @@
 
 
 
-        <ListView android:id="@+id/listView"
+    <com.shortstack.hackertracker.Utils.PullToRefresh android:id="@+id/listView"
                 android:layout_height="fill_parent"
                 android:layout_width="fill_parent"
                 android:padding="10dp"
