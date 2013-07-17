@@ -23,7 +23,7 @@
                           android:layout_height="wrap_content"
                           style="@style/helpText"
                           android:linksClickable="true"
-                          android:autoLink="web"
+                          android:autoLink="all"
                           android:textColorLink="@color/light_lime"
                           android:text="@string/faq"/>
     </ScrollView>

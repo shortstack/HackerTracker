@@ -18,7 +18,7 @@
               android:layout_height="wrap_content"  android:id="@+id/vendor_website"
               style="@style/vendor_website"
               android:linksClickable="true"
-              android:autoLink="web"
+              android:autoLink="all"
               android:text="test" />
     <TextView android:layout_width="fill_parent"
               android:layout_height="wrap_content"  android:id="@+id/vendor_body"

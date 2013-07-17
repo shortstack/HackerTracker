@@ -94,9 +94,22 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
 
                     // enter values
                     titleText.setText(title);
-                    timeText.setText("Time: " + startTime + " - " + endTime);
-                    locationText.setText("Location: " + location);
-                    forumText.setText("Forum: " + forum);
+                    if (startTime!=null && endTime!=null) {
+                        timeText.setText("Time: " + startTime + " - " + endTime);
+                    } else {
+                        timeText.setVisibility(View.GONE);
+                    }
+                    if (location!=null) {
+                        locationText.setText("Location: " + location);
+                    } else {
+                        locationText.setVisibility(View.GONE);
+                    }
+                    if (forum!=null) {
+                        forumText.setText("Forum: " + forum);
+
+                    } else {
+                        forumText.setVisibility(View.GONE);
+                    }
                     bodyText.setText(body);
 
                     // set up & show alert dialog

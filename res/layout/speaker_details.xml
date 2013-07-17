@@ -35,7 +35,7 @@
             >
         <TextView android:id="@+id/body"
                   style="@style/details_body"
-                  android:autoLink="web"
+                  android:autoLink="all"
                   android:linksClickable="true"
                 />
     </ScrollView>
