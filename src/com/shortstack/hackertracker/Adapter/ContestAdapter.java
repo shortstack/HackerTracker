@@ -93,7 +93,11 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
                     Button closeButton = (Button) layout.findViewById(R.id.closeButton);
 
                     // enter values
-                    titleText.setText(title);
+                    if (title.contains("-")) {
+                        titleText.setText(title.split("- ")[1]);
+                    } else {
+                        titleText.setText(title);
+                    }
                     if (startTime!=null && endTime!=null) {
                         timeText.setText("Time: " + startTime + " - " + endTime);
                     } else {
