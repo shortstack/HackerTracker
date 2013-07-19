@@ -54,7 +54,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
      */
     public DatabaseAdapter(Context context)  {
 
-        super(context, DB_NAME, null, 1);
+        super(context, DB_NAME, null, 2);
         this.myContext = context;
     }
 
@@ -170,7 +170,11 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("DROP TABLE IF EXISTS speakers");
+        db.execSQL("DROP TABLE IF EXISTS contests");
+        db.execSQL("DROP TABLE IF EXISTS entertainment");
+        db.execSQL("DROP TABLE IF EXISTS vendors");
+        onCreate(db);
     }
 
     // Add your public helper methods to access and get content from the database.
