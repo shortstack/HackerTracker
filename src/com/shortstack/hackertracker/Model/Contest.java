@@ -16,6 +16,17 @@ public class Contest {
     private String startTime;
     private String endTime;
     private String date;
+    private String location;
+    private String forum;
+    private Integer starred;
+
+    public Integer getStarred() {
+        return starred;
+    }
+
+    public void setStarred(Integer starred) {
+        this.starred = starred;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -48,9 +59,6 @@ public class Contest {
     public void setForum(String forum) {
         this.forum = forum;
     }
-
-    private String location;
-    private String forum;
 
     public String getId() {
         return id;

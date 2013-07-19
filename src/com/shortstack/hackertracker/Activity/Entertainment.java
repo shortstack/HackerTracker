@@ -1,19 +1,13 @@
 package com.shortstack.hackertracker.Activity;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
-import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Adapter.EventAdapter;
 import com.shortstack.hackertracker.Model.Event;
-import com.shortstack.hackertracker.Model.Speaker;
 import com.shortstack.hackertracker.R;
-import org.apache.commons.lang3.BooleanUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +22,7 @@ public class Entertainment extends HackerTracker {
 
     public Event[] eventData;
     public EventAdapter adapter;
-    public ListView eventsDay1;
+    public ListView events;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -87,9 +81,9 @@ public class Entertainment extends HackerTracker {
 
             adapter = new EventAdapter(this, R.layout.entertainment_row, eventData);
 
-            eventsDay1 = (ListView) findViewById(R.id.entertainment_day1);
+            this.events = (ListView) findViewById(R.id.entertainment_day1);
 
-            eventsDay1.setAdapter(adapter);
+            this.events.setAdapter(adapter);
         }
 
         // populate day 2
@@ -100,9 +94,9 @@ public class Entertainment extends HackerTracker {
 
             adapter = new EventAdapter(this, R.layout.entertainment_row, eventData);
 
-            eventsDay1 = (ListView) findViewById(R.id.entertainment_day2);
+            this.events = (ListView) findViewById(R.id.entertainment_day2);
 
-            eventsDay1.setAdapter(adapter);
+            this.events.setAdapter(adapter);
         }
 
         // populate day 3
@@ -113,9 +107,9 @@ public class Entertainment extends HackerTracker {
 
             adapter = new EventAdapter(this, R.layout.entertainment_row, eventData);
 
-            eventsDay1 = (ListView) findViewById(R.id.entertainment_day3);
+            this.events = (ListView) findViewById(R.id.entertainment_day3);
 
-            eventsDay1.setAdapter(adapter);
+            this.events.setAdapter(adapter);
         }
 
         // populate day 4
@@ -126,9 +120,9 @@ public class Entertainment extends HackerTracker {
 
             adapter = new EventAdapter(this, R.layout.entertainment_row, eventData);
 
-            eventsDay1 = (ListView) findViewById(R.id.entertainment_day4);
+            this.events = (ListView) findViewById(R.id.entertainment_day4);
 
-            eventsDay1.setAdapter(adapter);
+            this.events.setAdapter(adapter);
         }
 
         // close databases
@@ -155,6 +149,7 @@ public class Entertainment extends HackerTracker {
                     event.setEndTime(myCursor.getString((myCursor.getColumnIndex("endTime"))));
                     event.setStartTime(myCursor.getString((myCursor.getColumnIndex("startTime"))));
                     event.setLocation(myCursor.getString((myCursor.getColumnIndex("location"))));
+                    event.setStarred(myCursor.getInt((myCursor.getColumnIndex("starred"))));
 
                     result.add(event);
                 }while(myCursor.moveToNext());

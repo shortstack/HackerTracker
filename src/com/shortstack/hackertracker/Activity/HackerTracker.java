@@ -144,6 +144,10 @@ public class HackerTracker extends Activity
                 startActivity(new Intent(HackerTracker.this,
                         Faq.class));
                 break;
+            case R.id.starred:
+                startActivity(new Intent(HackerTracker.this,
+                        Stars.class));
+                break;
 
         }
         return true;

@@ -14,6 +14,18 @@ public class Event {
     private String title;
     private String body;
     private String startTime;
+    private String endTime;
+    private String date;
+    private String location;
+    private Integer starred;
+
+    public Integer getStarred() {
+        return starred;
+    }
+
+    public void setStarred(Integer starred) {
+        this.starred = starred;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -42,10 +54,6 @@ public class Event {
     public void setLocation(String location) {
         this.location = location;
     }
-
-    private String endTime;
-    private String date;
-    private String location;
 
     public String getId() {
         return id;

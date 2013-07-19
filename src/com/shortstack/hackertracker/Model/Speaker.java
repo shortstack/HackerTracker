@@ -19,6 +19,18 @@ public class Speaker {
     private String date;
     private String location;
     private Boolean demo;
+    private Boolean info;
+    private Boolean exploit;
+    private Boolean tool;
+    private Integer starred;
+
+    public Integer getStarred() {
+        return starred;
+    }
+
+    public void setStarred(Integer starred) {
+        this.starred = starred;
+    }
 
     public void setId(String id) {
         this.id = id;
@@ -68,9 +80,6 @@ public class Speaker {
         this.exploit = exploit;
     }
 
-    private Boolean tool;
-    private Boolean info;
-
     public String getId() {
         return id;
     }
@@ -119,7 +128,6 @@ public class Speaker {
         return exploit;
     }
 
-    private Boolean exploit;
 
 
 }

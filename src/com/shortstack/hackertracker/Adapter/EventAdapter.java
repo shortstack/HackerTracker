@@ -3,6 +3,9 @@ package com.shortstack.hackertracker.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.text.SpannableString;
 import android.text.method.LinkMovementMethod;
 import android.text.util.Linkify;
@@ -35,7 +38,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        EventHolder holder;
+        final EventHolder holder;
         View row = convertView;
 
         if ( row == null )
@@ -77,6 +80,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
                     String startTime = event.getStartTime();
                     String endTime =  event.getEndTime();
                     String location = event.getLocation();
+                    Integer starred = event.getStarred();
 
                     // build layout
                     LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -88,13 +92,65 @@ public class EventAdapter extends ArrayAdapter<Event> {
                     TextView timeText = (TextView) layout.findViewById(R.id.time);
                     TextView locationText = (TextView) layout.findViewById(R.id.location);
                     TextView bodyText = (TextView) layout.findViewById(R.id.body);
+                    final TextView star = (TextView) layout.findViewById(R.id.star);
                     Button closeButton = (Button) layout.findViewById(R.id.closeButton);
 
                     // enter values
                     titleText.setText(title.split("- ")[1]);
-                    timeText.setText("Time: " + startTime + " - " + endTime);
                     locationText.setText("Location: " + location);
+                    if (!startTime.equals("") && !endTime.equals("")) {
+                        timeText.setText("Time: " + startTime + " - " + endTime);
+                    } else {
+                        timeText.setVisibility(View.GONE);
+                    }
+                    if (location!=null) {
+                        location = location.replaceAll("\"","“");
+                        locationText.setText("Location: " + location);
+                    } else {
+                        locationText.setVisibility(View.GONE);
+                    }
+                    if (body!=null) {
+                        body = body.replaceAll("\"","“");
+                    }
                     bodyText.setText(body);
+
+                    // set star
+                    if (event.getStarred()==1) {
+                        star.setTextColor(Color.parseColor("#ffcc00"));
+                    }
+
+                    // onclicklistener for add to schedule
+                    final String finalBody = body;
+                    final String finalLocation = location;
+                    final View.OnClickListener starOnClickListener = new View.OnClickListener() {
+                        public void onClick(View v) {
+
+                            DatabaseAdapter myDbHelper = new DatabaseAdapter(getContext());
+                            SQLiteDatabase dbEvents = myDbHelper.getWritableDatabase();
+
+                            if (star.getCurrentTextColor() == -1) {
+                                // add to stars database
+                                dbEvents.execSQL("INSERT INTO stars VALUES (null,\""+event.getTitle()+"\",\""+ finalBody + "\",\"" + event.getStartTime() + "\",\"" + event.getEndTime() + "\",\"" + event.getDate() + "\",\"" + finalLocation + "\",\"\",\"\",1)");
+                                dbEvents.execSQL("UPDATE entertainment SET starred="+1+" WHERE _id="+event.getId());
+                                // change star color
+                                event.setStarred(1);
+                                star.setTextColor(Color.parseColor("#ffcc00"));
+                                Toast.makeText(context,"Added to My Schedule",Toast.LENGTH_SHORT).show();
+
+                            } else {
+                                // remove from database
+                                dbEvents.execSQL("DELETE FROM stars WHERE title=\""+event.getTitle()+"\" AND startTime=\""+event.getStartTime()+"\" AND date=\""+event.getDate()+"\"");
+                                dbEvents.execSQL("UPDATE entertainment SET starred="+0+" WHERE _id="+event.getId());
+                                // change star color
+                                event.setStarred(0);
+                                star.setTextColor(Color.parseColor("#ffffff"));
+                                Toast.makeText(context,"Removed from My Schedule",Toast.LENGTH_SHORT).show();
+                            }
+
+                            dbEvents.close();
+                        }
+                    };
+                    star.setOnClickListener(starOnClickListener);
 
                     // set up & show alert dialog
                     builder = new AlertDialog.Builder( v.getRootView().getContext(), android.R.style.Theme_Translucent_NoTitleBar);
@@ -114,7 +170,6 @@ public class EventAdapter extends ArrayAdapter<Event> {
                 }
             };
             holder.eventLayout.setOnClickListener(shareOnClickListener);
-
 
 
 

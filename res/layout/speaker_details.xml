@@ -7,15 +7,30 @@
               android:layout_height="fill_parent"
               android:orientation="vertical">
 
-    <TextView android:id="@+id/title"
-              style="@style/details_title"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-            />
+    <LinearLayout android:id="@+id/top_row"
+                  style="@style/details_title"
+                  android:layout_width="fill_parent"
+                  android:layout_height="wrap_content"
+                  android:orientation="horizontal">
+        <TextView android:id="@+id/title"
+                  style="@style/details_title_text"
+                  android:layout_weight=".85"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"
+                />
+        <TextView android:id="@+id/star"
+                  android:text="&#9733;"
+                  style="@style/star"
+                  android:layout_weight=".15"
+                  android:layout_gravity="center"
+                  android:layout_width="0dp"
+                  android:layout_height="wrap_content"/>
+    </LinearLayout>
     <TextView android:id="@+id/speaker"
               style="@style/details_speaker"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"        />
+
     <TextView android:id="@+id/time"
               style="@style/details_time"
               android:layout_width="fill_parent"

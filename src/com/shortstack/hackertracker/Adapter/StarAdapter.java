@@ -1,35 +1,32 @@
 package com.shortstack.hackertracker.Adapter;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.database.DatabaseUtils;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.text.SpannableString;
-import android.text.method.LinkMovementMethod;
-import android.text.util.Linkify;
 import android.view.*;
 import android.widget.*;
 import com.shortstack.hackertracker.Model.Contest;
+import com.shortstack.hackertracker.Model.Star;
 import com.shortstack.hackertracker.R;
 
 /**
  * Created with IntelliJ IDEA.
  * User: Whitney Champion
- * Date: 7/11/13
- * Time: 9:21 AM
- * Description:
+ * Date: 7/18/13
+ * Time: 10:16 PM
  */
-public class ContestAdapter extends ArrayAdapter<Contest> {
+public class StarAdapter extends ArrayAdapter<Star> {
 
     public AlertDialog.Builder builder;
     public AlertDialog alertDialog;
     Context context;
     int layoutResourceId;
-    Contest data[] = null;
+    Star data[] = null;
 
-    public ContestAdapter(Context context, int layoutResourceId, Contest[] data) {
+    public StarAdapter(Context context, int layoutResourceId, Star[] data) {
         super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
@@ -38,7 +35,7 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        final ContestHolder holder;
+        final StarHolder holder;
         View row = convertView;
 
         if ( row == null )
@@ -46,28 +43,29 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(layoutResourceId, parent, false);
 
-            holder = new ContestHolder();
+            holder = new StarHolder();
             holder.title = (TextView) row.findViewById(R.id.title);
             holder.location = (TextView) row.findViewById(R.id.location);
-            holder.contestLayout = (LinearLayout) row.findViewById(R.id.contestLayout);
+            holder.starLayout = (LinearLayout) row.findViewById(R.id.starLayout);
             row.setTag(holder);
 
 
         } else {
-            holder = (ContestHolder)row.getTag();
+            holder = (StarHolder)row.getTag();
         }
 
-        final Contest contest = data[position];
+        final Star star = data[position];
+
 
 
         // if tweets in list, populate data
-        if (contest.getTitle() != null) {
+        if (star.getTitle() != null) {
 
             // set title
-            holder.title.setText(contest.getTitle());
+            holder.title.setText(star.getTitle());
 
             // set location
-            holder.location.setText(contest.getLocation());
+            holder.location.setText(star.getLocation());
 
             // set onclicklistener for share button
             final View finalRow = row;
@@ -75,17 +73,18 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
                 public void onClick(View v) {
 
                     // get contest details
-                    String title = contest.getTitle();
-                    String body = contest.getBody();
-                    String startTime = contest.getStartTime();
-                    String endTime =  contest.getEndTime();
-                    String location = contest.getLocation();
-                    String forum = contest.getForum();
-                    Integer starred = contest.getStarred();
+                    String title = star.getTitle();
+                    String body = star.getBody();
+                    String speaker =  star.getSpeaker();
+                    String startTime = star.getStartTime();
+                    String endTime =  star.getEndTime();
+                    String location = star.getLocation();
+                    String forum = star.getForum();
+                    Integer starred = star.getStarred();
 
                     // build layout
                     LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-                    View layout = inflater.inflate(R.layout.contest_details,
+                    View layout = inflater.inflate(R.layout.star_details,
                             (ViewGroup) finalRow.findViewById(R.id.layout_root));
 
                     // declare layout parts
@@ -93,8 +92,9 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
                     TextView timeText = (TextView) layout.findViewById(R.id.time);
                     TextView locationText = (TextView) layout.findViewById(R.id.location);
                     TextView forumText = (TextView) layout.findViewById(R.id.forum);
+                    TextView speakerText = (TextView) layout.findViewById(R.id.speaker);
                     TextView bodyText = (TextView) layout.findViewById(R.id.body);
-                    final TextView star = (TextView) layout.findViewById(R.id.star);
+                    final TextView starIcon = (TextView) layout.findViewById(R.id.star);
                     Button closeButton = (Button) layout.findViewById(R.id.closeButton);
 
                     // enter values
@@ -103,65 +103,60 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
                     } else {
                         titleText.setText(title);
                     }
-                    if (!startTime.equals("") && !endTime.equals("")) {
+                    if (startTime!=null && endTime!=null) {
                         timeText.setText("Time: " + startTime + " - " + endTime);
                     } else {
                         timeText.setVisibility(View.GONE);
                     }
                     if (location!=null) {
-                        location = location.replaceAll("\"","“");
                         locationText.setText("Location: " + location);
                     } else {
                         locationText.setVisibility(View.GONE);
                     }
+                    if (speaker!=null) {
+                        speakerText.setText(speaker);
+                    } else {
+                        speakerText.setVisibility(View.GONE);
+                    }
                     if (forum!=null) {
                         forumText.setText("Forum: " + forum);
-
                     } else {
                         forumText.setVisibility(View.GONE);
-                    }
-                    if (body!=null) {
-                        body = body.replaceAll("\"","“");
                     }
                     bodyText.setText(body);
 
                     // set star
-                    if (contest.getStarred()==1) {
-                        star.setTextColor(Color.parseColor("#ffcc00"));
+                    if (star.getStarred()==1) {
+                        starIcon.setTextColor(Color.parseColor("#ffcc00"));
                     }
 
                     // onclicklistener for add to schedule
-                    final String finalLocation = location;
-                    final String finalBody = body;
                     final View.OnClickListener starOnClickListener = new View.OnClickListener() {
                         public void onClick(View v) {
 
                             DatabaseAdapter myDbHelper = new DatabaseAdapter(getContext());
-                            SQLiteDatabase dbContests = myDbHelper.getWritableDatabase();
+                            SQLiteDatabase dbStars = myDbHelper.getReadableDatabase();
 
-                            if (star.getCurrentTextColor() == -1) {
+                            if (starIcon.getCurrentTextColor() == -1) {
                                 // add to stars database
-                                dbContests.execSQL("INSERT INTO stars VALUES (null,\""+contest.getTitle()+"\",\""+ finalBody + "\",\"" + contest.getStartTime() + "\",\"" + contest.getEndTime() + "\",\"" + contest.getDate() + "\",\"" + finalLocation + "\",\"" + contest.getForum() + "\",\"\",1)");
-                                dbContests.execSQL("UPDATE contests SET starred="+1+" WHERE _id="+contest.getId());
+                                dbStars.execSQL("INSERT INTO stars VALUES (null,"+star.getTitle()+"\",\""+star.getBody()+"\",\""+star.getStartTime()+"\",\""+star.getEndTime()+"\",\""+star.getDate()+"\",\""+star.getLocation()+"\",\""+star.getForum()+"\",\""+star.getSpeaker()+"\",1)");
                                 // change star color
-                                contest.setStarred(1);
-                                star.setTextColor(Color.parseColor("#ffcc00"));
+                                star.setStarred(1);
+                                starIcon.setTextColor(Color.parseColor("#ffcc00"));
                                 Toast.makeText(context,"Added to My Schedule",Toast.LENGTH_SHORT).show();
-
                             } else {
                                 // remove from database
-                                dbContests.execSQL("DELETE FROM stars WHERE title=\""+contest.getTitle()+"\" AND startTime=\""+contest.getStartTime()+"\" AND date=\""+contest.getDate()+"\"");
-                                dbContests.execSQL("UPDATE contests SET starred="+0+" WHERE _id="+contest.getId());
+                                dbStars.execSQL("DELETE FROM stars WHERE title=\""+star.getTitle()+"\" AND startTime=\""+star.getStartTime()+"\" AND date=\""+star.getDate()+"\"");
                                 // change star color
-                                contest.setStarred(0);
-                                star.setTextColor(Color.parseColor("#ffffff"));
+                                star.setStarred(0);
+                                starIcon.setTextColor(Color.parseColor("#ffffff"));
                                 Toast.makeText(context,"Removed from My Schedule",Toast.LENGTH_SHORT).show();
                             }
 
-                            dbContests.close();
+                            dbStars.close();
                         }
                     };
-                    star.setOnClickListener(starOnClickListener);
+                    starIcon.setOnClickListener(starOnClickListener);
 
                     // set up & show alert dialog
                     builder = new AlertDialog.Builder( v.getRootView().getContext());
@@ -180,21 +175,24 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
 
                 }
             };
-            holder.contestLayout.setOnClickListener(shareOnClickListener);
+            holder.starLayout.setOnClickListener(shareOnClickListener);
 
-
-        } else {
-            holder.title.setText("No contests found");
+            } else {
+            holder.title.setText("You have no starred items");
         }
 
+
         return row;
+
+
     }
 
-    static class ContestHolder {
+
+    static class StarHolder {
         TextView title;
         TextView location;
-        LinearLayout contestLayout;
+        LinearLayout starLayout;
     }
+
+
 }
-
-

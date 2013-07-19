@@ -3,6 +3,9 @@ package com.shortstack.hackertracker.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.DatabaseUtils;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.view.*;
 import android.widget.*;
 import com.shortstack.hackertracker.Model.Speaker;
@@ -32,7 +35,7 @@ public class SpeakerAdapter extends ArrayAdapter<Speaker> {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            SpeakerHolder holder;
+            final SpeakerHolder holder;
             View row = convertView;
 
             if ( row == null )
@@ -83,6 +86,8 @@ public class SpeakerAdapter extends ArrayAdapter<Speaker> {
                         Boolean exploit = false;
                         Boolean info = false;
 
+                        Integer starred = speaker.getStarred();
+
                         if (speaker.getDemo() != null && speaker.getTool() != null && speaker.getExploit() != null && speaker.getInfo() != null) {
                             demo = speaker.getDemo();
                             tool = speaker.getTool();
@@ -101,14 +106,35 @@ public class SpeakerAdapter extends ArrayAdapter<Speaker> {
                         TextView timeText = (TextView) layout.findViewById(R.id.time);
                         TextView locationText = (TextView) layout.findViewById(R.id.location);
                         TextView bodyText = (TextView) layout.findViewById(R.id.body);
+                        final TextView star = (TextView) layout.findViewById(R.id.star);
                         Button closeButton = (Button) layout.findViewById(R.id.closeButton);
 
                         // enter values
                         titleText.setText(title.split("- ")[1]);
+                        if (speakerName!=null) {
+                            speakerName = speakerName.replaceAll("\"","“");
+                        }
                         speakerText.setText(speakerName);
-                        timeText.setText("Time: " + startTime + " - " + endTime);
-                        locationText.setText("Location: " + location);
+                        if (!startTime.equals("") && !endTime.equals("")) {
+                            timeText.setText("Time: " + startTime + " - " + endTime);
+                        } else {
+                            timeText.setVisibility(View.GONE);
+                        }
+                        if (location!=null) {
+                            location = location.replaceAll("\"","“");
+                            locationText.setText("Location: " + location);
+                        } else {
+                            locationText.setVisibility(View.GONE);
+                        }
+                        if (body!=null) {
+                            body = body.replaceAll("\"","“");
+                        }
                         bodyText.setText(body);
+
+                        // set star
+                        if (speaker.getStarred()==1) {
+                            star.setTextColor(Color.parseColor("#ffcc00"));
+                        }
 
                         // display images if applicable
                         if (demo) {
@@ -123,6 +149,40 @@ public class SpeakerAdapter extends ArrayAdapter<Speaker> {
                             ImageView image = (ImageView) layout.findViewById(R.id.image_exploit);
                             image.setImageResource(R.drawable.icon_exploit);
                         }
+
+                        // onclicklistener for add to schedule
+                        final String finalLocation = location;
+                        final String finalBody = body;
+                        final String finalSpeakerName = speakerName;
+                        final View.OnClickListener starOnClickListener = new View.OnClickListener() {
+                            public void onClick(View v) {
+
+                                DatabaseAdapter myDbHelper = new DatabaseAdapter(getContext());
+                                SQLiteDatabase dbSpeakers = myDbHelper.getWritableDatabase();
+
+                                if (star.getCurrentTextColor() == -1) {
+                                    // add to stars database
+                                    dbSpeakers.execSQL("INSERT INTO stars VALUES (null,\""+ speaker.getTitle() +"\",\""+ finalBody +"\",\""+speaker.getStartTime()+"\",\""+speaker.getEndTime()+"\",\""+speaker.getDate()+"\",\""+ finalLocation +"\",\"\","+"\""+finalSpeakerName+"\",1)");
+                                    dbSpeakers.execSQL("UPDATE speakers SET starred="+1+" WHERE _id="+speaker.getId());
+                                    // change star color
+                                    speaker.setStarred(1);
+                                    star.setTextColor(Color.parseColor("#ffcc00"));
+                                    Toast.makeText(context,"Added to My Schedule",Toast.LENGTH_SHORT).show();
+
+                                } else {
+                                    // remove from database
+                                    dbSpeakers.execSQL("DELETE FROM stars WHERE title=\""+ speaker.getTitle() +"\" AND startTime=\""+speaker.getStartTime()+"\" AND date=\""+speaker.getDate()+"\"");
+                                    dbSpeakers.execSQL("UPDATE speakers SET starred="+0+" WHERE _id="+speaker.getId());
+                                    // change star color
+                                    speaker.setStarred(0);
+                                    star.setTextColor(Color.parseColor("#ffffff"));
+                                    Toast.makeText(context,"Removed from My Schedule",Toast.LENGTH_SHORT).show();
+                                }
+
+                                dbSpeakers.close();
+                            }
+                        };
+                        star.setOnClickListener(starOnClickListener);
 
                         // set up & show alert dialog
                         builder = new AlertDialog.Builder( v.getRootView().getContext());
@@ -141,7 +201,6 @@ public class SpeakerAdapter extends ArrayAdapter<Speaker> {
                     }
                 };
                 holder.speakerLayout.setOnClickListener(shareOnClickListener);
-
 
 
 

@@ -1,15 +1,12 @@
 package com.shortstack.hackertracker.Activity;
 
-import android.app.AlertDialog;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
 import com.shortstack.hackertracker.Adapter.ContestAdapter;
-import com.shortstack.hackertracker.Adapter.EventAdapter;
 import com.shortstack.hackertracker.Model.Contest;
-import com.shortstack.hackertracker.Model.Event;
 import com.shortstack.hackertracker.R;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,7 +21,7 @@ public class Contests extends HackerTracker {
 
     public Contest[] contestData;
     public ContestAdapter adapter;
-    public ListView contestsDay1;
+    public ListView contests;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -83,9 +80,9 @@ public class Contests extends HackerTracker {
 
             adapter = new ContestAdapter(this, R.layout.contest_row, contestData);
 
-            contestsDay1 = (ListView) findViewById(R.id.contests_day1);
+            this.contests = (ListView) findViewById(R.id.contests_day1);
 
-            contestsDay1.setAdapter(adapter);
+            this.contests.setAdapter(adapter);
         }
 
         // populate day 2
@@ -96,9 +93,9 @@ public class Contests extends HackerTracker {
 
             adapter = new ContestAdapter(this, R.layout.contest_row, contestData);
 
-            contestsDay1 = (ListView) findViewById(R.id.contests_day2);
+            this.contests = (ListView) findViewById(R.id.contests_day2);
 
-            contestsDay1.setAdapter(adapter);
+            this.contests.setAdapter(adapter);
         }
 
         // populate day 3
@@ -109,9 +106,9 @@ public class Contests extends HackerTracker {
 
             adapter = new ContestAdapter(this, R.layout.contest_row, contestData);
 
-            contestsDay1 = (ListView) findViewById(R.id.contests_day3);
+            this.contests = (ListView) findViewById(R.id.contests_day3);
 
-            contestsDay1.setAdapter(adapter);
+            this.contests.setAdapter(adapter);
         }
 
         // populate day 4
@@ -122,9 +119,9 @@ public class Contests extends HackerTracker {
 
             adapter = new ContestAdapter(this, R.layout.contest_row, contestData);
 
-            contestsDay1 = (ListView) findViewById(R.id.contests_day4);
+            this.contests = (ListView) findViewById(R.id.contests_day4);
 
-            contestsDay1.setAdapter(adapter);
+            this.contests.setAdapter(adapter);
         }
 
         // close databases
@@ -145,6 +142,7 @@ public class Contests extends HackerTracker {
             if (myCursor.moveToFirst()){
                 do{
                     Contest contest = new Contest();
+                    contest.setId(myCursor.getString((myCursor.getColumnIndex("_id"))));
                     contest.setTitle(myCursor.getString((myCursor.getColumnIndex("title"))));
                     contest.setBody(myCursor.getString((myCursor.getColumnIndex("body"))));
                     contest.setDate(myCursor.getString((myCursor.getColumnIndex("date"))));
@@ -152,6 +150,7 @@ public class Contests extends HackerTracker {
                     contest.setEndTime(myCursor.getString((myCursor.getColumnIndex("endTime"))));
                     contest.setStartTime(myCursor.getString((myCursor.getColumnIndex("startTime"))));
                     contest.setLocation(myCursor.getString((myCursor.getColumnIndex("location"))));
+                    contest.setStarred(myCursor.getInt((myCursor.getColumnIndex("starred"))));
 
                     result.add(contest);
                 }while(myCursor.moveToNext());

@@ -1,16 +1,11 @@
 package com.shortstack.hackertracker.Activity;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.*;
 import android.widget.*;
-import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Adapter.SpeakerAdapter;
-import com.shortstack.hackertracker.Adapter.TweetAdapter;
 import com.shortstack.hackertracker.Model.Speaker;
 import com.shortstack.hackertracker.R;
 import org.apache.commons.lang3.BooleanUtils;
@@ -28,7 +23,7 @@ public class Speakers extends HackerTracker {
 
     public Speaker[] speakerData;
     public SpeakerAdapter adapter;
-    public ListView speakersDay1;
+    public ListView speakers;
 
     @Override
     public void onCreate(Bundle savedInstanceState)
@@ -87,9 +82,9 @@ public class Speakers extends HackerTracker {
 
             adapter = new SpeakerAdapter(this, R.layout.speaker_row, speakerData);
 
-            speakersDay1 = (ListView) findViewById(R.id.speakers_day1);
+            this.speakers = (ListView) findViewById(R.id.speakers_day1);
 
-            speakersDay1.setAdapter(adapter);
+            this.speakers.setAdapter(adapter);
         }
 
         // populate day 2
@@ -100,9 +95,9 @@ public class Speakers extends HackerTracker {
 
             adapter = new SpeakerAdapter(this, R.layout.speaker_row, speakerData);
 
-            speakersDay1 = (ListView) findViewById(R.id.speakers_day2);
+            this.speakers = (ListView) findViewById(R.id.speakers_day2);
 
-            speakersDay1.setAdapter(adapter);
+            this.speakers.setAdapter(adapter);
         }
 
         // populate day 3
@@ -113,9 +108,9 @@ public class Speakers extends HackerTracker {
 
             adapter = new SpeakerAdapter(this, R.layout.speaker_row, speakerData);
 
-            speakersDay1 = (ListView) findViewById(R.id.speakers_day3);
+            this.speakers = (ListView) findViewById(R.id.speakers_day3);
 
-            speakersDay1.setAdapter(adapter);
+            this.speakers.setAdapter(adapter);
         }
 
         // populate day 4
@@ -126,9 +121,9 @@ public class Speakers extends HackerTracker {
 
             adapter = new SpeakerAdapter(this, R.layout.speaker_row, speakerData);
 
-            speakersDay1 = (ListView) findViewById(R.id.speakers_day4);
+            this.speakers = (ListView) findViewById(R.id.speakers_day4);
 
-            speakersDay1.setAdapter(adapter);
+            this.speakers.setAdapter(adapter);
         }
 
         // close databases
@@ -160,6 +155,7 @@ public class Speakers extends HackerTracker {
                     speaker.setExploit(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("exploit"))))));
                     speaker.setTool(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("tool"))))));
                     speaker.setInfo(BooleanUtils.toBoolean(Integer.parseInt(myCursor.getString((myCursor.getColumnIndex("info"))))));
+                    speaker.setStarred(myCursor.getInt((myCursor.getColumnIndex("starred"))));
 
                     result.add(speaker);
                 }while(myCursor.moveToNext());

@@ -8,5 +8,7 @@
           android:title="About" />
     <item android:id="@+id/faq"
           android:title="FAQ" />
+    <item android:id="@+id/starred"
+          android:title="My Schedule" />
 
 </menu>
