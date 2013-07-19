@@ -1,15 +1,21 @@
 package com.shortstack.hackertracker.Adapter;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -28,25 +34,6 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     private final Context myContext;
 
-    public static final String KEY_ID = "_id";
-    public static final String KEY_TITLE = "title";
-    public static final String KEY_BODY = "body";
-    public static final String KEY_NAME = "speaker";
-    public static final String KEY_STARTTIME = "startTime";
-    public static final String KEY_ENDTIME = "endTime";
-    public static final String KEY_DATE = "date";
-    public static final String KEY_LOCATION = "location";
-    public static final String KEY_DEMO = "demo";
-    public static final String KEY_TOOL = "tool";
-    public static final String KEY_EXPLOIT = "exploit";
-    public static final String KEY_FORUM = "forum";
-    public static final String KEY_DAY = "day";
-    public static final String KEY_MONTH = "month";
-    public static final String KEY_YEAR = "year";
-
-
-
-
     /**
      * Constructor
      * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
@@ -54,7 +41,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
      */
     public DatabaseAdapter(Context context)  {
 
-        super(context, DB_NAME, null, 2);
+        super(context, DB_NAME, null, 25);
         this.myContext = context;
     }
 
@@ -170,15 +157,40 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        db.execSQL("DROP TABLE IF EXISTS speakers");
-        db.execSQL("DROP TABLE IF EXISTS contests");
-        db.execSQL("DROP TABLE IF EXISTS entertainment");
-        db.execSQL("DROP TABLE IF EXISTS vendors");
-        onCreate(db);
+
     }
 
     // Add your public helper methods to access and get content from the database.
     // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy
     // to you to create adapters for your views.
 
+
+    public static List<String> GetColumns(SQLiteDatabase db, String tableName) {
+        List<String> ar = null;
+        Cursor c = null;
+        try {
+            c = db.rawQuery("select * from " + tableName + " limit 1", null);
+            if (c != null) {
+                ar = new ArrayList<String>(Arrays.asList(c.getColumnNames()));
+            }
+        } catch (Exception e) {
+            Log.v(tableName, e.getMessage(), e);
+            e.printStackTrace();
+        } finally {
+            if (c != null)
+                c.close();
+        }
+        return ar;
+    }
+
+    public static String join(List<String> list, String delim) {
+        StringBuilder buf = new StringBuilder();
+        int num = list.size();
+        for (int i = 0; i < num; i++) {
+            if (i != 0)
+                buf.append(delim);
+            buf.append((String) list.get(i));
+        }
+        return buf.toString();
+    }
 }
