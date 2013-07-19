@@ -103,13 +103,13 @@ public class EventAdapter extends ArrayAdapter<Event> {
                     } else {
                         timeText.setVisibility(View.GONE);
                     }
-                    if (location!=null) {
+                    if (!location.equals("")) {
                         location = location.replaceAll("\"","“");
                         locationText.setText("Location: " + location);
                     } else {
                         locationText.setVisibility(View.GONE);
                     }
-                    if (body!=null) {
+                    if (!body.equals("")) {
                         body = body.replaceAll("\"","“");
                     }
                     bodyText.setText(body);

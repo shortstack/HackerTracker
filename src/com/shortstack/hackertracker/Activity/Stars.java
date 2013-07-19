@@ -166,6 +166,8 @@ public class Stars extends HackerTracker {
                     Star star = new Star();
                     star.setId(myCursor.getString((myCursor.getColumnIndex("_id"))));
                     star.setTitle(myCursor.getString((myCursor.getColumnIndex("title"))));
+                    star.setSpeaker(myCursor.getString((myCursor.getColumnIndex("speaker"))));
+                    star.setForum(myCursor.getString((myCursor.getColumnIndex("forum"))));
                     star.setBody(myCursor.getString((myCursor.getColumnIndex("body"))));
                     star.setDate(myCursor.getString((myCursor.getColumnIndex("date"))));
                     star.setEndTime(myCursor.getString((myCursor.getColumnIndex("endTime"))));

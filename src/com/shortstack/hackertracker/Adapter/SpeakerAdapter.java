@@ -111,7 +111,7 @@ public class SpeakerAdapter extends ArrayAdapter<Speaker> {
 
                         // enter values
                         titleText.setText(title.split("- ")[1]);
-                        if (speakerName!=null) {
+                        if (!speakerName.equals("")) {
                             speakerName = speakerName.replaceAll("\"","“");
                         }
                         speakerText.setText(speakerName);
@@ -120,13 +120,13 @@ public class SpeakerAdapter extends ArrayAdapter<Speaker> {
                         } else {
                             timeText.setVisibility(View.GONE);
                         }
-                        if (location!=null) {
+                        if (!location.equals("")) {
                             location = location.replaceAll("\"","“");
                             locationText.setText("Location: " + location);
                         } else {
                             locationText.setVisibility(View.GONE);
                         }
-                        if (body!=null) {
+                        if (!body.equals("")) {
                             body = body.replaceAll("\"","“");
                         }
                         bodyText.setText(body);

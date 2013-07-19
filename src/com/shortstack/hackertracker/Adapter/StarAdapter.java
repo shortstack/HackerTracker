@@ -103,22 +103,22 @@ public class StarAdapter extends ArrayAdapter<Star> {
                     } else {
                         titleText.setText(title);
                     }
-                    if (startTime!=null && endTime!=null) {
+                    if (!startTime.equals("") && !endTime.equals("")) {
                         timeText.setText("Time: " + startTime + " - " + endTime);
                     } else {
                         timeText.setVisibility(View.GONE);
                     }
-                    if (location!=null) {
+                    if (!location.equals("")) {
                         locationText.setText("Location: " + location);
                     } else {
                         locationText.setVisibility(View.GONE);
                     }
-                    if (speaker!=null) {
+                    if (!speaker.equals("")) {
                         speakerText.setText(speaker);
                     } else {
                         speakerText.setVisibility(View.GONE);
                     }
-                    if (forum!=null) {
+                    if (!forum.equals("")) {
                         forumText.setText("Forum: " + forum);
                     } else {
                         forumText.setVisibility(View.GONE);
@@ -139,7 +139,7 @@ public class StarAdapter extends ArrayAdapter<Star> {
 
                             if (starIcon.getCurrentTextColor() == -1) {
                                 // add to stars database
-                                dbStars.execSQL("INSERT INTO stars VALUES (null,"+star.getTitle()+"\",\""+star.getBody()+"\",\""+star.getStartTime()+"\",\""+star.getEndTime()+"\",\""+star.getDate()+"\",\""+star.getLocation()+"\",\""+star.getForum()+"\",\""+star.getSpeaker()+"\",1)");
+                                dbStars.execSQL("INSERT INTO stars VALUES (null,\""+star.getTitle()+"\",\""+star.getBody()+"\",\""+star.getStartTime()+"\",\""+star.getEndTime()+"\",\""+star.getDate()+"\",\""+star.getLocation()+"\",\""+star.getForum()+"\",\""+star.getSpeaker()+"\",1)");
                                 // change star color
                                 star.setStarred(1);
                                 starIcon.setTextColor(Color.parseColor("#ffcc00"));

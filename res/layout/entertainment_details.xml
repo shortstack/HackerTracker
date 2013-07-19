@@ -21,9 +21,9 @@
         <TextView android:id="@+id/star"
                   android:text="&#9733;"
                   style="@style/star"
-                  android:layout_weight=".15"
-                  android:layout_gravity="center"
-                  android:layout_width="0dp"
+                  android:layout_gravity="center_vertical"
+                  android:layout_width="30dp"
+                  android:layout_marginLeft="20dp"
                   android:layout_height="wrap_content"/>
     </LinearLayout>
     <TextView android:id="@+id/time"
