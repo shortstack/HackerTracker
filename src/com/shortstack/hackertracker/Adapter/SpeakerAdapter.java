@@ -158,11 +158,13 @@ public class SpeakerAdapter extends ArrayAdapter<Speaker> {
                             public void onClick(View v) {
 
                                 DatabaseAdapter myDbHelper = new DatabaseAdapter(getContext());
+                                StarDatabaseAdapter myDbHelperStars = new StarDatabaseAdapter(getContext());
                                 SQLiteDatabase dbSpeakers = myDbHelper.getWritableDatabase();
+                                SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
 
                                 if (star.getCurrentTextColor() == -1) {
                                     // add to stars database
-                                    dbSpeakers.execSQL("INSERT INTO stars VALUES (null,\""+ speaker.getTitle() +"\",\""+ finalBody +"\",\""+speaker.getStartTime()+"\",\""+speaker.getEndTime()+"\",\""+speaker.getDate()+"\",\""+ finalLocation +"\",\"\","+"\""+finalSpeakerName+"\",1)");
+                                    dbStars.execSQL("INSERT INTO stars VALUES (null,\""+ speaker.getTitle() +"\",\""+ finalBody +"\",\""+speaker.getStartTime()+"\",\""+speaker.getEndTime()+"\",\""+speaker.getDate()+"\",\""+ finalLocation +"\",\"\","+"\""+finalSpeakerName+"\",1)");
                                     dbSpeakers.execSQL("UPDATE speakers SET starred="+1+" WHERE _id="+speaker.getId());
                                     // change star color
                                     speaker.setStarred(1);
@@ -171,7 +173,7 @@ public class SpeakerAdapter extends ArrayAdapter<Speaker> {
 
                                 } else {
                                     // remove from database
-                                    dbSpeakers.execSQL("DELETE FROM stars WHERE title=\""+ speaker.getTitle() +"\" AND startTime=\""+speaker.getStartTime()+"\" AND date=\""+speaker.getDate()+"\"");
+                                    dbStars.execSQL("DELETE FROM stars WHERE title=\""+ speaker.getTitle() +"\" AND startTime=\""+speaker.getStartTime()+"\" AND date=\""+speaker.getDate()+"\"");
                                     dbSpeakers.execSQL("UPDATE speakers SET starred="+0+" WHERE _id="+speaker.getId());
                                     // change star color
                                     speaker.setStarred(0);
@@ -180,6 +182,7 @@ public class SpeakerAdapter extends ArrayAdapter<Speaker> {
                                 }
 
                                 dbSpeakers.close();
+                                dbStars.close();
                             }
                         };
                         star.setOnClickListener(starOnClickListener);

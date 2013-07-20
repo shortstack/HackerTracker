@@ -7,7 +7,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -23,12 +22,12 @@ import java.util.List;
  * Date: 8/29/12
  * Time: 5:52 PM
  */
-public class DatabaseAdapter extends SQLiteOpenHelper {
+public class StarDatabaseAdapter extends SQLiteOpenHelper {
 
     //The Android's default system path of your application database.
     private static String DB_PATH = "/data/data/com.shortstack.hackertracker/databases/";
 
-    private static String DB_NAME = "hackertracker";
+    private static String DB_NAME = "starred";
 
     private SQLiteDatabase myDataBase;
 
@@ -39,9 +38,9 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
      * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
      * @param context
      */
-    public DatabaseAdapter(Context context)  {
+    public StarDatabaseAdapter(Context context)  {
 
-        super(context, DB_NAME, null, 29);
+        super(context, DB_NAME, null, 27);
         this.myContext = context;
     }
 
@@ -157,11 +156,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        try {
-            copyDataBase();
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+
     }
 
     // Add your public helper methods to access and get content from the database.
@@ -169,32 +164,4 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
     // to you to create adapters for your views.
 
 
-    public static List<String> GetColumns(SQLiteDatabase db, String tableName) {
-        List<String> ar = null;
-        Cursor c = null;
-        try {
-            c = db.rawQuery("select * from " + tableName + " limit 1", null);
-            if (c != null) {
-                ar = new ArrayList<String>(Arrays.asList(c.getColumnNames()));
-            }
-        } catch (Exception e) {
-            Log.v(tableName, e.getMessage(), e);
-            e.printStackTrace();
-        } finally {
-            if (c != null)
-                c.close();
-        }
-        return ar;
-    }
-
-    public static String join(List<String> list, String delim) {
-        StringBuilder buf = new StringBuilder();
-        int num = list.size();
-        for (int i = 0; i < num; i++) {
-            if (i != 0)
-                buf.append(delim);
-            buf.append((String) list.get(i));
-        }
-        return buf.toString();
-    }
 }

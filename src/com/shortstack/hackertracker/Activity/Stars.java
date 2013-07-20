@@ -77,7 +77,7 @@ public class Stars extends HackerTracker {
         day4.setText(getDates("4"));
 
         //query database for stars
-        SQLiteDatabase dbStars = myDbHelper.getReadableDatabase();
+        SQLiteDatabase dbStars = myDbHelperStars.getReadableDatabase();
 
         // populate day 1
         List<Star> stars1 = getStarsByDate("1");
@@ -156,7 +156,7 @@ public class Stars extends HackerTracker {
     public List<Star> getStarsByDate(String day) {
         String[] args={day};
         ArrayList<Star> result = new ArrayList<Star>();
-        SQLiteDatabase db = myDbHelper.getWritableDatabase();
+        SQLiteDatabase db = myDbHelperStars.getWritableDatabase();
 
         Cursor myCursor = db.rawQuery("SELECT * FROM stars WHERE date=? ORDER BY startTime", args);
 

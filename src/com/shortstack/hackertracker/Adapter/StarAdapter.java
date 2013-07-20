@@ -134,7 +134,7 @@ public class StarAdapter extends ArrayAdapter<Star> {
                     final View.OnClickListener starOnClickListener = new View.OnClickListener() {
                         public void onClick(View v) {
 
-                            DatabaseAdapter myDbHelper = new DatabaseAdapter(getContext());
+                            StarDatabaseAdapter myDbHelper = new StarDatabaseAdapter(getContext());
                             SQLiteDatabase dbStars = myDbHelper.getReadableDatabase();
 
                             if (starIcon.getCurrentTextColor() == -1) {

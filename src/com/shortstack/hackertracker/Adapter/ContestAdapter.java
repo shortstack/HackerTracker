@@ -137,11 +137,13 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
                         public void onClick(View v) {
 
                             DatabaseAdapter myDbHelper = new DatabaseAdapter(getContext());
+                            StarDatabaseAdapter myDbHelperStars = new StarDatabaseAdapter(getContext());
                             SQLiteDatabase dbContests = myDbHelper.getWritableDatabase();
+                            SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
 
                             if (star.getCurrentTextColor() == -1) {
                                 // add to stars database
-                                dbContests.execSQL("INSERT INTO stars VALUES (null,\""+contest.getTitle()+"\",\""+ finalBody + "\",\"" + contest.getStartTime() + "\",\"" + contest.getEndTime() + "\",\"" + contest.getDate() + "\",\"" + finalLocation + "\",\"" + contest.getForum() + "\",\"\",1)");
+                                dbStars.execSQL("INSERT INTO stars VALUES (null,\""+contest.getTitle()+"\",\""+ finalBody + "\",\"" + contest.getStartTime() + "\",\"" + contest.getEndTime() + "\",\"" + contest.getDate() + "\",\"" + finalLocation + "\",\"" + contest.getForum() + "\",\"\",1)");
                                 dbContests.execSQL("UPDATE contests SET starred="+1+" WHERE _id="+contest.getId());
                                 // change star color
                                 contest.setStarred(1);
@@ -150,7 +152,7 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
 
                             } else {
                                 // remove from database
-                                dbContests.execSQL("DELETE FROM stars WHERE title=\""+contest.getTitle()+"\" AND startTime=\""+contest.getStartTime()+"\" AND date=\""+contest.getDate()+"\"");
+                                dbStars.execSQL("DELETE FROM stars WHERE title=\""+contest.getTitle()+"\" AND startTime=\""+contest.getStartTime()+"\" AND date=\""+contest.getDate()+"\"");
                                 dbContests.execSQL("UPDATE contests SET starred="+0+" WHERE _id="+contest.getId());
                                 // change star color
                                 contest.setStarred(0);
@@ -159,6 +161,7 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
                             }
 
                             dbContests.close();
+                            dbStars.close();
                         }
                     };
                     star.setOnClickListener(starOnClickListener);

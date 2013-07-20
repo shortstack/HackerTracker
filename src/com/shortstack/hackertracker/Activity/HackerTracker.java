@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
+import com.shortstack.hackertracker.Adapter.StarDatabaseAdapter;
 import com.shortstack.hackertracker.R;
 
 import java.io.IOException;
@@ -22,6 +23,7 @@ public class HackerTracker extends Activity
 {
 
     public DatabaseAdapter myDbHelper;
+    public StarDatabaseAdapter myDbHelperStars;
 
     public void setMainScreen() {
 
@@ -94,10 +96,12 @@ public class HackerTracker extends Activity
         // set up database
 
         myDbHelper = new DatabaseAdapter(this);
+        myDbHelperStars = new StarDatabaseAdapter(this);
 
         try {
 
             myDbHelper.createDataBase();
+            myDbHelperStars.createDataBase();
 
         } catch (IOException ioe) {
 

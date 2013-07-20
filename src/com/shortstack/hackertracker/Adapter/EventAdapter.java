@@ -126,11 +126,13 @@ public class EventAdapter extends ArrayAdapter<Event> {
                         public void onClick(View v) {
 
                             DatabaseAdapter myDbHelper = new DatabaseAdapter(getContext());
+                            StarDatabaseAdapter myDbHelperStars = new StarDatabaseAdapter(getContext());
                             SQLiteDatabase dbEvents = myDbHelper.getWritableDatabase();
+                            SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
 
                             if (star.getCurrentTextColor() == -1) {
                                 // add to stars database
-                                dbEvents.execSQL("INSERT INTO stars VALUES (null,\""+event.getTitle()+"\",\""+ finalBody + "\",\"" + event.getStartTime() + "\",\"" + event.getEndTime() + "\",\"" + event.getDate() + "\",\"" + finalLocation + "\",\"\",\"\",1)");
+                                dbStars.execSQL("INSERT INTO stars VALUES (null,\""+event.getTitle()+"\",\""+ finalBody + "\",\"" + event.getStartTime() + "\",\"" + event.getEndTime() + "\",\"" + event.getDate() + "\",\"" + finalLocation + "\",\"\",\"\",1)");
                                 dbEvents.execSQL("UPDATE entertainment SET starred="+1+" WHERE _id="+event.getId());
                                 // change star color
                                 event.setStarred(1);
@@ -139,7 +141,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
 
                             } else {
                                 // remove from database
-                                dbEvents.execSQL("DELETE FROM stars WHERE title=\""+event.getTitle()+"\" AND startTime=\""+event.getStartTime()+"\" AND date=\""+event.getDate()+"\"");
+                                dbStars.execSQL("DELETE FROM stars WHERE title=\""+event.getTitle()+"\" AND startTime=\""+event.getStartTime()+"\" AND date=\""+event.getDate()+"\"");
                                 dbEvents.execSQL("UPDATE entertainment SET starred="+0+" WHERE _id="+event.getId());
                                 // change star color
                                 event.setStarred(0);
@@ -148,6 +150,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
                             }
 
                             dbEvents.close();
+                            dbStars.close();
                         }
                     };
                     star.setOnClickListener(starOnClickListener);
