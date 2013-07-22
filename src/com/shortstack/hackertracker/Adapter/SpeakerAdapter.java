@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -131,6 +132,25 @@ public class SpeakerAdapter extends ArrayAdapter<Speaker> {
                         }
                         bodyText.setText(body);
 
+                        // check if entry is already in starred database
+                        DatabaseAdapter myDbHelper = new DatabaseAdapter(getContext());
+                        StarDatabaseAdapter myDbHelperStars = new StarDatabaseAdapter(getContext());
+                        SQLiteDatabase dbSpeakers = myDbHelper.getWritableDatabase();
+                        SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
+                        Cursor myCursor = dbStars.rawQuery("SELECT * FROM stars WHERE title=\""+speaker.getTitle()+"\" AND startTime=\""+speaker.getStartTime()+"\" AND date=\""+speaker.getDate()+"\"", null);
+                        try{
+                            if (myCursor.moveToFirst()){
+                                do{
+                                    dbSpeakers.execSQL("UPDATE speakers SET starred="+1+" WHERE _id="+speaker.getId());
+                                    star.setTextColor(Color.parseColor("#ffcc00"));
+                                }while(myCursor.moveToNext());
+                            }
+                        }finally{
+                            myCursor.close();
+                        }
+                        dbSpeakers.close();
+                        dbStars.close();
+
                         // set star
                         if (speaker.getStarred()==1) {
                             star.setTextColor(Color.parseColor("#ffcc00"));
@@ -165,7 +185,7 @@ public class SpeakerAdapter extends ArrayAdapter<Speaker> {
                                 if (star.getCurrentTextColor() == -1) {
                                     // add to stars database
                                     dbStars.execSQL("INSERT INTO stars VALUES (null,\""+ speaker.getTitle() +"\",\""+ finalBody +"\",\""+speaker.getStartTime()+"\",\""+speaker.getEndTime()+"\",\""+speaker.getDate()+"\",\""+ finalLocation +"\",\"\","+"\""+finalSpeakerName+"\",1)");
-                                    dbSpeakers.execSQL("UPDATE speakers SET starred="+1+" WHERE _id="+speaker.getId());
+                                    dbSpeakers.execSQL("UPDATE speakers SET starred=" + 1 + " WHERE _id=" + speaker.getId());
                                     // change star color
                                     speaker.setStarred(1);
                                     star.setTextColor(Color.parseColor("#ffcc00"));
@@ -174,7 +194,7 @@ public class SpeakerAdapter extends ArrayAdapter<Speaker> {
                                 } else {
                                     // remove from database
                                     dbStars.execSQL("DELETE FROM stars WHERE title=\""+ speaker.getTitle() +"\" AND startTime=\""+speaker.getStartTime()+"\" AND date=\""+speaker.getDate()+"\"");
-                                    dbSpeakers.execSQL("UPDATE speakers SET starred="+0+" WHERE _id="+speaker.getId());
+                                    dbSpeakers.execSQL("UPDATE speakers SET starred=" + 0 + " WHERE _id=" + speaker.getId());
                                     // change star color
                                     speaker.setStarred(0);
                                     star.setTextColor(Color.parseColor("#ffffff"));

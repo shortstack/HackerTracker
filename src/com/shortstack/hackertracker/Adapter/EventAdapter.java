@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -113,6 +114,25 @@ public class EventAdapter extends ArrayAdapter<Event> {
                         body = body.replaceAll("\"","“");
                     }
                     bodyText.setText(body);
+
+                    // check if entry is already in starred database
+                    DatabaseAdapter myDbHelper = new DatabaseAdapter(getContext());
+                    StarDatabaseAdapter myDbHelperStars = new StarDatabaseAdapter(getContext());
+                    SQLiteDatabase dbEvents = myDbHelper.getWritableDatabase();
+                    SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
+                    Cursor myCursor = dbStars.rawQuery("SELECT * FROM stars WHERE title=\""+event.getTitle()+"\" AND startTime=\""+event.getStartTime()+"\" AND date=\""+event.getDate()+"\"", null);
+                    try{
+                        if (myCursor.moveToFirst()){
+                            do{
+                                dbEvents.execSQL("UPDATE entertainment SET starred="+1+" WHERE _id="+event.getId());
+                                star.setTextColor(Color.parseColor("#ffcc00"));
+                            }while(myCursor.moveToNext());
+                        }
+                    }finally{
+                        myCursor.close();
+                    }
+                    dbEvents.close();
+                    dbStars.close();
 
                     // set star
                     if (event.getStarred()==1) {

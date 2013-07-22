@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.Adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -12,6 +13,7 @@ import android.text.util.Linkify;
 import android.view.*;
 import android.widget.*;
 import com.shortstack.hackertracker.Model.Contest;
+import com.shortstack.hackertracker.Model.Star;
 import com.shortstack.hackertracker.R;
 
 /**
@@ -124,6 +126,25 @@ public class ContestAdapter extends ArrayAdapter<Contest> {
                         body = body.replaceAll("\"","“");
                     }
                     bodyText.setText(body);
+
+                    // check if entry is already in starred database
+                    DatabaseAdapter myDbHelper = new DatabaseAdapter(getContext());
+                    StarDatabaseAdapter myDbHelperStars = new StarDatabaseAdapter(getContext());
+                    SQLiteDatabase dbContests = myDbHelper.getWritableDatabase();
+                    SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
+                    Cursor myCursor = dbStars.rawQuery("SELECT * FROM stars WHERE title=\""+contest.getTitle()+"\" AND startTime=\""+contest.getStartTime()+"\" AND date=\""+contest.getDate()+"\"", null);
+                    try{
+                        if (myCursor.moveToFirst()){
+                            do{
+                                dbContests.execSQL("UPDATE contests SET starred="+1+" WHERE _id="+contest.getId());
+                                star.setTextColor(Color.parseColor("#ffcc00"));
+                            }while(myCursor.moveToNext());
+                        }
+                    }finally{
+                        myCursor.close();
+                    }
+                    dbContests.close();
+                    dbStars.close();
 
                     // set star
                     if (contest.getStarred()==1) {
