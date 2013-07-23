@@ -120,7 +120,7 @@ public class EventAdapter extends ArrayAdapter<Event> {
                     StarDatabaseAdapter myDbHelperStars = new StarDatabaseAdapter(getContext());
                     SQLiteDatabase dbEvents = myDbHelper.getWritableDatabase();
                     SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
-                    Cursor myCursor = dbStars.rawQuery("SELECT * FROM stars WHERE title=\""+event.getTitle()+"\" AND startTime=\""+event.getStartTime()+"\" AND date=\""+event.getDate()+"\"", null);
+                    Cursor myCursor = dbStars.rawQuery("SELECT * FROM stars WHERE title=\""+title.replaceAll("\"","“")+"\" AND startTime=\""+event.getStartTime()+"\" AND date=\""+event.getDate()+"\"", null);
                     try{
                         if (myCursor.moveToFirst()){
                             do{

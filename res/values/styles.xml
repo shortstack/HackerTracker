@@ -17,6 +17,7 @@
     </style>
     <style name="location">
         <item name="android:textColor">@drawable/row_text_color</item>
+        <item name="android:textColorLink">@color/day4</item>
     </style>
     <style name="dayText">
         <item name="android:layout_width">wrap_content</item>
@@ -81,6 +82,7 @@
         <item name="android:background">@color/white</item>
         <item name="android:padding">10dp</item>
         <item name="android:textSize">16dp</item>
+        <item name="android:textColorLink">@color/light_lime</item>
     </style>
     <style name="buttonStyle">
         <item name="android:layout_width">60dp</item>
