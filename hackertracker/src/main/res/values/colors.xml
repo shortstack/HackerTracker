@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black_alpha">#CC000000</color>
+    <color name="black_alpha_hover">#EE000000</color>
+    <color name="white_alpha">#33FFFFFF</color>
+    <color name="green">#afec44</color>
+    <color name="white">#ffffff</color>
+    <color name="black">#000000</color>
+    <color name="light_green">#19a938</color>
+    <color name="day4">#00811c</color>
+    <color name="day3">#60a56f</color>
+    <color name="day2">#1b662b</color>
+    <color name="day1">#19a938</color>
+    <color name="star">#ffcc00</color>
+</resources>
