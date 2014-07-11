@@ -1,8 +1,0 @@
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/text1"
-    style="@style/row"
-    android:paddingTop="2dip"
-    android:paddingBottom="3dip"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/row_background_trans"/>
