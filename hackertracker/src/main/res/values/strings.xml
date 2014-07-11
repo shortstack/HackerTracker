@@ -22,6 +22,7 @@
     <string name="maps">maps</string>
     <string name="faq">faq</string>
     <string name="schedule">my schedule</string>
+    <string name="links">links</string>
 
     <string name="schedule_cleared">schedule cleared successfully</string>
     <string name="delete_all">clear my schedule</string>
@@ -35,10 +36,6 @@
     <string name="shuttle_text">
         <big>Airport Shuttle Service to DEF CON 22!</big>\n\nIt\'s a known fact: Vegas cab drivers can be … indirect. Even worse, it\'s a real challenge to keep a cab smelling daisy-fresh in 110 degree heat. So how does one get from the airport to the Rio without taking an unnecessary tour of Henderson and baking like a potato?\n\nThere is a way.\n\nWe\'ve partnered with LASxpress to shuttle DEF CON attendees from McCarran to their hotels, Rio and otherwise. It costs 11 bucks (18 non-stop), and has the benefits of meet and greet service and immediate boarding.\n\nOf course, there is something of a vision-quest feeling to waiting around in the desert, sweating in a small space as you travel aimlessly throughout the universe. So, you can still do that, too.\n\nIf you\'d rather try the shuttle route, just click here to register: http://lasrescenter.hudsonltd.net/res?USERIDENTRY=DEFCON2014&amp;LOGON=GO
     </string>
-
-    <array name="updates">
-        <item><b>7.11.14</b>\n\n2014 overhaul! if you have any events/speakers/parties/contests to add, or if you find any errors/typos, email me at whitney.ellis.champion@gmail.com. thanks!</item>
-    </array>
 
     <array name="faq_questions">
         <item>When and where is DEF CON 22?</item>
@@ -83,5 +80,13 @@
         \n\nhttps://forum.defcon.org/ for a look at all the events and contests being planned for DEF CON 22. Join in on the action.
         \n\nhttps://pics.defcon.org/ to upload all your past DEF CON pictures. We store the pictures so you don\'t have to worry about web space. If you have an account on the forums, you have an account here.
         \n\nhttps://www.defcon.org/defconrss.xml for news and announcements surrounding DEF CON. Also check out our Twitter, Facebook, and G+ accounts for up to the minute news.</item>
+    </array>
+
+    <string name="link_01"><b>official DC22 website</b>\n\nhttps://www.defcon.org/html/defcon-22/dc-22-index.html\n\n</string>
+    <string name="link_02"><b>official DEF CON twitter</b>\n\nhttps://twitter.com/_defcon_\n\n</string>
+    <string name="link_03" formatted="false"><b>DEF CON related twitter updates</b>&lt;br&gt;&lt;br&gt;&lt;a href=\"http://bit.ly/1oriN0n\"&gt;#defcon, #dc22, @defconparties, @_defcon_&lt;/a&gt;\n\n</string>
+
+    <array name="updates">
+        <item><b>7.11.14</b>\n\n2014 overhaul! if you have any events/speakers/parties/contests to add, or if you find any errors/typos, email me at whitney.ellis.champion@gmail.com. thanks!</item>
     </array>
 </resources>

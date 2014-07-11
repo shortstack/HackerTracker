@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/page">
+
+    <TextView android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/details_body"
+        android:textColor="@color/white"
+        android:textSize="16dp"
+        android:id="@+id/links"
+        android:clickable="true"
+        android:autoLink="all"
+        android:padding="15dp"/>
+
+</LinearLayout>
+

@@ -13,6 +13,7 @@ import com.shortstack.hackertracker.Contests.ContestPagerFragment;
 import com.shortstack.hackertracker.Events.EventPagerFragment;
 import com.shortstack.hackertracker.Misc.FAQFragment;
 import com.shortstack.hackertracker.Misc.HomeFragment;
+import com.shortstack.hackertracker.Misc.LinksFragment;
 import com.shortstack.hackertracker.Misc.MapsFragment;
 import com.shortstack.hackertracker.Misc.NavigationDrawerFragment;
 import com.shortstack.hackertracker.Misc.ShuttleFragment;
@@ -114,7 +115,12 @@ public class HomeActivity extends ActionBarActivity
                         .addToBackStack("FAQFragment")
                         .commit();
                 break;
-
+            case 9:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, LinksFragment.newInstance(11))
+                        .addToBackStack("LinksFragment")
+                        .commit();
+                break;
         }
     }
 
@@ -156,6 +162,10 @@ public class HomeActivity extends ActionBarActivity
                 break;
             case 10:
                 mTitle = getString(R.string.shuttle);
+                break;
+            case 11:
+                mTitle = getString(R.string.links);
+                break;
 
         }
     }
