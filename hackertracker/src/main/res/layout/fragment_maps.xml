@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+      style="@style/page">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        style="@style/scroll_view">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center">
+
+            <ImageView
+                android:src="@drawable/crop_dcmap"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="40dp"
+                android:id="@+id/crop_dcmap"/>
+
+            <Button
+                style="@style/button_map"
+                android:text="Conference Map"
+                android:id="@+id/button_dcmap"
+                />
+
+            <ImageView
+                android:src="@drawable/crop_riomap"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="10dp"
+                android:id="@+id/crop_riomap"/>
+
+            <Button
+                style="@style/button_map"
+                android:text="Rio Map"
+                android:id="@+id/button_riomap"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
+
