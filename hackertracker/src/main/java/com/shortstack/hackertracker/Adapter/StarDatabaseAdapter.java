@@ -35,7 +35,7 @@ public class StarDatabaseAdapter extends SQLiteOpenHelper {
      */
     public StarDatabaseAdapter(Context context)  {
 
-        super(context, DB_NAME, null, 1);
+        super(context, DB_NAME, null, 20);
         this.myContext = context;
     }
 
