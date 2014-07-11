@@ -27,7 +27,7 @@ import java.util.List;
 public class DatabaseAdapter extends SQLiteOpenHelper {
 
     //The Android's default system path of your application database.
-    private static String DB_PATH = "/data/data/com.shortstack.hackertracker2014/databases/";
+    private static String DB_PATH = "/data/data/com.shortstack.hackertracker/databases/";
 
     private static String DB_NAME = "hackertracker";
 
@@ -42,7 +42,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
      */
     public DatabaseAdapter(Context context)  {
 
-        super(context, DB_NAME, null, 21);
+        super(context, DB_NAME, null, 3);
         this.myContext = context;
     }
 

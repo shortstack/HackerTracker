@@ -23,17 +23,23 @@
     <string name="faq">faq</string>
     <string name="schedule">my schedule</string>
 
+    <string name="schedule_cleared">schedule cleared successfully</string>
     <string name="delete_all">clear my schedule</string>
-    <string name="close">Close</string>
+    <string name="close">close</string>
 
     <string name="coming_soon_maps">Conference map will be posted when it becomes available!</string>
 
-    <string name="star_add">Add to My Schedule</string>
-    <string name="star_delete">Remove from My Schedule</string>
+    <string name="star_add">add to my schedule</string>
+    <string name="star_delete">remove from my schedule</string>
 
     <string name="shuttle_text">
         <big>Airport Shuttle Service to DEF CON 22!</big>\n\nIt\'s a known fact: Vegas cab drivers can be … indirect. Even worse, it\'s a real challenge to keep a cab smelling daisy-fresh in 110 degree heat. So how does one get from the airport to the Rio without taking an unnecessary tour of Henderson and baking like a potato?\n\nThere is a way.\n\nWe\'ve partnered with LASxpress to shuttle DEF CON attendees from McCarran to their hotels, Rio and otherwise. It costs 11 bucks (18 non-stop), and has the benefits of meet and greet service and immediate boarding.\n\nOf course, there is something of a vision-quest feeling to waiting around in the desert, sweating in a small space as you travel aimlessly throughout the universe. So, you can still do that, too.\n\nIf you\'d rather try the shuttle route, just click here to register: http://lasrescenter.hudsonltd.net/res?USERIDENTRY=DEFCON2014&amp;LOGON=GO
     </string>
+
+    <array name="updates">
+        <item><b>7.11.14</b>\n\n2014 overhaul! if you have any events/speakers/parties/contests to add, or if you find any errors/typos, email me at whitney.ellis.champion@gmail.com. thanks!</item>
+    </array>
+
     <array name="faq_questions">
         <item>When and where is DEF CON 22?</item>
         <item>DEF CON is generally in the last week of July or first week of August in Las Vegas. DEF CON 22 will be held August 7&#8211;10, 2014 at the Rio Hotel &amp; Casino in Las Vegas. Many people arrive a day early, and many stay a day later. Again this year we will have some things running on Thursday.\n\nRio Hotel and Casino: \n3700 W Flamingo Rd\nLas Vegas, Nevada 89103\n866-746-7671\nhttp://www.riolasvegas.com/</item>

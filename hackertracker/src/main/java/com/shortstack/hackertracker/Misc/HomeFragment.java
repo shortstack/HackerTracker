@@ -1,14 +1,18 @@
 package com.shortstack.hackertracker.Misc;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 
 import com.shortstack.hackertracker.Activity.HomeActivity;
+import com.shortstack.hackertracker.Adapter.QuestionAdapter;
 import com.shortstack.hackertracker.R;
 
 /**
@@ -17,6 +21,7 @@ import com.shortstack.hackertracker.R;
 public class HomeFragment extends Fragment {
 
     private static View rootView;
+    private Context context;
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     public static HomeFragment newInstance(int sectionNumber) {
@@ -41,6 +46,17 @@ public class HomeFragment extends Fragment {
             rootView = inflater.inflate(R.layout.fragment_home, container, false);
         } catch (InflateException e) {
         }
+
+        // get context
+        context = inflater.getContext();
+
+        // get list items
+        CharSequence[] myItems = getResources().getTextArray(R.array.updates);
+
+        // configure the listview
+        ArrayAdapter<CharSequence> aa = new ArrayAdapter<CharSequence>(context,R.layout.row_updates,myItems);
+        ListView faq_list = (ListView) rootView.findViewById(R.id.updates);
+        faq_list.setAdapter(aa);
 
         return rootView;
     }

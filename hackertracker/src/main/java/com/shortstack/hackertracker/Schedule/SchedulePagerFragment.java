@@ -1,5 +1,7 @@
 package com.shortstack.hackertracker.Schedule;
 
+import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,7 +18,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Contests.ContestPagerFragment;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.DialogUtil;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
@@ -25,6 +29,7 @@ public class SchedulePagerFragment extends Fragment {
 
     static ViewPager pager;
     private static Context context;
+    private static Activity activity;
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     public static SchedulePagerFragment newInstance(int position) {
@@ -50,6 +55,8 @@ public class SchedulePagerFragment extends Fragment {
         View result=inflater.inflate(R.layout.pager, container, false);
 
         context = inflater.getContext();
+
+        activity = getActivity();
 
         // if there are no starred items, show dialog
         if (getStars()<1 && !SharedPreferencesUtil.showSuggestions()) {
@@ -98,7 +105,10 @@ public class SchedulePagerFragment extends Fragment {
         // update all data in main database to not be starred
         db.execSQL("UPDATE data SET starred=0");
 
-        Toast.makeText(context, "Schedule cleared successfully", Toast.LENGTH_SHORT).show();
+        // reload screen
+        HomeActivity.refreshSchedule();
+
+        Toast.makeText(context, R.string.schedule_cleared, Toast.LENGTH_SHORT).show();
         db.close();
         dbStars.close();
     }

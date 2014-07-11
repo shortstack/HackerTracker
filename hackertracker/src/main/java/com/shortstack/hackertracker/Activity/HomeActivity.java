@@ -11,12 +11,13 @@ import android.support.v4.widget.DrawerLayout;
 
 import com.shortstack.hackertracker.Contests.ContestPagerFragment;
 import com.shortstack.hackertracker.Events.EventPagerFragment;
-import com.shortstack.hackertracker.FAQ.FAQFragment;
+import com.shortstack.hackertracker.Misc.FAQFragment;
 import com.shortstack.hackertracker.Misc.HomeFragment;
 import com.shortstack.hackertracker.Misc.MapsFragment;
 import com.shortstack.hackertracker.Misc.NavigationDrawerFragment;
 import com.shortstack.hackertracker.Misc.ShuttleFragment;
 import com.shortstack.hackertracker.Parties.PartyPagerFragment;
+import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
 import com.shortstack.hackertracker.Vendors.VendorsFragment;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Speakers.SpeakerPagerFragment;
@@ -115,6 +116,13 @@ public class HomeActivity extends ActionBarActivity
                 break;
 
         }
+    }
+
+    public static void refreshSchedule() {
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, SchedulePagerFragment.newInstance(9))
+                .addToBackStack("SchedulePagerFragment")
+                .commit();
     }
 
     public void onSectionAttached(int number) {

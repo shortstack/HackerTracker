@@ -4,10 +4,11 @@ import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.shortstack.hackertracker.Misc.HackerTrackerFragment;
 
-public class SchedulePagerAdapter extends FragmentPagerAdapter {
+public class SchedulePagerAdapter extends FragmentStatePagerAdapter {
     private Context ctxt=null;
 
     public SchedulePagerAdapter(Context ctxt, FragmentManager mgr) {

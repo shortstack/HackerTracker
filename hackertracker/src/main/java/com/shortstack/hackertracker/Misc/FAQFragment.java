@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.FAQ;
+package com.shortstack.hackertracker.Misc;
 
 import android.app.Activity;
 import android.content.Context;

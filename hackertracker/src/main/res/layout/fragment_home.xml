@@ -1,7 +1,41 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/page"
+    android:orientation="vertical"
     tools:context=".HomeActivity$HomeFragment">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:textStyle="bold"
+        android:layout_marginTop="60dp"
+        android:textSize="20dp"
+        android:text="DC22 Schedule\nOfficial &amp; Unofficial"
+        android:gravity="center"
+        android:textColor="@color/white"/>
 
-</RelativeLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/skull_lg"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Updates"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_gravity="center_horizontal"
+        android:textColor="@color/white"/>
+    <ListView
+        style="@style/list"
+        android:id="@+id/updates"
+        android:padding="15dp"
+        android:textColor="@color/white"/>
+
+
+</LinearLayout>

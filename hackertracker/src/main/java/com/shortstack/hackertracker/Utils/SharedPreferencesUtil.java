@@ -39,7 +39,7 @@ public class SharedPreferencesUtil {
     }
 
     public static boolean showSuggestions() {
-        return sharedPreferences.getBoolean("showSuggestions",true);
+        return sharedPreferences.getBoolean("showSuggestions",false);
     }
 
 }

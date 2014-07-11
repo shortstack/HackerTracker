@@ -26,6 +26,12 @@ public class DialogUtil {
         return progressDialog;
     }
 
+    public static void hideSpinner(ProgressDialog progressDialog) {
+        if (progressDialog.isShowing()) {
+            progressDialog.hide();
+        }
+    }
+
     public static AlertDialog emptyScheduleDialog(final Context context) {
 
         LayoutInflater inflater =
