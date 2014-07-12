@@ -1,11 +1,13 @@
 package com.shortstack.hackertracker.Adapter;
 
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -22,7 +24,7 @@ public class StarDatabaseAdapter extends SQLiteOpenHelper {
     //The Android's default system path of your application database.
     private static String DB_PATH = "/data/data/com.shortstack.hackertracker/databases/";
 
-    private static String DB_NAME = "starred";
+    private static String DB_NAME = "starred.sqlite";
 
     private SQLiteDatabase myDataBase;
 
@@ -104,8 +106,10 @@ public class StarDatabaseAdapter extends SQLiteOpenHelper {
     private void copyDataBase() throws IOException{
 
         //Open your local db as the input stream
-        InputStream myInput = myContext.getAssets().open(DB_NAME);
-
+        AssetManager assetManager = myContext.getResources().getAssets();
+        InputStream myInput = null;
+        myInput = assetManager.open(DB_NAME);
+        File file = new File(DB_PATH+DB_NAME);
         // Path to the just created empty db
         String outFileName = DB_PATH + DB_NAME;
 
