@@ -250,6 +250,12 @@ public class NavigationDrawerFragment extends Fragment {
                     .addToBackStack("SchedulePagerFragment")
                     .commit();
             return true;
+        } else if (item.getItemId() == R.id.action_search) {
+            getFragmentManager().beginTransaction()
+                    .replace(R.id.container, SearchFragment.newInstance(12))
+                    .addToBackStack("SearchFragment")
+                    .commit();
+            return true;
         }
 
         return super.onOptionsItemSelected(item);

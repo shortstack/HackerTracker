@@ -120,17 +120,19 @@ public class MapsFragment extends Fragment {
             Log.e("tag", e.getMessage());
         }
         for(String filename : files) {
-            InputStream in = null;
-            OutputStream out = null;
-            try {
-                in = assetManager.open(filename);
-                out = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() +"/"+ filename);
-                copyFile(in, out);
-                in.close();
-                out.flush();
-                out.close();
-            } catch(Exception e) {
-                Log.e("tag", e.getMessage());
+            if (filename.contains("map")) {
+                InputStream in = null;
+                OutputStream out = null;
+                try {
+                    in = assetManager.open(filename);
+                    out = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename);
+                    copyFile(in, out);
+                    in.close();
+                    out.flush();
+                    out.close();
+                } catch (Exception e) {
+                    Log.e("tag", e.getMessage());
+                }
             }
         }
     }

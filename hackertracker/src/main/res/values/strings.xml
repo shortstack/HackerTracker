@@ -23,6 +23,7 @@
     <string name="faq">faq</string>
     <string name="schedule">my schedule</string>
     <string name="links">links</string>
+    <string name="search">search</string>
 
     <string name="schedule_cleared">schedule cleared successfully</string>
     <string name="delete_all">clear my schedule</string>

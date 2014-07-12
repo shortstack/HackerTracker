@@ -5,4 +5,8 @@
     <item android:id="@+id/action_schedule"
         android:title="@string/schedule"
         app:showAsAction="withText|ifRoom" />
+    <item android:id="@+id/action_search"
+        android:title="@string/search"
+        android:icon="@drawable/search"
+        app:showAsAction="ifRoom" />
 </menu>

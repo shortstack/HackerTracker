@@ -166,7 +166,9 @@ public class HomeActivity extends ActionBarActivity
             case 11:
                 mTitle = getString(R.string.links);
                 break;
-
+            case 12:
+                mTitle = getString(R.string.search);
+                break;
         }
     }
 

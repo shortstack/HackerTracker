@@ -11,6 +11,7 @@
          space available using match_parent in both dimensions. -->
     <FrameLayout
         android:id="@+id/container"
+        style="@style/page"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

@@ -108,10 +108,18 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                         forumText.setText("Site: " + item.getForum());
                     }
 
-                    // enter values
+                    // set title
                     titleText.setText(item.getTitle());
-                    locationText.append(item.getLocation());
+
+                    // set location
+                    if (item.getLocation()!=null) {
+                        locationText.append(item.getLocation());
+                    }
+
+                    // set body
                     bodyText.setText(item.getBody());
+
+                    // set time
                     timeText.setText(item.getStartTime() + " - " + item.getEndTime());
 
                     // check if entry is already in starred database

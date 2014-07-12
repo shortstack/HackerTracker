@@ -56,7 +56,7 @@ public class StarDatabaseAdapter extends SQLiteOpenHelper {
 
             //By calling this method and empty database will be created into the default system path
             //of your application so we are gonna be able to overwrite that database with our database.
-            this.getReadableDatabase();
+            this.getWritableDatabase();
 
             try {
 
@@ -81,7 +81,7 @@ public class StarDatabaseAdapter extends SQLiteOpenHelper {
 
         try{
             String myPath = DB_PATH + DB_NAME;
-            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS | SQLiteDatabase.OPEN_READWRITE);
 
         }catch(SQLiteException e){
 
@@ -106,10 +106,8 @@ public class StarDatabaseAdapter extends SQLiteOpenHelper {
     private void copyDataBase() throws IOException{
 
         //Open your local db as the input stream
-        AssetManager assetManager = myContext.getResources().getAssets();
-        InputStream myInput = null;
-        myInput = assetManager.open(DB_NAME);
-        File file = new File(DB_PATH+DB_NAME);
+        InputStream myInput = myContext.getAssets().open(DB_NAME);
+
         // Path to the just created empty db
         String outFileName = DB_PATH + DB_NAME;
 
@@ -134,7 +132,7 @@ public class StarDatabaseAdapter extends SQLiteOpenHelper {
 
         //Open the database
         String myPath = DB_PATH + DB_NAME;
-        myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+        myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS | SQLiteDatabase.OPEN_READWRITE);
 
     }
 

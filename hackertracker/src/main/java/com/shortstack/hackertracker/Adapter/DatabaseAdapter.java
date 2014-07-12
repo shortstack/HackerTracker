@@ -44,7 +44,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
      */
     public DatabaseAdapter(Context context)  {
 
-        super(context, DB_NAME, null, 76);
+        super(context, DB_NAME, null, 99);
         this.myContext = context;
     }
 
@@ -61,7 +61,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
             //By calling this method and empty database will be created into the default system path
             //of your application so we are gonna be able to overwrite that database with our database.
-            this.getReadableDatabase();
+            this.getWritableDatabase();
 
             try {
 
@@ -86,7 +86,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
         try{
             String myPath = DB_PATH + DB_NAME;
-            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READONLY);
+            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS | SQLiteDatabase.OPEN_READWRITE);
 
         }catch(SQLiteException e){
 
@@ -111,10 +111,8 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
     private void copyDataBase() throws IOException{
 
         //Open your local db as the input stream
-        AssetManager assetManager = myContext.getResources().getAssets();
-        InputStream myInput = null;
-        myInput = assetManager.open(DB_NAME);
-        File file = new File(DB_PATH+DB_NAME);
+        InputStream myInput = myContext.getAssets().open(DB_NAME);
+
         // Path to the just created empty db
         String outFileName = DB_PATH + DB_NAME;
 
