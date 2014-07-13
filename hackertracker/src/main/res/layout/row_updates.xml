@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:textColor="@color/white"
-    android:textSize="16dp"
+    android:textSize="14dp"
     android:paddingBottom="10dp"
     android:linksClickable="true"
     android:autoLink="all"

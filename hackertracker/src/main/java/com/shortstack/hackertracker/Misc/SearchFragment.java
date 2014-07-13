@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.net.wifi.ScanResult;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,6 +18,8 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -34,7 +37,15 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 /**
  * Created by Whitney Champion on 7/7/14.
@@ -45,6 +56,8 @@ public class SearchFragment extends Fragment {
     private Context context;
     private DefaultAdapter adapter;
     private ListView list;
+    private ArrayList<Default> result;
+    private EditText search;
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     public static SearchFragment newInstance(int sectionNumber) {
@@ -79,24 +92,40 @@ public class SearchFragment extends Fragment {
         list = (ListView) rootView.findViewById(R.id.search_list);
 
         // edittext listener
-        EditText search = (EditText) rootView.findViewById(R.id.search);
-        search.requestFocus();
+        search = (EditText) rootView.findViewById(R.id.search);
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
         search.addTextChangedListener(new TextWatcher() {
 
             public void afterTextChanged(Editable s) {
-                if (!s.toString().equals("")) {
-                    new getSearchResults().execute(s.toString());
-                }
             }
 
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
 
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString()!="") {
+                    new getSearchResults().execute(s.toString());
+                }
+            }
+        });
+        search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(!hasFocus){
+                    hideKeyboard();
+                }
+
             }
         });
 
         return rootView;
+    }
+
+    private void hideKeyboard() {
+        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
     }
 
     class getSearchResults extends AsyncTask<String, Void, List<Default>> {
@@ -110,19 +139,16 @@ public class SearchFragment extends Fragment {
         @Override
         protected void onPostExecute(List<Default> items) {
             if (items!=null) {
-                if (items.size() > 0) {
 
-                    adapter = new DefaultAdapter(context, R.layout.row, items);
+                adapter = new DefaultAdapter(context, R.layout.row, items);
 
-                    list.setAdapter(adapter);
-                    adapter.notifyDataSetChanged();
+                list.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
 
-                }
             }
         }
 
     }
-
 
     @Override
     public void onAttach(Activity activity) {
@@ -133,42 +159,87 @@ public class SearchFragment extends Fragment {
 
     public List<Default> searchDatabase(String string) {
 
-        ArrayList<Default> result = new ArrayList<Default>();
+        result = new ArrayList<Default>();
+
+        if (string.equals("") || string.trim().isEmpty()) {
+            return result;
+        }
+
         SQLiteDatabase db = HackerTrackerApplication.myDbHelper.getWritableDatabase();
 
-        Cursor myCursor = db.rawQuery("SELECT * FROM data WHERE (title LIKE ? OR body LIKE ? OR name LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
+        Cursor title = db.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
+        Cursor body = db.rawQuery("SELECT * FROM data WHERE (body LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
+        Cursor name = db.rawQuery("SELECT * FROM data WHERE (name LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
+
+        // get search results from each query
+        getResults(title);
+        getResults(body);
+        getResults(name);
+
+        // close database
+        db.close();
+
+        // sort by start time
+        Collections.sort(result, new ItemComparator());
+
+        SortedSet<Default> items = new TreeSet<Default>(new Comparator<Default>() {
+            @Override
+            public int compare(Default arg0, Default arg1) {
+                return String.valueOf(arg0.getId()).compareTo(String.valueOf(arg1.getId()));
+            }
+        });
+
+        Iterator<Default> iterator = result.iterator();
+        while(iterator.hasNext()) {
+            items.add(iterator.next());
+        }
+        result.clear();
+        result.addAll(items);
+
+        return result;
+    }
+
+
+
+    public class ItemComparator implements Comparator<Default> {
+
+        public int compare(Default left, Default right) {
+            return left.getStartTime().compareTo(right.getStartTime());
+        }
+
+    }
+
+    private void getResults(Cursor cursor) {
 
         try{
-            if (myCursor.moveToFirst()){
+            if (cursor.moveToFirst()){
                 do{
 
                     Default item = new Default();
 
-                    item.setId(myCursor.getInt(myCursor.getColumnIndex("id")));
-                    item.setType(myCursor.getInt(myCursor.getColumnIndex("type")));
-                    item.setTitle(myCursor.getString(myCursor.getColumnIndex("title")));
-                    item.setBody(myCursor.getString(myCursor.getColumnIndex("body")));
-                    item.setName(myCursor.getString(myCursor.getColumnIndex("name")));
-                    item.setDate(myCursor.getInt(myCursor.getColumnIndex("date")));
-                    item.setEndTime(myCursor.getString(myCursor.getColumnIndex("endTime")));
-                    item.setStartTime(myCursor.getString(myCursor.getColumnIndex("startTime")));
-                    item.setLocation(myCursor.getString(myCursor.getColumnIndex("location")));
-                    item.setStarred(myCursor.getInt(myCursor.getColumnIndex("starred")));
-                    item.setImage(myCursor.getString(myCursor.getColumnIndex("image")));
-                    item.setForum(myCursor.getString(myCursor.getColumnIndex("forum")));
+                    item.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                    item.setType(cursor.getInt(cursor.getColumnIndex("type")));
+                    item.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+                    item.setBody(cursor.getString(cursor.getColumnIndex("body")));
+                    item.setName(cursor.getString(cursor.getColumnIndex("name")));
+                    item.setDate(cursor.getInt(cursor.getColumnIndex("date")));
+                    item.setEndTime(cursor.getString(cursor.getColumnIndex("endTime")));
+                    item.setStartTime(cursor.getString(cursor.getColumnIndex("startTime")));
+                    item.setLocation(cursor.getString(cursor.getColumnIndex("location")));
+                    item.setStarred(cursor.getInt(cursor.getColumnIndex("starred")));
+                    item.setImage(cursor.getString(cursor.getColumnIndex("image")));
+                    item.setForum(cursor.getString(cursor.getColumnIndex("forum")));
 
                     result.add(item);
 
-                }while(myCursor.moveToNext());
+                }while(cursor.moveToNext());
             }
         }finally{
-            myCursor.close();
+            cursor.close();
         }
-
-        db.close();
-
-        return result;
     }
+
+
 }
 
 

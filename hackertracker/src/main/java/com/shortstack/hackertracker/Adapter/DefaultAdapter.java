@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -78,6 +79,9 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             final View finalRow = row;
             final View.OnClickListener shareOnClickListener = new View.OnClickListener() {
                 public void onClick(View v) {
+
+                    // hide keyboard
+                    hideKeyboard(v);
 
                     // build layout
                     LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -179,6 +183,11 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
         }
 
         return row;
+    }
+
+    private void hideKeyboard(View v) {
+        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 
     static class DefaultHolder {

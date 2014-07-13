@@ -12,6 +12,8 @@
         android:singleLine="true"
         android:background="@drawable/button_states_green"
         android:padding="10dp"
+        android:focusableInTouchMode="true"
+        android:imeOptions="actionDone"
         android:textColor="@color/white">
         <requestFocus/>
     </EditText>
