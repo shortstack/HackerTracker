@@ -88,7 +88,7 @@
     <string name="link_03" formatted="false"><b>DEF CON related twitter updates</b>&lt;br&gt;&lt;br&gt;&lt;a href=\"http://bit.ly/1oriN0n\"&gt;#defcon, #dc22, @defconparties, @_defcon_&lt;/a&gt;\n\n</string>
 
     <array name="updates">
-        <item><b>7.15.14</b>\n\nadded parties and more contests. removed unnecessary permissions, only need media/storage perms to save the maps so you don't have to be online to access them.</item>
+        <item><b>7.15.14</b>\n\nadded parties and more contests. removed unnecessary permissions, only need media/storage perms to save the maps so you don\'t have to be online to access them.</item>
         <item><b>7.13.14</b>\n\nthank you for the overwhelmingly awesome feedback :) DEAF CON meetup added, DEF CON bike ride added, and more to come as schedules are available! search now searches speaker names as well.</item>
         <item><b>7.11.14</b>\n\n2014 overhaul! if you have any events/speakers/parties/contests to add, or if you find any errors/typos, email me at whitney.ellis.champion@gmail.com. thanks!</item>
     </array>
