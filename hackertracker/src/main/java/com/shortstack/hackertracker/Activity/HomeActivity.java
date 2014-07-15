@@ -267,16 +267,71 @@ public class HomeActivity extends ActionBarActivity
         return super.onPrepareOptionsMenu(menu);
     }
 
+    private enum FragmentName {
+        HomeFragment,
+        SpeakerPagerFragment,
+        EventPagerFragment,
+        ContestPagerFragment,
+        PartyPagerFragment,
+        VendorsFragment,
+        MapsFragment,
+        ShuttleFragment,
+        FAQFragment,
+        LinksFragment,
+        SchedulePagerFragment,
+        SearchFragment;
+
+    }
+
+
     @Override
     public void onBackPressed(){
+
         FragmentManager fm = this.getSupportFragmentManager();
-        if (fm.getBackStackEntryCount() > 0) {
-            Log.i("HomeActivity", "popping backstack");
+        if (fm.getBackStackEntryCount() > 1) {
+
+            FragmentName fragName = FragmentName.valueOf(fm.getBackStackEntryAt(fm.getBackStackEntryCount()-2).getName());
+            switch (fragName) {
+                case HomeFragment:
+                    getActionBar().setTitle(getString(R.string.home));
+                    break;
+                case SpeakerPagerFragment:
+                    getActionBar().setTitle(getString(R.string.speakers));
+                    break;
+                case ContestPagerFragment:
+                    getActionBar().setTitle(getString(R.string.contests));
+                    break;
+                case EventPagerFragment:
+                    getActionBar().setTitle(getString(R.string.events));
+                    break;
+                case PartyPagerFragment:
+                    getActionBar().setTitle(getString(R.string.parties));
+                    break;
+                case VendorsFragment:
+                    getActionBar().setTitle(getString(R.string.vendors));
+                    break;
+                case MapsFragment:
+                    getActionBar().setTitle(getString(R.string.maps));
+                    break;
+                case LinksFragment:
+                    getActionBar().setTitle(getString(R.string.links));
+                    break;
+                case FAQFragment:
+                    getActionBar().setTitle(getString(R.string.faq));
+                    break;
+                case ShuttleFragment:
+                    getActionBar().setTitle(getString(R.string.shuttle));
+                    break;
+                case SchedulePagerFragment:
+                    getActionBar().setTitle(getString(R.string.schedule));
+                    break;
+
+            }
             fm.popBackStack();
         } else {
-            Log.i("HomeActivity", "nothing on backstack, calling super");
-            super.onBackPressed();
+            finish();
         }
+
     }
 
     public static void clearSchedule(Context context) {
