@@ -21,6 +21,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
 
@@ -246,20 +247,6 @@ public class NavigationDrawerFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
-            return true;
-        }
-
-        if (item.getItemId() == R.id.action_schedule) {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.container, SchedulePagerFragment.newInstance(9))
-                    .addToBackStack("SchedulePagerFragment")
-                    .commit();
-            return true;
-        } else if (item.getItemId() == R.id.action_search) {
-            getFragmentManager().beginTransaction()
-                    .replace(R.id.container, SearchFragment.newInstance(12))
-                    .addToBackStack("SearchFragment")
-                    .commit();
             return true;
         }
 

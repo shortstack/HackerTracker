@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
+import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
 
@@ -89,7 +90,7 @@ public class DialogUtil {
             @Override
             public void onClick(View v) {
                 finalDialog.dismiss();
-                SchedulePagerFragment.clearSchedule();
+                HomeActivity.clearSchedule(context);
             }
         });
 

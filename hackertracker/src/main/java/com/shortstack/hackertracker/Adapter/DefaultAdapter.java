@@ -53,6 +53,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             holder = new DefaultHolder();
             holder.title = (TextView) row.findViewById(R.id.title);
             holder.time = (TextView) row.findViewById(R.id.time);
+            holder.name = (TextView) row.findViewById(R.id.name);
             holder.location = (TextView) row.findViewById(R.id.location);
             holder.defaultLayout = (LinearLayout) row.findViewById(R.id.rootLayout);
             row.setTag(holder);
@@ -69,8 +70,17 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             // set title
             holder.title.setText(item.getTitle());
 
+            // set name
+            if (item.getType()==1) {
+                holder.name.setVisibility(View.VISIBLE);
+                holder.name.setText(item.getName());
+            }
+
             // set time
             holder.time.setText(item.getStartTime());
+
+            // set name if it's a speaker
+
 
             // set location
             holder.location.setText(item.getLocation());
@@ -193,6 +203,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
     static class DefaultHolder {
         TextView title;
         TextView time;
+        TextView name;
         TextView location;
         LinearLayout defaultLayout;
     }

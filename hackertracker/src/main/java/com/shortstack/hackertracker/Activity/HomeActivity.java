@@ -1,5 +1,7 @@
 package com.shortstack.hackertracker.Activity;
 
+import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
@@ -8,7 +10,9 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
+import android.widget.Toast;
 
+import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Contests.ContestPagerFragment;
 import com.shortstack.hackertracker.Events.EventPagerFragment;
 import com.shortstack.hackertracker.Misc.FAQFragment;
@@ -16,9 +20,11 @@ import com.shortstack.hackertracker.Misc.HomeFragment;
 import com.shortstack.hackertracker.Misc.LinksFragment;
 import com.shortstack.hackertracker.Misc.MapsFragment;
 import com.shortstack.hackertracker.Misc.NavigationDrawerFragment;
+import com.shortstack.hackertracker.Misc.SearchFragment;
 import com.shortstack.hackertracker.Misc.ShuttleFragment;
 import com.shortstack.hackertracker.Parties.PartyPagerFragment;
 import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
+import com.shortstack.hackertracker.Utils.DialogUtil;
 import com.shortstack.hackertracker.Vendors.VendorsFragment;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Speakers.SpeakerPagerFragment;
@@ -36,6 +42,9 @@ public class HomeActivity extends ActionBarActivity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+
+    private boolean isSchedule = false;
+    private boolean isSearch = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +140,7 @@ public class HomeActivity extends ActionBarActivity
                 .commit();
     }
 
+
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
@@ -168,11 +178,19 @@ public class HomeActivity extends ActionBarActivity
                 break;
             case 12:
                 mTitle = getString(R.string.search);
+
                 break;
         }
     }
 
     public void restoreActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setTitle(mTitle);
+    }
+
+    public void setTitle() {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
@@ -198,10 +216,55 @@ public class HomeActivity extends ActionBarActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (id == R.id.action_settings) {
+        if (item.getItemId() == R.id.action_schedule) {
+            isSchedule = true;
+            getActionBar().setTitle(getString(R.string.schedule));
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, SchedulePagerFragment.newInstance(9))
+                    .addToBackStack("SchedulePagerFragment")
+                    .commit();
+            toggleMenu();
+            return true;
+        } else if (item.getItemId() == R.id.action_search) {
+            isSearch = true;
+            getActionBar().setTitle(getString(R.string.search));
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, SearchFragment.newInstance(12))
+                    .addToBackStack("SearchFragment")
+                    .commit();
+            toggleMenu();
+            return true;
+        } else if (id == R.id.action_clear) {
+            DialogUtil.clearScheduleDialog(this).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void toggleMenu() {
+        invalidateOptionsMenu();
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+
+        // if not responding to navigation bar, toggle menu items
+        if (menu.findItem(R.id.action_schedule)!=null) {
+            restoreActionBar();
+
+            if (isSchedule) {
+                menu.findItem(R.id.action_schedule).setVisible(false);
+                menu.findItem(R.id.action_search).setVisible(true);
+                menu.findItem(R.id.action_clear).setVisible(true);
+                isSchedule = false;
+            } else if (isSearch) {
+                menu.findItem(R.id.action_search).setVisible(false);
+                menu.findItem(R.id.action_clear).setVisible(false);
+                isSearch = false;
+            }
+        }
+
+        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -214,6 +277,24 @@ public class HomeActivity extends ActionBarActivity
             Log.i("HomeActivity", "nothing on backstack, calling super");
             super.onBackPressed();
         }
+    }
+
+    public static void clearSchedule(Context context) {
+        SQLiteDatabase dbStars = HackerTrackerApplication.myDbHelperStars.getWritableDatabase();
+        SQLiteDatabase db = HackerTrackerApplication.myDbHelper.getWritableDatabase();
+
+        // delete all data in starred database
+        dbStars.execSQL("DELETE FROM data");
+
+        // update all data in main database to not be starred
+        db.execSQL("UPDATE data SET starred=0");
+
+        // reload screen
+        HomeActivity.refreshSchedule();
+
+        Toast.makeText(context, R.string.schedule_cleared, Toast.LENGTH_SHORT).show();
+        db.close();
+        dbStars.close();
     }
 
 }

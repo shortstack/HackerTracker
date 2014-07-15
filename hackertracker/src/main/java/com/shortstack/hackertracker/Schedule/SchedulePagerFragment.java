@@ -45,7 +45,6 @@ public class SchedulePagerFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setHasOptionsMenu(true);
     }
 
     @Override
@@ -77,40 +76,6 @@ public class SchedulePagerFragment extends Fragment {
 
     private PagerAdapter buildAdapter() {
         return(new SchedulePagerAdapter(getActivity(), getChildFragmentManager()));
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.schedule, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        if (item.getItemId() == R.id.action_clear) {
-            DialogUtil.clearScheduleDialog(context).show();
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    public static void clearSchedule() {
-        SQLiteDatabase dbStars = HackerTrackerApplication.myDbHelperStars.getWritableDatabase();
-        SQLiteDatabase db = HackerTrackerApplication.myDbHelper.getWritableDatabase();
-
-        // delete all data in starred database
-        dbStars.execSQL("DELETE FROM data");
-
-        // update all data in main database to not be starred
-        db.execSQL("UPDATE data SET starred=0");
-
-        // reload screen
-        HomeActivity.refreshSchedule();
-
-        Toast.makeText(context, R.string.schedule_cleared, Toast.LENGTH_SHORT).show();
-        db.close();
-        dbStars.close();
     }
 
     public int getStars() {

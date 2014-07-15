@@ -81,7 +81,13 @@
     </style>
     <style name="location">
         <item name="android:textColor">@color/green</item>
-        <item name="android:textColorLink">@color/day4</item>
+        <item name="android:textColorLink">@color/green</item>
+        <item name="android:textSize">14dp</item>
+        <item name="android:paddingTop">5dp</item>
+    </style>
+    <style name="name">
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textColorLink">@color/green</item>
         <item name="android:textSize">14dp</item>
         <item name="android:paddingTop">5dp</item>
     </style>

@@ -18,6 +18,12 @@
             android:singleLine="true" />
     </LinearLayout>
     <TextView android:layout_width="fill_parent"
+        android:layout_height="wrap_content"  android:id="@+id/name"
+        android:autoLink="all"
+        style="@style/name"
+        android:visibility="gone"
+        android:text="test" />
+    <TextView android:layout_width="fill_parent"
               android:layout_height="wrap_content"  android:id="@+id/location"
               android:autoLink="all"
               style="@style/location"
