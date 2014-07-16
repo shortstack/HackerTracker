@@ -30,6 +30,7 @@ import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
+import com.shortstack.hackertracker.Utils.ClearableEditText;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -57,7 +58,7 @@ public class SearchFragment extends Fragment {
     private DefaultAdapter adapter;
     private ListView list;
     private ArrayList<Default> result;
-    private EditText search;
+    private ClearableEditText search;
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     public static SearchFragment newInstance(int sectionNumber) {
@@ -92,7 +93,7 @@ public class SearchFragment extends Fragment {
         list = (ListView) rootView.findViewById(R.id.search_list);
 
         // edittext listener
-        search = (EditText) rootView.findViewById(R.id.search);
+        search = (ClearableEditText) rootView.findViewById(R.id.search);
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
         search.addTextChangedListener(new TextWatcher() {
