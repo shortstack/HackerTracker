@@ -8,11 +8,10 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.shortstack.hackertracker.Activity.HomeActivity;
-import com.shortstack.hackertracker.Adapter.QuestionAdapter;
+import com.shortstack.hackertracker.Adapter.UpdateAdapter;
 import com.shortstack.hackertracker.R;
 
 /**
@@ -54,7 +53,7 @@ public class HomeFragment extends Fragment {
         CharSequence[] myItems = getResources().getTextArray(R.array.updates);
 
         // configure the listview
-        ArrayAdapter<CharSequence> aa = new ArrayAdapter<CharSequence>(context,R.layout.row_updates,myItems);
+        UpdateAdapter aa = new UpdateAdapter(context,R.layout.row_updates,myItems);
         ListView faq_list = (ListView) rootView.findViewById(R.id.updates);
         faq_list.setAdapter(aa);
 
