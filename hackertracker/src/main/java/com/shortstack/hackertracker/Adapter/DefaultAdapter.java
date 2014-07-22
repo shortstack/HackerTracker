@@ -2,6 +2,7 @@ package com.shortstack.hackertracker.Adapter;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +10,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -103,7 +105,8 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                     TextView locationText = (TextView) layout.findViewById(R.id.location);
                     TextView forumText = (TextView) layout.findViewById(R.id.forum);
                     TextView bodyText = (TextView) layout.findViewById(R.id.body);
-                    final ImageView star = (ImageView) layout.findViewById(R.id.star);
+                    final ImageButton share = (ImageButton) layout.findViewById(R.id.share);
+                    final ImageButton star = (ImageButton) layout.findViewById(R.id.star);
                     Button closeButton = (Button) layout.findViewById(R.id.closeButton);
 
                     // if not a speaker, hide speaker name
@@ -140,6 +143,21 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                     // check if entry is already in starred database
                     if (item.getStarred()==1)
                        star.setImageResource(R.drawable.star_selected);
+
+                    // onclicklistener for share
+                    final View.OnClickListener shareOnClickListener = new View.OnClickListener() {
+                        public void onClick(View v) {
+
+                            Intent sendIntent = new Intent();
+                            sendIntent.setAction(Intent.ACTION_SEND);
+                            sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Check out \"" + item.getTitle() + "\" at DEF CON 22!");
+                            sendIntent.putExtra(Intent.EXTRA_TEXT,  item.getTitle() + "\n\nDate: " + getDate(item.getDate()) + "\n\nTime: " + item.getStartTime() + "\n\nLocation: " + item.getLocation() + "\n\nMore details:\n\n" + item.getBody());
+                            sendIntent.setType("text/plain");
+                            context.startActivity(Intent.createChooser(sendIntent, context.getResources().getText(R.string.action_share)));
+
+                        }
+                    };
+                    share.setOnClickListener(shareOnClickListener);
 
                     // onclicklistener for add to schedule
                     final View.OnClickListener starOnClickListener = new View.OnClickListener() {

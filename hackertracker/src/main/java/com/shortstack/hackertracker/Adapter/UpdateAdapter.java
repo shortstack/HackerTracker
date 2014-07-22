@@ -17,7 +17,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Created by whitneychampion on 7/7/14.
+ * Created by whitneychampion on 7/20/14.
  */
 public class UpdateAdapter extends ArrayAdapter<CharSequence> {
 
@@ -52,10 +52,10 @@ public class UpdateAdapter extends ArrayAdapter<CharSequence> {
 
         final CharSequence item = data[position];
 
-        // if questions in list, populate data
+        // if updates in list, populate data
         if (item != null) {
 
-            // set title
+            // set text
             holder.update.setText(Html.fromHtml(item.toString()));
 
         }

@@ -26,7 +26,10 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 />
-            <ImageView android:id="@+id/star"
+            <ImageButton android:id="@+id/share"
+                android:src="@drawable/icon_share"
+                style="@style/share"/>
+            <ImageButton android:id="@+id/star"
                 android:src="@drawable/star_unselected"
                 style="@style/star"/>
         </LinearLayout>
