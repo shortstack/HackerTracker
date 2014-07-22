@@ -6,12 +6,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_settings">Settings</string>
 
-    <string name="day0">Wednesday, August 6</string>
-    <string name="day1">Thursday, August 7</string>
-    <string name="day2">Friday, August 8</string>
-    <string name="day3">Saturday, August 9</string>
-    <string name="day4">Sunday, August 10</string>
-
     <string name="home">DEF CON 22</string>
     <string name="speakers">speakers</string>
     <string name="contests">contests</string>

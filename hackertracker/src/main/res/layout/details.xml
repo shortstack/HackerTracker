@@ -48,6 +48,12 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"        />
 
+            <TextView android:id="@+id/date"
+                style="@style/details_date"
+                android:text="Thurs, Aug 7"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"        />
+
             <TextView android:id="@+id/time"
                 style="@style/details_time"
                 android:text="11:00"

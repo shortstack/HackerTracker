@@ -79,9 +79,6 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             // set time
             holder.time.setText(item.getStartTime());
 
-            // set name if it's a speaker
-
-
             // set location
             holder.location.setText(item.getLocation());
 
@@ -102,6 +99,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                     TextView titleText = (TextView) layout.findViewById(R.id.title);
                     TextView nameText = (TextView) layout.findViewById(R.id.speaker);
                     TextView timeText = (TextView) layout.findViewById(R.id.time);
+                    TextView dateText = (TextView) layout.findViewById(R.id.date);
                     TextView locationText = (TextView) layout.findViewById(R.id.location);
                     TextView forumText = (TextView) layout.findViewById(R.id.forum);
                     TextView bodyText = (TextView) layout.findViewById(R.id.body);
@@ -132,6 +130,9 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
 
                     // set body
                     bodyText.setText(item.getBody());
+
+                    // set date
+                    dateText.setText(getDate(item.getDate()));
 
                     // set time
                     timeText.setText(item.getStartTime() + " - " + item.getEndTime());
@@ -193,6 +194,24 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
         }
 
         return row;
+    }
+
+    private String getDate(int date) {
+
+        switch (date) {
+            case 0:
+                return Constants.DAY_0;
+            case 1:
+                return Constants.DAY_1;
+            case 2:
+                return Constants.DAY_2;
+            case 3:
+                return Constants.DAY_3;
+            case 4:
+                return Constants.DAY_4;
+        }
+        return "";
+
     }
 
     private void hideKeyboard(View v) {

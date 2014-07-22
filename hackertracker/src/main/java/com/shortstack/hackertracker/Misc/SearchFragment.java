@@ -171,11 +171,13 @@ public class SearchFragment extends Fragment {
         Cursor title = db.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
         Cursor body = db.rawQuery("SELECT * FROM data WHERE (body LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
         Cursor name = db.rawQuery("SELECT * FROM data WHERE (name LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
+        Cursor location = db.rawQuery("SELECT * FROM data WHERE (location LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
 
         // get search results from each query
         getResults(title);
         getResults(body);
         getResults(name);
+        getResults(location);
 
         // close database
         db.close();
