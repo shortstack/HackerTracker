@@ -21,6 +21,7 @@ public class Default {
     private String forum;
     private Integer starred;
     private String image;
+    private Integer is_new;
 
     public Integer getStarred() {
         return starred;
@@ -116,6 +117,14 @@ public class Default {
 
     public void setForum(String forum) {
         this.forum = forum;
+    }
+
+    public Integer isNew() {
+        return is_new;
+    }
+
+    public void setIsNew(Integer is_new) {
+        this.is_new = is_new;
     }
 
 }

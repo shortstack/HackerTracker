@@ -20,9 +20,12 @@
     <string name="links">links</string>
     <string name="search">search</string>
 
-    <string name="schedule_cleared">schedule cleared successfully</string>
+    <string name="schedule_cleared">Schedule cleared successfully</string>
     <string name="delete_all">clear my schedule</string>
     <string name="close">close</string>
+
+    <string name="backup_name">dc22_schedule.csv</string>
+    <string name="backup">Schedule saved in Downloads as "dc22_schedule.csv"</string>
 
     <string name="coming_soon_maps">Conference map will be posted when it becomes available!</string>
 
@@ -72,18 +75,18 @@
         <item>It depends on what you\'re going to do at DEF CON. This is discussed in quite some depth on the unofficial DC FAQ (http://defcon.stotan.org/faq/) , as well as a thread in the DC Forums (https://forum.defcon.org/showthread.php?t=5483). You may want to bring fancy (or outrageously silly) clothes for the Black and White Balls, annual Friday and Saturday night events where everyone shows off nifty attire. SWAG is Always recommended, people LOVE to trade! You never know when or where a t&#8211;shirt with your .org will come in handy. Government SWAG is a hot commodity, however, DT wishes to pillage those goods first! Its generally a good idea if you are a pale geek to have some sunscreen at the top of your list. Other honorable mentions are: Blister preventions, Band&#8211;aids, Gel shoe inserts, Personal cooling devices, Pain relievers and antacids, Bottle openers, Personal voice recorders, water filters, and last but not least an Alibi.</item>
         <item>This FAQ didn\'t answer my questions, or was unclear, how can I get further information? </item>
         <item>There is a forum discussion thread in which you can ask follow up questions. https://forum.defcon.org/showthread.php?t=6845 </item>
-        <item>Please visit: https://www.defcon.org for previous conference archives, information, and speeches. Updated announcements will be posted to news groups, security mailing lists and this web site.
-        \n\nhttps://forum.defcon.org/ for a look at all the events and contests being planned for DEF CON 22. Join in on the action.
-        \n\nhttps://pics.defcon.org/ to upload all your past DEF CON pictures. We store the pictures so you don\'t have to worry about web space. If you have an account on the forums, you have an account here.
-        \n\nhttps://www.defcon.org/defconrss.xml for news and announcements surrounding DEF CON. Also check out our Twitter, Facebook, and G+ accounts for up to the minute news.</item>
     </array>
 
     <string name="link_01"><b>official DC22 website</b>\n\nhttps://www.defcon.org/html/defcon-22/dc-22-index.html\n\n</string>
     <string name="link_02"><b>official DEF CON twitter</b>\n\nhttps://twitter.com/_defcon_\n\n</string>
-    <string name="link_03" formatted="false"><b>DEF CON related twitter updates</b>&lt;br&gt;&lt;br&gt;&lt;a href=\"http://bit.ly/1oriN0n\"&gt;#defcon, #dc22, @defconparties, @_defcon_&lt;/a&gt;\n\n</string>
+    <string name="link_03" formatted="false"><b>DEF CON related twitter updates</b>&lt;br&gt;&lt;br&gt;&lt;a href=\"http://bit.ly/1oriN0n\"&gt;#defcon, #dc22, @defconparties, @_defcon_&lt;/a&gt;</string>
+    <string name="link_04"><b>DEF CON forums</b>\n\nhttps://forum.defcon.org\n\n</string>
+    <string name="link_05"><b>DEF CON pictures - upload all your past DEF CON pictures. if you have an account on the forums, you have an account here.</b>\n\nhttps://pics.defcon.org\n\n</string>
+    <string name="link_06"><b>RSS Feed</b>\n\nhttps://www.defcon.org/defconrss.xml\n\n</string>
+    <string name="link_07"><b>previous conference archives, info, speeches</b>\n\nhttps://www.defcon.org\n\n</string>
 
     <array name="updates">
-        <item><b>7.22.14</b>&lt;br/&gt;&lt;br/&gt;sharing feature added by popular demand, items now searchable by location/track</item>
+        <item><b>7.23.14</b>&lt;br/&gt;&lt;br/&gt;sharing feature added by popular demand, items now searchable by location/track, new items are flagged as "new" in the list</item>
         <item><b>7.20.14</b>&lt;br/&gt;&lt;br/&gt;wireless village schedule added, more bands/DJs added. if you have any schedule additions, DM me @shortxstack</item>
         <item><b>7.15.14</b>&lt;br/&gt;&lt;br/&gt;added parties and more contests. removed unnecessary permissions, only need media/storage perms to save the maps so you don\'t have to be online to access them.</item>
         <item><b>7.13.14</b>&lt;br/&gt;&lt;br/&gt;thank you for the overwhelmingly awesome feedback :) DEAF CON meetup added, DEF CON bike ride added, and more to come as schedules are available! search now searches speaker names as well.</item>

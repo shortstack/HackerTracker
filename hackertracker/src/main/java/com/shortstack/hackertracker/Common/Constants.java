@@ -17,6 +17,8 @@ public interface Constants {
     public String DAY_3 = "Sat, Aug 9";
     public String DAY_4 = "Sun, Aug 10";
 
+    public String[] COLUMN_NAMES = {"Title","Speaker Name","Start Time","End Time","Date","Location"};
+
     String UTF8 = "utf-8";
     int BUFFER_SIZE = 8 * 1024;
 }

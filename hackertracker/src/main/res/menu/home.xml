@@ -9,6 +9,11 @@
         android:title="@string/search"
         android:icon="@drawable/search"
         app:showAsAction="always" />
+    <item android:id="@+id/action_share"
+        android:title="@string/action_share"
+        android:icon="@drawable/icon_share"
+        android:visible="false"
+        app:showAsAction="always" />
     <item android:id="@+id/action_clear"
         android:title="@string/delete_all"
         android:icon="@drawable/trash"

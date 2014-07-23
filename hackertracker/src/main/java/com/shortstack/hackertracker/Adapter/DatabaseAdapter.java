@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -9,6 +10,7 @@ import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 
 import java.io.File;
@@ -44,7 +46,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
      */
     public DatabaseAdapter(Context context)  {
 
-        super(context, DB_NAME, null, 110);
+        super(context, DB_NAME, null, 141);
         this.myContext = context;
     }
 
@@ -146,8 +148,8 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
         try{
             if (myCursor.moveToFirst()){
                 do{
-                    // if in database, set starred
-                    dbDefault.execSQL("UPDATE data SET starred="+1+" WHERE id="+myCursor.getInt(myCursor.getColumnIndex("id")));
+                    dbDefault.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + myCursor.getInt(myCursor.getColumnIndex("id")));
+
                 }while(myCursor.moveToNext());
             }
         }finally{

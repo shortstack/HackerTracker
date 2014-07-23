@@ -232,6 +232,7 @@ public class SearchFragment extends Fragment {
                     item.setStarred(cursor.getInt(cursor.getColumnIndex("starred")));
                     item.setImage(cursor.getString(cursor.getColumnIndex("image")));
                     item.setForum(cursor.getString(cursor.getColumnIndex("forum")));
+                    item.setIsNew(cursor.getInt(cursor.getColumnIndex("is_new")));
 
                     result.add(item);
 

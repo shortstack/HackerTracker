@@ -141,6 +141,7 @@ public class HackerTrackerFragment extends Fragment {
                     item.setStarred(myCursor.getInt(myCursor.getColumnIndex("starred")));
                     item.setImage(myCursor.getString(myCursor.getColumnIndex("image")));
                     item.setForum(myCursor.getString(myCursor.getColumnIndex("forum")));
+                    item.setIsNew(myCursor.getInt(myCursor.getColumnIndex("is_new")));
 
                     result.add(item);
                 }while(myCursor.moveToNext());
@@ -177,6 +178,7 @@ public class HackerTrackerFragment extends Fragment {
                     item.setStarred(myCursor.getInt(myCursor.getColumnIndex("starred")));
                     item.setImage(myCursor.getString(myCursor.getColumnIndex("image")));
                     item.setForum(myCursor.getString(myCursor.getColumnIndex("forum")));
+                    item.setIsNew(myCursor.getInt(myCursor.getColumnIndex("is_new")));
 
                     result.add(item);
 

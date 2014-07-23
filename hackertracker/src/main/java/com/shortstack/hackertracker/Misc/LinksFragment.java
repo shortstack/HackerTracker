@@ -54,8 +54,9 @@ public class LinksFragment extends Fragment {
 
         // display links
         TextView links = (TextView) rootView.findViewById(R.id.links);
-        links.setText(getString(R.string.link_01) + getString(R.string.link_02));
-        links.append(Html.fromHtml(getString(R.string.link_03)));
+        TextView links_top = (TextView) rootView.findViewById(R.id.links_top);
+        links.setText(getString(R.string.link_01) + getString(R.string.link_02) + getString(R.string.link_04) + getString(R.string.link_05) + getString(R.string.link_06) + getString(R.string.link_07));
+        links_top.setText(Html.fromHtml(getString(R.string.link_03)));
 
         // make clickable
         links.setMovementMethod(LinkMovementMethod.getInstance());

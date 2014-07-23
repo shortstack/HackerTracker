@@ -234,6 +234,9 @@ public class HomeActivity extends ActionBarActivity
                     .commit();
             toggleMenu();
             return true;
+        } else if (id == R.id.action_share) {
+            DialogUtil.shareScheduleDialog(this).show();
+            return true;
         } else if (id == R.id.action_clear) {
             DialogUtil.clearScheduleDialog(this).show();
             return true;
@@ -256,10 +259,12 @@ public class HomeActivity extends ActionBarActivity
                 menu.findItem(R.id.action_schedule).setVisible(false);
                 menu.findItem(R.id.action_search).setVisible(true);
                 menu.findItem(R.id.action_clear).setVisible(true);
+                menu.findItem(R.id.action_share).setVisible(true);
                 isSchedule = false;
             } else if (isSearch) {
                 menu.findItem(R.id.action_search).setVisible(false);
                 menu.findItem(R.id.action_clear).setVisible(false);
+                menu.findItem(R.id.action_share).setVisible(false);
                 isSearch = false;
             }
         }
