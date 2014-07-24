@@ -39,21 +39,22 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     private final Context myContext;
 
+
     /**
      * Constructor
      * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
      * @param context
      */
-    public DatabaseAdapter(Context context)  {
+    public DatabaseAdapter(Context context) {
 
-        super(context, DB_NAME, null, 144);
+        super(context, DB_NAME, null, 162);
         this.myContext = context;
     }
 
     /**
      * Creates a empty database on the system and rewrites it with your own database.
      * */
-    public void createDataBase() throws IOException {
+    public void createDataBase() throws IOException{
 
         boolean dbExist = checkDataBase();
 
@@ -63,7 +64,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
             //By calling this method and empty database will be created into the default system path
             //of your application so we are gonna be able to overwrite that database with our database.
-            this.getWritableDatabase();
+            this.getReadableDatabase();
 
             try {
 
@@ -88,7 +89,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
         try{
             String myPath = DB_PATH + DB_NAME;
-            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS | SQLiteDatabase.OPEN_READWRITE);
+            checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
 
         }catch(SQLiteException e){
 
@@ -135,32 +136,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     }
 
-    public static void copyStarred() {
-
-        // check if entry is already in starred database
-        StarDatabaseAdapter myDbHelperStars = new StarDatabaseAdapter(HackerTrackerApplication.getAppContext());
-        DatabaseAdapter myDbHelper = new DatabaseAdapter(HackerTrackerApplication.getAppContext());
-
-        SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
-        SQLiteDatabase dbDefault = myDbHelper.getWritableDatabase();
-
-        Cursor myCursor = dbStars.rawQuery("SELECT * FROM data", null);
-        try{
-            if (myCursor.moveToFirst()){
-                do{
-                    dbDefault.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + myCursor.getInt(myCursor.getColumnIndex("id")));
-
-                }while(myCursor.moveToNext());
-            }
-        }finally{
-            myCursor.close();
-        }
-        dbStars.close();
-        dbDefault.close();
-
-    }
-
-    public void openDataBase() throws SQLException {
+    public void openDataBase() throws SQLException{
 
         //Open the database
         String myPath = DB_PATH + DB_NAME;
@@ -201,33 +177,29 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
     // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy
     // to you to create adapters for your views.
 
+    public static void copyStarred() {
 
-    public static List<String> GetColumns(SQLiteDatabase db, String tableName) {
-        List<String> ar = null;
-        Cursor c = null;
-        try {
-            c = db.rawQuery("select * from " + tableName + " limit 1", null);
-            if (c != null) {
-                ar = new ArrayList<String>(Arrays.asList(c.getColumnNames()));
+        // check if entry is already in starred database
+        StarDatabaseAdapter myDbHelperStars = new StarDatabaseAdapter(HackerTrackerApplication.getAppContext());
+        DatabaseAdapter myDbHelper = new DatabaseAdapter(HackerTrackerApplication.getAppContext());
+
+        SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
+        SQLiteDatabase dbDefault = myDbHelper.getWritableDatabase();
+
+        Cursor myCursor = dbStars.rawQuery("SELECT * FROM data", null);
+        try{
+            if (myCursor.moveToFirst()){
+                do{
+                    dbDefault.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + myCursor.getInt(myCursor.getColumnIndex("id")));
+
+                }while(myCursor.moveToNext());
             }
-        } catch (Exception e) {
-            Log.v(tableName, e.getMessage(), e);
-            e.printStackTrace();
-        } finally {
-            if (c != null)
-                c.close();
+        }finally{
+            myCursor.close();
         }
-        return ar;
-    }
+        dbStars.close();
+        dbDefault.close();
 
-    public static String join(List<String> list, String delim) {
-        StringBuilder buf = new StringBuilder();
-        int num = list.size();
-        for (int i = 0; i < num; i++) {
-            if (i != 0)
-                buf.append(delim);
-            buf.append((String) list.get(i));
-        }
-        return buf.toString();
     }
 }
+

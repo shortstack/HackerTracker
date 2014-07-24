@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.shortstack.hackertracker"
     android:versionCode="23"
-    android:versionName="2.9.5" >
+    android:versionName="2.9.4" >
 
     <uses-sdk
         android:minSdkVersion="14"

@@ -55,6 +55,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             holder.title = (TextView) row.findViewById(R.id.title);
             holder.time = (TextView) row.findViewById(R.id.time);
             holder.name = (TextView) row.findViewById(R.id.name);
+            holder.name.setVisibility(View.GONE);
             holder.is_new = (TextView) row.findViewById(R.id.isNew);
             holder.is_new.setVisibility(View.GONE);
             holder.location = (TextView) row.findViewById(R.id.location);
@@ -77,6 +78,8 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             if (item.getType()==1) {
                 holder.name.setVisibility(View.VISIBLE);
                 holder.name.setText(item.getName());
+            } else {
+                holder.name.setVisibility(View.GONE);
             }
 
             // set time
