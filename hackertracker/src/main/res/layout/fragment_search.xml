@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     style="@style/page"
-    android:padding="15dp"
     android:orientation="vertical">
 
    <!-- <EditText
@@ -26,6 +25,7 @@
         android:singleLine="true"
         android:padding="10dp"
         android:hint="search"
+        android:layout_margin="15dp"
         android:textColor="@color/white">
         <requestFocus/>
     </com.shortstack.hackertracker.Utils.ClearableEditText>

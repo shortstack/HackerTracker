@@ -83,6 +83,7 @@
             <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 style="@style/scroll_view"
                 android:id="@+id/scroll"
                 >
@@ -95,6 +96,34 @@
                     />
             </ScrollView>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_horizontal"
+                android:layout_marginTop="8dp"
+                android:id="@+id/icons">
+                <ImageView
+                    android:id="@+id/demo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/icon_demo"
+                    android:visibility="gone"
+                    android:layout_marginRight="8dp"/>
+                <ImageView
+                    android:id="@+id/exploit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="8dp"
+                    android:visibility="gone"
+                    android:src="@drawable/icon_exploit"/>
+                <ImageView
+                    android:id="@+id/tool"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:visibility="gone"
+                    android:src="@drawable/icon_tool"/>
+            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 

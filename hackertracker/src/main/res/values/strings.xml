@@ -86,6 +86,7 @@
     <string name="link_07"><b>previous conference archives, info, speeches</b>\n\nhttps://www.defcon.org\n\n</string>
 
     <array name="updates">
+        <item><b>7.26.14</b>&lt;br/&gt;&lt;br/&gt;speaker types (demo/exploit/tool) added, schedule updates and fixes</item>
         <item><b>7.23.14</b>&lt;br/&gt;&lt;br/&gt;sharing feature added by popular demand, items now searchable by location/track, new items are flagged as "new" in the list</item>
         <item><b>7.20.14</b>&lt;br/&gt;&lt;br/&gt;wireless village schedule added, more bands/DJs added. if you have any schedule additions, DM me @shortxstack</item>
         <item><b>7.15.14</b>&lt;br/&gt;&lt;br/&gt;added parties and more contests. removed unnecessary permissions, only need media/storage perms to save the maps so you don\'t have to be online to access them.</item>

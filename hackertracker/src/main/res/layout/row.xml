@@ -34,6 +34,30 @@
                   android:autoLink="all"
                   style="@style/location"
                   android:text="test" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp"
+            android:id="@+id/icons">
+            <ImageView
+                android:id="@+id/demo"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/icon_demo"
+                android:layout_marginRight="8dp"/>
+            <ImageView
+                android:id="@+id/exploit"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:layout_marginRight="8dp"
+                android:src="@drawable/icon_exploit"/>
+            <ImageView
+                android:id="@+id/tool"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:src="@drawable/icon_tool"/>
+        </LinearLayout>
     </LinearLayout>
 
     <TextView

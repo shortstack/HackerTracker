@@ -47,7 +47,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
      */
     public DatabaseAdapter(Context context) {
 
-        super(context, DB_NAME, null, 162);
+        super(context, DB_NAME, null, 179);
         this.myContext = context;
     }
 
@@ -56,26 +56,23 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
      * */
     public void createDataBase() throws IOException{
 
-        boolean dbExist = checkDataBase();
+        //boolean dbExist = checkDataBase();
 
-        if(dbExist){
-            //do nothing - database already exist
-        }else{
+        //By calling this method and empty database will be created into the default system path
+        //of your application so we are gonna be able to overwrite that database with our database.
+        this.getWritableDatabase();
 
-            //By calling this method and empty database will be created into the default system path
-            //of your application so we are gonna be able to overwrite that database with our database.
-            this.getReadableDatabase();
+        try {
 
-            try {
+            copyDataBase();
 
-                copyDataBase();
+        } catch (IOException e) {
 
-            } catch (IOException e) {
+            throw new Error("Error copying database");
 
-                throw new Error("Error copying database");
-
-            }
         }
+
+        this.close();
 
     }
 
@@ -156,12 +153,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        try {
-            // Copy the db from assests
-            copyDataBase();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+
     }
 
     @Override

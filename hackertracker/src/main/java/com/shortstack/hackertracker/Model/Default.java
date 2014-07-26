@@ -22,6 +22,9 @@ public class Default {
     private Integer starred;
     private String image;
     private Integer is_new;
+    private Integer demo;
+    private Integer tool;
+    private Integer exploit;
 
     public Integer getStarred() {
         return starred;
@@ -125,6 +128,30 @@ public class Default {
 
     public void setIsNew(Integer is_new) {
         this.is_new = is_new;
+    }
+
+    public Integer getDemo() {
+        return demo;
+    }
+
+    public void setDemo(Integer demo) {
+        this.demo = demo;
+    }
+
+    public Integer getTool() {
+        return tool;
+    }
+
+    public void setTool(Integer tool) {
+        this.tool = tool;
+    }
+
+    public Integer getExploit() {
+        return exploit;
+    }
+
+    public void setExploit(Integer exploit) {
+        this.exploit = exploit;
     }
 
 }

@@ -11,6 +11,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -56,6 +57,14 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             holder.time = (TextView) row.findViewById(R.id.time);
             holder.name = (TextView) row.findViewById(R.id.name);
             holder.name.setVisibility(View.GONE);
+            holder.demo = (ImageView) row.findViewById(R.id.demo);
+            holder.demo.setVisibility(View.GONE);
+            holder.exploit = (ImageView) row.findViewById(R.id.exploit);
+            holder.exploit.setVisibility(View.GONE);
+            holder.tool = (ImageView) row.findViewById(R.id.tool);
+            holder.tool.setVisibility(View.GONE);
+            holder.icons = (LinearLayout) row.findViewById(R.id.icons);
+            holder.icons.setVisibility(View.GONE);
             holder.is_new = (TextView) row.findViewById(R.id.isNew);
             holder.is_new.setVisibility(View.GONE);
             holder.location = (TextView) row.findViewById(R.id.location);
@@ -74,12 +83,44 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             // set title
             holder.title.setText(item.getTitle());
 
-            // set name
+            // set name if it's a speaker
             if (item.getType()==1) {
                 holder.name.setVisibility(View.VISIBLE);
                 holder.name.setText(item.getName());
             } else {
                 holder.name.setVisibility(View.GONE);
+            }
+
+            // set speaker type
+            if (item.getType()==1) {
+
+                if (item.getTool()==1) {
+                    holder.icons.setVisibility(View.VISIBLE);
+                    holder.tool.setVisibility(View.VISIBLE);
+                } else {
+                    holder.tool.setVisibility(View.GONE);
+                }
+                if (item.getExploit()==1) {
+                    holder.icons.setVisibility(View.VISIBLE);
+                    holder.exploit.setVisibility(View.VISIBLE);
+                } else {
+                    holder.exploit.setVisibility(View.GONE);
+                }
+                if (item.getDemo()==1) {
+                    holder.icons.setVisibility(View.VISIBLE);
+                    holder.demo.setVisibility(View.VISIBLE);
+                } else {
+                    holder.demo.setVisibility(View.GONE);
+                }
+
+                if (item.getTool()==0 && item.getExploit()==0 && item.getDemo()==0)
+                    holder.icons.setVisibility(View.GONE);
+
+            } else {
+                holder.icons.setVisibility(View.GONE);
+                holder.tool.setVisibility(View.GONE);
+                holder.exploit.setVisibility(View.GONE);
+                holder.demo.setVisibility(View.GONE);
             }
 
             // set time
@@ -118,6 +159,10 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                 TextView locationText = (TextView) layout.findViewById(R.id.location);
                 TextView forumText = (TextView) layout.findViewById(R.id.forum);
                 TextView bodyText = (TextView) layout.findViewById(R.id.body);
+                ImageView demo = (ImageView) layout.findViewById(R.id.demo);
+                ImageView exploit = (ImageView) layout.findViewById(R.id.exploit);
+                ImageView tool = (ImageView) layout.findViewById(R.id.tool);
+                LinearLayout icons = (LinearLayout) layout.findViewById(R.id.icons);
                 final ImageButton share = (ImageButton) layout.findViewById(R.id.share);
                 final ImageButton star = (ImageButton) layout.findViewById(R.id.star);
                 Button closeButton = (Button) layout.findViewById(R.id.closeButton);
@@ -127,6 +172,22 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                     nameText.setVisibility(View.GONE);
                 } else {
                     nameText.setText(item.getName());
+                }
+
+                // if speaker, show speaker type
+                if (item.getTool()==0 && item.getExploit()==0 && item.getDemo()==0)
+                    icons.setVisibility(View.GONE);
+                else {
+                    icons.setVisibility(View.VISIBLE);
+                    if (item.getTool()==1) {
+                        tool.setVisibility(View.VISIBLE);
+                    }
+                    if (item.getExploit()==1) {
+                        exploit.setVisibility(View.VISIBLE);
+                    }
+                    if (item.getDemo()==1) {
+                        demo.setVisibility(View.VISIBLE);
+                    }
                 }
 
                 // if no forum, hide forum
@@ -266,6 +327,10 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
         TextView name;
         TextView location;
         TextView is_new;
+        ImageView demo;
+        ImageView tool;
+        ImageView exploit;
+        LinearLayout icons;
         LinearLayout defaultLayout;
     }
 }
