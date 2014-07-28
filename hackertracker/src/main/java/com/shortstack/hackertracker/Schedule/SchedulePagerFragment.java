@@ -115,7 +115,10 @@ public class SchedulePagerFragment extends Fragment {
                 out.write(csvHeader);
                 while (cursor.moveToNext()) {
                     csvValues = "\""+cursor.getString(0).replace(",","")+"\",";
-                    csvValues += cursor.getString(1).replace(",",";")+",";
+                    if (cursor.getString(1)!=null)
+                        csvValues += cursor.getString(1).replace(",",";")+",";
+                    else
+                        csvValues += ",";
                     csvValues += cursor.getString(2)+",";
                     csvValues += cursor.getString(3)+",";
                     csvValues += SchedulePagerFragment.getDate(Integer.valueOf(cursor.getString(4))).replace(",","") +",";
