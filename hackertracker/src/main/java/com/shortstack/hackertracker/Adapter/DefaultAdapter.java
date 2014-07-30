@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,8 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             holder.exploit.setVisibility(View.GONE);
             holder.tool = (ImageView) row.findViewById(R.id.tool);
             holder.tool.setVisibility(View.GONE);
+            holder.music = (ImageView) row.findViewById(R.id.music);
+            holder.music.setVisibility(View.GONE);
             holder.icons = (LinearLayout) row.findViewById(R.id.icons);
             holder.icons.setVisibility(View.GONE);
             holder.is_new = (TextView) row.findViewById(R.id.isNew);
@@ -80,8 +83,13 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
         // if items in list, populate data
         if (item.getTitle() != null) {
 
-            // set title
-            holder.title.setText(item.getTitle());
+            // if it's a DJ/music, truncate "MUSIC"
+            if (item.getTitle().contains("MUSIC - ")) {
+                holder.title.setText(item.getTitle().split(" - ")[1]);
+            } else {
+                // set title
+                holder.title.setText(item.getTitle());
+            }
 
             // set name if it's a speaker
             if (item.getType()==1) {
@@ -117,7 +125,15 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                     holder.icons.setVisibility(View.GONE);
 
             } else {
-                holder.icons.setVisibility(View.GONE);
+
+                if (item.getTitle().contains("MUSIC - ")) {
+                    holder.icons.setVisibility(View.VISIBLE);
+                    holder.music.setVisibility(View.VISIBLE);
+                } else {
+                    holder.icons.setVisibility(View.GONE);
+                    holder.music.setVisibility(View.GONE);
+                }
+
                 holder.tool.setVisibility(View.GONE);
                 holder.exploit.setVisibility(View.GONE);
                 holder.demo.setVisibility(View.GONE);
@@ -170,8 +186,6 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                 // if not a speaker, hide speaker name
                 if (item.getType()!=Constants.TYPE_SPEAKER) {
                     nameText.setVisibility(View.GONE);
-                } else {
-                    nameText.setText(item.getName());
                 }
 
                 // if speaker, show speaker type
@@ -330,6 +344,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
         ImageView demo;
         ImageView tool;
         ImageView exploit;
+        ImageView music;
         LinearLayout icons;
         LinearLayout defaultLayout;
     }
