@@ -186,6 +186,8 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                 // if not a speaker, hide speaker name
                 if (item.getType()!=Constants.TYPE_SPEAKER) {
                     nameText.setVisibility(View.GONE);
+                } else {
+                    nameText.setText(item.getName());
                 }
 
                 // if speaker, show speaker type
