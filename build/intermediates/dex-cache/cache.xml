@@ -1,35 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<pre-dex-items>
+<items version="2" >
 
     <item
-        dex="/Users/whitneychampion/AndroidStudioProjects/hackertracker/hackertracker/build/intermediates/pre-dexed/defaultFlavor/debug/twitter4j-core-3.0.5-e1f9d33aedd14598162bc46527fdcdad6d3a38ed.jar"
+        jar="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="2c91c949a45a21cdecf26e03951e46c7beec9ad8">
+        <dex dex="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/build/intermediates/pre-dexed/defaultFlavor/debug/classes-77d0ce1330e2a3a7cb1c34da4662099b7e9a36ae.jar" />
+    </item>
+    <item
+        jar="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/libs/gson-2.2.4.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="973e832af433b44c3ed11c426f2f390b29f3f3f8">
+        <dex dex="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/build/intermediates/pre-dexed/defaultFlavor/debug/gson-2.2.4-ca6b177c1dfc146eb96b80e8ce64ee0e30e1fada.jar" />
+    </item>
+    <item
+        jar="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/libs/commons-lang3-3.1.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="905075e6c80f206bbe6cf1e809d2caa69f420c76">
+        <dex dex="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/build/intermediates/pre-dexed/defaultFlavor/debug/commons-lang3-3.1-eaa13a01d7a255087c5eb6875f9cd3b907fd0115.jar" />
+    </item>
+    <item
+        jar="/Users/whitneychampion/.gradle/caches/modules-2/files-2.1/org.twitter4j/twitter4j-core/3.0.5/c38ad47bc8ba5991886ce2c0e0acd76d0fdd6e6d/twitter4j-core-3.0.5.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c38ad47bc8ba5991886ce2c0e0acd76d0fdd6e6d">
+        <dex dex="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/build/intermediates/pre-dexed/defaultFlavor/debug/twitter4j-core-3.0.5-e1f9d33aedd14598162bc46527fdcdad6d3a38ed.jar" />
+    </item>
+    <item
+        jar="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/libs/gson-2.2.4.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="973e832af433b44c3ed11c426f2f390b29f3f3f8">
+        <dex dex="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/build/intermediates/pre-dexed/defaultFlavor/debug/gson-2.2.4-ca6b177c1dfc146eb96b80e8ce64ee0e30e1fada.jar" />
+    </item>
+    <item
+        jar="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.0.1/classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f71a6822470c9eb659d4f4a6cb57b780b35f058b">
+        <dex dex="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/build/intermediates/pre-dexed/defaultFlavor/debug/classes-17ecd94aad1cdc4e921300c486613c2e23917c89.jar" />
+    </item>
+    <item
+        jar="/Users/whitneychampion/Documents/sdk/extras/android/m2repository/com/android/support/support-annotations/21.0.3/support-annotations-21.0.3.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4b74cefe1f0c1b819e7260c8627a14674e37fd35">
+        <dex dex="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/build/intermediates/pre-dexed/defaultFlavor/debug/support-annotations-21.0.3-0c23559c6b8bd494626f200f7b1cb1e3356b02fd.jar" />
+    </item>
+    <item
+        jar="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.0.1/classes.jar"
+        jumboMode="false"
+        revision="19.1.0"
+        sha1="f71a6822470c9eb659d4f4a6cb57b780b35f058b">
+        <dex dex="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/build/intermediates/pre-dexed/defaultFlavor/debug/classes-17ecd94aad1cdc4e921300c486613c2e23917c89.jar" />
+    </item>
+    <item
         jar="/Users/whitneychampion/.gradle/caches/modules-2/files-2.1/org.twitter4j/twitter4j-core/3.0.5/c38ad47bc8ba5991886ce2c0e0acd76d0fdd6e6d/twitter4j-core-3.0.5.jar"
         jumboMode="false"
         revision="19.1.0"
-        sha1="c38ad47bc8ba5991886ce2c0e0acd76d0fdd6e6d"/>
+        sha1="c38ad47bc8ba5991886ce2c0e0acd76d0fdd6e6d">
+        <dex dex="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/build/intermediates/pre-dexed/defaultFlavor/debug/twitter4j-core-3.0.5-e1f9d33aedd14598162bc46527fdcdad6d3a38ed.jar" />
+    </item>
     <item
-        dex="/Users/whitneychampion/AndroidStudioProjects/hackertracker/hackertracker/build/intermediates/pre-dexed/defaultFlavor/debug/commons-lang3-3.1-46d6df1afa0f16138c099b352731af071259a20a.jar"
-        jar="/Users/whitneychampion/AndroidStudioProjects/hackertracker/hackertracker/libs/commons-lang3-3.1.jar"
+        jar="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/libs/commons-lang3-3.1.jar"
         jumboMode="false"
-        revision="19.1.0"
-        sha1="905075e6c80f206bbe6cf1e809d2caa69f420c76"/>
+        revision="22.0.1"
+        sha1="905075e6c80f206bbe6cf1e809d2caa69f420c76">
+        <dex dex="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/build/intermediates/pre-dexed/defaultFlavor/debug/commons-lang3-3.1-eaa13a01d7a255087c5eb6875f9cd3b907fd0115.jar" />
+    </item>
     <item
-        dex="/Users/whitneychampion/AndroidStudioProjects/hackertracker/hackertracker/build/intermediates/pre-dexed/defaultFlavor/debug/gson-2.2.4-867f6975f972439ea3ce6f578b7d3be26c285a44.jar"
-        jar="/Users/whitneychampion/AndroidStudioProjects/hackertracker/hackertracker/libs/gson-2.2.4.jar"
+        jar="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/build/intermediates/exploded-aar/com.android.support/support-v4/21.0.3/libs/internal_impl-21.0.3.jar"
         jumboMode="false"
-        revision="19.1.0"
-        sha1="973e832af433b44c3ed11c426f2f390b29f3f3f8"/>
-    <item
-        dex="/Users/whitneychampion/AndroidStudioProjects/hackertracker/hackertracker/build/intermediates/pre-dexed/defaultFlavor/debug/classes-d70286b59d8d23886534f77525cb8ca704a087f4.jar"
-        jar="/Users/whitneychampion/AndroidStudioProjects/hackertracker/build/intermediates/exploded-aar/com.android.support/appcompat-v7/19.0.1/classes.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="f71a6822470c9eb659d4f4a6cb57b780b35f058b"/>
-    <item
-        dex="/Users/whitneychampion/AndroidStudioProjects/hackertracker/hackertracker/build/intermediates/pre-dexed/defaultFlavor/debug/support-v4-19.0.1-e3887d76c75b6229bd88059a16ebeda4d20db292.jar"
-        jar="/Users/whitneychampion/Documents/adt-bundle-mac-x86_64-20131030/sdk/extras/android/m2repository/com/android/support/support-v4/19.0.1/support-v4-19.0.1.jar"
-        jumboMode="false"
-        revision="19.1.0"
-        sha1="587da9a481ffd341d2fa091704489b89845ddacd"/>
+        revision="22.0.1"
+        sha1="01ec05bfbafcc07646ba813000bf2ef11742dd03">
+        <dex dex="/Users/whitneychampion/AndroidStudioProjects/HackerTracker/hackertracker/build/intermediates/pre-dexed/defaultFlavor/debug/internal_impl-21.0.3-c84c6f8a7b4d98c48ace63d0b74681a610e22b50.jar" />
+    </item>
 
-</pre-dex-items>
+</items>
