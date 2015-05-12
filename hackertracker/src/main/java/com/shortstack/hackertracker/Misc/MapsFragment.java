@@ -92,7 +92,7 @@ public class MapsFragment extends Fragment {
         button_riomap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +"/map_rio.pdf");
+                File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/map_hotel.pdf");
                 Intent target = new Intent(Intent.ACTION_VIEW);
                 target.setDataAndType(Uri.fromFile(file),"application/pdf");
                 target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
