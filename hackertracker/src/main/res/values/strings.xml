@@ -23,6 +23,7 @@
     <string name="schedule_cleared">Schedule cleared successfully</string>
     <string name="delete_all">clear my schedule</string>
     <string name="close">close</string>
+    <string name="sync">sync</string>
 
     <string name="backup_name">dc23_schedule.csv</string>
     <string name="backup">Schedule saved in Downloads as "dc23_schedule.csv"</string>

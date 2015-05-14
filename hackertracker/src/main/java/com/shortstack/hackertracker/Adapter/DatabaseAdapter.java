@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.Adapter;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.res.AssetManager;
@@ -20,7 +21,9 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created with IntelliJ IDEA.
@@ -35,6 +38,8 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     private static String DB_NAME = "hackertracker.sqlite";
 
+    private static int DB_VERSION = 190;
+
     private SQLiteDatabase myDataBase;
 
     private final Context myContext;
@@ -47,7 +52,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
      */
     public DatabaseAdapter(Context context) {
 
-        super(context, DB_NAME, null, 184);
+        super(context, DB_NAME, null, DB_VERSION);
         this.myContext = context;
     }
 
@@ -56,20 +61,26 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
      * */
     public void createDataBase() throws IOException{
 
-        //boolean dbExist = checkDataBase();
+        boolean dbExist = checkDataBase();
 
-        //By calling this method and empty database will be created into the default system path
-        //of your application so we are gonna be able to overwrite that database with our database.
-        this.getWritableDatabase();
+        if (!dbExist) {
 
-        try {
+            //By calling this method and empty database will be created into the default system path
+            //of your application so we are gonna be able to overwrite that database with our database.
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.setLocale(Locale.getDefault());
+            db.setLockingEnabled(true);
+            db.setVersion(DB_VERSION);
 
-            copyDataBase();
+            try {
 
-        } catch (IOException e) {
+                copyDataBase();
 
-            throw new Error("Error copying database");
+            } catch (IOException e) {
 
+                throw new Error("Error copying database");
+
+            }
         }
 
         this.close();
@@ -87,8 +98,11 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
         try{
             String myPath = DB_PATH + DB_NAME;
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+            checkDB.setLocale(Locale.getDefault());
+            checkDB.setLockingEnabled(true);
+            checkDB.setVersion(DB_VERSION);
 
-        }catch(SQLiteException e){
+        } catch(SQLiteException e){
 
             //database does't exist yet.
 
@@ -190,6 +204,36 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
             myCursor.close();
         }
         dbStars.close();
+        dbDefault.close();
+
+    }
+
+    public static void updateDatabase(HashMap<String, String> queryValues) {
+
+        DatabaseAdapter myDbHelper = new DatabaseAdapter(HackerTrackerApplication.getAppContext());
+
+        SQLiteDatabase dbDefault = myDbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+
+        values.put("id", queryValues.get("id"));
+        values.put("title", queryValues.get("title"));
+        values.put("name", queryValues.get("name"));
+        values.put("startTime", queryValues.get("startTime"));
+        values.put("endTime", queryValues.get("endTime"));
+        values.put("date", queryValues.get("date"));
+        values.put("location", queryValues.get("location"));
+        values.put("body", queryValues.get("body"));
+        values.put("type", queryValues.get("type"));
+        values.put("starred", queryValues.get("starred"));
+        values.put("image", queryValues.get("image"));
+        values.put("forum", queryValues.get("forum"));
+        values.put("is_new", queryValues.get("is_new"));
+        values.put("demo", queryValues.get("demo"));
+        values.put("tool", queryValues.get("tool"));
+        values.put("exploit", queryValues.get("exploit"));
+
+        dbDefault.insert("data", null, values);
         dbDefault.close();
 
     }

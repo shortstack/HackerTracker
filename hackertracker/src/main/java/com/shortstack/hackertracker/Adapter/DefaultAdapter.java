@@ -140,7 +140,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             }
 
             // set time
-            holder.time.setText(item.getStartTime());
+            holder.time.setText(item.getId() + " " + item.getStartTime());
 
             // set location
             holder.location.setText(item.getLocation());

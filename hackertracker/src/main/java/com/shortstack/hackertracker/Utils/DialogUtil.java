@@ -109,6 +109,39 @@ public class DialogUtil {
 
     }
 
+    public static AlertDialog syncSpeakersDialog(final Context context) {
+
+        LayoutInflater inflater =
+                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.dialog_sync, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        AlertDialog dialog = builder.create();
+
+        dialog.setView(view, 0, 0, 0, 0);
+
+        Button cancelButton = (Button) view.findViewById(R.id.cancel);
+        final Dialog finalDialog = dialog;
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalDialog.dismiss();
+            }
+        });
+        Button clearButton = (Button) view.findViewById(R.id.sync);
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalDialog.dismiss();
+                HomeActivity.syncSchedule(context);
+            }
+        });
+
+        return dialog;
+
+    }
+
     public static Dialog shareScheduleDialog(final Context context) {
 
         AlertDialog.Builder b = new AlertDialog.Builder(context);

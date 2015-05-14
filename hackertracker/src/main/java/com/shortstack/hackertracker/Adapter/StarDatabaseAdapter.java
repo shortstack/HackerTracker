@@ -7,11 +7,14 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.shortstack.hackertracker.Utils.Strings;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Locale;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,6 +29,8 @@ public class StarDatabaseAdapter extends SQLiteOpenHelper {
 
     private static String DB_NAME = "starred.sqlite";
 
+    private static int DB_VERSION = 40;
+
     private SQLiteDatabase myDataBase;
 
     private final Context myContext;
@@ -37,7 +42,7 @@ public class StarDatabaseAdapter extends SQLiteOpenHelper {
      */
     public StarDatabaseAdapter(Context context)  {
 
-        super(context, DB_NAME, null, 40);
+        super(context, DB_NAME, null, DB_VERSION);
         this.myContext = context;
     }
 
@@ -56,7 +61,10 @@ public class StarDatabaseAdapter extends SQLiteOpenHelper {
 
             //By calling this method and empty database will be created into the default system path
             //of your application so we are gonna be able to overwrite that database with our database.
-            this.getWritableDatabase();
+            SQLiteDatabase db = this.getWritableDatabase();
+            db.setLocale(Locale.getDefault());
+            db.setLockingEnabled(true);
+            db.setVersion(DB_VERSION);
 
             try {
 
@@ -82,6 +90,9 @@ public class StarDatabaseAdapter extends SQLiteOpenHelper {
         try{
             String myPath = DB_PATH + DB_NAME;
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS | SQLiteDatabase.OPEN_READWRITE);
+            checkDB.setLocale(Locale.getDefault());
+            checkDB.setLockingEnabled(true);
+            checkDB.setVersion(DB_VERSION);
 
         }catch(SQLiteException e){
 

@@ -90,12 +90,12 @@ public class SpeakerFragment extends HackerTrackerFragment {
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
 
-        if (isConnected) {
+        /*if (isConnected) {
 
             // get speakers from API
             fillSpeakerList();
 
-        } else {
+        } else { */
 
             // get speakers from database
             List<Default> speakers = getItemByDate(String.valueOf(date), Constants.TYPE_SPEAKER);
@@ -106,7 +106,8 @@ public class SpeakerFragment extends HackerTrackerFragment {
                 list.setAdapter(adapter);
 
             }
-        }
+
+        //}
 
         return rootView;
     }

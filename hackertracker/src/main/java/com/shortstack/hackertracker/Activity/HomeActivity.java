@@ -12,9 +12,20 @@ import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
+import com.shortstack.hackertracker.Adapter.DefaultAdapter;
+import com.shortstack.hackertracker.Api.ApiException;
+import com.shortstack.hackertracker.Api.Impl.SyncServiceImpl;
+import com.shortstack.hackertracker.Api.SyncService;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Contests.ContestPagerFragment;
 import com.shortstack.hackertracker.Events.EventPagerFragment;
+import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
 import com.shortstack.hackertracker.Misc.FAQFragment;
 import com.shortstack.hackertracker.Misc.HomeFragment;
 import com.shortstack.hackertracker.Misc.LinksFragment;
@@ -22,12 +33,26 @@ import com.shortstack.hackertracker.Misc.MapsFragment;
 import com.shortstack.hackertracker.Misc.NavigationDrawerFragment;
 import com.shortstack.hackertracker.Misc.SearchFragment;
 import com.shortstack.hackertracker.Misc.ShuttleFragment;
+import com.shortstack.hackertracker.Model.ApiBase;
+import com.shortstack.hackertracker.Model.Default;
+import com.shortstack.hackertracker.Model.SpeakerList;
 import com.shortstack.hackertracker.Parties.PartyPagerFragment;
 import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
+import com.shortstack.hackertracker.Utils.ApiResponseUtil;
 import com.shortstack.hackertracker.Utils.DialogUtil;
 import com.shortstack.hackertracker.Vendors.VendorsFragment;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Speakers.SpeakerPagerFragment;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
 
 public class HomeActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -240,6 +265,9 @@ public class HomeActivity extends ActionBarActivity
         } else if (id == R.id.action_clear) {
             DialogUtil.clearScheduleDialog(this).show();
             return true;
+        } else if (id == R.id.action_sync) {
+            DialogUtil.syncSpeakersDialog(this).show();
+            return true;
         }
         return super.onOptionsItemSelected(item);
     }
@@ -355,6 +383,96 @@ public class HomeActivity extends ActionBarActivity
         Toast.makeText(context, R.string.schedule_cleared, Toast.LENGTH_SHORT).show();
         db.close();
         dbStars.close();
+    }
+
+    public static void syncSchedule(Context context) {
+
+        SyncService syncService = new SyncServiceImpl();
+
+        try {
+            syncService.syncDatabase(context, new SyncDatabaseListener(context));
+        } catch (ApiException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private static class SyncDatabaseListener implements AsyncTaskCompleteListener<ApiBase> {
+
+        Context context;
+
+        SyncDatabaseListener(Context context) {
+            this.context = context;
+        }
+
+        @Override
+        public void onTaskComplete(ApiBase result) {
+
+            // get speakers from API
+            SpeakerList speakers;
+            try {
+                speakers = (SpeakerList) ApiResponseUtil.parseResponse(result, SpeakerList.class);
+            } catch (ApiException e) {
+                return;
+            }
+
+            ArrayList<Default> speakersArray = new ArrayList(Arrays.asList(speakers.getSpeakers()));
+
+            if (speakersArray.size()!=0) {
+                syncDatabase(speakersArray, context);
+            } else {
+                // no results found, don't sync
+            }
+        }
+
+    }
+
+    private static void syncDatabase(ArrayList<Default> speakersArray, Context context) {
+
+        HashMap<String, String> queryValues;
+        DatabaseAdapter controller = new DatabaseAdapter(context);
+
+        // Create GSON object
+        Gson gson = new GsonBuilder().create();
+
+        // Extract JSON array from the response
+        JsonArray arr = gson.toJsonTree(speakersArray).getAsJsonArray();
+
+        // If no of array elements is not zero
+        if(arr.size() != 0){
+
+            // Loop through each array element, get JSON object
+            for (int i = 0; i < arr.size(); i++) {
+
+                // Get JSON object
+                JsonObject obj = (JsonObject) arr.get(i).getAsJsonObject();
+
+                // DB QueryValues Object to insert into SQLite
+                queryValues = new HashMap<String, String>();
+
+                // Add userID extracted from Object
+                queryValues.put("id", obj.get("id").toString());
+                queryValues.put("title", obj.get("title").toString());
+                queryValues.put("name", obj.get("name").toString());
+                queryValues.put("startTime", obj.get("startTime").toString());
+                queryValues.put("endTime", obj.get("endTime").toString());
+                queryValues.put("date", obj.get("date").toString());
+                queryValues.put("location", obj.get("location").toString());
+                queryValues.put("body", obj.get("body").toString());
+                queryValues.put("type", obj.get("type").toString());
+                queryValues.put("starred", obj.get("starred").toString());
+                queryValues.put("image", obj.get("image").toString());
+                queryValues.put("forum", obj.get("forum").toString());
+                queryValues.put("is_new", obj.get("is_new").toString());
+                queryValues.put("demo", obj.get("demo").toString());
+                queryValues.put("tool", obj.get("tool").toString());
+                queryValues.put("exploit", obj.get("exploit").toString());
+
+                // Insert User into SQLite DB
+                controller.updateDatabase(queryValues);
+
+            }
+        }
     }
 
 }

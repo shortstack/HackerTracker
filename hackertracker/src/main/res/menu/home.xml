@@ -19,4 +19,8 @@
         android:icon="@drawable/trash"
         android:visible="false"
         app:showAsAction="always" />
+    <item android:id="@+id/action_sync"
+        android:title="@string/sync"
+        android:icon="@android:drawable/ic_menu_send"
+        app:showAsAction="always" />
 </menu>
