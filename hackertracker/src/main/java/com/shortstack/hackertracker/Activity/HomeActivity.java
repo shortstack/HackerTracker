@@ -6,7 +6,6 @@ import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
@@ -15,10 +14,8 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
-import com.shortstack.hackertracker.Adapter.DefaultAdapter;
+import com.shortstack.hackertracker.Adapter.OfficialDatabaseAdapter;
 import com.shortstack.hackertracker.Api.ApiException;
 import com.shortstack.hackertracker.Api.Impl.SyncServiceImpl;
 import com.shortstack.hackertracker.Api.SyncService;
@@ -44,15 +41,9 @@ import com.shortstack.hackertracker.Vendors.VendorsFragment;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Speakers.SpeakerPagerFragment;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.List;
 
 public class HomeActivity extends ActionBarActivity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -369,7 +360,7 @@ public class HomeActivity extends ActionBarActivity
 
     public static void clearSchedule(Context context) {
         SQLiteDatabase dbStars = HackerTrackerApplication.myDbHelperStars.getWritableDatabase();
-        SQLiteDatabase db = HackerTrackerApplication.myDbHelper.getWritableDatabase();
+        SQLiteDatabase db = HackerTrackerApplication.myOfficialDbHelper.getWritableDatabase();
 
         // delete all data in starred database
         dbStars.execSQL("DELETE FROM data");
@@ -430,7 +421,7 @@ public class HomeActivity extends ActionBarActivity
     private static void syncDatabase(ArrayList<Default> speakersArray, Context context) {
 
         HashMap<String, String> queryValues;
-        DatabaseAdapter controller = new DatabaseAdapter(context);
+        OfficialDatabaseAdapter controller = new OfficialDatabaseAdapter(context);
 
         // Create GSON object
         Gson gson = new GsonBuilder().create();

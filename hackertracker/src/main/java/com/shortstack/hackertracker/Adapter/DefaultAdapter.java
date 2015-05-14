@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,6 +18,7 @@ import android.widget.Toast;
 
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Default;
+import com.shortstack.hackertracker.Model.Party;
 import com.shortstack.hackertracker.R;
 
 import java.util.List;
@@ -262,25 +262,41 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                 final View.OnClickListener starOnClickListener = new View.OnClickListener() {
                     public void onClick(View v) {
 
+                        OfficialDatabaseAdapter myDbOfficialHelper = new OfficialDatabaseAdapter(context);
                         DatabaseAdapter myDbHelper = new DatabaseAdapter(context);
                         StarDatabaseAdapter myDbHelperStars = new StarDatabaseAdapter(context);
                         SQLiteDatabase dbDefaults = myDbHelper.getWritableDatabase();
+                        SQLiteDatabase dbOfficial = myDbOfficialHelper.getWritableDatabase();
                         SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
 
                         // if not starred, star it
                         if (item.getStarred()==0) {
+
                             // add to stars database
-                            dbStars.execSQL("INSERT INTO data VALUES ("+item.getId()+")");
-                            dbDefaults.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + item.getId());
+                            dbStars.execSQL("INSERT INTO data VALUES (" + item.getId() + ")");
+
+                            if (item.getType() == 1) {
+                                dbOfficial.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + item.getId());
+                            } else {
+                                dbDefaults.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + item.getId());
+                            }
+
                             // change star
                             item.setStarred(1);
                             star.setImageResource(R.drawable.star_selected);
                             Toast.makeText(context,"Added to My Schedule",Toast.LENGTH_SHORT).show();
 
                         } else {
+
                             // remove from database
                             dbStars.delete("data", "id=" + item.getId(), null);
-                            dbDefaults.execSQL("UPDATE data SET starred=" + 0 + " WHERE id=" + item.getId());
+
+                            if (item.getType() == 1) {
+                                dbOfficial.execSQL("UPDATE data SET starred=" + 0 + " WHERE id=" + item.getId());
+                            } else {
+                                dbDefaults.execSQL("UPDATE data SET starred=" + 0 + " WHERE id=" + item.getId());
+                            }
+
                             // change star
                             item.setStarred(0);
                             star.setImageResource(R.drawable.star_unselected);
@@ -288,6 +304,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                         }
 
                         dbDefaults.close();
+                        dbOfficial.close();
                         dbStars.close();
                     }
                 };

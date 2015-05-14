@@ -90,7 +90,7 @@ public class SchedulePagerFragment extends Fragment {
     }
 
     public static Boolean backupDatabaseCSV() {
-        SQLiteDatabase db = HackerTrackerApplication.myDbHelper.getReadableDatabase();
+        SQLiteDatabase db = HackerTrackerApplication.myOfficialDbHelper.getReadableDatabase();
 
         Log.d("CSV", "backupDatabaseCSV");
         Boolean returnCode = false;

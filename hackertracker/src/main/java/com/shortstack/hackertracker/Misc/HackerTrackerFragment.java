@@ -16,6 +16,7 @@ import android.support.v4.app.FragmentManager;
 
 import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
+import com.shortstack.hackertracker.Adapter.OfficialDatabaseAdapter;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Model.Contest;
 import com.shortstack.hackertracker.Model.Default;
@@ -31,6 +32,7 @@ public class HackerTrackerFragment extends Fragment {
 
     private FragmentManager fragmentManager;
     private Context context;
+    private OfficialDatabaseAdapter myOfficialDbHelper;
     private DatabaseAdapter myDbHelper;
 
     public HackerTrackerFragment() {
@@ -42,6 +44,7 @@ public class HackerTrackerFragment extends Fragment {
         context = HackerTrackerApplication.getAppContext();
 
         // database
+        myOfficialDbHelper = HackerTrackerApplication.myOfficialDbHelper;
         myDbHelper = HackerTrackerApplication.myDbHelper;
 
     }
@@ -98,7 +101,14 @@ public class HackerTrackerFragment extends Fragment {
      */
     public List<Default> getItemByDate(String day, int type) {
         ArrayList<Default> result = new ArrayList<Default>();
-        SQLiteDatabase db = HackerTrackerApplication.myDbHelper.getWritableDatabase();
+
+        SQLiteDatabase db;
+
+        if (type==1) {
+            db = HackerTrackerApplication.myOfficialDbHelper.getWritableDatabase();
+        } else {
+            db = HackerTrackerApplication.myDbHelper.getWritableDatabase();
+        }
 
         Cursor myCursor = db.rawQuery("SELECT * FROM data WHERE date=? AND type=? ORDER BY startTime", new String[] {day, String.valueOf(type)});
 
@@ -159,9 +169,49 @@ public class HackerTrackerFragment extends Fragment {
 
     public List<Default> getStars(String day) {
         ArrayList<Default> result = new ArrayList<Default>();
+
+        SQLiteDatabase dbOfficial = myOfficialDbHelper.getWritableDatabase();
         SQLiteDatabase db = myDbHelper.getWritableDatabase();
 
+        Cursor myOfficialCursor = dbOfficial.rawQuery("SELECT * FROM data WHERE date=? AND starred=1 ORDER BY startTime", new String[]{day});
         Cursor myCursor = db.rawQuery("SELECT * FROM data WHERE date=? AND starred=1 ORDER BY startTime", new String[] {day});
+
+        // get speakers from official database
+
+        try{
+            if (myOfficialCursor.moveToFirst()){
+                do{
+
+                    Default item = new Default();
+
+                    item.setId(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("id")));
+                    item.setType(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("type")));
+                    item.setTitle(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("title")));
+                    item.setBody(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("body")));
+                    item.setName(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("name")));
+                    item.setDate(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("date")));
+                    item.setEndTime(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("endTime")));
+                    item.setStartTime(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("startTime")));
+                    item.setLocation(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("location")));
+                    item.setStarred(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("starred")));
+                    item.setImage(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("image")));
+                    item.setForum(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("forum")));
+                    item.setIsNew(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("is_new")));
+                    item.setDemo(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("demo")));
+                    item.setTool(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("tool")));
+                    item.setExploit(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("exploit")));
+
+                    result.add(item);
+
+                }while(myOfficialCursor.moveToNext());
+            }
+        }finally{
+            myOfficialCursor.close();
+        }
+
+        dbOfficial.close();
+
+        // get all other events from unofficial database
 
         try{
             if (myCursor.moveToFirst()){
@@ -194,9 +244,9 @@ public class HackerTrackerFragment extends Fragment {
             myCursor.close();
         }
 
-
-
         db.close();
+
+        // return all items
 
         return result;
     }

@@ -23,14 +23,14 @@ import java.util.Locale;
  * Date: 8/29/12
  * Time: 5:52 PM
  */
-public class DatabaseAdapter extends SQLiteOpenHelper {
+public class OfficialDatabaseAdapter extends SQLiteOpenHelper {
 
     //The Android's default system path of your application database.
     private static String DB_PATH = "/data/data/com.shortstack.hackertracker/databases/";
 
-    private static String DB_NAME = "hackertracker_unofficial.sqlite";
+    private static String DB_NAME = "hackertracker.sqlite";
 
-    private static int DB_VERSION = 1;
+    private static int DB_VERSION = 190;
 
     private SQLiteDatabase myDataBase;
 
@@ -42,7 +42,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
      * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
      * @param context
      */
-    public DatabaseAdapter(Context context) {
+    public OfficialDatabaseAdapter(Context context) {
 
         super(context, DB_NAME, null, DB_VERSION);
         this.myContext = context;
@@ -179,18 +179,19 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
         // check if entry is already in starred database
         StarDatabaseAdapter myDbHelperStars = new StarDatabaseAdapter(HackerTrackerApplication.getAppContext());
-        DatabaseAdapter myDbHelper = new DatabaseAdapter(HackerTrackerApplication.getAppContext());
+        OfficialDatabaseAdapter myOfficialDbHelper = new OfficialDatabaseAdapter(HackerTrackerApplication.getAppContext());
 
         SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
-        SQLiteDatabase dbDefault = myDbHelper.getWritableDatabase();
+        SQLiteDatabase dbDefault = myOfficialDbHelper.getWritableDatabase();
 
         Cursor myCursor = dbStars.rawQuery("SELECT * FROM data", null);
         try{
             if (myCursor.moveToFirst()){
                 do{
+
                     dbDefault.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + myCursor.getInt(myCursor.getColumnIndex("id")));
 
-                }while(myCursor.moveToNext());
+                } while(myCursor.moveToNext());
             }
         }finally{
             myCursor.close();
@@ -202,7 +203,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     public static void updateDatabase(HashMap<String, String> queryValues) {
 
-        DatabaseAdapter myDbHelper = new DatabaseAdapter(HackerTrackerApplication.getAppContext());
+        OfficialDatabaseAdapter myDbHelper = new OfficialDatabaseAdapter(HackerTrackerApplication.getAppContext());
 
         SQLiteDatabase dbDefault = myDbHelper.getWritableDatabase();
 
