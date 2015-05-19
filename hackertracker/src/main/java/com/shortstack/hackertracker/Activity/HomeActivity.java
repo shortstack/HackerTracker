@@ -76,7 +76,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
         drawerFragment.setDrawerListener(this);
 
-        // set home 
+        // set home
         fragmentManager.beginTransaction()
                 .replace(R.id.container, HomeFragment.newInstance(1))
                 .addToBackStack("HomeFragment")
