@@ -7,7 +7,26 @@
     <string name="action_settings">Settings</string>
     <string name="action_share">Share via</string>
 
+    <string name="nav_item_home">Home</string>
+    <string name="nav_item_friends">Friends</string>
+    <string name="nav_item_notifications">Messages</string>
+
+    <!-- navigation drawer item labels  -->
+    <string-array name="nav_drawer_labels">
+        <item>@string/main</item>
+        <item>@string/speakers</item>
+        <item>@string/contests</item>
+        <item>@string/events</item>
+        <item>@string/parties</item>
+        <item>@string/vendors</item>
+        <item>@string/maps</item>
+        <item>@string/shuttle</item>
+        <item>@string/faq</item>
+        <item>@string/links</item>
+    </string-array>
+
     <string name="home">DEF CON 23</string>
+    <string name="main">home</string>
     <string name="speakers">official schedule</string>
     <string name="contests">contests</string>
     <string name="vendors">vendors</string>
