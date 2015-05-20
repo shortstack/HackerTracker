@@ -23,14 +23,14 @@ import java.util.Locale;
  * Date: 8/29/12
  * Time: 5:52 PM
  */
-public class OfficialDatabaseAdapter extends SQLiteOpenHelper {
+public class DatabaseAdapterOfficial extends SQLiteOpenHelper {
 
     //The Android's default system path of your application database.
     private static String DB_PATH = "/data/data/com.shortstack.hackertracker/databases/";
 
     private static String DB_NAME = "hackertracker.sqlite";
 
-    private static int DB_VERSION = 190;
+    private static int DB_VERSION = 191;
 
     private SQLiteDatabase myDataBase;
 
@@ -42,7 +42,7 @@ public class OfficialDatabaseAdapter extends SQLiteOpenHelper {
      * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
      * @param context
      */
-    public OfficialDatabaseAdapter(Context context) {
+    public DatabaseAdapterOfficial(Context context) {
 
         super(context, DB_NAME, null, DB_VERSION);
         this.myContext = context;
@@ -178,8 +178,8 @@ public class OfficialDatabaseAdapter extends SQLiteOpenHelper {
     public static void copyStarred() {
 
         // check if entry is already in starred database
-        StarDatabaseAdapter myDbHelperStars = new StarDatabaseAdapter(HackerTrackerApplication.getAppContext());
-        OfficialDatabaseAdapter myOfficialDbHelper = new OfficialDatabaseAdapter(HackerTrackerApplication.getAppContext());
+        DatabaseAdapterStarred myDbHelperStars = new DatabaseAdapterStarred(HackerTrackerApplication.getAppContext());
+        DatabaseAdapterOfficial myOfficialDbHelper = new DatabaseAdapterOfficial(HackerTrackerApplication.getAppContext());
 
         SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
         SQLiteDatabase dbDefault = myOfficialDbHelper.getWritableDatabase();
@@ -203,7 +203,7 @@ public class OfficialDatabaseAdapter extends SQLiteOpenHelper {
 
     public static void updateDatabase(HashMap<String, String> queryValues) {
 
-        OfficialDatabaseAdapter myDbHelper = new OfficialDatabaseAdapter(HackerTrackerApplication.getAppContext());
+        DatabaseAdapterOfficial myDbHelper = new DatabaseAdapterOfficial(HackerTrackerApplication.getAppContext());
 
         SQLiteDatabase dbDefault = myDbHelper.getWritableDatabase();
 
@@ -212,10 +212,10 @@ public class OfficialDatabaseAdapter extends SQLiteOpenHelper {
         values.put("id", queryValues.get("id"));
         values.put("title", queryValues.get("title"));
         values.put("name", queryValues.get("name"));
-        values.put("startTime", queryValues.get("startTime"));
-        values.put("endTime", queryValues.get("endTime"));
+        values.put("begin", queryValues.get("begin"));
+        values.put("end", queryValues.get("end"));
         values.put("date", queryValues.get("date"));
-        values.put("location", queryValues.get("location"));
+        values.put("where", queryValues.get("where"));
         values.put("body", queryValues.get("body"));
         values.put("type", queryValues.get("type"));
         values.put("starred", queryValues.get("starred"));

@@ -14,11 +14,11 @@ public class Default {
     private int date;
     private String title;
     private String name;
-    private String body;
-    private String startTime;
-    private String endTime;
-    private String location;
-    private String forum;
+    private String description;
+    private String begin;
+    private String end;
+    private String where;
+    private String link;
     private Integer starred;
     private String image;
     private Integer is_new;
@@ -42,28 +42,28 @@ public class Default {
         this.title = title;
     }
 
-    public void setBody(String body) {
-        this.body = body;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setBegin(String begin) {
+        this.begin = begin;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setEnd(String end) {
+        this.end = end;
     }
 
     public void setDate(int date) {
         this.date = date;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setWhere(String where) {
+        this.where = where;
     }
 
     public int getId() {
@@ -74,28 +74,28 @@ public class Default {
         return title;
     }
 
-    public String getBody() {
-        return body;
+    public String getDescription() {
+        return description;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public String getBegin() {
+        return begin;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public String getEnd() {
+        return end;
     }
 
     public int getDate() {
         return date;
     }
 
-    public String getLocation() {
-        return location;
+    public String getWhere() {
+        return where;
     }
 
     public String getImage() {
@@ -114,12 +114,12 @@ public class Default {
         this.type = type;
     }
 
-    public String getForum() {
-        return forum;
+    public String getLink() {
+        return link;
     }
 
-    public void setForum(String forum) {
-        this.forum = forum;
+    public void setLink(String link) {
+        this.link = link;
     }
 
     public Integer isNew() {

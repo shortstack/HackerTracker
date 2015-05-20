@@ -61,14 +61,14 @@ public class VendorAdapter extends ArrayAdapter<Vendor> {
             holder.title.setText(vendor.getTitle());
 
             // set website
-            if (vendor.getForum()!=null) {
-                holder.website.setText(vendor.getForum());
+            if (vendor.getLink()!=null) {
+                holder.website.setText(vendor.getLink());
             } else {
                 holder.website.setVisibility(View.GONE);
             }
 
             // set body
-            holder.body.setText(vendor.getBody());
+            holder.body.setText(vendor.getDescription());
 
             // set logo
             String logo = vendor.getImage();

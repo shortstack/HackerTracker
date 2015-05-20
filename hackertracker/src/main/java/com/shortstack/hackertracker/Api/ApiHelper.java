@@ -39,7 +39,7 @@ public class ApiHelper {
 
     // API URLs
     public static final String FIND_DATES = "/date";
-    public static final String FIND_SPEAKER = "/speakers.json";
+    public static final String FIND_SPEAKER = "/schedule-full.json";
     public static final String FIND_SPEAKER_BY_DATE = "/speaker/date";
     public static final String FIND_ENTERTAINMENT = "/event";
     public static final String FIND_ENTERTAINMENT_BY_DATE = "/event/date";

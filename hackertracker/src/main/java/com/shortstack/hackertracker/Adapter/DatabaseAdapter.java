@@ -30,7 +30,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     private static String DB_NAME = "hackertracker_unofficial.sqlite";
 
-    private static int DB_VERSION = 1;
+    private static int DB_VERSION = 2;
 
     private SQLiteDatabase myDataBase;
 
@@ -178,7 +178,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
     public static void copyStarred() {
 
         // check if entry is already in starred database
-        StarDatabaseAdapter myDbHelperStars = new StarDatabaseAdapter(HackerTrackerApplication.getAppContext());
+        DatabaseAdapterStarred myDbHelperStars = new DatabaseAdapterStarred(HackerTrackerApplication.getAppContext());
         DatabaseAdapter myDbHelper = new DatabaseAdapter(HackerTrackerApplication.getAppContext());
 
         SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
@@ -211,10 +211,10 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
         values.put("id", queryValues.get("id"));
         values.put("title", queryValues.get("title"));
         values.put("name", queryValues.get("name"));
-        values.put("startTime", queryValues.get("startTime"));
-        values.put("endTime", queryValues.get("endTime"));
+        values.put("begin", queryValues.get("begin"));
+        values.put("end", queryValues.get("end"));
         values.put("date", queryValues.get("date"));
-        values.put("location", queryValues.get("location"));
+        values.put("where", queryValues.get("where"));
         values.put("body", queryValues.get("body"));
         values.put("type", queryValues.get("type"));
         values.put("starred", queryValues.get("starred"));

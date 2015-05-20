@@ -3,7 +3,6 @@ package com.shortstack.hackertracker.Activity;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -17,7 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.shortstack.hackertracker.Adapter.OfficialDatabaseAdapter;
+import com.shortstack.hackertracker.Adapter.DatabaseAdapterOfficial;
 import com.shortstack.hackertracker.Api.ApiException;
 import com.shortstack.hackertracker.Api.Impl.SyncServiceImpl;
 import com.shortstack.hackertracker.Api.SyncService;
@@ -388,7 +387,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
     private static void syncDatabase(ArrayList<Default> speakersArray, Context context) {
 
         HashMap<String, String> queryValues;
-        OfficialDatabaseAdapter controller = new OfficialDatabaseAdapter(context);
+        DatabaseAdapterOfficial controller = new DatabaseAdapterOfficial(context);
 
         // Create GSON object
         Gson gson = new GsonBuilder().create();
@@ -411,16 +410,16 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 // Add userID extracted from Object
                 queryValues.put("id", obj.get("id").toString());
                 queryValues.put("title", obj.get("title").toString());
-                queryValues.put("name", obj.get("name").toString());
-                queryValues.put("startTime", obj.get("startTime").toString());
-                queryValues.put("endTime", obj.get("endTime").toString());
+                queryValues.put("name", obj.get("who").toString());
+                queryValues.put("begin", obj.get("begin").toString());
+                queryValues.put("end", obj.get("end").toString());
                 queryValues.put("date", obj.get("date").toString());
-                queryValues.put("location", obj.get("location").toString());
-                queryValues.put("body", obj.get("body").toString());
+                queryValues.put("where", obj.get("where").toString());
+                queryValues.put("body", obj.get("description").toString());
                 queryValues.put("type", obj.get("type").toString());
                 queryValues.put("starred", obj.get("starred").toString());
                 queryValues.put("image", obj.get("image").toString());
-                queryValues.put("forum", obj.get("forum").toString());
+                queryValues.put("forum", obj.get("link").toString());
                 queryValues.put("is_new", obj.get("is_new").toString());
                 queryValues.put("demo", obj.get("demo").toString());
                 queryValues.put("tool", obj.get("tool").toString());

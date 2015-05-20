@@ -4,8 +4,8 @@ import android.app.Application;
 import android.content.Context;
 
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
-import com.shortstack.hackertracker.Adapter.OfficialDatabaseAdapter;
-import com.shortstack.hackertracker.Adapter.StarDatabaseAdapter;
+import com.shortstack.hackertracker.Adapter.DatabaseAdapterOfficial;
+import com.shortstack.hackertracker.Adapter.DatabaseAdapterStarred;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 
 import java.io.IOException;
@@ -17,9 +17,9 @@ public class HackerTrackerApplication extends Application {
 
     private static HackerTrackerApplication application;
     private static Context context;
-    public static OfficialDatabaseAdapter myOfficialDbHelper;
+    public static DatabaseAdapterOfficial myOfficialDbHelper;
     public static DatabaseAdapter myDbHelper;
-    public static StarDatabaseAdapter myDbHelperStars;
+    public static DatabaseAdapterStarred myDbHelperStars;
 
     public void onCreate(){
         super.onCreate();
@@ -38,9 +38,9 @@ public class HackerTrackerApplication extends Application {
 
     private void setUpDatabase() {
 
-        myOfficialDbHelper = new OfficialDatabaseAdapter(context);
+        myOfficialDbHelper = new DatabaseAdapterOfficial(context);
         myDbHelper = new DatabaseAdapter(context);
-        myDbHelperStars = new StarDatabaseAdapter(context);
+        myDbHelperStars = new DatabaseAdapterStarred(context);
 
         try {
 

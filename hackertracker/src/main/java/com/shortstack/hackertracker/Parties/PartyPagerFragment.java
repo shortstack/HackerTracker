@@ -37,9 +37,9 @@ public class PartyPagerFragment extends Fragment {
         pager.setOffscreenPageLimit(5);
 
         PagerTabStrip pagerTabStrip = (PagerTabStrip) result.findViewById(R.id.pager_title_strip);
-        pagerTabStrip.setDrawFullUnderline(true);
-        pagerTabStrip.setTabIndicatorColor(getResources().getColor(R.color.green));
         pagerTabStrip.setDrawFullUnderline(false);
+        pagerTabStrip.setTabIndicatorColor(getResources().getColor(R.color.green));
+        pagerTabStrip.setBackgroundColor(getResources().getColor(R.color.black));
 
         return(result);
     }

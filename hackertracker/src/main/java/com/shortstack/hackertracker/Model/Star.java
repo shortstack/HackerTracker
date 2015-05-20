@@ -12,10 +12,10 @@ public class Star {
     private String title;
     private String body;
     private String speaker;
-    private String startTime;
-    private String endTime;
+    private String begin;
+    private String end;
     private String date;
-    private String location;
+    private String where;
     private String forum;
     private Integer starred;
 
@@ -59,20 +59,20 @@ public class Star {
         this.speaker = speaker;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public String getBegin() {
+        return begin;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setBegin(String begin) {
+        this.begin = begin;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public String getEnd() {
+        return end;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
+    public void setEnd(String end) {
+        this.end = end;
     }
 
     public String getDate() {
@@ -83,19 +83,19 @@ public class Star {
         this.date = date;
     }
 
-    public String getLocation() {
-        return location;
+    public String getWhere() {
+        return where;
     }
 
-    public void setLocation(String location) {
-        this.location = location;
+    public void setWhere(String where) {
+        this.where = where;
     }
 
-    public String getForum() {
+    public String getLink() {
         return forum;
     }
 
-    public void setForum(String forum) {
+    public void setLink(String forum) {
         this.forum = forum;
     }
 }

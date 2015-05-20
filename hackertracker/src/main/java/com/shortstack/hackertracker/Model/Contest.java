@@ -11,11 +11,11 @@ public class Contest extends Default {
 
     private String forum;
 
-    public void setForum(String forum) {
+    public void setLink(String forum) {
         this.forum = forum;
     }
 
-    public String getForum() {
+    public String getLink() {
         return forum;
     }
 }

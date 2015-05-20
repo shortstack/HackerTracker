@@ -18,7 +18,6 @@ import android.widget.Toast;
 
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Default;
-import com.shortstack.hackertracker.Model.Party;
 import com.shortstack.hackertracker.R;
 
 import java.util.List;
@@ -70,7 +69,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             holder.icons.setVisibility(View.GONE);
             holder.is_new = (TextView) row.findViewById(R.id.isNew);
             holder.is_new.setVisibility(View.GONE);
-            holder.location = (TextView) row.findViewById(R.id.location);
+            holder.where = (TextView) row.findViewById(R.id.where);
             holder.defaultLayout = (LinearLayout) row.findViewById(R.id.rootLayout);
             row.setTag(holder);
 
@@ -140,10 +139,10 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             }
 
             // set time
-            holder.time.setText(item.getId() + " " + item.getStartTime());
+            holder.time.setText(item.getId() + " " + item.getBegin());
 
             // set location
-            holder.location.setText(item.getLocation());
+            holder.where.setText(item.getWhere());
 
             // if new, show "new"
             holder.is_new.setVisibility(View.GONE);
@@ -172,9 +171,9 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                 TextView nameText = (TextView) layout.findViewById(R.id.speaker);
                 TextView timeText = (TextView) layout.findViewById(R.id.time);
                 TextView dateText = (TextView) layout.findViewById(R.id.date);
-                TextView locationText = (TextView) layout.findViewById(R.id.location);
-                TextView forumText = (TextView) layout.findViewById(R.id.forum);
-                TextView bodyText = (TextView) layout.findViewById(R.id.body);
+                TextView locationText = (TextView) layout.findViewById(R.id.where);
+                TextView forumText = (TextView) layout.findViewById(R.id.link);
+                TextView bodyText = (TextView) layout.findViewById(R.id.description);
                 ImageView demo = (ImageView) layout.findViewById(R.id.demo);
                 ImageView exploit = (ImageView) layout.findViewById(R.id.exploit);
                 ImageView tool = (ImageView) layout.findViewById(R.id.tool);
@@ -207,28 +206,28 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                 }
 
                 // if no forum, hide forum
-                if (item.getForum()==null) {
+                if (item.getLink()==null) {
                     forumText.setVisibility(View.GONE);
                 } else {
-                    forumText.setText("Site: " + item.getForum());
+                    forumText.setText("Site: " + item.getLink());
                 }
 
                 // set title
                 titleText.setText(item.getTitle());
 
                 // set location
-                if (item.getLocation()!=null) {
-                    locationText.append(item.getLocation());
+                if (item.getWhere()!=null) {
+                    locationText.append(item.getWhere());
                 }
 
                 // set body
-                bodyText.setText(item.getBody());
+                bodyText.setText(item.getDescription());
 
                 // set date
                 dateText.setText(getDate(item.getDate()));
 
                 // set time
-                timeText.setText(item.getStartTime() + " - " + item.getEndTime());
+                timeText.setText(item.getBegin() + " - " + item.getEnd());
 
                 // check if entry is already in starred database
                 if (item.getStarred()==1)
@@ -246,9 +245,9 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                         sb.append(item.getTitle());
                         if(item.getName()!=null)
                             sb.append("\n\nSpeaker: " + item.getName());
-                        sb.append("\n\nDate: " + getDate(item.getDate()) + "\n\nTime: " + item.getStartTime() + "\n\nLocation: " + item.getLocation());
-                        if(item.getBody()!=null)
-                            sb.append("\n\nMore details:\n\n" + item.getBody());
+                        sb.append("\n\nDate: " + getDate(item.getDate()) + "\n\nTime: " + item.getBegin() + "\n\nLocation: " + item.getWhere());
+                        if(item.getDescription()!=null)
+                            sb.append("\n\nMore details:\n\n" + item.getDescription());
 
                         sendIntent.putExtra(Intent.EXTRA_TEXT, sb.toString());
                         sendIntent.setType("text/plain");
@@ -262,9 +261,9 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                 final View.OnClickListener starOnClickListener = new View.OnClickListener() {
                     public void onClick(View v) {
 
-                        OfficialDatabaseAdapter myDbOfficialHelper = new OfficialDatabaseAdapter(context);
+                        DatabaseAdapterOfficial myDbOfficialHelper = new DatabaseAdapterOfficial(context);
                         DatabaseAdapter myDbHelper = new DatabaseAdapter(context);
-                        StarDatabaseAdapter myDbHelperStars = new StarDatabaseAdapter(context);
+                        DatabaseAdapterStarred myDbHelperStars = new DatabaseAdapterStarred(context);
                         SQLiteDatabase dbDefaults = myDbHelper.getWritableDatabase();
                         SQLiteDatabase dbOfficial = myDbOfficialHelper.getWritableDatabase();
                         SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
@@ -358,7 +357,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
         TextView title;
         TextView time;
         TextView name;
-        TextView location;
+        TextView where;
         TextView is_new;
         ImageView demo;
         ImageView tool;

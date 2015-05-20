@@ -110,7 +110,7 @@ public class SchedulePagerFragment extends Fragment {
             File outFile = DialogUtil.getOutputMediaFile();
             FileWriter fileWriter = new FileWriter(outFile);
             BufferedWriter out = new BufferedWriter(fileWriter);
-            Cursor cursor = db.rawQuery("SELECT title,name,startTime,endTime,date,location FROM data WHERE starred=1", null);
+            Cursor cursor = db.rawQuery("SELECT title,name,begin,end,date,where FROM data WHERE starred=1", null);
             if (cursor != null) {
                 out.write(csvHeader);
                 while (cursor.moveToNext()) {

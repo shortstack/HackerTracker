@@ -63,15 +63,15 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"        />
 
-            <TextView android:id="@+id/location"
+            <TextView android:id="@+id/where"
                 android:text="Location: "
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                style="@style/details_location"
+                style="@style/details_where"
                 android:textIsSelectable="true"
                 />
 
-            <TextView android:id="@+id/forum"
+            <TextView android:id="@+id/link"
                 style="@style/details_forum"
                 android:text=""
                 android:layout_width="fill_parent"
@@ -87,7 +87,7 @@
                 style="@style/scroll_view"
                 android:id="@+id/scroll"
                 >
-                <TextView android:id="@+id/body"
+                <TextView android:id="@+id/description"
                     style="@style/details_body"
                     android:autoLink="all"
                     android:text="Test test test"

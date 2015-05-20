@@ -22,7 +22,7 @@ import java.util.Locale;
  * Date: 8/29/12
  * Time: 5:52 PM
  */
-public class StarDatabaseAdapter extends SQLiteOpenHelper {
+public class DatabaseAdapterStarred extends SQLiteOpenHelper {
 
     //The Android's default system path of your application database.
     private static String DB_PATH = "/data/data/com.shortstack.hackertracker/databases/";
@@ -40,7 +40,7 @@ public class StarDatabaseAdapter extends SQLiteOpenHelper {
      * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
      * @param context
      */
-    public StarDatabaseAdapter(Context context)  {
+    public DatabaseAdapterStarred(Context context)  {
 
         super(context, DB_NAME, null, DB_VERSION);
         this.myContext = context;

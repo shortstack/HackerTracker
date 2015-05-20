@@ -154,7 +154,7 @@ public class SearchFragment extends Fragment {
         Cursor title = db.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
         Cursor body = db.rawQuery("SELECT * FROM data WHERE (body LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
         Cursor name = db.rawQuery("SELECT * FROM data WHERE (name LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
-        Cursor location = db.rawQuery("SELECT * FROM data WHERE (location LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
+        Cursor location = db.rawQuery("SELECT * FROM data WHERE (where LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
 
         // get search results from each query
         getResults(title);
@@ -190,7 +190,7 @@ public class SearchFragment extends Fragment {
     public class ItemComparator implements Comparator<Default> {
 
         public int compare(Default left, Default right) {
-            return left.getStartTime().compareTo(right.getStartTime());
+            return left.getBegin().compareTo(right.getBegin());
         }
 
     }
@@ -206,15 +206,15 @@ public class SearchFragment extends Fragment {
                     item.setId(cursor.getInt(cursor.getColumnIndex("id")));
                     item.setType(cursor.getInt(cursor.getColumnIndex("type")));
                     item.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-                    item.setBody(cursor.getString(cursor.getColumnIndex("body")));
+                    item.setDescription(cursor.getString(cursor.getColumnIndex("body")));
                     item.setName(cursor.getString(cursor.getColumnIndex("name")));
                     item.setDate(cursor.getInt(cursor.getColumnIndex("date")));
-                    item.setEndTime(cursor.getString(cursor.getColumnIndex("endTime")));
-                    item.setStartTime(cursor.getString(cursor.getColumnIndex("startTime")));
-                    item.setLocation(cursor.getString(cursor.getColumnIndex("location")));
+                    item.setEnd(cursor.getString(cursor.getColumnIndex("end")));
+                    item.setBegin(cursor.getString(cursor.getColumnIndex("begin")));
+                    item.setWhere(cursor.getString(cursor.getColumnIndex("where")));
                     item.setStarred(cursor.getInt(cursor.getColumnIndex("starred")));
                     item.setImage(cursor.getString(cursor.getColumnIndex("image")));
-                    item.setForum(cursor.getString(cursor.getColumnIndex("forum")));
+                    item.setLink(cursor.getString(cursor.getColumnIndex("forum")));
                     item.setIsNew(cursor.getInt(cursor.getColumnIndex("is_new")));
                     item.setDemo(cursor.getInt(cursor.getColumnIndex("demo")));
                     item.setExploit(cursor.getInt(cursor.getColumnIndex("exploit")));

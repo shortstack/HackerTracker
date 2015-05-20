@@ -44,9 +44,9 @@ public class SpeakerPagerFragment extends Fragment {
         pager.setOffscreenPageLimit(4);
 
         PagerTabStrip pagerTabStrip = (PagerTabStrip) result.findViewById(R.id.pager_title_strip);
-        pagerTabStrip.setDrawFullUnderline(true);
-        pagerTabStrip.setTabIndicatorColor(getResources().getColor(R.color.green));
         pagerTabStrip.setDrawFullUnderline(false);
+        pagerTabStrip.setTabIndicatorColor(getResources().getColor(R.color.colorAccent));
+        pagerTabStrip.setBackgroundColor(getResources().getColor(R.color.black));
 
         return(result);
     }
