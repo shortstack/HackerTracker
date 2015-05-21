@@ -30,7 +30,7 @@ public class DatabaseAdapterOfficial extends SQLiteOpenHelper {
 
     private static String DB_NAME = "hackertracker.sqlite";
 
-    private static int DB_VERSION = 191;
+    private static int DB_VERSION = 193;
 
     private SQLiteDatabase myDataBase;
 
@@ -211,22 +211,25 @@ public class DatabaseAdapterOfficial extends SQLiteOpenHelper {
 
         values.put("id", queryValues.get("id"));
         values.put("title", queryValues.get("title"));
-        values.put("name", queryValues.get("name"));
+        values.put("who", queryValues.get("who"));
         values.put("begin", queryValues.get("begin"));
         values.put("end", queryValues.get("end"));
         values.put("date", queryValues.get("date"));
-        values.put("where", queryValues.get("where"));
-        values.put("body", queryValues.get("body"));
+        values.put("description", queryValues.get("description"));
         values.put("type", queryValues.get("type"));
-        values.put("starred", queryValues.get("starred"));
         values.put("image", queryValues.get("image"));
-        values.put("forum", queryValues.get("forum"));
+        values.put("link", queryValues.get("link"));
         values.put("is_new", queryValues.get("is_new"));
         values.put("demo", queryValues.get("demo"));
         values.put("tool", queryValues.get("tool"));
         values.put("exploit", queryValues.get("exploit"));
 
-        dbDefault.insert("data", null, values);
+        // check if previously starred
+        Cursor c = dbDefault.rawQuery("SELECT starred FROM data WHERE id="+queryValues.get("id"),null);
+        c.moveToFirst();
+        values.put("starred", c.getString(0));
+
+        dbDefault.insertWithOnConflict("data", null, values, SQLiteDatabase.CONFLICT_REPLACE);
         dbDefault.close();
 
     }

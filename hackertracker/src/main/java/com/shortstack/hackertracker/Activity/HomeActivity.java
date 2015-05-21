@@ -408,22 +408,22 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 queryValues = new HashMap<String, String>();
 
                 // Add userID extracted from Object
-                queryValues.put("id", obj.get("id").toString());
-                queryValues.put("title", obj.get("title").toString());
-                queryValues.put("name", obj.get("who").toString());
-                queryValues.put("begin", obj.get("begin").toString());
-                queryValues.put("end", obj.get("end").toString());
-                queryValues.put("date", obj.get("date").toString());
-                queryValues.put("where", obj.get("where").toString());
-                queryValues.put("body", obj.get("description").toString());
-                queryValues.put("type", obj.get("type").toString());
-                queryValues.put("starred", obj.get("starred").toString());
-                queryValues.put("image", obj.get("image").toString());
-                queryValues.put("forum", obj.get("link").toString());
-                queryValues.put("is_new", obj.get("is_new").toString());
-                queryValues.put("demo", obj.get("demo").toString());
-                queryValues.put("tool", obj.get("tool").toString());
-                queryValues.put("exploit", obj.get("exploit").toString());
+                queryValues.put("id", obj.get("id").getAsString());
+                queryValues.put("title", obj.get("title").getAsString());
+                queryValues.put("name", obj.get("who").getAsString());
+                queryValues.put("begin", obj.get("begin").getAsString());
+                queryValues.put("end", obj.get("end").getAsString());
+                queryValues.put("date", obj.get("date").getAsString());
+                queryValues.put("where", obj.get("where").getAsString());
+                queryValues.put("description", obj.get("description").getAsString());
+                queryValues.put("type", obj.get("type").getAsString());
+                queryValues.put("starred", obj.get("starred").getAsString());
+                queryValues.put("image", obj.get("image").getAsString());
+                queryValues.put("forum", obj.get("link").getAsString());
+                queryValues.put("is_new", obj.get("is_new").getAsString());
+                queryValues.put("demo", obj.get("demo").getAsString());
+                queryValues.put("tool", obj.get("tool").getAsString());
+                queryValues.put("exploit", obj.get("exploit").getAsString());
 
                 // Insert User into SQLite DB
                 controller.updateDatabase(queryValues);

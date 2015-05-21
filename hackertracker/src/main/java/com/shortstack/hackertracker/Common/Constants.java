@@ -5,7 +5,7 @@ package com.shortstack.hackertracker.Common;
  */
 public interface Constants {
 
-    public static String API_URL = "http://dcib.melloman.net";
+    public static String API_URL = "http://short-stack.net/api";
     public static String API_ERROR_MESSAGE = "\"errorMessage\":";
 
     public static int TYPE_SPEAKER = 1;

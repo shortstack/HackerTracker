@@ -13,7 +13,7 @@ public class Default {
     private int type;
     private int date;
     private String title;
-    private String name;
+    private String who;
     private String description;
     private String begin;
     private String end;
@@ -46,8 +46,8 @@ public class Default {
         this.description = description;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String who) {
+        this.who = who;
     }
 
     public void setBegin(String begin) {
@@ -79,7 +79,7 @@ public class Default {
     }
 
     public String getName() {
-        return name;
+        return who;
     }
 
     public String getBegin() {
