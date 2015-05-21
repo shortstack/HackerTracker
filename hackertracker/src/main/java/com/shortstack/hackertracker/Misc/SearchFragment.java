@@ -149,20 +149,30 @@ public class SearchFragment extends Fragment {
             return result;
         }
 
-        SQLiteDatabase db = HackerTrackerApplication.myOfficialDbHelper.getWritableDatabase();
+        SQLiteDatabase dbOfficial = HackerTrackerApplication.myOfficialDbHelper.getWritableDatabase();
+        SQLiteDatabase db = HackerTrackerApplication.myDbHelper.getWritableDatabase();
 
-        Cursor title = db.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
-        Cursor body = db.rawQuery("SELECT * FROM data WHERE (body LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
-        Cursor name = db.rawQuery("SELECT * FROM data WHERE (name LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
-        Cursor location = db.rawQuery("SELECT * FROM data WHERE (where LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
+        Cursor titleOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type <> 5", new String[]{"%" + string + "%"});
+        Cursor bodyOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (description LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
+        Cursor nameOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (who LIKE ?) AND type <> 5", new String[]{"%" + string + "%"});
+        Cursor locationOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE ('where' LIKE ?) AND type <> 5", new String[]{"%" + string + "%"});
+        Cursor title = db.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type <> 5", new String[]{"%" + string + "%"});
+        Cursor body = db.rawQuery("SELECT * FROM data WHERE (description LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
+        Cursor name = db.rawQuery("SELECT * FROM data WHERE (who LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
+        Cursor location = db.rawQuery("SELECT * FROM data WHERE ('where' LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
 
         // get search results from each query
+        getResults(titleOfficial);
+        getResults(bodyOfficial);
+        getResults(nameOfficial);
+        getResults(locationOfficial);
         getResults(title);
         getResults(body);
         getResults(name);
         getResults(location);
 
         // close database
+        dbOfficial.close();
         db.close();
 
         // sort by start time
@@ -206,15 +216,15 @@ public class SearchFragment extends Fragment {
                     item.setId(cursor.getInt(cursor.getColumnIndex("id")));
                     item.setType(cursor.getInt(cursor.getColumnIndex("type")));
                     item.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-                    item.setDescription(cursor.getString(cursor.getColumnIndex("body")));
-                    item.setName(cursor.getString(cursor.getColumnIndex("name")));
+                    item.setDescription(cursor.getString(cursor.getColumnIndex("description")));
+                    item.setName(cursor.getString(cursor.getColumnIndex("who")));
                     item.setDate(cursor.getInt(cursor.getColumnIndex("date")));
                     item.setEnd(cursor.getString(cursor.getColumnIndex("end")));
                     item.setBegin(cursor.getString(cursor.getColumnIndex("begin")));
                     item.setWhere(cursor.getString(cursor.getColumnIndex("where")));
                     item.setStarred(cursor.getInt(cursor.getColumnIndex("starred")));
                     item.setImage(cursor.getString(cursor.getColumnIndex("image")));
-                    item.setLink(cursor.getString(cursor.getColumnIndex("forum")));
+                    item.setLink(cursor.getString(cursor.getColumnIndex("link")));
                     item.setIsNew(cursor.getInt(cursor.getColumnIndex("is_new")));
                     item.setDemo(cursor.getInt(cursor.getColumnIndex("demo")));
                     item.setExploit(cursor.getInt(cursor.getColumnIndex("exploit")));

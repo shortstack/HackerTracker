@@ -3,20 +3,6 @@
     style="@style/page"
     android:orientation="vertical">
 
-   <!-- <EditText
-        android:id="@+id/search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="search"
-        android:singleLine="true"
-        android:background="@drawable/button_states_green"
-        android:padding="10dp"
-        android:focusableInTouchMode="true"
-        android:imeOptions="actionDone"
-        android:textColor="@color/white">
-        <requestFocus/>
-    </EditText>-->
-
     <com.shortstack.hackertracker.Utils.ClearableEditText
         android:id="@+id/search"
         android:layout_width="match_parent"
@@ -25,6 +11,7 @@
         android:singleLine="true"
         android:padding="10dp"
         android:hint="search"
+        android:textColorHint="@color/white"
         android:layout_margin="15dp"
         android:textColor="@color/white">
         <requestFocus/>

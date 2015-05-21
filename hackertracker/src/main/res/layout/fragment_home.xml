@@ -11,7 +11,7 @@
         android:textStyle="bold"
         android:layout_marginTop="60dp"
         android:textSize="20dp"
-        android:text="DC22 Schedule\nOfficial &amp; Unofficial"
+        android:text="@string/home_text"
         android:gravity="center"
         android:textColor="@color/white"/>
 
