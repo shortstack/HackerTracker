@@ -153,7 +153,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                 holder.is_new.setVisibility(View.GONE);
             }
 
-            // set onclicklistener for share button
+            // set onclicklistener for viewing event
             final View finalRow = row;
             final View.OnClickListener openOnClickListener = new View.OnClickListener() {
                 public void onClick(View v) {
@@ -213,7 +213,11 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                 }
 
                 // set title
-                titleText.setText(item.getTitle());
+                if (item.getTitle().contains("MUSIC - ")) {
+                    titleText.setText(item.getTitle().split(" - ")[1]);
+                } else {
+                    titleText.setText(item.getTitle());
+                }
 
                 // set location
                 if (item.getWhere()!=null) {
@@ -271,7 +275,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                         // if not starred, star it
                         if (item.getStarred()==0) {
 
-                            // add to stars database
+                            // add to starred database
                             dbStars.execSQL("INSERT INTO data VALUES (" + item.getId() + ")");
 
                             if (item.getType() == 1) {
@@ -283,11 +287,11 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                             // change star
                             item.setStarred(1);
                             star.setImageResource(R.drawable.star_selected);
-                            Toast.makeText(context,"Added to My Schedule",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,R.string.schedule_added,Toast.LENGTH_SHORT).show();
 
                         } else {
 
-                            // remove from database
+                            // remove from starred database
                             dbStars.delete("data", "id=" + item.getId(), null);
 
                             if (item.getType() == 1) {
@@ -299,7 +303,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                             // change star
                             item.setStarred(0);
                             star.setImageResource(R.drawable.star_unselected);
-                            Toast.makeText(context,"Removed from My Schedule",Toast.LENGTH_SHORT).show();
+                            Toast.makeText(context,R.string.schedule_removed,Toast.LENGTH_SHORT).show();
                         }
 
                         dbDefaults.close();

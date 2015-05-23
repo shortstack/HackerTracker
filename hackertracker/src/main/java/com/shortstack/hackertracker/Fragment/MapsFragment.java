@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Misc;
+package com.shortstack.hackertracker.Fragment;
 
 import android.app.Activity;
 import android.content.ActivityNotFoundException;
@@ -142,13 +142,6 @@ public class MapsFragment extends Fragment {
         while((read = in.read(buffer)) != -1){
             out.write(buffer, 0, read);
         }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((HomeActivity) activity).onSectionAttached(
-                getArguments().getInt(ARG_SECTION_NUMBER));
     }
 
 }

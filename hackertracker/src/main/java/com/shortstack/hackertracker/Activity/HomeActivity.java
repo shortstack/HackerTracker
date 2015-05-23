@@ -1,9 +1,8 @@
 package com.shortstack.hackertracker.Activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
-import android.content.res.Resources;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -26,13 +24,14 @@ import com.shortstack.hackertracker.Api.SyncService;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Contests.ContestPagerFragment;
 import com.shortstack.hackertracker.Events.EventPagerFragment;
+import com.shortstack.hackertracker.Fragment.FragmentDrawer;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
-import com.shortstack.hackertracker.Misc.FAQFragment;
-import com.shortstack.hackertracker.Misc.HomeFragment;
-import com.shortstack.hackertracker.Misc.LinksFragment;
-import com.shortstack.hackertracker.Misc.MapsFragment;
-import com.shortstack.hackertracker.Misc.SearchFragment;
-import com.shortstack.hackertracker.Misc.ShuttleFragment;
+import com.shortstack.hackertracker.Fragment.FAQFragment;
+import com.shortstack.hackertracker.Fragment.HomeFragment;
+import com.shortstack.hackertracker.Fragment.LinksFragment;
+import com.shortstack.hackertracker.Fragment.MapsFragment;
+import com.shortstack.hackertracker.Fragment.SearchFragment;
+import com.shortstack.hackertracker.Fragment.ShuttleFragment;
 import com.shortstack.hackertracker.Model.ApiBase;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.SpeakerList;
@@ -71,6 +70,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         // set up action bar
         setSupportActionBar(mToolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         // set up nav drawer
         drawerFragment = (FragmentDrawer)
                 getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
@@ -93,37 +93,37 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
             FragmentName fragName = FragmentName.valueOf(fm.getBackStackEntryAt(fm.getBackStackEntryCount()-2).getName());
             switch (fragName) {
                 case HomeFragment:
-                    getSupportActionBar().setTitle(getString(R.string.home));
+                    getSupportActionBar().setTitle(getString(R.string.home).toUpperCase());
                     break;
                 case SpeakerPagerFragment:
-                    getSupportActionBar().setTitle(getString(R.string.speakers));
+                    getSupportActionBar().setTitle(getString(R.string.speakers).toUpperCase());
                     break;
                 case ContestPagerFragment:
-                    getSupportActionBar().setTitle(getString(R.string.contests));
+                    getSupportActionBar().setTitle(getString(R.string.contests).toUpperCase());
                     break;
                 case EventPagerFragment:
-                    getSupportActionBar().setTitle(getString(R.string.events));
+                    getSupportActionBar().setTitle(getString(R.string.events).toUpperCase());
                     break;
                 case PartyPagerFragment:
-                    getSupportActionBar().setTitle(getString(R.string.parties));
+                    getSupportActionBar().setTitle(getString(R.string.parties).toUpperCase());
                     break;
                 case VendorsFragment:
-                    getSupportActionBar().setTitle(getString(R.string.vendors));
+                    getSupportActionBar().setTitle(getString(R.string.vendors).toUpperCase());
                     break;
                 case MapsFragment:
-                    getSupportActionBar().setTitle(getString(R.string.maps));
+                    getSupportActionBar().setTitle(getString(R.string.maps).toUpperCase());
                     break;
                 case LinksFragment:
-                    getSupportActionBar().setTitle(getString(R.string.links));
+                    getSupportActionBar().setTitle(getString(R.string.links).toUpperCase());
                     break;
                 case FAQFragment:
-                    getSupportActionBar().setTitle(getString(R.string.faq));
+                    getSupportActionBar().setTitle(getString(R.string.faq).toUpperCase());
                     break;
                 case ShuttleFragment:
-                    getSupportActionBar().setTitle(getString(R.string.shuttle));
+                    getSupportActionBar().setTitle(getString(R.string.shuttle).toUpperCase());
                     break;
                 case SchedulePagerFragment:
-                    getSupportActionBar().setTitle(getString(R.string.schedule));
+                    getSupportActionBar().setTitle(getString(R.string.schedule).toUpperCase());
                     break;
 
             }
@@ -149,7 +149,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         int id = item.getItemId();
         if (item.getItemId() == R.id.action_schedule) {
             isSchedule = true;
-            getSupportActionBar().setTitle(getString(R.string.schedule));
+            getSupportActionBar().setTitle(getString(R.string.schedule).toUpperCase());
             fragmentManager.beginTransaction()
                     .replace(R.id.container, SchedulePagerFragment.newInstance(9))
                     .addToBackStack("SchedulePagerFragment")
@@ -157,7 +157,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
             return true;
         } else if (item.getItemId() == R.id.action_search) {
             isSearch = true;
-            getSupportActionBar().setTitle(getString(R.string.search));
+            getSupportActionBar().setTitle(getString(R.string.search).toUpperCase());
             fragmentManager.beginTransaction()
                     .replace(R.id.container, SearchFragment.newInstance(12))
                     .addToBackStack("SearchFragment")
@@ -209,130 +209,98 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                         .replace(R.id.container, HomeFragment.newInstance(1))
                         .addToBackStack("HomeFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.home));
+                getSupportActionBar().setTitle(getString(R.string.home).toUpperCase());
                 break;
             case 1:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, SpeakerPagerFragment.newInstance(2))
                         .addToBackStack("SpeakerPagerFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.speakers));
+                getSupportActionBar().setTitle(getString(R.string.speakers).toUpperCase());
                 break;
             case 2:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, ContestPagerFragment.newInstance(3))
                         .addToBackStack("ContestPagerFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.contests));
+                getSupportActionBar().setTitle(getString(R.string.contests).toUpperCase());
                 break;
             case 3:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, EventPagerFragment.newInstance(4))
                         .addToBackStack("EventPagerFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.events));
+                getSupportActionBar().setTitle(getString(R.string.events).toUpperCase());
                 break;
             case 4:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, PartyPagerFragment.newInstance(5))
                         .addToBackStack("PartyPagerFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.parties));
+                getSupportActionBar().setTitle(getString(R.string.parties).toUpperCase());
                 break;
             case 5:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, VendorsFragment.newInstance(6))
                         .addToBackStack("VendorsFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.vendors));
+                getSupportActionBar().setTitle(getString(R.string.vendors).toUpperCase());
                 break;
             case 6:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, MapsFragment.newInstance(7))
                         .addToBackStack("MapsFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.maps));
+                getSupportActionBar().setTitle(getString(R.string.maps).toUpperCase());
                 break;
-            case 7:
+/*            case 7:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, ShuttleFragment.newInstance(10))
                         .addToBackStack("ShuttleFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.shuttle));
-                break;
-            case 8:
+                getSupportActionBar().setTitle(getString(R.string.shuttle).toUpperCase());
+                break;*/
+            case 7:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, FAQFragment.newInstance(8))
                         .addToBackStack("FAQFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.faq));
+                getSupportActionBar().setTitle(getString(R.string.faq).toUpperCase());
                 break;
-            case 9:
+/*            case 9:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, LinksFragment.newInstance(11))
                         .addToBackStack("LinksFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.links));
-                break;
+                getSupportActionBar().setTitle(getString(R.string.links).toUpperCase());
+                break;*/
         }
     }
 
     public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.home);
-                break;
-            case 2:
-                mTitle = getString(R.string.speakers);
-                break;
-            case 3:
-                mTitle = getString(R.string.contests);
-                break;
-            case 4:
-                mTitle = getString(R.string.events);
-                break;
-            case 5:
-                mTitle = getString(R.string.parties);
-                break;
-            case 6:
-                mTitle = getString(R.string.vendors);
-                break;
-            case 7:
-                mTitle = getString(R.string.maps);
-                break;
-            case 8:
-                mTitle = getString(R.string.faq);
-                break;
-            case 9:
-                mTitle = getString(R.string.schedule);
-                break;
-            case 10:
-                mTitle = getString(R.string.shuttle);
-                break;
-            case 11:
-                mTitle = getString(R.string.links);
-                break;
-            case 12:
-                mTitle = getString(R.string.search);
 
-                break;
-        }
     }
 
     public static void clearSchedule(Context context) {
         SQLiteDatabase dbStars = HackerTrackerApplication.myDbHelperStars.getWritableDatabase();
-        SQLiteDatabase db = HackerTrackerApplication.myOfficialDbHelper.getWritableDatabase();
+        SQLiteDatabase dbOfficial = HackerTrackerApplication.myOfficialDbHelper.getWritableDatabase();
+        SQLiteDatabase db = HackerTrackerApplication.myDbHelper.getWritableDatabase();
 
         // delete all data in starred database
         dbStars.execSQL("DELETE FROM data");
 
         // update all data in main database to not be starred
+        dbOfficial.execSQL("UPDATE data SET starred=0");
         db.execSQL("UPDATE data SET starred=0");
 
         // reload screen
         HomeActivity.refreshSchedule();
 
+        // show cleared message
         Toast.makeText(context, R.string.schedule_cleared, Toast.LENGTH_SHORT).show();
+
+        // close database
+        dbOfficial.close();
         db.close();
         dbStars.close();
     }
@@ -372,6 +340,8 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
             try {
                 speakers = (SpeakerList) ApiResponseUtil.parseResponse(result, SpeakerList.class);
             } catch (ApiException e) {
+                AlertDialog dialog = DialogUtil.apiErrorDialog(context);
+                dialog.show();
                 return;
             }
 
@@ -381,6 +351,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 syncDatabase(speakersArray, context);
             } else {
                 // no results found, don't sync
+                Toast.makeText(context,R.string.no_updates,Toast.LENGTH_SHORT).show();
             }
         }
 

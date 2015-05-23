@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="@drawable/row_background_trans"
+    android:layout_height="match_parent"
     android:clickable="true">
 
     <TextView
@@ -12,8 +11,6 @@
         android:layout_height="wrap_content"
         android:paddingLeft="30dp"
         android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:textSize="15dp"
-        android:textStyle="bold" />
+        android:paddingBottom="10dp"/>
 
 </RelativeLayout>

@@ -3,15 +3,25 @@
               android:orientation="vertical"
               style="@style/vendor_row"
               android:id="@+id/vendorLayout">
-    <ImageView android:layout_width="match_parent"
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
+        android:background="@color/white"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="20dp"
-        android:adjustViewBounds="true"
-        android:id="@+id/vendor_logo"
-        style="@style/vendor_logo"/>
+        android:gravity="center_horizontal"
+        >
+
+        <ImageView android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:adjustViewBounds="true"
+            android:id="@+id/vendor_logo"
+            style="@style/vendor_logo"/>
+
+    </LinearLayout>
+
     <TextView android:id="@+id/vendor_title" android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               style="@style/vendor_title"

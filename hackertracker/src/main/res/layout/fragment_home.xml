@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="Updates"
+        android:text="@string/updates"
         android:textStyle="bold"
         android:textSize="16dp"
         android:layout_gravity="center_horizontal"

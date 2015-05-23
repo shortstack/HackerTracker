@@ -1,14 +1,25 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black_alpha">
+    android:background="@color/colorPrimary">
 
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/drawerList"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp" />
+        android:id="@+id/skull"
+        android:orientation="vertical"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="115dp"
+            android:src="@drawable/skull_lg"
+            android:scaleType="fitCenter"/>
+    </LinearLayout>
 
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/skull"
+        android:id="@+id/drawerList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
 
 </RelativeLayout>

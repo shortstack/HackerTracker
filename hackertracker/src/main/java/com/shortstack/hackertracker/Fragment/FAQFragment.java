@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Misc;
+package com.shortstack.hackertracker.Fragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -61,13 +61,6 @@ public class FAQFragment extends Fragment {
         faq_list.setAdapter(adapter);
 
         return rootView;
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((HomeActivity) activity).onSectionAttached(
-                getArguments().getInt(ARG_SECTION_NUMBER));
     }
 
 }

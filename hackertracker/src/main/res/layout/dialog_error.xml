@@ -16,7 +16,7 @@
         style="@style/dialog_header">
         <TextView
             style="@style/dialog_title"
-            android:text="@string/sync_database"/>
+            android:text="@string/error_api"/>
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -27,7 +27,7 @@
     <TextView
         android:id="@+id/text"
         style="@style/dialog_text"
-        android:text="@string/sync_check"
+        android:text="@string/error_api_desc"
         android:gravity="center"
         android:padding="10dp"/>
 
@@ -36,20 +36,10 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <Button
-            android:id="@+id/cancel"
+            android:id="@+id/dismiss"
             style="@style/dialog_button"
             android:padding="10dp"
-            android:layout_weight=".5"
-            android:text="@string/schedule_cancel"
-            android:textSize="14dp"
-            android:layout_margin="0dp"
-            />
-        <Button
-            android:id="@+id/sync"
-            style="@style/dialog_button"
-            android:padding="10dp"
-            android:layout_weight=".5"
-            android:text="@string/schedule_sync"
+            android:text="@string/got_it"
             android:textSize="14dp"
             android:layout_margin="0dp"
             />

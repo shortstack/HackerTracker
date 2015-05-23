@@ -68,7 +68,7 @@ public class SchedulePagerFragment extends Fragment {
 
         PagerTabStrip pagerTabStrip = (PagerTabStrip) result.findViewById(R.id.pager_title_strip);
         pagerTabStrip.setDrawFullUnderline(true);
-        pagerTabStrip.setTabIndicatorColor(getResources().getColor(R.color.green));
+        pagerTabStrip.setTabIndicatorColor(getResources().getColor(R.color.colorAccent));
         pagerTabStrip.setDrawFullUnderline(false);
 
         return(result);
@@ -110,7 +110,7 @@ public class SchedulePagerFragment extends Fragment {
             File outFile = DialogUtil.getOutputMediaFile();
             FileWriter fileWriter = new FileWriter(outFile);
             BufferedWriter out = new BufferedWriter(fileWriter);
-            Cursor cursor = db.rawQuery("SELECT title,name,begin,end,date,where FROM data WHERE starred=1", null);
+            Cursor cursor = db.rawQuery("SELECT title,who,begin,end,date,where FROM data WHERE starred=1", null);
             if (cursor != null) {
                 out.write(csvHeader);
                 while (cursor.moveToNext()) {

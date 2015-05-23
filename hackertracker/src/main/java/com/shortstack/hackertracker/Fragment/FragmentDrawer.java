@@ -1,10 +1,9 @@
-package com.shortstack.hackertracker.Activity;
+package com.shortstack.hackertracker.Fragment;
 
 /**
  * Created by Whitney Champion on 5/19/15.
  */
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
@@ -17,8 +16,6 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import com.shortstack.hackertracker.Adapter.NavigationDrawerAdapter;
 import com.shortstack.hackertracker.Model.NavDrawerItem;

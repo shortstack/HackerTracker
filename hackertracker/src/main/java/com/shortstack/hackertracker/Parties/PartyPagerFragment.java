@@ -38,7 +38,7 @@ public class PartyPagerFragment extends Fragment {
 
         PagerTabStrip pagerTabStrip = (PagerTabStrip) result.findViewById(R.id.pager_title_strip);
         pagerTabStrip.setDrawFullUnderline(false);
-        pagerTabStrip.setTabIndicatorColor(getResources().getColor(R.color.green));
+        pagerTabStrip.setTabIndicatorColor(getResources().getColor(R.color.colorAccent));
         pagerTabStrip.setBackgroundColor(getResources().getColor(R.color.black));
 
         return(result);

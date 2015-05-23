@@ -50,10 +50,4 @@ public class ContestPagerFragment extends Fragment {
      return(new ContestPagerAdapter(getActivity(), getChildFragmentManager()));
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((HomeActivity) activity).onSectionAttached(
-                getArguments().getInt(ARG_SECTION_NUMBER));
-    }
 }

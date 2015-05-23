@@ -4,8 +4,8 @@
     <string name="app_name">hacker tracker</string>
     <string name="navigation_drawer_open">open navigation drawer</string>
     <string name="navigation_drawer_close">close navigation drawer</string>
-    <string name="action_settings">settings</string>
-    <string name="action_share">share schedule</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_share">Share Schedule</string>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
@@ -16,39 +16,57 @@
         <item>@string/parties</item>
         <item>@string/vendors</item>
         <item>@string/maps</item>
-        <item>@string/shuttle</item>
         <item>@string/faq</item>
-        <item>@string/links</item>
     </string-array>
 
     <string name="home">DEF CON 23</string>
-    <string name="main">home</string>
-    <string name="speakers">official schedule</string>
-    <string name="contests">contests</string>
-    <string name="vendors">vendors</string>
-    <string name="events">events</string>
-    <string name="parties">parties</string>
-    <string name="shuttle">shuttle</string>
-    <string name="maps">maps</string>
-    <string name="faq">faq</string>
-    <string name="schedule">my schedule</string>
-    <string name="links">links</string>
-    <string name="search">search</string>
+    <string name="main">Home</string>
+    <string name="speakers">Official Schedule</string>
+    <string name="contests">Contests</string>
+    <string name="vendors">Vendors</string>
+    <string name="events">Events</string>
+    <string name="parties">Parties</string>
+    <string name="shuttle">Shuttle</string>
+    <string name="maps">Maps</string>
+    <string name="faq">FAQ</string>
+    <string name="schedule">My Schedule</string>
+    <string name="links">Links</string>
+    <string name="search">Search</string>
 
     <string name="home_text">DC23 Schedule\nOfficial &amp; Unofficial</string>
+    <string name="updates">Updates</string>
+
+    <string name="oh_snap">Oh snap!</string>
+    <string name="dont_show">Don\'t show this again</string>
+    <string name="empty_schedule">Looks like you don\'t have anything in your schedule yet!\n\nCheck out the speaker list, contests, parties, and events to make the most of your DEF CON 23 experience :)</string>
+    <string name="got_it">Got it!</string>
+    <string name="error_api">Error connecting to API</string>
+    <string name="error_api_desc">Please check your connection and try again :)</string>
+    <string name="sync_database">Sync Speaker Database</string>
+    <string name="sync_check">Are you sure you want to sync your local database? This will require your device to access the internet."</string>
+    <string name="no_updates">Your schedule is up to date! :)</string>
 
     <string name="schedule_cleared">Schedule cleared successfully</string>
-    <string name="delete_all">clear my schedule</string>
-    <string name="close">close</string>
-    <string name="sync">sync schedule</string>
+    <string name="schedule_clear">Clear My Schedule</string>
+    <string name="delete_all">Clear My Schedule</string>
+    <string name="close">Close</string>
+    <string name="sync">Sync Speaker Database</string>
+    <string name="schedule_check">Are you sure you want to remove everything from your schedule?</string>
+    <string name="schedule_cancel">No, Cancel</string>
+    <string name="schedule_remove">yes, Remove them</string>
+    <string name="schedule_removed">Removed from My Schedule</string>
+    <string name="schedule_added">Added to My Schedule</string>
+    <string name="schedule_sync">Yes, Sync Now</string>
 
+    <string name="map_hotel">Hotel Map</string>
+    <string name="map_con">Conference Map</string>
     <string name="backup_name">dc23_schedule.csv</string>
     <string name="backup">Schedule saved in Downloads as "dc23_schedule.csv"</string>
 
     <string name="coming_soon_maps">Conference map will be posted when it becomes available!</string>
 
-    <string name="star_add">add to my schedule</string>
-    <string name="star_delete">remove from my schedule</string>
+    <string name="star_add">Add to My Schedule</string>
+    <string name="star_delete">Remove from My Schedule</string>
 
     <string name="shuttle_text">
         <big>Airport Shuttle Service to DEF CON 23!</big>\n\nIt\'s a known fact: Vegas cab drivers can be … indirect. Even worse, it\'s a real challenge to keep a cab smelling daisy-fresh in 110 degree heat. So how does one get from the airport to Paris and Bally\'s without taking an unnecessary tour of Henderson and baking like a potato?\n\nThere is a way.\n\nWe\'ve partnered with LASxpress to shuttle DEF CON attendees from McCarran to their hotels, Paris and Bally\'s and otherwise. It costs 11 bucks (18 non-stop), and has the benefits of meet and greet service and immediate boarding.\n\nOf course, there is something of a vision-quest feeling to waiting around in the desert, sweating in a small space as you travel aimlessly throughout the universe. So, you can still do that, too.\n\nIf you\'d rather try the shuttle route, just click here to register: http://lasrescenter.hudsonltd.net/res?USERIDENTRY=DEFCON2014&amp;LOGON=GO
@@ -104,11 +122,6 @@
     <string name="link_07"><b>previous conference archives, info, speeches</b>\n\nhttps://www.defcon.org\n\n</string>
 
     <array name="updates">
-        <item><b>7.26.14</b>&lt;br/&gt;&lt;br/&gt;speaker types (demo/exploit/tool) added, schedule updates and fixes</item>
-        <item><b>7.23.14</b>&lt;br/&gt;&lt;br/&gt;sharing feature added by popular demand, items now searchable by location/track, new items are flagged as "new" in the list</item>
-        <item><b>7.20.14</b>&lt;br/&gt;&lt;br/&gt;wireless village schedule added, more bands/DJs added. if you have any schedule additions, DM me @shortxstack</item>
-        <item><b>7.15.14</b>&lt;br/&gt;&lt;br/&gt;added parties and more contests. removed unnecessary permissions, only need media/storage perms to save the maps so you don\'t have to be online to access them.</item>
-        <item><b>7.13.14</b>&lt;br/&gt;&lt;br/&gt;thank you for the overwhelmingly awesome feedback :) DEAF CON meetup added, DEF CON bike ride added, and more to come as schedules are available! search now searches speaker names as well.</item>
-        <item><b>7.11.14</b>&lt;br/&gt;&lt;br/&gt;2014 overhaul! if you have any events/speakers/parties/contests to add, or if you find any errors/typos, email me at whitney.ellis.champion@gmail.com. thanks!</item>
+        <item><b>05/21/15</b>&lt;br/&gt;&lt;br/&gt;2015 overhaul! If you have any events/parties/contests to add, or if you find any errors/typos, email me at whitney.ellis.champion@gmail.com. We are working directly with the DEF CON information booth this year, so you are now able to sync your schedule with the official database. Thanks! :)</item>
     </array>
 </resources>

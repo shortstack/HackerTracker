@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Misc;
+package com.shortstack.hackertracker.Fragment;
 
 import android.app.Activity;
 import android.content.Context;
@@ -132,13 +132,6 @@ public class SearchFragment extends Fragment {
             }
         }
 
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((HomeActivity) activity).onSectionAttached(
-                getArguments().getInt(ARG_SECTION_NUMBER));
     }
 
     public List<Default> searchDatabase(String string) {

@@ -22,7 +22,7 @@
 
             <Button
                 style="@style/button_map"
-                android:text="Conference Map"
+                android:text="@string/map_con"
                 android:id="@+id/button_dcmap"
                 />
 
@@ -35,7 +35,7 @@
 
             <Button
                 style="@style/button_map"
-                android:text="Rio Map"
+                android:text="@string/map_hotel"
                 android:id="@+id/button_riomap"/>
 
         </LinearLayout>

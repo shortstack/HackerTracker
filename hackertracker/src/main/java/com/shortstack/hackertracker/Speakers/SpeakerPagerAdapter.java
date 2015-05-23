@@ -5,7 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.shortstack.hackertracker.Misc.HackerTrackerFragment;
+import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
 
 public class SpeakerPagerAdapter extends FragmentPagerAdapter {
   private Context ctxt=null;

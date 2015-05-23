@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.Speakers;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -17,15 +18,16 @@ import com.shortstack.hackertracker.Api.ApiException;
 import com.shortstack.hackertracker.Api.Impl.SpeakerServiceImpl;
 import com.shortstack.hackertracker.Api.SpeakerService;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
-import com.shortstack.hackertracker.Misc.HackerTrackerFragment;
+import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
 import com.shortstack.hackertracker.Model.ApiBase;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Common.Constants;
-import com.shortstack.hackertracker.Model.Speaker;
 import com.shortstack.hackertracker.Model.SpeakerList;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.ApiResponseUtil;
+import com.shortstack.hackertracker.Utils.DialogUtil;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -119,6 +121,7 @@ public class SpeakerFragment extends HackerTrackerFragment {
         } catch (ApiException e) {
             e.printStackTrace();
         }
+
     }
 
     private class GetSpeakersListener implements AsyncTaskCompleteListener<ApiBase> {
@@ -152,8 +155,6 @@ public class SpeakerFragment extends HackerTrackerFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((HomeActivity) activity).onSectionAttached(
-                getArguments().getInt(ARG_SECTION_NUMBER));
         if (adapter!=null)
             adapter.notifyDataSetChanged();
     }

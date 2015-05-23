@@ -10,15 +10,16 @@
             android:orientation="horizontal">
 
         <ListView android:id="@+id/list_vendors"
-                  android:layout_height="fill_parent"
-                  android:layout_width="fill_parent"
-                  android:padding="10dp"
-                  android:scrollbars="vertical"
-                  android:cacheColorHint="@android:color/transparent"
-                  android:background="@android:color/transparent"
-                  android:overScrollFooter="@null"
-                  android:scrollbarThumbVertical="@drawable/scrollbar"
-                  />
+            android:layout_height="fill_parent"
+            android:layout_width="fill_parent"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:scrollbars="vertical"
+            android:cacheColorHint="@android:color/transparent"
+            android:background="@android:color/transparent"
+            android:overScrollFooter="@null"
+            android:scrollbarThumbVertical="@drawable/scrollbar"
+            />
 
     </LinearLayout>
 

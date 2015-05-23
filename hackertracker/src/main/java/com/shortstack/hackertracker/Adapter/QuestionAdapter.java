@@ -60,8 +60,14 @@ public class QuestionAdapter extends ArrayAdapter<CharSequence> {
             // if it's a question, make it bold
             if (backgroundSetting==0) {
                 holder.question.setTypeface(null, Typeface.BOLD);
-                holder.question.setPadding(0,100,0,20);
+                holder.question.setPadding(0, 100, 0, 20);
                 holder.layout.setBackgroundResource(R.drawable.border_bottom_black);
+            // if it's the last item, don't underline
+            } else if (position==data.length-1) {
+                holder.question.setTypeface(null, Typeface.NORMAL);
+                holder.question.setPadding(0,10,0,100);
+                holder.layout.setBackgroundResource(R.drawable.border_bottom_black);
+            // if it's an answer, unbold, green underline
             } else {
                 holder.question.setTypeface(null, Typeface.NORMAL);
                 holder.question.setPadding(0,10,0,100);

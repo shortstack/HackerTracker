@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Misc;
+package com.shortstack.hackertracker.Fragment;
 
 /**
  * Created by Whitney Champion on 4/18/14.
@@ -18,12 +18,14 @@ import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterOfficial;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Contest;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.Event;
 import com.shortstack.hackertracker.Model.Party;
 import com.shortstack.hackertracker.Model.Speaker;
 import com.shortstack.hackertracker.Model.Vendor;
+import com.shortstack.hackertracker.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,15 +77,15 @@ public class HackerTrackerFragment extends Fragment {
     public static String getTitle(Context ctxt, int position) {
         switch (position) {
             case -1:
-                return (String.format("Wed, Aug 6"));
+                return Constants.DAY_0;
             case 0:
-                return (String.format("Thurs, Aug 7"));
+                return Constants.DAY_1;
             case 1:
-                return (String.format("Fri, Aug 8"));
+                return Constants.DAY_2;
             case 2:
-                return (String.format("Sat, Aug 9"));
+                return Constants.DAY_3;
             case 3:
-                return (String.format("Sun, Aug 10"));
+                return Constants.DAY_4;
             default:
                 return "";
         }
@@ -99,11 +101,13 @@ public class HackerTrackerFragment extends Fragment {
      * vendors = 5
      *
      */
+
     public List<Default> getItemByDate(String day, int type) {
         ArrayList<Default> result = new ArrayList<Default>();
 
         SQLiteDatabase db;
 
+        // if it's a speaker or from official database, use officialDbHelper
         if (type==1) {
             db = HackerTrackerApplication.myOfficialDbHelper.getWritableDatabase();
         } else {

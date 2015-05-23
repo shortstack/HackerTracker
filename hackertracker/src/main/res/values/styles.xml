@@ -26,8 +26,9 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:padding">15dp</item>
-        <item name="android:textSize">14dp</item>
+        <item name="android:textSize">16dp</item>
         <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">normal</item>
     </style>
     <style name="row">
         <item name="android:layout_width">match_parent</item>
@@ -205,7 +206,10 @@
         <item name="android:layout_marginBottom">15dp</item>
     </style>
     <style name="vendor_logo">
-
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:paddingRight">15dp</item>
     </style>
     <style name="dialog_header">
         <item name="android:layout_width">match_parent</item>

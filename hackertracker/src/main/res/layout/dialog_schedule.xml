@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
- <LinearLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         style="@style/dialog_header">
         <TextView
             style="@style/dialog_title"
-            android:text="oh snap!"/>
+            android:text="@string/oh_snap"/>
         <ImageView
             android:layout_width="30dp"
             android:layout_height="30dp"
@@ -27,7 +27,7 @@
     <TextView
         android:id="@+id/text"
         style="@style/dialog_text"
-        android:text="looks like you don't have anything in your schedule yet!\n\ncheck out the speaker list, contests, parties, and events to make the most of your DEF CON 22 experience :)"
+        android:text="@string/empty_schedule"
         android:gravity="center"
         android:padding="10dp"/>
 
@@ -35,7 +35,7 @@
         android:id="@+id/dont_show_suggestions"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="don't show this again"
+        android:text="@string/dont_show"
         android:textColor="@color/white"
         android:checked="false"
         android:layout_gravity="center"
@@ -49,7 +49,7 @@
             android:id="@+id/dismiss"
             style="@style/dialog_button"
             android:padding="10dp"
-            android:text="got it!"
+            android:text="@string/got_it"
             android:textSize="14dp"
             android:layout_margin="0dp"
             />

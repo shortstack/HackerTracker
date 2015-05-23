@@ -5,22 +5,21 @@ package com.shortstack.hackertracker.Common;
  */
 public interface Constants {
 
-    public static String API_URL = "http://short-stack.net/api";
-    public static String API_ERROR_MESSAGE = "\"errorMessage\":";
+    String API_URL = "http://short-stack.net/api";
+    String API_ERROR_MESSAGE = "\"errorMessage\":";
 
-    public static int TYPE_SPEAKER = 1;
-    public static int TYPE_CONTEST = 2;
-    public static int TYPE_EVENT = 3;
-    public static int TYPE_PARTY = 4;
-    public static int TYPE_VENDOR = 5;
+    int TYPE_SPEAKER = 1;
+    int TYPE_CONTEST = 2;
+    int TYPE_EVENT = 3;
+    int TYPE_PARTY = 4;
+    int TYPE_VENDOR = 5;
 
-    public String DAY_0 = "Wed, Aug 6";
-    public String DAY_1 = "Thurs, Aug 7";
-    public String DAY_2 = "Fri, Aug 8";
-    public String DAY_3 = "Sat, Aug 9";
-    public String DAY_4 = "Sun, Aug 10";
+    String DAY_0 = "Wed, Aug 5";
+    String DAY_1 = "Thurs, Aug 6";
+    String DAY_2 = "Fri, Aug 7";
+    String DAY_3 = "Sat, Aug 8";
+    String DAY_4 = "Sun, Aug 9";
 
-    public String[] COLUMN_NAMES = {"Title","Speaker Name","Start Time","End Time","Date","Location"};
+    String[] COLUMN_NAMES = {"Title","Speaker Name","Start Time","End Time","Date","Location"};
 
-    String UTF8 = "utf-8";
 }

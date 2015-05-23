@@ -5,5 +5,5 @@ package com.shortstack.hackertracker.Listener;
  */
 public interface AsyncTaskCompleteListener<T> {
 
-    public void onTaskComplete(T result);
+    void onTaskComplete(T result);
 }

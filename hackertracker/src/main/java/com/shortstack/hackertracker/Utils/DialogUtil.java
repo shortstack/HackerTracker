@@ -36,12 +36,38 @@ public class DialogUtil {
         progressDialog.setCanceledOnTouchOutside(false);
         progressDialog.setMessage(message);
         return progressDialog;
+
     }
 
     public static void hideSpinner(ProgressDialog progressDialog) {
         if (progressDialog.isShowing()) {
             progressDialog.hide();
         }
+    }
+
+    public static AlertDialog apiErrorDialog(final Context context) {
+
+        LayoutInflater inflater =
+                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.dialog_error, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        AlertDialog dialog = builder.create();
+
+        dialog.setView(view, 0, 0, 0, 0);
+
+        Button cancelButton = (Button) view.findViewById(R.id.dismiss);
+        final Dialog finalDialog = dialog;
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalDialog.dismiss();
+            }
+        });
+
+        return dialog;
+
     }
 
     public static AlertDialog emptyScheduleDialog(final Context context) {

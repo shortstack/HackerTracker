@@ -12,7 +12,7 @@ import android.widget.ListView;
 import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Adapter.VendorAdapter;
 import com.shortstack.hackertracker.Common.Constants;
-import com.shortstack.hackertracker.Misc.HackerTrackerFragment;
+import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.Vendor;
 import com.shortstack.hackertracker.R;
@@ -73,12 +73,6 @@ public class VendorsFragment extends HackerTrackerFragment {
         return rootView;
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((HomeActivity) activity).onSectionAttached(
-                getArguments().getInt(ARG_SECTION_NUMBER));
-    }
 }
 
 
