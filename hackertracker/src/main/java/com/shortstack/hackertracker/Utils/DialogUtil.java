@@ -185,7 +185,7 @@ public class DialogUtil {
                         SchedulePagerFragment.backupDatabaseCSV();
                         Intent sendIntent = new Intent();
                         sendIntent.setAction(Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Check out my DEF CON 22 schedule");
+                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Check out my DEF CON 23 schedule");
                         sendIntent.setType("text/csv");
 
                         Uri uri = Uri.fromFile(getOutputMediaFile());
@@ -225,7 +225,7 @@ public class DialogUtil {
                 }
             }
 
-            return new File(mediaStorageDir.getPath() + File.separator + "dc22_schedule.csv");
+            return new File(mediaStorageDir.getPath() + File.separator + "dc23_schedule.csv");
         } else {
             Toast.makeText(HackerTrackerApplication.getAppContext(), "No external storage available!", Toast.LENGTH_LONG).show();
         }
