@@ -53,7 +53,14 @@
     <string name="sync">Sync Speaker Database</string>
     <string name="schedule_check">Are you sure you want to remove everything from your schedule?</string>
     <string name="schedule_cancel">No, Cancel</string>
-    <string name="schedule_remove">yes, Remove them</string>
+    <string name="schedule_share">Check out my DEF CON 23 schedule</string>
+    <string name="schedule_share_save">Save schedule to CSV and Share</string>
+    <string name="schedule_save">Save schedule to CSV only</string>
+    <string name="schedule_options">Options</string>
+    <string name="no_storage">No external storage available!</string>
+    <string name="directory_fail">Failed to create directory</string>
+    <string name="filename">dc23_schedule.csv</string>
+    <string name="schedule_remove">Yes, Remove them</string>
     <string name="schedule_removed">Removed from My Schedule</string>
     <string name="schedule_added">Added to My Schedule</string>
     <string name="schedule_sync">Yes, Sync Now</string>

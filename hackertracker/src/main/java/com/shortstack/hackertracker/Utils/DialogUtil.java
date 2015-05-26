@@ -171,8 +171,8 @@ public class DialogUtil {
     public static Dialog shareScheduleDialog(final Context context) {
 
         AlertDialog.Builder b = new AlertDialog.Builder(context);
-        b.setTitle("Options");
-        String[] types = {"Save schedule to CSV and Share","Save schedule to CSV only"};
+        b.setTitle(R.string.schedule_options);
+        String[] types = {context.getString(R.string.schedule_share_save),context.getString(R.string.schedule_save)};
         b.setItems(types, new DialogInterface.OnClickListener() {
 
             @Override
@@ -185,7 +185,7 @@ public class DialogUtil {
                         SchedulePagerFragment.backupDatabaseCSV();
                         Intent sendIntent = new Intent();
                         sendIntent.setAction(Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Check out my DEF CON 23 schedule");
+                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.schedule_share);
                         sendIntent.setType("text/csv");
 
                         Uri uri = Uri.fromFile(getOutputMediaFile());
@@ -210,24 +210,26 @@ public class DialogUtil {
 
     public static File getOutputMediaFile()
     {
+        Context context = HackerTrackerApplication.getAppContext();
+
         // Checks to see if the External Storage SD card is mounted and has write access.
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 
             // Creates a Stream folder in the External Storage SD card
             File mediaStorageDir = new File (Environment.getExternalStoragePublicDirectory(
-                    Environment.DIRECTORY_DOWNLOADS), "HackerTracker");
+                    Environment.DIRECTORY_DOWNLOADS), context.getString(R.string.app_name));
 
             // Create the storage directory if it does not exist
             if (!mediaStorageDir.exists()) {
                 if (!mediaStorageDir.mkdirs()) {
-                    Log.d("Stream", "failed to create directory");
+                    Log.d(context.getString(R.string.app_name), context.getString(R.string.directory_fail));
                     return null;
                 }
             }
 
-            return new File(mediaStorageDir.getPath() + File.separator + "dc23_schedule.csv");
+            return new File(mediaStorageDir.getPath() + File.separator + R.string.filename);
         } else {
-            Toast.makeText(HackerTrackerApplication.getAppContext(), "No external storage available!", Toast.LENGTH_LONG).show();
+            Toast.makeText(HackerTrackerApplication.getAppContext(), R.string.no_storage, Toast.LENGTH_LONG).show();
         }
 
         return null;
