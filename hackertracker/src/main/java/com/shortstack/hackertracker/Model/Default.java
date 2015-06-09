@@ -10,14 +10,14 @@ package com.shortstack.hackertracker.Model;
 public class Default {
 
     private int id;
-    private int type;
-    private int date;
+    private String type;
+    private String date;
     private String title;
     private String who;
     private String description;
     private String begin;
     private String end;
-    private String where;
+    private String location;
     private String link;
     private Integer starred;
     private String image;
@@ -58,12 +58,12 @@ public class Default {
         this.end = end;
     }
 
-    public void setDate(int date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
-    public void setWhere(String where) {
-        this.where = where;
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public int getId() {
@@ -90,12 +90,12 @@ public class Default {
         return end;
     }
 
-    public int getDate() {
+    public String getDate() {
         return date;
     }
 
-    public String getWhere() {
-        return where;
+    public String getLocation() {
+        return location;
     }
 
     public String getImage() {
@@ -106,11 +106,11 @@ public class Default {
         this.image = image;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 

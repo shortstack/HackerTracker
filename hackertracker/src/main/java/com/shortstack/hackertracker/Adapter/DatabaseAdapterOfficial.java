@@ -212,22 +212,24 @@ public class DatabaseAdapterOfficial extends SQLiteOpenHelper {
         values.put("id", queryValues.get("id"));
         values.put("title", queryValues.get("title"));
         values.put("who", queryValues.get("who"));
+        values.put("location", queryValues.get("location"));
         values.put("begin", queryValues.get("begin"));
         values.put("end", queryValues.get("end"));
         values.put("date", queryValues.get("date"));
         values.put("description", queryValues.get("description"));
         values.put("type", queryValues.get("type"));
-        values.put("image", queryValues.get("image"));
         values.put("link", queryValues.get("link"));
-        values.put("is_new", queryValues.get("is_new"));
         values.put("demo", queryValues.get("demo"));
         values.put("tool", queryValues.get("tool"));
         values.put("exploit", queryValues.get("exploit"));
 
         // check if previously starred
         Cursor c = dbDefault.rawQuery("SELECT starred FROM data WHERE id="+queryValues.get("id"),null);
-        c.moveToFirst();
-        values.put("starred", c.getString(0));
+        if (c.moveToFirst())
+            values.put("starred", c.getString(0));
+        else
+            values.put("starred", "0");
+        c.close();
 
         dbDefault.insertWithOnConflict("data", null, values, SQLiteDatabase.CONFLICT_REPLACE);
         dbDefault.close();

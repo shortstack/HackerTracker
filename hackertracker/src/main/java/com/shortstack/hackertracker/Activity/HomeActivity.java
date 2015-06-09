@@ -34,9 +34,12 @@ import com.shortstack.hackertracker.Fragment.SearchFragment;
 import com.shortstack.hackertracker.Fragment.ShuttleFragment;
 import com.shortstack.hackertracker.Model.ApiBase;
 import com.shortstack.hackertracker.Model.Default;
+import com.shortstack.hackertracker.Model.OfficialList;
 import com.shortstack.hackertracker.Model.SpeakerList;
 import com.shortstack.hackertracker.Parties.PartyPagerFragment;
 import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
+import com.shortstack.hackertracker.Skytalks.SkytalksFragment;
+import com.shortstack.hackertracker.Skytalks.SkytalksPagerFragment;
 import com.shortstack.hackertracker.Utils.ApiResponseUtil;
 import com.shortstack.hackertracker.Utils.DialogUtil;
 import com.shortstack.hackertracker.Vendors.VendorsFragment;
@@ -220,35 +223,42 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 break;
             case 2:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, ContestPagerFragment.newInstance(3))
+                        .replace(R.id.container, SkytalksPagerFragment.newInstance(3))
+                        .addToBackStack("SkytalksFragment")
+                        .commit();
+                getSupportActionBar().setTitle(getString(R.string.skytalks).toUpperCase());
+                break;
+            case 3:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, ContestPagerFragment.newInstance(4))
                         .addToBackStack("ContestPagerFragment")
                         .commit();
                 getSupportActionBar().setTitle(getString(R.string.contests).toUpperCase());
                 break;
-            case 3:
+            case 4:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, EventPagerFragment.newInstance(4))
+                        .replace(R.id.container, EventPagerFragment.newInstance(5))
                         .addToBackStack("EventPagerFragment")
                         .commit();
                 getSupportActionBar().setTitle(getString(R.string.events).toUpperCase());
                 break;
-            case 4:
+            case 5:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, PartyPagerFragment.newInstance(5))
+                        .replace(R.id.container, PartyPagerFragment.newInstance(6))
                         .addToBackStack("PartyPagerFragment")
                         .commit();
                 getSupportActionBar().setTitle(getString(R.string.parties).toUpperCase());
                 break;
-            case 5:
+            case 6:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, VendorsFragment.newInstance(6))
+                        .replace(R.id.container, VendorsFragment.newInstance(7))
                         .addToBackStack("VendorsFragment")
                         .commit();
                 getSupportActionBar().setTitle(getString(R.string.vendors).toUpperCase());
                 break;
-            case 6:
+            case 7:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, MapsFragment.newInstance(7))
+                        .replace(R.id.container, MapsFragment.newInstance(8))
                         .addToBackStack("MapsFragment")
                         .commit();
                 getSupportActionBar().setTitle(getString(R.string.maps).toUpperCase());
@@ -260,9 +270,9 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                         .commit();
                 getSupportActionBar().setTitle(getString(R.string.shuttle).toUpperCase());
                 break;*/
-            case 7:
+            case 8:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, FAQFragment.newInstance(8))
+                        .replace(R.id.container, FAQFragment.newInstance(9))
                         .addToBackStack("FAQFragment")
                         .commit();
                 getSupportActionBar().setTitle(getString(R.string.faq).toUpperCase());
@@ -275,10 +285,6 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 getSupportActionBar().setTitle(getString(R.string.links).toUpperCase());
                 break;*/
         }
-    }
-
-    public void onSectionAttached(int number) {
-
     }
 
     public static void clearSchedule(Context context) {
@@ -335,20 +341,20 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         @Override
         public void onTaskComplete(ApiBase result) {
 
-            // get speakers from API
-            SpeakerList speakers;
+            // get schedule from API
+            OfficialList schedule;
             try {
-                speakers = (SpeakerList) ApiResponseUtil.parseResponse(result, SpeakerList.class);
+                schedule = (OfficialList) ApiResponseUtil.parseResponse(result, OfficialList.class);
             } catch (ApiException e) {
                 AlertDialog dialog = DialogUtil.apiErrorDialog(context);
                 dialog.show();
                 return;
             }
 
-            ArrayList<Default> speakersArray = new ArrayList(Arrays.asList(speakers.getSpeakers()));
+            ArrayList<Default> officialArray = new ArrayList(Arrays.asList(schedule.getAll()));
 
-            if (speakersArray.size()!=0) {
-                syncDatabase(speakersArray, context);
+            if (officialArray.size()!=0) {
+                syncDatabase(officialArray, context);
             } else {
                 // no results found, don't sync
                 Toast.makeText(context,R.string.no_updates,Toast.LENGTH_SHORT).show();
@@ -357,7 +363,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
     }
 
-    private static void syncDatabase(ArrayList<Default> speakersArray, Context context) {
+    private static void syncDatabase(ArrayList<Default> officialArray, Context context) {
 
         HashMap<String, String> queryValues;
         DatabaseAdapterOfficial controller = new DatabaseAdapterOfficial(context);
@@ -366,7 +372,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         Gson gson = new GsonBuilder().create();
 
         // Extract JSON array from the response
-        JsonArray arr = gson.toJsonTree(speakersArray).getAsJsonArray();
+        JsonArray arr = gson.toJsonTree(officialArray).getAsJsonArray();
 
         // If no of array elements is not zero
         if(arr.size() != 0){
@@ -387,13 +393,10 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 queryValues.put("begin", obj.get("begin").getAsString());
                 queryValues.put("end", obj.get("end").getAsString());
                 queryValues.put("date", obj.get("date").getAsString());
-                queryValues.put("where", obj.get("where").getAsString());
+                queryValues.put("location", obj.get("location").getAsString());
                 queryValues.put("description", obj.get("description").getAsString());
                 queryValues.put("type", obj.get("type").getAsString());
-                queryValues.put("starred", obj.get("starred").getAsString());
-                queryValues.put("image", obj.get("image").getAsString());
-                queryValues.put("forum", obj.get("link").getAsString());
-                queryValues.put("is_new", obj.get("is_new").getAsString());
+                queryValues.put("link", obj.get("link").getAsString());
                 queryValues.put("demo", obj.get("demo").getAsString());
                 queryValues.put("tool", obj.get("tool").getAsString());
                 queryValues.put("exploit", obj.get("exploit").getAsString());

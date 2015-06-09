@@ -214,12 +214,12 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
         values.put("begin", queryValues.get("begin"));
         values.put("end", queryValues.get("end"));
         values.put("date", queryValues.get("date"));
-        values.put("where", queryValues.get("where"));
+        values.put("location", queryValues.get("location"));
         values.put("body", queryValues.get("body"));
         values.put("type", queryValues.get("type"));
         values.put("starred", queryValues.get("starred"));
         values.put("image", queryValues.get("image"));
-        values.put("forum", queryValues.get("forum"));
+        values.put("link", queryValues.get("link"));
         values.put("is_new", queryValues.get("is_new"));
         values.put("demo", queryValues.get("demo"));
         values.put("tool", queryValues.get("tool"));

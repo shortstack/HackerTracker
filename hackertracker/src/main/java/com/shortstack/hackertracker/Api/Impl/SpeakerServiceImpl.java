@@ -9,6 +9,7 @@ import com.shortstack.hackertracker.Api.ApiHelper;
 import com.shortstack.hackertracker.Api.SpeakerService;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
+import com.shortstack.hackertracker.Model.OfficialList;
 import com.shortstack.hackertracker.Model.Speaker;
 import com.shortstack.hackertracker.Model.SpeakerList;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
@@ -27,15 +28,15 @@ public class SpeakerServiceImpl implements SpeakerService {
     private static final String EXCEPTION_MESSAGE = "An error occurred.";
 
     @Override
-    public void findSpeakerById(String userId, Context context,
+    public void findSpeakerById(String speakerId, Context context,
                              AsyncTaskCompleteListener listener) throws ApiException {
         // create headers
         Map<String, String> extraHeaderParameters = new HashMap<String, String>();
 
         // try to make call
-        String url = ApiHelper.FIND_SPEAKER + "?limit=1&id=" + userId;
+        String url = ApiHelper.FIND_SPEAKER + "?id=" + speakerId;
         try {
-            ApiHelper.get(url, context, SpeakerList.class, listener, extraHeaderParameters);
+            ApiHelper.get(url, context, OfficialList.class, listener, extraHeaderParameters);
         } catch (Exception e) {
             throw new ApiException(EXCEPTION_MESSAGE, null);
         }
@@ -51,7 +52,7 @@ public class SpeakerServiceImpl implements SpeakerService {
         // try to make call
         String url = ApiHelper.FIND_SPEAKER;
         try {
-            ApiHelper.get(url, context, SpeakerList.class, listener, extraHeaderParameters);
+            ApiHelper.get(url, context, OfficialList.class, listener, extraHeaderParameters);
         } catch (Exception e) {
             throw new ApiException(EXCEPTION_MESSAGE, null);
         }

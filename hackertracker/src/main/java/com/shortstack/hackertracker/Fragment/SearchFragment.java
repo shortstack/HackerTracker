@@ -1,6 +1,5 @@
 package com.shortstack.hackertracker.Fragment;
 
-import android.app.Activity;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -16,7 +15,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ListView;
 
-import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Adapter.DefaultAdapter;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Model.Default;
@@ -148,11 +146,11 @@ public class SearchFragment extends Fragment {
         Cursor titleOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type <> 5", new String[]{"%" + string + "%"});
         Cursor bodyOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (description LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
         Cursor nameOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (who LIKE ?) AND type <> 5", new String[]{"%" + string + "%"});
-        Cursor locationOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE ('where' LIKE ?) AND type <> 5", new String[]{"%" + string + "%"});
+        Cursor locationOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (location LIKE ?) AND type <> 5", new String[]{"%" + string + "%"});
         Cursor title = db.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type <> 5", new String[]{"%" + string + "%"});
         Cursor body = db.rawQuery("SELECT * FROM data WHERE (description LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
         Cursor name = db.rawQuery("SELECT * FROM data WHERE (who LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
-        Cursor location = db.rawQuery("SELECT * FROM data WHERE ('where' LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
+        Cursor location = db.rawQuery("SELECT * FROM data WHERE (location LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
 
         // get search results from each query
         getResults(titleOfficial);
@@ -207,14 +205,14 @@ public class SearchFragment extends Fragment {
                     Default item = new Default();
 
                     item.setId(cursor.getInt(cursor.getColumnIndex("id")));
-                    item.setType(cursor.getInt(cursor.getColumnIndex("type")));
+                    item.setType(cursor.getString(cursor.getColumnIndex("type")));
                     item.setTitle(cursor.getString(cursor.getColumnIndex("title")));
                     item.setDescription(cursor.getString(cursor.getColumnIndex("description")));
                     item.setName(cursor.getString(cursor.getColumnIndex("who")));
-                    item.setDate(cursor.getInt(cursor.getColumnIndex("date")));
+                    item.setDate(cursor.getString(cursor.getColumnIndex("date")));
                     item.setEnd(cursor.getString(cursor.getColumnIndex("end")));
                     item.setBegin(cursor.getString(cursor.getColumnIndex("begin")));
-                    item.setWhere(cursor.getString(cursor.getColumnIndex("where")));
+                    item.setLocation(cursor.getString(cursor.getColumnIndex("location")));
                     item.setStarred(cursor.getInt(cursor.getColumnIndex("starred")));
                     item.setImage(cursor.getString(cursor.getColumnIndex("image")));
                     item.setLink(cursor.getString(cursor.getColumnIndex("link")));

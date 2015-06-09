@@ -3,15 +3,15 @@ package com.shortstack.hackertracker.Model;
 /**
  * Created by Whitney Champion on 4/21/14.
  */
-public class SpeakerList extends ApiBase {
+public class OfficialList extends ApiBase {
 
-    private Speaker[] schedule;
+    private Default[] schedule;
 
-    public Speaker[] getSpeakers() {
+    public Default[] getAll() {
         return schedule;
     }
 
-    public void setSpeakers(Speaker[] schedule) {
+    public void setAll(Default[] schedule) {
         this.schedule = schedule;
     }
 

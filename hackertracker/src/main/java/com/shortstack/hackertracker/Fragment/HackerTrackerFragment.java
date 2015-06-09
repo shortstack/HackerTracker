@@ -25,7 +25,6 @@ import com.shortstack.hackertracker.Model.Event;
 import com.shortstack.hackertracker.Model.Party;
 import com.shortstack.hackertracker.Model.Speaker;
 import com.shortstack.hackertracker.Model.Vendor;
-import com.shortstack.hackertracker.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,6 +90,28 @@ public class HackerTrackerFragment extends Fragment {
         }
     }
 
+    public static String getDate(int date) {
+        String day = "";
+        switch (date) {
+            case 0:
+                day = Constants.LONG_DAY_0;
+                break;
+            case 1:
+                day = Constants.LONG_DAY_1;
+                break;
+            case 2:
+                day = Constants.LONG_DAY_2;
+                break;
+            case 3:
+                day = Constants.LONG_DAY_3;
+                break;
+            case 4:
+                day = Constants.LONG_DAY_4;
+                break;
+        }
+        return day;
+    }
+
     /*
      * get list of {type} for {day}
      *
@@ -99,16 +120,28 @@ public class HackerTrackerFragment extends Fragment {
      * event = 3
      * party = 4
      * vendors = 5
+     * skytalks = 6
+     * message = 7
+     * unofficial = 8
+     * dcib = 9
+     * stupid = 10
+     * kids = 11
+     * joke = 12
      *
      */
 
-    public List<Default> getItemByDate(String day, int type) {
+    public List<Default> getItemByDate(String day, String type) {
         ArrayList<Default> result = new ArrayList<Default>();
 
         SQLiteDatabase db;
 
         // if it's a speaker or from official database, use officialDbHelper
-        if (type==1) {
+        if (type.equals(Constants.TYPE_SPEAKER)
+                || type.equals(Constants.TYPE_CONTEST)
+                || type.equals(Constants.TYPE_PARTY)
+                || type.equals(Constants.TYPE_SKYTALKS)
+                || type.equals(Constants.TYPE_EVENT)
+                ) {
             db = HackerTrackerApplication.myOfficialDbHelper.getWritableDatabase();
         } else {
             db = HackerTrackerApplication.myDbHelper.getWritableDatabase();
@@ -123,20 +156,41 @@ public class HackerTrackerFragment extends Fragment {
                     Default item;
 
                     switch (type) {
-                        case 1:
+                        case Constants.TYPE_SPEAKER:
                             item = new Speaker();
                             break;
-                        case 2:
+                        case Constants.TYPE_CONTEST:
                             item = new Contest();
                             break;
-                        case 3:
+                        case Constants.TYPE_EVENT:
                             item = new Event();
                             break;
-                        case 4:
+                        case Constants.TYPE_PARTY:
                             item = new Party();
                             break;
-                        case 5:
+                        case Constants.TYPE_VENDOR:
                             item = new Vendor();
+                            break;
+                        case Constants.TYPE_SKYTALKS:
+                            item = new Default();
+                            break;
+                        case Constants.TYPE_MESSAGE:
+                            item = new Default();
+                            break;
+                        case Constants.TYPE_UNOFFICIAL:
+                            item = new Default();
+                            break;
+                        case Constants.TYPE_DCIB:
+                            item = new Default();
+                            break;
+                        case Constants.TYPE_STUPID:
+                            item = new Default();
+                            break;
+                        case Constants.TYPE_KIDS:
+                            item = new Default();
+                            break;
+                        case Constants.TYPE_JOKE:
+                            item = new Default();
                             break;
                         default:
                             item = new Speaker();
@@ -144,14 +198,14 @@ public class HackerTrackerFragment extends Fragment {
                     }
 
                     item.setId(myCursor.getInt(myCursor.getColumnIndex("id")));
-                    item.setType(myCursor.getInt(myCursor.getColumnIndex("type")));
+                    item.setType(myCursor.getString(myCursor.getColumnIndex("type")));
+                    item.setDate(myCursor.getString(myCursor.getColumnIndex("date")));
                     item.setTitle(myCursor.getString(myCursor.getColumnIndex("title")));
                     item.setDescription(myCursor.getString(myCursor.getColumnIndex("description")));
                     item.setName(myCursor.getString(myCursor.getColumnIndex("who")));
-                    item.setDate(myCursor.getInt(myCursor.getColumnIndex("date")));
                     item.setEnd(myCursor.getString(myCursor.getColumnIndex("end")));
                     item.setBegin(myCursor.getString(myCursor.getColumnIndex("begin")));
-                    item.setWhere(myCursor.getString(myCursor.getColumnIndex("where")));
+                    item.setLocation(myCursor.getString(myCursor.getColumnIndex("location")));
                     item.setStarred(myCursor.getInt(myCursor.getColumnIndex("starred")));
                     item.setImage(myCursor.getString(myCursor.getColumnIndex("image")));
                     item.setLink(myCursor.getString(myCursor.getColumnIndex("link")));
@@ -189,14 +243,14 @@ public class HackerTrackerFragment extends Fragment {
                     Default item = new Default();
 
                     item.setId(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("id")));
-                    item.setType(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("type")));
+                    item.setType(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("type")));
                     item.setTitle(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("title")));
                     item.setDescription(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("description")));
                     item.setName(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("who")));
-                    item.setDate(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("date")));
+                    item.setDate(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("date")));
                     item.setEnd(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("end")));
                     item.setBegin(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("begin")));
-                    item.setWhere(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("where")));
+                    item.setLocation(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("location")));
                     item.setStarred(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("starred")));
                     item.setImage(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("image")));
                     item.setLink(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("link")));
@@ -224,14 +278,14 @@ public class HackerTrackerFragment extends Fragment {
                     Default item = new Default();
 
                     item.setId(myCursor.getInt(myCursor.getColumnIndex("id")));
-                    item.setType(myCursor.getInt(myCursor.getColumnIndex("type")));
+                    item.setType(myCursor.getString(myCursor.getColumnIndex("type")));
                     item.setTitle(myCursor.getString(myCursor.getColumnIndex("title")));
                     item.setDescription(myCursor.getString(myCursor.getColumnIndex("description")));
                     item.setName(myCursor.getString(myCursor.getColumnIndex("who")));
-                    item.setDate(myCursor.getInt(myCursor.getColumnIndex("date")));
+                    item.setDate(myCursor.getString(myCursor.getColumnIndex("date")));
                     item.setEnd(myCursor.getString(myCursor.getColumnIndex("end")));
                     item.setBegin(myCursor.getString(myCursor.getColumnIndex("begin")));
-                    item.setWhere(myCursor.getString(myCursor.getColumnIndex("where")));
+                    item.setLocation(myCursor.getString(myCursor.getColumnIndex("location")));
                     item.setStarred(myCursor.getInt(myCursor.getColumnIndex("starred")));
                     item.setImage(myCursor.getString(myCursor.getColumnIndex("image")));
                     item.setLink(myCursor.getString(myCursor.getColumnIndex("link")));

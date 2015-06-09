@@ -91,7 +91,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             }
 
             // set name if it's a speaker
-            if (item.getType()==1) {
+            if (item.getType().equals(Constants.TYPE_SPEAKER)) {
                 holder.name.setVisibility(View.VISIBLE);
                 holder.name.setText(item.getName());
             } else {
@@ -99,7 +99,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             }
 
             // set speaker type
-            if (item.getType()==1) {
+            if (item.getType().equals(Constants.TYPE_SPEAKER)) {
 
                 if (item.getTool()==1) {
                     holder.icons.setVisibility(View.VISIBLE);
@@ -142,7 +142,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             holder.time.setText(item.getBegin());
 
             // set location
-            holder.where.setText(item.getWhere());
+            holder.where.setText(item.getLocation());
 
             // if new, show "new"
             holder.is_new.setVisibility(View.GONE);
@@ -205,11 +205,11 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                     }
                 }
 
-                // if no forum, hide forum
-                if (item.getLink()==null) {
+                // if no link, hide link
+                if (item.getLink()==null || item.getLink().equals("") || item.getLink().equals(" ")) {
                     forumText.setVisibility(View.GONE);
                 } else {
-                    forumText.setText("Site: " + item.getLink());
+                    forumText.setText("More info: " + item.getLink());
                 }
 
                 // set title
@@ -220,15 +220,15 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                 }
 
                 // set location
-                if (item.getWhere()!=null) {
-                    locationText.append(item.getWhere());
+                if (item.getLocation()!=null) {
+                    locationText.append(item.getLocation());
                 }
 
                 // set body
                 bodyText.setText(item.getDescription());
 
                 // set date
-                dateText.setText(getDate(item.getDate()));
+                dateText.setText(item.getDate());
 
                 // set time
                 timeText.setText(item.getBegin() + " - " + item.getEnd());
@@ -243,13 +243,13 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
 
                         Intent sendIntent = new Intent();
                         sendIntent.setAction(Intent.ACTION_SEND);
-                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Check out \"" + item.getTitle() + "\" at DEF CON 22!");
+                        sendIntent.putExtra(Intent.EXTRA_SUBJECT, "Check out \"" + item.getTitle() + "\" at DEF CON 23!");
 
                         StringBuilder sb = new StringBuilder();
                         sb.append(item.getTitle());
                         if(item.getName()!=null)
                             sb.append("\n\nSpeaker: " + item.getName());
-                        sb.append("\n\nDate: " + getDate(item.getDate()) + "\n\nTime: " + item.getBegin() + "\n\nLocation: " + item.getWhere());
+                        sb.append("\n\nDate: " + item.getDate() + "\n\nTime: " + item.getBegin() + "\n\nLocation: " + item.getLocation());
                         if(item.getDescription()!=null)
                             sb.append("\n\nMore details:\n\n" + item.getDescription());
 
@@ -278,7 +278,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                             // add to starred database
                             dbStars.execSQL("INSERT INTO data VALUES (" + item.getId() + ")");
 
-                            if (item.getType() == 1) {
+                            if (item.getType().equals(Constants.TYPE_SPEAKER)) {
                                 dbOfficial.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + item.getId());
                             } else {
                                 dbDefaults.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + item.getId());
@@ -294,7 +294,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                             // remove from starred database
                             dbStars.delete("data", "id=" + item.getId(), null);
 
-                            if (item.getType() == 1) {
+                            if (item.getType().equals(Constants.TYPE_SPEAKER)) {
                                 dbOfficial.execSQL("UPDATE data SET starred=" + 0 + " WHERE id=" + item.getId());
                             } else {
                                 dbDefaults.execSQL("UPDATE data SET starred=" + 0 + " WHERE id=" + item.getId());

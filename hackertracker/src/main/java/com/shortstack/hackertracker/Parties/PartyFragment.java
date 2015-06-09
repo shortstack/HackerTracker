@@ -70,8 +70,8 @@ public class PartyFragment extends HackerTrackerFragment {
 
         list = (ListView) rootView.findViewById(R.id.list_parties);
 
-        // get partys
-        List<Default> parties = getItemByDate(String.valueOf(date), Constants.TYPE_PARTY);
+        // get parties
+        List<Default> parties = getItemByDate(HackerTrackerFragment.getDate(date), Constants.TYPE_PARTY);
         if (parties.size() > 0) {
 
             adapter = new DefaultAdapter(context, R.layout.row, parties);

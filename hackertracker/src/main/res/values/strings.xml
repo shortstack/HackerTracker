@@ -11,6 +11,7 @@
     <string-array name="nav_drawer_labels">
         <item>@string/main</item>
         <item>@string/speakers</item>
+        <item>@string/skytalks</item>
         <item>@string/contests</item>
         <item>@string/events</item>
         <item>@string/parties</item>
@@ -21,12 +22,13 @@
 
     <string name="home">DEF CON 23</string>
     <string name="main">Home</string>
-    <string name="speakers">Official Schedule</string>
+    <string name="speakers">Speakers</string>
     <string name="contests">Contests</string>
     <string name="vendors">Vendors</string>
     <string name="events">Events</string>
     <string name="parties">Parties</string>
     <string name="shuttle">Shuttle</string>
+    <string name="skytalks">Skytalks</string>
     <string name="maps">Maps</string>
     <string name="faq">FAQ</string>
     <string name="schedule">My Schedule</string>

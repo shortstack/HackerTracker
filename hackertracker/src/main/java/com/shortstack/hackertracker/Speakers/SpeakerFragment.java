@@ -22,6 +22,7 @@ import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
 import com.shortstack.hackertracker.Model.ApiBase;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Common.Constants;
+import com.shortstack.hackertracker.Model.OfficialList;
 import com.shortstack.hackertracker.Model.SpeakerList;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.ApiResponseUtil;
@@ -87,29 +88,15 @@ public class SpeakerFragment extends HackerTrackerFragment {
         list = (ListView) rootView.findViewById(R.id.list_speakers);
         speakerService = new SpeakerServiceImpl();
 
-        // check internet connectivity
-        ConnectivityManager cm = (ConnectivityManager)context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        boolean isConnected = activeNetwork != null && activeNetwork.isConnectedOrConnecting();
+        // get speakers from database
+        List<Default> speakers = getItemByDate(HackerTrackerFragment.getDate(date), Constants.TYPE_SPEAKER);
+        if (speakers.size() > 0) {
 
-        /*if (isConnected) {
+            adapter = new DefaultAdapter(context, R.layout.row, speakers);
 
-            // get speakers from API
-            fillSpeakerList();
+            list.setAdapter(adapter);
 
-        } else { */
-
-            // get speakers from database
-            List<Default> speakers = getItemByDate(String.valueOf(date), Constants.TYPE_SPEAKER);
-            if (speakers.size() > 0) {
-
-                adapter = new DefaultAdapter(context, R.layout.row, speakers);
-
-                list.setAdapter(adapter);
-
-            }
-
-        //}
+        }
 
         return rootView;
     }
@@ -130,14 +117,14 @@ public class SpeakerFragment extends HackerTrackerFragment {
         public void onTaskComplete(ApiBase result) {
 
             // get speakers
-            SpeakerList speakers;
+            OfficialList speakers;
             try {
-                speakers = (SpeakerList) ApiResponseUtil.parseResponse(result, SpeakerList.class);
+                speakers = (OfficialList) ApiResponseUtil.parseResponse(result, OfficialList.class);
             } catch (ApiException e) {
                 return;
             }
 
-            List<Default> speakersArray = new ArrayList(Arrays.asList(speakers.getSpeakers()));
+            List<Default> speakersArray = new ArrayList(Arrays.asList(speakers.getAll()));
 
             // populate adapter and attached it to the list view
             adapter = new DefaultAdapter(context, R.layout.row, speakersArray);
@@ -152,10 +139,4 @@ public class SpeakerFragment extends HackerTrackerFragment {
 
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if (adapter!=null)
-            adapter.notifyDataSetChanged();
-    }
 }
