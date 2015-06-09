@@ -58,11 +58,6 @@
                 android:layout_height="25dp"
                 android:layout_marginRight="8dp"
                 android:src="@drawable/icon_tool"/>
-            <ImageView
-                android:id="@+id/music"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:src="@drawable/icon_music"/>
         </LinearLayout>
     </LinearLayout>
 

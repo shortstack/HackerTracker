@@ -63,8 +63,6 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             holder.exploit.setVisibility(View.GONE);
             holder.tool = (ImageView) row.findViewById(R.id.tool);
             holder.tool.setVisibility(View.GONE);
-            holder.music = (ImageView) row.findViewById(R.id.music);
-            holder.music.setVisibility(View.GONE);
             holder.icons = (LinearLayout) row.findViewById(R.id.icons);
             holder.icons.setVisibility(View.GONE);
             holder.is_new = (TextView) row.findViewById(R.id.isNew);
@@ -82,13 +80,8 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
         // if items in list, populate data
         if (item.getTitle() != null) {
 
-            // if it's a DJ/music, truncate "MUSIC"
-            if (item.getTitle().contains("MUSIC - ")) {
-                holder.title.setText(item.getTitle().split(" - ")[1]);
-            } else {
-                // set title
-                holder.title.setText(item.getTitle());
-            }
+            // set title
+            holder.title.setText(item.getTitle());
 
             // set name if it's a speaker
             if (item.getType().equals(Constants.TYPE_SPEAKER)) {
@@ -125,17 +118,11 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
 
             } else {
 
-                if (item.getTitle().contains("MUSIC - ")) {
-                    holder.icons.setVisibility(View.VISIBLE);
-                    holder.music.setVisibility(View.VISIBLE);
-                } else {
-                    holder.icons.setVisibility(View.GONE);
-                    holder.music.setVisibility(View.GONE);
-                }
-
+                holder.icons.setVisibility(View.GONE);
                 holder.tool.setVisibility(View.GONE);
                 holder.exploit.setVisibility(View.GONE);
                 holder.demo.setVisibility(View.GONE);
+
             }
 
             // set time
@@ -210,13 +197,6 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                     forumText.setVisibility(View.GONE);
                 } else {
                     forumText.setText("More info: " + item.getLink());
-                }
-
-                // set title
-                if (item.getTitle().contains("MUSIC - ")) {
-                    titleText.setText(item.getTitle().split(" - ")[1]);
-                } else {
-                    titleText.setText(item.getTitle());
                 }
 
                 // set location
@@ -342,24 +322,6 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
         return row;
     }
 
-    private String getDate(int date) {
-
-        switch (date) {
-            case 0:
-                return Constants.DAY_0;
-            case 1:
-                return Constants.DAY_1;
-            case 2:
-                return Constants.DAY_2;
-            case 3:
-                return Constants.DAY_3;
-            case 4:
-                return Constants.DAY_4;
-        }
-        return "";
-
-    }
-
     private void hideKeyboard(View v) {
         InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
@@ -374,7 +336,6 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
         ImageView demo;
         ImageView tool;
         ImageView exploit;
-        ImageView music;
         LinearLayout icons;
         LinearLayout defaultLayout;
     }
