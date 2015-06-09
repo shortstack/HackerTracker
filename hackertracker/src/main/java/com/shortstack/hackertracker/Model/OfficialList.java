@@ -5,6 +5,8 @@ package com.shortstack.hackertracker.Model;
  */
 public class OfficialList extends ApiBase {
 
+    private String updateDate;
+    private String updateTime;
     private Default[] schedule;
 
     public Default[] getAll() {
@@ -13,6 +15,22 @@ public class OfficialList extends ApiBase {
 
     public void setAll(Default[] schedule) {
         this.schedule = schedule;
+    }
+
+    public String getUpdateDate() {
+        return updateDate;
+    }
+
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate;
+    }
+
+    public String getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(String updateTime) {
+        this.updateTime = updateTime;
     }
 
 }

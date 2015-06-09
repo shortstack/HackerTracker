@@ -278,7 +278,11 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                             // add to starred database
                             dbStars.execSQL("INSERT INTO data VALUES (" + item.getId() + ")");
 
-                            if (item.getType().equals(Constants.TYPE_SPEAKER)) {
+                            if (item.getType().equals(Constants.TYPE_SPEAKER)
+                                    || item.getType().equals(Constants.TYPE_CONTEST)
+                                    || item.getType().equals(Constants.TYPE_PARTY)
+                                    || item.getType().equals(Constants.TYPE_SKYTALKS)
+                                    || item.getType().equals(Constants.TYPE_EVENT)) {
                                 dbOfficial.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + item.getId());
                             } else {
                                 dbDefaults.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + item.getId());
@@ -294,7 +298,11 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                             // remove from starred database
                             dbStars.delete("data", "id=" + item.getId(), null);
 
-                            if (item.getType().equals(Constants.TYPE_SPEAKER)) {
+                            if (item.getType().equals(Constants.TYPE_SPEAKER)
+                                    || item.getType().equals(Constants.TYPE_CONTEST)
+                                    || item.getType().equals(Constants.TYPE_PARTY)
+                                    || item.getType().equals(Constants.TYPE_SKYTALKS)
+                                    || item.getType().equals(Constants.TYPE_EVENT)) {
                                 dbOfficial.execSQL("UPDATE data SET starred=" + 0 + " WHERE id=" + item.getId());
                             } else {
                                 dbDefaults.execSQL("UPDATE data SET starred=" + 0 + " WHERE id=" + item.getId());

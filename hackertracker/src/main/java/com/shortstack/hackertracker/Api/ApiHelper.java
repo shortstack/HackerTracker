@@ -43,12 +43,12 @@ import java.util.Map;
 public class ApiHelper {
 
     // API URLs
-    public static final String OFFICIAL_SCHEDULE = "/speakers.json";
-    public static final String FIND_SPEAKER = "/speakers.json";
+    public static final String OFFICIAL_SCHEDULE = "/schedule-full.json";
+    public static final String FIND_SPEAKER = "/schedule-full.json";
     public static final String FIND_SPEAKER_BY_DATE = "/speaker/date";
     public static final String FIND_ENTERTAINMENT = "/event";
     public static final String FIND_ENTERTAINMENT_BY_DATE = "/event/date";
-    public static final String FIND_CONTEST = "/speakers.json";
+    public static final String FIND_CONTEST = "/schedule-full.json";
     public static final String FIND_CONTEST_BY_DATE = "/contest/date";
     public static final String FIND_VENDOR = "/vendor";
 
