@@ -71,7 +71,7 @@ public class EventFragment extends HackerTrackerFragment {
         list = (ListView) rootView.findViewById(R.id.list_events);
 
         // get events
-        List<Default> events = getItemByDate(String.valueOf(date), Constants.TYPE_EVENT);
+        List<Default> events = getItemByDate(HackerTrackerFragment.getDate(date), Constants.TYPE_EVENT);
         if (events.size() > 0) {
 
             adapter = new DefaultAdapter(context, R.layout.row, events);

@@ -4,11 +4,9 @@ import android.content.Context;
 
 import com.shortstack.hackertracker.Api.ApiException;
 import com.shortstack.hackertracker.Api.ApiHelper;
-import com.shortstack.hackertracker.Api.SpeakerService;
 import com.shortstack.hackertracker.Api.SyncService;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
 import com.shortstack.hackertracker.Model.OfficialList;
-import com.shortstack.hackertracker.Model.SpeakerList;
 
 import java.util.HashMap;
 import java.util.Map;

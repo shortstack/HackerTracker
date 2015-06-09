@@ -25,20 +25,18 @@ import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Contests.ContestPagerFragment;
 import com.shortstack.hackertracker.Events.EventPagerFragment;
 import com.shortstack.hackertracker.Fragment.FragmentDrawer;
+import com.shortstack.hackertracker.Kids.KidsFragment;
+import com.shortstack.hackertracker.Kids.KidsPagerFragment;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
 import com.shortstack.hackertracker.Fragment.FAQFragment;
 import com.shortstack.hackertracker.Fragment.HomeFragment;
-import com.shortstack.hackertracker.Fragment.LinksFragment;
 import com.shortstack.hackertracker.Fragment.MapsFragment;
 import com.shortstack.hackertracker.Fragment.SearchFragment;
-import com.shortstack.hackertracker.Fragment.ShuttleFragment;
 import com.shortstack.hackertracker.Model.ApiBase;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.OfficialList;
-import com.shortstack.hackertracker.Model.SpeakerList;
 import com.shortstack.hackertracker.Parties.PartyPagerFragment;
 import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
-import com.shortstack.hackertracker.Skytalks.SkytalksFragment;
 import com.shortstack.hackertracker.Skytalks.SkytalksPagerFragment;
 import com.shortstack.hackertracker.Utils.ApiResponseUtil;
 import com.shortstack.hackertracker.Utils.DialogUtil;
@@ -55,9 +53,6 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
     public static FragmentManager fragmentManager;
     private FragmentDrawer drawerFragment;
     private Toolbar mToolbar;
-    private String mTitle;
-    private boolean isSchedule = false;
-    private boolean isSearch = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,7 +146,6 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (item.getItemId() == R.id.action_schedule) {
-            isSchedule = true;
             getSupportActionBar().setTitle(getString(R.string.schedule).toUpperCase());
             fragmentManager.beginTransaction()
                     .replace(R.id.container, SchedulePagerFragment.newInstance(9))
@@ -159,7 +153,6 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                     .commit();
             return true;
         } else if (item.getItemId() == R.id.action_search) {
-            isSearch = true;
             getSupportActionBar().setTitle(getString(R.string.search).toUpperCase());
             fragmentManager.beginTransaction()
                     .replace(R.id.container, SearchFragment.newInstance(12))
@@ -192,7 +185,6 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         LinksFragment,
         SchedulePagerFragment,
         SearchFragment;
-
     }
 
     @Override
@@ -224,7 +216,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
             case 2:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, SkytalksPagerFragment.newInstance(3))
-                        .addToBackStack("SkytalksFragment")
+                        .addToBackStack("SkytalksPagerFragment")
                         .commit();
                 getSupportActionBar().setTitle(getString(R.string.skytalks).toUpperCase());
                 break;
@@ -251,14 +243,21 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 break;
             case 6:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, VendorsFragment.newInstance(7))
+                        .replace(R.id.container, KidsPagerFragment.newInstance(7))
+                        .addToBackStack("KidsPagerFragment")
+                        .commit();
+                getSupportActionBar().setTitle(getString(R.string.kids).toUpperCase());
+                break;
+            case 7:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.container, VendorsFragment.newInstance(8))
                         .addToBackStack("VendorsFragment")
                         .commit();
                 getSupportActionBar().setTitle(getString(R.string.vendors).toUpperCase());
                 break;
-            case 7:
+            case 8:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, MapsFragment.newInstance(8))
+                        .replace(R.id.container, MapsFragment.newInstance(9))
                         .addToBackStack("MapsFragment")
                         .commit();
                 getSupportActionBar().setTitle(getString(R.string.maps).toUpperCase());
@@ -270,9 +269,9 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                         .commit();
                 getSupportActionBar().setTitle(getString(R.string.shuttle).toUpperCase());
                 break;*/
-            case 8:
+            case 9:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.container, FAQFragment.newInstance(9))
+                        .replace(R.id.container, FAQFragment.newInstance(10))
                         .addToBackStack("FAQFragment")
                         .commit();
                 getSupportActionBar().setTitle(getString(R.string.faq).toUpperCase());

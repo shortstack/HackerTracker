@@ -1,24 +1,15 @@
 package com.shortstack.hackertracker.Api.Impl;
 
 import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
 
 import com.shortstack.hackertracker.Api.ApiException;
 import com.shortstack.hackertracker.Api.ApiHelper;
 import com.shortstack.hackertracker.Api.SpeakerService;
-import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
 import com.shortstack.hackertracker.Model.OfficialList;
-import com.shortstack.hackertracker.Model.Speaker;
-import com.shortstack.hackertracker.Model.SpeakerList;
-import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * Created by Whitney Champion on 5/12/15.

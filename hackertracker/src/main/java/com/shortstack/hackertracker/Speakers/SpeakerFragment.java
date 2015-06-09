@@ -1,10 +1,6 @@
 package com.shortstack.hackertracker.Speakers;
 
-import android.app.Activity;
-import android.app.Dialog;
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.view.InflateException;
 import android.view.LayoutInflater;
@@ -12,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Adapter.DefaultAdapter;
 import com.shortstack.hackertracker.Api.ApiException;
 import com.shortstack.hackertracker.Api.Impl.SpeakerServiceImpl;
@@ -23,12 +18,9 @@ import com.shortstack.hackertracker.Model.ApiBase;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.OfficialList;
-import com.shortstack.hackertracker.Model.SpeakerList;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.ApiResponseUtil;
-import com.shortstack.hackertracker.Utils.DialogUtil;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;

@@ -5,11 +5,8 @@ import android.content.Context;
 import com.shortstack.hackertracker.Api.ApiException;
 import com.shortstack.hackertracker.Api.ApiHelper;
 import com.shortstack.hackertracker.Api.ContestService;
-import com.shortstack.hackertracker.Api.SpeakerService;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
-import com.shortstack.hackertracker.Model.ContestList;
 import com.shortstack.hackertracker.Model.OfficialList;
-import com.shortstack.hackertracker.Model.SpeakerList;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -30,7 +27,7 @@ public class ContestServiceImpl implements ContestService {
         // try to make call
         String url = ApiHelper.FIND_CONTEST + "?id=" + contestId;
         try {
-            ApiHelper.get(url, context, ContestList.class, listener, extraHeaderParameters);
+            ApiHelper.get(url, context, OfficialList.class, listener, extraHeaderParameters);
         } catch (Exception e) {
             throw new ApiException(EXCEPTION_MESSAGE, null);
         }

@@ -15,6 +15,7 @@
         <item>@string/contests</item>
         <item>@string/events</item>
         <item>@string/parties</item>
+        <item>@string/kids</item>
         <item>@string/vendors</item>
         <item>@string/maps</item>
         <item>@string/faq</item>
@@ -27,6 +28,7 @@
     <string name="vendors">Vendors</string>
     <string name="events">Events</string>
     <string name="parties">Parties</string>
+    <string name="kids">Kids</string>
     <string name="shuttle">Shuttle</string>
     <string name="skytalks">Skytalks</string>
     <string name="maps">Maps</string>
