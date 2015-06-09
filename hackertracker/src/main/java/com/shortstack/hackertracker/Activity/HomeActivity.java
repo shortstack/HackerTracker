@@ -25,7 +25,6 @@ import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Contests.ContestPagerFragment;
 import com.shortstack.hackertracker.Events.EventPagerFragment;
 import com.shortstack.hackertracker.Fragment.FragmentDrawer;
-import com.shortstack.hackertracker.Kids.KidsFragment;
 import com.shortstack.hackertracker.Kids.KidsPagerFragment;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
 import com.shortstack.hackertracker.Fragment.FAQFragment;
@@ -62,6 +61,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         //set up toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(R.string.home);
+        mToolbar.setTitleTextAppearance(getApplicationContext(),R.style.titleText);
 
         fragmentManager = getSupportFragmentManager();
 

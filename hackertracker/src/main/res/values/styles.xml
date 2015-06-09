@@ -13,6 +13,13 @@
         <item name="colorControlHighlight">@color/colorAccent</item>
     </style>
 
+    <style name="titleText">
+        <item name="android:textSize">14sp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
     <style name="PagerTabStripText">
         <item name="android:textSize">14sp</item>
         <item name="android:textStyle">bold</item>

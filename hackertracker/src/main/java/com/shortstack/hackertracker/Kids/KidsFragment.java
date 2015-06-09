@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.shortstack.hackertracker.Adapter.DefaultAdapter;
+import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
@@ -20,21 +21,19 @@ public class KidsFragment extends HackerTrackerFragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static final String ARG_DATE = "date";
     private View rootView;
-    private static DefaultAdapter adapter;
+    private DefaultAdapter adapter;
     private ListView list;
     private static int date;
     private Context context;
-    private List<Default> stars;
     private int mPage;
     private int mDate;
 
-    public static com.shortstack.hackertracker.Schedule.ScheduleFragment newInstance(int position,int date) {
-        com.shortstack.hackertracker.Schedule.ScheduleFragment frag=new com.shortstack.hackertracker.Schedule.ScheduleFragment();
+    public static KidsFragment newInstance(int position, int date) {
+        KidsFragment frag=new KidsFragment();
         Bundle args=new Bundle();
 
-        args.putInt(ARG_SECTION_NUMBER, 9);
+        args.putInt(ARG_SECTION_NUMBER, position);
         args.putInt(ARG_DATE, date);
-
         frag.setArguments(args);
 
         return(frag);
@@ -61,19 +60,20 @@ public class KidsFragment extends HackerTrackerFragment {
               parent.removeView(rootView);
         }
         try {
-          rootView = inflater.inflate(R.layout.fragment_schedule, container, false);
+          rootView = inflater.inflate(R.layout.fragment_kids, container, false);
         } catch (InflateException e) {
         }
 
         date = mDate+1;
 
-        list = (ListView) rootView.findViewById(R.id.starred);
+        list = (ListView) rootView.findViewById(R.id.list_kids);
 
-        // get starred items
-        stars = getStars(HackerTrackerFragment.getDate(date));
-        if (stars.size() > 0) {
+        // get kid events
+        List<Default> events = getItemByDate(HackerTrackerFragment.getDate(date), Constants.TYPE_EVENT);
+        if (events.size() > 0) {
 
-            adapter = new DefaultAdapter(context, R.layout.row, stars);
+            adapter = new DefaultAdapter(context, R.layout.row, events);
+
             list.setAdapter(adapter);
 
         }

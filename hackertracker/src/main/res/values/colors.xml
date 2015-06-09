@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#515151</color>
-    <color name="colorPrimaryDark">#d416a1</color>
+    <color name="colorPrimaryDark">#19a938</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
-    <color name="colorAccent">#ff1ac1</color>
+    <color name="colorAccent">#afec44</color>
 
     <color name="black_alpha">#CC000000</color>
     <color name="black_alpha_hover">#EE000000</color>
@@ -13,6 +13,6 @@
     <color name="green">#dddddd</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
-    <color name="dark_green">#d416a1</color>
+    <color name="dark_green">#19a938</color>
     <color name="star">#ffcc00</color>
 </resources>
