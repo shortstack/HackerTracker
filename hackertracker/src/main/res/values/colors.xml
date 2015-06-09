@@ -10,7 +10,8 @@
     <color name="black_alpha">#CC000000</color>
     <color name="black_alpha_hover">#EE000000</color>
     <color name="white_alpha">#33FFFFFF</color>
-    <color name="green">#dddddd</color>
+    <color name="light_gray">#dddddd</color>
+    <color name="green">#afec44</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="dark_green">#19a938</color>

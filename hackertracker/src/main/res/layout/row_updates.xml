@@ -9,4 +9,4 @@
     android:linksClickable="true"
     android:autoLink="all"
     android:textIsSelectable="true"
-    android:textColorLink="@color/green"/>
+    android:textColorLink="@color/light_gray"/>

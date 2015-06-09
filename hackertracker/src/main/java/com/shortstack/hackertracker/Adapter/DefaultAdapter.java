@@ -169,6 +169,9 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
                 final ImageButton star = (ImageButton) layout.findViewById(R.id.star);
                 Button closeButton = (Button) layout.findViewById(R.id.closeButton);
 
+                // set title
+                titleText.setText(item.getTitle());
+
                 // if not a speaker, hide speaker name
                 if (item.getType()!=Constants.TYPE_SPEAKER) {
                     nameText.setVisibility(View.GONE);

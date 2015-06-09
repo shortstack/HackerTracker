@@ -17,6 +17,6 @@
         android:linksClickable="true"
         android:background="@drawable/border_bottom_black"
         android:autoLink="all"
-        android:textColorLink="@color/green"/>
+        android:textColorLink="@color/light_gray"/>
 
 </LinearLayout>

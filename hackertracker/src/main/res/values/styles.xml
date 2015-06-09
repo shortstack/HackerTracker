@@ -14,7 +14,7 @@
     </style>
 
     <style name="titleText">
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/white</item>
@@ -63,7 +63,7 @@
         <item name="android:textSize">16dp</item>
     </style>
     <style name="date">
-        <item name="android:textColor">@color/green</item>
+        <item name="android:textColor">@color/light_gray</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">16dp</item>
         <item name="android:layout_marginRight">10dp</item>
@@ -76,7 +76,7 @@
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar</item>
     </style>
     <style name="button_map">
-        <item name="android:textColor">@color/green</item>
+        <item name="android:textColor">@color/light_gray</item>
         <item name="android:background">@drawable/button_states_green</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -88,14 +88,14 @@
         <item name="android:padding">5dp</item>
     </style>
     <style name="where">
-        <item name="android:textColor">@color/green</item>
-        <item name="android:textColorLink">@color/green</item>
+        <item name="android:textColor">@color/light_gray</item>
+        <item name="android:textColorLink">@color/light_gray</item>
         <item name="android:textSize">14dp</item>
         <item name="android:paddingTop">5dp</item>
     </style>
     <style name="name">
         <item name="android:textColor">@color/white</item>
-        <item name="android:textColorLink">@color/green</item>
+        <item name="android:textColorLink">@color/light_gray</item>
         <item name="android:textSize">14dp</item>
         <item name="android:paddingTop">5dp</item>
     </style>
@@ -128,7 +128,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">15dp</item>
         <item name="android:paddingTop">15dp</item>
-        <item name="android:textColorLink">@color/green</item>
+        <item name="android:textColorLink">@color/light_gray</item>
     </style>
     <style name="details_title">
         <item name="android:padding">10dp</item>
@@ -162,7 +162,7 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:textSize">16dp</item>
-        <item name="android:textColorLink">@color/green</item>
+        <item name="android:textColorLink">@color/light_gray</item>
     </style>
     <style name="details_forum">
         <item name="android:paddingBottom">10dp</item>
@@ -176,7 +176,7 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:background">@drawable/border_top_green</item>
         <item name="android:padding">8dp</item>
-        <item name="android:textColor">@color/green</item>
+        <item name="android:textColor">@color/light_gray</item>
         <item name="android:textSize">16dp</item>
     </style>
 
@@ -202,7 +202,7 @@
         <item name="android:paddingTop">10dp</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:textSize">16dp</item>
-        <item name="android:textColorLink">@color/green</item>
+        <item name="android:textColorLink">@color/light_gray</item>
         <item name="android:textColor">@color/white</item>
     </style>
     <style name="vendor_body">
@@ -230,7 +230,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:textColor">@color/green</item>
+        <item name="android:textColor">@color/light_gray</item>
         <item name="android:textSize">16dp</item>
     </style>
     <style name="dialog_text">
@@ -252,7 +252,7 @@
         <item name="android:layout_gravity">center</item>
         <item name="android:background">@drawable/border_top_green_trans</item>
         <item name="android:padding">8dp</item>
-        <item name="android:textColor">@color/green</item>
+        <item name="android:textColor">@color/light_gray</item>
         <item name="android:textSize">16dp</item>
     </style>
 </resources>
