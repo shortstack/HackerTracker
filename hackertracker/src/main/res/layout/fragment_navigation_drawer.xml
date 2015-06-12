@@ -35,7 +35,7 @@
         android:text="@string/schedule"
         android:textAlignment="center"
         android:gravity="center"
-        android:background="@color/green"
+        android:background="@drawable/button_states"
         android:textColor="@color/black"
         android:textAllCaps="true"/>
 </RelativeLayout>
