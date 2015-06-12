@@ -123,6 +123,12 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 case ShuttleFragment:
                     getSupportActionBar().setTitle(getString(R.string.shuttle).toUpperCase());
                     break;
+                case KidsPagerFragment:
+                    getSupportActionBar().setTitle(getString(R.string.kids).toUpperCase());
+                    break;
+                case SkytalksPagerFragment:
+                    getSupportActionBar().setTitle(getString(R.string.skytalks).toUpperCase());
+                    break;
                 case SchedulePagerFragment:
                     getSupportActionBar().setTitle(getString(R.string.schedule).toUpperCase());
                     break;
@@ -177,6 +183,8 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         VendorsFragment,
         MapsFragment,
         ShuttleFragment,
+        SkytalksPagerFragment,
+        KidsPagerFragment,
         FAQFragment,
         LinksFragment,
         SchedulePagerFragment,
