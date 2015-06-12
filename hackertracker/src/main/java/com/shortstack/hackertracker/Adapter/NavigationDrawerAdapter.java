@@ -1,12 +1,14 @@
 package com.shortstack.hackertracker.Adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 
 import com.shortstack.hackertracker.Model.NavDrawerItem;
 import com.shortstack.hackertracker.R;
 
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -53,11 +55,17 @@ public class NavigationDrawerAdapter extends RecyclerView.Adapter<NavigationDraw
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
+
+        private TextView title;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             title = (TextView) itemView.findViewById(R.id.title);
         }
+
+        public void setItem(String item) {
+            title.setText(item);
+        }
+
     }
 }

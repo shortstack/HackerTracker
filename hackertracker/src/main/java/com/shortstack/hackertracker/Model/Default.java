@@ -1,5 +1,9 @@
 package com.shortstack.hackertracker.Model;
 
+import org.parceler.Parcel;
+
+import java.io.Serializable;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Whitney Champion
@@ -7,7 +11,9 @@ package com.shortstack.hackertracker.Model;
  * Time: 9:20 AM
  * Description:
  */
-public class Default {
+
+@Parcel
+public class Default implements Serializable {
 
     private int id;
     private String type;
@@ -154,4 +160,25 @@ public class Default {
         this.exploit = exploit;
     }
 
+    public Default() {
+
+    }
+
+    public Default(int id, String title, String type, String description, String location, String who, String end, String begin, String link, String image, int demo, int tool, int exploit, int starred, int is_new){
+        this.id = id;
+        this.type = type;
+        this.title = title;
+        this.description = description;
+        this.who = who;
+        this.location = location;
+        this.begin = begin;
+        this.end = end;
+        this.link = link;
+        this.image = image;
+        this.exploit = exploit;
+        this.demo = demo;
+        this.tool = tool;
+        this.starred = starred;
+        this.is_new = is_new;
+    }
 }

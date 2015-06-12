@@ -28,11 +28,11 @@ public interface Constants {
     String LONG_DAY_3 = "2014-08-09";
     String LONG_DAY_4 = "2014-08-10";
 
-    String DAY_0 = "Wed, Aug 6";
-    String DAY_1 = "Thurs, Aug 7";
-    String DAY_2 = "Fri, Aug 8";
-    String DAY_3 = "Sat, Aug 9";
-    String DAY_4 = "Sun, Aug 10";
+    String DAY_0 = "Wednesday";
+    String DAY_1 = "Thursday";
+    String DAY_2 = "Friday";
+    String DAY_3 = "Saturday";
+    String DAY_4 = "Sunday";
 
     String[] COLUMN_NAMES = {"Title","Speaker Name","Start Time","End Time","Date","Location"};
 

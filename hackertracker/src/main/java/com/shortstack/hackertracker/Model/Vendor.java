@@ -8,4 +8,6 @@ package com.shortstack.hackertracker.Model;
  */
 public class Vendor extends Default {
 
+
+
 }

@@ -11,7 +11,7 @@
         android:gravity="center">
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="115dp"
+            android:layout_height="105dp"
             android:src="@drawable/skull_lg"
             android:scaleType="fitCenter"/>
     </LinearLayout>
@@ -19,7 +19,23 @@
     <android.support.v7.widget.RecyclerView
         android:layout_below="@id/skull"
         android:id="@+id/drawerList"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollbars="vertical"
+        android:scrollbarThumbVertical="@drawable/scrollbar"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
+    <Button
+        android:id="@+id/button_schedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/schedule"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:background="@color/green"
+        android:textColor="@color/black"
+        android:textAllCaps="true"/>
 </RelativeLayout>

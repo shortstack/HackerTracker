@@ -143,14 +143,14 @@ public class SearchFragment extends Fragment {
         SQLiteDatabase dbOfficial = HackerTrackerApplication.myOfficialDbHelper.getWritableDatabase();
         SQLiteDatabase db = HackerTrackerApplication.myDbHelper.getWritableDatabase();
 
-        Cursor titleOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type <> 5", new String[]{"%" + string + "%"});
-        Cursor bodyOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (description LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
-        Cursor nameOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (who LIKE ?) AND type <> 5", new String[]{"%" + string + "%"});
-        Cursor locationOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (location LIKE ?) AND type <> 5", new String[]{"%" + string + "%"});
-        Cursor title = db.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type <> 5", new String[]{"%" + string + "%"});
-        Cursor body = db.rawQuery("SELECT * FROM data WHERE (description LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
-        Cursor name = db.rawQuery("SELECT * FROM data WHERE (who LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
-        Cursor location = db.rawQuery("SELECT * FROM data WHERE (location LIKE ?) AND type <> 5", new String[] {"%"+string+"%"});
+        Cursor titleOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
+        Cursor bodyOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (description LIKE ?) AND type NOT LIKE 'Vendor'", new String[] {"%"+string+"%"});
+        Cursor nameOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (who LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
+        Cursor locationOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (location LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
+        Cursor title = db.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
+        Cursor body = db.rawQuery("SELECT * FROM data WHERE (description LIKE ?) AND type NOT LIKE 'Vendor'", new String[] {"%"+string+"%"});
+        Cursor name = db.rawQuery("SELECT * FROM data WHERE (who LIKE ?) AND type NOT LIKE 'Vendor'", new String[] {"%"+string+"%"});
+        Cursor location = db.rawQuery("SELECT * FROM data WHERE (location LIKE ?) AND type NOT LIKE 'Vendor'", new String[] {"%"+string+"%"});
 
         // get search results from each query
         getResults(titleOfficial);
@@ -190,8 +190,13 @@ public class SearchFragment extends Fragment {
 
     public class ItemComparator implements Comparator<Default> {
 
+        private Default left;
+        private Default right;
+
         public int compare(Default left, Default right) {
-            return left.getBegin().compareTo(right.getBegin());
+            this.left = left;
+            this.right = right;
+            return this.left.getBegin().compareTo(this.right.getBegin());
         }
 
     }

@@ -1,31 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/layout_root"
-    style="@style/detailsLayout"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center">
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
+        style="@style/detailsLayout"
+        android:layout_width="320dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
         android:orientation="vertical">
 
         <LinearLayout android:id="@+id/top_row"
             style="@style/details_title"
-            android:layout_width="fill_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
             <TextView android:id="@+id/title"
                 style="@style/details_title_text"
                 android:text="Title"
+                android:textAlignment="center"
+                android:gravity="center"
                 android:textIsSelectable="true"
-                android:layout_weight=".85"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 />
+
+            <TextView android:id="@+id/speaker"
+                style="@style/details_speaker"
+                android:text="Speaker Name"
+                android:textAlignment="center"
+                android:gravity="center"
+                android:textIsSelectable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"        />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center_horizontal"
+            android:paddingTop="10dp">
             <ImageButton android:id="@+id/share"
                 android:src="@drawable/icon_share"
                 style="@style/share"/>
@@ -34,42 +61,49 @@
                 style="@style/star"/>
         </LinearLayout>
 
-        <View android:layout_width="match_parent"
-            android:layout_height="1dip"
-            android:background="@color/light_gray" />
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="10dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingTop="20dp"
+            android:layout_marginBottom="10dp"
             android:orientation="vertical">
 
-            <TextView android:id="@+id/speaker"
-                style="@style/details_speaker"
-                android:text="Name"
-                android:textIsSelectable="true"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"        />
-
-            <TextView android:id="@+id/date"
-                style="@style/details_date"
-                android:text="Thurs, Aug 7"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"        />
-
-            <TextView android:id="@+id/time"
-                style="@style/details_time"
-                android:text="11:00"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"        />
-
-            <TextView android:id="@+id/where"
-                android:text="Location: "
-                android:layout_width="fill_parent"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/details_where"
-                android:textIsSelectable="true"
-                />
+                android:id="@+id/when_holder"
+                android:orientation="horizontal">
+                <TextView android:id="@+id/date_label"
+                    style="@style/details_label"
+                    android:text="WHEN "
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"        />
+                <TextView android:id="@+id/when"
+                    style="@style/details_date"
+                    android:text="Thurs, Aug 7"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"        />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/where_holder"
+                android:orientation="horizontal">
+                <TextView android:id="@+id/where_label"
+                    style="@style/details_label"
+                    android:text="WHERE"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"        />
+                <TextView android:id="@+id/where"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    style="@style/details_where"
+                    android:textIsSelectable="true"
+                    />
+            </LinearLayout>
 
             <TextView android:id="@+id/link"
                 style="@style/details_forum"
@@ -90,7 +124,7 @@
                 <TextView android:id="@+id/description"
                     style="@style/details_body"
                     android:autoLink="all"
-                    android:text="Test test test"
+                    android:text="Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test Test test test  test test Test test test Test test test Test test test Test test test "
                     android:linksClickable="true"
                     android:textIsSelectable="true"
                     />
@@ -102,6 +136,7 @@
                 android:orientation="horizontal"
                 android:gravity="center_horizontal"
                 android:layout_marginTop="8dp"
+                android:layout_marginBottom="10dp"
                 android:id="@+id/icons">
                 <ImageView
                     android:id="@+id/demo"
@@ -127,12 +162,6 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button android:id="@+id/closeButton"
-        style="@style/details_button"
-        android:text="@string/close"
-        android:layout_gravity="bottom"
-        />
-
-</FrameLayout>
+</RelativeLayout>
 
 

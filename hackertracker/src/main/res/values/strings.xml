@@ -5,7 +5,7 @@
     <string name="navigation_drawer_open">open navigation drawer</string>
     <string name="navigation_drawer_close">close navigation drawer</string>
     <string name="action_settings">Settings</string>
-    <string name="action_share">Share Schedule</string>
+    <string name="action_share">Share My Schedule</string>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
@@ -133,6 +133,6 @@
     <string name="link_07"><b>previous conference archives, info, speeches</b>\n\nhttps://www.defcon.org\n\n</string>
 
     <array name="updates">
-        <item><b>05/21/15</b>&lt;br/&gt;&lt;br/&gt;2015 overhaul! If you have any events/parties/contests to add, or if you find any errors/typos, email me at whitney.ellis.champion@gmail.com. We are working directly with the DEF CON information booth this year, so you are now able to sync your schedule with the official database. Thanks! :)</item>
+        <item><b>05/21/15</b>&lt;br/&gt;&lt;br/&gt;2015 overhaul! If you have any events, parties, or contests to add, or if you find any errors or typos, email me at whitney.ellis.champion@gmail.com. We are working directly with the DEF CON information booth this year, so you are now able to sync your schedule with the online official database. Thanks! :)</item>
     </array>
 </resources>

@@ -6,9 +6,6 @@
         android:title="@string/search"
         android:icon="@drawable/search"
         app:showAsAction="ifRoom" />
-    <item android:id="@+id/action_schedule"
-        android:title="@string/schedule"
-        app:showAsAction="never" />
    <item android:id="@+id/action_share"
         android:title="@string/action_share"
         android:icon="@drawable/icon_share"

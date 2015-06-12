@@ -16,10 +16,17 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Adapter.NavigationDrawerAdapter;
+import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.NavDrawerItem;
 import com.shortstack.hackertracker.R;
+import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
+import com.shortstack.hackertracker.Utils.DialogUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +54,6 @@ public class FragmentDrawer extends Fragment {
     public static List<NavDrawerItem> getData() {
         List<NavDrawerItem> data = new ArrayList<>();
 
-
         // preparing navigation drawer items
         for (int i = 0; i < titles.length; i++) {
             NavDrawerItem navItem = new NavDrawerItem();
@@ -68,9 +74,13 @@ public class FragmentDrawer extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflating view layout
+        // inflating view layout
         View layout = inflater.inflate(R.layout.fragment_navigation_drawer, container, false);
         recyclerView = (RecyclerView) layout.findViewById(R.id.drawerList);
+
+        // my schedule button
+        Button mySchedule = (Button) layout.findViewById(R.id.button_schedule);
+        mySchedule.setOnClickListener(new scheduleOnClickListener());
 
         adapter = new NavigationDrawerAdapter(getActivity(), getData());
         recyclerView.setAdapter(adapter);
@@ -84,7 +94,6 @@ public class FragmentDrawer extends Fragment {
 
             @Override
             public void onLongClick(View view, int position) {
-
             }
         }));
 
@@ -130,6 +139,28 @@ public class FragmentDrawer extends Fragment {
 
         public void onLongClick(View view, int position);
     }
+
+    private class scheduleOnClickListener implements View.OnClickListener {
+
+
+        public scheduleOnClickListener() {
+
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            HomeActivity.actionBar.setTitle(getString(R.string.schedule).toUpperCase());
+            mDrawerLayout.closeDrawer(containerView);
+
+            // open schedule fragment
+            HomeActivity.fragmentManager.beginTransaction()
+                    .replace(R.id.container, SchedulePagerFragment.newInstance(9))
+                    .addToBackStack("SchedulePagerFragment")
+                    .commit();
+        }
+    }
+
 
     static class RecyclerTouchListener implements RecyclerView.OnItemTouchListener {
 

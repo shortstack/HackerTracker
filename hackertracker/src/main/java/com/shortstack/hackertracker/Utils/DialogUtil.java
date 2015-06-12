@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Fragment.DetailsFragment;
+import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
 
@@ -179,7 +181,7 @@ public class DialogUtil {
             public void onClick(DialogInterface dialog, int which) {
 
                 dialog.dismiss();
-                switch(which){
+                switch (which) {
                     case 0:
                         // export CSV and share
                         SchedulePagerFragment.backupDatabaseCSV();
@@ -196,7 +198,7 @@ public class DialogUtil {
                     case 1:
                         // export CSV
                         SchedulePagerFragment.backupDatabaseCSV();
-                        Toast.makeText(context,context.getString(R.string.backup),Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, context.getString(R.string.backup), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -206,6 +208,11 @@ public class DialogUtil {
         dialog.setCanceledOnTouchOutside(true);
 
         return dialog;
+    }
+
+    public static DetailsFragment getProfileDialog(Default item) {
+        DetailsFragment profileDialogFragment = DetailsFragment.newInstance(item);
+        return profileDialogFragment;
     }
 
     public static File getOutputMediaFile()

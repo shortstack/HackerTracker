@@ -6,6 +6,7 @@
 
     <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -22,22 +23,25 @@
 
     <style name="PagerTabStripText">
         <item name="android:textSize">14sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">true</item>
         <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="page">
-        <item name="android:background">@android:color/black</item>
+        <item name="android:background">@color/black</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
     <style name="row_nav">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:padding">15dp</item>
-        <item name="android:textSize">16dp</item>
+        <item name="android:paddingTop">10dp</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingLeft">15dp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textStyle">normal</item>
+        <item name="android:textAllCaps">true</item>
     </style>
     <style name="row">
         <item name="android:layout_width">match_parent</item>
@@ -106,21 +110,28 @@
         <item name="android:layout_margin">10dp</item>
     </style>
     <style name="star">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:layout_width">30dp</item>
-        <item name="android:layout_height">30dp</item>
-        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:background">@drawable/button_green_rounded</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
         <item name="android:scaleType">fitXY</item>
+        <item name="android:padding">9dp</item>
     </style>
     <style name="share">
-        <item name="android:background">@android:color/transparent</item>
-        <item name="android:layout_width">30dp</item>
-        <item name="android:layout_height">30dp</item>
+        <item name="android:background">@drawable/button_green_rounded</item>
+        <item name="android:layout_width">40dp</item>
+        <item name="android:layout_height">40dp</item>
         <item name="android:scaleType">fitXY</item>
-        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:padding">9dp</item>
+    </style>
+    <style name="detailsAnimation">
+        <item name="android:windowEnterAnimation">@anim/details_down</item>
+        <item name="android:windowExitAnimation">@anim/details_up</item>
     </style>
     <style name="detailsLayout">
-        <item name="android:background">@color/black</item>
+        <item name="android:background">@drawable/black_rounded</item>
+        <item name="android:layout_marginRight">15dp</item>
+        <item name="android:layout_marginLeft">15dp</item>
     </style>
     <style name="details_body">
         <item name="android:layout_width">match_parent</item>
@@ -134,40 +145,43 @@
         <item name="android:padding">10dp</item>
     </style>
     <style name="details_title_text">
-        <item name="android:textSize">19dp</item>
-        <item name="android:layout_gravity">center_vertical</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:layout_gravity">center</item>
         <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/green</item>
+        <item name="android:paddingTop">10dp</item>
+    </style>
+    <style name="details_label">
+        <item name="android:textAllCaps">true</item>
+        <item name="android:paddingBottom">10dp</item>
+        <item name="android:textColor">@color/green</item>
+        <item name="android:textSize">13sp</item>
     </style>
     <style name="details_speaker">
         <item name="android:paddingBottom">10dp</item>
-        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">18dp</item>
+        <item name="android:textSize">13sp</item>
     </style>
     <style name="details_time">
-        <item name="android:textStyle">bold</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">16dp</item>
+        <item name="android:textSize">12sp</item>
     </style>
     <style name="details_date">
-        <item name="android:textStyle">bold</item>
         <item name="android:paddingBottom">10dp</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">16dp</item>
+        <item name="android:textSize">12sp</item>
     </style>
     <style name="details_where">
-        <item name="android:textStyle">bold</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:paddingBottom">10dp</item>
-        <item name="android:textSize">16dp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColorLink">@color/light_gray</item>
     </style>
     <style name="details_forum">
         <item name="android:paddingBottom">10dp</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textSize">16dp</item>
+        <item name="android:textSize">12sp</item>
         <item name="android:textColorLink">@color/green</item>
     </style>
     <style name="details_button">
@@ -230,7 +244,7 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textStyle">bold</item>
         <item name="android:layout_centerVertical">true</item>
-        <item name="android:textColor">@color/light_gray</item>
+        <item name="android:textColor">@color/green</item>
         <item name="android:textSize">16dp</item>
     </style>
     <style name="dialog_text">

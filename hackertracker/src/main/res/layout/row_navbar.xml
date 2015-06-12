@@ -7,10 +7,9 @@
     <TextView
         style="@style/row_nav"
         android:id="@+id/title"
+        android:textColor="@color/navbar_selector"
+        android:clickable="true"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="30dp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"/>
+        android:layout_height="wrap_content"/>
 
 </RelativeLayout>

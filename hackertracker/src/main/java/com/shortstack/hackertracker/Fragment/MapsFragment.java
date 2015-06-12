@@ -88,20 +88,20 @@ public class MapsFragment extends Fragment {
 
         // button listener for rio map
 
-        Button button_riomap = (Button) rootView.findViewById(R.id.button_riomap);
-        button_riomap.setOnClickListener(new View.OnClickListener() {
+        Button button_ballysmap = (Button) rootView.findViewById(R.id.button_ballysmap);
+        button_ballysmap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
                 File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/map_hotel.pdf");
                 Intent target = new Intent(Intent.ACTION_VIEW);
-                target.setDataAndType(Uri.fromFile(file),"application/pdf");
+                target.setDataAndType(Uri.fromFile(file), "application/pdf");
                 target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 
                 Intent intent = Intent.createChooser(target, "Open File");
                 try {
                     startActivity(intent);
                 } catch (ActivityNotFoundException e) {
-                    Toast.makeText(context,"No PDF reader found",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "No PDF reader found", Toast.LENGTH_SHORT).show();
                 }
 
             }

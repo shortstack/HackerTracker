@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
@@ -50,6 +51,7 @@ import java.util.HashMap;
 public class HomeActivity extends ActionBarActivity implements FragmentDrawer.FragmentDrawerListener {
 
     public static FragmentManager fragmentManager;
+    public static ActionBar actionBar;
     private FragmentDrawer drawerFragment;
     private Toolbar mToolbar;
 
@@ -67,7 +69,8 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
         // set up action bar
         setSupportActionBar(mToolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        actionBar = getSupportActionBar();
+        actionBar.setDisplayShowHomeEnabled(true);
 
         // set up nav drawer
         drawerFragment = (FragmentDrawer)
@@ -145,14 +148,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if (item.getItemId() == R.id.action_schedule) {
-            getSupportActionBar().setTitle(getString(R.string.schedule).toUpperCase());
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, SchedulePagerFragment.newInstance(9))
-                    .addToBackStack("SchedulePagerFragment")
-                    .commit();
-            return true;
-        } else if (item.getItemId() == R.id.action_search) {
+        if (item.getItemId() == R.id.action_search) {
             getSupportActionBar().setTitle(getString(R.string.search).toUpperCase());
             fragmentManager.beginTransaction()
                     .replace(R.id.container, SearchFragment.newInstance(12))

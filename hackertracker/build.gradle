@@ -35,10 +35,11 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:22.0.+'
+    compile 'com.android.support:support-v4:22.1.1'
     compile files('libs/commons-lang3-3.1.jar')
-    compile 'com.android.support:appcompat-v7:22.0.0'
+    compile 'com.android.support:appcompat-v7:22.1.1'
     compile 'com.android.support:recyclerview-v7:21.0.+'
-    compile 'org.twitter4j:twitter4j-core:3.0.5'
+    compile 'org.parceler:parceler-api:0.2.7'
+    provided 'org.parceler:parceler:0.2.7'
     compile files('libs/gson-2.2.4.jar')
 }
