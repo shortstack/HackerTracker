@@ -49,6 +49,9 @@
     <string name="sync_database">Sync Speaker Database</string>
     <string name="sync_check">Are you sure you want to sync your local database? This will require your device to access the internet."</string>
     <string name="no_updates">Your schedule is up to date! :)</string>
+    <string name="schedule_downloading">Checking for schedule updates...</string>
+    <string name="schedule_finished">Schedule sync complete</string>
+    <string name="up_to_date">Your schedule is already up to date! :)</string>
 
     <string name="schedule_cleared">Schedule cleared successfully</string>
     <string name="schedule_clear">Clear My Schedule</string>

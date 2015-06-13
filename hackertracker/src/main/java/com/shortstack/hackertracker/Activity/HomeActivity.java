@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.Activity;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.v7.app.ActionBar;
@@ -40,13 +41,19 @@ import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
 import com.shortstack.hackertracker.Skytalks.SkytalksPagerFragment;
 import com.shortstack.hackertracker.Utils.ApiResponseUtil;
 import com.shortstack.hackertracker.Utils.DialogUtil;
+import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 import com.shortstack.hackertracker.Vendors.VendorsFragment;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Speakers.SpeakerPagerFragment;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 
 public class HomeActivity extends ActionBarActivity implements FragmentDrawer.FragmentDrawerListener {
 
@@ -54,6 +61,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
     public static ActionBar actionBar;
     private FragmentDrawer drawerFragment;
     private Toolbar mToolbar;
+    private static ProgressDialog syncDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -325,6 +333,9 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
         SyncService syncService = new SyncServiceImpl();
 
+        syncDialog = DialogUtil.getProgressDialog(context, context.getResources().getString(R.string.schedule_downloading));
+        syncDialog.show();
+
         try {
             syncService.syncDatabase(context, new SyncDatabaseListener(context));
         } catch (ApiException e) {
@@ -336,6 +347,8 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
     private static class SyncDatabaseListener implements AsyncTaskCompleteListener<ApiBase> {
 
         Context context;
+        Date lastUpdatedOnline;
+        Date lastUpdatedDevice;
 
         SyncDatabaseListener(Context context) {
             this.context = context;
@@ -346,6 +359,9 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
             // get schedule from API
             OfficialList schedule;
+            String updateDate;
+            String updateTime;
+
             try {
                 schedule = (OfficialList) ApiResponseUtil.parseResponse(result, OfficialList.class);
             } catch (ApiException e) {
@@ -354,14 +370,62 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 return;
             }
 
-            ArrayList<Default> officialArray = new ArrayList(Arrays.asList(schedule.getAll()));
+            if (schedule.getUpdateDate()!=null && schedule.getUpdateTime()!=null) {
 
-            if (officialArray.size()!=0) {
-                syncDatabase(officialArray, context);
-            } else {
-                // no results found, don't sync
-                Toast.makeText(context,R.string.no_updates,Toast.LENGTH_SHORT).show();
+                updateTime = schedule.getUpdateTime();
+                updateDate = schedule.getUpdateDate();
+
+                String myFormat = "yyyy-MM-dd HH:mm:ss";
+                SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
+
+                // get string of last online update
+                String update = updateDate + " " + updateTime;
+
+                // get string of last device update
+                String strDate = SharedPreferencesUtil.getLastUpdated();
+
+                // compare
+                try {
+                    lastUpdatedOnline = sdf.parse(update);
+
+                    if (strDate!=null) {
+                        lastUpdatedDevice = sdf.parse(strDate);
+                    }
+
+                    // if device has never been updated or if the
+                    // device update is older than last updated online date, update
+
+                    if (lastUpdatedDevice==null || lastUpdatedDevice.compareTo(lastUpdatedOnline) < 0) {
+
+                        ArrayList<Default> officialArray = new ArrayList(Arrays.asList(schedule.getAll()));
+
+                        if (officialArray.size()!=0) {
+                            syncDatabase(officialArray, context);
+                            syncDialog.dismiss();
+                            Toast.makeText(context,R.string.schedule_finished,Toast.LENGTH_SHORT).show();
+                        } else {
+                            syncDialog.dismiss();
+
+                            // no results found, don't sync
+                            Toast.makeText(context,R.string.no_updates,Toast.LENGTH_SHORT).show();
+                        }
+
+                        // update last updated device date to last updated online date
+                        SharedPreferencesUtil.saveLastUpdated(update);
+
+                    } else { // else, don't update
+
+                        syncDialog.dismiss();
+                        Toast.makeText(context,R.string.up_to_date,Toast.LENGTH_SHORT).show();
+
+                    }
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
             }
+
         }
 
     }

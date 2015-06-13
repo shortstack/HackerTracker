@@ -32,6 +32,16 @@ public class SharedPreferencesUtil {
         sharedPreferencesEditor.commit();
     }
 
+    public static void saveLastUpdated(String date) {
+        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+        sharedPreferencesEditor.putString("lastUpdated", date);
+        sharedPreferencesEditor.commit();
+    }
+
+    public static String getLastUpdated() {
+        return sharedPreferences.getString("lastUpdated",null);
+    }
+
     public static void showSuggestions(boolean show) {
         SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
         sharedPreferencesEditor.putBoolean("showSuggestions",show);
