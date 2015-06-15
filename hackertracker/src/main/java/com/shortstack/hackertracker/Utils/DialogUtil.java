@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.Utils;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -20,6 +21,7 @@ import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Fragment.DetailsFragment;
 import com.shortstack.hackertracker.Model.Default;
+import com.shortstack.hackertracker.Model.OfficialList;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
 
@@ -135,6 +137,38 @@ public class DialogUtil {
 
         return dialog;
 
+    }
+
+    public static AlertDialog updateDialog(final OfficialList schedule, final String update, final Context context) {
+        LayoutInflater inflater =
+                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.inflate(R.layout.dialog_update, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        AlertDialog dialog = builder.create();
+
+        dialog.setView(view, 0, 0, 0, 0);
+
+        Button cancelButton = (Button) view.findViewById(R.id.no);
+        final Dialog finalDialog = dialog;
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalDialog.dismiss();
+            }
+        });
+
+        Button updateButton = (Button) view.findViewById(R.id.yes);
+        updateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalDialog.dismiss();
+                HomeActivity.performUpdate(schedule, update, context);
+            }
+        });
+
+        return dialog;
     }
 
     public static AlertDialog syncSpeakersDialog(final Context context) {

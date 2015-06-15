@@ -40,16 +40,22 @@
     <string name="home_text">DC23 Schedule\nOfficial &amp; Unofficial</string>
     <string name="updates">Updates</string>
 
+    <string name="yes">Yes</string>
+    <string name="no">No</string>
+
     <string name="oh_snap">Oh snap!</string>
     <string name="dont_show">Don\'t show this again</string>
     <string name="empty_schedule">Looks like you don\'t have anything in your schedule yet!\n\nCheck out the speaker list, contests, parties, and events to make the most of your DEF CON 23 experience :)</string>
     <string name="got_it">Got it!</string>
     <string name="error_api">Error connecting to API</string>
     <string name="error_api_desc">Please check your connection and try again :)</string>
-    <string name="sync_database">Sync Speaker Database</string>
-    <string name="sync_check">Are you sure you want to sync your local database? This will require your device to access the internet."</string>
+    <string name="sync_database">Check For Schedule Updates</string>
+    <string name="sync_check">Are you sure you want to check for updates? This will require your device to access the internet."</string>
+    <string name="updates_available">Update Available</string>
+    <string name="update_check">Would you like to update the schedule? This will not affect your saved schedule.</string>
     <string name="no_updates">Your schedule is up to date! :)</string>
-    <string name="schedule_downloading">Checking for schedule updates...</string>
+    <string name="checking_for_updates">Checking for schedule updates...</string>
+    <string name="syncing">Syncing database with updates...</string>
     <string name="schedule_finished">Schedule sync complete</string>
     <string name="up_to_date">Your schedule is already up to date! :)</string>
 
@@ -57,7 +63,7 @@
     <string name="schedule_clear">Clear My Schedule</string>
     <string name="delete_all">Clear My Schedule</string>
     <string name="close">Close</string>
-    <string name="sync">Sync Speaker Database</string>
+    <string name="check_for_updates">Check For Schedule Updates</string>
     <string name="schedule_check">Are you sure you want to remove everything from your schedule?</string>
     <string name="schedule_cancel">No, Cancel</string>
     <string name="schedule_share">Check out my DEF CON 23 schedule</string>
@@ -70,7 +76,7 @@
     <string name="schedule_remove">Yes, Remove them</string>
     <string name="schedule_removed">Removed from My Schedule</string>
     <string name="schedule_added">Added to My Schedule</string>
-    <string name="schedule_sync">Yes, Sync Now</string>
+    <string name="schedule_sync">Yes, Check Now</string>
 
     <string name="map_hotel">Hotel Map</string>
     <string name="map_con">Conference Map</string>

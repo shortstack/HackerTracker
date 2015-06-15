@@ -1,18 +1,24 @@
 package com.shortstack.hackertracker.Activity;
 
+import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -42,11 +48,11 @@ import com.shortstack.hackertracker.Skytalks.SkytalksPagerFragment;
 import com.shortstack.hackertracker.Utils.ApiResponseUtil;
 import com.shortstack.hackertracker.Utils.DialogUtil;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
+import com.shortstack.hackertracker.Utils.UpdateTask;
 import com.shortstack.hackertracker.Vendors.VendorsFragment;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Speakers.SpeakerPagerFragment;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -61,7 +67,9 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
     public static ActionBar actionBar;
     private FragmentDrawer drawerFragment;
     private Toolbar mToolbar;
-    private static ProgressDialog syncDialog;
+    private Context context;
+    private static ProgressDialog updateCheckDialog;
+    public static ProgressDialog syncScheduleDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,9 +79,17 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         //set up toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
         mToolbar.setTitle(R.string.home);
-        mToolbar.setTitleTextAppearance(getApplicationContext(),R.style.titleText);
+        mToolbar.setTitleTextAppearance(getApplicationContext(), R.style.titleText);
 
+        // get context
+        context = HomeActivity.this;
+
+        // get fragment manager
         fragmentManager = getSupportFragmentManager();
+
+        // set up dialogs
+        updateCheckDialog = DialogUtil.getProgressDialog(context, context.getResources().getString(R.string.checking_for_updates));
+        syncScheduleDialog = DialogUtil.getProgressDialog(context, context.getResources().getString(R.string.syncing));
 
         // set up action bar
         setSupportActionBar(mToolbar);
@@ -139,6 +155,9 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                     break;
                 case SchedulePagerFragment:
                     getSupportActionBar().setTitle(getString(R.string.schedule).toUpperCase());
+                    break;
+                case SearchFragment:
+                    getSupportActionBar().setTitle(getString(R.string.search).toUpperCase());
                     break;
 
             }
@@ -274,13 +293,6 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                         .commit();
                 getSupportActionBar().setTitle(getString(R.string.maps).toUpperCase());
                 break;
-/*            case 7:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, ShuttleFragment.newInstance(10))
-                        .addToBackStack("ShuttleFragment")
-                        .commit();
-                getSupportActionBar().setTitle(getString(R.string.shuttle).toUpperCase());
-                break;*/
             case 9:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, FAQFragment.newInstance(10))
@@ -288,13 +300,6 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                         .commit();
                 getSupportActionBar().setTitle(getString(R.string.faq).toUpperCase());
                 break;
-/*            case 9:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, LinksFragment.newInstance(11))
-                        .addToBackStack("LinksFragment")
-                        .commit();
-                getSupportActionBar().setTitle(getString(R.string.links).toUpperCase());
-                break;*/
         }
     }
 
@@ -333,8 +338,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
         SyncService syncService = new SyncServiceImpl();
 
-        syncDialog = DialogUtil.getProgressDialog(context, context.getResources().getString(R.string.schedule_downloading));
-        syncDialog.show();
+        updateCheckDialog.show();
 
         try {
             syncService.syncDatabase(context, new SyncDatabaseListener(context));
@@ -358,7 +362,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         public void onTaskComplete(ApiBase result) {
 
             // get schedule from API
-            OfficialList schedule;
+            final OfficialList schedule;
             String updateDate;
             String updateTime;
 
@@ -379,7 +383,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.US);
 
                 // get string of last online update
-                String update = updateDate + " " + updateTime;
+                final String update = updateDate + " " + updateTime;
 
                 // get string of last device update
                 String strDate = SharedPreferencesUtil.getLastUpdated();
@@ -397,25 +401,12 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
                     if (lastUpdatedDevice==null || lastUpdatedDevice.compareTo(lastUpdatedOnline) < 0) {
 
-                        ArrayList<Default> officialArray = new ArrayList(Arrays.asList(schedule.getAll()));
-
-                        if (officialArray.size()!=0) {
-                            syncDatabase(officialArray, context);
-                            syncDialog.dismiss();
-                            Toast.makeText(context,R.string.schedule_finished,Toast.LENGTH_SHORT).show();
-                        } else {
-                            syncDialog.dismiss();
-
-                            // no results found, don't sync
-                            Toast.makeText(context,R.string.no_updates,Toast.LENGTH_SHORT).show();
-                        }
-
-                        // update last updated device date to last updated online date
-                        SharedPreferencesUtil.saveLastUpdated(update);
+                        updateCheckDialog.dismiss();
+                        DialogUtil.updateDialog(schedule, update, context).show();
 
                     } else { // else, don't update
 
-                        syncDialog.dismiss();
+                        updateCheckDialog.dismiss();
                         Toast.makeText(context,R.string.up_to_date,Toast.LENGTH_SHORT).show();
 
                     }
@@ -430,7 +421,13 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
     }
 
-    private static void syncDatabase(ArrayList<Default> officialArray, Context context) {
+    public static void performUpdate(final OfficialList schedule, final String update, final Context context) {
+
+       AsyncTask task = new UpdateTask(schedule, update, context).execute();
+
+    }
+
+    public static void syncDatabase(ArrayList<Default> officialArray, Context context) {
 
         HashMap<String, String> queryValues;
         DatabaseAdapterOfficial controller = new DatabaseAdapterOfficial(context);
@@ -473,6 +470,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
             }
         }
+
     }
 
 }

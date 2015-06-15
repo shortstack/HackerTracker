@@ -15,6 +15,7 @@
         android:id="@+id/dialogTitle"
         style="@style/dialog_header">
         <TextView
+            android:id="@+id/dialog_title"
             style="@style/dialog_title"
             android:text="@string/error_api"/>
         <ImageView
@@ -25,7 +26,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/dialog_text"
         style="@style/dialog_text"
         android:text="@string/error_api_desc"
         android:gravity="center"

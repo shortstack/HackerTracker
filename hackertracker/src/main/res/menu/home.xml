@@ -15,7 +15,7 @@
         android:icon="@drawable/trash"
         app:showAsAction="never" />
     <item android:id="@+id/action_sync"
-        android:title="@string/sync"
+        android:title="@string/check_for_updates"
         android:icon="@android:drawable/ic_menu_send"
         app:showAsAction="never" />
 </menu>

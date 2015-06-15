@@ -25,7 +25,7 @@
     </RelativeLayout>
 
     <TextView
-        android:id="@+id/text"
+        android:id="@+id/dialog_text"
         style="@style/dialog_text"
         android:text="@string/schedule_check"
         android:gravity="center"
