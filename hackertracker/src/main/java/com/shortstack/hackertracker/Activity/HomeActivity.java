@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.support.v4.widget.DrawerLayout;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -32,6 +33,7 @@ import com.shortstack.hackertracker.Api.SyncService;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Contests.ContestPagerFragment;
 import com.shortstack.hackertracker.Events.EventPagerFragment;
+import com.shortstack.hackertracker.Font.HelveticaTextView;
 import com.shortstack.hackertracker.Fragment.FragmentDrawer;
 import com.shortstack.hackertracker.Kids.KidsPagerFragment;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
@@ -67,6 +69,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
     public static ActionBar actionBar;
     private FragmentDrawer drawerFragment;
     private Toolbar mToolbar;
+    private HelveticaTextView mTitle;
     private Context context;
     private static ProgressDialog updateCheckDialog;
     public static ProgressDialog syncScheduleDialog;
@@ -76,11 +79,12 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        //set up toolbar
+        // set up toolbar
         mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        mToolbar.setTitle(R.string.home);
-        mToolbar.setTitleTextAppearance(getApplicationContext(), R.style.titleText);
-
+        mToolbar.setTitle("");
+        mTitle = (HelveticaTextView) mToolbar.findViewById(R.id.toolbar_title);
+        mTitle.setText(R.string.home);
+        
         // get context
         context = HomeActivity.this;
 
@@ -118,46 +122,46 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
             FragmentName fragName = FragmentName.valueOf(fm.getBackStackEntryAt(fm.getBackStackEntryCount()-2).getName());
             switch (fragName) {
                 case HomeFragment:
-                    getSupportActionBar().setTitle(getString(R.string.home).toUpperCase());
+                    mTitle.setText(getString(R.string.home).toUpperCase());
                     break;
                 case SpeakerPagerFragment:
-                    getSupportActionBar().setTitle(getString(R.string.speakers).toUpperCase());
+                    mTitle.setText(getString(R.string.speakers).toUpperCase());
                     break;
                 case ContestPagerFragment:
-                    getSupportActionBar().setTitle(getString(R.string.contests).toUpperCase());
+                    mTitle.setText(getString(R.string.contests).toUpperCase());
                     break;
                 case EventPagerFragment:
-                    getSupportActionBar().setTitle(getString(R.string.events).toUpperCase());
+                    mTitle.setText(getString(R.string.events).toUpperCase());
                     break;
                 case PartyPagerFragment:
-                    getSupportActionBar().setTitle(getString(R.string.parties).toUpperCase());
+                    mTitle.setText(getString(R.string.parties).toUpperCase());
                     break;
                 case VendorsFragment:
-                    getSupportActionBar().setTitle(getString(R.string.vendors).toUpperCase());
+                    mTitle.setText(getString(R.string.vendors).toUpperCase());
                     break;
                 case MapsFragment:
-                    getSupportActionBar().setTitle(getString(R.string.maps).toUpperCase());
+                    mTitle.setText(getString(R.string.maps).toUpperCase());
                     break;
                 case LinksFragment:
-                    getSupportActionBar().setTitle(getString(R.string.links).toUpperCase());
+                    mTitle.setText(getString(R.string.links).toUpperCase());
                     break;
                 case FAQFragment:
-                    getSupportActionBar().setTitle(getString(R.string.faq).toUpperCase());
+                    mTitle.setText(getString(R.string.faq).toUpperCase());
                     break;
                 case ShuttleFragment:
-                    getSupportActionBar().setTitle(getString(R.string.shuttle).toUpperCase());
+                    mTitle.setText(getString(R.string.shuttle).toUpperCase());
                     break;
                 case KidsPagerFragment:
-                    getSupportActionBar().setTitle(getString(R.string.kids).toUpperCase());
+                    mTitle.setText(getString(R.string.kids).toUpperCase());
                     break;
                 case SkytalksPagerFragment:
-                    getSupportActionBar().setTitle(getString(R.string.skytalks).toUpperCase());
+                    mTitle.setText(getString(R.string.skytalks).toUpperCase());
                     break;
                 case SchedulePagerFragment:
-                    getSupportActionBar().setTitle(getString(R.string.schedule).toUpperCase());
+                    mTitle.setText(getString(R.string.schedule).toUpperCase());
                     break;
                 case SearchFragment:
-                    getSupportActionBar().setTitle(getString(R.string.search).toUpperCase());
+                    mTitle.setText(getString(R.string.search).toUpperCase());
                     break;
 
             }
@@ -182,7 +186,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (item.getItemId() == R.id.action_search) {
-            getSupportActionBar().setTitle(getString(R.string.search).toUpperCase());
+            mTitle.setText(getString(R.string.search).toUpperCase());
             fragmentManager.beginTransaction()
                     .replace(R.id.container, SearchFragment.newInstance(12))
                     .addToBackStack("SearchFragment")
@@ -235,70 +239,70 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                         .replace(R.id.container, HomeFragment.newInstance(1))
                         .addToBackStack("HomeFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.home).toUpperCase());
+                mTitle.setText(getString(R.string.home).toUpperCase());
                 break;
             case 1:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, SpeakerPagerFragment.newInstance(2))
                         .addToBackStack("SpeakerPagerFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.speakers).toUpperCase());
+                mTitle.setText(getString(R.string.speakers).toUpperCase());
                 break;
             case 2:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, SkytalksPagerFragment.newInstance(3))
                         .addToBackStack("SkytalksPagerFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.skytalks).toUpperCase());
+                mTitle.setText(getString(R.string.skytalks).toUpperCase());
                 break;
             case 3:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, ContestPagerFragment.newInstance(4))
                         .addToBackStack("ContestPagerFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.contests).toUpperCase());
+                mTitle.setText(getString(R.string.contests).toUpperCase());
                 break;
             case 4:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, EventPagerFragment.newInstance(5))
                         .addToBackStack("EventPagerFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.events).toUpperCase());
+                mTitle.setText(getString(R.string.events).toUpperCase());
                 break;
             case 5:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, PartyPagerFragment.newInstance(6))
                         .addToBackStack("PartyPagerFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.parties).toUpperCase());
+                mTitle.setText(getString(R.string.parties).toUpperCase());
                 break;
             case 6:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, KidsPagerFragment.newInstance(7))
                         .addToBackStack("KidsPagerFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.kids).toUpperCase());
+                mTitle.setText(getString(R.string.kids).toUpperCase());
                 break;
             case 7:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, VendorsFragment.newInstance(8))
                         .addToBackStack("VendorsFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.vendors).toUpperCase());
+                mTitle.setText(getString(R.string.vendors).toUpperCase());
                 break;
             case 8:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, MapsFragment.newInstance(9))
                         .addToBackStack("MapsFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.maps).toUpperCase());
+                mTitle.setText(getString(R.string.maps).toUpperCase());
                 break;
             case 9:
                 fragmentManager.beginTransaction()
                         .replace(R.id.container, FAQFragment.newInstance(10))
                         .addToBackStack("FAQFragment")
                         .commit();
-                getSupportActionBar().setTitle(getString(R.string.faq).toUpperCase());
+                mTitle.setText(getString(R.string.faq).toUpperCase());
                 break;
         }
     }

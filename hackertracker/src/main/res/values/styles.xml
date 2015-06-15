@@ -1,7 +1,6 @@
-<resources>
+<resources xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
-
     </style>
 
     <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.DarkActionBar">
@@ -36,11 +35,10 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">10dp</item>
+        <item name="android:paddingBottom">8dp</item>
         <item name="android:paddingLeft">15dp</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">13sp</item>
         <item name="android:textColor">@color/white</item>
-        <item name="android:textStyle">normal</item>
         <item name="android:textAllCaps">true</item>
     </style>
     <style name="row">
@@ -81,6 +79,7 @@
     </style>
     <style name="button_map">
         <item name="android:textColor">@color/light_gray</item>
+        <item name="android:textAllCaps">true</item>
         <item name="android:background">@drawable/button_states_green</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

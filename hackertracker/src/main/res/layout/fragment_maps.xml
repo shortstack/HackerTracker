@@ -20,7 +20,7 @@
                 android:layout_marginTop="40dp"
                 android:id="@+id/crop_dcmap"/>
 
-            <Button
+            <com.shortstack.hackertracker.Font.HelveticaButton
                 style="@style/button_map"
                 android:text="@string/map_con"
                 android:id="@+id/button_dcmap"
@@ -33,7 +33,7 @@
                 android:layout_marginTop="10dp"
                 android:id="@+id/crop_ballysmap"/>
 
-            <Button
+            <com.shortstack.hackertracker.Font.HelveticaButton
                 style="@style/button_map"
                 android:text="@string/map_hotel"
                 android:id="@+id/button_ballysmap"/>

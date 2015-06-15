@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:clickable="true">
 
-    <TextView
+    <com.shortstack.hackertracker.Font.HelveticaTextView
         style="@style/row_nav"
         android:id="@+id/title"
         android:textColor="@color/navbar_selector"

@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-    <Button
+    <com.shortstack.hackertracker.Font.HelveticaButton
         android:id="@+id/button_schedule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -6,4 +6,14 @@
     android:layout_height="wrap_content"
     android:background="@color/colorPrimary"
     local:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-    local:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+    local:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+
+
+    <com.shortstack.hackertracker.Font.HelveticaTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="start|center_vertical"
+        android:id="@+id/toolbar_title"
+        style="@style/titleText"/>
+
+</android.support.v7.widget.Toolbar>

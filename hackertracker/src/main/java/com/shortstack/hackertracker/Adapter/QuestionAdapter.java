@@ -61,6 +61,7 @@ public class QuestionAdapter extends ArrayAdapter<CharSequence> {
             if (backgroundSetting==0) {
                 holder.question.setTypeface(null, Typeface.BOLD);
                 holder.question.setPadding(0, 100, 0, 20);
+                holder.question.setTextColor(context.getResources().getColor(R.color.green));
                 holder.layout.setBackgroundResource(R.drawable.border_bottom_black);
             // if it's the last item, don't underline
             } else if (position==data.length-1) {
@@ -70,6 +71,7 @@ public class QuestionAdapter extends ArrayAdapter<CharSequence> {
             // if it's an answer, unbold, green underline
             } else {
                 holder.question.setTypeface(null, Typeface.NORMAL);
+                holder.question.setTextColor(context.getResources().getColor(R.color.white));
                 holder.question.setPadding(0,10,0,100);
                 holder.layout.setBackgroundResource(R.drawable.border_bottom_green);
             }

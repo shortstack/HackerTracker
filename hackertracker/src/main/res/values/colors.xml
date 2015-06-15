@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#000000</color>
-    <color name="colorPrimaryDark">#19a938</color>
+    <color name="colorPrimaryDark">#99d72e</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
@@ -15,6 +15,6 @@
     <color name="green">#afec44</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
-    <color name="dark_green">#19a938</color>
+    <color name="dark_green">#99d72e</color>
     <color name="star">#ffcc00</color>
 </resources>
