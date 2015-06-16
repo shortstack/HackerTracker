@@ -1,15 +1,11 @@
 package com.shortstack.hackertracker.Adapter;
 
 import android.content.Context;
-import android.content.res.AssetManager;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.shortstack.hackertracker.Utils.Strings;
-
-import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;

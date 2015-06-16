@@ -1,10 +1,17 @@
 package com.shortstack.hackertracker.Adapter;
 
 import android.content.Context;
-import android.view.*;
-import android.widget.*;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
 import com.shortstack.hackertracker.Model.Vendor;
 import com.shortstack.hackertracker.R;
+
 import junit.framework.Assert;
 
 /**

@@ -1,14 +1,11 @@
 package com.shortstack.hackertracker.Utils;
 
-import android.app.ListActivity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.Toast;
 
 import com.shortstack.hackertracker.Activity.HomeActivity;
-import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.OfficialList;
 import com.shortstack.hackertracker.R;

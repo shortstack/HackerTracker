@@ -16,16 +16,6 @@ package com.shortstack.hackertracker.Utils;
  * limitations under the License.
  */
 
-        import com.shortstack.hackertracker.Common.Constants;
-
-        import java.io.UnsupportedEncodingException;
-        import java.math.BigInteger;
-        import java.net.URLDecoder;
-        import java.net.URLEncoder;
-        import java.security.MessageDigest;
-        import java.security.NoSuchAlgorithmException;
-        import java.util.Collection;
-
 public class Strings {
 
     public static boolean isNotEmpty(CharSequence str) {

@@ -16,9 +16,9 @@ package com.shortstack.hackertracker.Adapter;
  * limitations under the License.
  */
 
-        import android.text.Editable;
-        import android.text.TextWatcher;
-        import android.widget.EditText;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.widget.EditText;
 
 public class TextWatcherAdapter implements TextWatcher {
 

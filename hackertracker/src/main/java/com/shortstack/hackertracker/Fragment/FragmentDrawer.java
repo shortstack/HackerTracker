@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.Fragment;
 /**
  * Created by Whitney Champion on 5/19/15.
  */
+
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -17,16 +18,12 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Adapter.NavigationDrawerAdapter;
-import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.NavDrawerItem;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
-import com.shortstack.hackertracker.Utils.DialogUtil;
 
 import java.util.ArrayList;
 import java.util.List;

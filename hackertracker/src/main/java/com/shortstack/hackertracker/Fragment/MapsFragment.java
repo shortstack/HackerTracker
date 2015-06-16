@@ -1,6 +1,5 @@
 package com.shortstack.hackertracker.Fragment;
 
-import android.app.Activity;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.R;
 
 import java.io.File;

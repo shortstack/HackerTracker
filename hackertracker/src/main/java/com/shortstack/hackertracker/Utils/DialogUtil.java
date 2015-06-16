@@ -1,6 +1,5 @@
 package com.shortstack.hackertracker.Utils;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -26,8 +25,6 @@ import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.UUID;
 
 /**
  * Created by whitneychampion on 7/11/14.

@@ -1,6 +1,5 @@
 package com.shortstack.hackertracker.Vendors;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.InflateException;
@@ -9,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
-import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Adapter.VendorAdapter;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;

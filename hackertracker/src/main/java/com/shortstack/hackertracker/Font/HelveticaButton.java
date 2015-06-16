@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.widget.Button;
-import android.widget.TextView;
 
 /**
  * Created by Whitney Champion on 6/15/15.

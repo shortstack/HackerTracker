@@ -1,25 +1,24 @@
 package com.shortstack.hackertracker.Api;
 
-import java.io.File;
-import java.io.IOException;
-
-import android.app.Dialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonSyntaxException;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
-import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Utils.DialogUtil;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.*;
+import org.apache.http.client.methods.HttpDelete;
+import org.apache.http.client.methods.HttpEntityEnclosingRequestBase;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpHead;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpPut;
+import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.conn.ConnectTimeoutException;
 import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.StringEntity;
@@ -30,6 +29,8 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;

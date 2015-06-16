@@ -1,29 +1,16 @@
 package com.shortstack.hackertracker.Kids;
 
-import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.shortstack.hackertracker.Application.HackerTrackerApplication;
-import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Utils.DialogUtil;
-import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
-
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 
 public class KidsPagerFragment extends Fragment {
 

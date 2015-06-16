@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.shortstack.hackertracker.Adapter.DefaultAdapter;
-import com.shortstack.hackertracker.Api.SpeakerService;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
 import com.shortstack.hackertracker.Model.Default;
