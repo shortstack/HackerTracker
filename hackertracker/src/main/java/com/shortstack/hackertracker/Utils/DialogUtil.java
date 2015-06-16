@@ -268,7 +268,7 @@ public class DialogUtil {
                 }
             }
 
-            return new File(mediaStorageDir.getPath() + File.separator + R.string.filename);
+            return new File(mediaStorageDir.getPath() + File.separator + context.getString(R.string.filename));
         } else {
             Toast.makeText(HackerTrackerApplication.getAppContext(), R.string.no_storage, Toast.LENGTH_LONG).show();
         }

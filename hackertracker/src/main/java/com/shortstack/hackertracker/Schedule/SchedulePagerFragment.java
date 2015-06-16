@@ -123,7 +123,7 @@ public class SchedulePagerFragment extends Fragment {
                         csvValues += ",";
                     csvValues += cursorOfficial.getString(2)+",";
                     csvValues += cursorOfficial.getString(3)+",";
-                    csvValues += SchedulePagerFragment.getDate(Integer.valueOf(cursorOfficial.getString(4))).replace(",","") +",";
+                    csvValues += cursorOfficial.getString(4)+",";
                     csvValues += cursorOfficial.getString(5)+",\n";
                     out.write(csvValues.replace("null",""));
                 }
@@ -141,7 +141,7 @@ public class SchedulePagerFragment extends Fragment {
                         csvValues += ",";
                     csvValues += cursor.getString(2)+",";
                     csvValues += cursor.getString(3)+",";
-                    csvValues += SchedulePagerFragment.getDate(Integer.valueOf(cursor.getString(4))).replace(",","") +",";
+                    csvValues += cursor.getString(4)+",";
                     csvValues += cursor.getString(5)+",\n";
                     out.write(csvValues.replace("null",""));
                 }
@@ -156,24 +156,6 @@ public class SchedulePagerFragment extends Fragment {
         db.close();
         dbOfficial.close();
         return returnCode;
-    }
-
-    private static String getDate(int date) {
-
-        switch (date) {
-            case 0:
-                return Constants.DAY_0;
-            case 1:
-                return Constants.DAY_1;
-            case 2:
-                return Constants.DAY_2;
-            case 3:
-                return Constants.DAY_3;
-            case 4:
-                return Constants.DAY_4;
-        }
-        return "";
-
     }
 
 }
