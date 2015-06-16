@@ -62,7 +62,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
     public static ActionBar actionBar;
     private FragmentDrawer drawerFragment;
     private Toolbar mToolbar;
-    private HelveticaTextView mTitle;
+    public static HelveticaTextView mTitle;
     private Context context;
     private static ProgressDialog updateCheckDialog;
     public static ProgressDialog syncScheduleDialog;

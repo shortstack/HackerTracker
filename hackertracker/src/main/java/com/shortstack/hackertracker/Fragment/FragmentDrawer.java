@@ -147,7 +147,7 @@ public class FragmentDrawer extends Fragment {
         @Override
         public void onClick(View v) {
 
-            HomeActivity.actionBar.setTitle(getString(R.string.schedule).toUpperCase());
+            HomeActivity.mTitle.setText(getString(R.string.schedule).toUpperCase());
             mDrawerLayout.closeDrawer(containerView);
 
             // open schedule fragment
