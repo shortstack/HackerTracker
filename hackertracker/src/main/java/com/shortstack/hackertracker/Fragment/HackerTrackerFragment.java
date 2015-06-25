@@ -14,6 +14,7 @@ import android.graphics.Rect;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
+import com.google.gson.Gson;
 import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterOfficial;
@@ -22,11 +23,18 @@ import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Contest;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.Event;
+import com.shortstack.hackertracker.Model.OfficialList;
 import com.shortstack.hackertracker.Model.Party;
 import com.shortstack.hackertracker.Model.Speaker;
 import com.shortstack.hackertracker.Model.Vendor;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class HackerTrackerFragment extends Fragment {
@@ -110,6 +118,35 @@ public class HackerTrackerFragment extends Fragment {
                 break;
         }
         return day;
+    }
+
+    public OfficialList loadJSONFromAsset() {
+
+        String json = null;
+
+        try {
+
+            InputStream is = context.getAssets().open("schedule-full.json");
+
+            int size = is.available();
+
+            byte[] buffer = new byte[size];
+
+            is.read(buffer);
+
+            is.close();
+
+            json = new String(buffer, "UTF-8");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+
+        OfficialList data = new Gson().fromJson(json, OfficialList.class);
+
+        return data;
+
     }
 
     /*

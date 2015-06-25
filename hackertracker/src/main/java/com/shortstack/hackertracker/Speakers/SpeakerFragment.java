@@ -81,6 +81,7 @@ public class SpeakerFragment extends HackerTrackerFragment {
         speakerService = new SpeakerServiceImpl();
 
         // get speakers from database
+        //OfficialList jsonList = loadJSONFromAsset();
         List<Default> speakers = getItemByDate(HackerTrackerFragment.getDate(date), Constants.TYPE_SPEAKER);
         if (speakers.size() > 0) {
 
