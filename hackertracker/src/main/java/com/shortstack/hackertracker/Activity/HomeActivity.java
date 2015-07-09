@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -20,7 +21,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.shortstack.hackertracker.Adapter.DatabaseAdapterOfficial;
+import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Api.ApiException;
 import com.shortstack.hackertracker.Api.Impl.SyncServiceImpl;
 import com.shortstack.hackertracker.Api.SyncService;
@@ -49,6 +50,10 @@ import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 import com.shortstack.hackertracker.Utils.UpdateTask;
 import com.shortstack.hackertracker.Vendors.VendorsFragment;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.nio.channels.FileChannel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -104,6 +109,9 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 .replace(R.id.container, HomeFragment.newInstance(1))
                 .addToBackStack("HomeFragment")
                 .commit();
+
+        // export database
+        exportDB();
     }
 
     @Override
@@ -302,8 +310,8 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
     public static void clearSchedule(Context context) {
         SQLiteDatabase dbStars = HackerTrackerApplication.myDbHelperStars.getWritableDatabase();
-        SQLiteDatabase dbOfficial = HackerTrackerApplication.myOfficialDbHelper.getWritableDatabase();
-        SQLiteDatabase db = HackerTrackerApplication.myDbHelper.getWritableDatabase();
+        SQLiteDatabase dbOfficial = HackerTrackerApplication.dbHelper.getWritableDatabase();
+        SQLiteDatabase db = HackerTrackerApplication.vendorDbHelper.getWritableDatabase();
 
         // delete all data in starred database
         dbStars.execSQL("DELETE FROM data");
@@ -427,7 +435,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
     public static void syncDatabase(ArrayList<Default> officialArray, Context context) {
 
         HashMap<String, String> queryValues;
-        DatabaseAdapterOfficial controller = new DatabaseAdapterOfficial(context);
+        DatabaseAdapter controller = new DatabaseAdapter(context);
 
         // Create GSON object
         Gson gson = new GsonBuilder().create();
@@ -450,7 +458,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 // Add userID extracted from Object
                 queryValues.put("id", obj.get("id").getAsString());
                 queryValues.put("title", obj.get("title").getAsString());
-                queryValues.put("name", obj.get("who").getAsString());
+                queryValues.put("who", obj.get("who").getAsString());
                 queryValues.put("begin", obj.get("begin").getAsString());
                 queryValues.put("end", obj.get("end").getAsString());
                 queryValues.put("date", obj.get("date").getAsString());
@@ -468,6 +476,37 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
             }
         }
 
+    }
+
+    //exporting database
+    private void exportDB() {
+        // TODO Auto-generated method stub
+
+        try {
+            File sd = Environment.getExternalStorageDirectory();
+            File data = Environment.getDataDirectory();
+
+            if (sd.canWrite()) {
+                String  currentDBPath= "/data/data/com.shortstack.hackertracker/databases/hackertracker.sqlite";
+                String backupDBPath  = Environment.getExternalStorageDirectory().getAbsolutePath() + "/hackertracker.sqlite";
+                File currentDB = new File(currentDBPath);
+                File backupDB = new File(backupDBPath);
+
+                FileChannel src = new FileInputStream(currentDB).getChannel();
+                FileChannel dst = new FileOutputStream(backupDB).getChannel();
+                dst.transferFrom(src, 0, src.size());
+                src.close();
+                dst.close();
+                Toast.makeText(context, backupDB.toString(),
+                        Toast.LENGTH_LONG).show();
+
+            }
+        } catch (Exception e) {
+
+            Toast.makeText(context, e.toString(), Toast.LENGTH_LONG)
+                    .show();
+
+        }
     }
 
 }

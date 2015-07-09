@@ -7,42 +7,30 @@ package com.shortstack.hackertracker.Fragment;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Path;
-import android.graphics.Rect;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
-import com.google.gson.Gson;
 import com.shortstack.hackertracker.Activity.HomeActivity;
+import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
-import com.shortstack.hackertracker.Adapter.DatabaseAdapterOfficial;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Contest;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.Event;
-import com.shortstack.hackertracker.Model.OfficialList;
 import com.shortstack.hackertracker.Model.Party;
 import com.shortstack.hackertracker.Model.Speaker;
 import com.shortstack.hackertracker.Model.Vendor;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class HackerTrackerFragment extends Fragment {
 
     private FragmentManager fragmentManager;
     private Context context;
-    private DatabaseAdapterOfficial myOfficialDbHelper;
-    private DatabaseAdapter myDbHelper;
+    private DatabaseAdapter dbHelper;
+    private DatabaseAdapterVendors vendorDbHelper;
 
     public HackerTrackerFragment() {
 
@@ -53,32 +41,9 @@ public class HackerTrackerFragment extends Fragment {
         context = HackerTrackerApplication.getAppContext();
 
         // database
-        myOfficialDbHelper = HackerTrackerApplication.myOfficialDbHelper;
-        myDbHelper = HackerTrackerApplication.myDbHelper;
+        dbHelper = HackerTrackerApplication.dbHelper;
+        vendorDbHelper = HackerTrackerApplication.vendorDbHelper;
 
-    }
-
-    public Bitmap getRoundedShape(Bitmap scaleBitmapImage, int shape) {
-        int targetWidth = shape;
-        int targetHeight = shape;
-        Bitmap targetBitmap = Bitmap.createBitmap(targetWidth,
-                targetHeight,Bitmap.Config.ARGB_8888);
-
-        Canvas canvas = new Canvas(targetBitmap);
-        Path path = new Path();
-        path.addCircle(((float) targetWidth - 1) / 2,
-                ((float) targetHeight - 1) / 2,
-                (Math.min(((float) targetWidth),
-                        ((float) targetHeight)) / 2),
-                Path.Direction.CCW);
-
-        canvas.clipPath(path);
-        Bitmap sourceBitmap = scaleBitmapImage;
-        canvas.drawBitmap(sourceBitmap,
-                new Rect(0, 0, sourceBitmap.getWidth(),
-                        sourceBitmap.getHeight()),
-                new Rect(0, 0, targetWidth, targetHeight), null);
-        return targetBitmap;
     }
 
     public static String getTitle(Context ctxt, int position) {
@@ -120,74 +85,45 @@ public class HackerTrackerFragment extends Fragment {
         return day;
     }
 
-    public OfficialList loadJSONFromAsset() {
+    public List<Vendor> getVendors() {
+        ArrayList<Vendor> result = new ArrayList<Vendor>();
 
-        String json = null;
+        SQLiteDatabase db = HackerTrackerApplication.vendorDbHelper.getWritableDatabase();
 
-        try {
+        Cursor cursor = db.rawQuery("SELECT * FROM data ORDER BY title", new String[] {});
 
-            InputStream is = context.getAssets().open("schedule-full.json");
+        try{
+            if (cursor.moveToFirst()){
+                do{
 
-            int size = is.available();
+                    Vendor item = new Vendor();
 
-            byte[] buffer = new byte[size];
+                    item.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                    item.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+                    item.setDescription(cursor.getString(cursor.getColumnIndex("description")));
+                    item.setImage(cursor.getString(cursor.getColumnIndex("image")));
+                    item.setLink(cursor.getString(cursor.getColumnIndex("link")));
 
-            is.read(buffer);
-
-            is.close();
-
-            json = new String(buffer, "UTF-8");
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
+                    result.add(item);
+                }while(cursor.moveToNext());
+            }
+        }finally{
+            cursor.close();
         }
+        db.close();
 
-        OfficialList data = new Gson().fromJson(json, OfficialList.class);
-
-        return data;
-
+        return result;
     }
-
-    /*
-     * get list of {type} for {day}
-     *
-     * speaker = 1
-     * contest = 2
-     * event = 3
-     * party = 4
-     * vendors = 5
-     * skytalks = 6
-     * message = 7
-     * unofficial = 8
-     * dcib = 9
-     * stupid = 10
-     * kids = 11
-     * joke = 12
-     *
-     */
 
     public List<Default> getItemByDate(String day, String type) {
         ArrayList<Default> result = new ArrayList<Default>();
 
-        SQLiteDatabase db;
+        SQLiteDatabase db = HackerTrackerApplication.dbHelper.getWritableDatabase();
 
-        // if it's a speaker or from official database, use officialDbHelper
-        if (type.equals(Constants.TYPE_SPEAKER)
-                || type.equals(Constants.TYPE_CONTEST)
-                || type.equals(Constants.TYPE_PARTY)
-                || type.equals(Constants.TYPE_SKYTALKS)
-                || type.equals(Constants.TYPE_EVENT)
-                ) {
-            db = HackerTrackerApplication.myOfficialDbHelper.getWritableDatabase();
-        } else {
-            db = HackerTrackerApplication.myDbHelper.getWritableDatabase();
-        }
-
-        Cursor myCursor = db.rawQuery("SELECT * FROM data WHERE date=? AND type=? ORDER BY begin", new String[] {day, String.valueOf(type)});
+        Cursor cursor = db.rawQuery("SELECT * FROM data WHERE date=? AND type=? ORDER BY begin", new String[] {day, String.valueOf(type)});
 
         try{
-            if (myCursor.moveToFirst()){
+            if (cursor.moveToFirst()){
                 do{
 
                     Default item;
@@ -204,9 +140,6 @@ public class HackerTrackerFragment extends Fragment {
                             break;
                         case Constants.TYPE_PARTY:
                             item = new Party();
-                            break;
-                        case Constants.TYPE_VENDOR:
-                            item = new Vendor();
                             break;
                         case Constants.TYPE_SKYTALKS:
                             item = new Default();
@@ -234,28 +167,28 @@ public class HackerTrackerFragment extends Fragment {
                             break;
                     }
 
-                    item.setId(myCursor.getInt(myCursor.getColumnIndex("id")));
-                    item.setType(myCursor.getString(myCursor.getColumnIndex("type")));
-                    item.setDate(myCursor.getString(myCursor.getColumnIndex("date")));
-                    item.setTitle(myCursor.getString(myCursor.getColumnIndex("title")));
-                    item.setDescription(myCursor.getString(myCursor.getColumnIndex("description")));
-                    item.setName(myCursor.getString(myCursor.getColumnIndex("who")));
-                    item.setEnd(myCursor.getString(myCursor.getColumnIndex("end")));
-                    item.setBegin(myCursor.getString(myCursor.getColumnIndex("begin")));
-                    item.setLocation(myCursor.getString(myCursor.getColumnIndex("location")));
-                    item.setStarred(myCursor.getInt(myCursor.getColumnIndex("starred")));
-                    item.setImage(myCursor.getString(myCursor.getColumnIndex("image")));
-                    item.setLink(myCursor.getString(myCursor.getColumnIndex("link")));
-                    item.setIsNew(myCursor.getInt(myCursor.getColumnIndex("is_new")));
-                    item.setDemo(myCursor.getInt(myCursor.getColumnIndex("demo")));
-                    item.setTool(myCursor.getInt(myCursor.getColumnIndex("tool")));
-                    item.setExploit(myCursor.getInt(myCursor.getColumnIndex("exploit")));
+                    item.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                    item.setType(cursor.getString(cursor.getColumnIndex("type")));
+                    item.setDate(cursor.getString(cursor.getColumnIndex("date")));
+                    item.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+                    item.setDescription(cursor.getString(cursor.getColumnIndex("description")));
+                    item.setName(cursor.getString(cursor.getColumnIndex("who")));
+                    item.setEnd(cursor.getString(cursor.getColumnIndex("end")));
+                    item.setBegin(cursor.getString(cursor.getColumnIndex("begin")));
+                    item.setLocation(cursor.getString(cursor.getColumnIndex("location")));
+                    item.setStarred(cursor.getInt(cursor.getColumnIndex("starred")));
+                    item.setImage(cursor.getString(cursor.getColumnIndex("image")));
+                    item.setLink(cursor.getString(cursor.getColumnIndex("link")));
+                    item.setIsNew(cursor.getInt(cursor.getColumnIndex("is_new")));
+                    item.setDemo(cursor.getInt(cursor.getColumnIndex("demo")));
+                    item.setTool(cursor.getInt(cursor.getColumnIndex("tool")));
+                    item.setExploit(cursor.getInt(cursor.getColumnIndex("exploit")));
 
                     result.add(item);
-                }while(myCursor.moveToNext());
+                }while(cursor.moveToNext());
             }
         }finally{
-            myCursor.close();
+            cursor.close();
         }
         db.close();
 
@@ -265,78 +198,41 @@ public class HackerTrackerFragment extends Fragment {
     public List<Default> getStars(String day) {
         ArrayList<Default> result = new ArrayList<Default>();
 
-        SQLiteDatabase dbOfficial = myOfficialDbHelper.getWritableDatabase();
-        SQLiteDatabase db = myDbHelper.getWritableDatabase();
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        Cursor myOfficialCursor = dbOfficial.rawQuery("SELECT * FROM data WHERE date=? AND starred=1 ORDER BY begin", new String[]{day});
-        Cursor myCursor = db.rawQuery("SELECT * FROM data WHERE date=? AND starred=1 ORDER BY begin", new String[] {day});
+        Cursor cursor = db.rawQuery("SELECT * FROM data WHERE date=? AND starred=1 ORDER BY begin", new String[]{day});
 
-        // get speakers from official database
+        // get items from database
 
         try{
-            if (myOfficialCursor.moveToFirst()){
+            if (cursor.moveToFirst()){
                 do{
 
                     Default item = new Default();
 
-                    item.setId(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("id")));
-                    item.setType(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("type")));
-                    item.setTitle(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("title")));
-                    item.setDescription(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("description")));
-                    item.setName(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("who")));
-                    item.setDate(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("date")));
-                    item.setEnd(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("end")));
-                    item.setBegin(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("begin")));
-                    item.setLocation(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("location")));
-                    item.setStarred(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("starred")));
-                    item.setImage(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("image")));
-                    item.setLink(myOfficialCursor.getString(myOfficialCursor.getColumnIndex("link")));
-                    item.setIsNew(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("is_new")));
-                    item.setDemo(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("demo")));
-                    item.setTool(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("tool")));
-                    item.setExploit(myOfficialCursor.getInt(myOfficialCursor.getColumnIndex("exploit")));
+                    item.setId(cursor.getInt(cursor.getColumnIndex("id")));
+                    item.setType(cursor.getString(cursor.getColumnIndex("type")));
+                    item.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+                    item.setDescription(cursor.getString(cursor.getColumnIndex("description")));
+                    item.setName(cursor.getString(cursor.getColumnIndex("who")));
+                    item.setDate(cursor.getString(cursor.getColumnIndex("date")));
+                    item.setEnd(cursor.getString(cursor.getColumnIndex("end")));
+                    item.setBegin(cursor.getString(cursor.getColumnIndex("begin")));
+                    item.setLocation(cursor.getString(cursor.getColumnIndex("location")));
+                    item.setStarred(cursor.getInt(cursor.getColumnIndex("starred")));
+                    item.setImage(cursor.getString(cursor.getColumnIndex("image")));
+                    item.setLink(cursor.getString(cursor.getColumnIndex("link")));
+                    item.setIsNew(cursor.getInt(cursor.getColumnIndex("is_new")));
+                    item.setDemo(cursor.getInt(cursor.getColumnIndex("demo")));
+                    item.setTool(cursor.getInt(cursor.getColumnIndex("tool")));
+                    item.setExploit(cursor.getInt(cursor.getColumnIndex("exploit")));
 
                     result.add(item);
 
-                }while(myOfficialCursor.moveToNext());
+                }while(cursor.moveToNext());
             }
         }finally{
-            myOfficialCursor.close();
-        }
-
-        dbOfficial.close();
-
-        // get all other events from unofficial database
-
-        try{
-            if (myCursor.moveToFirst()){
-                do{
-
-                    Default item = new Default();
-
-                    item.setId(myCursor.getInt(myCursor.getColumnIndex("id")));
-                    item.setType(myCursor.getString(myCursor.getColumnIndex("type")));
-                    item.setTitle(myCursor.getString(myCursor.getColumnIndex("title")));
-                    item.setDescription(myCursor.getString(myCursor.getColumnIndex("description")));
-                    item.setName(myCursor.getString(myCursor.getColumnIndex("who")));
-                    item.setDate(myCursor.getString(myCursor.getColumnIndex("date")));
-                    item.setEnd(myCursor.getString(myCursor.getColumnIndex("end")));
-                    item.setBegin(myCursor.getString(myCursor.getColumnIndex("begin")));
-                    item.setLocation(myCursor.getString(myCursor.getColumnIndex("location")));
-                    item.setStarred(myCursor.getInt(myCursor.getColumnIndex("starred")));
-                    item.setImage(myCursor.getString(myCursor.getColumnIndex("image")));
-                    item.setLink(myCursor.getString(myCursor.getColumnIndex("link")));
-                    item.setIsNew(myCursor.getInt(myCursor.getColumnIndex("is_new")));
-                    item.setDemo(myCursor.getInt(myCursor.getColumnIndex("demo")));
-                    item.setTool(myCursor.getInt(myCursor.getColumnIndex("tool")));
-                    item.setExploit(myCursor.getInt(myCursor.getColumnIndex("exploit")));
-
-                    result.add(item);
-
-                }while(myCursor.moveToNext());
-            }
-        }finally{
-            myCursor.close();
+            cursor.close();
         }
 
         db.close();

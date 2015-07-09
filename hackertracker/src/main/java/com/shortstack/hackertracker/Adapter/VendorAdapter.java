@@ -82,7 +82,6 @@ public class VendorAdapter extends ArrayAdapter<Vendor> {
             int imageResource = getDrawable(context,logo);
             holder.logo.setImageResource(imageResource);
 
-
         }
 
         return row;

@@ -140,8 +140,8 @@ public class SearchFragment extends Fragment {
             return result;
         }
 
-        SQLiteDatabase dbOfficial = HackerTrackerApplication.myOfficialDbHelper.getWritableDatabase();
-        SQLiteDatabase db = HackerTrackerApplication.myDbHelper.getWritableDatabase();
+        SQLiteDatabase dbOfficial = HackerTrackerApplication.dbHelper.getWritableDatabase();
+        SQLiteDatabase db = HackerTrackerApplication.vendorDbHelper.getWritableDatabase();
 
         Cursor titleOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
         Cursor bodyOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (description LIKE ?) AND type NOT LIKE 'Vendor'", new String[] {"%"+string+"%"});

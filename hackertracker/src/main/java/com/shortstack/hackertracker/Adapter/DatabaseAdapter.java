@@ -28,9 +28,9 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
     //The Android's default system path of your application database.
     private static String DB_PATH = "/data/data/com.shortstack.hackertracker/databases/";
 
-    private static String DB_NAME = "hackertracker_unofficial.sqlite";
+    private static String DB_NAME = "hackertracker.sqlite";
 
-    private static int DB_VERSION = 4;
+    private static int DB_VERSION = 193;
 
     private SQLiteDatabase myDataBase;
 
@@ -179,18 +179,19 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
         // check if entry is already in starred database
         DatabaseAdapterStarred myDbHelperStars = new DatabaseAdapterStarred(HackerTrackerApplication.getAppContext());
-        DatabaseAdapter myDbHelper = new DatabaseAdapter(HackerTrackerApplication.getAppContext());
+        DatabaseAdapter myOfficialDbHelper = new DatabaseAdapter(HackerTrackerApplication.getAppContext());
 
         SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
-        SQLiteDatabase dbDefault = myDbHelper.getWritableDatabase();
+        SQLiteDatabase dbDefault = myOfficialDbHelper.getWritableDatabase();
 
         Cursor myCursor = dbStars.rawQuery("SELECT * FROM data", null);
         try{
             if (myCursor.moveToFirst()){
                 do{
+
                     dbDefault.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + myCursor.getInt(myCursor.getColumnIndex("id")));
 
-                }while(myCursor.moveToNext());
+                } while(myCursor.moveToNext());
             }
         }finally{
             myCursor.close();
@@ -210,22 +211,27 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
         values.put("id", queryValues.get("id"));
         values.put("title", queryValues.get("title"));
-        values.put("name", queryValues.get("name"));
+        values.put("who", queryValues.get("who"));
+        values.put("location", queryValues.get("location"));
         values.put("begin", queryValues.get("begin"));
         values.put("end", queryValues.get("end"));
         values.put("date", queryValues.get("date"));
-        values.put("location", queryValues.get("location"));
-        values.put("body", queryValues.get("body"));
+        values.put("description", queryValues.get("description"));
         values.put("type", queryValues.get("type"));
-        values.put("starred", queryValues.get("starred"));
-        values.put("image", queryValues.get("image"));
         values.put("link", queryValues.get("link"));
-        values.put("is_new", queryValues.get("is_new"));
         values.put("demo", queryValues.get("demo"));
         values.put("tool", queryValues.get("tool"));
         values.put("exploit", queryValues.get("exploit"));
 
-        dbDefault.insert("data", null, values);
+        // check if previously starred
+        Cursor c = dbDefault.rawQuery("SELECT starred FROM data WHERE id="+queryValues.get("id"),null);
+        if (c.moveToFirst())
+            values.put("starred", c.getString(0));
+        else
+            values.put("starred", "0");
+        c.close();
+
+        dbDefault.insertWithOnConflict("data", null, values, SQLiteDatabase.CONFLICT_REPLACE);
         dbDefault.close();
 
     }

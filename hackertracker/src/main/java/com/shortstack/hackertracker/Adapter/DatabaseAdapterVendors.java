@@ -23,14 +23,14 @@ import java.util.Locale;
  * Date: 8/29/12
  * Time: 5:52 PM
  */
-public class DatabaseAdapterOfficial extends SQLiteOpenHelper {
+public class DatabaseAdapterVendors extends SQLiteOpenHelper {
 
     //The Android's default system path of your application database.
     private static String DB_PATH = "/data/data/com.shortstack.hackertracker/databases/";
 
-    private static String DB_NAME = "hackertracker.sqlite";
+    private static String DB_NAME = "vendors.sqlite";
 
-    private static int DB_VERSION = 193;
+    private static int DB_VERSION = 5;
 
     private SQLiteDatabase myDataBase;
 
@@ -42,7 +42,7 @@ public class DatabaseAdapterOfficial extends SQLiteOpenHelper {
      * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
      * @param context
      */
-    public DatabaseAdapterOfficial(Context context) {
+    public DatabaseAdapterVendors(Context context) {
 
         super(context, DB_NAME, null, DB_VERSION);
         this.myContext = context;
@@ -179,19 +179,18 @@ public class DatabaseAdapterOfficial extends SQLiteOpenHelper {
 
         // check if entry is already in starred database
         DatabaseAdapterStarred myDbHelperStars = new DatabaseAdapterStarred(HackerTrackerApplication.getAppContext());
-        DatabaseAdapterOfficial myOfficialDbHelper = new DatabaseAdapterOfficial(HackerTrackerApplication.getAppContext());
+        DatabaseAdapterVendors myDbHelper = new DatabaseAdapterVendors(HackerTrackerApplication.getAppContext());
 
         SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
-        SQLiteDatabase dbDefault = myOfficialDbHelper.getWritableDatabase();
+        SQLiteDatabase dbDefault = myDbHelper.getWritableDatabase();
 
         Cursor myCursor = dbStars.rawQuery("SELECT * FROM data", null);
         try{
             if (myCursor.moveToFirst()){
                 do{
-
                     dbDefault.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + myCursor.getInt(myCursor.getColumnIndex("id")));
 
-                } while(myCursor.moveToNext());
+                }while(myCursor.moveToNext());
             }
         }finally{
             myCursor.close();
@@ -203,7 +202,7 @@ public class DatabaseAdapterOfficial extends SQLiteOpenHelper {
 
     public static void updateDatabase(HashMap<String, String> queryValues) {
 
-        DatabaseAdapterOfficial myDbHelper = new DatabaseAdapterOfficial(HackerTrackerApplication.getAppContext());
+        DatabaseAdapterVendors myDbHelper = new DatabaseAdapterVendors(HackerTrackerApplication.getAppContext());
 
         SQLiteDatabase dbDefault = myDbHelper.getWritableDatabase();
 
@@ -211,27 +210,22 @@ public class DatabaseAdapterOfficial extends SQLiteOpenHelper {
 
         values.put("id", queryValues.get("id"));
         values.put("title", queryValues.get("title"));
-        values.put("who", queryValues.get("who"));
-        values.put("location", queryValues.get("location"));
+        values.put("name", queryValues.get("name"));
         values.put("begin", queryValues.get("begin"));
         values.put("end", queryValues.get("end"));
         values.put("date", queryValues.get("date"));
-        values.put("description", queryValues.get("description"));
+        values.put("location", queryValues.get("location"));
+        values.put("body", queryValues.get("body"));
         values.put("type", queryValues.get("type"));
+        values.put("starred", queryValues.get("starred"));
+        values.put("image", queryValues.get("image"));
         values.put("link", queryValues.get("link"));
+        values.put("is_new", queryValues.get("is_new"));
         values.put("demo", queryValues.get("demo"));
         values.put("tool", queryValues.get("tool"));
         values.put("exploit", queryValues.get("exploit"));
 
-        // check if previously starred
-        Cursor c = dbDefault.rawQuery("SELECT starred FROM data WHERE id="+queryValues.get("id"),null);
-        if (c.moveToFirst())
-            values.put("starred", c.getString(0));
-        else
-            values.put("starred", "0");
-        c.close();
-
-        dbDefault.insertWithOnConflict("data", null, values, SQLiteDatabase.CONFLICT_REPLACE);
+        dbDefault.insert("data", null, values);
         dbDefault.close();
 
     }

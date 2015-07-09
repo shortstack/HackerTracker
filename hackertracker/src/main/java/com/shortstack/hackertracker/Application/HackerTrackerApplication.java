@@ -3,8 +3,8 @@ package com.shortstack.hackertracker.Application;
 import android.app.Application;
 import android.content.Context;
 
+import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
-import com.shortstack.hackertracker.Adapter.DatabaseAdapterOfficial;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterStarred;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 
@@ -17,8 +17,8 @@ public class HackerTrackerApplication extends Application {
 
     private static HackerTrackerApplication application;
     private static Context context;
-    public static DatabaseAdapterOfficial myOfficialDbHelper;
-    public static DatabaseAdapter myDbHelper;
+    public static DatabaseAdapter dbHelper;
+    public static DatabaseAdapterVendors vendorDbHelper;
     public static DatabaseAdapterStarred myDbHelperStars;
 
     public void onCreate(){
@@ -38,14 +38,14 @@ public class HackerTrackerApplication extends Application {
 
     private void setUpDatabase() {
 
-        myOfficialDbHelper = new DatabaseAdapterOfficial(context);
-        myDbHelper = new DatabaseAdapter(context);
+        dbHelper = new DatabaseAdapter(context);
+        vendorDbHelper = new DatabaseAdapterVendors(context);
         myDbHelperStars = new DatabaseAdapterStarred(context);
 
         try {
 
-            myOfficialDbHelper.createDataBase();
-            myDbHelper.createDataBase();
+            dbHelper.createDataBase();
+            vendorDbHelper.createDataBase();
             myDbHelperStars.createDataBase();
 
         } catch (IOException ioe) {
@@ -54,8 +54,8 @@ public class HackerTrackerApplication extends Application {
 
         }
 
-        myOfficialDbHelper.copyStarred();
-        myDbHelper.copyStarred();
+        dbHelper.copyStarred();
+        vendorDbHelper.copyStarred();
 
     }
 

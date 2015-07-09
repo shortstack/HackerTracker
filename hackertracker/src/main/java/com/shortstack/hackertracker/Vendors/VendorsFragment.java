@@ -57,7 +57,7 @@ public class VendorsFragment extends HackerTrackerFragment {
         String date = "1";
 
         // get vendors
-        List<Default> vendors = getItemByDate(date, Constants.TYPE_VENDOR);
+        List<Vendor> vendors = getVendors();
         if (vendors.size() > 0) {
 
             vendorData = vendors.toArray(new Vendor[vendors.size()]);

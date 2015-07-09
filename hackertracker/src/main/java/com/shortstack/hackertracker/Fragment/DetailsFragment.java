@@ -18,8 +18,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
-import com.shortstack.hackertracker.Adapter.DatabaseAdapterOfficial;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterStarred;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Default;
@@ -183,8 +183,8 @@ public class DetailsFragment extends DialogFragment {
         final View.OnClickListener starOnClickListener = new View.OnClickListener() {
             public void onClick(View v) {
 
-                DatabaseAdapterOfficial myDbOfficialHelper = new DatabaseAdapterOfficial(context);
-                DatabaseAdapter myDbHelper = new DatabaseAdapter(context);
+                DatabaseAdapter myDbOfficialHelper = new DatabaseAdapter(context);
+                DatabaseAdapterVendors myDbHelper = new DatabaseAdapterVendors(context);
                 DatabaseAdapterStarred myDbHelperStars = new DatabaseAdapterStarred(context);
                 SQLiteDatabase dbDefaults = myDbHelper.getWritableDatabase();
                 SQLiteDatabase dbOfficial = myDbOfficialHelper.getWritableDatabase();

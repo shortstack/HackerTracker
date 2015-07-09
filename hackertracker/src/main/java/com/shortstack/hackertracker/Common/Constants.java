@@ -22,11 +22,11 @@ public interface Constants {
     String TYPE_KIDS = "Kids";
     String TYPE_JOKE = "Joke";
 
-    String LONG_DAY_0 = "2014-08-06";
-    String LONG_DAY_1 = "2014-08-07";
-    String LONG_DAY_2 = "2014-08-08";
-    String LONG_DAY_3 = "2014-08-09";
-    String LONG_DAY_4 = "2014-08-10";
+    String LONG_DAY_0 = "2015-08-05";
+    String LONG_DAY_1 = "2015-08-06";
+    String LONG_DAY_2 = "2015-08-07";
+    String LONG_DAY_3 = "2015-08-08";
+    String LONG_DAY_4 = "2015-08-09";
 
     String DAY_0 = "Wednesday";
     String DAY_1 = "Thursday";
