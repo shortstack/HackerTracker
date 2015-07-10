@@ -55,7 +55,6 @@ public class HackerTrackerApplication extends Application {
         }
 
         dbHelper.copyStarred();
-        vendorDbHelper.copyStarred();
 
     }
 

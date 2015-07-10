@@ -30,7 +30,7 @@ public class DatabaseAdapterVendors extends SQLiteOpenHelper {
 
     private static String DB_NAME = "vendors.sqlite";
 
-    private static int DB_VERSION = 5;
+    private static int DB_VERSION = 6;
 
     private SQLiteDatabase myDataBase;
 
@@ -171,35 +171,6 @@ public class DatabaseAdapterVendors extends SQLiteOpenHelper {
         }
     }
 
-    // Add your public helper methods to access and get content from the database.
-    // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy
-    // to you to create adapters for your views.
-
-    public static void copyStarred() {
-
-        // check if entry is already in starred database
-        DatabaseAdapterStarred myDbHelperStars = new DatabaseAdapterStarred(HackerTrackerApplication.getAppContext());
-        DatabaseAdapterVendors myDbHelper = new DatabaseAdapterVendors(HackerTrackerApplication.getAppContext());
-
-        SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
-        SQLiteDatabase dbDefault = myDbHelper.getWritableDatabase();
-
-        Cursor myCursor = dbStars.rawQuery("SELECT * FROM data", null);
-        try{
-            if (myCursor.moveToFirst()){
-                do{
-                    dbDefault.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + myCursor.getInt(myCursor.getColumnIndex("id")));
-
-                }while(myCursor.moveToNext());
-            }
-        }finally{
-            myCursor.close();
-        }
-        dbStars.close();
-        dbDefault.close();
-
-    }
-
     public static void updateDatabase(HashMap<String, String> queryValues) {
 
         DatabaseAdapterVendors myDbHelper = new DatabaseAdapterVendors(HackerTrackerApplication.getAppContext());
@@ -210,20 +181,9 @@ public class DatabaseAdapterVendors extends SQLiteOpenHelper {
 
         values.put("id", queryValues.get("id"));
         values.put("title", queryValues.get("title"));
-        values.put("name", queryValues.get("name"));
-        values.put("begin", queryValues.get("begin"));
-        values.put("end", queryValues.get("end"));
-        values.put("date", queryValues.get("date"));
-        values.put("location", queryValues.get("location"));
-        values.put("body", queryValues.get("body"));
-        values.put("type", queryValues.get("type"));
-        values.put("starred", queryValues.get("starred"));
+        values.put("description", queryValues.get("description"));
         values.put("image", queryValues.get("image"));
         values.put("link", queryValues.get("link"));
-        values.put("is_new", queryValues.get("is_new"));
-        values.put("demo", queryValues.get("demo"));
-        values.put("tool", queryValues.get("tool"));
-        values.put("exploit", queryValues.get("exploit"));
 
         dbDefault.insert("data", null, values);
         dbDefault.close();
