@@ -14,9 +14,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.shortstack.hackertracker.R;
+import com.shortstack.hackertracker.Utils.DialogUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -63,7 +65,16 @@ public class MapsFragment extends Fragment {
         // copy pdf files to sdcard
         copyAssets(context);
 
-        // button listener for defcon map
+        // button listeners for defcon map
+
+        ImageView image_dcmap = (ImageView) rootView.findViewById(R.id.crop_dcmap);
+        image_dcmap.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+
+                DialogUtil.darknetDialog(context, getResources().getString(R.string.code01)).show();
+
+            }
+        });
 
         Button button_dcmap = (Button) rootView.findViewById(R.id.button_dcmap);
         button_dcmap.setOnClickListener(new View.OnClickListener() {
