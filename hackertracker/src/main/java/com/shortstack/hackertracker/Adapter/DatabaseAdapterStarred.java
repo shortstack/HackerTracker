@@ -51,10 +51,7 @@ public class DatabaseAdapterStarred extends SQLiteOpenHelper {
 
         boolean dbExist = checkDataBase();
 
-         /* TODO: remove this on next version */
-        copyDataBase();
-
-        /*if(dbExist){
+        if(dbExist){
             //do nothing - database already exist
         }else{
 
@@ -74,7 +71,11 @@ public class DatabaseAdapterStarred extends SQLiteOpenHelper {
                 throw new Error("Error copying database");
 
             }
-        }*/
+        }
+
+        /* TODO: remove this on next version */
+        copyDataBase();
+
 
     }
 

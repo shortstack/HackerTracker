@@ -55,9 +55,6 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
         boolean dbExist = checkDataBase();
 
-        /* TODO: remove this on next version */
-        copyDataBase();
-        /*
         if (!dbExist) {
 
             //By calling this method and empty database will be created into the default system path
@@ -76,7 +73,10 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
                 throw new Error("Error copying database");
 
             }
-        }*/
+        }
+
+        /* TODO: remove this on next version */
+        copyDataBase();
 
         this.close();
 
