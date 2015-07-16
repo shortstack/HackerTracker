@@ -73,10 +73,6 @@ public class DatabaseAdapterStarred extends SQLiteOpenHelper {
             }
         }
 
-        /* TODO: remove this on next version */
-        copyDataBase();
-
-
     }
 
     /**

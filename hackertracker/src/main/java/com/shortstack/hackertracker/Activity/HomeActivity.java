@@ -200,7 +200,8 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
             DialogUtil.clearScheduleDialog(this).show();
             return true;
         } else if (id == R.id.action_sync) {
-            DialogUtil.syncSpeakersDialog(this).show();
+            Toast.makeText(context,"Sync will be available the Wednesday before DEF CON! :)",Toast.LENGTH_SHORT).show();
+            //DialogUtil.syncSpeakersDialog(this).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
