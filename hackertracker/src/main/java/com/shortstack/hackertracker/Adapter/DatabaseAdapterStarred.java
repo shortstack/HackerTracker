@@ -25,7 +25,7 @@ public class DatabaseAdapterStarred extends SQLiteOpenHelper {
 
     private static String DB_NAME = "starred.sqlite";
 
-    private static int DB_VERSION = 40;
+    private static int DB_VERSION = 41;
 
     private SQLiteDatabase myDataBase;
 
@@ -51,7 +51,10 @@ public class DatabaseAdapterStarred extends SQLiteOpenHelper {
 
         boolean dbExist = checkDataBase();
 
-        if(dbExist){
+         /* TODO: remove this on next version */
+        copyDataBase();
+
+        /*if(dbExist){
             //do nothing - database already exist
         }else{
 
@@ -71,7 +74,7 @@ public class DatabaseAdapterStarred extends SQLiteOpenHelper {
                 throw new Error("Error copying database");
 
             }
-        }
+        }*/
 
     }
 
