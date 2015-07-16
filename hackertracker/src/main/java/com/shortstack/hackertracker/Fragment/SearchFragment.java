@@ -141,30 +141,20 @@ public class SearchFragment extends Fragment {
         }
 
         SQLiteDatabase dbOfficial = HackerTrackerApplication.dbHelper.getWritableDatabase();
-        SQLiteDatabase db = HackerTrackerApplication.vendorDbHelper.getWritableDatabase();
 
         Cursor titleOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
         Cursor bodyOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (description LIKE ?) AND type NOT LIKE 'Vendor'", new String[] {"%"+string+"%"});
         Cursor nameOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (who LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
         Cursor locationOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (location LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
-        Cursor title = db.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
-        Cursor body = db.rawQuery("SELECT * FROM data WHERE (description LIKE ?) AND type NOT LIKE 'Vendor'", new String[] {"%"+string+"%"});
-        Cursor name = db.rawQuery("SELECT * FROM data WHERE (who LIKE ?) AND type NOT LIKE 'Vendor'", new String[] {"%"+string+"%"});
-        Cursor location = db.rawQuery("SELECT * FROM data WHERE (location LIKE ?) AND type NOT LIKE 'Vendor'", new String[] {"%"+string+"%"});
 
         // get search results from each query
         getResults(titleOfficial);
         getResults(bodyOfficial);
         getResults(nameOfficial);
         getResults(locationOfficial);
-        getResults(title);
-        getResults(body);
-        getResults(name);
-        getResults(location);
 
         // close database
         dbOfficial.close();
-        db.close();
 
         // sort by start time
         Collections.sort(result, new ItemComparator());
