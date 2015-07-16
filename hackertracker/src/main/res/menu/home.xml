@@ -6,7 +6,7 @@
         android:title="@string/search"
         android:icon="@drawable/search"
         app:showAsAction="ifRoom" />
-   <item android:id="@+id/action_share"
+    <item android:id="@+id/action_share"
         android:title="@string/action_share"
         android:icon="@drawable/icon_share"
         app:showAsAction="never" />
@@ -17,5 +17,6 @@
     <item android:id="@+id/action_sync"
         android:title="@string/check_for_updates"
         android:icon="@android:drawable/ic_menu_send"
-        app:showAsAction="never" />
+        app:showAsAction="never"
+        android:enabled="false"/>
 </menu>

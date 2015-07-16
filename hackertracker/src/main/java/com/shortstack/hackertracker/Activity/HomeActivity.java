@@ -110,8 +110,8 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 .addToBackStack("HomeFragment")
                 .commit();
 
-        // export database
-        exportDB();
+        // export database (using to backup official database instead of having to manually import)
+        //exportDB();
     }
 
     @Override
