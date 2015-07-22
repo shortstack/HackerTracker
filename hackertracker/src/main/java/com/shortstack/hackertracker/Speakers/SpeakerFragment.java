@@ -10,8 +10,8 @@ import android.widget.ListView;
 
 import com.shortstack.hackertracker.Adapter.DefaultAdapter;
 import com.shortstack.hackertracker.Api.ApiException;
-import com.shortstack.hackertracker.Api.Impl.SpeakerServiceImpl;
-import com.shortstack.hackertracker.Api.SpeakerService;
+import com.shortstack.hackertracker.Api.Impl.ApiServiceImpl;
+import com.shortstack.hackertracker.Api.ApiService;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
@@ -32,7 +32,7 @@ public class SpeakerFragment extends HackerTrackerFragment {
     private View rootView;
     private DefaultAdapter adapter;
     private ListView list;
-    private SpeakerService speakerService;
+    private ApiService apiService;
     private static int date;
     private Context context;
     private int mPage;
@@ -78,7 +78,7 @@ public class SpeakerFragment extends HackerTrackerFragment {
         date = mDate+1;
 
         list = (ListView) rootView.findViewById(R.id.list_speakers);
-        speakerService = new SpeakerServiceImpl();
+        apiService = new ApiServiceImpl();
 
         // get speakers from database
         List<Default> speakers = getItemByDate(HackerTrackerFragment.getDate(date), Constants.TYPE_SPEAKER);
@@ -96,7 +96,7 @@ public class SpeakerFragment extends HackerTrackerFragment {
     protected void fillSpeakerList() {
 
         try {
-            speakerService.getAllSpeakers(context, new GetSpeakersListener());
+            apiService.getAllSpeakers(context, new GetSpeakersListener());
         } catch (ApiException e) {
             e.printStackTrace();
         }

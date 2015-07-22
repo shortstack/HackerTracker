@@ -9,8 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 
 import com.shortstack.hackertracker.Adapter.DefaultAdapter;
-import com.shortstack.hackertracker.Api.ContestService;
-import com.shortstack.hackertracker.Api.Impl.ContestServiceImpl;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
 import com.shortstack.hackertracker.Model.Default;
@@ -25,7 +23,6 @@ public class ContestFragment extends HackerTrackerFragment {
     private View rootView;
     private DefaultAdapter adapter;
     private ListView list;
-    private ContestService contestService;
     private static int date;
     private Context context;
     private int mPage;
@@ -70,7 +67,6 @@ public class ContestFragment extends HackerTrackerFragment {
         date = mDate+1;
 
         list = (ListView) rootView.findViewById(R.id.list_contests);
-        contestService = new ContestServiceImpl();
 
         // get contests
         List<Default> contests = getItemByDate(HackerTrackerFragment.getDate(date), Constants.TYPE_CONTEST);

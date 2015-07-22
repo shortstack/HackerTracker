@@ -8,6 +8,8 @@ public interface Constants {
     //String API_URL = "http://short-stack.net/api";
     String API_URL = "http://dcib.melloman.net";
     String API_ERROR_MESSAGE = "\"errorMessage\":";
+    String OFFICIAL_SCHEDULE = "/schedule-full.json";
+    String FIND_ITEMS = "/schedule-full.json";
 
     String TYPE_SPEAKER = "Official";
     String TYPE_CONTEST = "Contest";

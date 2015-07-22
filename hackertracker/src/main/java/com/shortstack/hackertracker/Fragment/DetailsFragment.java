@@ -94,7 +94,6 @@ public class DetailsFragment extends DialogFragment {
         TextView locationText = (TextView) rootView.findViewById(R.id.where);
         TextView forumText = (TextView) rootView.findViewById(R.id.link);
         TextView bodyText = (TextView) rootView.findViewById(R.id.description);
-        LinearLayout whenLayout = (LinearLayout) rootView.findViewById(R.id.when_holder);
         LinearLayout whereLayout = (LinearLayout) rootView.findViewById(R.id.where_holder);
         ImageView demo = (ImageView) rootView.findViewById(R.id.demo);
         ImageView exploit = (ImageView) rootView.findViewById(R.id.exploit);

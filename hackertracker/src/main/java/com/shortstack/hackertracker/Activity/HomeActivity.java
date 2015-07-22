@@ -479,9 +479,8 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
     }
 
-    //exporting database
+    // export sqlite database to SD card
     private void exportDB() {
-        // TODO Auto-generated method stub
 
         try {
             File sd = Environment.getExternalStorageDirectory();

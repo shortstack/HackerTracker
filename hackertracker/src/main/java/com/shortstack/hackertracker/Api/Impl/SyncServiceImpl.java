@@ -5,6 +5,7 @@ import android.content.Context;
 import com.shortstack.hackertracker.Api.ApiException;
 import com.shortstack.hackertracker.Api.ApiHelper;
 import com.shortstack.hackertracker.Api.SyncService;
+import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
 import com.shortstack.hackertracker.Model.OfficialList;
 
@@ -25,7 +26,7 @@ public class SyncServiceImpl implements SyncService {
         Map<String, String> extraHeaderParameters = new HashMap<String, String>();
 
         // try to make call
-        String url = ApiHelper.OFFICIAL_SCHEDULE;
+        String url = Constants.OFFICIAL_SCHEDULE;
         try {
             ApiHelper.get(url, context, OfficialList.class, listener, extraHeaderParameters);
         } catch (Exception e) {

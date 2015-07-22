@@ -7,7 +7,7 @@ import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
 /**
  * Created by Whitney Champion on 5/12/15.
  */
-public interface SpeakerService {
+public interface ApiService {
 
     void findSpeakerById(String speakerId, Context context,
                       AsyncTaskCompleteListener listener) throws ApiException;

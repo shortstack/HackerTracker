@@ -130,15 +130,14 @@
     </style>
     <style name="detailsLayout">
         <item name="android:background">@drawable/black_rounded</item>
-        <item name="android:layout_marginRight">15dp</item>
-        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_marginTop">30dp</item>
+        <item name="android:layout_marginBottom">30dp</item>
     </style>
     <style name="details_body">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">15dp</item>
-        <item name="android:paddingTop">15dp</item>
         <item name="android:textColorLink">@color/light_gray</item>
     </style>
     <style name="details_title">
@@ -259,6 +258,7 @@
         <item name="android:scrollbarThumbVertical">@drawable/scrollbar</item>
         <item name="android:inputType">textMultiLine</item>
         <item name="android:padding">10dp</item>
+        <item name="android:textColorLink">@color/green</item>
     </style>
     <style name="dialog_button">
         <item name="android:layout_width">match_parent</item>
