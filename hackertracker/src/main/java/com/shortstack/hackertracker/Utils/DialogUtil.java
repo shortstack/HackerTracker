@@ -271,23 +271,23 @@ public class DialogUtil {
         return dialog;
     }
 
-    public static DetailsFragment getProfileDialog(Default item) {
-        DetailsFragment profileDialogFragment = DetailsFragment.newInstance(item);
-        return profileDialogFragment;
+    public static DetailsFragment getDetailsDialog(Default item) {
+        DetailsFragment detailsDialogFragment = DetailsFragment.newInstance(item);
+        return detailsDialogFragment;
     }
 
     public static File getOutputMediaFile()
     {
         Context context = HackerTrackerApplication.getAppContext();
 
-        // Checks to see if the External Storage SD card is mounted and has write access.
+        // checks to see if the external storage SD card is mounted and has write access
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
 
-            // Creates a Stream folder in the External Storage SD card
+            // creates a folder in the external storage SD card
             File mediaStorageDir = new File (Environment.getExternalStoragePublicDirectory(
                     Environment.DIRECTORY_DOWNLOADS), context.getString(R.string.app_name));
 
-            // Create the storage directory if it does not exist
+            // create the storage directory if it does not exist
             if (!mediaStorageDir.exists()) {
                 if (!mediaStorageDir.mkdirs()) {
                     Log.d(context.getString(R.string.app_name), context.getString(R.string.directory_fail));

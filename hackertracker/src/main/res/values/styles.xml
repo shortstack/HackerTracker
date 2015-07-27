@@ -129,9 +129,7 @@
         <item name="android:windowExitAnimation">@anim/details_up</item>
     </style>
     <style name="detailsLayout">
-        <item name="android:background">@drawable/black_rounded</item>
-        <item name="android:layout_marginTop">30dp</item>
-        <item name="android:layout_marginBottom">30dp</item>
+        <item name="android:background">@drawable/black_squared</item>
     </style>
     <style name="details_body">
         <item name="android:layout_width">match_parent</item>

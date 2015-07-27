@@ -7,11 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
+import android.view.Gravity;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -66,6 +68,9 @@ public class DetailsFragment extends DialogFragment {
 
         // set animation
         dialog.getWindow().getAttributes().windowAnimations = R.style.detailsAnimation;
+
+        // full width
+        dialog.getWindow().getAttributes().gravity = Gravity.FILL_HORIZONTAL;
 
         return dialog;
     }

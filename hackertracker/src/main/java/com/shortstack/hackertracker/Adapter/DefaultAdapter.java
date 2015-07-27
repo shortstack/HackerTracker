@@ -160,7 +160,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
         public void onClick(View v) {
 
             // open DetailsFragment
-            DetailsFragment detailsFragment = DialogUtil.getProfileDialog(item);
+            DetailsFragment detailsFragment = DialogUtil.getDetailsDialog(item);
             detailsFragment.show(HomeActivity.fragmentManager, "detailsFragment");
         }
     }
