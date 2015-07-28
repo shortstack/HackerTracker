@@ -80,9 +80,6 @@ public class MapsFragment extends Fragment {
         button_dcmap.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
 
-                Toast.makeText(context,"CON MAP WILL BE AVAILABLE SHORTLY :)",Toast.LENGTH_SHORT).show();
-
-                /*
                 File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +"/map_defcon.pdf");
                 Intent target = new Intent(Intent.ACTION_VIEW);
                 target.setDataAndType(Uri.fromFile(file),"application/pdf");
@@ -93,7 +90,7 @@ public class MapsFragment extends Fragment {
                     startActivity(intent);
                 } catch (ActivityNotFoundException e) {
                     Toast.makeText(context,"No PDF reader found",Toast.LENGTH_SHORT).show();
-                }*/
+                }
 
             }
         });
