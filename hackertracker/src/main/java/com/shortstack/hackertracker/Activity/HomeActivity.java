@@ -311,14 +311,12 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
     public static void clearSchedule(Context context) {
         SQLiteDatabase dbStars = HackerTrackerApplication.myDbHelperStars.getWritableDatabase();
-        SQLiteDatabase dbOfficial = HackerTrackerApplication.dbHelper.getWritableDatabase();
-        SQLiteDatabase db = HackerTrackerApplication.vendorDbHelper.getWritableDatabase();
+        SQLiteDatabase db = HackerTrackerApplication.dbHelper.getWritableDatabase();
 
         // delete all data in starred database
         dbStars.execSQL("DELETE FROM data");
 
         // update all data in main database to not be starred
-        dbOfficial.execSQL("UPDATE data SET starred=0");
         db.execSQL("UPDATE data SET starred=0");
 
         // reload screen
@@ -328,7 +326,6 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         Toast.makeText(context, R.string.schedule_cleared, Toast.LENGTH_SHORT).show();
 
         // close database
-        dbOfficial.close();
         db.close();
         dbStars.close();
     }
