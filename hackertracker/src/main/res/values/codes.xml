@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="darknet" type="string">DarkNet Challenge</item>
+    <item name="darknet_url" type="string">https://dcdark.net</item>
+    <item name="code01" type="string">4c0cc4bbd533bd1479ca0a0858b42d24</item>
+    <item name="code02" type="string">דָּוִיד</item>
+</resources>

@@ -90,8 +90,7 @@ public class SchedulePagerFragment extends Fragment {
     }
 
     public static Boolean backupDatabaseCSV() {
-        SQLiteDatabase dbOfficial = HackerTrackerApplication.dbHelper.getReadableDatabase();
-        SQLiteDatabase db = HackerTrackerApplication.vendorDbHelper.getReadableDatabase();
+        SQLiteDatabase db = HackerTrackerApplication.dbHelper.getReadableDatabase();
 
         Log.d("CSV", "backupDatabaseCSV");
         Boolean returnCode = false;
@@ -111,28 +110,9 @@ public class SchedulePagerFragment extends Fragment {
             File outFile = DialogUtil.getOutputMediaFile();
             FileWriter fileWriter = new FileWriter(outFile);
             BufferedWriter out = new BufferedWriter(fileWriter);
-            Cursor cursorOfficial = dbOfficial.rawQuery("SELECT title,who,begin,end,date,location FROM data WHERE starred=1", null);
             Cursor cursor = db.rawQuery("SELECT title,who,begin,end,date,location FROM data WHERE starred=1", null);
-            if (cursorOfficial != null) {
-                out.write(csvHeader);
-                while (cursorOfficial.moveToNext()) {
-                    csvValues = "\""+cursorOfficial.getString(0).replace(",","")+"\",";
-                    if (cursorOfficial.getString(1)!=null)
-                        csvValues += cursorOfficial.getString(1).replace(",",";")+",";
-                    else
-                        csvValues += ",";
-                    csvValues += cursorOfficial.getString(2)+",";
-                    csvValues += cursorOfficial.getString(3)+",";
-                    csvValues += cursorOfficial.getString(4)+",";
-                    csvValues += cursorOfficial.getString(5)+",\n";
-                    out.write(csvValues.replace("null",""));
-                }
-                cursorOfficial.close();
-            }
             if (cursor != null) {
-                if (!outFile.exists()) {
-                    out.write(csvHeader);
-                }
+                out.write(csvHeader);
                 while (cursor.moveToNext()) {
                     csvValues = "\""+cursor.getString(0).replace(",","")+"\",";
                     if (cursor.getString(1)!=null)
@@ -154,7 +134,6 @@ public class SchedulePagerFragment extends Fragment {
             Log.d("CSV", "IOException: " + e.getMessage());
         }
         db.close();
-        dbOfficial.close();
         return returnCode;
     }
 

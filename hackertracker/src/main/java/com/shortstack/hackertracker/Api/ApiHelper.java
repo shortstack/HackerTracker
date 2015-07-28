@@ -472,17 +472,6 @@ public class ApiHelper {
 
     private static void setHttpRequestEntity(HttpEntityEnclosingRequestBase httpRequest, File file) {
         if(file!=null) {
-//            MultipartEntityBuilder entity = MultipartEntityBuilder.create();
-//            entity.setMode(HttpMultipartMode.BROWSER_COMPATIBLE);
-//            entity.setStrictMode();
-//            FileBody fileBody = new FileBody(file, ContentType.create("image/png"));
-//            entity.addPart("picture", fileBody);
-//            httpRequest.setHeader("Content-Type", "multipart/form-data; boundary=Boundary+0xAbCdEfGbOuNdArY");
-//            //httpRequest.setHeader("Content-Length", "75112");
-////            httpRequest.setHe   ader("Content-Type", "multipart/form-data");
-//            httpRequest.setHeader("Accept", "*/*");
-////            entity.setBoundary("boundary=Boundary+0xAbCdEfGbOuNdArY");
-//            httpRequest.setEntity(entity.build());
             httpRequest.setEntity(new FileEntity(new File(file.getAbsolutePath()), "binary/octet-stream"));
         }
     }

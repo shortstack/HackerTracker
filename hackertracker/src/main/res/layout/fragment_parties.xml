@@ -8,6 +8,13 @@
             android:layout_height="fill_parent"
             android:orientation="vertical">
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/empty_list"
+            android:visibility="gone"
+            android:text="@string/empty"
+            style="@style/dialog_text"/>
         <ListView android:id="@+id/list_parties"
             style="@style/list"/>
 
