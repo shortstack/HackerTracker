@@ -11,8 +11,6 @@ import android.widget.TextView;
 
 import com.shortstack.hackertracker.Adapter.DefaultAdapter;
 import com.shortstack.hackertracker.Api.ApiException;
-import com.shortstack.hackertracker.Api.Impl.ApiServiceImpl;
-import com.shortstack.hackertracker.Api.ApiService;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
@@ -33,7 +31,6 @@ public class SpeakerFragment extends HackerTrackerFragment {
     private View rootView;
     private DefaultAdapter adapter;
     private ListView list;
-    private ApiService apiService;
     private static int date;
     private Context context;
     private int mPage;
@@ -79,7 +76,6 @@ public class SpeakerFragment extends HackerTrackerFragment {
         date = mDate+1;
 
         list = (ListView) rootView.findViewById(R.id.list_speakers);
-        apiService = new ApiServiceImpl();
 
         // get speakers from database
         List<Default> speakers = getItemByDate(HackerTrackerFragment.getDate(date), Constants.TYPE_SPEAKER);
@@ -96,44 +92,6 @@ public class SpeakerFragment extends HackerTrackerFragment {
         }
 
         return rootView;
-    }
-
-    protected void fillSpeakerList() {
-
-        try {
-            apiService.getAllSpeakers(context, new GetSpeakersListener());
-        } catch (ApiException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private class GetSpeakersListener implements AsyncTaskCompleteListener<ApiBase> {
-
-        @Override
-        public void onTaskComplete(ApiBase result) {
-
-            // get speakers
-            OfficialList speakers;
-            try {
-                speakers = (OfficialList) ApiResponseUtil.parseResponse(result, OfficialList.class);
-            } catch (ApiException e) {
-                return;
-            }
-
-            List<Default> speakersArray = new ArrayList(Arrays.asList(speakers.getAll()));
-
-            // populate adapter and attached it to the list view
-            adapter = new DefaultAdapter(context, R.layout.row, speakersArray);
-
-            if (speakersArray.size()!=0) {
-                list.setAdapter(adapter);
-                adapter.notifyDataSetChanged();
-            } else {
-                // no results found
-            }
-        }
-
     }
 
 }
