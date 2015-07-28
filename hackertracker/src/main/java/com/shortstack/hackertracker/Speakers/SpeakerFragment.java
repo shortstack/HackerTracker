@@ -10,18 +10,11 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.shortstack.hackertracker.Adapter.DefaultAdapter;
-import com.shortstack.hackertracker.Api.ApiException;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
-import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
-import com.shortstack.hackertracker.Model.ApiBase;
 import com.shortstack.hackertracker.Model.Default;
-import com.shortstack.hackertracker.Model.OfficialList;
 import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Utils.ApiResponseUtil;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class SpeakerFragment extends HackerTrackerFragment {

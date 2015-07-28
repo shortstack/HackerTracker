@@ -3,9 +3,9 @@ package com.shortstack.hackertracker.Application;
 import android.app.Application;
 import android.content.Context;
 
-import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterStarred;
+import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 
 import java.io.IOException;

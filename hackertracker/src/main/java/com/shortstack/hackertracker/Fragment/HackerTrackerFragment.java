@@ -11,8 +11,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
 import com.shortstack.hackertracker.Activity.HomeActivity;
-import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
+import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Contest;

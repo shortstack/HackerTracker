@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.shortstack.hackertracker.Adapter.UpdateAdapter;
 import com.shortstack.hackertracker.R;
@@ -75,7 +74,7 @@ public class HomeFragment extends Fragment {
         {
             clicks += 1;
             if (clicks == 3) {
-                DialogUtil.darknetDialog(context,getResources().getString(R.string.code02)).show();
+                DialogUtil.darknetDialog(context, getResources().getString(R.string.code02)).show();
             }
         }
 
