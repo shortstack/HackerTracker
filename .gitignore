@@ -1,0 +1,14 @@
+/local.properties
+
+*.iml
+/.idea
+
+.gradle
+/build
+
+Thumbs.db
+.DS_Store
+
+bin/
+gen/
+
