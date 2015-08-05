@@ -2,6 +2,11 @@
 <resources>
     <item name="darknet" type="string">DarkNet Challenge</item>
     <item name="darknet_url" type="string">https://dcdark.net</item>
+    <item name="message01" type="string">It\'s dark in here!</item>
+    <item name="message02" type="string">Stop poking me!</item>
+    <item name="message03" type="string">What do you expect to find here?</item>
+    <item name="message04" type="string">THIS DOES NOTHING</item>
+    <item name="message05" type="string">I see you...</item>
     <item name="code01" type="string">4c0cc4bbd533bd1479ca0a0858b42d24</item>
     <item name="code02" type="string">דָּוִיד</item>
 </resources>

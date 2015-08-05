@@ -3,12 +3,14 @@ package com.shortstack.hackertracker.Fragment;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.shortstack.hackertracker.Adapter.UpdateAdapter;
 import com.shortstack.hackertracker.R;
@@ -44,6 +46,7 @@ public class HomeFragment extends Fragment {
         try {
             rootView = inflater.inflate(R.layout.fragment_home, container, false);
         } catch (InflateException e) {
+            Log.e("HomeFragment", e.getMessage());
         }
 
         // get context
@@ -73,10 +76,16 @@ public class HomeFragment extends Fragment {
         public void onClick(View v)
         {
             clicks += 1;
-            if (clicks == 3) {
+            if (clicks == 1) {
+                Toast.makeText(context,getString(R.string.message01),Toast.LENGTH_SHORT).show();
+            } else if (clicks == 2) {
+                Toast.makeText(context,getString(R.string.message02),Toast.LENGTH_SHORT).show();
+            } else if (clicks == 3) {
+                Toast.makeText(context,getString(R.string.message03), Toast.LENGTH_SHORT).show();
+            } else if (clicks == 4) {
                 DialogUtil.darknetDialog(context, getResources().getString(R.string.code02)).show();
             }
         }
 
-    };
+    }
 }

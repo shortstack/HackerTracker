@@ -36,6 +36,21 @@ public interface Constants {
     String DAY_3 = "Saturday";
     String DAY_4 = "Sunday";
 
+    String FRAGMENT_SCHEDULE = "SchedulePagerFragment";
+    String FRAGMENT_SPEAKERS = "SpeakerPagerFragment";
+    String FRAGMENT_CONTESTS = "ContestPagerFragment";
+    String FRAGMENT_EVENTS = "EventPagerFragment";
+    String FRAGMENT_PARTIES = "PartyPagerFragment";
+    String FRAGMENT_KIDS = "KidsPagerFragment";
+    String FRAGMENT_SKYTALKS = "SkytalksPagerFragment";
+    String FRAGMENT_VENDORS = "VendorsFragment";
+    String FRAGMENT_HOME = "HomeFragment";
+    String FRAGMENT_LINKS = "LinksFragment";
+    String FRAGMENT_MAPS = "MapsFragment";
+    String FRAGMENT_SEARCH = "SearchFragment";
+    String FRAGMENT_SHUTTLE = "ShuttleFragment";
+    String FRAGMENT_FAQ = "FAQFragment";
+
     String[] COLUMN_NAMES = {"Title","Speaker Name","Start Time","End Time","Date","Location"};
 
 }

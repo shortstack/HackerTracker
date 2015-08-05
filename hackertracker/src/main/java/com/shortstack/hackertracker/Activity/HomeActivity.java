@@ -7,10 +7,12 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -26,6 +28,7 @@ import com.shortstack.hackertracker.Api.ApiException;
 import com.shortstack.hackertracker.Api.Impl.SyncServiceImpl;
 import com.shortstack.hackertracker.Api.SyncService;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Contests.ContestPagerFragment;
 import com.shortstack.hackertracker.Events.EventPagerFragment;
 import com.shortstack.hackertracker.Font.HelveticaTextView;
@@ -61,7 +64,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 
-public class HomeActivity extends ActionBarActivity implements FragmentDrawer.FragmentDrawerListener {
+public class HomeActivity extends AppCompatActivity implements FragmentDrawer.FragmentDrawerListener {
 
     public static FragmentManager fragmentManager;
     public static ActionBar actionBar;
@@ -111,7 +114,8 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
                 .commit();
 
         // export database (using to backup official database instead of having to manually import)
-        //exportDB();
+        // TODO: comment this out upon release
+        exportDB();
     }
 
     @Override
@@ -175,33 +179,30 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
+        // inflate context menu
         getMenuInflater().inflate(R.menu.home, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (item.getItemId() == R.id.action_search) {
-            mTitle.setText(getString(R.string.search).toUpperCase());
-            fragmentManager.beginTransaction()
-                    .replace(R.id.container, SearchFragment.newInstance(12))
-                    .addToBackStack("SearchFragment")
-                    .commit();
+            // open search fragment
+            addToBackStack(R.string.search, Constants.FRAGMENT_SEARCH, SearchFragment.newInstance(12));
             return true;
         } else if (id == R.id.action_share) {
+            // show share dialog
             DialogUtil.shareScheduleDialog(this).show();
             return true;
         } else if (id == R.id.action_clear) {
+            // show clear dialog
             DialogUtil.clearScheduleDialog(this).show();
             return true;
         } else if (id == R.id.action_sync) {
-            Toast.makeText(context,"Sync will be available the Wednesday before DEF CON! :)",Toast.LENGTH_SHORT).show();
-            //DialogUtil.syncSpeakersDialog(this).show();
+            // show online sync dialog
+            //Toast.makeText(context,getResources().getString(R.string.sync_availability),Toast.LENGTH_SHORT).show();
+            DialogUtil.syncSpeakersDialog(this).show();
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -221,7 +222,7 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         FAQFragment,
         LinksFragment,
         SchedulePagerFragment,
-        SearchFragment;
+        SearchFragment
     }
 
     @Override
@@ -237,76 +238,54 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         switch (position)
         {
             case 0:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, HomeFragment.newInstance(1))
-                        .addToBackStack("HomeFragment")
-                        .commit();
-                mTitle.setText(getString(R.string.home).toUpperCase());
+                // home
+                addToBackStack(R.string.home, Constants.FRAGMENT_HOME, HomeFragment.newInstance(1));
                 break;
             case 1:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, SpeakerPagerFragment.newInstance(2))
-                        .addToBackStack("SpeakerPagerFragment")
-                        .commit();
-                mTitle.setText(getString(R.string.speakers).toUpperCase());
+                // speakers
+                addToBackStack(R.string.speakers, Constants.FRAGMENT_SPEAKERS, SpeakerPagerFragment.newInstance(2));
                 break;
             case 2:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, SkytalksPagerFragment.newInstance(3))
-                        .addToBackStack("SkytalksPagerFragment")
-                        .commit();
-                mTitle.setText(getString(R.string.skytalks).toUpperCase());
+                // skytalks
+                addToBackStack(R.string.skytalks, Constants.FRAGMENT_SKYTALKS, SkytalksPagerFragment.newInstance(3));
                 break;
             case 3:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, ContestPagerFragment.newInstance(4))
-                        .addToBackStack("ContestPagerFragment")
-                        .commit();
-                mTitle.setText(getString(R.string.contests).toUpperCase());
+                // contests
+                addToBackStack(R.string.contests, Constants.FRAGMENT_CONTESTS, ContestPagerFragment.newInstance(4));
                 break;
             case 4:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, EventPagerFragment.newInstance(5))
-                        .addToBackStack("EventPagerFragment")
-                        .commit();
-                mTitle.setText(getString(R.string.events).toUpperCase());
+                // events
+                addToBackStack(R.string.events, Constants.FRAGMENT_EVENTS, EventPagerFragment.newInstance(5));
                 break;
             case 5:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, PartyPagerFragment.newInstance(6))
-                        .addToBackStack("PartyPagerFragment")
-                        .commit();
-                mTitle.setText(getString(R.string.parties).toUpperCase());
+                // parties
+                addToBackStack(R.string.parties, Constants.FRAGMENT_PARTIES, PartyPagerFragment.newInstance(6));
                 break;
             case 6:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, KidsPagerFragment.newInstance(7))
-                        .addToBackStack("KidsPagerFragment")
-                        .commit();
-                mTitle.setText(getString(R.string.kids).toUpperCase());
+                // kids
+                addToBackStack(R.string.kids, Constants.FRAGMENT_KIDS, KidsPagerFragment.newInstance(7));
                 break;
             case 7:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, VendorsFragment.newInstance(8))
-                        .addToBackStack("VendorsFragment")
-                        .commit();
-                mTitle.setText(getString(R.string.vendors).toUpperCase());
+                // vendors
+                addToBackStack(R.string.vendors, Constants.FRAGMENT_VENDORS, VendorsFragment.newInstance(8));
                 break;
             case 8:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, MapsFragment.newInstance(9))
-                        .addToBackStack("MapsFragment")
-                        .commit();
-                mTitle.setText(getString(R.string.maps).toUpperCase());
+                // maps
+                addToBackStack(R.string.maps, Constants.FRAGMENT_MAPS, MapsFragment.newInstance(9));
                 break;
             case 9:
-                fragmentManager.beginTransaction()
-                        .replace(R.id.container, FAQFragment.newInstance(10))
-                        .addToBackStack("FAQFragment")
-                        .commit();
-                mTitle.setText(getString(R.string.faq).toUpperCase());
+                // faq
+                addToBackStack(R.string.faq, Constants.FRAGMENT_FAQ, FAQFragment.newInstance(10));
                 break;
         }
+    }
+
+    private void addToBackStack(int title, String name, Fragment fragment) {
+        fragmentManager.beginTransaction()
+                .replace(R.id.container, fragment)
+                .addToBackStack(name)
+                .commit();
+        mTitle.setText(getString(title).toUpperCase());
     }
 
     public static void clearSchedule(Context context) {
@@ -319,8 +298,8 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
         // update all data in main database to not be starred
         db.execSQL("UPDATE data SET starred=0");
 
-        // reload screen
-        HomeActivity.refreshSchedule();
+        // reload schedule
+        refreshSchedule();
 
         // show cleared message
         Toast.makeText(context, R.string.schedule_cleared, Toast.LENGTH_SHORT).show();
@@ -331,10 +310,13 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
     }
 
     public static void refreshSchedule() {
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, SchedulePagerFragment.newInstance(9))
-                .addToBackStack("SchedulePagerFragment")
-                .commit();
+        // if on schedule screen, reload fragment
+        if (fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getName().equals(Constants.FRAGMENT_SCHEDULE)) {
+            fragmentManager.beginTransaction()
+                    .replace(R.id.container, SchedulePagerFragment.newInstance(11))
+                    .addToBackStack(Constants.FRAGMENT_SCHEDULE)
+                    .commit();
+        }
     }
 
     public static void syncSchedule(Context context) {
@@ -372,6 +354,11 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
             try {
                 schedule = (OfficialList) ApiResponseUtil.parseResponse(result, OfficialList.class);
             } catch (ApiException e) {
+
+                // dismiss checking dialog
+                updateCheckDialog.dismiss();
+
+                // show API error message
                 AlertDialog dialog = DialogUtil.apiErrorDialog(context);
                 dialog.show();
                 return;
@@ -404,12 +391,18 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
                     if (lastUpdatedDevice==null || lastUpdatedDevice.compareTo(lastUpdatedOnline) < 0) {
 
+                        // dismiss checking dialog
                         updateCheckDialog.dismiss();
+
+                        // update schedule
                         DialogUtil.updateDialog(schedule, update, context).show();
 
                     } else { // else, don't update
 
+                        // dismiss checking dialog
                         updateCheckDialog.dismiss();
+
+                        // schedule already up to date
                         Toast.makeText(context,R.string.up_to_date,Toast.LENGTH_SHORT).show();
 
                     }
@@ -448,10 +441,10 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
             for (int i = 0; i < arr.size(); i++) {
 
                 // Get JSON object
-                JsonObject obj = (JsonObject) arr.get(i).getAsJsonObject();
+                JsonObject obj = arr.get(i).getAsJsonObject();
 
                 // DB QueryValues Object to insert into SQLite
-                queryValues = new HashMap<String, String>();
+                queryValues = new HashMap<>();
 
                 // Add userID extracted from Object
                 queryValues.put("id", obj.get("id").getAsString());
@@ -481,10 +474,9 @@ public class HomeActivity extends ActionBarActivity implements FragmentDrawer.Fr
 
         try {
             File sd = Environment.getExternalStorageDirectory();
-            File data = Environment.getDataDirectory();
 
             if (sd.canWrite()) {
-                String  currentDBPath= "/data/data/com.shortstack.hackertracker/databases/hackertracker.sqlite";
+                String currentDBPath= "/data/data/com.shortstack.hackertracker/databases/hackertracker.sqlite";
                 String backupDBPath  = Environment.getExternalStorageDirectory().getAbsolutePath() + "/hackertracker.sqlite";
                 File currentDB = new File(currentDBPath);
                 File backupDB = new File(backupDBPath);

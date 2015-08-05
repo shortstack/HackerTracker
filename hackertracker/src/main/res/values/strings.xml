@@ -59,6 +59,7 @@
     <string name="checking_for_updates">Checking for schedule updates...</string>
     <string name="syncing">Syncing database with updates...</string>
     <string name="schedule_finished">Schedule sync complete</string>
+    <string name="sync_availability">Sync will be available the Wednesday before DEF CON! :)</string>
     <string name="up_to_date">Your schedule is already up to date! :)</string>
 
     <string name="schedule_cleared">Schedule cleared successfully</string>
@@ -82,6 +83,10 @@
 
     <string name="map_hotel">Hotel Map</string>
     <string name="map_con">Conference Map</string>
+    <string name="map_hotel_name">map_hotel.pdf</string>
+    <string name="map_con_name">map_defcon.pdf</string>
+    <string name="no_pdf_reader">No PDF reader found</string>
+    <string name="open_file">Open File</string>
     <string name="backup_name">dc23_schedule.csv</string>
     <string name="backup">Schedule saved in Downloads as "dc23_schedule.csv"</string>
 

@@ -25,23 +25,14 @@ import java.util.Locale;
  */
 public class DatabaseAdapter extends SQLiteOpenHelper {
 
-    //The Android's default system path of your application database.
     private static String DB_PATH = "/data/data/com.shortstack.hackertracker/databases/";
-
     private static String DB_NAME = "hackertracker.sqlite";
-
-    private static int DB_VERSION = 206;
+    private static int DB_VERSION = 208;
 
     private SQLiteDatabase myDataBase;
 
     private final Context myContext;
 
-
-    /**
-     * Constructor
-     * Takes and keeps a reference of the passed context in order to access to the application assets and resources.
-     * @param context
-     */
     public DatabaseAdapter(Context context) {
 
         super(context, DB_NAME, null, DB_VERSION);
@@ -49,7 +40,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Creates a empty database on the system and rewrites it with your own database.
+     * creates sqlite database
      * */
     public void createDataBase() throws IOException{
 
@@ -57,8 +48,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
         if (!dbExist) {
 
-            //By calling this method and empty database will be created into the default system path
-            //of your application so we are gonna be able to overwrite that database with our database.
+            // create database
             SQLiteDatabase db = this.getWritableDatabase();
             db.setLocale(Locale.getDefault());
             db.setLockingEnabled(true);
@@ -75,16 +65,15 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
             }
         }
 
-        /* TODO: remove this on next version */
-        copyDataBase();
+        // TODO: remove this on next version
+        //copyDataBase();
 
         this.close();
 
     }
 
     /**
-     * Check if the database already exist to avoid re-copying the file each time you open the application.
-     * @return true if it exists, false if it doesn't
+     * check if database exists
      */
     private boolean checkDataBase(){
 
@@ -113,29 +102,27 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
     }
 
     /**
-     * Copies your database from your local assets-folder to the just created empty database in the
-     * system folder, from where it can be accessed and handled.
-     * This is done by transfering bytestream.
+     * copy database from assets to device
      * */
     private void copyDataBase() throws IOException{
 
-        //Open your local db as the input stream
+        // get db from assets
         InputStream myInput = myContext.getAssets().open(DB_NAME);
 
-        // Path to the just created empty db
+        // path of db to create
         String outFileName = DB_PATH + DB_NAME;
 
-        //Open the empty db as the output stream
+        // initialize output stream
         OutputStream myOutput = new FileOutputStream(outFileName);
 
-        //transfer bytes from the inputfile to the outputfile
+        // transfer bytes from the inputfile to the outputfile
         byte[] buffer = new byte[1024];
         int length;
         while ((length = myInput.read(buffer))>0){
             myOutput.write(buffer, 0, length);
         }
 
-        //Close the streams
+        // close the streams
         myOutput.flush();
         myOutput.close();
         myInput.close();
@@ -144,7 +131,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     public void openDataBase() throws SQLException{
 
-        //Open the database
+        // open the database
         String myPath = DB_PATH + DB_NAME;
         myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
 
@@ -170,13 +157,10 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
         try {
             copyDataBase();
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
     }
 
-    // Add your public helper methods to access and get content from the database.
-    // You could return cursors by doing "return myDataBase.query(....)" so it'd be easy
-    // to you to create adapters for your views.
 
     public static void copyStarred() {
 
@@ -208,10 +192,11 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
         DatabaseAdapter myDbHelper = new DatabaseAdapter(HackerTrackerApplication.getAppContext());
 
+        // open database
         SQLiteDatabase dbDefault = myDbHelper.getWritableDatabase();
 
+        // create set of all values
         ContentValues values = new ContentValues();
-
         values.put("id", queryValues.get("id"));
         values.put("title", queryValues.get("title"));
         values.put("who", queryValues.get("who"));
@@ -232,9 +217,14 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
             values.put("starred", c.getString(0));
         else
             values.put("starred", "0");
+
+        // close cursor
         c.close();
 
+        // insert new record or replace if already exists
         dbDefault.insertWithOnConflict("data", null, values, SQLiteDatabase.CONFLICT_REPLACE);
+
+        // close database
         dbDefault.close();
 
     }

@@ -57,6 +57,7 @@ public class MapsFragment extends Fragment {
         try {
             rootView = inflater.inflate(R.layout.fragment_maps, container, false);
         } catch (InflateException e) {
+            Log.e("MapsFragment",e.getMessage());
         }
 
         // get context
@@ -66,85 +67,91 @@ public class MapsFragment extends Fragment {
         copyAssets(context);
 
         // button listeners for defcon map
-
         ImageView image_dcmap = (ImageView) rootView.findViewById(R.id.crop_dcmap);
-        image_dcmap.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                DialogUtil.darknetDialog(context, getResources().getString(R.string.code01)).show();
-
-            }
-        });
-
+        image_dcmap.setOnClickListener(new MapOnClickListener());
         Button button_dcmap = (Button) rootView.findViewById(R.id.button_dcmap);
-        button_dcmap.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
+        button_dcmap.setOnClickListener(new MapButtonOnClickListener(getString(R.string.map_con_name)));
 
-                File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() +"/map_defcon.pdf");
-                Intent target = new Intent(Intent.ACTION_VIEW);
-                target.setDataAndType(Uri.fromFile(file),"application/pdf");
-                target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-                Intent intent = Intent.createChooser(target, "Open File");
-                try {
-                    startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(context,"No PDF reader found",Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
-
-        // button listener for rio map
-
+        // button listener for hotel map
         Button button_ballysmap = (Button) rootView.findViewById(R.id.button_ballysmap);
-        button_ballysmap.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-
-                File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/map_hotel.pdf");
-                Intent target = new Intent(Intent.ACTION_VIEW);
-                target.setDataAndType(Uri.fromFile(file), "application/pdf");
-                target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-
-                Intent intent = Intent.createChooser(target, "Open File");
-                try {
-                    startActivity(intent);
-                } catch (ActivityNotFoundException e) {
-                    Toast.makeText(context, "No PDF reader found", Toast.LENGTH_SHORT).show();
-                }
-
-            }
-        });
+        button_ballysmap.setOnClickListener(new MapButtonOnClickListener(getString(R.string.map_hotel_name)));
 
         return rootView;
     }
 
+    private class MapOnClickListener implements View.OnClickListener {
+
+        int clicks = 0;
+
+        @Override
+        public void onClick(View v) {
+            clicks += 1;
+            if (clicks == 1) {
+                Toast.makeText(context, getString(R.string.message04), Toast.LENGTH_SHORT).show();
+            } else if (clicks == 2) {
+                Toast.makeText(context, getString(R.string.message05), Toast.LENGTH_SHORT).show();
+            } else if (clicks == 3) {
+                DialogUtil.darknetDialog(context, getResources().getString(R.string.code01)).show();
+            }
+        }
+
+    }
+
+    private class MapButtonOnClickListener implements View.OnClickListener {
+
+        String filename;
+
+        MapButtonOnClickListener(String filename) {
+            this.filename = filename;
+        }
+
+        @Override
+        public void onClick(View v) {
+
+            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename);
+            Intent target = new Intent(Intent.ACTION_VIEW);
+            target.setDataAndType(Uri.fromFile(file),"application/pdf");
+            target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+
+            Intent intent = Intent.createChooser(target, getString(R.string.open_file));
+            try {
+                startActivity(intent);
+            } catch (ActivityNotFoundException e) {
+                Toast.makeText(context,getString(R.string.no_pdf_reader),Toast.LENGTH_SHORT).show();
+            }
+
+        }
+
+    }
+
+    // copies map PDFs to SD card if available
     private void copyAssets(Context context) {
         AssetManager assetManager = context.getAssets();
-        String[] files = null;
+        String[] files;
         try {
             files = assetManager.list("");
+            for(String filename : files) {
+                if (filename.contains("map")) {
+                    InputStream in;
+                    OutputStream out;
+                    try {
+                        in = assetManager.open(filename);
+                        out = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename);
+                        copyFile(in, out);
+                        in.close();
+                        out.flush();
+                        out.close();
+                    } catch (Exception e) {
+                        Log.e("tag", e.getMessage());
+                    }
+                }
+            }
         } catch (IOException e) {
             Log.e("tag", e.getMessage());
         }
-        for(String filename : files) {
-            if (filename.contains("map")) {
-                InputStream in = null;
-                OutputStream out = null;
-                try {
-                    in = assetManager.open(filename);
-                    out = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename);
-                    copyFile(in, out);
-                    in.close();
-                    out.flush();
-                    out.close();
-                } catch (Exception e) {
-                    Log.e("tag", e.getMessage());
-                }
-            }
-        }
     }
 
+    // actually copies file
     private void copyFile(InputStream in, OutputStream out) throws IOException {
         byte[] buffer = new byte[1024];
         int read;

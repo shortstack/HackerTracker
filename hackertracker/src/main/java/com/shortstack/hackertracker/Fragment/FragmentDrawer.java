@@ -30,8 +30,6 @@ import java.util.List;
 
 public class FragmentDrawer extends Fragment {
 
-    private static String TAG = FragmentDrawer.class.getSimpleName();
-
     private RecyclerView recyclerView;
     private ActionBarDrawerToggle mDrawerToggle;
     private DrawerLayout mDrawerLayout;
@@ -97,7 +95,6 @@ public class FragmentDrawer extends Fragment {
         return layout;
     }
 
-
     public void setUp(int fragmentId, DrawerLayout drawerLayout, final Toolbar toolbar) {
         containerView = getActivity().findViewById(fragmentId);
         mDrawerLayout = drawerLayout;
@@ -131,10 +128,9 @@ public class FragmentDrawer extends Fragment {
 
     }
 
-    public static interface ClickListener {
-        public void onClick(View view, int position);
-
-        public void onLongClick(View view, int position);
+    public interface ClickListener {
+        void onClick(View view, int position);
+        void onLongClick(View view, int position);
     }
 
     private class scheduleOnClickListener implements View.OnClickListener {
@@ -152,7 +148,7 @@ public class FragmentDrawer extends Fragment {
 
             // open schedule fragment
             HomeActivity.fragmentManager.beginTransaction()
-                    .replace(R.id.container, SchedulePagerFragment.newInstance(9))
+                    .replace(R.id.container, SchedulePagerFragment.newInstance(11))
                     .addToBackStack("SchedulePagerFragment")
                     .commit();
         }
@@ -198,6 +194,6 @@ public class FragmentDrawer extends Fragment {
     }
 
     public interface FragmentDrawerListener {
-        public void onDrawerItemSelected(View view, int position);
+        void onDrawerItemSelected(View view, int position);
     }
 }
