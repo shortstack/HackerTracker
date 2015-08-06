@@ -187,9 +187,7 @@ public class DetailsFragment extends DialogFragment {
             public void onClick(View v) {
 
                 DatabaseAdapter myDbOfficialHelper = new DatabaseAdapter(context);
-                DatabaseAdapterVendors myDbHelper = new DatabaseAdapterVendors(context);
                 DatabaseAdapterStarred myDbHelperStars = new DatabaseAdapterStarred(context);
-                SQLiteDatabase dbDefaults = myDbHelper.getWritableDatabase();
                 SQLiteDatabase dbOfficial = myDbOfficialHelper.getWritableDatabase();
                 SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
 
@@ -198,16 +196,7 @@ public class DetailsFragment extends DialogFragment {
 
                     // add to starred database
                     dbStars.execSQL("INSERT INTO data VALUES (" + item.getId() + ")");
-
-                    if (item.getType().equals(Constants.TYPE_SPEAKER)
-                            || item.getType().equals(Constants.TYPE_CONTEST)
-                            || item.getType().equals(Constants.TYPE_PARTY)
-                            || item.getType().equals(Constants.TYPE_SKYTALKS)
-                            || item.getType().equals(Constants.TYPE_EVENT)) {
-                        dbOfficial.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + item.getId());
-                    } else {
-                        dbDefaults.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + item.getId());
-                    }
+                    dbOfficial.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + item.getId());
 
                     // change star
                     item.setStarred(1);
@@ -218,16 +207,7 @@ public class DetailsFragment extends DialogFragment {
 
                     // remove from starred database
                     dbStars.delete("data", "id=" + item.getId(), null);
-
-                    if (item.getType().equals(Constants.TYPE_SPEAKER)
-                            || item.getType().equals(Constants.TYPE_CONTEST)
-                            || item.getType().equals(Constants.TYPE_PARTY)
-                            || item.getType().equals(Constants.TYPE_SKYTALKS)
-                            || item.getType().equals(Constants.TYPE_EVENT)) {
-                        dbOfficial.execSQL("UPDATE data SET starred=" + 0 + " WHERE id=" + item.getId());
-                    } else {
-                        dbDefaults.execSQL("UPDATE data SET starred=" + 0 + " WHERE id=" + item.getId());
-                    }
+                    dbOfficial.execSQL("UPDATE data SET starred=" + 0 + " WHERE id=" + item.getId());
 
                     // change star
                     item.setStarred(0);
@@ -235,7 +215,6 @@ public class DetailsFragment extends DialogFragment {
                     Toast.makeText(context,R.string.schedule_removed,Toast.LENGTH_SHORT).show();
                 }
 
-                dbDefaults.close();
                 dbOfficial.close();
                 dbStars.close();
             }
