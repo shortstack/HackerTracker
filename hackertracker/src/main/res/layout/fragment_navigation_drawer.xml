@@ -16,17 +16,6 @@
             android:scaleType="fitCenter"/>
     </LinearLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:layout_below="@id/skull"
-        android:id="@+id/drawerList"
-        android:clickable="true"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
-        android:scrollbars="vertical"
-        android:scrollbarThumbVertical="@drawable/scrollbar"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
     <com.shortstack.hackertracker.Font.HelveticaButton
         android:id="@+id/button_schedule"
         android:layout_width="match_parent"
@@ -38,4 +27,16 @@
         android:background="@drawable/button_states"
         android:textColor="@color/black"
         android:textAllCaps="true"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:layout_below="@id/skull"
+        android:layout_above="@id/button_schedule"
+        android:id="@+id/drawerList"
+        android:clickable="true"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
+        android:scrollbars="vertical"
+        android:scrollbarThumbVertical="@drawable/scrollbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </RelativeLayout>

@@ -27,7 +27,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     private static String DB_PATH = "/data/data/com.shortstack.hackertracker/databases/";
     private static String DB_NAME = "hackertracker.sqlite";
-    private static int DB_VERSION = 208;
+    private static int DB_VERSION = 209;
 
     private SQLiteDatabase myDataBase;
 
@@ -66,7 +66,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
         }
 
         // TODO: remove this on next version
-        //copyDataBase();
+        copyDataBase();
 
         this.close();
 

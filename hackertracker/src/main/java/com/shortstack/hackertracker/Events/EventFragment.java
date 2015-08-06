@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import com.shortstack.hackertracker.Adapter.DefaultAdapter;
 import com.shortstack.hackertracker.Common.Constants;
@@ -77,10 +76,6 @@ public class EventFragment extends HackerTrackerFragment {
 
             list.setAdapter(adapter);
 
-        } else { // if there are no events, show empty message, hide listview
-            TextView empty = (TextView) rootView.findViewById(R.id.empty_list);
-            empty.setVisibility(View.VISIBLE);
-            list.setVisibility(View.GONE);
         }
 
         return rootView;

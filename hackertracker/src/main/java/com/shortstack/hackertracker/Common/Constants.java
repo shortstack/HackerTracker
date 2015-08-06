@@ -5,11 +5,11 @@ package com.shortstack.hackertracker.Common;
  */
 public interface Constants {
 
-    //String API_URL = "http://short-stack.net/api";
-    String API_URL = "http://dcib.melloman.net";
+    String API_URL = "http://short-stack.net/api";
+    //String API_URL = "https://info.defcon.org";
+    //String API_URL = "http://dcib.melloman.net";
     String API_ERROR_MESSAGE = "\"errorMessage\":";
     String OFFICIAL_SCHEDULE = "/schedule-full.json";
-    String FIND_ITEMS = "/schedule-full.json";
 
     String TYPE_SPEAKER = "Official";
     String TYPE_CONTEST = "Contest";
@@ -18,6 +18,8 @@ public interface Constants {
     String TYPE_VENDOR = "Vendor";
     String TYPE_SKYTALKS = "Skytalks";
     String TYPE_MESSAGE = "Message";
+    String TYPE_VILLAGE = "Village";
+    String TYPE_BOOK = "Book-Signing";
     String TYPE_UNOFFICIAL = "Un-Official";
     String TYPE_DCIB = "DCIB";
     String TYPE_STUPID = "Stupid";
@@ -43,6 +45,8 @@ public interface Constants {
     String FRAGMENT_PARTIES = "PartyPagerFragment";
     String FRAGMENT_KIDS = "KidsPagerFragment";
     String FRAGMENT_SKYTALKS = "SkytalksPagerFragment";
+    String FRAGMENT_BOOKS = "BookPagerFragment";
+    String FRAGMENT_VILLAGES = "VillagePagerFragment";
     String FRAGMENT_VENDORS = "VendorsFragment";
     String FRAGMENT_HOME = "HomeFragment";
     String FRAGMENT_LINKS = "LinksFragment";

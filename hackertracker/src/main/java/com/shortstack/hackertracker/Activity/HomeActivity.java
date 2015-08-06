@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -28,6 +27,7 @@ import com.shortstack.hackertracker.Api.ApiException;
 import com.shortstack.hackertracker.Api.Impl.SyncServiceImpl;
 import com.shortstack.hackertracker.Api.SyncService;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Books.BooksPagerFragment;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Contests.ContestPagerFragment;
 import com.shortstack.hackertracker.Events.EventPagerFragment;
@@ -52,6 +52,7 @@ import com.shortstack.hackertracker.Utils.DialogUtil;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 import com.shortstack.hackertracker.Utils.UpdateTask;
 import com.shortstack.hackertracker.Vendors.VendorsFragment;
+import com.shortstack.hackertracker.Villages.VillagePagerFragment;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -115,7 +116,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         // export database (using to backup official database instead of having to manually import)
         // TODO: comment this out upon release
-        exportDB();
+        //exportDB();
     }
 
     @Override
@@ -146,6 +147,12 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     break;
                 case MapsFragment:
                     mTitle.setText(getString(R.string.maps).toUpperCase());
+                    break;
+                case BooksPagerFragment:
+                    mTitle.setText(getString(R.string.books).toUpperCase());
+                    break;
+                case VillagePagerFragment:
+                    mTitle.setText(getString(R.string.villages).toUpperCase());
                     break;
                 case LinksFragment:
                     mTitle.setText(getString(R.string.links).toUpperCase());
@@ -199,12 +206,12 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
             // show clear dialog
             DialogUtil.clearScheduleDialog(this).show();
             return true;
-        } else if (id == R.id.action_sync) {
+        } /*else if (id == R.id.action_sync) {
             // show online sync dialog
             //Toast.makeText(context,getResources().getString(R.string.sync_availability),Toast.LENGTH_SHORT).show();
             DialogUtil.syncSpeakersDialog(this).show();
             return true;
-        }
+        }*/
         return super.onOptionsItemSelected(item);
     }
 
@@ -216,6 +223,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         PartyPagerFragment,
         VendorsFragment,
         MapsFragment,
+        BooksPagerFragment,
+        VillagePagerFragment,
         ShuttleFragment,
         SkytalksPagerFragment,
         KidsPagerFragment,
@@ -262,20 +271,28 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 addToBackStack(R.string.parties, Constants.FRAGMENT_PARTIES, PartyPagerFragment.newInstance(6));
                 break;
             case 6:
-                // kids
-                addToBackStack(R.string.kids, Constants.FRAGMENT_KIDS, KidsPagerFragment.newInstance(7));
+                // villages
+                addToBackStack(R.string.villages, Constants.FRAGMENT_VILLAGES, VillagePagerFragment.newInstance(7));
                 break;
             case 7:
-                // vendors
-                addToBackStack(R.string.vendors, Constants.FRAGMENT_VENDORS, VendorsFragment.newInstance(8));
+                // book signings
+                addToBackStack(R.string.books, Constants.FRAGMENT_BOOKS, BooksPagerFragment.newInstance(8));
                 break;
             case 8:
-                // maps
-                addToBackStack(R.string.maps, Constants.FRAGMENT_MAPS, MapsFragment.newInstance(9));
+                // kids
+                addToBackStack(R.string.kids, Constants.FRAGMENT_KIDS, KidsPagerFragment.newInstance(9));
                 break;
             case 9:
+                // vendors
+                addToBackStack(R.string.vendors, Constants.FRAGMENT_VENDORS, VendorsFragment.newInstance(10));
+                break;
+            case 10:
+                // maps
+                addToBackStack(R.string.maps, Constants.FRAGMENT_MAPS, MapsFragment.newInstance(11));
+                break;
+            case 11:
                 // faq
-                addToBackStack(R.string.faq, Constants.FRAGMENT_FAQ, FAQFragment.newInstance(10));
+                addToBackStack(R.string.faq, Constants.FRAGMENT_FAQ, FAQFragment.newInstance(12));
                 break;
         }
     }

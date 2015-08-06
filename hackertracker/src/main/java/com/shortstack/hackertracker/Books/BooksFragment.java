@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Parties;
+package com.shortstack.hackertracker.Books;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -16,7 +16,7 @@ import com.shortstack.hackertracker.R;
 
 import java.util.List;
 
-public class PartyFragment extends HackerTrackerFragment {
+public class BooksFragment extends HackerTrackerFragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
     private static final String ARG_DATE = "date";
@@ -28,8 +28,8 @@ public class PartyFragment extends HackerTrackerFragment {
     private int mPage;
     private int mDate;
 
-    public static PartyFragment newInstance(int position, int date) {
-        PartyFragment frag=new PartyFragment();
+    public static BooksFragment newInstance(int position, int date) {
+        BooksFragment frag=new BooksFragment();
         Bundle args=new Bundle();
 
         args.putInt(ARG_SECTION_NUMBER, position);
@@ -60,19 +60,19 @@ public class PartyFragment extends HackerTrackerFragment {
               parent.removeView(rootView);
         }
         try {
-          rootView = inflater.inflate(R.layout.fragment_parties, container, false);
+          rootView = inflater.inflate(R.layout.fragment_books, container, false);
         } catch (InflateException e) {
         }
 
         date = mDate+1;
 
-        list = (ListView) rootView.findViewById(R.id.list_parties);
+        list = (ListView) rootView.findViewById(R.id.list_books);
 
-        // get parties
-        List<Default> parties = getItemByDate(HackerTrackerFragment.getDate(date), Constants.TYPE_PARTY);
-        if (parties.size() > 0) {
+        // get book signings
+        List<Default> books = getItemByDate(HackerTrackerFragment.getDate(date), Constants.TYPE_BOOK);
+        if (books.size() > 0) {
 
-            adapter = new DefaultAdapter(context, R.layout.row, parties);
+            adapter = new DefaultAdapter(context, R.layout.row, books);
 
             list.setAdapter(adapter);
 
