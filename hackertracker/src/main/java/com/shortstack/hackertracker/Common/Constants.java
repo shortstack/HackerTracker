@@ -5,7 +5,8 @@ package com.shortstack.hackertracker.Common;
  */
 public interface Constants {
 
-    String API_URL = "http://short-stack.net/api";
+    String API_URL = "https://s3.amazonaws.com/defcon-api";
+    //String API_URL = "http://short-stack.net/api";
     //String API_URL = "https://info.defcon.org";
     //String API_URL = "http://dcib.melloman.net";
     String API_ERROR_MESSAGE = "\"errorMessage\":";
@@ -16,6 +17,7 @@ public interface Constants {
     String TYPE_EVENT = "Event";
     String TYPE_PARTY = "Party";
     String TYPE_VENDOR = "Vendor";
+    String TYPE_DEMOLAB = "DemoLabs";
     String TYPE_SKYTALKS = "Skytalks";
     String TYPE_MESSAGE = "Message";
     String TYPE_VILLAGE = "Village";
@@ -48,6 +50,7 @@ public interface Constants {
     String FRAGMENT_BOOKS = "BookPagerFragment";
     String FRAGMENT_VILLAGES = "VillagePagerFragment";
     String FRAGMENT_VENDORS = "VendorsFragment";
+    String FRAGMENT_DEMOLAB = "DemoLabsFragment";
     String FRAGMENT_HOME = "HomeFragment";
     String FRAGMENT_LINKS = "LinksFragment";
     String FRAGMENT_MAPS = "MapsFragment";

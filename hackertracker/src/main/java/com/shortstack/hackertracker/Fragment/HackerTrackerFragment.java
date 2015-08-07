@@ -162,6 +162,9 @@ public class HackerTrackerFragment extends Fragment {
                         case Constants.TYPE_JOKE:
                             item = new Default();
                             break;
+                        case Constants.TYPE_DEMOLAB:
+                            item = new Default();
+                            break;
                         default:
                             item = new Speaker();
                             break;

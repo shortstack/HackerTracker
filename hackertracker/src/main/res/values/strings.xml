@@ -17,6 +17,7 @@
         <item>@string/parties</item>
         <item>@string/villages</item>
         <item>@string/books</item>
+        <item>@string/demolabs</item>
         <item>@string/kids</item>
         <item>@string/vendors</item>
         <item>@string/maps</item>
@@ -29,6 +30,7 @@
     <string name="contests">Contests</string>
     <string name="vendors">Vendors</string>
     <string name="books">Book Signings</string>
+    <string name="demolabs">Demo Labs</string>
     <string name="villages">Villages</string>
     <string name="events">Events</string>
     <string name="parties">Parties</string>
@@ -46,7 +48,6 @@
 
     <string name="yes">Yes</string>
     <string name="no">No</string>
-
 
     <string name="oh_snap">Oh Snap!</string>
     <string name="dont_show">Don\'t show this again</string>
@@ -153,6 +154,7 @@
     <string name="link_07"><b>previous conference archives, info, speeches</b>\n\nhttps://www.defcon.org\n\n</string>
 
     <array name="updates">
+        <item><b>08/07/15</b>&lt;br/&gt;&lt;br/&gt;Parties and demo labs have been added! Sync is now available, and is pulling updates from S3.</item>
         <item><b>08/06/15</b>&lt;br/&gt;&lt;br/&gt;Change of plans--I will be doing manual updates from here on out, due to unforeseen complications. Contests, parties, and kids events will be coming as soon as they\'re made available from the DC info booth. Skytalks, villages, and book signings have been added. I apologize for the delay! Thanks everyone!</item>
         <item><b>07/27/15</b>&lt;br/&gt;&lt;br/&gt;The official speaker list is fully populated, but the rest is yet to come--still waiting on parties, skytalks, contests, events, villages, etc. Also, welcome DarkNet! :)</item>
         <item><b>07/15/15</b>&lt;br/&gt;&lt;br/&gt;2015 overhaul! If you find any errors or typos, email me at whitney.ellis.champion@gmail.com. I am working directly with the DEF CON information booth this year--all schedule data is coming straight from them. When the con starts, you will be able to sync your schedule with the online official database. Thanks! :)</item>

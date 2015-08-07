@@ -30,6 +30,7 @@ import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Books.BooksPagerFragment;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Contests.ContestPagerFragment;
+import com.shortstack.hackertracker.DemoLabs.DemoLabsPagerFragment;
 import com.shortstack.hackertracker.Events.EventPagerFragment;
 import com.shortstack.hackertracker.Font.HelveticaTextView;
 import com.shortstack.hackertracker.Fragment.FAQFragment;
@@ -163,6 +164,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 case ShuttleFragment:
                     mTitle.setText(getString(R.string.shuttle).toUpperCase());
                     break;
+                case DemoLabsFragment:
+                    mTitle.setText(getString(R.string.demolabs).toUpperCase());
                 case KidsPagerFragment:
                     mTitle.setText(getString(R.string.kids).toUpperCase());
                     break;
@@ -206,12 +209,12 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
             // show clear dialog
             DialogUtil.clearScheduleDialog(this).show();
             return true;
-        } /*else if (id == R.id.action_sync) {
+        } else if (id == R.id.action_sync) {
             // show online sync dialog
             //Toast.makeText(context,getResources().getString(R.string.sync_availability),Toast.LENGTH_SHORT).show();
             DialogUtil.syncSpeakersDialog(this).show();
             return true;
-        }*/
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -230,6 +233,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         KidsPagerFragment,
         FAQFragment,
         LinksFragment,
+        DemoLabsFragment,
         SchedulePagerFragment,
         SearchFragment
     }
@@ -279,20 +283,24 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 addToBackStack(R.string.books, Constants.FRAGMENT_BOOKS, BooksPagerFragment.newInstance(8));
                 break;
             case 8:
-                // kids
-                addToBackStack(R.string.kids, Constants.FRAGMENT_KIDS, KidsPagerFragment.newInstance(9));
+                // demo labs
+                addToBackStack(R.string.demolabs, Constants.FRAGMENT_DEMOLAB, DemoLabsPagerFragment.newInstance(9));
                 break;
             case 9:
-                // vendors
-                addToBackStack(R.string.vendors, Constants.FRAGMENT_VENDORS, VendorsFragment.newInstance(10));
+                // kids
+                addToBackStack(R.string.kids, Constants.FRAGMENT_KIDS, KidsPagerFragment.newInstance(10));
                 break;
             case 10:
-                // maps
-                addToBackStack(R.string.maps, Constants.FRAGMENT_MAPS, MapsFragment.newInstance(11));
+                // vendors
+                addToBackStack(R.string.vendors, Constants.FRAGMENT_VENDORS, VendorsFragment.newInstance(11));
                 break;
             case 11:
+                // maps
+                addToBackStack(R.string.maps, Constants.FRAGMENT_MAPS, MapsFragment.newInstance(12));
+                break;
+            case 12:
                 // faq
-                addToBackStack(R.string.faq, Constants.FRAGMENT_FAQ, FAQFragment.newInstance(12));
+                addToBackStack(R.string.faq, Constants.FRAGMENT_FAQ, FAQFragment.newInstance(13));
                 break;
         }
     }
