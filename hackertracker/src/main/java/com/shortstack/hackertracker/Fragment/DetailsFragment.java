@@ -22,11 +22,14 @@ import android.widget.Toast;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterStarred;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
+import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
 
 import org.parceler.Parcels;
+
+import java.util.Calendar;
 
 /**
  * Created by Whitney Champion on 6/11/15.
@@ -198,6 +201,17 @@ public class DetailsFragment extends DialogFragment {
                     dbStars.execSQL("INSERT INTO data VALUES (" + item.getId() + ")");
                     dbOfficial.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + item.getId());
 
+                    // set up alarm
+                    Calendar calendar =  Calendar.getInstance();
+                    calendar.set(Calendar.YEAR, Integer.parseInt(item.getDate().split("-")[0]));
+                    calendar.set(Calendar.MONTH, Integer.parseInt(item.getDate().split("-")[1]));
+                    calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(item.getDate().split("-")[2]));
+                    calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(item.getBegin().split(":")[0]));
+                    calendar.set(Calendar.MINUTE, Integer.parseInt(item.getBegin().split(":")[1]));
+                    calendar.set(Calendar.SECOND, 0);
+                    long when = calendar.getTimeInMillis()-1200000;
+                    HackerTrackerApplication.scheduleNotification(HackerTrackerApplication.getNotification("\"" + item.getTitle() + "\" is starting in 20 minutes in " + item.getLocation() + "."), when, item.getId());
+
                     // change star
                     item.setStarred(1);
                     star.setImageResource(R.drawable.star_selected);
@@ -208,6 +222,9 @@ public class DetailsFragment extends DialogFragment {
                     // remove from starred database
                     dbStars.delete("data", "id=" + item.getId(), null);
                     dbOfficial.execSQL("UPDATE data SET starred=" + 0 + " WHERE id=" + item.getId());
+
+                    // remove alarm
+                    HackerTrackerApplication.cancelNotification(item.getId());
 
                     // change star
                     item.setStarred(0);
