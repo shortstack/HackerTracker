@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -62,6 +63,7 @@ import java.nio.channels.FileChannel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -305,6 +307,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         }
     }
 
+    // add new fragment to back stack
     private void addToBackStack(int title, String name, Fragment fragment) {
         fragmentManager.beginTransaction()
                 .replace(R.id.container, fragment)
@@ -313,6 +316,37 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         mTitle.setText(getString(title).toUpperCase());
     }
 
+    // scroll viewpager to current day
+    public static void setDay(ViewPager pager) {
+
+        SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.US);
+        Calendar calendar = Calendar.getInstance();
+        String weekDay = dayFormat.format(calendar.getTime());
+
+        switch (weekDay){
+            case Constants.DAY_0:
+                pager.setCurrentItem(0);
+                break;
+            case Constants.DAY_1:
+                pager.setCurrentItem(1);
+                break;
+            case Constants.DAY_2:
+                pager.setCurrentItem(2);
+                break;
+            case Constants.DAY_3:
+                pager.setCurrentItem(3);
+                break;
+            case Constants.DAY_4:
+                pager.setCurrentItem(4);
+                break;
+            default:
+                pager.setCurrentItem(0);
+                break;
+        }
+
+    }
+
+    // clear schedule from DB
     public static void clearSchedule(Context context) {
         SQLiteDatabase dbStars = HackerTrackerApplication.myDbHelperStars.getWritableDatabase();
         SQLiteDatabase db = HackerTrackerApplication.dbHelper.getWritableDatabase();
@@ -334,6 +368,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         dbStars.close();
     }
 
+    // reload schedule if on schedule screen
     public static void refreshSchedule() {
         // if on schedule screen, reload fragment
         if (fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getName().equals(Constants.FRAGMENT_SCHEDULE)) {
@@ -344,6 +379,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         }
     }
 
+    // sync schedule with online json schedule
     public static void syncSchedule(Context context) {
 
         SyncService syncService = new SyncServiceImpl();
@@ -358,6 +394,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     }
 
+    // listener for online sync
     private static class SyncDatabaseListener implements AsyncTaskCompleteListener<ApiBase> {
 
         Context context;
@@ -442,36 +479,38 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     }
 
+    // call async update task
     public static void performUpdate(final OfficialList schedule, final String update, final Context context) {
 
        AsyncTask task = new UpdateTask(schedule, update, context).execute();
 
     }
 
+    // convert json to object to put into db
     public static void syncDatabase(ArrayList<Default> officialArray, Context context) {
 
         HashMap<String, String> queryValues;
         DatabaseAdapter controller = new DatabaseAdapter(context);
 
-        // Create GSON object
+        // create gson object
         Gson gson = new GsonBuilder().create();
 
-        // Extract JSON array from the response
+        // get json array from the response
         JsonArray arr = gson.toJsonTree(officialArray).getAsJsonArray();
 
-        // If no of array elements is not zero
+        // if there are items
         if(arr.size() != 0){
 
-            // Loop through each array element, get JSON object
+            // loop through each array element, get json object
             for (int i = 0; i < arr.size(); i++) {
 
-                // Get JSON object
+                // get json object
                 JsonObject obj = arr.get(i).getAsJsonObject();
 
-                // DB QueryValues Object to insert into SQLite
+                // create queryvalues object to insert into SQLite
                 queryValues = new HashMap<>();
 
-                // Add userID extracted from Object
+                // add values to object
                 queryValues.put("id", obj.get("id").getAsString());
                 queryValues.put("title", obj.get("title").getAsString());
                 queryValues.put("who", obj.get("who").getAsString());
@@ -486,7 +525,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 queryValues.put("tool", obj.get("tool").getAsString());
                 queryValues.put("exploit", obj.get("exploit").getAsString());
 
-                // Insert User into SQLite DB
+                // insert object into database
                 controller.updateDatabase(queryValues);
 
             }

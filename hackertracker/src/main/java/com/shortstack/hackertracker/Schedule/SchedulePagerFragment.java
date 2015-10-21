@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.R;
@@ -24,6 +25,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class SchedulePagerFragment extends Fragment {
 
@@ -65,6 +70,9 @@ public class SchedulePagerFragment extends Fragment {
         pager = (ViewPager) result.findViewById(R.id.pager);
         pager.setAdapter(buildAdapter());
         pager.setOffscreenPageLimit(5);
+
+        // get current date, scroll to that page
+        HomeActivity.setDay(pager);
 
         PagerTabStrip pagerTabStrip = (PagerTabStrip) result.findViewById(R.id.pager_title_strip);
         pagerTabStrip.setDrawFullUnderline(true);

@@ -17,17 +17,17 @@ public class SkytalksPagerAdapter extends FragmentPagerAdapter {
 
   @Override
   public int getCount() {
-    return(4);
+    return(5);
   }
 
   @Override
   public Fragment getItem(int position) {
-    return(SkytalksFragment.newInstance(9, position));
+    return(SkytalksFragment.newInstance(9, position-1));
   }
 
   @Override
   public String getPageTitle(int position) {
-    return(HackerTrackerFragment.getTitle(ctxt, position));
+    return(HackerTrackerFragment.getTitle(ctxt, position-1));
   }
 
 }

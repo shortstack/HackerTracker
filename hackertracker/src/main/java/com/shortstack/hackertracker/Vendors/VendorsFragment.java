@@ -52,8 +52,6 @@ public class VendorsFragment extends HackerTrackerFragment {
 
         list = (ListView) rootView.findViewById(R.id.list_vendors);
 
-        String date = "1";
-
         // get vendors
         List<Vendor> vendors = getVendors();
         if (vendors.size() > 0) {

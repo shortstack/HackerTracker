@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.R;
 
 public class PartyPagerFragment extends Fragment {
@@ -35,6 +36,9 @@ public class PartyPagerFragment extends Fragment {
         pager=(ViewPager)result.findViewById(R.id.pager);
         pager.setAdapter(buildAdapter());
         pager.setOffscreenPageLimit(5);
+
+        // get current date, scroll to that page
+        HomeActivity.setDay(pager);
 
         PagerTabStrip pagerTabStrip = (PagerTabStrip) result.findViewById(R.id.pager_title_strip);
         pagerTabStrip.setDrawFullUnderline(false);

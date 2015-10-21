@@ -17,16 +17,16 @@ public class DemoLabsPagerAdapter extends FragmentPagerAdapter {
 
   @Override
   public int getCount() {
-    return(1);
+    return(5);
   }
 
   @Override
   public Fragment getItem(int position) {
-    return(DemoLabsFragment.newInstance(3, position + 2));
+    return(DemoLabsFragment.newInstance(3, position - 1));
   }
 
   @Override
   public String getPageTitle(int position) {
-    return(HackerTrackerFragment.getTitle(ctxt, position + 2));
+    return(HackerTrackerFragment.getTitle(ctxt, position - 1));
   }
 }

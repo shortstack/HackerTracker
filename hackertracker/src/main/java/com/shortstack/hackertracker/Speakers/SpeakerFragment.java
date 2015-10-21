@@ -32,7 +32,6 @@ public class SpeakerFragment extends HackerTrackerFragment {
         SpeakerFragment frag=new SpeakerFragment();
         Bundle args=new Bundle();
 
-        args.putInt(ARG_SECTION_NUMBER, position);
         args.putInt(ARG_DATE, date);
 
         frag.setArguments(args);
@@ -44,7 +43,6 @@ public class SpeakerFragment extends HackerTrackerFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-        mPage = args.getInt(ARG_SECTION_NUMBER);
         mDate = args.getInt(ARG_DATE);
     }
 

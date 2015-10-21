@@ -161,7 +161,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
         }
     }
 
-
+    // copy already starred objects to database from starred database
     public static void copyStarred() {
 
         // check if entry is already in starred database
@@ -188,6 +188,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     }
 
+    // add new items to db
     public static void updateDatabase(HashMap<String, String> queryValues) {
 
         DatabaseAdapter myDbHelper = new DatabaseAdapter(HackerTrackerApplication.getAppContext());
