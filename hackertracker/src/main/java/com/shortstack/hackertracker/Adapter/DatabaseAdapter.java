@@ -25,8 +25,8 @@ import java.util.Locale;
  */
 public class DatabaseAdapter extends SQLiteOpenHelper {
 
-    private static String DB_PATH = "/data/data/com.shortstack.hackertracker/databases/";
     private static String DB_NAME = "hackertracker.sqlite";
+
     private static int DB_VERSION = 215;
 
     private SQLiteDatabase myDataBase;
@@ -51,7 +51,6 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
             // create database
             SQLiteDatabase db = this.getWritableDatabase();
             db.setLocale(Locale.getDefault());
-            db.setLockingEnabled(true);
             db.setVersion(DB_VERSION);
 
             try {
@@ -80,10 +79,9 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
         SQLiteDatabase checkDB = null;
 
         try{
-            String myPath = DB_PATH + DB_NAME;
+            String myPath = myContext.getDatabasePath(DB_NAME).getPath();
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
             checkDB.setLocale(Locale.getDefault());
-            checkDB.setLockingEnabled(true);
             checkDB.setVersion(DB_VERSION);
 
         } catch(SQLiteException e){
@@ -98,7 +96,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
         }
 
-        return checkDB != null ? true : false;
+        return checkDB != null;
     }
 
     /**
@@ -110,7 +108,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
         InputStream myInput = myContext.getAssets().open(DB_NAME);
 
         // path of db to create
-        String outFileName = DB_PATH + DB_NAME;
+        String outFileName = myContext.getDatabasePath(DB_NAME).getPath();
 
         // initialize output stream
         OutputStream myOutput = new FileOutputStream(outFileName);
@@ -132,7 +130,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
     public void openDataBase() throws SQLException{
 
         // open the database
-        String myPath = DB_PATH + DB_NAME;
+        String myPath = myContext.getDatabasePath(DB_NAME).getPath();
         myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
 
     }
