@@ -119,7 +119,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         // export database (using to backup official database instead of having to manually import)
         // TODO: comment this out upon release
-        //exportDB();
+        exportDB();
     }
 
     @Override
@@ -288,21 +288,21 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 // demo labs
                 addToBackStack(R.string.demolabs, Constants.FRAGMENT_DEMOLAB, DemoLabsPagerFragment.newInstance(9));
                 break;
-            case 9:
+            /*case 9:
                 // kids
                 addToBackStack(R.string.kids, Constants.FRAGMENT_KIDS, KidsPagerFragment.newInstance(10));
+                break;*/
+            case 9:
+                // vendors
+                addToBackStack(R.string.vendors, Constants.FRAGMENT_VENDORS, VendorsFragment.newInstance(10));
                 break;
             case 10:
-                // vendors
-                addToBackStack(R.string.vendors, Constants.FRAGMENT_VENDORS, VendorsFragment.newInstance(11));
+                // maps
+                addToBackStack(R.string.maps, Constants.FRAGMENT_MAPS, MapsFragment.newInstance(11));
                 break;
             case 11:
-                // maps
-                addToBackStack(R.string.maps, Constants.FRAGMENT_MAPS, MapsFragment.newInstance(12));
-                break;
-            case 12:
                 // faq
-                addToBackStack(R.string.faq, Constants.FRAGMENT_FAQ, FAQFragment.newInstance(13));
+                addToBackStack(R.string.faq, Constants.FRAGMENT_FAQ, FAQFragment.newInstance(12));
                 break;
         }
     }

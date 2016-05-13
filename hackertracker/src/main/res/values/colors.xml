@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorPrimary">#000000</color>
-    <color name="colorPrimaryDark">#99d72e</color>
+    <color name="colorPrimaryDark">#5050a1</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
-    <color name="colorAccent">#afec44</color>
+    <color name="colorAccent">#6464b7</color>
 
     <color name="black_alpha">#DD000000</color>
     <color name="black_alpha_hover">#EE000000</color>
     <color name="white_alpha">#33FFFFFF</color>
     <color name="light_gray">#dddddd</color>
     <color name="dark_gray">#282828</color>
-    <color name="green">#afec44</color>
+    <color name="green">#6464b7</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
-    <color name="dark_green">#99d72e</color>
+    <color name="dark_green">#525284</color>
     <color name="star">#ffcc00</color>
 </resources>

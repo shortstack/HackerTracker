@@ -4,9 +4,11 @@ import android.app.AlarmManager;
 import android.app.Application;
 import android.app.Notification;
 import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.os.SystemClock;
+import android.content.IntentFilter;
+import android.widget.Toast;
 
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterStarred;
@@ -27,6 +29,9 @@ public class HackerTrackerApplication extends Application {
     public static DatabaseAdapter dbHelper;
     public static DatabaseAdapterVendors vendorDbHelper;
     public static DatabaseAdapterStarred myDbHelperStars;
+    private static AlarmManager alarmManager;
+    private BroadcastReceiver receiver;
+    private PendingIntent pendingIntent;
 
     public void onCreate(){
         super.onCreate();
@@ -42,6 +47,37 @@ public class HackerTrackerApplication extends Application {
         // set up shared preferences
         SharedPreferencesUtil.getInstance();
 
+        // register alarm
+        RegisterAlarmBroadcast();
+
+    }
+
+    private void RegisterAlarmBroadcast()
+    {
+
+        //This is the call back function(BroadcastReceiver) which will be call when your
+        //alarm time will reached.
+        BroadcastReceiver receiver = new BroadcastReceiver()
+        {
+            private static final String TAG = "Alarm Example Receiver";
+            @Override
+            public void onReceive(Context context, Intent intent)
+            {
+                Toast.makeText(context, "Congrats!. Your Alarm time has been reached", Toast.LENGTH_LONG).show();
+            }
+        };
+
+        // register the alarm broadcast here
+        registerReceiver(receiver, new IntentFilter("com.shortstack.hackertracker") );
+        pendingIntent = PendingIntent.getBroadcast( this, 0, new Intent("com.shortstack.hackertracker"),0 );
+        alarmManager = (AlarmManager)(this.getSystemService( Context.ALARM_SERVICE ));
+
+    }
+
+    private void UnregisterAlarmBroadcast()
+    {
+        alarmManager.cancel(pendingIntent);
+        getBaseContext().unregisterReceiver(receiver);
     }
 
     public static void cancelNotification(int id) {
@@ -51,7 +87,6 @@ public class HackerTrackerApplication extends Application {
         PendingIntent pendingIntent = PendingIntent.getActivity(context, id, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         pendingIntent.cancel();
 
-        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         alarmManager.cancel(pendingIntent);
     }
 
@@ -62,15 +97,13 @@ public class HackerTrackerApplication extends Application {
         notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-        long futureInMillis = when;
-        AlarmManager alarmManager = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, futureInMillis, pendingIntent);
+        alarmManager.set(AlarmManager.RTC_WAKEUP, when, pendingIntent);
     }
 
     public static Notification getNotification(String content) {
         Notification.Builder builder = new Notification.Builder(context);
-        builder.setContentTitle("Scheduled Notification");
-        builder.setContentText(content);
+        builder.setContentTitle("DEF CON Schedule Notification");
+        builder.setStyle(new Notification.BigTextStyle().bigText(content));
         builder.setSmallIcon(R.drawable.ic_launcher);
         return builder.build();
     }

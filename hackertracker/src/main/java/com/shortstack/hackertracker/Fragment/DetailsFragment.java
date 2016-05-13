@@ -210,6 +210,7 @@ public class DetailsFragment extends DialogFragment {
                     calendar.set(Calendar.MINUTE, Integer.parseInt(item.getBegin().split(":")[1]));
                     calendar.set(Calendar.SECOND, 0);
                     long when = calendar.getTimeInMillis()-1200000;
+
                     HackerTrackerApplication.scheduleNotification(HackerTrackerApplication.getNotification("\"" + item.getTitle() + "\" is starting in 20 minutes in " + item.getLocation() + "."), when, item.getId());
 
                     // change star
