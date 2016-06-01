@@ -24,17 +24,14 @@
     <TextView android:id="@+id/vendor_title" android:layout_width="fill_parent"
               android:layout_height="wrap_content"
               style="@style/vendor_title"
-              android:text="test"
               android:gravity="center_vertical" android:singleLine="true" />
     <TextView android:layout_width="fill_parent"
               android:layout_height="wrap_content"  android:id="@+id/vendor_website"
               style="@style/vendor_website"
               android:linksClickable="true"
-              android:autoLink="all"
-              android:text="test" />
+              android:autoLink="all" />
     <TextView android:layout_width="fill_parent"
               android:layout_height="wrap_content"  android:id="@+id/vendor_body"
-              style="@style/vendor_body"
-              android:text="test" />
+              style="@style/vendor_body"/>
 
 </LinearLayout>

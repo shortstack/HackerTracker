@@ -47,7 +47,7 @@ public class HackerTrackerApplication extends Application {
         // set up shared preferences
         SharedPreferencesUtil.getInstance();
 
-        // register alarm
+        // register alarm broadcast
         RegisterAlarmBroadcast();
 
     }
@@ -55,21 +55,18 @@ public class HackerTrackerApplication extends Application {
     private void RegisterAlarmBroadcast()
     {
 
-        //This is the call back function(BroadcastReceiver) which will be call when your
-        //alarm time will reached.
         BroadcastReceiver receiver = new BroadcastReceiver()
         {
-            private static final String TAG = "Alarm Example Receiver";
             @Override
             public void onReceive(Context context, Intent intent)
             {
-                Toast.makeText(context, "Congrats!. Your Alarm time has been reached", Toast.LENGTH_LONG).show();
+                //Toast.makeText(context, "Alarm", Toast.LENGTH_LONG).show();
             }
         };
 
-        // register the alarm broadcast here
-        registerReceiver(receiver, new IntentFilter("com.shortstack.hackertracker") );
-        pendingIntent = PendingIntent.getBroadcast( this, 0, new Intent("com.shortstack.hackertracker"),0 );
+        // register the alarm broadcast
+        registerReceiver(receiver, new IntentFilter(getPackageName()) );
+        pendingIntent = PendingIntent.getBroadcast( this, 0, new Intent(getPackageName()),0 );
         alarmManager = (AlarmManager)(this.getSystemService( Context.ALARM_SERVICE ));
 
     }
@@ -102,7 +99,7 @@ public class HackerTrackerApplication extends Application {
 
     public static Notification getNotification(String content) {
         Notification.Builder builder = new Notification.Builder(context);
-        builder.setContentTitle("DEF CON Schedule Notification");
+        builder.setContentTitle(context.getString(R.string.notification_title));
         builder.setStyle(new Notification.BigTextStyle().bigText(content));
         builder.setSmallIcon(R.drawable.ic_launcher);
         return builder.build();

@@ -28,7 +28,6 @@
         android:id="@+id/dialog_text"
         style="@style/dialog_text"
         android:gravity="center"
-        android:text="test"
         android:textIsSelectable="true"
         android:padding="10dp"/>
 

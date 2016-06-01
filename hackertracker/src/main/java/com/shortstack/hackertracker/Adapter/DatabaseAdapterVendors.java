@@ -58,6 +58,7 @@ public class DatabaseAdapterVendors extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
             db.setLocale(Locale.getDefault());
             db.setVersion(DB_VERSION);
+            db.setLockingEnabled(true);
 
             try {
 
@@ -87,6 +88,7 @@ public class DatabaseAdapterVendors extends SQLiteOpenHelper {
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
             checkDB.setLocale(Locale.getDefault());
             checkDB.setVersion(DB_VERSION);
+            checkDB.setLockingEnabled(true);
 
         } catch(SQLiteException e){
 
@@ -100,7 +102,8 @@ public class DatabaseAdapterVendors extends SQLiteOpenHelper {
 
         }
 
-        return checkDB != null;
+        return checkDB != null ? true : false;
+
     }
 
     /**
@@ -137,7 +140,7 @@ public class DatabaseAdapterVendors extends SQLiteOpenHelper {
 
         //Open the database
         String myPath = myContext.getDatabasePath(DB_NAME).getPath();
-        myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+        myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.NO_LOCALIZED_COLLATORS | SQLiteDatabase.OPEN_READWRITE);
 
     }
 

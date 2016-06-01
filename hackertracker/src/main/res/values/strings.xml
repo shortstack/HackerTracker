@@ -48,6 +48,8 @@
     <string name="yes">Yes</string>
     <string name="no">No</string>
 
+    <string name="db_path">/data/data/com.shortstack.hackertracker/databases/</string>
+    <string name="db_name">hackertracker.sqlite</string>
     <string name="oh_snap">Oh Snap!</string>
     <string name="dont_show">Don\'t show this again</string>
     <string name="empty">Check back later for more updates.\n\nSchedule updates are coming straight from the DEF CON Info Booth database, and will be added as they are made available.\n\nOn 8/5, you will be able to sync the schedule within the app, which will pull from info.defcon.org.\n\nThanks! :)</string>
@@ -65,6 +67,7 @@
     <string name="schedule_finished">Schedule sync complete</string>
     <string name="sync_availability">Sync will be available the Wednesday before DEF CON! :)</string>
     <string name="up_to_date">Your schedule is already up to date! :)</string>
+    <string name="notification_title">DEF CON Schedule Notification</string>
 
     <string name="schedule_cleared">Schedule cleared successfully</string>
     <string name="schedule_clear">Clear My Schedule</string>
@@ -84,6 +87,8 @@
     <string name="schedule_removed">Removed from My Schedule</string>
     <string name="schedule_added">Added to My Schedule</string>
     <string name="schedule_sync">Yes, Check Now</string>
+    <string name="is_new">NEW</string>
+    <string name="tba">TBA</string>
 
     <string name="map_hotel">Hotel Map</string>
     <string name="map_con">Conference Map</string>
@@ -166,6 +171,6 @@
     <string name="link_07"><b>previous conference archives, info, speeches</b>\n\nhttps://www.defcon.org\n\n</string>
 
     <array name="updates">
-        <item><b>08/07/15</b>&lt;br/&gt;&lt;br/&gt;Parties and demo labs have been added! Sync is now available, and is pulling updates from S3.</item>
+        <item><b>06/01/16</b>&lt;br/&gt;&lt;br/&gt;Starting early this year with updates! Ramping up for DC24. Added all available contest and event information. Can\'t wait to see everyone in August!</item>
     </array>
 </resources>

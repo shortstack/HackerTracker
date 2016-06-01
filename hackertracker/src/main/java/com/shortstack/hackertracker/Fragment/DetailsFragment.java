@@ -202,16 +202,18 @@ public class DetailsFragment extends DialogFragment {
                     dbOfficial.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + item.getId());
 
                     // set up alarm
-                    Calendar calendar =  Calendar.getInstance();
-                    calendar.set(Calendar.YEAR, Integer.parseInt(item.getDate().split("-")[0]));
-                    calendar.set(Calendar.MONTH, Integer.parseInt(item.getDate().split("-")[1]));
-                    calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(item.getDate().split("-")[2]));
-                    calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(item.getBegin().split(":")[0]));
-                    calendar.set(Calendar.MINUTE, Integer.parseInt(item.getBegin().split(":")[1]));
-                    calendar.set(Calendar.SECOND, 0);
-                    long when = calendar.getTimeInMillis()-1200000;
+                    if (!item.getBegin().equals("")) {
+                        Calendar calendar = Calendar.getInstance();
+                        calendar.set(Calendar.YEAR, Integer.parseInt(item.getDate().split("-")[0]));
+                        calendar.set(Calendar.MONTH, Integer.parseInt(item.getDate().split("-")[1]));
+                        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(item.getDate().split("-")[2]));
+                        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(item.getBegin().split(":")[0]));
+                        calendar.set(Calendar.MINUTE, Integer.parseInt(item.getBegin().split(":")[1]));
+                        calendar.set(Calendar.SECOND, 0);
+                        long when = calendar.getTimeInMillis() - 1200000;
 
-                    HackerTrackerApplication.scheduleNotification(HackerTrackerApplication.getNotification("\"" + item.getTitle() + "\" is starting in 20 minutes in " + item.getLocation() + "."), when, item.getId());
+                        HackerTrackerApplication.scheduleNotification(HackerTrackerApplication.getNotification("\"" + item.getTitle() + "\" is starting in 20 minutes in " + item.getLocation() + "."), when, item.getId());
+                    }
 
                     // change star
                     item.setStarred(1);

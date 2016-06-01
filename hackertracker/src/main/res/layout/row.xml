@@ -15,25 +15,21 @@
             android:orientation="horizontal">
             <TextView android:id="@+id/time" android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                style="@style/date"
-                android:text="test"/>
+                style="@style/date"/>
             <TextView android:id="@+id/title" android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 style="@style/title"
-                android:text="test fjwekf f jewl fklwjfl lafehjla fla f fkalf afl fdskjl fsdl fds fjdsklf fjsdkl fslj"
                 android:singleLine="true" />
         </LinearLayout>
         <TextView android:layout_width="fill_parent"
             android:layout_height="wrap_content"  android:id="@+id/name"
             android:autoLink="all"
             style="@style/name"
-            android:visibility="gone"
-            android:text="test" />
+            android:visibility="gone"/>
         <TextView android:layout_width="fill_parent"
                   android:layout_height="wrap_content"  android:id="@+id/where"
                   android:autoLink="all"
-                  style="@style/where"
-                  android:text="test" />
+                  style="@style/where"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -65,11 +61,11 @@
         android:id="@+id/isNew"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NEW"
+        android:text="@string/is_new"
         android:layout_marginLeft="15dp"
         android:textColor="@color/black"
         android:padding="4dp"
-        android:gravity="right"
+        android:gravity="end"
         android:background="@drawable/button_green_rounded"
-        android:layout_gravity="right|center_vertical"/>
+        android:layout_gravity="end|center_vertical"/>
 </LinearLayout>

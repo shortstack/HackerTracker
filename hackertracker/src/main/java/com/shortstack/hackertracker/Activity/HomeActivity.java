@@ -14,6 +14,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,7 +40,6 @@ import com.shortstack.hackertracker.Fragment.FragmentDrawer;
 import com.shortstack.hackertracker.Fragment.HomeFragment;
 import com.shortstack.hackertracker.Fragment.MapsFragment;
 import com.shortstack.hackertracker.Fragment.SearchFragment;
-import com.shortstack.hackertracker.Kids.KidsPagerFragment;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
 import com.shortstack.hackertracker.Model.ApiBase;
 import com.shortstack.hackertracker.Model.Default;
@@ -73,6 +73,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
     public static FragmentManager fragmentManager;
     public static ActionBar actionBar;
     private FragmentDrawer drawerFragment;
+    private DrawerLayout drawerLayout;
     private Toolbar mToolbar;
     public static HelveticaTextView mTitle;
     private Context context;
@@ -106,9 +107,9 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         actionBar.setDisplayShowHomeEnabled(true);
 
         // set up nav drawer
-        drawerFragment = (FragmentDrawer)
-                getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
-        drawerFragment.setUp(R.id.fragment_navigation_drawer, (DrawerLayout) findViewById(R.id.drawer_layout), mToolbar);
+        drawerFragment = (FragmentDrawer) getSupportFragmentManager().findFragmentById(R.id.fragment_navigation_drawer);
+        drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawerFragment.setUp(R.id.fragment_navigation_drawer, drawerLayout, mToolbar);
         drawerFragment.setDrawerListener(this);
 
         // set home
@@ -125,67 +126,74 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
     @Override
     public void onBackPressed(){
 
-        FragmentManager fm = this.getSupportFragmentManager();
-        if (fm.getBackStackEntryCount() > 1) {
+        // if drawer is open, close nav drawer
+        if (drawerLayout.isDrawerOpen(Gravity.START)) {
+            drawerLayout.closeDrawer(Gravity.START);
+        } else { // otherwise go to previous fragment
 
-            FragmentName fragName = FragmentName.valueOf(fm.getBackStackEntryAt(fm.getBackStackEntryCount()-2).getName());
-            switch (fragName) {
-                case HomeFragment:
-                    mTitle.setText(getString(R.string.home).toUpperCase());
-                    break;
-                case SpeakerPagerFragment:
-                    mTitle.setText(getString(R.string.speakers).toUpperCase());
-                    break;
-                case ContestPagerFragment:
-                    mTitle.setText(getString(R.string.contests).toUpperCase());
-                    break;
-                case EventPagerFragment:
-                    mTitle.setText(getString(R.string.events).toUpperCase());
-                    break;
-                case PartyPagerFragment:
-                    mTitle.setText(getString(R.string.parties).toUpperCase());
-                    break;
-                case VendorsFragment:
-                    mTitle.setText(getString(R.string.vendors).toUpperCase());
-                    break;
-                case MapsFragment:
-                    mTitle.setText(getString(R.string.maps).toUpperCase());
-                    break;
-                case BooksPagerFragment:
-                    mTitle.setText(getString(R.string.books).toUpperCase());
-                    break;
-                case VillagePagerFragment:
-                    mTitle.setText(getString(R.string.villages).toUpperCase());
-                    break;
-                case LinksFragment:
-                    mTitle.setText(getString(R.string.links).toUpperCase());
-                    break;
-                case FAQFragment:
-                    mTitle.setText(getString(R.string.faq).toUpperCase());
-                    break;
-                case ShuttleFragment:
-                    mTitle.setText(getString(R.string.shuttle).toUpperCase());
-                    break;
-                case DemoLabsFragment:
-                    mTitle.setText(getString(R.string.demolabs).toUpperCase());
-                case KidsPagerFragment:
-                    mTitle.setText(getString(R.string.kids).toUpperCase());
-                    break;
-                case SkytalksPagerFragment:
-                    mTitle.setText(getString(R.string.skytalks).toUpperCase());
-                    break;
-                case SchedulePagerFragment:
-                    mTitle.setText(getString(R.string.schedule).toUpperCase());
-                    break;
-                case SearchFragment:
-                    mTitle.setText(getString(R.string.search).toUpperCase());
-                    break;
+            FragmentManager fm = this.getSupportFragmentManager();
+            if (fm.getBackStackEntryCount() > 1) {
 
+                FragmentName fragName = FragmentName.valueOf(fm.getBackStackEntryAt(fm.getBackStackEntryCount()-2).getName());
+                switch (fragName) {
+                    case HomeFragment:
+                        mTitle.setText(getString(R.string.home).toUpperCase());
+                        break;
+                    case SpeakerPagerFragment:
+                        mTitle.setText(getString(R.string.speakers).toUpperCase());
+                        break;
+                    case ContestPagerFragment:
+                        mTitle.setText(getString(R.string.contests).toUpperCase());
+                        break;
+                    case EventPagerFragment:
+                        mTitle.setText(getString(R.string.events).toUpperCase());
+                        break;
+                    case PartyPagerFragment:
+                        mTitle.setText(getString(R.string.parties).toUpperCase());
+                        break;
+                    case VendorsFragment:
+                        mTitle.setText(getString(R.string.vendors).toUpperCase());
+                        break;
+                    case MapsFragment:
+                        mTitle.setText(getString(R.string.maps).toUpperCase());
+                        break;
+                    case BooksPagerFragment:
+                        mTitle.setText(getString(R.string.books).toUpperCase());
+                        break;
+                    case VillagePagerFragment:
+                        mTitle.setText(getString(R.string.villages).toUpperCase());
+                        break;
+                    case LinksFragment:
+                        mTitle.setText(getString(R.string.links).toUpperCase());
+                        break;
+                    case FAQFragment:
+                        mTitle.setText(getString(R.string.faq).toUpperCase());
+                        break;
+                    case ShuttleFragment:
+                        mTitle.setText(getString(R.string.shuttle).toUpperCase());
+                        break;
+                    case DemoLabsFragment:
+                        mTitle.setText(getString(R.string.demolabs).toUpperCase());
+                    case KidsPagerFragment:
+                        mTitle.setText(getString(R.string.kids).toUpperCase());
+                        break;
+                    case SkytalksPagerFragment:
+                        mTitle.setText(getString(R.string.skytalks).toUpperCase());
+                        break;
+                    case SchedulePagerFragment:
+                        mTitle.setText(getString(R.string.schedule).toUpperCase());
+                        break;
+                    case SearchFragment:
+                        mTitle.setText(getString(R.string.search).toUpperCase());
+                        break;
+                }
+                fm.popBackStack();
+            } else {
+                finish();
             }
-            fm.popBackStack();
-        } else {
-            finish();
+
         }
+
 
     }
 

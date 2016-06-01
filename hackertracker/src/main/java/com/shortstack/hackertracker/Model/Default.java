@@ -81,7 +81,7 @@ public class Default implements Serializable {
     }
 
     public String getDescription() {
-        return description;
+        return description.replace("\\\"", "\"");
     }
 
     public String getName() {

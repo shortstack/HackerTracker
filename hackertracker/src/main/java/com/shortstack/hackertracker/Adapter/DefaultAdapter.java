@@ -125,7 +125,11 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             }
 
             // set time
-            holder.time.setText(item.getBegin());
+            if (!item.getBegin().equals("")) {
+                holder.time.setText(item.getBegin());
+            } else {
+                holder.time.setText(context.getResources().getString(R.string.tba));
+            }
 
             // set location
             holder.where.setText(item.getLocation());

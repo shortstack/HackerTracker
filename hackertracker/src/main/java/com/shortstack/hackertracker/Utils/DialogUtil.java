@@ -176,6 +176,7 @@ public class DialogUtil {
         AlertDialog dialog = builder.create();
 
         dialog.setView(view, 0, 0, 0, 0);
+        dialog.setCanceledOnTouchOutside(false);
 
         Button cancelButton = (Button) view.findViewById(R.id.no);
         final Dialog finalDialog = dialog;
