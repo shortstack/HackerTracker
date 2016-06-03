@@ -1,0 +1,23 @@
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:key="preferenceTheme"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
+
+    <CheckBoxPreference
+        android:key="allowNotifications"
+        android:title="Push Notifications"
+        android:summary="Allow push notifications for upcoming starred events"
+        android:defaultValue="True"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Preference
+        android:key="clearSchedule"
+        android:title="Clear My Schedule"
+        android:summary="Clear all events from schedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+    />
+
+</PreferenceScreen>

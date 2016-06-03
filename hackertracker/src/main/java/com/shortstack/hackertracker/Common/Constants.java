@@ -57,6 +57,7 @@ public interface Constants {
     String FRAGMENT_SEARCH = "SearchFragment";
     String FRAGMENT_SHUTTLE = "ShuttleFragment";
     String FRAGMENT_FAQ = "FAQFragment";
+    String FRAGMENT_SETTINGS = "SettingsFragment";
 
     String[] COLUMN_NAMES = {"Title","Speaker Name","Start Time","End Time","Date","Location"};
 

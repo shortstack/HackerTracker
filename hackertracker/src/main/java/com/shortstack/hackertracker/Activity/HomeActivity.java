@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -40,6 +41,7 @@ import com.shortstack.hackertracker.Fragment.FragmentDrawer;
 import com.shortstack.hackertracker.Fragment.HomeFragment;
 import com.shortstack.hackertracker.Fragment.MapsFragment;
 import com.shortstack.hackertracker.Fragment.SearchFragment;
+import com.shortstack.hackertracker.Fragment.SettingsFragment;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
 import com.shortstack.hackertracker.Model.ApiBase;
 import com.shortstack.hackertracker.Model.Default;
@@ -120,15 +122,15 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         // export database (using to backup official database instead of having to manually import)
         // TODO: comment this out upon release
-        exportDB();
+        //exportDB();
     }
 
     @Override
     public void onBackPressed(){
 
         // if drawer is open, close nav drawer
-        if (drawerLayout.isDrawerOpen(Gravity.START)) {
-            drawerLayout.closeDrawer(Gravity.START);
+        if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
+            drawerLayout.closeDrawer(GravityCompat.START);
         } else { // otherwise go to previous fragment
 
             FragmentManager fm = this.getSupportFragmentManager();
@@ -174,6 +176,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                         break;
                     case DemoLabsFragment:
                         mTitle.setText(getString(R.string.demolabs).toUpperCase());
+                        break;
                     case KidsPagerFragment:
                         mTitle.setText(getString(R.string.kids).toUpperCase());
                         break;
@@ -185,6 +188,9 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                         break;
                     case SearchFragment:
                         mTitle.setText(getString(R.string.search).toUpperCase());
+                        break;
+                    case SettingsFragment:
+                        mTitle.setText(getString(R.string.settings).toUpperCase());
                         break;
                 }
                 fm.popBackStack();
@@ -215,14 +221,14 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
             // show share dialog
             DialogUtil.shareScheduleDialog(this).show();
             return true;
-        } else if (id == R.id.action_clear) {
-            // show clear dialog
-            DialogUtil.clearScheduleDialog(this).show();
-            return true;
         } else if (id == R.id.action_sync) {
             // show online sync dialog
             //Toast.makeText(context,getResources().getString(R.string.sync_availability),Toast.LENGTH_SHORT).show();
             DialogUtil.syncSpeakersDialog(this).show();
+            return true;
+        } else if (id == R.id.action_settings) {
+            // open settings fragment
+            addToBackStack(R.string.settings, Constants.FRAGMENT_SETTINGS, new SettingsFragment());
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -245,7 +251,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         LinksFragment,
         DemoLabsFragment,
         SchedulePagerFragment,
-        SearchFragment
+        SearchFragment,
+        SettingsFragment
     }
 
     @Override
@@ -311,6 +318,10 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
             case 11:
                 // faq
                 addToBackStack(R.string.faq, Constants.FRAGMENT_FAQ, FAQFragment.newInstance(12));
+                break;
+            case 12:
+                // settings
+                addToBackStack(R.string.settings, Constants.FRAGMENT_SETTINGS, new SettingsFragment());
                 break;
         }
     }

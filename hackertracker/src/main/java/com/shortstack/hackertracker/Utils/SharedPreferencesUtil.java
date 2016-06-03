@@ -52,4 +52,14 @@ public class SharedPreferencesUtil {
         return sharedPreferences.getBoolean("showSuggestions",false);
     }
 
+    public static void allowPushNotifications(boolean show) {
+        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
+        sharedPreferencesEditor.putBoolean("allowPushNotifications",show);
+        sharedPreferencesEditor.commit();
+    }
+
+    public static boolean allowPushNotifications() {
+        return sharedPreferences.getBoolean("allowPushNotifications",true);
+    }
+
 }

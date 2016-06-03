@@ -8,6 +8,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.support.v7.preference.Preference;
 import android.widget.Toast;
 
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
@@ -48,7 +49,9 @@ public class HackerTrackerApplication extends Application {
         SharedPreferencesUtil.getInstance();
 
         // register alarm broadcast
-        RegisterAlarmBroadcast();
+        if (SharedPreferencesUtil.allowPushNotifications()) {
+            RegisterAlarmBroadcast();
+        }
 
     }
 
@@ -60,8 +63,8 @@ public class HackerTrackerApplication extends Application {
             @Override
             public void onReceive(Context context, Intent intent)
             {
-                //Toast.makeText(context, "Alarm", Toast.LENGTH_LONG).show();
             }
+
         };
 
         // register the alarm broadcast

@@ -9,7 +9,7 @@ import com.google.gson.JsonSyntaxException;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
 
-import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpDelete;
@@ -485,7 +485,7 @@ public class ApiHelper {
                 httpRequest.setHeader("Content-Type", "application/json");
                 httpRequest.setHeader("Accept", "application/json");
                 httpRequest.setEntity(entity);
-            } catch (UnsupportedEncodingException e) {
+            } catch (Exception e) {
                 Log.e("error", "Could not convert jsonObject to a StringEntity", e);
             }
         }

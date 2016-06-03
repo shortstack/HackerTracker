@@ -26,6 +26,7 @@ import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
+import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 
 import org.parceler.Parcels;
 
