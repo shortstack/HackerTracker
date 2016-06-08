@@ -27,7 +27,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     private static String DB_NAME = "hackertracker.sqlite";
 
-    private static int DB_VERSION = 237;
+    private static int DB_VERSION = 239;
 
     private SQLiteDatabase myDataBase;
 

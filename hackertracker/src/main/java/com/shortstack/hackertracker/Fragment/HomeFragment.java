@@ -8,13 +8,10 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.shortstack.hackertracker.Adapter.UpdateAdapter;
 import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Utils.DialogUtil;
 
 /**
  * Created by Whitney Champion on 3/29/14.
@@ -60,32 +57,7 @@ public class HomeFragment extends Fragment {
         ListView faq_list = (ListView) rootView.findViewById(R.id.updates);
         faq_list.setAdapter(aa);
 
-        // logo onclick listener
-        ImageView logo = (ImageView) rootView.findViewById(R.id.logo);
-        logo.setOnClickListener(new LogoOnClickListener());
-
         return rootView;
     }
 
-    public class LogoOnClickListener implements View.OnClickListener
-    {
-
-        int clicks = 0;
-
-        @Override
-        public void onClick(View v)
-        {
-            clicks += 1;
-            if (clicks == 1) {
-                Toast.makeText(context,getString(R.string.message01),Toast.LENGTH_SHORT).show();
-            } else if (clicks == 2) {
-                Toast.makeText(context,getString(R.string.message02),Toast.LENGTH_SHORT).show();
-            } else if (clicks == 3) {
-                Toast.makeText(context,getString(R.string.message03), Toast.LENGTH_SHORT).show();
-            } else if (clicks == 4) {
-                DialogUtil.darknetDialog(context, getResources().getString(R.string.code02)).show();
-            }
-        }
-
-    }
 }

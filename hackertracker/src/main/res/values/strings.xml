@@ -69,6 +69,7 @@
     <string name="sync_availability">Sync will be available the Wednesday before DEF CON! :)</string>
     <string name="up_to_date">Your schedule is already up to date! :)</string>
     <string name="notification_title">DEF CON Schedule Notification</string>
+    <string name="vendors_message">Vendors not announced yet! Check back soon :)</string>
 
     <string name="schedule_cleared">Schedule cleared successfully</string>
     <string name="schedule_clear">Clear My Schedule</string>

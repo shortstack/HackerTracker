@@ -8,8 +8,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.support.v7.preference.Preference;
-import android.widget.Toast;
 
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterStarred;

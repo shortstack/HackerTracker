@@ -15,7 +15,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -309,7 +308,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;*/
             case 9:
                 // vendors
-                addToBackStack(R.string.vendors, Constants.FRAGMENT_VENDORS, VendorsFragment.newInstance(10));
+                Toast.makeText(context,R.string.vendors_message, Toast.LENGTH_SHORT).show();
+                //addToBackStack(R.string.vendors, Constants.FRAGMENT_VENDORS, VendorsFragment.newInstance(10));
                 break;
             case 10:
                 // maps
