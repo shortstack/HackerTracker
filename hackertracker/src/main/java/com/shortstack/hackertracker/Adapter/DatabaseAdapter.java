@@ -27,7 +27,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     private static String DB_NAME = "hackertracker.sqlite";
 
-    private static int DB_VERSION = 239;
+    private static int DB_VERSION = 243;
 
     private SQLiteDatabase myDataBase;
 
@@ -52,7 +52,6 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
             db.setLocale(Locale.getDefault());
             db.setVersion(DB_VERSION);
-            db.setLockingEnabled(true);
 
             try {
 
@@ -84,7 +83,6 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
             checkDB.setLocale(Locale.getDefault());
             checkDB.setVersion(DB_VERSION);
-            checkDB.setLockingEnabled(true);
 
         } catch(SQLiteException e){
 

@@ -16,6 +16,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 
     public void onReceive(Context context, Intent intent) {
 
+        // if user settings allow push notifications, send notification
         if (SharedPreferencesUtil.allowPushNotifications()) {
 
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);

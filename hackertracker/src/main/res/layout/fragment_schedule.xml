@@ -3,15 +3,8 @@
     style="@style/page"
     >
 
-    <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical">
-
         <ListView android:id="@+id/starred"
             style="@style/list"/>
-
-    </LinearLayout>
 
 </LinearLayout>
 

@@ -2,6 +2,7 @@ package com.shortstack.hackertracker.Speakers;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,6 +62,7 @@ public class SpeakerFragment extends HackerTrackerFragment {
         try {
           rootView = inflater.inflate(R.layout.fragment_speakers, container, false);
         } catch (InflateException e) {
+            Log.e(context.getClass().getName(), e.getMessage());
         }
 
         date = mDate+1;

@@ -21,6 +21,7 @@ import com.shortstack.hackertracker.Model.Event;
 import com.shortstack.hackertracker.Model.Party;
 import com.shortstack.hackertracker.Model.Speaker;
 import com.shortstack.hackertracker.Model.Vendor;
+import com.shortstack.hackertracker.Model.Workshop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -86,7 +87,7 @@ public class HackerTrackerFragment extends Fragment {
     }
 
     public List<Vendor> getVendors() {
-        ArrayList<Vendor> result = new ArrayList<Vendor>();
+        ArrayList<Vendor> result = new ArrayList<>();
 
         SQLiteDatabase db = HackerTrackerApplication.vendorDbHelper.getWritableDatabase();
 
@@ -116,7 +117,7 @@ public class HackerTrackerFragment extends Fragment {
     }
 
     public List<Default> getItemByDate(String day, String type) {
-        ArrayList<Default> result = new ArrayList<Default>();
+        ArrayList<Default> result = new ArrayList<>();
 
         SQLiteDatabase db = HackerTrackerApplication.dbHelper.getWritableDatabase();
 
@@ -140,6 +141,9 @@ public class HackerTrackerFragment extends Fragment {
                             break;
                         case Constants.TYPE_PARTY:
                             item = new Party();
+                            break;
+                        case Constants.TYPE_WORKSHOP:
+                            item = new Workshop();
                             break;
                         case Constants.TYPE_SKYTALKS:
                             item = new Default();
@@ -199,7 +203,7 @@ public class HackerTrackerFragment extends Fragment {
     }
 
     public List<Default> getStars(String day) {
-        ArrayList<Default> result = new ArrayList<Default>();
+        ArrayList<Default> result = new ArrayList<>();
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 

@@ -1,6 +1,6 @@
-package com.shortstack.hackertracker.Speakers;
+package com.shortstack.hackertracker.Workshops;
 
-import android.content.Context;
+import android.content.res.Resources;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -14,14 +14,13 @@ import android.view.ViewGroup;
 import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.R;
 
-public class SpeakerPagerFragment extends Fragment {
+public class WorkshopPagerFragment extends Fragment {
 
     static ViewPager pager;
-    private Context context;
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    public static SpeakerPagerFragment newInstance(int position) {
-        SpeakerPagerFragment frag=new SpeakerPagerFragment();
+    public static WorkshopPagerFragment newInstance(int position) {
+        WorkshopPagerFragment frag=new WorkshopPagerFragment();
         Bundle args=new Bundle();
 
         args.putInt(ARG_SECTION_NUMBER, position);
@@ -35,9 +34,6 @@ public class SpeakerPagerFragment extends Fragment {
                            ViewGroup container,
                            Bundle savedInstanceState) {
         View result=inflater.inflate(R.layout.pager, container, false);
-
-        // get context
-        context = inflater.getContext();
 
         pager=(ViewPager)result.findViewById(R.id.pager);
         pager.setAdapter(buildAdapter());
@@ -55,7 +51,7 @@ public class SpeakerPagerFragment extends Fragment {
     }
 
     private PagerAdapter buildAdapter() {
-        return(new SpeakerPagerAdapter(getActivity(), getChildFragmentManager()));
+        return(new WorkshopPagerAdapter(getActivity(), getChildFragmentManager()));
     }
 
 }

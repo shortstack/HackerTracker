@@ -10,8 +10,7 @@
             android:visibility="gone"
             android:text="@string/empty"
             style="@style/dialog_text"/>
-        <ListView android:id="@+id/list_kids"
+        <ListView android:id="@+id/list_workshops"
             style="@style/list"/>
 
 </LinearLayout>
-

@@ -16,6 +16,7 @@
         <item>@string/events</item>
         <item>@string/parties</item>
         <item>@string/villages</item>
+        <item>@string/workshops</item>
         <item>@string/books</item>
         <item>@string/demolabs</item>
         <item>@string/vendors</item>
@@ -37,6 +38,7 @@
     <string name="shuttle">Shuttle</string>
     <string name="skytalks">Skytalks</string>
     <string name="maps">Maps</string>
+    <string name="workshops">Workshops</string>
     <string name="faq">FAQ</string>
     <string name="schedule">My Schedule</string>
     <string name="links">Links</string>
@@ -63,13 +65,14 @@
     <string name="updates_available">Update Available</string>
     <string name="update_check">Would you like to update the schedule? This will not affect your saved schedule.</string>
     <string name="no_updates">Your schedule is up to date! :)</string>
-    <string name="checking_for_updates">Checking for schedule updates...</string>
-    <string name="syncing">Syncing database with updates...</string>
+    <string name="checking_for_updates">Checking for schedule updates…</string>
+    <string name="syncing">Syncing database with updates…</string>
     <string name="schedule_finished">Schedule sync complete</string>
     <string name="sync_availability">Sync will be available the Wednesday before DEF CON! :)</string>
     <string name="up_to_date">Your schedule is already up to date! :)</string>
     <string name="notification_title">DEF CON Schedule Notification</string>
     <string name="vendors_message">Vendors not announced yet! Check back soon :)</string>
+    <string name="demolabs_message">Demo labs not announced yet! Check back soon :)</string>
 
     <string name="schedule_cleared">Schedule cleared successfully</string>
     <string name="schedule_clear">Clear My Schedule</string>

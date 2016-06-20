@@ -3,11 +3,6 @@
     style="@style/page"
     >
 
-    <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -17,8 +12,6 @@
             style="@style/dialog_text"/>
         <ListView android:id="@+id/list_events"
             style="@style/list"/>
-
-    </LinearLayout>
 
 </LinearLayout>
 

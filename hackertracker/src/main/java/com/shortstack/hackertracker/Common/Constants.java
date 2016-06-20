@@ -9,7 +9,7 @@ public interface Constants {
     String API_ERROR_MESSAGE = "\"errorMessage\":";
     String OFFICIAL_SCHEDULE = "/schedule-full.json";
 
-    String TYPE_SPEAKER = "Official";
+    String TYPE_SPEAKER = "Speaker";
     String TYPE_CONTEST = "Contest";
     String TYPE_EVENT = "Event";
     String TYPE_PARTY = "Party";
@@ -18,6 +18,7 @@ public interface Constants {
     String TYPE_SKYTALKS = "Skytalks";
     String TYPE_MESSAGE = "Message";
     String TYPE_VILLAGE = "Villages";
+    String TYPE_WORKSHOP = "Workshop";
     String TYPE_BOOK = "Book-Signing";
     String TYPE_UNOFFICIAL = "Un-Official";
     String TYPE_DCIB = "DCIB";
@@ -43,6 +44,7 @@ public interface Constants {
     String FRAGMENT_EVENTS = "EventPagerFragment";
     String FRAGMENT_PARTIES = "PartyPagerFragment";
     String FRAGMENT_KIDS = "KidsPagerFragment";
+    String FRAGMENT_WORKSHOPS = "WorkshopPagerFragment";
     String FRAGMENT_SKYTALKS = "SkytalksPagerFragment";
     String FRAGMENT_BOOKS = "BookPagerFragment";
     String FRAGMENT_VILLAGES = "VillagePagerFragment";

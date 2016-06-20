@@ -2,6 +2,7 @@ package com.shortstack.hackertracker.Parties;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -62,6 +63,7 @@ public class PartyFragment extends HackerTrackerFragment {
         try {
           rootView = inflater.inflate(R.layout.fragment_parties, container, false);
         } catch (InflateException e) {
+            Log.e(context.getClass().getName(), e.getMessage());
         }
 
         date = mDate+1;

@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
@@ -71,9 +72,9 @@ public class SchedulePagerFragment extends Fragment {
         HomeActivity.setDay(pager);
 
         PagerTabStrip pagerTabStrip = (PagerTabStrip) result.findViewById(R.id.pager_title_strip);
-        pagerTabStrip.setDrawFullUnderline(true);
-        pagerTabStrip.setTabIndicatorColor(getResources().getColor(R.color.colorAccent));
         pagerTabStrip.setDrawFullUnderline(false);
+        pagerTabStrip.setTabIndicatorColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+        pagerTabStrip.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.black));
 
         return(result);
     }
@@ -89,6 +90,7 @@ public class SchedulePagerFragment extends Fragment {
         int count = myCursor.getCount();
 
         db.close();
+        myCursor.close();
 
         return count;
     }
@@ -97,8 +99,8 @@ public class SchedulePagerFragment extends Fragment {
         SQLiteDatabase db = HackerTrackerApplication.dbHelper.getReadableDatabase();
 
         Log.d("CSV", "backupDatabaseCSV");
-        Boolean returnCode = false;
-        int i = 0;
+        Boolean returnCode;
+        int i;
         String csvHeader = "";
         String csvValues = "";
         for (i = 0; i < Constants.COLUMN_NAMES.length; i++) {

@@ -56,6 +56,7 @@ import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 import com.shortstack.hackertracker.Utils.UpdateTask;
 import com.shortstack.hackertracker.Vendors.VendorsFragment;
 import com.shortstack.hackertracker.Villages.VillagePagerFragment;
+import com.shortstack.hackertracker.Workshops.WorkshopPagerFragment;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -243,6 +244,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         MapsFragment,
         BooksPagerFragment,
         VillagePagerFragment,
+        WorkshopPagerFragment,
         ShuttleFragment,
         SkytalksPagerFragment,
         KidsPagerFragment,
@@ -295,31 +297,36 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 addToBackStack(R.string.villages, Constants.FRAGMENT_VILLAGES, VillagePagerFragment.newInstance(7));
                 break;
             case 7:
-                // book signings
-                addToBackStack(R.string.books, Constants.FRAGMENT_BOOKS, BooksPagerFragment.newInstance(8));
+                // workshops
+                addToBackStack(R.string.workshops, Constants.FRAGMENT_WORKSHOPS, WorkshopPagerFragment.newInstance(8));
                 break;
             case 8:
+                // book signings
+                addToBackStack(R.string.books, Constants.FRAGMENT_BOOKS, BooksPagerFragment.newInstance(9));
+                break;
+            case 9:
                 // demo labs
-                addToBackStack(R.string.demolabs, Constants.FRAGMENT_DEMOLAB, DemoLabsPagerFragment.newInstance(9));
+                Toast.makeText(context,R.string.demolabs_message, Toast.LENGTH_SHORT).show();
+                //addToBackStack(R.string.demolabs, Constants.FRAGMENT_DEMOLAB, DemoLabsPagerFragment.newInstance(10));
                 break;
             /*case 9:
                 // kids
                 addToBackStack(R.string.kids, Constants.FRAGMENT_KIDS, KidsPagerFragment.newInstance(10));
                 break;*/
-            case 9:
+            case 10:
                 // vendors
                 Toast.makeText(context,R.string.vendors_message, Toast.LENGTH_SHORT).show();
-                //addToBackStack(R.string.vendors, Constants.FRAGMENT_VENDORS, VendorsFragment.newInstance(10));
-                break;
-            case 10:
-                // maps
-                addToBackStack(R.string.maps, Constants.FRAGMENT_MAPS, MapsFragment.newInstance(11));
+                //addToBackStack(R.string.vendors, Constants.FRAGMENT_VENDORS, VendorsFragment.newInstance(11));
                 break;
             case 11:
-                // faq
-                addToBackStack(R.string.faq, Constants.FRAGMENT_FAQ, FAQFragment.newInstance(12));
+                // maps
+                addToBackStack(R.string.maps, Constants.FRAGMENT_MAPS, MapsFragment.newInstance(12));
                 break;
             case 12:
+                // faq
+                addToBackStack(R.string.faq, Constants.FRAGMENT_FAQ, FAQFragment.newInstance(13));
+                break;
+            case 13:
                 // settings
                 addToBackStack(R.string.settings, Constants.FRAGMENT_SETTINGS, new SettingsFragment());
                 break;
@@ -559,8 +566,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
             File sd = Environment.getExternalStorageDirectory();
 
             if (sd.canWrite()) {
-                String currentDBPath= "/data/data/com.shortstack.hackertracker/databases/hackertracker.sqlite";
-                String backupDBPath  = Environment.getExternalStorageDirectory().getAbsolutePath() + "/hackertracker.sqlite";
+                String currentDBPath= getResources().getString(R.string.db_path) + getResources().getString(R.string.db_name);
+                String backupDBPath  = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + getResources().getString(R.string.db_name);
                 File currentDB = new File(currentDBPath);
                 File backupDB = new File(backupDBPath);
 

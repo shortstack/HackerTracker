@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.Skytalks;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.PagerTabStrip;
 import android.support.v4.view.ViewPager;
@@ -47,8 +48,8 @@ public class SkytalksPagerFragment extends Fragment {
 
         PagerTabStrip pagerTabStrip = (PagerTabStrip) result.findViewById(R.id.pager_title_strip);
         pagerTabStrip.setDrawFullUnderline(false);
-        pagerTabStrip.setTabIndicatorColor(getResources().getColor(R.color.colorAccent));
-        pagerTabStrip.setBackgroundColor(getResources().getColor(R.color.black));
+        pagerTabStrip.setTabIndicatorColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
+        pagerTabStrip.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.black));
 
         return(result);
     }
