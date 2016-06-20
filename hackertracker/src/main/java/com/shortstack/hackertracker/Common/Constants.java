@@ -46,7 +46,7 @@ public interface Constants {
     String FRAGMENT_KIDS = "KidsPagerFragment";
     String FRAGMENT_WORKSHOPS = "WorkshopPagerFragment";
     String FRAGMENT_SKYTALKS = "SkytalksPagerFragment";
-    String FRAGMENT_BOOKS = "BookPagerFragment";
+    String FRAGMENT_BOOKS = "BooksPagerFragment";
     String FRAGMENT_VILLAGES = "VillagePagerFragment";
     String FRAGMENT_VENDORS = "VendorsFragment";
     String FRAGMENT_DEMOLAB = "DemoLabsFragment";
