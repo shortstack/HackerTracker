@@ -6,6 +6,7 @@
     <color name="windowBackground">#FFFFFF</color>
     <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#6464b7</color>
+    <color name="colorLightAccent">#A0A0EF</color>
 
     <color name="black_alpha">#DD000000</color>
     <color name="black_alpha_hover">#EE000000</color>

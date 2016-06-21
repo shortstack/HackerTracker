@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.Adapter;
 
 import android.content.Context;
+import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -79,6 +80,12 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
 
             // set title
             holder.title.setText(item.getTitle());
+
+            // if starred, highlight title
+            if (item.getStarred()==1) {
+                holder.title.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+                holder.time.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+            }
 
             // set name if it's a speaker
             if (!item.getType().equals(Constants.TYPE_SPEAKER) || item.getName()==null) {
