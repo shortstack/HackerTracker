@@ -41,6 +41,7 @@ import com.shortstack.hackertracker.Fragment.HomeFragment;
 import com.shortstack.hackertracker.Fragment.MapsFragment;
 import com.shortstack.hackertracker.Fragment.SearchFragment;
 import com.shortstack.hackertracker.Fragment.SettingsFragment;
+import com.shortstack.hackertracker.Kids.KidsPagerFragment;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
 import com.shortstack.hackertracker.Model.ApiBase;
 import com.shortstack.hackertracker.Model.Default;
@@ -300,19 +301,19 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 // workshops
                 addToBackStack(R.string.workshops, Constants.FRAGMENT_WORKSHOPS, WorkshopPagerFragment.newInstance(8));
                 break;
-            case 8:
+            /*case 8:
                 // book signings
                 addToBackStack(R.string.books, Constants.FRAGMENT_BOOKS, BooksPagerFragment.newInstance(9));
-                break;
-            case 9:
+                break;*/
+            case 8:
                 // demo labs
                 Toast.makeText(context,R.string.demolabs_message, Toast.LENGTH_SHORT).show();
-                //addToBackStack(R.string.demolabs, Constants.FRAGMENT_DEMOLAB, DemoLabsPagerFragment.newInstance(10));
+                //addToBackStack(R.string.demolabs, Constants.FRAGMENT_DEMOLAB, DemoLabsPagerFragment.newInstance(9));
                 break;
-            /*case 9:
+            case 9:
                 // kids
                 addToBackStack(R.string.kids, Constants.FRAGMENT_KIDS, KidsPagerFragment.newInstance(10));
-                break;*/
+                break;
             case 10:
                 // vendors
                 Toast.makeText(context,R.string.vendors_message, Toast.LENGTH_SHORT).show();

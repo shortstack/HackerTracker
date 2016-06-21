@@ -17,8 +17,8 @@
         <item>@string/parties</item>
         <item>@string/villages</item>
         <item>@string/workshops</item>
-        <item>@string/books</item>
         <item>@string/demolabs</item>
+        <item>@string/kids</item>
         <item>@string/vendors</item>
         <item>@string/maps</item>
         <item>@string/faq</item>
