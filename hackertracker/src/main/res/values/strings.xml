@@ -21,6 +21,7 @@
         <item>@string/kids</item>
         <item>@string/vendors</item>
         <item>@string/maps</item>
+        <item>@string/partners</item>
         <item>@string/faq</item>
     </string-array>
 
@@ -38,6 +39,7 @@
     <string name="shuttle">Shuttle</string>
     <string name="skytalks">Skytalks</string>
     <string name="maps">Maps</string>
+    <string name="partners">Partners</string>
     <string name="workshops">Workshops</string>
     <string name="faq">FAQ</string>
     <string name="schedule">My Schedule</string>
@@ -72,6 +74,7 @@
     <string name="up_to_date">Your schedule is already up to date! :)</string>
     <string name="notification_title">DEF CON Schedule Notification</string>
     <string name="vendors_message">Vendors not announced yet! Check back soon :)</string>
+    <string name="skytalks_message">Skytalks not announced yet! Check back soon :)</string>
     <string name="demolabs_message">Demo labs not announced yet! Check back soon :)</string>
 
     <string name="schedule_cleared">Schedule cleared successfully</string>
@@ -175,9 +178,12 @@
     <string name="link_06"><b>RSS Feed</b>\n\nhttps://www.defcon.org/defconrss.xml\n\n</string>
     <string name="link_07"><b>previous conference archives, info, speeches</b>\n\nhttps://www.defcon.org\n\n</string>
 
+    <string name="partners_rejectedcon">Has your paper been rejected from a security conference? Rejected Con is an online annual security conference that allows the presentations rejected by other conferences to see the light of day. Check them out at @Rejected_CON!\n\nhttp://twitter.com/rejected_con\nhttp://rejectedcon.com</string>
+    <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
+
     <string-array name="updates">
         <item>06/22/16</item>
-        <item>Has your paper been rejected from a security conference? Rejected Con is an online annual security conference that allows the presentations rejected by other conferences to see the light of day. Check them out at @Rejected_CON! The CFP closes 9/30!</item>
+        <item>Added a partners section :) Check them out in the menu on the left - @Rejected_CON and @defconparties! The @Rejected_CON CFP closes 9/30!</item>
         <item>06/20/16</item>
         <item>Starting early this year with updates! Ramping up for DC24. Added official schedule and workshops. Can\'t wait to see everyone in August!</item>
     </string-array>

@@ -39,6 +39,7 @@ import com.shortstack.hackertracker.Fragment.FAQFragment;
 import com.shortstack.hackertracker.Fragment.FragmentDrawer;
 import com.shortstack.hackertracker.Fragment.HomeFragment;
 import com.shortstack.hackertracker.Fragment.MapsFragment;
+import com.shortstack.hackertracker.Fragment.PartnersFragment;
 import com.shortstack.hackertracker.Fragment.SearchFragment;
 import com.shortstack.hackertracker.Fragment.SettingsFragment;
 import com.shortstack.hackertracker.Kids.KidsPagerFragment;
@@ -166,8 +167,14 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     case VillagePagerFragment:
                         mTitle.setText(getString(R.string.villages).toUpperCase());
                         break;
+                    case WorkshopPagerFragment:
+                        mTitle.setText(getString(R.string.workshops).toUpperCase());
+                        break;
                     case LinksFragment:
                         mTitle.setText(getString(R.string.links).toUpperCase());
+                        break;
+                    case PartnersFragment:
+                        mTitle.setText(getString(R.string.partners).toUpperCase());
                         break;
                     case FAQFragment:
                         mTitle.setText(getString(R.string.faq).toUpperCase());
@@ -246,6 +253,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         BooksPagerFragment,
         VillagePagerFragment,
         WorkshopPagerFragment,
+        PartnersFragment,
         ShuttleFragment,
         SkytalksPagerFragment,
         KidsPagerFragment,
@@ -279,7 +287,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;
             case 2:
                 // skytalks
-                addToBackStack(R.string.skytalks, Constants.FRAGMENT_SKYTALKS, SkytalksPagerFragment.newInstance(3));
+                Toast.makeText(context,R.string.skytalks_message, Toast.LENGTH_SHORT).show();
+                //addToBackStack(R.string.skytalks, Constants.FRAGMENT_SKYTALKS, SkytalksPagerFragment.newInstance(3));
                 break;
             case 3:
                 // contests
@@ -324,10 +333,14 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 addToBackStack(R.string.maps, Constants.FRAGMENT_MAPS, MapsFragment.newInstance(12));
                 break;
             case 12:
-                // faq
-                addToBackStack(R.string.faq, Constants.FRAGMENT_FAQ, FAQFragment.newInstance(13));
+                // partners
+                addToBackStack(R.string.partners, Constants.FRAGMENT_PARTNERS, PartnersFragment.newInstance(13));
                 break;
             case 13:
+                // faq
+                addToBackStack(R.string.faq, Constants.FRAGMENT_FAQ, FAQFragment.newInstance(14));
+                break;
+            case 14:
                 // settings
                 addToBackStack(R.string.settings, Constants.FRAGMENT_SETTINGS, new SettingsFragment());
                 break;

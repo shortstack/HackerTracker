@@ -63,7 +63,6 @@ public class UpdateAdapter extends ArrayAdapter<String> {
         // if updates in list, populate data
         if (item != null) {
 
-
             // set text
             holder.update.setText(Html.fromHtml(item));
 
@@ -78,7 +77,6 @@ public class UpdateAdapter extends ArrayAdapter<String> {
             Pattern pattern = Pattern.compile("@([A-Za-z0-9_-]+)");
             String scheme = "http://twitter.com/";
             Linkify.addLinks(holder.update, pattern, scheme, null, mentionFilter);
-
 
         }
 
