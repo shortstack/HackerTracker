@@ -31,6 +31,8 @@
     <ListView
         style="@style/list"
         android:id="@+id/updates"
+        android:divider="@null"
+        android:dividerHeight="0dp"
         android:padding="15dp"
         android:textColor="@color/white"/>
 

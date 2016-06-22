@@ -175,7 +175,10 @@
     <string name="link_06"><b>RSS Feed</b>\n\nhttps://www.defcon.org/defconrss.xml\n\n</string>
     <string name="link_07"><b>previous conference archives, info, speeches</b>\n\nhttps://www.defcon.org\n\n</string>
 
-    <array name="updates">
-        <item><b>06/20/16</b>&lt;br/&gt;&lt;br/&gt;Starting early this year with updates! Ramping up for DC24. Added official schedule and workshops. Can\'t wait to see everyone in August!</item>
-    </array>
+    <string-array name="updates">
+        <item>06/22/16</item>
+        <item>Has your paper been rejected from a security conference? Rejected Con is an online annual security conference that allows the presentations rejected by other conferences to see the light of day. Check them out at @Rejected_CON! The CFP closes 9/30!</item>
+        <item>06/20/16</item>
+        <item>Starting early this year with updates! Ramping up for DC24. Added official schedule and workshops. Can\'t wait to see everyone in August!</item>
+    </string-array>
 </resources>

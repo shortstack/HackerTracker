@@ -50,7 +50,7 @@ public class HomeFragment extends Fragment {
         context = inflater.getContext();
 
         // get list items
-        CharSequence[] myItems = getResources().getTextArray(R.array.updates);
+        String[] myItems = getResources().getStringArray(R.array.updates);
 
         // configure the listview
         UpdateAdapter aa = new UpdateAdapter(context,R.layout.row_updates,myItems);
