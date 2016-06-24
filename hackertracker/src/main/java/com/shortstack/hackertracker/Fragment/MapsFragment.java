@@ -63,12 +63,7 @@ public class MapsFragment extends Fragment {
         // get context
         context = inflater.getContext();
 
-        // copy pdf files to sdcard
-        copyAssets(context);
-
         // button listeners for defcon map
-        ImageView image_dcmap = (ImageView) rootView.findViewById(R.id.crop_dcmap);
-        image_dcmap.setOnClickListener(new MapOnClickListener());
         Button button_dcmap = (Button) rootView.findViewById(R.id.button_dcmap);
         button_dcmap.setOnClickListener(new MapButtonOnClickListener(getString(R.string.map_con_name)));
 
@@ -108,6 +103,10 @@ public class MapsFragment extends Fragment {
         @Override
         public void onClick(View v) {
 
+            // copy map to sdcard
+            copyAssets(context, filename);
+
+
             File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename);
             Intent target = new Intent(Intent.ACTION_VIEW);
             target.setDataAndType(Uri.fromFile(file),"application/pdf");
@@ -125,30 +124,24 @@ public class MapsFragment extends Fragment {
     }
 
     // copies map PDFs to SD card if available
-    private void copyAssets(Context context) {
+    private void copyAssets(Context context, String filename) {
+
         AssetManager assetManager = context.getAssets();
-        String[] files;
+
+        InputStream in;
+        OutputStream out;
+
         try {
-            files = assetManager.list("");
-            for(String filename : files) {
-                if (filename.contains("map")) {
-                    InputStream in;
-                    OutputStream out;
-                    try {
-                        in = assetManager.open(filename);
-                        out = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename);
-                        copyFile(in, out);
-                        in.close();
-                        out.flush();
-                        out.close();
-                    } catch (Exception e) {
-                        Log.e("tag", e.getMessage());
-                    }
-                }
-            }
-        } catch (IOException e) {
+            in = assetManager.open(filename);
+            out = new FileOutputStream(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + filename);
+            copyFile(in, out);
+            in.close();
+            out.flush();
+            out.close();
+        } catch (Exception e) {
             Log.e("tag", e.getMessage());
         }
+
     }
 
     // actually copies file
