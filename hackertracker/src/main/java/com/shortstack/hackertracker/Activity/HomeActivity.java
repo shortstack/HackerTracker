@@ -287,8 +287,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;
             case 2:
                 // skytalks
-                Toast.makeText(context,R.string.skytalks_message, Toast.LENGTH_SHORT).show();
-                //addToBackStack(R.string.skytalks, Constants.FRAGMENT_SKYTALKS, SkytalksPagerFragment.newInstance(3));
+                addToBackStack(R.string.skytalks, Constants.FRAGMENT_SKYTALKS, SkytalksPagerFragment.newInstance(3));
                 break;
             case 3:
                 // contests
@@ -325,8 +324,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;
             case 10:
                 // vendors
-                Toast.makeText(context,R.string.vendors_message, Toast.LENGTH_SHORT).show();
-                //addToBackStack(R.string.vendors, Constants.FRAGMENT_VENDORS, VendorsFragment.newInstance(11));
+                addToBackStack(R.string.vendors, Constants.FRAGMENT_VENDORS, VendorsFragment.newInstance(11));
                 break;
             case 11:
                 // maps

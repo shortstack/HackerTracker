@@ -11,7 +11,31 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:gravity="center">
+            android:gravity="center"
+            android:foreground="#ffffff">
+<!--
+            <com.shortstack.hackertracker.Font.HelveticaTextView
+                style="@style/button_map"
+                android:text="@string/need_uber"
+                android:id="@+id/uber_text"
+                />
+
+            <TextView
+                style="@style/uber_text"
+                android:text="@string/uber_location"
+                android:id="@+id/uber"
+                />
+
+            <Spinner
+                android:id="@+id/spinner_uber"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:prompt="@string/uber_location"
+                android:entries="@array/uber_locations"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginBottom="20dp">
+            </Spinner>-->
 
             <ImageView
                 android:src="@drawable/crop_dcmap"

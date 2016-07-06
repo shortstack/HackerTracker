@@ -106,6 +106,36 @@
               <item name="android:gravity">center</item>
               <item name="android:padding">5dp</item>
           </style>
+          <style name="button_map_selected">
+            <item name="android:textColor">@color/white</item>
+            <item name="android:textAllCaps">true</item>
+            <item name="android:textSize">15sp</item>
+            <item name="android:background">@color/colorAccent</item>
+            <item name="android:layout_width">match_parent</item>
+            <item name="android:layout_height">wrap_content</item>
+            <item name="android:layout_marginLeft">40dp</item>
+            <item name="android:layout_marginRight">40dp</item>
+            <item name="android:layout_marginTop">20dp</item>
+            <item name="android:layout_marginBottom">30dp</item>
+            <item name="android:gravity">center</item>
+            <item name="android:padding">5dp</item>
+          </style>
+          <style name="uber_button">
+               <item name="android:textColor">@color/white</item>
+               <item name="android:textSize">15sp</item>
+               <item name="android:layout_width">match_parent</item>
+               <item name="android:layout_height">wrap_content</item>
+               <item name="android:layout_marginLeft">40dp</item>
+               <item name="android:layout_marginRight">40dp</item>
+          </style>
+          <style name="uber_text">
+            <item name="android:textColor">@color/light_gray</item>
+            <item name="android:textSize">15sp</item>
+            <item name="android:layout_width">match_parent</item>
+            <item name="android:layout_height">wrap_content</item>
+            <item name="android:layout_marginLeft">40dp</item>
+            <item name="android:layout_marginRight">40dp</item>
+          </style>
           <style name="where">
               <item name="android:textColor">@color/light_gray</item>
               <item name="android:textColorLink">@color/light_gray</item>

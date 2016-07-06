@@ -13,8 +13,10 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.shortstack.hackertracker.R;
@@ -25,6 +27,9 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Whitney Champion on 3/29/14.
@@ -65,31 +70,23 @@ public class MapsFragment extends Fragment {
 
         // button listeners for defcon map
         Button button_dcmap = (Button) rootView.findViewById(R.id.button_dcmap);
+        ImageView image_dcmap = (ImageView) rootView.findViewById(R.id.crop_dcmap);
         button_dcmap.setOnClickListener(new MapButtonOnClickListener(getString(R.string.map_con_name)));
+        image_dcmap.setOnClickListener(new MapButtonOnClickListener(getString(R.string.map_con_name)));
 
         // button listener for hotel map
         Button button_ballysmap = (Button) rootView.findViewById(R.id.button_ballysmap);
+        ImageView image_ballysmap = (ImageView) rootView.findViewById(R.id.crop_ballysmap);
         button_ballysmap.setOnClickListener(new MapButtonOnClickListener(getString(R.string.map_hotel_name)));
+        image_ballysmap.setOnClickListener(new MapButtonOnClickListener(getString(R.string.map_hotel_name)));
+/*
+        // set up spinner
+        Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner_uber);
+        ArrayAdapter adapter = ArrayAdapter.createFromResource(context, R.array.uber_locations, R.layout.spinner_item);
+        adapter.setDropDownViewResource(R.layout.spinner_item);
+        spinner.setAdapter(adapter);*/
 
         return rootView;
-    }
-
-    private class MapOnClickListener implements View.OnClickListener {
-
-        int clicks = 0;
-
-        @Override
-        public void onClick(View v) {
-            clicks += 1;
-            if (clicks == 1) {
-                Toast.makeText(context, getString(R.string.message04), Toast.LENGTH_SHORT).show();
-            } else if (clicks == 2) {
-                Toast.makeText(context, getString(R.string.message05), Toast.LENGTH_SHORT).show();
-            } else if (clicks == 3) {
-                DialogUtil.darknetDialog(context, getResources().getString(R.string.code01)).show();
-            }
-        }
-
     }
 
     private class MapButtonOnClickListener implements View.OnClickListener {

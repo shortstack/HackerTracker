@@ -26,7 +26,7 @@ public class DatabaseAdapterVendors extends SQLiteOpenHelper {
 
     private static String DB_NAME = "vendors.sqlite";
 
-    private static int DB_VERSION = 6;
+    private static int DB_VERSION = 9;
 
     private SQLiteDatabase myDataBase;
 

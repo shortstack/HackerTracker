@@ -38,7 +38,7 @@
     <string name="kids">Kids</string>
     <string name="shuttle">Shuttle</string>
     <string name="skytalks">Skytalks</string>
-    <string name="maps">Maps</string>
+    <string name="maps">Maps &amp; Uber</string>
     <string name="partners">Partners</string>
     <string name="workshops">Workshops</string>
     <string name="faq">FAQ</string>
@@ -106,6 +106,19 @@
     <string name="open_file">Open File</string>
     <string name="backup_name">dc24_schedule.csv</string>
     <string name="backup">Schedule saved in Downloads as "dc24_schedule.csv"</string>
+
+    <string name="need_uber">Need an Uber?</string>
+    <string name="uber_location">Choose your pickup location…</string>
+    <string name="uber_find">Find An Uber</string>
+    <string-array name="uber_locations">
+        <item name="ballys">Bally\'s</item>
+        <item name="paris">Paris</item>
+        <item name="tuscany">Tuscany</item>
+        <item name="bellagio">Bellagio</item>
+        <item name="caesars">Caesar\'s Palace</item>
+        <item name="flamingo">Flamingo</item>
+        <item name="planet_hollywood">Planet Hollywood</item>
+    </string-array>
 
     <string name="coming_soon_maps">Conference map will be posted when it becomes available!</string>
 
@@ -182,6 +195,8 @@
     <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
 
     <string-array name="updates">
+        <item>07/05/16</item>
+        <item>Skytalks, vendors, more parties, village schedules, and events! 1 month to go! :)</item>
         <item>06/22/16</item>
         <item>Added a partners section :) Check them out in the menu on the left - @Rejected_CON and @defconparties! The @Rejected_CON CFP closes 9/30!</item>
         <item>06/20/16</item>
