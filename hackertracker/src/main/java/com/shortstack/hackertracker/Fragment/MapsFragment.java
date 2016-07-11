@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.Fragment;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,20 +14,31 @@ import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.shortstack.hackertracker.Adapter.SpinnerAdapter;
+import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.DialogUtil;
+import com.uber.sdk.android.core.UberSdk;
+import com.uber.sdk.android.rides.RideParameters;
+import com.uber.sdk.android.rides.RideRequestButton;
+import com.uber.sdk.core.auth.Scope;
+import com.uber.sdk.rides.client.SessionConfiguration;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +50,9 @@ public class MapsFragment extends Fragment {
 
     private static View rootView;
     private Context context;
+    private String address;
+    private String nickname;
+    private RideRequestButton requestButton;
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     public static MapsFragment newInstance(int sectionNumber) {
@@ -79,14 +94,77 @@ public class MapsFragment extends Fragment {
         ImageView image_ballysmap = (ImageView) rootView.findViewById(R.id.crop_ballysmap);
         button_ballysmap.setOnClickListener(new MapButtonOnClickListener(getString(R.string.map_hotel_name)));
         image_ballysmap.setOnClickListener(new MapButtonOnClickListener(getString(R.string.map_hotel_name)));
-/*
+
+        // set up uber
+        SessionConfiguration config = new SessionConfiguration.Builder()
+                .setClientId(Constants.UBER_CLIENT_ID)
+                .setEnvironment(SessionConfiguration.Environment.PRODUCTION)
+                .setScopes(Arrays.asList(Scope.PROFILE, Scope.RIDE_WIDGETS))
+                .build();
+        UberSdk.initialize(config);
+        requestButton = (RideRequestButton) rootView.findViewById(R.id.uber_request_button);
+
         // set up spinner
         Spinner spinner = (Spinner) rootView.findViewById(R.id.spinner_uber);
-        ArrayAdapter adapter = ArrayAdapter.createFromResource(context, R.array.uber_locations, R.layout.spinner_item);
-        adapter.setDropDownViewResource(R.layout.spinner_item);
-        spinner.setAdapter(adapter);*/
+        spinner.setOnItemSelectedListener(new UberOnItemSelectedListener());
+        SpinnerAdapter adapter = new SpinnerAdapter(context, R.layout.spinner_item);
+        adapter.addAll(Constants.UBER_LOCATIONS);
+        spinner.setAdapter(adapter);
+        spinner.setSelection(adapter.getCount());
 
         return rootView;
+    }
+
+    public class UberOnItemSelectedListener implements AdapterView.OnItemSelectedListener {
+
+        public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
+
+            // get address for selected item
+            switch (parent.getSelectedItem().toString()) {
+                case Constants.UBER_BALLYS:
+                    nickname = parent.getSelectedItem().toString();
+                    address = Constants.UBER_ADDRESS_BALLYS;
+                    break;
+                case Constants.UBER_PARIS:
+                    nickname = parent.getSelectedItem().toString();
+                    address = Constants.UBER_ADDRESS_PARIS;
+                    break;
+                case Constants.UBER_TUSCANY:
+                    nickname = parent.getSelectedItem().toString();
+                    address = Constants.UBER_ADDRESS_TUSCANY;
+                    break;
+                case Constants.UBER_CAESARS:
+                    nickname = parent.getSelectedItem().toString();
+                    address = Constants.UBER_ADDRESS_CAESARS;
+                    break;
+                case Constants.UBER_MANDALAY:
+                    nickname = parent.getSelectedItem().toString();
+                    address = Constants.UBER_ADDRESS_MANDALAY;
+                    break;
+                case Constants.UBER_PLANET_HOLLYWOOD:
+                    nickname = parent.getSelectedItem().toString();
+                    address = Constants.UBER_ADDRESS_PLANET_HOLLYWOOD;
+                    break;
+                case Constants.UBER_BELLAGIO:
+                    nickname = parent.getSelectedItem().toString();
+                    address = Constants.UBER_ADDRESS_BELLAGIO;
+                    break;
+                default:
+                    nickname = "Paris";
+                    address = Constants.UBER_ADDRESS_PARIS;
+                    break;
+            }
+
+            // set up ride request button
+            RideParameters rideParams = new RideParameters.Builder()
+                    .setDropoffLocation(0.0,0.0,nickname,address)
+                    .build();
+            requestButton.setRideParameters(rideParams);
+
+        }
+
+        public void onNothingSelected(AdapterView parent) {
+        }
     }
 
     private class MapButtonOnClickListener implements View.OnClickListener {

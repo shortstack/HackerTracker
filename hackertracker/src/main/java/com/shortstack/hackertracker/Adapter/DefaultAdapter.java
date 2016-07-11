@@ -85,6 +85,9 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             if (item.getStarred()==1) {
                 holder.title.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
                 holder.time.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
+            } else {
+                holder.title.setTextColor(ContextCompat.getColor(context, R.color.white));
+                holder.time.setTextColor(ContextCompat.getColor(context, R.color.white));
             }
 
             // set name if it's a speaker

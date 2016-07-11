@@ -61,4 +61,26 @@ public interface Constants {
 
     String[] COLUMN_NAMES = {"Title","Speaker Name","Start Time","End Time","Date","Location"};
 
+    String UBER_CLIENT_ID = "q1eUCeC1ZenbGmQD2vb0MytALvboEHhD";
+
+    String UBER_PARIS = "Paris";
+    String UBER_BALLYS = "Bally's";
+    String UBER_TUSCANY = "Tuscany Suites & Casino";
+    String UBER_CAESARS = "Caesar's Palace";
+    String UBER_MANDALAY = "Mandalay Bay";
+    String UBER_BELLAGIO = "Bellagio";
+    String UBER_PLANET_HOLLYWOOD = "Planet Hollywood";
+
+    String UBER_DEFAULT = "Choose your destination";
+
+    String UBER_ADDRESS_PARIS = "3655 S Las Vegas Blvd, Las Vegas, NV 89109";
+    String UBER_ADDRESS_BALLYS = "3645 S Las Vegas Blvd, Las Vegas, NV 89109";
+    String UBER_ADDRESS_TUSCANY = "255 E Flamingo Rd, Las Vegas, NV 89169";
+    String UBER_ADDRESS_CAESARS = "3570 S Las Vegas Blvd, Las Vegas, NV 89109";
+    String UBER_ADDRESS_MANDALAY = "3950 S Las Vegas Blvd, Las Vegas, NV 89119";
+    String UBER_ADDRESS_BELLAGIO = "3600 S Las Vegas Blvd, Las Vegas, NV 89109";
+    String UBER_ADDRESS_PLANET_HOLLYWOOD = "3667 S Las Vegas Blvd, Las Vegas, NV 89109";
+
+    String[] UBER_LOCATIONS = {UBER_PARIS,UBER_BALLYS,UBER_TUSCANY,UBER_PLANET_HOLLYWOOD,UBER_MANDALAY,UBER_DEFAULT};
+
 }

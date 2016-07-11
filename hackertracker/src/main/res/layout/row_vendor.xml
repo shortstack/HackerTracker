@@ -21,10 +21,17 @@
 
     </LinearLayout>
 
-    <TextView android:id="@+id/vendor_title" android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              style="@style/vendor_title"
-              android:gravity="center_vertical" android:singleLine="true" />
+    <com.shortstack.hackertracker.Font.HelveticaTextView
+        android:id="@+id/vendor_title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        style="@style/button_map"
+        android:textSize="16dp"
+        android:padding="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:singleLine="true" />
     <TextView android:layout_width="fill_parent"
               android:layout_height="wrap_content"  android:id="@+id/vendor_website"
               style="@style/vendor_website"

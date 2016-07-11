@@ -26,7 +26,7 @@ public class DatabaseAdapterVendors extends SQLiteOpenHelper {
 
     private static String DB_NAME = "vendors.sqlite";
 
-    private static int DB_VERSION = 9;
+    private static int DB_VERSION = 11;
 
     private SQLiteDatabase myDataBase;
 
@@ -42,6 +42,7 @@ public class DatabaseAdapterVendors extends SQLiteOpenHelper {
 
         super(context, DB_NAME, null, DB_VERSION);
         this.myContext = context;
+
     }
 
     /**
@@ -164,7 +165,7 @@ public class DatabaseAdapterVendors extends SQLiteOpenHelper {
         try {
             copyDataBase();
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
         }
     }
 

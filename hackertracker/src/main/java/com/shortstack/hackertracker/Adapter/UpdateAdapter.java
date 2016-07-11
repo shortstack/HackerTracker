@@ -46,12 +46,6 @@ public class UpdateAdapter extends ArrayAdapter<String> {
             holder = new UpdateHolder();
             holder.update = (TextView) row.findViewById(R.id.update);
 
-            // color/bold dates
-            if (position % 2 == 0) {
-                holder.update.setTextColor(ContextCompat.getColor(context,R.color.colorLightAccent));
-                holder.update.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
-            }
-
             row.setTag(holder);
 
         } else {
@@ -65,6 +59,15 @@ public class UpdateAdapter extends ArrayAdapter<String> {
 
             // set text
             holder.update.setText(Html.fromHtml(item));
+
+            // color/bold dates
+            if (position % 2 == 0) {
+                holder.update.setTextColor(ContextCompat.getColor(context,R.color.colorLightAccent));
+                holder.update.setTypeface(Typeface.defaultFromStyle(Typeface.BOLD));
+            } else {
+                holder.update.setTextColor(ContextCompat.getColor(context,R.color.white));
+                holder.update.setTypeface(Typeface.defaultFromStyle(Typeface.NORMAL));
+            }
 
             // get text from regex
             Linkify.TransformFilter mentionFilter = new Linkify.TransformFilter() {

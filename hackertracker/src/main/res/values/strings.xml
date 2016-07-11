@@ -107,18 +107,10 @@
     <string name="backup_name">dc24_schedule.csv</string>
     <string name="backup">Schedule saved in Downloads as "dc24_schedule.csv"</string>
 
-    <string name="need_uber">Need an Uber?</string>
-    <string name="uber_location">Choose your pickup location…</string>
+    <string name="need_uber">Need an Uber to DEF CON?</string>
+    <string name="uber_location">Choose your destination…</string>
     <string name="uber_find">Find An Uber</string>
-    <string-array name="uber_locations">
-        <item name="ballys">Bally\'s</item>
-        <item name="paris">Paris</item>
-        <item name="tuscany">Tuscany</item>
-        <item name="bellagio">Bellagio</item>
-        <item name="caesars">Caesar\'s Palace</item>
-        <item name="flamingo">Flamingo</item>
-        <item name="planet_hollywood">Planet Hollywood</item>
-    </string-array>
+    <string name="uber_choose">Please choose your Uber destination from the dropdown menu above :)</string>
 
     <string name="coming_soon_maps">Conference map will be posted when it becomes available!</string>
 
@@ -195,6 +187,8 @@
     <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
 
     <string-array name="updates">
+        <item>07/11/16</item>
+        <item>You can now get an Uber to the con with a click! Defaults to Paris. Updated official schedule, parties, and village schedules.</item>
         <item>07/05/16</item>
         <item>Skytalks, vendors, more parties, village schedules, and events! 1 month to go! :)</item>
         <item>06/22/16</item>

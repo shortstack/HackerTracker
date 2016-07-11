@@ -7,9 +7,11 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.Toast;
 
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +29,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     private static String DB_NAME = "hackertracker.sqlite";
 
-    private static int DB_VERSION = 256;
+    private static int DB_VERSION = 299;
 
     private SQLiteDatabase myDataBase;
 
@@ -37,12 +39,18 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
         super(context, DB_NAME, null, DB_VERSION);
         this.myContext = context;
+
     }
 
     /**
      * creates sqlite database
      * */
     public void createDataBase() throws IOException{
+
+        SQLiteDatabase db_test = this.getWritableDatabase();
+        int version = db_test.getVersion();
+        myContext.deleteDatabase(DB_NAME);
+        db_test.close();
 
         boolean dbExist = checkDataBase();
 
@@ -52,6 +60,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
             SQLiteDatabase db = this.getWritableDatabase();
             db.setLocale(Locale.getDefault());
             db.setVersion(DB_VERSION);
+            db.setLockingEnabled(true);
 
             try {
 
@@ -63,9 +72,6 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
             }
         }
-
-        // TODO: remove this on next version
-        copyDataBase();
 
         this.close();
 
@@ -229,4 +235,3 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     }
 }
-
