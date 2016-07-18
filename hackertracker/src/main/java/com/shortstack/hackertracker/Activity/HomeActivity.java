@@ -229,11 +229,11 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
             // show share dialog
             DialogUtil.shareScheduleDialog(this).show();
             return true;
-        } else if (id == R.id.action_sync) {
+        /*} else if (id == R.id.action_sync) {
             // show online sync dialog
             //Toast.makeText(context,getResources().getString(R.string.sync_availability),Toast.LENGTH_SHORT).show();
             DialogUtil.syncSpeakersDialog(this).show();
-            return true;
+            return true;*/
         } else if (id == R.id.action_settings) {
             // open settings fragment
             addToBackStack(R.string.settings, Constants.FRAGMENT_SETTINGS, new SettingsFragment());

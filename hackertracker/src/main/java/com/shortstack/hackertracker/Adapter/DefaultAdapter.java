@@ -18,6 +18,7 @@ import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.DialogUtil;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -91,7 +92,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             }
 
             // set name if it's a speaker
-            if (!item.getType().equals(Constants.TYPE_SPEAKER) || item.getName()==null) {
+            if (!Arrays.asList(Constants.TYPE_SPEAKER,Constants.TYPE_VILLAGE,Constants.TYPE_PARTY).contains(item.getType()) || item.getName()==null) {
                 holder.name.setVisibility(View.GONE);
             } else if (item.getName().equals("")){
                 holder.name.setVisibility(View.GONE);
