@@ -315,8 +315,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;*/
             case 8:
                 // demo labs
-                Toast.makeText(context,R.string.demolabs_message, Toast.LENGTH_SHORT).show();
-                //addToBackStack(R.string.demolabs, Constants.FRAGMENT_DEMOLAB, DemoLabsPagerFragment.newInstance(9));
+                addToBackStack(R.string.demolabs, Constants.FRAGMENT_DEMOLAB, DemoLabsPagerFragment.newInstance(9));
                 break;
             case 9:
                 // kids
