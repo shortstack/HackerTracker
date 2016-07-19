@@ -187,6 +187,8 @@
     <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
 
     <string-array name="updates">
+        <item>07/19/16</item>
+        <item>Demo labs are live! Added crypto village, wireless village, and other minor schedule updates.</item>
         <item>07/11/16</item>
         <item>You can now get an Uber to the con with a click! Defaults to Paris. Updated official schedule, parties, and village schedules.</item>
         <item>07/05/16</item>

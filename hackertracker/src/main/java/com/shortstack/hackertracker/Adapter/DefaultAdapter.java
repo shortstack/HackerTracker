@@ -92,7 +92,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             }
 
             // set name if it's a speaker, skytalk, party, or village talk
-            if (!Arrays.asList(Constants.TYPE_SPEAKER,Constants.TYPE_SKYTALKS,Constants.TYPE_VILLAGE,Constants.TYPE_PARTY).contains(item.getType()) || item.getName()==null) {
+            if (!Arrays.asList(Constants.TYPE_SPEAKER,Constants.TYPE_DEMOLAB,Constants.TYPE_SKYTALKS,Constants.TYPE_VILLAGE,Constants.TYPE_PARTY).contains(item.getType()) || item.getName()==null) {
                 holder.name.setVisibility(View.GONE);
             } else if (item.getName().equals("")){
                 holder.name.setVisibility(View.GONE);
