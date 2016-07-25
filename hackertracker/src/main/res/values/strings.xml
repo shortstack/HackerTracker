@@ -189,6 +189,8 @@
     <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
 
     <string-array name="updates">
+        <item>07/25/16</item>
+        <item>Welcome, @DCDarkNet and @tiarac0n! ;)</item>
         <item>07/21/16</item>
         <item>Wall of Sheep announced their DJ lineup! Now in events.</item>
         <item>07/19/16</item>
