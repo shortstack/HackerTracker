@@ -100,6 +100,24 @@
                     />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:id="@+id/number">
+                <TextView
+                    style="@style/details_label"
+                    android:text="WHERE"
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"        />
+                <EditText
+                    style="@style/details_where"
+                    android:id="@+id/the_number"
+                    android:text="667-5309"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
             <TextView android:id="@+id/link"
                 style="@style/details_forum"
                 android:text=""
@@ -108,6 +126,15 @@
                 android:autoLink="all"
                 android:linksClickable="true"
                 android:textIsSelectable="true"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/daemon_1"
+                android:id="@+id/daemon"
+                android:visibility="gone"
+                android:layout_gravity="center_horizontal"
+                android:paddingTop="20dp"/>
 
             <ScrollView
                 android:layout_width="match_parent"

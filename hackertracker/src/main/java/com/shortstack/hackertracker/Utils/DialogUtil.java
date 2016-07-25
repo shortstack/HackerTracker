@@ -32,35 +32,6 @@ import java.io.File;
  */
 public class DialogUtil {
 
-    public static AlertDialog darknetDialog(Context context, String message) {
-
-        LayoutInflater inflater =
-                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.dialog_darknet, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-        AlertDialog dialog = builder.create();
-
-        dialog.setView(view, 0, 0, 0, 0);
-        dialog.setCanceledOnTouchOutside(false);
-
-        TextView dialogText = (TextView) view.findViewById(R.id.dialog_text);
-        dialogText.setText(message);
-
-        Button cancelButton = (Button) view.findViewById(R.id.dismiss);
-        final Dialog finalDialog = dialog;
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finalDialog.dismiss();
-            }
-        });
-
-        return dialog;
-
-    }
-
     public static ProgressDialog getProgressDialog(Context context, String message) {
 
         ProgressDialog progressDialog = new ProgressDialog(context);
@@ -225,6 +196,39 @@ public class DialogUtil {
             public void onClick(View v) {
                 finalDialog.dismiss();
                 HomeActivity.syncSchedule(context);
+            }
+        });
+
+        return dialog;
+
+    }
+
+    public static AlertDialog saveBarcodeDialog(final Context context) {
+
+        LayoutInflater inflater =
+                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.dialog_barcode, null);
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+
+        AlertDialog dialog = builder.create();
+
+        dialog.setView(view, 0, 0, 0, 0);
+
+        Button cancelButton = (Button) view.findViewById(R.id.cancel);
+        final Dialog finalDialog = dialog;
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalDialog.dismiss();
+            }
+        });
+        Button saveButton = (Button) view.findViewById(R.id.save);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finalDialog.dismiss();
+                DetailsFragment.saveImage(context);
             }
         });
 

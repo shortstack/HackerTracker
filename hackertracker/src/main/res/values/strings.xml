@@ -76,7 +76,8 @@
     <string name="vendors_message">Vendors not announced yet! Check back soon :)</string>
     <string name="skytalks_message">Skytalks not announced yet! Check back soon :)</string>
     <string name="demolabs_message">Demo labs not announced yet! Check back soon :)</string>
-
+    <string name="barcode_header">Save Barcode</string>
+    <string name="barcode_download">Save image to your device?</string>
     <string name="schedule_cleared">Schedule cleared successfully</string>
     <string name="schedule_clear">Clear My Schedule</string>
     <string name="delete_all">Clear My Schedule</string>
@@ -97,7 +98,8 @@
     <string name="schedule_sync">Yes, Check Now</string>
     <string name="is_new">NEW</string>
     <string name="tba">TBA</string>
-
+    <string name="save">Save</string>
+    <string name="save_cancel">No, Cancel</string>
     <string name="map_hotel">Hotel Map</string>
     <string name="map_con">Conference Map</string>
     <string name="map_hotel_name">map_hotel.pdf</string>
@@ -187,6 +189,8 @@
     <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
 
     <string-array name="updates">
+        <item>07/21/16</item>
+        <item>Wall of Sheep announced their DJ lineup! Now in events.</item>
         <item>07/19/16</item>
         <item>Demo labs are live! Added crypto village, wireless village, and other minor schedule updates.</item>
         <item>07/11/16</item>

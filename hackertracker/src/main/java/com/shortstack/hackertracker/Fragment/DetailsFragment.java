@@ -4,15 +4,23 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.DialogFragment;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.Gravity;
 import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -25,9 +33,11 @@ import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
+import com.shortstack.hackertracker.Utils.DialogUtil;
 
 import org.parceler.Parcels;
 
+import java.util.Arrays;
 import java.util.Calendar;
 
 /**
@@ -107,6 +117,28 @@ public class DetailsFragment extends DialogFragment {
         LinearLayout icons = (LinearLayout) rootView.findViewById(R.id.icons);
         final ImageButton share = (ImageButton) rootView.findViewById(R.id.share);
         final ImageButton star = (ImageButton) rootView.findViewById(R.id.star);
+
+        // check if event
+        String[] darknet = {"4770","4771","4772"};
+        if ( Arrays.asList(darknet).contains(String.valueOf(item.getId()))) {
+            Toast.makeText(context,"Jump in your Gibsons.",Toast.LENGTH_LONG).show();
+        }
+
+        // check if correct event
+        int event = 4832;
+        if (event == item.getId()) {
+            Toast.makeText(context,"Who saw your number on the wall",Toast.LENGTH_LONG).show();
+
+            // show event location
+            whereLayout.setVisibility(View.GONE);
+            LinearLayout newWhereLayout = (LinearLayout) rootView.findViewById(R.id.number);
+            newWhereLayout.setVisibility(View.VISIBLE);
+
+            // set on changed listener
+            EditText number = (EditText) rootView.findViewById(R.id.the_number);
+            number.addTextChangedListener(numberWatcher);
+
+        }
 
         // set title
         titleText.setText(item.getTitle());
@@ -242,5 +274,46 @@ public class DetailsFragment extends DialogFragment {
 
         return rootView;
     }
+
+    // edittext onchanged listener
+    TextWatcher numberWatcher = new TextWatcher() {
+
+        @Override
+        public void afterTextChanged(Editable s) {
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+            if (s.toString().equals("867-5309")) {
+                ImageView daemon = (ImageView) rootView.findViewById(R.id.daemon);
+                daemon.setVisibility(View.VISIBLE);
+                daemon.setOnClickListener(codeOnClickListener);
+            }
+        }
+    };
+
+    // onclick listener for barcode
+    final View.OnClickListener codeOnClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+
+            DialogUtil.saveBarcodeDialog(context).show();
+
+        }
+    };
+
+    // save barcode to device
+    public static void saveImage(Context context) {
+
+        Drawable drawable = context.getResources().getDrawable(R.drawable.daemon_1);
+        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+        String imagePath = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "barcode", "barcode");
+        Uri uri = Uri.parse(imagePath);
+
+    }
+
 
 }

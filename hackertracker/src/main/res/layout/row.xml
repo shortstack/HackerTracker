@@ -28,7 +28,7 @@
             android:visibility="gone"/>
         <TextView android:layout_width="fill_parent"
                   android:layout_height="wrap_content"  android:id="@+id/where"
-                  android:autoLink="all"
+                  android:autoLink="none"
                   style="@style/where"/>
         <LinearLayout
             android:layout_width="wrap_content"
