@@ -23,6 +23,7 @@
         <item>@string/maps</item>
         <item>@string/partners</item>
         <item>@string/faq</item>
+        <item>@string/badges</item>
     </string-array>
 
     <string name="home">DEF CON 24</string>
@@ -42,6 +43,7 @@
     <string name="partners">Partners</string>
     <string name="workshops">Workshops</string>
     <string name="faq">FAQ</string>
+    <string name="badges">Badge Info</string>
     <string name="schedule">My Schedule</string>
     <string name="links">Links</string>
     <string name="search">Search</string>
@@ -119,6 +121,19 @@
     <string name="star_add">Add to My Schedule</string>
     <string name="star_delete">Remove from My Schedule</string>
 
+    <string name="workshop_info_title">Workshop Info</string>
+    <string name="workshop_info">Click here to read about\nimportant workshop sign up details!</string>
+    <string name="workshop_info_text">
+        Workshops are free, first come, first served, and seats will fill up fast!\n\n
+        To register for a workshop, you will need to go to the Bally\'s side in front of the cafe arcade between Thursday 07:00 to 15:00. We will have goons to pre-register you for the workshop(s) of your choosing.\n\n
+        If the workshop that you want has filled up before you got there, don\'t worry! Just like last year, if you come to the workshop area early the day of, you can wait in the standby line. If a seat opens up, it will be made available to the first person waiting to claim it.\n\n
+        Please Note: You will be issued a workshop \"pass\". It will be required for class admission. If you lose it we can\'t help you, your seat will be made available for those in standby.
+    </string>
+
+    <string name="badge_text">
+        DEF CON regular badge pricing is $240, cash only, at the DEF CON registration area at Paris/Bally’s. See map for directions to registration area.\n\nDEF CON does not offer pre-registration.\n\nBadges go on sale EARLY Thursday morning--get in line early.\n\nWelcome to LineCon! Bring a drink, make some friends, and enjoy the ride. :)
+    </string>
+
     <string name="shuttle_text">
         <big>Airport Shuttle Service to DEF CON 23!</big>\n\nIt\'s a known fact: Vegas cab drivers can be … indirect. Even worse, it\'s a real challenge to keep a cab smelling daisy-fresh in 110 degree heat. So how does one get from the airport to Paris and Bally\'s without taking an unnecessary tour of Henderson and baking like a potato?\n\nThere is a way.\n\nWe\'ve partnered with LASxpress to shuttle DEF CON attendees from McCarran to their hotels, Paris and Bally\'s and otherwise. It costs 11 bucks (18 non-stop), and has the benefits of meet and greet service and immediate boarding.\n\nOf course, there is something of a vision-quest feeling to waiting around in the desert, sweating in a small space as you travel aimlessly throughout the universe. So, you can still do that, too.\n\nIf you\'d rather try the shuttle route, just click here to register: http://lasrescenter.hudsonltd.net/res?USERIDENTRY=DEFCON2014&amp;LOGON=GO
     </string>
@@ -189,6 +204,8 @@
     <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
 
     <string-array name="updates">
+        <item>07/28/16</item>
+        <item>Welcome, Biohacking Village! Also, check out the Crash and Compile contest, and the #Demonsaw and #Telephreak parties! All Thursday workshop times changed. Badge info now available in the menu. Thanks to @defcon for the generous recognition! &lt;3</item>
         <item>07/25/16</item>
         <item>Welcome, @DCDarkNet and @tiarac0n! ;)</item>
         <item>07/21/16</item>

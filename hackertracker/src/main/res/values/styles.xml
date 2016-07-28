@@ -91,6 +91,17 @@
               <item name="android:overScrollFooter">@null</item>
               <item name="android:scrollbarThumbVertical">@drawable/scrollbar</item>
           </style>
+        <style name="header_workshop_info">
+            <item name="android:textColor">@color/light_gray</item>
+            <item name="android:textAllCaps">true</item>
+            <item name="android:textSize">14sp</item>
+            <item name="android:background">@drawable/border_bottom_purple</item>
+            <item name="android:layout_width">match_parent</item>
+            <item name="android:layout_height">wrap_content</item>
+            <item name="android:gravity">center</item>
+            <item name="android:paddingTop">20dp</item>
+            <item name="android:paddingBottom">20dp</item>
+        </style>
           <style name="button_map">
               <item name="android:textColor">@color/light_gray</item>
               <item name="android:textAllCaps">true</item>

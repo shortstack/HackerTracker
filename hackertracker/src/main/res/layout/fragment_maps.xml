@@ -68,6 +68,7 @@
                 android:src="@drawable/crop_ballysmap"
                 android:layout_width="200dp"
                 android:layout_height="200dp"
+                android:layout_marginBottom="20dp"
                 android:id="@+id/crop_ballysmap"/>
 
         </LinearLayout>

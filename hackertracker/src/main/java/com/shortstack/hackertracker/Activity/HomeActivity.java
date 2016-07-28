@@ -35,6 +35,7 @@ import com.shortstack.hackertracker.Contests.ContestPagerFragment;
 import com.shortstack.hackertracker.DemoLabs.DemoLabsPagerFragment;
 import com.shortstack.hackertracker.Events.EventPagerFragment;
 import com.shortstack.hackertracker.Font.HelveticaTextView;
+import com.shortstack.hackertracker.Fragment.BadgeFragment;
 import com.shortstack.hackertracker.Fragment.FAQFragment;
 import com.shortstack.hackertracker.Fragment.FragmentDrawer;
 import com.shortstack.hackertracker.Fragment.HomeFragment;
@@ -200,6 +201,12 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     case SettingsFragment:
                         mTitle.setText(getString(R.string.settings).toUpperCase());
                         break;
+                    case BadgeFragment:
+                        mTitle.setText(getString(R.string.badges).toUpperCase());
+                        break;
+                    case WorkshopInfoFragment:
+                        mTitle.setText(getString(R.string.workshop_info_title).toUpperCase());
+                        break;
                 }
                 fm.popBackStack();
             } else {
@@ -257,12 +264,14 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         ShuttleFragment,
         SkytalksPagerFragment,
         KidsPagerFragment,
+        BadgeFragment,
         FAQFragment,
         LinksFragment,
         DemoLabsFragment,
         SchedulePagerFragment,
         SearchFragment,
-        SettingsFragment
+        SettingsFragment,
+        WorkshopInfoFragment
     }
 
     @Override
@@ -338,6 +347,14 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 addToBackStack(R.string.faq, Constants.FRAGMENT_FAQ, FAQFragment.newInstance(14));
                 break;
             case 14:
+                // badge info
+                addToBackStack(R.string.badges, Constants.FRAGMENT_BADGES, BadgeFragment.newInstance(15));
+                break;
+            case 15:
+                // workshop info
+                addToBackStack(R.string.workshop_info_title, Constants.FRAGMENT_WORKSHOP_INFO, BadgeFragment.newInstance(16));
+                break;
+            case 16:
                 // settings
                 addToBackStack(R.string.settings, Constants.FRAGMENT_SETTINGS, new SettingsFragment());
                 break;
@@ -351,6 +368,11 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 .addToBackStack(name)
                 .commit();
         mTitle.setText(getString(title).toUpperCase());
+    }
+
+    // set actionbar title
+    public static void setActionBarTitle(String title) {
+        mTitle.setText(title.toUpperCase());
     }
 
     // scroll viewpager to current day
