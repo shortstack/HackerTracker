@@ -131,7 +131,9 @@
     </string>
 
     <string name="badge_text">
-        DEF CON regular badge pricing is $240, cash only, at the DEF CON registration area at Paris/Bally’s. See map for directions to registration area.\n\nDEF CON does not offer pre-registration.\n\nBadges go on sale EARLY Thursday morning--get in line early.\n\nWelcome to LineCon! Bring a drink, make some friends, and enjoy the ride. :)
+        DEF CON regular badge pricing is $240, cash only, at the DEF CON registration area at Paris/Bally’s. See map for directions to registration area.\n\n
+        DEF CON does not offer pre-registration.\n\n
+        Badges go on sale 6AM Thursday morning! Welcome to LineCon! Bring a drink (and/or coffee), make some friends, and enjoy the ride. :)
     </string>
 
     <string name="shuttle_text">
@@ -205,7 +207,7 @@
 
     <string-array name="updates">
         <item>07/28/16</item>
-        <item>Welcome, Biohacking Village! Also, check out the Crash and Compile contest, and the #Demonsaw and #Telephreak parties! All Thursday workshop times changed. Badge info now available in the menu. Thanks to @defcon for the generous recognition! &lt;3</item>
+        <item>Welcome, Biohacking Village! Also, check out the Crash and Compile contest, and the #Demonsaw and #Telephreak parties! All Thursday workshop times changed. Badge info now available in the menu. Many thanks to @defcon for the generous recognition! :)</item>
         <item>07/25/16</item>
         <item>Welcome, @DCDarkNet and @tiarac0n! ;)</item>
         <item>07/21/16</item>

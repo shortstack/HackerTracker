@@ -1,7 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-      style="@style/page">
+    style="@style/page"
+    android:orientation="vertical">
 
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:src="@drawable/linecon"
+        />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
