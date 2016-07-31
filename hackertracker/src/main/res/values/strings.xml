@@ -206,6 +206,8 @@
     <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
 
     <string-array name="updates">
+        <item>07/30/16</item>
+        <item>Updated con map! Added Hack Fortress, Data Duplication Village, Lawyer Meetup, a few parties. Also, World Run and DEF CON Half Marathon! 4! MORE! DAYS! Start hydrating NOW!</item>
         <item>07/28/16</item>
         <item>Welcome, Biohacking Village! Also, check out the Crash and Compile contest, and the #Demonsaw and #Telephreak parties! All Thursday workshop times changed. Badge info now available in the menu. Many thanks to @defcon for the generous recognition! :)</item>
         <item>07/25/16</item>
