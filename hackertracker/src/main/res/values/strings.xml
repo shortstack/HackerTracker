@@ -206,6 +206,8 @@
     <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
 
     <string-array name="updates">
+        <item>07/31/16</item>
+        <item>Updated con map *again*! Added Mohawk-Con! Also, new location for this year's Unofficial DEF CON Shoot! It will be at the Clark County Shooting Complex.</item>
         <item>07/30/16</item>
         <item>Updated con map! Added Hack Fortress, Data Duplication Village, Lawyer Meetup, a few parties. Also, World Run and DEF CON Half Marathon! 4! MORE! DAYS! Start hydrating NOW!</item>
         <item>07/28/16</item>
