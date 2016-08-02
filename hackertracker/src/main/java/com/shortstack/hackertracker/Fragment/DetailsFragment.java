@@ -39,6 +39,7 @@ import org.parceler.Parcels;
 
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.TimeZone;
 
 /**
  * Created by Whitney Champion on 6/11/15.
@@ -239,7 +240,7 @@ public class DetailsFragment extends DialogFragment {
                     if (!item.getBegin().equals("")) {
                         Calendar calendar = Calendar.getInstance();
                         calendar.set(Calendar.YEAR, Integer.parseInt(item.getDate().split("-")[0]));
-                        calendar.set(Calendar.MONTH, Integer.parseInt(item.getDate().split("-")[1]));
+                        calendar.set(Calendar.MONTH, Integer.parseInt(item.getDate().split("-")[1])-1);
                         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(item.getDate().split("-")[2]));
                         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(item.getBegin().split(":")[0]));
                         calendar.set(Calendar.MINUTE, Integer.parseInt(item.getBegin().split(":")[1]));
