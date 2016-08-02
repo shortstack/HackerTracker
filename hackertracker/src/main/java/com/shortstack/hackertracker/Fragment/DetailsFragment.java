@@ -124,6 +124,9 @@ public class DetailsFragment extends DialogFragment {
             Toast.makeText(context,"Jump in your Gibsons.",Toast.LENGTH_LONG).show();
         }
 
+        // unicorns
+        hullo(item);
+
         // check if correct event
         int event = 4832;
         if (event == item.getId()) {
@@ -273,6 +276,24 @@ public class DetailsFragment extends DialogFragment {
         star.setOnClickListener(starOnClickListener);
 
         return rootView;
+    }
+
+    // wat
+    private void hullo(Default item) {
+
+        switch (item.getId()) {
+            case 4373:
+                Toast.makeText(context,R.string.e4373,Toast.LENGTH_LONG).show();
+                break;
+            case 4374:
+                Toast.makeText(context,R.string.e4374,Toast.LENGTH_LONG).show();
+                break;
+            case 4375:
+                Toast.makeText(context,R.string.e4375,Toast.LENGTH_LONG).show();
+                break;
+
+        }
+
     }
 
     // edittext onchanged listener

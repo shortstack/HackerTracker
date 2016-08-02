@@ -25,6 +25,7 @@ public interface Constants {
     String TYPE_STUPID = "Stupid";
     String TYPE_KIDS = "Kids";
     String TYPE_JOKE = "Joke";
+    String TYPE_OMG = "Password";
 
     String LONG_DAY_0 = "2016-08-03";
     String LONG_DAY_1 = "2016-08-04";

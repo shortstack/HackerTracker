@@ -121,6 +121,10 @@
     <string name="star_add">Add to My Schedule</string>
     <string name="star_delete">Remove from My Schedule</string>
 
+    <string name="e4373">They see me rollin... they hatin...</string>
+    <string name="e4374">Pew pew!</string>
+    <string name="e4375">BRING ME MY SHOTGUN!</string>
+
     <string name="workshop_info_title">Workshop Info</string>
     <string name="workshop_info">Click here to read about\nimportant workshop sign up details!</string>
     <string name="workshop_info_text">
@@ -206,8 +210,10 @@
     <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
 
     <string-array name="updates">
+        <item>08/02/16</item>
+        <item>If you find me around the con Thurs-Sun, speak the *password* once you find it and you will receive MAYBE the coolest sticker ever made! ;)</item>
         <item>07/31/16</item>
-        <item>Updated con map *again*! Added Mohawk-Con! Also, new location for this year's Unofficial DEF CON Shoot! It will be at the Clark County Shooting Complex.</item>
+        <item>Updated con map *again*! Added Mohawk-Con! Also, new location for this year\'s Unofficial DEF CON Shoot! It will be at the Clark County Shooting Complex.</item>
         <item>07/30/16</item>
         <item>Updated con map! Added Hack Fortress, Data Duplication Village, Lawyer Meetup, a few parties. Also, World Run and DEF CON Half Marathon! 4! MORE! DAYS! Start hydrating NOW!</item>
         <item>07/28/16</item>

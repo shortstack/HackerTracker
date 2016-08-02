@@ -142,12 +142,14 @@ public class SearchFragment extends Fragment {
 
         SQLiteDatabase dbOfficial = HackerTrackerApplication.dbHelper.getWritableDatabase();
 
+        Cursor hint = dbOfficial.rawQuery("SELECT * FROM data WHERE (type LIKE ?)", new String[]{"%" + string + "%"});
         Cursor titleOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
         Cursor bodyOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (description LIKE ?) AND type NOT LIKE 'Vendor'", new String[] {"%"+string+"%"});
         Cursor nameOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (who LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
         Cursor locationOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (location LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
 
         // get search results from each query
+        getResults(hint);
         getResults(titleOfficial);
         getResults(bodyOfficial);
         getResults(nameOfficial);
@@ -175,8 +177,6 @@ public class SearchFragment extends Fragment {
 
         return result;
     }
-
-
 
     public class ItemComparator implements Comparator<Default> {
 
