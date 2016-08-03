@@ -154,7 +154,7 @@
     <string name="radio_text">
         Music for Hacking. The DEF CON Year-Round Channel.\n\n
         Since 2013, SomaFM has provided the music for the DEF CON Chill room. That theme continues with SomaFM broadcasting this special year-round stream hosted by the DJs who entertain the DEF CON 24 chill room this year in Vegas.\n\n
-        Check out http://somafm.com/defcon/ to listen online, or download the Android app here: https://play.google.com/store/apps/details?id=com.somafm
+        Check out http://somafm.com/defcon/ to listen online, or download the Android app here: https://somafm.com/mobile/android.html
     </string>
 
     <string name="shuttle_text">
@@ -227,6 +227,8 @@
     <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
 
     <string-array name="updates">
+        <item>08/03/16</item>
+        <item>Updated Skytalks schedule! Updated DEF CON Saturday night line-up!</item>
         <item>08/03/16</item>
         <item>Added Capture the Packet, Sheep City, and Packet Detective contests! Check them out in the PHV. Also, DEF CON Radio is now in the menu on the left. :)</item>
         <item>08/02/16</item>
