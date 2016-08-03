@@ -41,6 +41,7 @@ import com.shortstack.hackertracker.Fragment.FragmentDrawer;
 import com.shortstack.hackertracker.Fragment.HomeFragment;
 import com.shortstack.hackertracker.Fragment.MapsFragment;
 import com.shortstack.hackertracker.Fragment.PartnersFragment;
+import com.shortstack.hackertracker.Fragment.RadioFragment;
 import com.shortstack.hackertracker.Fragment.SearchFragment;
 import com.shortstack.hackertracker.Fragment.SettingsFragment;
 import com.shortstack.hackertracker.Fragment.WifiFragment;
@@ -211,6 +212,9 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     case WifiFragment:
                         mTitle.setText(getString(R.string.wifi).toUpperCase());
                         break;
+                    case RadioFragment:
+                        mTitle.setText(getString(R.string.radio).toUpperCase());
+                        break;
                 }
                 fm.popBackStack();
             } else {
@@ -276,6 +280,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         SearchFragment,
         SettingsFragment,
         WifiFragment,
+        RadioFragment,
         WorkshopInfoFragment
     }
 
@@ -360,10 +365,14 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 addToBackStack(R.string.wifi, Constants.FRAGMENT_WIFI, WifiFragment.newInstance(16));
                 break;
             case 16:
-                // workshop info
-                addToBackStack(R.string.workshop_info_title, Constants.FRAGMENT_WORKSHOP_INFO, BadgeFragment.newInstance(17));
+                // radio info
+                addToBackStack(R.string.radio, Constants.FRAGMENT_RADIO, RadioFragment.newInstance(17));
                 break;
             case 17:
+                // workshop info
+                addToBackStack(R.string.workshop_info_title, Constants.FRAGMENT_WORKSHOP_INFO, BadgeFragment.newInstance(18));
+                break;
+            case 18:
                 // settings
                 addToBackStack(R.string.settings, Constants.FRAGMENT_SETTINGS, new SettingsFragment());
                 break;

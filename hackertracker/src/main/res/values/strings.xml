@@ -25,6 +25,7 @@
         <item>@string/faq</item>
         <item>@string/badges</item>
         <item>@string/wifi</item>
+        <item>@string/radio</item>
     </string-array>
 
     <string name="home">DEF CON 24</string>
@@ -46,6 +47,7 @@
     <string name="faq">FAQ</string>
     <string name="badges">Badge Info</string>
     <string name="wifi">Wifi Info</string>
+    <string name="radio">DEF CON Radio</string>
     <string name="schedule">My Schedule</string>
     <string name="links">Links</string>
     <string name="search">Search</string>
@@ -148,6 +150,13 @@
         If you\'re feeling frisky, we\'ll still have the traditional \"open\" network for you - bring your laptop (we\'d recommend a clean OS, fully patched--you know the procedure) because we don\'t police what happens on that net. Share &amp; enjoy!
     </string>
 
+    <string name="radio_title">DEF CON Radio</string>
+    <string name="radio_text">
+        Music for Hacking. The DEF CON Year-Round Channel.\n\n
+        Since 2013, SomaFM has provided the music for the DEF CON Chill room. That theme continues with SomaFM broadcasting this special year-round stream hosted by the DJs who entertain the DEF CON 24 chill room this year in Vegas.\n\n
+        Check out http://somafm.com/defcon/ to listen online, or download the Android app here: https://play.google.com/store/apps/details?id=com.somafm
+    </string>
+
     <string name="shuttle_text">
         <big>Airport Shuttle Service to DEF CON 23!</big>\n\nIt\'s a known fact: Vegas cab drivers can be … indirect. Even worse, it\'s a real challenge to keep a cab smelling daisy-fresh in 110 degree heat. So how does one get from the airport to Paris and Bally\'s without taking an unnecessary tour of Henderson and baking like a potato?\n\nThere is a way.\n\nWe\'ve partnered with LASxpress to shuttle DEF CON attendees from McCarran to their hotels, Paris and Bally\'s and otherwise. It costs 11 bucks (18 non-stop), and has the benefits of meet and greet service and immediate boarding.\n\nOf course, there is something of a vision-quest feeling to waiting around in the desert, sweating in a small space as you travel aimlessly throughout the universe. So, you can still do that, too.\n\nIf you\'d rather try the shuttle route, just click here to register: http://lasrescenter.hudsonltd.net/res?USERIDENTRY=DEFCON2014&amp;LOGON=GO
     </string>
@@ -218,6 +227,8 @@
     <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
 
     <string-array name="updates">
+        <item>08/03/16</item>
+        <item>Added Capture the Packet, Sheep City, and Packet Detective contests! Check them out in the PHV. Also, DEF CON Radio is now in the menu on the left. :)</item>
         <item>08/02/16</item>
         <item>Toxic BBQ is back this year! Check out the events on Thursday for more info! Added WiFi info in the menu. Added IoT 0-day track. Added abstracts to R00tz events. Check out the N00b Party on Thursday! Check out TravelCon on Friday! If you want a sticker, find ze password! And then find @shortxstack!</item>
         <item>08/02/16</item>
