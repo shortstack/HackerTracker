@@ -59,6 +59,7 @@ public interface Constants {
     String FRAGMENT_SHUTTLE = "ShuttleFragment";
     String FRAGMENT_FAQ = "FAQFragment";
     String FRAGMENT_BADGES = "BadgeFragment";
+    String FRAGMENT_WIFI = "WifiFragment";
     String FRAGMENT_WORKSHOP_INFO = "WorkshopInfoFragment";
     String FRAGMENT_SETTINGS = "SettingsFragment";
 

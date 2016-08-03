@@ -24,6 +24,7 @@
         <item>@string/partners</item>
         <item>@string/faq</item>
         <item>@string/badges</item>
+        <item>@string/wifi</item>
     </string-array>
 
     <string name="home">DEF CON 24</string>
@@ -44,6 +45,7 @@
     <string name="workshops">Workshops</string>
     <string name="faq">FAQ</string>
     <string name="badges">Badge Info</string>
+    <string name="wifi">Wifi Info</string>
     <string name="schedule">My Schedule</string>
     <string name="links">Links</string>
     <string name="search">Search</string>
@@ -140,6 +142,12 @@
         Badges go on sale 6AM Thursday morning! Welcome to LineCon! Bring a drink (and/or coffee), make some friends, and enjoy the ride. :)
     </string>
 
+    <string name="wifi_text">
+        DEF CON WiFi registration information will be available at http://wifireg.defcon.org.\n\n
+        DEF CON is FULLY network-enabled. Now that we\'ve perfected the art of a stable hacker con network, we\'re ascending to a higher level - we\'re providing you a network that you feel SAFE in using! Since DEF CON 18 we\'re WPA2 encrypted over-the-air, with a direct trunk out to the Internet. No peer-to-peer, no sniffing, just straight to the net (and internal servers). We\'ll provide login credentials at Registration. We know the 3G airwaves will be saturated so we\'re putting our own cred on the line to give you a net that even we would put our own mobile phones on.\n\n
+        If you\'re feeling frisky, we\'ll still have the traditional \"open\" network for you - bring your laptop (we\'d recommend a clean OS, fully patched--you know the procedure) because we don\'t police what happens on that net. Share &amp; enjoy!
+    </string>
+
     <string name="shuttle_text">
         <big>Airport Shuttle Service to DEF CON 23!</big>\n\nIt\'s a known fact: Vegas cab drivers can be … indirect. Even worse, it\'s a real challenge to keep a cab smelling daisy-fresh in 110 degree heat. So how does one get from the airport to Paris and Bally\'s without taking an unnecessary tour of Henderson and baking like a potato?\n\nThere is a way.\n\nWe\'ve partnered with LASxpress to shuttle DEF CON attendees from McCarran to their hotels, Paris and Bally\'s and otherwise. It costs 11 bucks (18 non-stop), and has the benefits of meet and greet service and immediate boarding.\n\nOf course, there is something of a vision-quest feeling to waiting around in the desert, sweating in a small space as you travel aimlessly throughout the universe. So, you can still do that, too.\n\nIf you\'d rather try the shuttle route, just click here to register: http://lasrescenter.hudsonltd.net/res?USERIDENTRY=DEFCON2014&amp;LOGON=GO
     </string>
@@ -210,6 +218,8 @@
     <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
 
     <string-array name="updates">
+        <item>08/02/16</item>
+        <item>Toxic BBQ is back this year! Check out the events on Thursday for more info! Added WiFi info in the menu. Added IoT 0-day track. Added abstracts to R00tz events. Check out the N00b Party on Thursday! Check out TravelCon on Friday! If you want a sticker, find ze password! And then find @shortxstack!</item>
         <item>08/02/16</item>
         <item>If you find me around the con Thurs-Sun, speak the *password* once you find it and you will receive MAYBE the coolest sticker ever made! ;) Also, fixed the push notifications--re-star your starred items if you want notifications, because I can\'t tell time, apparently.</item>
         <item>07/31/16</item>
