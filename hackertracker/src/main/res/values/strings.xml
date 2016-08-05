@@ -227,6 +227,8 @@
     <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
 
     <string-array name="updates">
+        <item>08/04/16</item>
+        <item>Updated Biohacking village schedule! :)</item>
         <item>08/03/16</item>
         <item>Catch a movie at DEF CON Movie Night on Thurs/Fri/Sat!</item>
         <item>08/03/16</item>
