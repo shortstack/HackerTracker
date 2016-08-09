@@ -50,4 +50,8 @@ dependencies {
     compile 'org.parceler:parceler-api:0.2.7'
     provided 'org.parceler:parceler:0.2.7'
     compile 'com.uber.sdk:rides-android:0.5.1'
+
+
+    // Butterknife for View Binding
+    compile 'com.jakewharton:butterknife:8.2.1'
 }
