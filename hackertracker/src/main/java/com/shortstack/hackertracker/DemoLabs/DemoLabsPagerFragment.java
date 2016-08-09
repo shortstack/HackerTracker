@@ -19,22 +19,22 @@ public class DemoLabsPagerFragment extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
 
     public static DemoLabsPagerFragment newInstance(int position) {
-        DemoLabsPagerFragment frag=new DemoLabsPagerFragment();
-        Bundle args=new Bundle();
+        DemoLabsPagerFragment frag = new DemoLabsPagerFragment();
+        Bundle args = new Bundle();
 
         args.putInt(ARG_SECTION_NUMBER, position);
         frag.setArguments(args);
 
-        return(frag);
+        return (frag);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
-                           ViewGroup container,
-                           Bundle savedInstanceState) {
-        View result=inflater.inflate(R.layout.pager, container, false);
+                             ViewGroup container,
+                             Bundle savedInstanceState) {
+        View result = inflater.inflate(R.layout.pager, container, false);
 
-        pager=(ViewPager)result.findViewById(R.id.pager);
+        pager = (ViewPager) result.findViewById(R.id.pager);
         pager.setAdapter(buildAdapter());
         pager.setOffscreenPageLimit(5);
 
@@ -44,13 +44,12 @@ public class DemoLabsPagerFragment extends Fragment {
         PagerTabStrip pagerTabStrip = (PagerTabStrip) result.findViewById(R.id.pager_title_strip);
         pagerTabStrip.setDrawFullUnderline(false);
         pagerTabStrip.setTabIndicatorColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-        pagerTabStrip.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.black));
 
-        return(result);
+        return (result);
     }
 
     private PagerAdapter buildAdapter() {
-     return(new DemoLabsPagerAdapter(getActivity(), getChildFragmentManager()));
+        return (new DemoLabsPagerAdapter(getActivity(), getChildFragmentManager()));
     }
 
 }

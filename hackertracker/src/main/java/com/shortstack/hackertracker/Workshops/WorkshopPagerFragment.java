@@ -52,7 +52,6 @@ public class WorkshopPagerFragment extends Fragment {
         PagerTabStrip pagerTabStrip = (PagerTabStrip) result.findViewById(R.id.pager_title_strip);
         pagerTabStrip.setDrawFullUnderline(false);
         pagerTabStrip.setTabIndicatorColor(ContextCompat.getColor(getContext(), R.color.colorAccent));
-        pagerTabStrip.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.black));
 
         return (result);
     }

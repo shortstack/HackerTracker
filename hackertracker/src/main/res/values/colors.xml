@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#000000</color>
+    <color name="colorPrimary">#5050a1</color>
     <color name="colorPrimaryDark">#5050a1</color>
     <color name="textColorPrimary">#FFFFFF</color>
     <color name="windowBackground">#FFFFFF</color>
@@ -18,4 +18,6 @@
     <color name="black">#000000</color>
     <color name="dark_green">#525284</color>
     <color name="star">#ffcc00</color>
+
+    <color name="background">#121212</color>
 </resources>
