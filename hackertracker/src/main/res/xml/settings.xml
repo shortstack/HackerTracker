@@ -12,6 +12,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <CheckBoxPreference
+        android:key="militaryTime"
+        android:title="24 hour time"
+        android:summary="Show 14:00 instead of 2:00 PM"
+        android:defaultValue="False"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+
+
     <Preference
         android:key="clearSchedule"
         android:title="Clear My Schedule"

@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,14 +12,19 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.shortstack.hackertracker.Activity.HomeActivity;
+import com.shortstack.hackertracker.Activity.DetailsActivity;
 import com.shortstack.hackertracker.Common.Constants;
-import com.shortstack.hackertracker.Fragment.DetailsFragment;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Utils.DialogUtil;
+import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 
+import org.parceler.Parcels;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,7 +41,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
     List<Default> data;
 
     public DefaultAdapter(Context context, int layoutResourceId, List<Default> data) {
-        super(context,layoutResourceId,data);
+        super(context, layoutResourceId, data);
         this.layoutResourceId = layoutResourceId;
         this.context = context;
         this.data = data;
@@ -46,8 +52,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
         final DefaultHolder holder;
         View row = convertView;
 
-        if ( row == null )
-        {
+        if (row == null) {
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             row = inflater.inflate(layoutResourceId, parent, false);
 
@@ -71,7 +76,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             row.setTag(holder);
 
         } else {
-            holder = (DefaultHolder)row.getTag();
+            holder = (DefaultHolder) row.getTag();
         }
 
         final Default item = data.get(position);
@@ -83,7 +88,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             holder.title.setText(item.getTitle());
 
             // if starred, highlight title
-            if (item.getStarred()==1) {
+            if (item.getStarred() == 1) {
                 holder.title.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
                 holder.time.setTextColor(ContextCompat.getColor(context, R.color.colorAccent));
             } else {
@@ -92,9 +97,9 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             }
 
             // set name if it's a speaker, demo lab, skytalk, party, or village talk
-            if (!Arrays.asList(Constants.TYPE_SPEAKER,Constants.TYPE_DEMOLAB,Constants.TYPE_SKYTALKS,Constants.TYPE_VILLAGE,Constants.TYPE_PARTY,Constants.TYPE_OMG).contains(item.getType()) || item.getName()==null) {
+            if (!Arrays.asList(Constants.TYPE_SPEAKER, Constants.TYPE_DEMOLAB, Constants.TYPE_SKYTALKS, Constants.TYPE_VILLAGE, Constants.TYPE_PARTY, Constants.TYPE_OMG).contains(item.getType()) || item.getName() == null) {
                 holder.name.setVisibility(View.GONE);
-            } else if (item.getName().equals("")){
+            } else if (item.getName().equals("")) {
                 holder.name.setVisibility(View.GONE);
             } else {
                 holder.name.setVisibility(View.VISIBLE);
@@ -104,26 +109,26 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
             // set speaker type
             if (item.getType().equals(Constants.TYPE_SPEAKER)) {
 
-                if (item.getTool()==1) {
+                if (item.getTool() == 1) {
                     holder.icons.setVisibility(View.VISIBLE);
                     holder.tool.setVisibility(View.VISIBLE);
                 } else {
                     holder.tool.setVisibility(View.GONE);
                 }
-                if (item.getExploit()==1) {
+                if (item.getExploit() == 1) {
                     holder.icons.setVisibility(View.VISIBLE);
                     holder.exploit.setVisibility(View.VISIBLE);
                 } else {
                     holder.exploit.setVisibility(View.GONE);
                 }
-                if (item.getDemo()==1) {
+                if (item.getDemo() == 1) {
                     holder.icons.setVisibility(View.VISIBLE);
                     holder.demo.setVisibility(View.VISIBLE);
                 } else {
                     holder.demo.setVisibility(View.GONE);
                 }
 
-                if (item.getTool()==0 && item.getExploit()==0 && item.getDemo()==0)
+                if (item.getTool() == 0 && item.getExploit() == 0 && item.getDemo() == 0)
                     holder.icons.setVisibility(View.GONE);
 
             } else {
@@ -137,7 +142,29 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
 
             // set time
             if (!item.getBegin().equals("")) {
-                holder.time.setText(item.getBegin());
+                String time = "";
+
+                if (SharedPreferencesUtil.shouldShowMilitaryTime()) {
+                    time = item.getBegin();
+
+                } else {
+                    String dateStr = item.getBegin();
+                    DateFormat readFormat = new SimpleDateFormat("HH:mm");
+                    DateFormat writeFormat = new SimpleDateFormat("h:mm aa");
+                    Date date = null;
+                    try {
+                        date = readFormat.parse(dateStr);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+
+                    if (date != null) {
+                        time = writeFormat.format(date);
+                    }
+                }
+
+                holder.time.setText(time);
+
             } else {
                 holder.time.setText(context.getResources().getString(R.string.tba));
             }
@@ -147,7 +174,7 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
 
             // if new, show "new"
             holder.is_new.setVisibility(View.GONE);
-            if (item.isNew()!=null) {
+            if (item.isNew() != null) {
                 if (item.isNew() == 1)
                     holder.is_new.setVisibility(View.VISIBLE);
             } else {
@@ -173,15 +200,18 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
 
         @Override
         public void onClick(View v) {
+            startDetailsActivity();
+        }
 
-            // open DetailsFragment
-            DetailsFragment detailsFragment = DialogUtil.getDetailsDialog(item);
-            detailsFragment.show(HomeActivity.fragmentManager, "detailsFragment");
+        private void startDetailsActivity() {
+            Intent intent = new Intent(getContext(), DetailsActivity.class);
+            intent.putExtra("item", Parcels.wrap(item));
+            getContext().startActivity(intent);
         }
     }
 
     private void hideKeyboard(View v) {
-        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 

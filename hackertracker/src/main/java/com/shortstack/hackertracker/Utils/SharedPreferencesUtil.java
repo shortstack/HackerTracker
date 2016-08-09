@@ -62,4 +62,8 @@ public class SharedPreferencesUtil {
         return sharedPreferences.getBoolean("allowPushNotifications",true);
     }
 
+    public static boolean shouldShowMilitaryTime() {
+        return sharedPreferences.getBoolean("militaryTime", false );
+    }
+
 }
