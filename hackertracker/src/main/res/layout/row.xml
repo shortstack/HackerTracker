@@ -9,10 +9,8 @@
     <View
         android:layout_width="3dp"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"
+        android:background="@color/white" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -33,6 +31,7 @@
                 android:visibility="gone" />
 
             <TextView
+                tools:text="DARPA Cyber Grand Challenge"
                 android:id="@+id/title"
                 style="@style/title"
                 android:layout_width="fill_parent"
@@ -49,6 +48,7 @@
             android:visibility="gone" />
 
         <TextView
+            tools:text="Track 1"
             android:id="@+id/where"
             style="@style/where"
             android:layout_width="fill_parent"
@@ -59,32 +59,24 @@
             android:id="@+id/icons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="3dp"
             android:orientation="horizontal">
 
-            <ImageView
+            <TextView
                 android:id="@+id/demo"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginRight="8dp"
-                android:src="@drawable/icon_demo"
-                android:visibility="gone" />
+                style="@style/icon_text"
+                android:text="@string/demo" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/exploit"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginRight="8dp"
-                android:src="@drawable/icon_exploit"
-                android:visibility="gone" />
+                style="@style/icon_text"
+                android:text="@string/exploit" />
 
-            <ImageView
+            <TextView
                 android:id="@+id/tool"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
-                android:layout_marginRight="8dp"
-                android:src="@drawable/icon_tool"
-                android:visibility="gone" />
+                style="@style/icon_text"
+                android:text="@string/tool" />
+
         </LinearLayout>
     </LinearLayout>
 

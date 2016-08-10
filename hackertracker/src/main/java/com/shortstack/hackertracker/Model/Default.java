@@ -216,7 +216,6 @@ public class Default implements Serializable {
 
         if (SharedPreferencesUtil.shouldShowMilitaryTime()) {
             time = getBegin();
-
         } else {
             String dateStr = getBegin();
             DateFormat readFormat = new SimpleDateFormat("HH:mm");
@@ -231,6 +230,28 @@ public class Default implements Serializable {
             if (date != null) {
                 time = writeFormat.format(date);
             }
+        }
+
+        return time;
+    }
+
+    public String getDateStamp() {
+        String time = "";
+
+        String dateStr = getDate();
+
+        DateFormat readFormat = new SimpleDateFormat("yyyy-MM-dd");
+        DateFormat writeFormat = new SimpleDateFormat("EEEE");
+
+        Date date = null;
+        try {
+            date = readFormat.parse(dateStr);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        if (date != null) {
+            time = writeFormat.format(date);
         }
 
         return time;

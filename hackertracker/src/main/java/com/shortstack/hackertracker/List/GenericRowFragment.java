@@ -77,7 +77,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
         if( events.size() == 0 )
             return result;
 
-        result.add(events.get(0).getDate());
+        result.add(events.get(0).getDateStamp());
         result.add(events.get(0).getTimeStamp(getContext()));
 
         for (int i = 0; i < events.size() - 1; i++) {
@@ -87,7 +87,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
 
             Default next = events.get(i + 1);
             if (!current.getDate().equals(next.getDate())) {
-                result.add(next.getDate());
+                result.add(next.getDateStamp());
             }
 
             if (!current.getBegin().equals(next.getBegin())) {
