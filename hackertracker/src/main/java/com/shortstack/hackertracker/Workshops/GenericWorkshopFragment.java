@@ -2,7 +2,6 @@ package com.shortstack.hackertracker.Workshops;
 
 import android.os.Bundle;
 
-import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.List.GenericRowFragment;
 import com.shortstack.hackertracker.R;
 
@@ -17,12 +16,6 @@ public class GenericWorkshopFragment extends GenericRowFragment {
         frag.setArguments(args);
 
         return (frag);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        Logger.d("Creating Workshop.");
     }
 
     @Override
