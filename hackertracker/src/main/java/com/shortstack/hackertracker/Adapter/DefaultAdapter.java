@@ -174,9 +174,8 @@ public class DefaultAdapter extends ArrayAdapter<Default> {
 
             // if new, show "new"
             holder.is_new.setVisibility(View.GONE);
-            if (item.isNew() != null) {
-                if (item.isNew() == 1)
-                    holder.is_new.setVisibility(View.VISIBLE);
+            if (item.isNew()) {
+                holder.is_new.setVisibility(View.VISIBLE);
             } else {
                 holder.is_new.setVisibility(View.GONE);
             }

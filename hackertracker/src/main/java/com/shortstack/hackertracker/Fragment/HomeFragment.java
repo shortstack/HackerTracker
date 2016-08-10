@@ -20,12 +20,10 @@ public class HomeFragment extends Fragment {
 
     private static View rootView;
     private Context context;
-    private static final String ARG_SECTION_NUMBER = "section_number";
 
-    public static HomeFragment newInstance(int sectionNumber) {
+    public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
         fragment.setArguments(args);
         return fragment;
     }
@@ -56,6 +54,8 @@ public class HomeFragment extends Fragment {
         UpdateAdapter aa = new UpdateAdapter(context,R.layout.row_updates,myItems);
         ListView faq_list = (ListView) rootView.findViewById(R.id.updates);
         faq_list.setAdapter(aa);
+
+        faq_list.addHeaderView(inflater.inflate(R.layout.fragment_home_header, container, false));
 
         return rootView;
     }

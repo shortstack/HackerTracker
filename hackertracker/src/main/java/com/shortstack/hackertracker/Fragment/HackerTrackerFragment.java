@@ -116,6 +116,7 @@ public class HackerTrackerFragment extends Fragment {
         return result;
     }
 
+
     public List<Default> getItemByDate(String day, String type) {
         ArrayList<Default> result = new ArrayList<>();
 

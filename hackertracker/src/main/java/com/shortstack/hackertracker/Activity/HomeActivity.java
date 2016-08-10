@@ -24,16 +24,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Api.ApiException;
 import com.shortstack.hackertracker.Api.Impl.SyncServiceImpl;
 import com.shortstack.hackertracker.Api.SyncService;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
-import com.shortstack.hackertracker.Books.BooksPagerFragment;
 import com.shortstack.hackertracker.Common.Constants;
-import com.shortstack.hackertracker.Contests.ContestPagerFragment;
-import com.shortstack.hackertracker.DemoLabs.DemoLabsPagerFragment;
-import com.shortstack.hackertracker.Events.EventPagerFragment;
 import com.shortstack.hackertracker.Font.HelveticaTextView;
 import com.shortstack.hackertracker.Fragment.BadgeFragment;
 import com.shortstack.hackertracker.Fragment.FAQFragment;
@@ -44,23 +41,19 @@ import com.shortstack.hackertracker.Fragment.PartnersFragment;
 import com.shortstack.hackertracker.Fragment.SearchFragment;
 import com.shortstack.hackertracker.Fragment.SettingsFragment;
 import com.shortstack.hackertracker.Fragment.WifiFragment;
-import com.shortstack.hackertracker.Kids.KidsPagerFragment;
+import com.shortstack.hackertracker.List.GenericRowFragment;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
 import com.shortstack.hackertracker.Model.ApiBase;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.OfficialList;
-import com.shortstack.hackertracker.Parties.PartyPagerFragment;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
-import com.shortstack.hackertracker.Skytalks.SkytalksPagerFragment;
-import com.shortstack.hackertracker.Speakers.SpeakerPagerFragment;
 import com.shortstack.hackertracker.Utils.ApiResponseUtil;
 import com.shortstack.hackertracker.Utils.DialogUtil;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 import com.shortstack.hackertracker.Utils.UpdateTask;
 import com.shortstack.hackertracker.Vendors.VendorsFragment;
-import com.shortstack.hackertracker.Villages.VillagePagerFragment;
-import com.shortstack.hackertracker.Workshops.WorkshopPagerFragment;
+import com.shortstack.hackertracker.Workshops.GenericWorkshopFragment;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -120,7 +113,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         // set home
         fragmentManager.beginTransaction()
-                .replace(R.id.container, HomeFragment.newInstance(1))
+                .replace(R.id.container, HomeFragment.newInstance())
                 .addToBackStack("HomeFragment")
                 .commit();
 
@@ -157,12 +150,6 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     case PartyPagerFragment:
                         mTitle.setText(getString(R.string.parties).toUpperCase());
                         break;
-                    case VendorsFragment:
-                        mTitle.setText(getString(R.string.vendors).toUpperCase());
-                        break;
-                    case MapsFragment:
-                        mTitle.setText(getString(R.string.maps).toUpperCase());
-                        break;
                     case BooksPagerFragment:
                         mTitle.setText(getString(R.string.books).toUpperCase());
                         break;
@@ -177,9 +164,6 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                         break;
                     case PartnersFragment:
                         mTitle.setText(getString(R.string.partners).toUpperCase());
-                        break;
-                    case FAQFragment:
-                        mTitle.setText(getString(R.string.faq).toUpperCase());
                         break;
                     case ShuttleFragment:
                         mTitle.setText(getString(R.string.shuttle).toUpperCase());
@@ -202,14 +186,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                     case SettingsFragment:
                         mTitle.setText(getString(R.string.settings).toUpperCase());
                         break;
-                    case BadgeFragment:
-                        mTitle.setText(getString(R.string.badges).toUpperCase());
-                        break;
                     case WorkshopInfoFragment:
                         mTitle.setText(getString(R.string.workshop_info_title).toUpperCase());
-                        break;
-                    case WifiFragment:
-                        mTitle.setText(getString(R.string.wifi).toUpperCase());
                         break;
                 }
                 fm.popBackStack();
@@ -259,8 +237,6 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         EventPagerFragment,
         ContestPagerFragment,
         PartyPagerFragment,
-        VendorsFragment,
-        MapsFragment,
         BooksPagerFragment,
         VillagePagerFragment,
         WorkshopPagerFragment,
@@ -268,14 +244,11 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         ShuttleFragment,
         SkytalksPagerFragment,
         KidsPagerFragment,
-        BadgeFragment,
-        FAQFragment,
         LinksFragment,
         DemoLabsFragment,
         SchedulePagerFragment,
         SearchFragment,
         SettingsFragment,
-        WifiFragment,
         WorkshopInfoFragment
     }
 
@@ -289,39 +262,41 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         // update the main content by replacing fragments
         fragmentManager = getSupportFragmentManager();
 
+        Logger.d("Displaying position: " + position);
+
         switch (position)
         {
             case 0:
                 // home
-                addToBackStack(R.string.home, Constants.FRAGMENT_HOME, HomeFragment.newInstance(1));
+                addToBackStack(R.string.home, Constants.FRAGMENT_HOME, HomeFragment.newInstance());
                 break;
             case 1:
                 // speakers
-                addToBackStack(R.string.speakers, Constants.FRAGMENT_SPEAKERS, SpeakerPagerFragment.newInstance(2));
+                addToBackStack(R.string.speakers, Constants.FRAGMENT_SPEAKERS, GenericRowFragment.newInstance(Constants.TYPE_SPEAKER));
                 break;
             case 2:
                 // skytalks
-                addToBackStack(R.string.skytalks, Constants.FRAGMENT_SKYTALKS, SkytalksPagerFragment.newInstance(3));
+                addToBackStack(R.string.skytalks, Constants.FRAGMENT_SKYTALKS, GenericRowFragment.newInstance(Constants.TYPE_SKYTALKS));
                 break;
             case 3:
                 // contests
-                addToBackStack(R.string.contests, Constants.FRAGMENT_CONTESTS, ContestPagerFragment.newInstance(4));
+                addToBackStack(R.string.contests, Constants.FRAGMENT_CONTESTS, GenericRowFragment.newInstance(Constants.TYPE_CONTEST));
                 break;
             case 4:
                 // events
-                addToBackStack(R.string.events, Constants.FRAGMENT_EVENTS, EventPagerFragment.newInstance(5));
+                addToBackStack(R.string.events, Constants.FRAGMENT_EVENTS, GenericRowFragment.newInstance(Constants.TYPE_EVENT));
                 break;
             case 5:
                 // parties
-                addToBackStack(R.string.parties, Constants.FRAGMENT_PARTIES, PartyPagerFragment.newInstance(6));
+                addToBackStack(R.string.parties, Constants.FRAGMENT_PARTIES, GenericRowFragment.newInstance(Constants.TYPE_PARTY));
                 break;
             case 6:
                 // villages
-                addToBackStack(R.string.villages, Constants.FRAGMENT_VILLAGES, VillagePagerFragment.newInstance(7));
+                addToBackStack(R.string.villages, Constants.FRAGMENT_VILLAGES, GenericRowFragment.newInstance(Constants.TYPE_VILLAGE));
                 break;
             case 7:
                 // workshops
-                addToBackStack(R.string.workshops, Constants.FRAGMENT_WORKSHOPS, WorkshopPagerFragment.newInstance(8));
+                addToBackStack(R.string.workshops, Constants.FRAGMENT_WORKSHOPS, GenericWorkshopFragment.newInstance(Constants.TYPE_WORKSHOP));
                 break;
             /*case 8:
                 // book signings
@@ -329,11 +304,11 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;*/
             case 8:
                 // demo labs
-                addToBackStack(R.string.demolabs, Constants.FRAGMENT_DEMOLAB, DemoLabsPagerFragment.newInstance(9));
+                addToBackStack(R.string.demolabs, Constants.FRAGMENT_DEMOLAB, GenericRowFragment.newInstance(Constants.TYPE_DEMOLAB));
                 break;
             case 9:
                 // kids
-                addToBackStack(R.string.kids, Constants.FRAGMENT_KIDS, KidsPagerFragment.newInstance(10));
+                addToBackStack(R.string.kids, Constants.FRAGMENT_KIDS, GenericRowFragment.newInstance(Constants.TYPE_SKYTALKS));
                 break;
             case 10:
                 // vendors

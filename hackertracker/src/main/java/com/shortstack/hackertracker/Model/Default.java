@@ -1,8 +1,17 @@
 package com.shortstack.hackertracker.Model;
 
+import android.content.Context;
+
+import com.shortstack.hackertracker.R;
+import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
+
 import org.parceler.Parcel;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Created with IntelliJ IDEA.
@@ -128,8 +137,8 @@ public class Default implements Serializable {
         this.link = link;
     }
 
-    public Integer isNew() {
-        return is_new;
+    public boolean isNew() {
+        return is_new != null && is_new == 1;
     }
 
     public void setIsNew(Integer is_new) {
@@ -180,5 +189,50 @@ public class Default implements Serializable {
         this.tool = tool;
         this.starred = starred;
         this.is_new = is_new;
+    }
+
+    public boolean isTool() {
+        return getTool() == 1;
+    }
+
+    public boolean isExploit() {
+        return getExploit() == 1;
+    }
+
+    public boolean isDemo() {
+        return getDemo() == 1;
+    }
+
+    public boolean isStarred() {
+        return getStarred() == 1;
+    }
+
+    public String getTimeStamp( Context context ) {
+        // No start time, return TBA.
+        if( getBegin().equals("") )
+            return context.getResources().getString(R.string.tba);
+
+        String time = "";
+
+        if (SharedPreferencesUtil.shouldShowMilitaryTime()) {
+            time = getBegin();
+
+        } else {
+            String dateStr = getBegin();
+            DateFormat readFormat = new SimpleDateFormat("HH:mm");
+            DateFormat writeFormat = new SimpleDateFormat("h:mm aa");
+            Date date = null;
+            try {
+                date = readFormat.parse(dateStr);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            if (date != null) {
+                time = writeFormat.format(date);
+            }
+        }
+
+        return time;
     }
 }

@@ -39,7 +39,6 @@ import org.parceler.Parcels;
 
 import java.util.Arrays;
 import java.util.Calendar;
-import java.util.TimeZone;
 
 /**
  * Created by Whitney Champion on 6/11/15.
@@ -109,7 +108,6 @@ public class DetailsFragment extends DialogFragment {
         TextView nameText = (TextView) rootView.findViewById(R.id.speaker);
         TextView timeText = (TextView) rootView.findViewById(R.id.when);
         TextView locationText = (TextView) rootView.findViewById(R.id.where);
-        TextView forumText = (TextView) rootView.findViewById(R.id.link);
         TextView bodyText = (TextView) rootView.findViewById(R.id.description);
         LinearLayout whereLayout = (LinearLayout) rootView.findViewById(R.id.where_holder);
         ImageView demo = (ImageView) rootView.findViewById(R.id.demo);
@@ -172,12 +170,6 @@ public class DetailsFragment extends DialogFragment {
             }
         }
 
-        // if no link, hide link
-        if (item.getLink()==null || item.getLink().equals("") || item.getLink().equals(" ")) {
-            forumText.setVisibility(View.GONE);
-        } else {
-            forumText.setText("More info: " + item.getLink());
-        }
 
         // set location
         if (item.getLocation()!=null) {
