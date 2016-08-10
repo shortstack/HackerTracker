@@ -19,12 +19,7 @@
         <item>@string/workshops</item>
         <item>@string/demolabs</item>
         <item>@string/kids</item>
-        <item>@string/vendors</item>
-        <item>@string/maps</item>
         <item>@string/partners</item>
-        <item>@string/faq</item>
-        <item>@string/badges</item>
-        <item>@string/wifi</item>
     </string-array>
 
     <string name="home">DEF CON 24</string>
@@ -216,6 +211,8 @@
 
     <string name="partners_rejectedcon">Has your paper been rejected from a security conference? Rejected Con is an online annual security conference that allows the presentations rejected by other conferences to see the light of day. Check them out at @Rejected_CON!\n\nhttp://twitter.com/rejected_con\nhttp://rejectedcon.com</string>
     <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
+    <string name="action_star">Favorite</string>
+    <string name="action_more_information">More Details</string>
 
     <string-array name="updates">
         <item>08/02/16</item>

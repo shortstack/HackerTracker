@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:background="@color/background">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:background="@drawable/skull_lg" />
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="40dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:scaleType="fitStart"
+        android:src="@drawable/title_white" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.shortstack.hackertracker.Font.HelveticaButton
+                style="@style/button_home"
+                android:text="@string/wifi" />
+
+            <com.shortstack.hackertracker.Font.HelveticaButton
+                style="@style/button_home"
+                android:text="@string/map_hotel" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.shortstack.hackertracker.Font.HelveticaButton
+                style="@style/button_home"
+                android:text="@string/maps" />
+
+            <com.shortstack.hackertracker.Font.HelveticaButton
+                style="@style/button_home"
+                android:text="@string/vendors" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.shortstack.hackertracker.Font.HelveticaButton
+                style="@style/button_home"
+                android:text="@string/badges" />
+
+            <com.shortstack.hackertracker.Font.HelveticaButton
+                style="@style/button_home"
+                android:text="@string/faq" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <TextView
+        style="@style/details_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15dp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="@string/updates" />
+</LinearLayout>

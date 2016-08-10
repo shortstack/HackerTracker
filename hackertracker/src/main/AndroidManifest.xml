@@ -34,6 +34,13 @@
             android:screenOrientation="portrait">
         </activity>
 
+        <activity
+            android:name="com.shortstack.hackertracker.Activity.DetailsActivity"
+            android:screenOrientation="portrait"
+            android:icon="@drawable/skull"
+            >
+        </activity>
+
         <receiver android:name="com.shortstack.hackertracker.Utils.AlarmReceiver" >
         </receiver>
 

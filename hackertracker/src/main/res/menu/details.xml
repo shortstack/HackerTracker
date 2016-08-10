@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/information"
+        android:icon="@drawable/star_selected"
+        app:showAsAction="always"
+        android:title="@string/action_more_information">
+    </item>
+
+    <item
+        android:id="@+id/share"
+        android:icon="@drawable/icon_share"
+        app:showAsAction="never"
+        android:title="@string/action_share">
+    </item>
+    <item
+        android:id="@+id/star"
+        android:icon="@drawable/star_unselected"
+        app:showAsAction="never"
+        android:title="@string/action_star">
+    </item>
+</menu>

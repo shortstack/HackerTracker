@@ -98,5 +98,8 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
 
     @Override
     public void onClick(View view) {
+        Intent intent = new Intent(getContext(), DetailsActivity.class);
+        intent.putExtra("item", Parcels.wrap(getContent()));
+        getContext().startActivity(intent);
     }
 }

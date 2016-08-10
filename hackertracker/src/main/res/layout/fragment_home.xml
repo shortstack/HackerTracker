@@ -1,40 +1,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     style="@style/page"
-    android:orientation="vertical"
-    tools:context=".HomeActivity$HomeFragment">
+    android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:background="@drawable/skull_lg"/>
-
-    <ImageView
-        android:layout_gravity="center_horizontal"
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_marginBottom="10dp"
-        android:src="@drawable/title_white"
-        android:scaleType="fitStart"/>
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:layout_marginTop="15dp"
-        android:text="@string/updates"
-        style="@style/details_label"
-        android:layout_gravity="center_horizontal"/>
     <ListView
-        style="@style/list"
         android:id="@+id/updates"
+        style="@style/list"
+        android:clipToPadding="false"
         android:divider="@null"
         android:dividerHeight="0dp"
         android:padding="15dp"
-        android:textColor="@color/white"/>
-
-
+        android:textColor="@color/white" />
 </LinearLayout>
