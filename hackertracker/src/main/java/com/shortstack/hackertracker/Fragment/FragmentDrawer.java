@@ -23,7 +23,7 @@ import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Adapter.NavigationDrawerAdapter;
 import com.shortstack.hackertracker.Model.NavDrawerItem;
 import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
+import com.shortstack.hackertracker.Schedule.GenericScheduleFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -148,7 +148,7 @@ public class FragmentDrawer extends Fragment {
 
             // open schedule fragment
             HomeActivity.fragmentManager.beginTransaction()
-                    .replace(R.id.container, SchedulePagerFragment.newInstance(11))
+                    .replace(R.id.container, GenericScheduleFragment.newInstance())
                     .addToBackStack("SchedulePagerFragment")
                     .commit();
         }

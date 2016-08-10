@@ -41,7 +41,8 @@ public class GenericRowFragment extends HackerTrackerFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-        mType = args.getString(ARG_TYPE);
+        if( args != null )
+            mType = args.getString(ARG_TYPE);
     }
 
 
@@ -53,7 +54,12 @@ public class GenericRowFragment extends HackerTrackerFragment {
         LinearLayoutManager layout = new LinearLayoutManager(getContext());
         list.setLayoutManager(layout);
 
-        List<Default> events = getItemByDate(mType);
+        List<Default> events;
+
+        if( mType != null )
+            events = getItemByDate(mType);
+        else
+            events = getStars();
         List<Object> objects = addTimeDividers(events);
 
         if (events.size() > 0) {
@@ -67,6 +73,9 @@ public class GenericRowFragment extends HackerTrackerFragment {
 
     private List<Object> addTimeDividers(List<Default> events) {
         ArrayList<Object> result = new ArrayList<>();
+
+        if( events.size() == 0 )
+            return result;
 
         result.add(events.get(0).getDate());
         result.add(events.get(0).getTimeStamp(getContext()));

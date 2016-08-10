@@ -47,7 +47,7 @@ import com.shortstack.hackertracker.Model.ApiBase;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.OfficialList;
 import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
+import com.shortstack.hackertracker.Schedule.GenericScheduleFragment;
 import com.shortstack.hackertracker.Utils.ApiResponseUtil;
 import com.shortstack.hackertracker.Utils.DialogUtil;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
@@ -416,7 +416,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         // if on schedule screen, reload fragment
         if (fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getName().equals(Constants.FRAGMENT_SCHEDULE)) {
             fragmentManager.beginTransaction()
-                    .replace(R.id.container, SchedulePagerFragment.newInstance(11))
+                    .replace(R.id.container, GenericScheduleFragment.newInstance())
                     .addToBackStack(Constants.FRAGMENT_SCHEDULE)
                     .commit();
         }

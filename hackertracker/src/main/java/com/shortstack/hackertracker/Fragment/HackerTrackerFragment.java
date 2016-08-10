@@ -155,12 +155,12 @@ public class HackerTrackerFragment extends Fragment {
         return result;
     }
 
-    public List<Default> getStars(String day) {
+    public List<Default> getStars() {
         ArrayList<Default> result = new ArrayList<>();
 
         SQLiteDatabase db = dbHelper.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM data WHERE date=? AND starred=1 ORDER BY begin", new String[]{day});
+        Cursor cursor = db.rawQuery("SELECT * FROM data WHERE date=? AND starred=1 ORDER BY date, begin", new String[]{});
 
         // get items from database
 

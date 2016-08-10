@@ -6,6 +6,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
@@ -14,18 +16,20 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Fragment.DetailsFragment;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.OfficialList;
 import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Schedule.SchedulePagerFragment;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 
 /**
  * Created by whitneychampion on 7/11/14.
@@ -250,7 +254,7 @@ public class DialogUtil {
                 switch (which) {
                     case 0:
                         // export CSV and share
-                        SchedulePagerFragment.backupDatabaseCSV();
+                        backupDatabaseCSV();
                         Intent sendIntent = new Intent();
                         sendIntent.setAction(Intent.ACTION_SEND);
                         sendIntent.putExtra(Intent.EXTRA_SUBJECT, R.string.schedule_share);
@@ -263,7 +267,7 @@ public class DialogUtil {
                         break;
                     case 1:
                         // export CSV
-                        SchedulePagerFragment.backupDatabaseCSV();
+                        backupDatabaseCSV();
                         Toast.makeText(context, context.getString(R.string.backup), Toast.LENGTH_SHORT).show();
                 }
             }
@@ -307,4 +311,53 @@ public class DialogUtil {
 
         return null;
     }
+
+    public static Boolean backupDatabaseCSV() {
+        SQLiteDatabase db = HackerTrackerApplication.dbHelper.getReadableDatabase();
+
+        Log.d("CSV", "backupDatabaseCSV");
+        Boolean returnCode;
+        int i;
+        String csvHeader = "";
+        String csvValues = "";
+        for (i = 0; i < Constants.COLUMN_NAMES.length; i++) {
+            if (csvHeader.length() > 0) {
+                csvHeader += ",";
+            }
+            csvHeader += "\"" + Constants.COLUMN_NAMES[i] + "\"";
+        }
+
+        csvHeader += "\n";
+        Log.d("CSV", "header=" + csvHeader);
+        try {
+            File outFile = DialogUtil.getOutputMediaFile();
+            FileWriter fileWriter = new FileWriter(outFile);
+            BufferedWriter out = new BufferedWriter(fileWriter);
+            Cursor cursor = db.rawQuery("SELECT title,who,begin,end,date,location FROM data WHERE starred=1", null);
+            if (cursor != null) {
+                out.write(csvHeader);
+                while (cursor.moveToNext()) {
+                    csvValues = "\""+cursor.getString(0).replace(",","")+"\",";
+                    if (cursor.getString(1)!=null)
+                        csvValues += cursor.getString(1).replace(",",";")+",";
+                    else
+                        csvValues += ",";
+                    csvValues += cursor.getString(2)+",";
+                    csvValues += cursor.getString(3)+",";
+                    csvValues += cursor.getString(4)+",";
+                    csvValues += cursor.getString(5)+",\n";
+                    out.write(csvValues.replace("null",""));
+                }
+                cursor.close();
+            }
+            out.close();
+            returnCode = true;
+        } catch (IOException e) {
+            returnCode = false;
+            Log.d("CSV", "IOException: " + e.getMessage());
+        }
+        db.close();
+        return returnCode;
+    }
+
 }
