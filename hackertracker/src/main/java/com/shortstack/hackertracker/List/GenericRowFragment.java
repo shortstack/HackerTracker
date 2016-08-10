@@ -23,6 +23,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
     protected static final String ARG_TYPE = "type";
 
     @Bind(R.id.list)
+    protected
     RecyclerView list;
 
     private String mType;
@@ -54,21 +55,20 @@ public class GenericRowFragment extends HackerTrackerFragment {
         LinearLayoutManager layout = new LinearLayoutManager(getContext());
         list.setLayoutManager(layout);
 
-        List<Default> events;
-
-        if( mType != null )
-            events = getItemByDate(mType);
-        else
-            events = getStars();
+        List<Default> events = getEvents();
         List<Object> objects = addTimeDividers(events);
 
-        if (events.size() > 0) {
-            GenericRowAdapter adapter = new GenericRowAdapter();
-            adapter.addAll(objects);
-            list.setAdapter(adapter);
-        }
+        GenericRowAdapter adapter = new GenericRowAdapter();
+        adapter.addAll(objects);
+        list.setAdapter(adapter);
 
         return rootView;
+    }
+
+    protected List<Default> getEvents() {
+        List<Default> events;
+        events = getItemByDate(mType);
+        return events;
     }
 
     private List<Object> addTimeDividers(List<Default> events) {
