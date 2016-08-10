@@ -6,6 +6,6 @@ import com.shortstack.hackertracker.Model.Default;
 
 public class GenericRowBuilder extends RendererBuilder<Default> {
     public GenericRowBuilder() {
-        this.bind(Default.class, new GenericDefaultRenderer());
-    }
+        this.bind(Default.class, new GenericDefaultRenderer()).bind(String.class, new GenericHeaderRenderer());
+}
 }

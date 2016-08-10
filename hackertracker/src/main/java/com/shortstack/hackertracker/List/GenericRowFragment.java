@@ -11,6 +11,7 @@ import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -52,15 +53,40 @@ public class GenericRowFragment extends HackerTrackerFragment {
         LinearLayoutManager layout = new LinearLayoutManager(getContext());
         list.setLayoutManager(layout);
 
-        List<Default> events = getItemByDate(HackerTrackerFragment.getDate(2), mType);
+        List<Default> events = getItemByDate(mType);
+        List<Object> objects = addTimeDividers(events);
 
         if (events.size() > 0) {
             GenericRowAdapter adapter = new GenericRowAdapter();
-            adapter.addAll(events);
+            adapter.addAll(objects);
             list.setAdapter(adapter);
         }
 
         return rootView;
+    }
+
+    private List<Object> addTimeDividers(List<Default> events) {
+        ArrayList<Object> result = new ArrayList<>();
+
+        result.add(events.get(0).getDate());
+        result.add(events.get(0).getTimeStamp(getContext()));
+
+        for (int i = 0; i < events.size() - 1; i++) {
+            Default current = events.get(i);
+
+            result.add(current);
+
+            Default next = events.get(i + 1);
+            if (!current.getDate().equals(next.getDate())) {
+                result.add(next.getDate());
+            }
+
+            if (!current.getBegin().equals(next.getBegin())) {
+                result.add(next.getTimeStamp(getContext()));
+            }
+        }
+
+        return result;
     }
 
     protected int getContentView() {

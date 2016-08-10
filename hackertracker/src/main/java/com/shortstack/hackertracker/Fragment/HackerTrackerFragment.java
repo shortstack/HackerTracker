@@ -15,13 +15,8 @@ import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Common.Constants;
-import com.shortstack.hackertracker.Model.Contest;
 import com.shortstack.hackertracker.Model.Default;
-import com.shortstack.hackertracker.Model.Event;
-import com.shortstack.hackertracker.Model.Party;
-import com.shortstack.hackertracker.Model.Speaker;
 import com.shortstack.hackertracker.Model.Vendor;
-import com.shortstack.hackertracker.Model.Workshop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -117,63 +112,20 @@ public class HackerTrackerFragment extends Fragment {
     }
 
 
-    public List<Default> getItemByDate(String day, String type) {
+
+
+    public List<Default> getItemByDate(String type) {
         ArrayList<Default> result = new ArrayList<>();
 
         SQLiteDatabase db = HackerTrackerApplication.dbHelper.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM data WHERE date=? AND type=? ORDER BY begin", new String[] {day, String.valueOf(type)});
+        Cursor cursor = db.rawQuery("SELECT * FROM data WHERE type=? ORDER BY date, begin", new String[] {String.valueOf(type)});
 
         try{
             if (cursor.moveToFirst()){
                 do{
 
-                    Default item;
-
-                    switch (type) {
-                        case Constants.TYPE_SPEAKER:
-                            item = new Speaker();
-                            break;
-                        case Constants.TYPE_CONTEST:
-                            item = new Contest();
-                            break;
-                        case Constants.TYPE_EVENT:
-                            item = new Event();
-                            break;
-                        case Constants.TYPE_PARTY:
-                            item = new Party();
-                            break;
-                        case Constants.TYPE_WORKSHOP:
-                            item = new Workshop();
-                            break;
-                        case Constants.TYPE_SKYTALKS:
-                            item = new Default();
-                            break;
-                        case Constants.TYPE_MESSAGE:
-                            item = new Default();
-                            break;
-                        case Constants.TYPE_UNOFFICIAL:
-                            item = new Default();
-                            break;
-                        case Constants.TYPE_DCIB:
-                            item = new Default();
-                            break;
-                        case Constants.TYPE_STUPID:
-                            item = new Default();
-                            break;
-                        case Constants.TYPE_KIDS:
-                            item = new Default();
-                            break;
-                        case Constants.TYPE_JOKE:
-                            item = new Default();
-                            break;
-                        case Constants.TYPE_DEMOLAB:
-                            item = new Default();
-                            break;
-                        default:
-                            item = new Speaker();
-                            break;
-                    }
+                    Default item = new Default();
 
                     item.setId(cursor.getInt(cursor.getColumnIndex("id")));
                     item.setType(cursor.getString(cursor.getColumnIndex("type")));

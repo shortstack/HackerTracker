@@ -71,7 +71,7 @@ public class BooksFragment extends HackerTrackerFragment {
         list = (ListView) rootView.findViewById(R.id.list_books);
 
         // get book signings
-        List<Default> books = getItemByDate(HackerTrackerFragment.getDate(date), Constants.TYPE_BOOK);
+        List<Default> books = getItemByDate(Constants.TYPE_BOOK);
         if (books.size() > 0) {
 
             adapter = new DefaultAdapter(context, R.layout.row, books);
