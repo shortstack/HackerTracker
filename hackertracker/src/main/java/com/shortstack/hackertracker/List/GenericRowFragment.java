@@ -86,6 +86,8 @@ public class GenericRowFragment extends HackerTrackerFragment {
             }
         }
 
+        result.add(events.get(events.size() - 1));
+
         return result;
     }
 
