@@ -5,18 +5,14 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.view.InflateException;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ListView;
 
-import com.shortstack.hackertracker.Adapter.DefaultAdapter;
+import com.pedrogomez.renderers.RendererAdapter;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.List.GenericRowFragment;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.ClearableEditText;
@@ -29,84 +25,56 @@ import java.util.List;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-/**
- * Created by Whitney Champion on 7/7/14.
- */
-public class SearchFragment extends Fragment {
+import butterknife.Bind;
+import butterknife.OnFocusChange;
+import butterknife.OnTextChanged;
 
-    private static View rootView;
-    private Context context;
-    private DefaultAdapter adapter;
-    private ListView list;
+public class GenericSearchFragment extends GenericRowFragment {
+
+    @Bind(R.id.search)
+    ClearableEditText search;
+
     private ArrayList<Default> result;
-    private ClearableEditText search;
-    private static final String ARG_SECTION_NUMBER = "section_number";
 
-    public static SearchFragment newInstance(int sectionNumber) {
-        SearchFragment fragment = new SearchFragment();
-        Bundle args = new Bundle();
-
-        args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        fragment.setArguments(args);
-        return fragment;
+    public static GenericSearchFragment newInstance() {
+        GenericSearchFragment frag = new GenericSearchFragment();
+        return (frag);
     }
 
-    public SearchFragment() {
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
+    protected List<Default> getEvents() {
+        return Collections.emptyList();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
 
-        if (rootView != null) {
-            ViewGroup parent = (ViewGroup) rootView.getParent();
-            if (parent != null)
-                parent.removeView(rootView);
+    @Override
+    protected int getContentView() {
+        return R.layout.fragment_search;
+    }
+
+    @OnTextChanged(R.id.search)
+    public void onSearchTextChanged(CharSequence text) {
+        new getSearchResults().execute(text.toString());
+    }
+
+    @OnFocusChange(R.id.search)
+    public void onSearchFocusChanged(boolean isFocused) {
+        if (!isFocused) {
+            hideKeyboard();
         }
-        try {
-            rootView = inflater.inflate(R.layout.fragment_search, container, false);
-        } catch (InflateException e) {
-        }
-
-        // get context
-        context = inflater.getContext();
-
-        // set up listview
-        list = (ListView) rootView.findViewById(R.id.search_list);
-
-        // edittext listener
-        search = (ClearableEditText) rootView.findViewById(R.id.search);
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0);
-        search.addTextChangedListener(new TextWatcher() {
-
-            public void afterTextChanged(Editable s) {
-            }
-
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (s.toString()!="") {
-                    new getSearchResults().execute(s.toString());
-                }
-            }
-        });
-        search.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                if(!hasFocus){
-                    hideKeyboard();
-                }
-
-            }
-        });
-
-        return rootView;
     }
 
     private void hideKeyboard() {
-        InputMethodManager imm = (InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(search.getWindowToken(), 0);
     }
 
@@ -120,16 +88,13 @@ public class SearchFragment extends Fragment {
 
         @Override
         protected void onPostExecute(List<Default> items) {
-            if (items!=null) {
-
-                adapter = new DefaultAdapter(context, R.layout.row, items);
-
-                list.setAdapter(adapter);
+            if (items != null) {
+                RendererAdapter adapter = (RendererAdapter) list.getAdapter();
+                adapter.getCollection().clear();
+                adapter.getCollection().addAll(items);
                 adapter.notifyDataSetChanged();
-
             }
         }
-
     }
 
     public List<Default> searchDatabase(String string) {
@@ -144,7 +109,7 @@ public class SearchFragment extends Fragment {
 
         Cursor hint = dbOfficial.rawQuery("SELECT * FROM data WHERE (type LIKE ?)", new String[]{"%" + string + "%"});
         Cursor titleOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
-        Cursor bodyOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (description LIKE ?) AND type NOT LIKE 'Vendor'", new String[] {"%"+string+"%"});
+        Cursor bodyOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (description LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
         Cursor nameOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (who LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
         Cursor locationOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (location LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
 
@@ -169,7 +134,7 @@ public class SearchFragment extends Fragment {
         });
 
         Iterator<Default> iterator = result.iterator();
-        while(iterator.hasNext()) {
+        while (iterator.hasNext()) {
             items.add(iterator.next());
         }
         result.clear();
@@ -193,9 +158,9 @@ public class SearchFragment extends Fragment {
 
     private void getResults(Cursor cursor) {
 
-        try{
-            if (cursor.moveToFirst()){
-                do{
+        try {
+            if (cursor.moveToFirst()) {
+                do {
 
                     Default item = new Default();
 
@@ -218,15 +183,10 @@ public class SearchFragment extends Fragment {
 
                     result.add(item);
 
-                }while(cursor.moveToNext());
+                } while (cursor.moveToNext());
             }
-        }finally{
+        } finally {
             cursor.close();
         }
     }
-
-
 }
-
-
-

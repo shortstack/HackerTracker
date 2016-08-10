@@ -7,25 +7,24 @@
         android:id="@+id/search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/button_states_green"
-        android:singleLine="true"
-        android:padding="10dp"
-        android:hint="@string/search"
-        android:textAllCaps="true"
-        android:textColorHint="@color/white"
         android:layout_margin="15dp"
-        android:textColor="@color/white">
-        <requestFocus/>
+        android:background="@drawable/button_states_green"
+        android:hint="@string/search"
+        android:padding="10dp"
+        android:singleLine="true"
+        android:textAllCaps="true"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white">
+
+        <requestFocus />
     </com.shortstack.hackertracker.Utils.ClearableEditText>
 
 
-    <ListView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/search_list"
-        android:layout_marginTop="15dp"
-        android:divider="@null"
-        style="@style/list"/>
+        android:background="@color/background" />
 
 </LinearLayout>
 

@@ -35,10 +35,10 @@ import com.shortstack.hackertracker.Font.HelveticaTextView;
 import com.shortstack.hackertracker.Fragment.BadgeFragment;
 import com.shortstack.hackertracker.Fragment.FAQFragment;
 import com.shortstack.hackertracker.Fragment.FragmentDrawer;
+import com.shortstack.hackertracker.Fragment.GenericSearchFragment;
 import com.shortstack.hackertracker.Fragment.HomeFragment;
 import com.shortstack.hackertracker.Fragment.MapsFragment;
 import com.shortstack.hackertracker.Fragment.PartnersFragment;
-import com.shortstack.hackertracker.Fragment.SearchFragment;
 import com.shortstack.hackertracker.Fragment.SettingsFragment;
 import com.shortstack.hackertracker.Fragment.WifiFragment;
 import com.shortstack.hackertracker.List.GenericRowFragment;
@@ -212,7 +212,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         int id = item.getItemId();
         if (item.getItemId() == R.id.action_search) {
             // open search fragment
-            addToBackStack(R.string.search, Constants.FRAGMENT_SEARCH, SearchFragment.newInstance(12));
+            addToBackStack(R.string.search, Constants.FRAGMENT_SEARCH, GenericSearchFragment.newInstance());
             return true;
         } else if (id == R.id.action_share) {
             // show share dialog
