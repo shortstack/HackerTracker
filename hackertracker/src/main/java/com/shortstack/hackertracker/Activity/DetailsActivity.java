@@ -7,25 +7,21 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterStarred;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
-import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
 
 import org.parceler.Parcels;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
 
 /**
  * Created by Admin on 8/8/2016.
@@ -34,14 +30,43 @@ public class DetailsActivity extends AppCompatActivity {
 
     private Default item;
 
+    @Bind(R.id.my_toolbar)
+    Toolbar toolbar;
+
+    @Bind(R.id.title)
+    TextView title;
+
+    @Bind(R.id.speaker)
+    TextView host;
+
+    @Bind(R.id.when)
+    TextView time;
+
+    @Bind(R.id.where)
+    TextView location;
+
+    @Bind(R.id.description)
+    TextView description;
+
+    @Bind(R.id.demo)
+    View demo;
+
+    @Bind(R.id.exploit)
+    View exploit;
+
+    @Bind(R.id.tool)
+    View tool;
+
+    @Bind(R.id.isNew)
+    View isNew;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.details);
-
-        Toolbar myToolbar = (Toolbar) findViewById(R.id.my_toolbar);
-        setSupportActionBar(myToolbar);
+        ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         if (getIntent().getExtras() != null) {
             item = Parcels.unwrap(getIntent().getExtras().getParcelable("item"));
@@ -49,75 +74,34 @@ public class DetailsActivity extends AppCompatActivity {
             item = Parcels.unwrap(savedInstanceState.getParcelable("item"));
         }
 
-        myToolbar.setTitle(item.getTitle());
 
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setTitle(item.getTitle());
 
-        TextView titleText = (TextView) findViewById(R.id.title);
-        TextView nameText = (TextView) findViewById(R.id.speaker);
-        TextView timeText = (TextView) findViewById(R.id.when);
-        TextView locationText = (TextView) findViewById(R.id.where);
-        TextView bodyText = (TextView) findViewById(R.id.description);
-        //LinearLayout whereLayout = (LinearLayout) findViewById(R.id.where_holder);
-        View demo = findViewById(R.id.demo);
-        View exploit = findViewById(R.id.exploit);
-        View tool = findViewById(R.id.tool);
+        displayText();
+        displaySpeakerIcons();
+        displayNewIcon();
+    }
 
+    private void displayText() {
+        title.setText(getContent().getTitle());
+        host.setText(getContent().getName());
+        time.setText(getContent().getTimeStamp(this));
+        location.setText(getContent().getLocation());
+        description.setText(item.getDescription());
+    }
 
-        // set title
-        titleText.setText(item.getTitle());
+    private void displaySpeakerIcons() {
+        tool.setVisibility(getContent().isTool() ? View.VISIBLE : View.GONE);
+        exploit.setVisibility(getContent().isExploit() ? View.VISIBLE : View.GONE);
+        demo.setVisibility(getContent().isDemo() ? View.VISIBLE : View.GONE);
+    }
 
-        // if not a speaker, hide speaker name
-        if (!item.getType().equals(Constants.TYPE_SPEAKER) || item.getName() == null) {
-            nameText.setVisibility(View.GONE);
-        } else if (item.getName().isEmpty()) {
-            nameText.setVisibility(View.GONE);
-        } else {
-            nameText.setText(item.getName());
-        }
+    private void displayNewIcon() {
+        isNew.setVisibility(getContent().isNew() ? View.VISIBLE : View.GONE);
+    }
 
-        // if speaker, show speaker type
-
-        if (item.getTool() == 1) {
-            tool.setVisibility(View.VISIBLE);
-        }
-        if (item.getExploit() == 1) {
-            exploit.setVisibility(View.VISIBLE);
-        }
-        if (item.getDemo() == 1) {
-            demo.setVisibility(View.VISIBLE);
-        }
-
-
-        // set location
-        if (item.getLocation() != null) {
-            locationText.append(item.getLocation());
-        } else {
-        }
-
-        // set body
-        bodyText.setText(item.getDescription());
-
-        // set date & time
-
-
-        String dateStr = item.getDate() + ", " + item.getBegin();
-        DateFormat readFormat = new SimpleDateFormat("yyyy-MM-dd, HH:mm");
-        DateFormat writeFormat = new SimpleDateFormat("EEEE h:mm aa");
-        Date date = null;
-        try {
-            date = readFormat.parse(dateStr);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-        String formattedDate = "";
-        if (date != null) {
-            formattedDate = writeFormat.format(date);
-        }
-
-
-        timeText.setText(item.getDate() + " @ " + item.getBegin() + " - " + item.getEnd() + "\n" + formattedDate);
+    private Default getContent() {
+        return item;
     }
 
     @Override
@@ -156,7 +140,7 @@ public class DetailsActivity extends AppCompatActivity {
         SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
 
         // if not starred, star it
-        if (item.getStarred()==0) {
+        if (item.getStarred() == 0) {
 
             // add to starred database
             dbStars.execSQL("INSERT INTO data VALUES (" + item.getId() + ")");
@@ -166,7 +150,7 @@ public class DetailsActivity extends AppCompatActivity {
             if (!item.getBegin().equals("")) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.YEAR, Integer.parseInt(item.getDate().split("-")[0]));
-                calendar.set(Calendar.MONTH, Integer.parseInt(item.getDate().split("-")[1])-1);
+                calendar.set(Calendar.MONTH, Integer.parseInt(item.getDate().split("-")[1]) - 1);
                 calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(item.getDate().split("-")[2]));
                 calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(item.getBegin().split(":")[0]));
                 calendar.set(Calendar.MINUTE, Integer.parseInt(item.getBegin().split(":")[1]));
@@ -191,7 +175,7 @@ public class DetailsActivity extends AppCompatActivity {
 
             // change star
             item.setStarred(0);
-            Toast.makeText(this,R.string.schedule_removed,Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.schedule_removed, Toast.LENGTH_SHORT).show();
         }
 
         dbOfficial.close();
