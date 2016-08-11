@@ -26,13 +26,13 @@ public class GenericRowFragment extends HackerTrackerFragment {
     protected
     RecyclerView list;
 
-    private String mType;
+    private String[] mTypes;
 
 
-    public static GenericRowFragment newInstance(String type) {
+    public static GenericRowFragment newInstance(String... type) {
         GenericRowFragment frag = new GenericRowFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_TYPE, type);
+        args.putStringArray(ARG_TYPE, type);
         frag.setArguments(args);
 
         return (frag);
@@ -42,8 +42,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
-        if( args != null )
-            mType = args.getString(ARG_TYPE);
+        if (args != null) mTypes = args.getStringArray(ARG_TYPE);
     }
 
 
@@ -67,14 +66,14 @@ public class GenericRowFragment extends HackerTrackerFragment {
 
     protected List<Default> getEvents() {
         List<Default> events;
-        events = getItemByDate(mType);
+        events = getItemByDate(mTypes);
         return events;
     }
 
     private List<Object> addTimeDividers(List<Default> events) {
         ArrayList<Object> result = new ArrayList<>();
 
-        if( events.size() == 0 )
+        if (events.size() == 0)
             return result;
 
         result.add(events.get(0).getDateStamp());

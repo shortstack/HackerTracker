@@ -17,7 +17,7 @@ import java.util.TimerTask;
  */
 public class SplashActivity extends Activity {
 
-    public static final int SPLASH_DELAY = 1000;
+    public static final int SPLASH_DELAY = 450;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

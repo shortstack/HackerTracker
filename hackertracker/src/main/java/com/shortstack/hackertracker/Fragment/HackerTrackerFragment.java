@@ -7,6 +7,7 @@ package com.shortstack.hackertracker.Fragment;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 
@@ -114,12 +115,10 @@ public class HackerTrackerFragment extends Fragment {
 
 
 
-    public List<Default> getItemByDate(String type) {
+    public List<Default> getItemByDate(String ... type) {
         ArrayList<Default> result = new ArrayList<>();
-
         SQLiteDatabase db = HackerTrackerApplication.dbHelper.getWritableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT * FROM data WHERE type=? ORDER BY date, begin", new String[] {String.valueOf(type)});
+        Cursor cursor = db.rawQuery(getQueryString(type), type );
 
         try{
             if (cursor.moveToFirst()){
@@ -153,6 +152,17 @@ public class HackerTrackerFragment extends Fragment {
         db.close();
 
         return result;
+    }
+
+    @NonNull
+    private String getQueryString(String[] type) {
+        String query = "SELECT * FROM data WHERE (";
+        for (int i = 0; i < type.length; i++) {
+            query = query.concat("type=?");
+            if( i < type.length - 1 ) query = query.concat(" OR ");
+        }
+        query = query.concat(") ORDER BY date, begin");
+        return query;
     }
 
     public List<Default> getStars() {
