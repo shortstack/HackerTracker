@@ -33,7 +33,7 @@ public class SplashActivity extends Activity {
     }
 
     private void startHomeActivity() {
-        startActivity(new Intent(SplashActivity.this, HomeActivity.class));
+        startActivity(new Intent(SplashActivity.this, TabHomeActivity.class));
         finish();
     }
 }
