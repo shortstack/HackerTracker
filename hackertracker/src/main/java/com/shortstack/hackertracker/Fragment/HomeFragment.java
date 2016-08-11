@@ -1,6 +1,5 @@
 package com.shortstack.hackertracker.Fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -19,7 +18,6 @@ import com.shortstack.hackertracker.R;
 public class HomeFragment extends Fragment {
 
     private static View rootView;
-    private Context context;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -45,13 +43,12 @@ public class HomeFragment extends Fragment {
         }
 
         // get context
-        context = inflater.getContext();
 
         // get list items
         String[] myItems = getResources().getStringArray(R.array.updates);
 
         // configure the listview
-        UpdateAdapter aa = new UpdateAdapter(context,R.layout.row_updates,myItems);
+        UpdateAdapter aa = new UpdateAdapter(getContext(), R.layout.row_updates, myItems);
         ListView faq_list = (ListView) rootView.findViewById(R.id.updates);
         faq_list.setAdapter(aa);
 

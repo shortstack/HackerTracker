@@ -354,41 +354,6 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         mTitle.setText(getString(title).toUpperCase());
     }
 
-    // set actionbar title
-    public static void setActionBarTitle(String title) {
-        mTitle.setText(title.toUpperCase());
-    }
-
-    // scroll viewpager to current day
-    public static void setDay(ViewPager pager) {
-
-        SimpleDateFormat dayFormat = new SimpleDateFormat("EEEE", Locale.US);
-        Calendar calendar = Calendar.getInstance();
-        String weekDay = dayFormat.format(calendar.getTime());
-
-        switch (weekDay){
-            case Constants.DAY_0:
-                pager.setCurrentItem(0);
-                break;
-            case Constants.DAY_1:
-                pager.setCurrentItem(1);
-                break;
-            case Constants.DAY_2:
-                pager.setCurrentItem(2);
-                break;
-            case Constants.DAY_3:
-                pager.setCurrentItem(3);
-                break;
-            case Constants.DAY_4:
-                pager.setCurrentItem(4);
-                break;
-            default:
-                pager.setCurrentItem(0);
-                break;
-        }
-
-    }
-
     // clear schedule from DB
     public static void clearSchedule(Context context) {
         SQLiteDatabase dbStars = HackerTrackerApplication.myDbHelperStars.getWritableDatabase();

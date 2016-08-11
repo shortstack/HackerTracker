@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:padding="10dp"
-    android:textColor="@color/colorPrimary"
+    android:textColor="@android:color/white"
     android:textSize="24sp"
     tools:background="@color/background"
-    tools:text="Wednesday" />
+    tools:text="10:00 AM" />

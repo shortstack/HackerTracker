@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -50,6 +52,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         ViewGroup rootView = (ViewGroup) inflater.inflate(getContentView(), container, false);
         ButterKnife.bind(this, rootView);
+        setHasOptionsMenu(true);
 
         LinearLayoutManager layout = new LinearLayoutManager(getContext());
         list.setLayoutManager(layout);
@@ -77,7 +80,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
             return result;
 
         result.add(events.get(0).getDateStamp());
-        result.add(events.get(0).getTimeStamp(getContext()));
+        result.add(events.get(0).getBeginDateObject());
 
         for (int i = 0; i < events.size() - 1; i++) {
             Default current = events.get(i);
@@ -90,7 +93,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
             }
 
             if (!current.getBegin().equals(next.getBegin())) {
-                result.add(next.getTimeStamp(getContext()));
+                result.add(next.getBeginDateObject());
             }
         }
 
@@ -103,4 +106,8 @@ public class GenericRowFragment extends HackerTrackerFragment {
         return R.layout.fragment_list;
     }
 
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.schedule, menu);
+    }
 }

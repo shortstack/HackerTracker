@@ -4,18 +4,13 @@ package com.shortstack.hackertracker.Fragment;
  * Created by Whitney Champion on 4/18/14.
  */
 
-import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 
-import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
-import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
-import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.Vendor;
 
@@ -24,62 +19,11 @@ import java.util.List;
 
 public class HackerTrackerFragment extends Fragment {
 
-    private FragmentManager fragmentManager;
-    private Context context;
     private DatabaseAdapter dbHelper;
-    private DatabaseAdapterVendors vendorDbHelper;
 
     public HackerTrackerFragment() {
-
-        // get fragment manager
-        fragmentManager = HomeActivity.fragmentManager;
-
-        // get context
-        context = HackerTrackerApplication.getAppContext();
-
         // database
         dbHelper = HackerTrackerApplication.dbHelper;
-        vendorDbHelper = HackerTrackerApplication.vendorDbHelper;
-
-    }
-
-    public static String getTitle(Context ctxt, int position) {
-        switch (position) {
-            case -1:
-                return Constants.DAY_0;
-            case 0:
-                return Constants.DAY_1;
-            case 1:
-                return Constants.DAY_2;
-            case 2:
-                return Constants.DAY_3;
-            case 3:
-                return Constants.DAY_4;
-            default:
-                return "";
-        }
-    }
-
-    public static String getDate(int date) {
-        String day = "";
-        switch (date) {
-            case 0:
-                day = Constants.LONG_DAY_0;
-                break;
-            case 1:
-                day = Constants.LONG_DAY_1;
-                break;
-            case 2:
-                day = Constants.LONG_DAY_2;
-                break;
-            case 3:
-                day = Constants.LONG_DAY_3;
-                break;
-            case 4:
-                day = Constants.LONG_DAY_4;
-                break;
-        }
-        return day;
     }
 
     public List<Vendor> getVendors() {
@@ -167,7 +111,6 @@ public class HackerTrackerFragment extends Fragment {
         db.close();
 
         // return all items
-
         return result;
     }
 

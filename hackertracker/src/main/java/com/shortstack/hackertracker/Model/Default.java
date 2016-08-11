@@ -1,6 +1,8 @@
 package com.shortstack.hackertracker.Model;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.support.annotation.NonNull;
 
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
@@ -173,7 +175,7 @@ public class Default implements Serializable {
 
     }
 
-    public Default(int id, String title, String type, String description, String location, String who, String end, String begin, String link, String image, int demo, int tool, int exploit, int starred, int is_new){
+    public Default(int id, String title, String type, String description, String location, String who, String end, String begin, String link, String image, int demo, int tool, int exploit, int starred, int is_new) {
         this.id = id;
         this.type = type;
         this.title = title;
@@ -207,9 +209,9 @@ public class Default implements Serializable {
         return getStarred() == 1;
     }
 
-    public String getTimeStamp( Context context ) {
+    public String getTimeStamp(Context context) {
         // No start time, return TBA.
-        if( getBegin().equals("") )
+        if (getBegin().equals(""))
             return context.getResources().getString(R.string.tba);
 
         String time = "";
@@ -217,17 +219,9 @@ public class Default implements Serializable {
         if (SharedPreferencesUtil.shouldShowMilitaryTime()) {
             time = getBegin();
         } else {
-            String dateStr = getBegin();
-            DateFormat readFormat = new SimpleDateFormat("HH:mm");
-            DateFormat writeFormat = new SimpleDateFormat("h:mm aa");
-            Date date = null;
-            try {
-                date = readFormat.parse(dateStr);
-            } catch (ParseException e) {
-                e.printStackTrace();
-            }
-
+            Date date = getBeginDateObject();
             if (date != null) {
+                DateFormat writeFormat = new SimpleDateFormat("h:mm aa");
                 time = writeFormat.format(date);
             }
         }
@@ -235,13 +229,55 @@ public class Default implements Serializable {
         return time;
     }
 
+    public static String getTimeStamp(Context context, Date date) {
+        // No start time, return TBA.
+        if (date == null)
+            return context.getResources().getString(R.string.tba);
+
+        String time;
+        DateFormat writeFormat;
+
+        if (SharedPreferencesUtil.shouldShowMilitaryTime()) {
+            writeFormat = new SimpleDateFormat("HH:mm");
+        } else {
+            writeFormat = new SimpleDateFormat("h:mm aa");
+        }
+
+        time = writeFormat.format(date);
+
+        return time;
+    }
+
     public String getDateStamp() {
+        Date date = getBeginDateObject();
+        return getDateStamp(date);
+    }
+
+    public static String getDateStamp(Date date) {
         String time = "";
 
-        String dateStr = getDate();
+        if (date != null) {
+            @SuppressLint("SimpleDateFormat")
+            DateFormat writeFormat = new SimpleDateFormat("EEEE");
+            time = writeFormat.format(date);
+        }
 
-        DateFormat readFormat = new SimpleDateFormat("yyyy-MM-dd");
-        DateFormat writeFormat = new SimpleDateFormat("EEEE");
+        return time;
+    }
+
+
+    public Date getBeginDateObject() {
+        String dateStr = getDate() + " " + getBegin();
+        return getDateObject(dateStr);
+    }
+
+    private Date getEndDateObject() {
+        String dateStr = getDate() + " " + getEnd();
+        return getDateObject(dateStr);
+    }
+
+    private Date getDateObject(String dateStr) {
+        DateFormat readFormat = getDateFormat();
 
         Date date = null;
         try {
@@ -249,11 +285,12 @@ public class Default implements Serializable {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        return date;
+    }
 
-        if (date != null) {
-            time = writeFormat.format(date);
-        }
-
-        return time;
+    @NonNull
+    @SuppressLint("SimpleDateFormat")
+    private DateFormat getDateFormat() {
+        return new SimpleDateFormat("yyyy-MM-dd HH:mm");
     }
 }

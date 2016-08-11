@@ -14,6 +14,7 @@ import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Fragment.HomeFragment;
 import com.shortstack.hackertracker.List.GenericRowFragment;
 import com.shortstack.hackertracker.R;
+import com.shortstack.hackertracker.Schedule.GenericScheduleFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +42,7 @@ public class TabHomeActivity extends AppCompatActivity {
 
     private void initViewPager() {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(GenericRowFragment.newInstance(Constants.TYPE_PARTY), "OTHER");
+        adapter.addFragment(GenericScheduleFragment.newInstance(), "STARRED");
         adapter.addFragment(HomeFragment.newInstance(), "HOME");
         adapter.addFragment(GenericRowFragment.newInstance(Constants.TYPE_PARTY), "SCHEDULE");
         viewPager.setAdapter(adapter);
