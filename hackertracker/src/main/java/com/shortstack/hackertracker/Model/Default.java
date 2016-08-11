@@ -293,4 +293,11 @@ public class Default implements Serializable {
     private DateFormat getDateFormat() {
         return new SimpleDateFormat("yyyy-MM-dd HH:mm");
     }
+
+    public String getFullTimeStamp(Context context) {
+        Date begin = getBeginDateObject();
+        Date end = getEndDateObject();
+
+        return String.format(context.getString(R.string.timestamp_full), getDateStamp(), getTimeStamp(context, begin), getTimeStamp(context, end));
+    }
 }

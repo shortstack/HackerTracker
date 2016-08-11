@@ -30,8 +30,8 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
     @Bind(R.id.name)
     TextView name;
 
-    @Bind(R.id.where)
-    TextView where;
+    @Bind(R.id.location)
+    TextView location;
 
     @Bind(R.id.demo)
     View demo;
@@ -86,7 +86,7 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
         title.setText(getContent().getTitle());
         name.setText(getContent().getName());
         time.setText(getContent().getTimeStamp(getContext()));
-        where.setText(getContent().getLocation());
+        location.setText(getContent().getLocation());
     }
 
     private void displaySpeakerIcons() {

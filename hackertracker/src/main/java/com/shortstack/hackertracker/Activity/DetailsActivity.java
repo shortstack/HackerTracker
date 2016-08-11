@@ -39,10 +39,10 @@ public class DetailsActivity extends AppCompatActivity {
     @Bind(R.id.speaker)
     TextView host;
 
-    @Bind(R.id.when)
+    @Bind(R.id.time)
     TextView time;
 
-    @Bind(R.id.where)
+    @Bind(R.id.location)
     TextView location;
 
     @Bind(R.id.description)
@@ -85,7 +85,9 @@ public class DetailsActivity extends AppCompatActivity {
     private void displayText() {
         title.setText(getContent().getTitle());
         host.setText(getContent().getName());
-        time.setText(getContent().getTimeStamp(this));
+        host.setVisibility(View.VISIBLE);
+        time.setText(getContent().getFullTimeStamp(this));
+        time.setVisibility(View.VISIBLE);
         location.setText(getContent().getLocation());
         description.setText(item.getDescription());
     }
