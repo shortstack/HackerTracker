@@ -58,10 +58,10 @@ public class DetailsActivity extends AppCompatActivity {
         TextView timeText = (TextView) findViewById(R.id.when);
         TextView locationText = (TextView) findViewById(R.id.where);
         TextView bodyText = (TextView) findViewById(R.id.description);
-        LinearLayout whereLayout = (LinearLayout) findViewById(R.id.where_holder);
-        ImageView demo = (ImageView) findViewById(R.id.demo);
-        ImageView exploit = (ImageView) findViewById(R.id.exploit);
-        ImageView tool = (ImageView) findViewById(R.id.tool);
+        //LinearLayout whereLayout = (LinearLayout) findViewById(R.id.where_holder);
+        View demo = findViewById(R.id.demo);
+        View exploit = findViewById(R.id.exploit);
+        View tool = findViewById(R.id.tool);
 
 
         // set title
@@ -93,7 +93,6 @@ public class DetailsActivity extends AppCompatActivity {
         if (item.getLocation() != null) {
             locationText.append(item.getLocation());
         } else {
-            whereLayout.setVisibility(View.GONE);
         }
 
         // set body

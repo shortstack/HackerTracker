@@ -123,27 +123,7 @@ public class HackerTrackerFragment extends Fragment {
         try{
             if (cursor.moveToFirst()){
                 do{
-
-                    Default item = new Default();
-
-                    item.setId(cursor.getInt(cursor.getColumnIndex("id")));
-                    item.setType(cursor.getString(cursor.getColumnIndex("type")));
-                    item.setDate(cursor.getString(cursor.getColumnIndex("date")));
-                    item.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-                    item.setDescription(cursor.getString(cursor.getColumnIndex("description")));
-                    item.setName(cursor.getString(cursor.getColumnIndex("who")));
-                    item.setEnd(cursor.getString(cursor.getColumnIndex("end")));
-                    item.setBegin(cursor.getString(cursor.getColumnIndex("begin")));
-                    item.setLocation(cursor.getString(cursor.getColumnIndex("location")));
-                    item.setStarred(cursor.getInt(cursor.getColumnIndex("starred")));
-                    item.setImage(cursor.getString(cursor.getColumnIndex("image")));
-                    item.setLink(cursor.getString(cursor.getColumnIndex("link")));
-                    item.setIsNew(cursor.getInt(cursor.getColumnIndex("is_new")));
-                    item.setDemo(cursor.getInt(cursor.getColumnIndex("demo")));
-                    item.setTool(cursor.getInt(cursor.getColumnIndex("tool")));
-                    item.setExploit(cursor.getInt(cursor.getColumnIndex("exploit")));
-
-                    result.add(item);
+                    result.add(getDefaultFromCursor(cursor));
                 }while(cursor.moveToNext());
             }
         }finally{
@@ -177,28 +157,7 @@ public class HackerTrackerFragment extends Fragment {
         try{
             if (cursor.moveToFirst()){
                 do{
-
-                    Default item = new Default();
-
-                    item.setId(cursor.getInt(cursor.getColumnIndex("id")));
-                    item.setType(cursor.getString(cursor.getColumnIndex("type")));
-                    item.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-                    item.setDescription(cursor.getString(cursor.getColumnIndex("description")));
-                    item.setName(cursor.getString(cursor.getColumnIndex("who")));
-                    item.setDate(cursor.getString(cursor.getColumnIndex("date")));
-                    item.setEnd(cursor.getString(cursor.getColumnIndex("end")));
-                    item.setBegin(cursor.getString(cursor.getColumnIndex("begin")));
-                    item.setLocation(cursor.getString(cursor.getColumnIndex("location")));
-                    item.setStarred(cursor.getInt(cursor.getColumnIndex("starred")));
-                    item.setImage(cursor.getString(cursor.getColumnIndex("image")));
-                    item.setLink(cursor.getString(cursor.getColumnIndex("link")));
-                    item.setIsNew(cursor.getInt(cursor.getColumnIndex("is_new")));
-                    item.setDemo(cursor.getInt(cursor.getColumnIndex("demo")));
-                    item.setTool(cursor.getInt(cursor.getColumnIndex("tool")));
-                    item.setExploit(cursor.getInt(cursor.getColumnIndex("exploit")));
-
-                    result.add(item);
-
+                    result.add(getDefaultFromCursor(cursor));
                 }while(cursor.moveToNext());
             }
         }finally{
@@ -210,5 +169,28 @@ public class HackerTrackerFragment extends Fragment {
         // return all items
 
         return result;
+    }
+
+    @NonNull
+    private Default getDefaultFromCursor(Cursor cursor) {
+        Default item = new Default();
+
+        item.setId(cursor.getInt(cursor.getColumnIndex("id")));
+        item.setType(cursor.getString(cursor.getColumnIndex("type")));
+        item.setTitle(cursor.getString(cursor.getColumnIndex("title")));
+        item.setDescription(cursor.getString(cursor.getColumnIndex("description")));
+        item.setName(cursor.getString(cursor.getColumnIndex("who")));
+        item.setDate(cursor.getString(cursor.getColumnIndex("date")));
+        item.setEnd(cursor.getString(cursor.getColumnIndex("end")));
+        item.setBegin(cursor.getString(cursor.getColumnIndex("begin")));
+        item.setLocation(cursor.getString(cursor.getColumnIndex("location")));
+        item.setStarred(cursor.getInt(cursor.getColumnIndex("starred")));
+        item.setImage(cursor.getString(cursor.getColumnIndex("image")));
+        item.setLink(cursor.getString(cursor.getColumnIndex("link")));
+        item.setIsNew(cursor.getInt(cursor.getColumnIndex("is_new")));
+        item.setDemo(cursor.getInt(cursor.getColumnIndex("demo")));
+        item.setTool(cursor.getInt(cursor.getColumnIndex("tool")));
+        item.setExploit(cursor.getInt(cursor.getColumnIndex("exploit")));
+        return item;
     }
 }

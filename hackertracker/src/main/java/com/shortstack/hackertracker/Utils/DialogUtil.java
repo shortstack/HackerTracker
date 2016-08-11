@@ -8,8 +8,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Environment;
+import android.provider.MediaStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,8 +25,6 @@ import android.widget.Toast;
 import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Common.Constants;
-import com.shortstack.hackertracker.Fragment.DetailsFragment;
-import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.OfficialList;
 import com.shortstack.hackertracker.R;
 
@@ -232,11 +234,21 @@ public class DialogUtil {
             @Override
             public void onClick(View v) {
                 finalDialog.dismiss();
-                DetailsFragment.saveImage(context);
+                saveImage(context);
             }
         });
 
         return dialog;
+
+    }
+
+    // save barcode to device
+    public static void saveImage(Context context) {
+
+        Drawable drawable = context.getResources().getDrawable(R.drawable.daemon_1);
+        Bitmap bitmap = ((BitmapDrawable)drawable).getBitmap();
+        String imagePath = MediaStore.Images.Media.insertImage(context.getContentResolver(), bitmap, "barcode", "barcode");
+        Uri uri = Uri.parse(imagePath);
 
     }
 
@@ -280,10 +292,7 @@ public class DialogUtil {
         return dialog;
     }
 
-    public static DetailsFragment getDetailsDialog(Default item) {
-        DetailsFragment detailsDialogFragment = DetailsFragment.newInstance(item);
-        return detailsDialogFragment;
-    }
+
 
     public static File getOutputMediaFile()
     {

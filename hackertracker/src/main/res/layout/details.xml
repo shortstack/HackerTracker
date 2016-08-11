@@ -16,6 +16,7 @@
         app:title="text"
         app:titleTextColor="@android:color/white"></android.support.v7.widget.Toolbar>
 
+
     <LinearLayout
         style="@style/detailsLayout"
         android:layout_width="match_parent"
@@ -32,21 +33,15 @@
             android:layout_weight="1"
             android:fillViewport="true">
 
+
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:padding="20dp">
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/title"
-                    style="@style/details_title_text"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:text="Title"
-                    android:textAlignment="center"
-                    android:textIsSelectable="true" />
+
+                <include layout="@layout/row" />
 
                 <LinearLayout
                     android:id="@+id/when_holder"
@@ -55,39 +50,11 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/date_label"
-                        style="@style/details_label"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:text="WHEN " />
-
-                    <TextView
                         android:id="@+id/when"
                         style="@style/details_date"
                         android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
                         android:text="Thurs, Aug 7" />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:id="@+id/where_holder"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:id="@+id/where_label"
-                        style="@style/details_label"
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:text="WHERE" />
-
-                    <TextView
-                        android:id="@+id/where"
-                        style="@style/details_where"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content"
-                        android:textIsSelectable="true" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -135,39 +102,6 @@
                     android:paddingTop="20dp"
                     android:src="@drawable/daemon_1"
                     android:visibility="gone" />
-
-                <LinearLayout
-                    android:id="@+id/icons"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="8dp"
-                    android:gravity="center_horizontal"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:id="@+id/demo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:src="@drawable/icon_demo"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:id="@+id/exploit"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginRight="8dp"
-                        android:src="@drawable/icon_exploit"
-                        android:visibility="gone" />
-
-                    <ImageView
-                        android:id="@+id/tool"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/icon_tool"
-                        android:visibility="gone" />
-                </LinearLayout>
 
             </LinearLayout>
         </ScrollView>
