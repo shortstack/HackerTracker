@@ -1,8 +1,8 @@
 package com.shortstack.hackertracker.Activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.shortstack.hackertracker.R;
 
@@ -15,7 +15,7 @@ import java.util.TimerTask;
  * Date: 8/29/12
  * Time: 2:26 PM
  */
-public class SplashActivity extends Activity {
+public class SplashActivity extends AppCompatActivity {
 
     public static final int SPLASH_DELAY = 450;
 
