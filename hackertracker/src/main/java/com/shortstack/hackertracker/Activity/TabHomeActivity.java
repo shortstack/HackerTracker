@@ -10,9 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
-import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Home.HomeFragment;
-import com.shortstack.hackertracker.List.GenericRowFragment;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Schedule.GenericScheduleFragment;
 
@@ -48,7 +46,7 @@ public class TabHomeActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(GenericScheduleFragment.newInstance(), "STARRED");
         adapter.addFragment(HomeFragment.newInstance(), "HOME");
-        adapter.addFragment(GenericRowFragment.newInstance(Constants.TYPE_PARTY), "SCHEDULE");
+        adapter.addFragment(GenericScheduleFragment.newInstance(), "SCHEDULE");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 

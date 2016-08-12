@@ -31,7 +31,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
     protected static final String ARG_TYPE = "type";
 
     @Bind(R.id.list)
-    protected
+    public
     RecyclerView list;
 
     private String[] mTypes;
