@@ -10,7 +10,6 @@ import android.os.Environment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
@@ -39,6 +38,7 @@ import com.shortstack.hackertracker.Fragment.GenericSearchFragment;
 import com.shortstack.hackertracker.Fragment.HomeFragment;
 import com.shortstack.hackertracker.Fragment.MapsFragment;
 import com.shortstack.hackertracker.Fragment.PartnersFragment;
+import com.shortstack.hackertracker.Fragment.RadioFragment;
 import com.shortstack.hackertracker.Fragment.SettingsFragment;
 import com.shortstack.hackertracker.Fragment.WifiFragment;
 import com.shortstack.hackertracker.List.GenericRowFragment;
@@ -62,7 +62,6 @@ import java.nio.channels.FileChannel;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -89,7 +88,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         mToolbar.setTitle("");
         mTitle = (HelveticaTextView) mToolbar.findViewById(R.id.toolbar_title);
         mTitle.setText(R.string.home);
-        
+
         // get context
         context = HomeActivity.this;
 
@@ -123,7 +122,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
     }
 
     @Override
-    public void onBackPressed(){
+    public void onBackPressed() {
 
         // if drawer is open, close nav drawer
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {
@@ -133,7 +132,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
             FragmentManager fm = this.getSupportFragmentManager();
             if (fm.getBackStackEntryCount() > 1) {
 
-                FragmentName fragName = FragmentName.valueOf(fm.getBackStackEntryAt(fm.getBackStackEntryCount()-2).getName());
+                FragmentName fragName = FragmentName.valueOf(fm.getBackStackEntryAt(fm.getBackStackEntryCount() - 2).getName());
                 switch (fragName) {
                     case HomeFragment:
                         mTitle.setText(getString(R.string.home).toUpperCase());
@@ -188,6 +187,12 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                         break;
                     case WorkshopInfoFragment:
                         mTitle.setText(getString(R.string.workshop_info_title).toUpperCase());
+                        break;
+                    case WifiFragment:
+                        mTitle.setText(getString(R.string.wifi).toUpperCase());
+                        break;
+                    case RadioFragment:
+                        mTitle.setText(getString(R.string.radio).toUpperCase());
                         break;
                 }
                 fm.popBackStack();
@@ -249,6 +254,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         SchedulePagerFragment,
         SearchFragment,
         SettingsFragment,
+        WifiFragment,
+        RadioFragment,
         WorkshopInfoFragment
     }
 
@@ -264,8 +271,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
         Logger.d("Displaying position: " + position);
 
-        switch (position)
-        {
+        switch (position) {
             case 0:
                 // home
                 addToBackStack(R.string.home, Constants.FRAGMENT_HOME, HomeFragment.newInstance());
@@ -335,10 +341,14 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 addToBackStack(R.string.wifi, Constants.FRAGMENT_WIFI, WifiFragment.newInstance(16));
                 break;
             case 16:
-                // workshop info
-                addToBackStack(R.string.workshop_info_title, Constants.FRAGMENT_WORKSHOP_INFO, BadgeFragment.newInstance(17));
+                // radio info
+                addToBackStack(R.string.radio, Constants.FRAGMENT_RADIO, RadioFragment.newInstance(17));
                 break;
             case 17:
+                // workshop info
+                addToBackStack(R.string.workshop_info_title, Constants.FRAGMENT_WORKSHOP_INFO, BadgeFragment.newInstance(18));
+                break;
+            case 18:
                 // settings
                 addToBackStack(R.string.settings, Constants.FRAGMENT_SETTINGS, new SettingsFragment());
                 break;
@@ -379,7 +389,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
     // reload schedule if on schedule screen
     public static void refreshSchedule() {
         // if on schedule screen, reload fragment
-        if (fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount()-1).getName().equals(Constants.FRAGMENT_SCHEDULE)) {
+        if (fragmentManager.getBackStackEntryAt(fragmentManager.getBackStackEntryCount() - 1).getName().equals(Constants.FRAGMENT_SCHEDULE)) {
             fragmentManager.beginTransaction()
                     .replace(R.id.container, GenericScheduleFragment.newInstance())
                     .addToBackStack(Constants.FRAGMENT_SCHEDULE)
@@ -434,7 +444,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 return;
             }
 
-            if (schedule.getUpdateDate()!=null && schedule.getUpdateTime()!=null) {
+            if (schedule.getUpdateDate() != null && schedule.getUpdateTime() != null) {
 
                 updateTime = schedule.getUpdateTime();
                 updateDate = schedule.getUpdateDate();
@@ -452,14 +462,14 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 try {
                     lastUpdatedOnline = sdf.parse(update);
 
-                    if (strDate!=null) {
+                    if (strDate != null) {
                         lastUpdatedDevice = sdf.parse(strDate);
                     }
 
                     // if device has never been updated or if the
                     // device update is older than last updated online date, update
 
-                    if (lastUpdatedDevice==null || lastUpdatedDevice.compareTo(lastUpdatedOnline) < 0) {
+                    if (lastUpdatedDevice == null || lastUpdatedDevice.compareTo(lastUpdatedOnline) < 0) {
 
                         // dismiss checking dialog
                         updateCheckDialog.dismiss();
@@ -473,7 +483,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                         updateCheckDialog.dismiss();
 
                         // schedule already up to date
-                        Toast.makeText(context,R.string.up_to_date,Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, R.string.up_to_date, Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -490,7 +500,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
     // call async update task
     public static void performUpdate(final OfficialList schedule, final String update, final Context context) {
 
-       AsyncTask task = new UpdateTask(schedule, update, context).execute();
+        AsyncTask task = new UpdateTask(schedule, update, context).execute();
 
     }
 
@@ -507,7 +517,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
         JsonArray arr = gson.toJsonTree(officialArray).getAsJsonArray();
 
         // if there are items
-        if(arr.size() != 0){
+        if (arr.size() != 0) {
 
             // loop through each array element, get json object
             for (int i = 0; i < arr.size(); i++) {
@@ -548,8 +558,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
             File sd = Environment.getExternalStorageDirectory();
 
             if (sd.canWrite()) {
-                String currentDBPath= getResources().getString(R.string.db_path) + getResources().getString(R.string.db_name);
-                String backupDBPath  = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + getResources().getString(R.string.db_name);
+                String currentDBPath = getResources().getString(R.string.db_path) + getResources().getString(R.string.db_name);
+                String backupDBPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + getResources().getString(R.string.db_name);
                 File currentDB = new File(currentDBPath);
                 File backupDB = new File(backupDBPath);
 
