@@ -2,31 +2,28 @@ package com.shortstack.hackertracker.Fragment;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
+import android.support.v7.app.AppCompatActivity;
 
 import com.shortstack.hackertracker.R;
 
-public class InformationFragment extends Fragment {
+import butterknife.ButterKnife;
 
-    private static final String ARG_STRING_RES = "string_res";
+public class InformationFragment extends AppCompatActivity {
 
-    public static InformationFragment newInstance(int string) {
-        InformationFragment fragment = new InformationFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_STRING_RES, string);
-        fragment.setArguments(args);
-        return fragment;
-    }
+    private static final String ARG_LAYOUT_RES = "layout_res";
+    public static final int DEFAULT_LAYOUT = R.layout.fragment_maps;
 
-    @Nullable
+
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        TextView textView = (TextView) inflater.inflate(R.layout.fragment_information, container, false);
-        textView.setText(getString(getArguments().getInt(ARG_STRING_RES)));
-        return textView;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        int res = DEFAULT_LAYOUT;
+        if( getIntent().getExtras() != null ) {
+            res = getIntent().getExtras().getInt(ARG_LAYOUT_RES, DEFAULT_LAYOUT);
+        }
+
+        setContentView(res);
+        ButterKnife.bind(this);
     }
 }

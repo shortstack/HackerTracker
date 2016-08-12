@@ -31,16 +31,13 @@ import com.shortstack.hackertracker.Api.SyncService;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Font.HelveticaTextView;
-import com.shortstack.hackertracker.Fragment.BadgeFragment;
 import com.shortstack.hackertracker.Fragment.FAQFragment;
 import com.shortstack.hackertracker.Fragment.FragmentDrawer;
 import com.shortstack.hackertracker.Fragment.GenericSearchFragment;
-import com.shortstack.hackertracker.Home.HomeFragment;
 import com.shortstack.hackertracker.Fragment.MapsFragment;
 import com.shortstack.hackertracker.Fragment.PartnersFragment;
-import com.shortstack.hackertracker.Fragment.RadioFragment;
 import com.shortstack.hackertracker.Fragment.SettingsFragment;
-import com.shortstack.hackertracker.Fragment.WifiFragment;
+import com.shortstack.hackertracker.Home.HomeFragment;
 import com.shortstack.hackertracker.List.GenericRowFragment;
 import com.shortstack.hackertracker.Listener.AsyncTaskCompleteListener;
 import com.shortstack.hackertracker.Model.ApiBase;
@@ -332,22 +329,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 // faq
                 addToBackStack(R.string.faq, Constants.FRAGMENT_FAQ, FAQFragment.newInstance(14));
                 break;
-            case 14:
-                // badge info
-                addToBackStack(R.string.badges, Constants.FRAGMENT_BADGES, BadgeFragment.newInstance(15));
-                break;
-            case 15:
-                // wifi info
-                addToBackStack(R.string.wifi, Constants.FRAGMENT_WIFI, WifiFragment.newInstance(16));
-                break;
-            case 16:
-                // radio info
-                addToBackStack(R.string.radio, Constants.FRAGMENT_RADIO, RadioFragment.newInstance(17));
-                break;
-            case 17:
-                // workshop info
-                addToBackStack(R.string.workshop_info_title, Constants.FRAGMENT_WORKSHOP_INFO, BadgeFragment.newInstance(18));
-                break;
+
+
             case 18:
                 // settings
                 addToBackStack(R.string.settings, Constants.FRAGMENT_SETTINGS, new SettingsFragment());

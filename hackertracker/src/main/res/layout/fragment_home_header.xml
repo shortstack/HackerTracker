@@ -33,11 +33,13 @@
 
             <com.shortstack.hackertracker.Font.HelveticaButton
                 style="@style/button_home"
-                android:text="@string/wifi" />
+                android:text="@string/wifi"
+                android:id="@+id/wifi" />
 
             <com.shortstack.hackertracker.Font.HelveticaButton
                 style="@style/button_home"
-                android:text="@string/map_hotel" />
+                android:text="@string/workshops"
+                android:id="@+id/workshop" />
         </LinearLayout>
 
         <LinearLayout
@@ -47,11 +49,13 @@
 
             <com.shortstack.hackertracker.Font.HelveticaButton
                 style="@style/button_home"
-                android:text="@string/maps" />
+                android:text="@string/maps"
+                android:id="@+id/map" />
 
             <com.shortstack.hackertracker.Font.HelveticaButton
                 style="@style/button_home"
-                android:text="@string/vendors" />
+                android:text="@string/vendors"
+                android:id="@+id/vendors" />
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
@@ -65,8 +69,24 @@
 
             <com.shortstack.hackertracker.Font.HelveticaButton
                 style="@style/button_home"
-                android:text="@string/faq" />
+                android:text="@string/faq"
+                android:id="@+id/faqs" />
+
+
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.shortstack.hackertracker.Font.HelveticaButton
+                style="@style/button_home"
+                android:text="@string/radio"
+                android:id="@+id/radio" />
+
+        </LinearLayout>
+
+
+
     </LinearLayout>
 
 
