@@ -5,11 +5,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.pedrogomez.renderers.Renderer;
+import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.R;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class HomeHeaderRenderer extends Renderer<Void> {
     @Override
@@ -22,6 +24,12 @@ public class HomeHeaderRenderer extends Renderer<Void> {
     @Override
     public void render(List<Object> payloads) {
         // Do nothing.
+    }
+
+    @OnClick(R.id.badge)
+    public void onBadgeClick() {
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_badges, null);
+        MaterialAlert.create(getContext()).setView(view).setBasicPositiveButton().show();
     }
 
     // TODO: Bind all the onClick listeners.

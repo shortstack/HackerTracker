@@ -24,6 +24,10 @@ import butterknife.ButterKnife;
 
 public class TabHomeActivity extends AppCompatActivity {
 
+    public static final int ITEM_PROFILE = 0;
+    public static final int ITEM_HOME = 1;
+    public static final int ITEM_SCHEDULE = 2;
+
     @Bind(R.id.toolbar)
     Toolbar toolbar;
     @Bind(R.id.tabs)
@@ -48,7 +52,7 @@ public class TabHomeActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-        viewPager.setCurrentItem(2);
+        viewPager.setCurrentItem(ITEM_HOME);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {

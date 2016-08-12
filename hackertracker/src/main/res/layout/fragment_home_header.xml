@@ -60,7 +60,8 @@
 
             <com.shortstack.hackertracker.Font.HelveticaButton
                 style="@style/button_home"
-                android:text="@string/badges" />
+                android:text="@string/badges"
+                android:id="@+id/badge" />
 
             <com.shortstack.hackertracker.Font.HelveticaButton
                 style="@style/button_home"
