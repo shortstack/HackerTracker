@@ -6,11 +6,13 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.pedrogomez.renderers.Renderer;
+import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
 
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class GenericTimeRenderer extends Renderer<Date> {
 
@@ -24,6 +26,28 @@ public class GenericTimeRenderer extends Renderer<Date> {
 
     @Override
     public void render(List<Object> payloads) {
-        view.setText(Default.getTimeStamp(getContext(), getContent()));
+        Date content = getContent();
+        Date currentDate = HackerTrackerApplication.getApplication().getCurrentDate();
+
+
+        String stamp = Default.getTimeStamp(getContext(), content);
+
+        if( content.after(currentDate) ) {
+            long hourDiff = getDateDiff(currentDate, content, TimeUnit.HOURS);
+            if( hourDiff >= 1 ) {
+                stamp = stamp.concat(" [in " + hourDiff + "hrs]");
+            } else {
+                long dateDiff = getDateDiff(currentDate, content, TimeUnit.MINUTES);
+                stamp = stamp.concat(" [in " + dateDiff + "mins]");
+            }
+        }
+
+
+        view.setText(stamp);
+    }
+
+    public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
+        long diffInMillies = date2.getTime() - date1.getTime();
+        return timeUnit.convert(diffInMillies, TimeUnit.MILLISECONDS);
     }
 }

@@ -89,7 +89,7 @@ public class HackerTrackerFragment extends Fragment {
             }
             query = query.concat(")");
         }
-        query = query.concat(" ORDER BY date, begin");
+        query = query.concat(" OR starred=1 ORDER BY date, begin");
         return query;
     }
 

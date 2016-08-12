@@ -50,7 +50,6 @@ import com.shortstack.hackertracker.Utils.DialogUtil;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 import com.shortstack.hackertracker.Utils.UpdateTask;
 import com.shortstack.hackertracker.Vendors.VendorsFragment;
-import com.shortstack.hackertracker.Workshops.GenericWorkshopFragment;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -297,10 +296,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 // villages
                 addToBackStack(R.string.villages, Constants.FRAGMENT_VILLAGES, GenericRowFragment.newInstance(Constants.TYPE_VILLAGE));
                 break;
-            case 7:
-                // workshops
-                addToBackStack(R.string.workshops, Constants.FRAGMENT_WORKSHOPS, GenericWorkshopFragment.newInstance(Constants.TYPE_WORKSHOP));
-                break;
+
             /*case 8:
                 // book signings
                 addToBackStack(R.string.books, Constants.FRAGMENT_BOOKS, BooksPagerFragment.newInstance(9));

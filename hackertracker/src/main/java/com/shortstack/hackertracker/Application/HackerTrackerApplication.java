@@ -12,11 +12,13 @@ import android.content.IntentFilter;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterStarred;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
+import com.shortstack.hackertracker.BuildConfig;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.AlarmReceiver;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Created by Whitney Champion on 3/19/14.
@@ -32,7 +34,7 @@ public class HackerTrackerApplication extends Application {
     private BroadcastReceiver receiver;
     private PendingIntent pendingIntent;
 
-    public void onCreate(){
+    public void onCreate() {
         super.onCreate();
 
         application = this;
@@ -53,27 +55,23 @@ public class HackerTrackerApplication extends Application {
 
     }
 
-    private void RegisterAlarmBroadcast()
-    {
+    private void RegisterAlarmBroadcast() {
 
-        BroadcastReceiver receiver = new BroadcastReceiver()
-        {
+        BroadcastReceiver receiver = new BroadcastReceiver() {
             @Override
-            public void onReceive(Context context, Intent intent)
-            {
+            public void onReceive(Context context, Intent intent) {
             }
 
         };
 
         // register the alarm broadcast
-        registerReceiver(receiver, new IntentFilter(getPackageName()) );
-        pendingIntent = PendingIntent.getBroadcast( this, 0, new Intent(getPackageName()),0 );
-        alarmManager = (AlarmManager)(this.getSystemService( Context.ALARM_SERVICE ));
+        registerReceiver(receiver, new IntentFilter(getPackageName()));
+        pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(getPackageName()), 0);
+        alarmManager = (AlarmManager) (this.getSystemService(Context.ALARM_SERVICE));
 
     }
 
-    private void UnregisterAlarmBroadcast()
-    {
+    private void UnregisterAlarmBroadcast() {
         alarmManager.cancel(pendingIntent);
         getBaseContext().unregisterReceiver(receiver);
     }
@@ -139,4 +137,12 @@ public class HackerTrackerApplication extends Application {
         return application;
     }
 
+    public Date getCurrentDate() {
+        if (BuildConfig.DEBUG) {
+            Date date = new Date();
+            date.setTime(1470418200000L);
+            return date;
+        }
+        return new Date();
+    }
 }

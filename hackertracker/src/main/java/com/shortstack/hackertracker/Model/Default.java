@@ -300,4 +300,8 @@ public class Default implements Serializable {
 
         return String.format(context.getString(R.string.timestamp_full), getDateStamp(), getTimeStamp(context, begin), getTimeStamp(context, end));
     }
+
+    public String getDisplayTitle() {
+        return "[" + getType() + "] " + getTitle();
+    }
 }

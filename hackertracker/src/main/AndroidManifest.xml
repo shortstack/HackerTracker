@@ -30,17 +30,17 @@
             android:name="com.shortstack.hackertracker.Activity.HomeActivity"
             android:icon="@drawable/skull"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.shortstack.hackertracker.Activity.DetailsActivity"
             android:icon="@drawable/skull"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.shortstack.hackertracker.Activity.TabHomeActivity"
             android:icon="@drawable/skull"
-            android:screenOrientation="portrait"></activity>
+            android:screenOrientation="portrait" />
 
         <activity android:name="com.shortstack.hackertracker.Fragment.InformationFragment" />
 

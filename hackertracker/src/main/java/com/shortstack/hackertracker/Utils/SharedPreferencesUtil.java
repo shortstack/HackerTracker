@@ -73,12 +73,11 @@ public class SharedPreferencesUtil {
         SharedPreferences.Editor edit = sharedPreferences.edit();
 
         edit.putStringSet("filter_types", filter.getTypesSet());
-        edit.putBoolean("filter_starred", filter.isShowingStarred());
 
         edit.apply();
     }
 
     public static Filter getFilter() {
-        return new Filter(sharedPreferences.getStringSet("filter_types", new HashSet<String>()), sharedPreferences.getBoolean("filter_starred", false));
+        return new Filter(sharedPreferences.getStringSet("filter_types", new HashSet<String>()));
     }
 }

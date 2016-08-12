@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.shortstack.hackertracker.Alert.MaterialAlert;
+import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.Filter;
@@ -20,6 +21,7 @@ import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 import com.shortstack.hackertracker.View.FilterView;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -82,6 +84,37 @@ public class GenericRowFragment extends HackerTrackerFragment {
 
         adapter.addAll(objects);
         adapter.notifyDataSetChanged();
+
+
+        scrollToCurrentTime();
+    }
+
+    private void scrollToCurrentTime() {
+        list.getLayoutManager().scrollToPosition(findCurrentPositionByTime());
+    }
+
+    private int findCurrentPositionByTime() {
+        List<Default> collection = adapter.getCollection();
+        Date currentDate = HackerTrackerApplication.getApplication().getCurrentDate();
+
+        for (int i = 0; i < collection.size(); i++) {
+            Object object = collection.get(i);
+
+            if( object instanceof Default ) {
+
+                Date beginDateObject = ((Default) object).getBeginDateObject();
+                if( beginDateObject.after(currentDate)) {
+                    for (int i1 = i - 1; i1 >= 0; i1--) {
+                        if( !(object instanceof String ) ) {
+                            return i1;
+                        }
+                    }
+                    return i;
+                }
+            }
+        }
+
+        return 0;
     }
 
     protected List<Default> getEvents( Filter filter ) {

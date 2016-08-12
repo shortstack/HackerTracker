@@ -19,9 +19,6 @@ public class FilterView extends LinearLayout {
     @Bind({R.id.speaker, R.id.skytalk, R.id.event, R.id.village, R.id.kids, R.id.contest, R.id.party, R.id.demo, R.id.workshop})
     CheckBox[] types;
 
-    @Bind(R.id.starred)
-    CheckBox starred;
-
     public FilterView(Context context) {
         super(context);
         init();
@@ -43,8 +40,6 @@ public class FilterView extends LinearLayout {
                 }
             }
         }
-
-        starred.setChecked(filter.isShowingStarred());
     }
 
     public FilterView(Context context, AttributeSet attrs) {
@@ -75,7 +70,7 @@ public class FilterView extends LinearLayout {
 
         String[] strings = selected.toArray(new String[selected.size()]);
 
-        Filter filter = new Filter(strings, starred.isChecked());
+        Filter filter = new Filter(strings);
 
         SharedPreferencesUtil.saveFilter( filter );
 

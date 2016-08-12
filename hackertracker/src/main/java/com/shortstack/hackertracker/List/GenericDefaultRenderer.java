@@ -46,6 +46,9 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
     View isNew;
 
 
+    @Bind(R.id.category)
+    View category;
+
     @Override
     protected View inflate(LayoutInflater inflater, ViewGroup parent) {
         View view = inflater.inflate(R.layout.row, parent, false);
@@ -63,8 +66,14 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
         displayText();
         displaySpeakerIcons();
         displayNewIcon();
+        displayCategory();
 
         highlightText();
+    }
+
+    private void displayCategory() {
+        String type = getContent().getType();
+        //category.setBackgroundColor(getContext().getResources().getColor(R.color.star));
     }
 
     private void displayNewIcon() {
@@ -83,7 +92,7 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
     }
 
     private void displayText() {
-        title.setText(getContent().getTitle());
+        title.setText(getContent().getDisplayTitle());
         name.setText(getContent().getName());
         time.setText(getContent().getTimeStamp(getContext()));
         location.setText(getContent().getLocation());

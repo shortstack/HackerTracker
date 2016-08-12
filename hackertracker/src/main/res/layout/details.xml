@@ -64,6 +64,86 @@
                 </LinearLayout>
 
 
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="5dp">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#232323"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="5dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView3"
+                            android:src="@drawable/ic_info_outline_white_24dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp" />
+
+                        <TextView
+                            style="@style/details_body"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="More Info"
+                            android:id="@+id/textView3" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#232323"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="5dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView2"
+                            android:src="@drawable/ic_bookmark_border_white_24dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Bookmark"
+                            android:id="@+id/textView2"
+                            style="@style/details_body" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="#232323"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_margin="5dp" >
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/imageView4"
+                            android:src="@drawable/ic_share_white_24dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="10dp" />
+
+                        <TextView
+                            style="@style/details_body"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Share"
+                            android:id="@+id/textView4" />
+                    </LinearLayout>
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/description"
