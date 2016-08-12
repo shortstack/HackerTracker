@@ -2,6 +2,7 @@ package com.shortstack.hackertracker.Schedule;
 
 import com.shortstack.hackertracker.List.GenericRowFragment;
 import com.shortstack.hackertracker.Model.Default;
+import com.shortstack.hackertracker.Model.Filter;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public class GenericScheduleFragment extends GenericRowFragment {
     }
 
     @Override
-    protected List<Default> getEvents() {
+    protected List<Default> getEvents(Filter filter) {
         return getStars();
     }
 }

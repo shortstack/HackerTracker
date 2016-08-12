@@ -80,12 +80,16 @@ public class HackerTrackerFragment extends Fragment {
 
     @NonNull
     private String getQueryString(String[] type) {
-        String query = "SELECT * FROM data WHERE (";
-        for (int i = 0; i < type.length; i++) {
-            query = query.concat("type=?");
-            if( i < type.length - 1 ) query = query.concat(" OR ");
+        String query = "SELECT * FROM data ";
+        if( type.length > 0 ) {
+            query = query.concat("WHERE (");
+            for (int i = 0; i < type.length; i++) {
+                query = query.concat("type=?");
+                if (i < type.length - 1) query = query.concat(" OR ");
+            }
+            query = query.concat(")");
         }
-        query = query.concat(") ORDER BY date, begin");
+        query = query.concat(" ORDER BY date, begin");
         return query;
     }
 

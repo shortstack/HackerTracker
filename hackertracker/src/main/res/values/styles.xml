@@ -25,6 +25,9 @@
         <item name="colorControlNormal">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
         <item name="preferenceTheme">@style/Theme.WtfPreference</item>
+
+        <item name="android:checkboxStyle">@style/checkBoxStyle</item>
+
     </style>
 
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
@@ -384,6 +387,29 @@
 
     <style name="MyCustomTabText" parent="TextAppearance.AppCompat.Button">
         <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowTitleStyle">@style/MyTitleTextStyle</item>
+        <!-- Used for the buttons -->
+        <item name="colorAccent">@color/colorAccent</item>
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <!-- Used for the background -->
+        <item name="android:background">@color/background</item>
+    </style>
+
+    <style name="MyTitleTextStyle">
+        <item name="android:textAppearance">@style/titleTextStyle</item>
+    </style>
+
+    <style name="titleTextStyle">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="checkBoxStyle" parent="@android:style/Widget.Holo.Light.CompoundButton.CheckBox">
         <item name="android:textColor">@color/white</item>
     </style>
 </resources>

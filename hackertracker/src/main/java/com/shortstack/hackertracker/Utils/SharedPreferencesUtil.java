@@ -4,6 +4,9 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Model.Filter;
+
+import java.util.HashSet;
 
 /**
  * Created by Whitney Champion on 7/11/14.
@@ -66,4 +69,16 @@ public class SharedPreferencesUtil {
         return sharedPreferences.getBoolean("militaryTime", false );
     }
 
+    public static void saveFilter(Filter filter) {
+        SharedPreferences.Editor edit = sharedPreferences.edit();
+
+        edit.putStringSet("filter_types", filter.getTypesSet());
+        edit.putBoolean("filter_starred", filter.isShowingStarred());
+
+        edit.apply();
+    }
+
+    public static Filter getFilter() {
+        return new Filter(sharedPreferences.getStringSet("filter_types", new HashSet<String>()), sharedPreferences.getBoolean("filter_starred", false));
+    }
 }

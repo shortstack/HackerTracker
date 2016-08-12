@@ -1,17 +1,23 @@
 package com.shortstack.hackertracker.List;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
 import com.shortstack.hackertracker.Model.Default;
+import com.shortstack.hackertracker.Model.Filter;
 import com.shortstack.hackertracker.R;
+import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
+import com.shortstack.hackertracker.View.FilterView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +35,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
     RecyclerView list;
 
     private String[] mTypes;
+    private GenericRowAdapter adapter;
 
 
     public static GenericRowFragment newInstance(String... type) {
@@ -57,19 +64,29 @@ public class GenericRowFragment extends HackerTrackerFragment {
         LinearLayoutManager layout = new LinearLayoutManager(getContext());
         list.setLayoutManager(layout);
 
-        List<Default> events = getEvents();
-        List<Object> objects = addTimeDividers(events);
-
-        GenericRowAdapter adapter = new GenericRowAdapter();
-        adapter.addAll(objects);
+        adapter = new GenericRowAdapter();
         list.setAdapter(adapter);
+
+        refreshContents();
 
         return rootView;
     }
 
-    protected List<Default> getEvents() {
+    private void refreshContents() {
+        adapter.clear();
+
+        Filter filter = SharedPreferencesUtil.getFilter();
+
+        List<Default> events = getEvents(filter);
+        List<Object> objects = addTimeDividers(events);
+
+        adapter.addAll(objects);
+        adapter.notifyDataSetChanged();
+    }
+
+    protected List<Default> getEvents( Filter filter ) {
         List<Default> events;
-        events = getItemByDate(mTypes);
+        events = getItemByDate(filter.getTypesArray());
         return events;
     }
 
@@ -109,5 +126,30 @@ public class GenericRowFragment extends HackerTrackerFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.schedule, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+            case R.id.action_search:
+            case R.id.action_filter:
+                showFilters();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void showFilters() {
+        Filter filter = SharedPreferencesUtil.getFilter();
+
+        final FilterView view = new FilterView(getContext(), filter);
+        MaterialAlert.create(getContext()).setTitle("Filter").setView(view).setBasicNegativeButton().setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Filter filter = view.save();
+                refreshContents();
+            }
+        }).show();
     }
 }

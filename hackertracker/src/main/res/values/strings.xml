@@ -22,6 +22,19 @@
         <item>@string/partners</item>
     </string-array>
 
+    <string-array name="filter_types">
+        <item>Speaker</item>
+        <item>Skytalks</item>
+        <item>Event</item>
+        <item>Villages</item>
+        <item>Kids</item>
+
+        <item>Contest</item>
+        <item>Party</item>
+        <item>DemoLabs</item>
+        <item>Workshop</item>
+    </string-array>
+
     <string name="home">DEF CON 24</string>
     <string name="main">Home</string>
     <string name="speakers">Speakers</string>
@@ -218,6 +231,9 @@
     <string name="exploit">EXPLOIT</string>
     <string name="filter">Filter</string>
     <string name="timestamp_full">%1$s, %2$s - %3$s</string>
+    <string name="cancel">Cancel</string>
+    <string name="okay">Okay</string>
+    <string name="always_show_starred">Always show starred</string>
 
     <string-array name="updates">
         <item>08/02/16</item>

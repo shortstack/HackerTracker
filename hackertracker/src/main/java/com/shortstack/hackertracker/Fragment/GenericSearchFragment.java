@@ -14,6 +14,7 @@ import com.pedrogomez.renderers.RendererAdapter;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
 import com.shortstack.hackertracker.List.GenericRowFragment;
 import com.shortstack.hackertracker.Model.Default;
+import com.shortstack.hackertracker.Model.Filter;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.ClearableEditText;
 
@@ -47,7 +48,7 @@ public class GenericSearchFragment extends GenericRowFragment {
     }
 
     @Override
-    protected List<Default> getEvents() {
+    protected List<Default> getEvents(Filter filter ) {
         return Collections.emptyList();
     }
 
