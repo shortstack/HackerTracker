@@ -11,7 +11,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
 import com.shortstack.hackertracker.Common.Constants;
-import com.shortstack.hackertracker.Fragment.HomeFragment;
+import com.shortstack.hackertracker.Home.HomeFragment;
 import com.shortstack.hackertracker.List.GenericRowFragment;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Schedule.GenericScheduleFragment;

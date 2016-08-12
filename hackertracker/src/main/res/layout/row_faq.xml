@@ -1,21 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
     style="@style/row"
-    android:padding="0dp"
-    android:layout_margin="0dp"
-    android:id="@+id/rootLayout">
+    android:orientation="vertical">
 
-    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    <TextView
         android:id="@+id/question"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:textColor="@color/white"
-        android:textSize="16dp"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:linksClickable="true"
         android:autoLink="all"
-        android:textColorLink="@color/light_gray"/>
+        android:linksClickable="true"
+        android:textColor="@color/white"
+        android:textColorLink="@color/light_gray"
+        android:textSize="16sp"
+        tools:text="Q. What is DEFCON?" />
+
+    <TextView
+        android:id="@+id/answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:linksClickable="true"
+        android:textColor="@color/white"
+        android:textColorLink="@color/light_gray"
+        tools:text="DEFCON is a large convention..." />
 
 </LinearLayout>

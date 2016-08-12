@@ -35,7 +35,7 @@ import com.shortstack.hackertracker.Fragment.BadgeFragment;
 import com.shortstack.hackertracker.Fragment.FAQFragment;
 import com.shortstack.hackertracker.Fragment.FragmentDrawer;
 import com.shortstack.hackertracker.Fragment.GenericSearchFragment;
-import com.shortstack.hackertracker.Fragment.HomeFragment;
+import com.shortstack.hackertracker.Home.HomeFragment;
 import com.shortstack.hackertracker.Fragment.MapsFragment;
 import com.shortstack.hackertracker.Fragment.PartnersFragment;
 import com.shortstack.hackertracker.Fragment.RadioFragment;
