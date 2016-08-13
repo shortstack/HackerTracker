@@ -4,8 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
-    android:padding="10dp"
     android:textColor="@android:color/white"
-    android:textSize="24sp"
+    android:textSize="24dp"
     tools:background="@color/background"
-    tools:text="10:00 AM" />
+    tools:text="10:00 AM"
+    android:paddingBottom="10dp"
+    android:paddingTop="30dp" />

@@ -57,8 +57,8 @@ public class DetailsActivity extends AppCompatActivity {
     @Bind(R.id.tool)
     View tool;
 
-    @Bind(R.id.isNew)
-    View isNew;
+    //@Bind(R.id.isNew)
+    //View isNew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,7 +99,7 @@ public class DetailsActivity extends AppCompatActivity {
     }
 
     private void displayNewIcon() {
-        isNew.setVisibility(getContent().isNew() ? View.VISIBLE : View.GONE);
+        //isNew.setVisibility(getContent().isNew() ? View.VISIBLE : View.GONE);
     }
 
     private Default getContent() {

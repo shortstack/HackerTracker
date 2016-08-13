@@ -7,7 +7,12 @@
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background" />
+        android:background="@color/background"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:paddingBottom="30dp"
+        android:paddingTop="30dp"
+        android:clipToPadding="false" />
 
     <include
         android:layout_width="wrap_content"

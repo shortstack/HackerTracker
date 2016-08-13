@@ -1,22 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rootLayout"
-    style="@style/row"
-    android:orientation="horizontal"
-    tools:background="@color/background">
 
-    <View
-        android:layout_width="3dp"
-        android:layout_height="match_parent"
-        android:layout_marginRight="10dp"
-        android:background="@color/white"
-        android:id="@+id/category" />
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingBottom="1dp"
+    android:paddingTop="1dp">
+
 
     <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_weight="3"
+        android:id="@+id/rootLayout"
+        style="@style/row"
         android:orientation="vertical">
 
         <TextView
@@ -24,7 +18,10 @@
             style="@style/title"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:alpha=".75"
             android:singleLine="false"
+            android:textColor="@color/white"
+            android:textSize="17sp"
             tools:text="DARPA Cyber Grand Challenge" />
 
         <TextView
@@ -40,7 +37,10 @@
             style="@style/where"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:alpha=".75"
             android:autoLink="none"
+            android:textColor="@color/white"
+            android:textSize="16sp"
             tools:text="Track 1" />
 
         <TextView
@@ -50,8 +50,8 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:textIsSelectable="true"
-            tools:text="Speaker Name"
-            android:visibility="gone" />
+            android:visibility="gone"
+            tools:text="Speaker Name" />
 
         <TextView
             android:id="@+id/time"
@@ -83,17 +83,6 @@
                 android:text="@string/tool" />
 
         </LinearLayout>
-    </LinearLayout>
 
-    <TextView
-        android:id="@+id/isNew"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|center_vertical"
-        android:layout_marginLeft="15dp"
-        android:background="@drawable/button_green_rounded"
-        android:gravity="end"
-        android:padding="4dp"
-        android:text="@string/is_new"
-        android:textColor="@color/black" />
-</LinearLayout>
+    </LinearLayout>
+</FrameLayout>

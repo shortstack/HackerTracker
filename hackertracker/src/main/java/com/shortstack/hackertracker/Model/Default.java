@@ -302,6 +302,6 @@ public class Default implements Serializable {
     }
 
     public String getDisplayTitle() {
-        return "[" + getType() + "] " + getTitle();
+        return/* "[" + getType() + "] " +*/ getTitle();
     }
 }

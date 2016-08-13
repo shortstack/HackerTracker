@@ -32,7 +32,7 @@ public class GenericTimeRenderer extends Renderer<Date> {
 
         String stamp = Default.getTimeStamp(getContext(), content);
 
-        if( content.after(currentDate) ) {
+        if( content.getDay() == currentDate.getDay() && content.after(currentDate) ) {
             long hourDiff = getDateDiff(currentDate, content, TimeUnit.HOURS);
             if( hourDiff >= 1 ) {
                 stamp = stamp.concat(" [in " + hourDiff + "hrs]");
