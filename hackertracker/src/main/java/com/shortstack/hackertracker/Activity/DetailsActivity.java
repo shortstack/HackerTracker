@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.Activity;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -57,6 +58,12 @@ public class DetailsActivity extends AppCompatActivity {
     @Bind(R.id.tool)
     View tool;
 
+    @Bind(R.id.category)
+    View category;
+
+    @Bind(R.id.container)
+    View container;
+
     //@Bind(R.id.isNew)
     //View isNew;
 
@@ -76,6 +83,11 @@ public class DetailsActivity extends AppCompatActivity {
 
 
         toolbar.setTitle(item.getTitle());
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            container.setTransitionName("category");
+            getWindow().setEnterTransition(null);
+        }
 
         displayText();
         displaySpeakerIcons();

@@ -1,7 +1,9 @@
 package com.shortstack.hackertracker.List;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -47,9 +49,14 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
     //@Bind(R.id.isNew)
     //View isNew;
 
+    @Bind(R.id.container)
+    View container;
 
     @Bind(R.id.category)
     View category;
+
+    @Bind(R.id.bookmark)
+    View bookmark;
 
     @Override
     protected View inflate(LayoutInflater inflater, ViewGroup parent) {
@@ -112,10 +119,7 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
     }
 
     private void highlightText() {
-        int color = ContextCompat.getColor(getContext(), isOnSchedule() ? R.color.colorAccent : R.color.white);
-
-        title.setTextColor(color);
-        time.setTextColor(color);
+        bookmark.setVisibility( isOnSchedule() ? View.VISIBLE : View.GONE );
     }
 
     private void displayText() {
@@ -134,8 +138,16 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
 
     @Override
     public void onClick(View view) {
-        Intent intent = new Intent(getContext(), DetailsActivity.class);
+        Activity context = (Activity) getContext();
+        Intent intent = new Intent(context, DetailsActivity.class);
         intent.putExtra("item", Parcels.wrap(getContent()));
-        getContext().startActivity(intent);
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(context, container, "category");
+
+
+
+        context.startActivity(intent, options.toBundle());
+        context.getWindow().setExitTransition(null);
     }
 }

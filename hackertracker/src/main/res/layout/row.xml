@@ -15,7 +15,8 @@
         android:layout_height="wrap_content"
         android:background="#57000000"
         android:orientation="horizontal"
-        tools:background="@color/background">
+        tools:background="@color/background"
+        android:id="@+id/container">
 
 
         <View
@@ -27,7 +28,8 @@
         <LinearLayout
             android:id="@+id/rootLayout"
             style="@style/row"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_weight="1">
 
             <TextView
                 android:id="@+id/title"
@@ -101,6 +103,14 @@
             </LinearLayout>
 
         </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bookmark"
+            android:src="@drawable/ic_bookmark_white_24dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="5dp" />
 
     </LinearLayout>
 
