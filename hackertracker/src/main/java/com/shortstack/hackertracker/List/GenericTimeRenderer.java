@@ -42,17 +42,21 @@ public class GenericTimeRenderer extends Renderer<Date> {
         header.setText(Default.getTimeStamp(getContext(), content));
 
         if (content.getDay() == currentDate.getDay() && content.after(currentDate)) {
+            subheader.setVisibility(View.VISIBLE);
+
             String stamp = "";
 
             long hourDiff = getDateDiff(currentDate, content, TimeUnit.HOURS);
             if (hourDiff >= 1) {
-                stamp = stamp.concat("in " + hourDiff + "hrs");
+                stamp = stamp.concat("in " + hourDiff + " hrs");
             } else {
                 long dateDiff = getDateDiff(currentDate, content, TimeUnit.MINUTES);
-                stamp = stamp.concat("in " + dateDiff + "mins");
+                stamp = stamp.concat("in " + dateDiff + " mins");
             }
 
             subheader.setText(stamp);
+        } else {
+            subheader.setVisibility(View.GONE);
         }
 
 
