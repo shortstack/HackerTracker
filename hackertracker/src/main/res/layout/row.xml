@@ -1,88 +1,107 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
 
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingBottom="1dp"
-    android:paddingTop="1dp">
-
+    android:paddingTop="1dp"
+    >
 
     <LinearLayout
-        android:id="@+id/rootLayout"
-        style="@style/row"
-        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/title"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:alpha=".75"
-            android:singleLine="false"
-            android:textColor="@color/white"
-            android:textSize="17sp"
-            tools:text="DARPA Cyber Grand Challenge" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#57000000"
+        android:orientation="horizontal"
+        tools:background="@color/background">
 
-        <TextView
-            android:id="@+id/name"
-            style="@style/name"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:autoLink="all"
-            android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/location"
-            style="@style/where"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:alpha=".75"
-            android:autoLink="none"
-            android:textColor="@color/white"
-            android:textSize="16sp"
-            tools:text="Track 1" />
-
-        <TextView
-            android:id="@+id/speaker"
-            style="@style/where"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:textIsSelectable="true"
-            android:visibility="gone"
-            tools:text="Speaker Name" />
-
-        <TextView
-            android:id="@+id/time"
-            style="@style/date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="gone" />
+        <View
+            android:id="@+id/category"
+            android:layout_width="10dp"
+            android:layout_height="match_parent"
+            android:background="#da3a3a" />
 
         <LinearLayout
-            android:id="@+id/icons"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
-            android:orientation="horizontal">
+            android:id="@+id/rootLayout"
+            style="@style/row"
+            android:orientation="vertical">
 
             <TextView
-                android:id="@+id/demo"
-                style="@style/icon_text"
-                android:text="@string/demo" />
+                android:id="@+id/title"
+                style="@style/title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:alpha=".75"
+                android:singleLine="false"
+                android:textColor="@color/white"
+                android:textSize="17sp"
+                tools:text="DARPA Cyber Grand Challenge" />
 
             <TextView
-                android:id="@+id/exploit"
-                style="@style/icon_text"
-                android:text="@string/exploit" />
+                android:id="@+id/name"
+                style="@style/name"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="all"
+                android:visibility="gone" />
 
             <TextView
-                android:id="@+id/tool"
-                style="@style/icon_text"
-                android:text="@string/tool" />
+                android:id="@+id/location"
+                style="@style/where"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:alpha=".75"
+                android:autoLink="none"
+                android:textColor="@color/white"
+                android:textSize="16sp"
+                tools:text="Track 1" />
+
+            <TextView
+                android:id="@+id/speaker"
+                style="@style/where"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textIsSelectable="true"
+                android:visibility="gone"
+                tools:text="Speaker Name" />
+
+            <TextView
+                android:id="@+id/time"
+                style="@style/date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+            <LinearLayout
+                android:id="@+id/icons"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="3dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/demo"
+                    style="@style/icon_text"
+                    android:text="@string/demo" />
+
+                <TextView
+                    android:id="@+id/exploit"
+                    style="@style/icon_text"
+                    android:text="@string/exploit" />
+
+                <TextView
+                    android:id="@+id/tool"
+                    style="@style/icon_text"
+                    android:text="@string/tool" />
+
+            </LinearLayout>
 
         </LinearLayout>
 
     </LinearLayout>
+
 </FrameLayout>

@@ -8,7 +8,7 @@
     <color name="colorAccent">#6464b7</color>
     <color name="colorLightAccent">#A0A0EF</color>
 
-    <color name="black_alpha">#DD000000</color>
+    <color name="black_alpha">#dd000000</color>
     <color name="black_alpha_hover">#EE000000</color>
     <color name="white_alpha">#33FFFFFF</color>
     <color name="light_gray">#dddddd</color>

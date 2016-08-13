@@ -6,7 +6,6 @@ import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import com.pedrogomez.renderers.Renderer;
@@ -49,8 +48,8 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
     //View isNew;
 
 
-    //@Bind(R.id.category)
-    //View category;
+    @Bind(R.id.category)
+    View category;
 
     @Override
     protected View inflate(LayoutInflater inflater, ViewGroup parent) {
@@ -99,9 +98,9 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
 
         String[] allColors = getContext().getResources().getStringArray(R.array.colors);
 
-        ((FrameLayout)getRootView()).getChildAt(0).setBackgroundColor(Color.parseColor(allColors[count % allColors.length]));
-
-        //category.setBackgroundColor(getContext().getResources().getColor(R.color.star));
+        int color = Color.parseColor(allColors[count % allColors.length]);
+        //((FrameLayout)getRootView()).getChildAt(0).setBackgroundColor(color);
+        category.setBackgroundColor(color);
     }
 
     private void displayNewIcon() {

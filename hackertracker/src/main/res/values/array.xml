@@ -2,17 +2,15 @@
 <resources>
 
     <string-array name="colors">
-        <item>#63414b</item>
-        <item>#685146</item>
-        <item>#46536c</item>
-        <item>#2f6859</item>
-        <item>#2a5374</item>
-        <item>#383a78</item>
-        <item>#534693</item>
-        <item>#6b468a</item>
-        <item>#534e4b</item>
+        <item>#C62828</item>
+        <item>#AD1457</item>
+        <item>#6A1B9A</item>
+        <item>#4527A0</item>
+        <item>#283593</item>
+        <item>#1565C0</item>
+        <item>#0277BD</item>
+        <item>#00838F</item>
+        <item>#00695C</item>
     </string-array>
-
-
 
 </resources>

@@ -14,13 +14,22 @@ import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 public class GenericTimeRenderer extends Renderer<Date> {
 
-    private TextView view;
+    @Bind(R.id.header)
+    TextView header;
+
+    @Bind(R.id.subheader)
+    TextView subheader;
+
 
     @Override
     protected View inflate(LayoutInflater inflater, ViewGroup parent) {
-        view = (TextView) inflater.inflate(R.layout.row_header_time, parent, false);
+        View view = inflater.inflate(R.layout.row_header_time, parent, false);
+        ButterKnife.bind(this, view);
         return view;
     }
 
@@ -30,20 +39,23 @@ public class GenericTimeRenderer extends Renderer<Date> {
         Date currentDate = HackerTrackerApplication.getApplication().getCurrentDate();
 
 
-        String stamp = Default.getTimeStamp(getContext(), content);
+        header.setText(Default.getTimeStamp(getContext(), content));
 
-        if( content.getDay() == currentDate.getDay() && content.after(currentDate) ) {
+        if (content.getDay() == currentDate.getDay() && content.after(currentDate)) {
+            String stamp = "";
+
             long hourDiff = getDateDiff(currentDate, content, TimeUnit.HOURS);
-            if( hourDiff >= 1 ) {
-                stamp = stamp.concat(" [in " + hourDiff + "hrs]");
+            if (hourDiff >= 1) {
+                stamp = stamp.concat("in " + hourDiff + "hrs");
             } else {
                 long dateDiff = getDateDiff(currentDate, content, TimeUnit.MINUTES);
-                stamp = stamp.concat(" [in " + dateDiff + "mins]");
+                stamp = stamp.concat("in " + dateDiff + "mins");
             }
+
+            subheader.setText(stamp);
         }
 
 
-        view.setText(stamp);
     }
 
     public static long getDateDiff(Date date1, Date date2, TimeUnit timeUnit) {
