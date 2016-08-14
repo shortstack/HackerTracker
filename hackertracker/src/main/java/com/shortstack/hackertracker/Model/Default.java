@@ -332,4 +332,8 @@ public class Default implements Serializable {
     public boolean hasHost() {
         return getName() != null && getName().length() > 0;
     }
+
+    public boolean hasDescription() {
+        return getDescription() != null && getDescription().length() > 0;
+    }
 }

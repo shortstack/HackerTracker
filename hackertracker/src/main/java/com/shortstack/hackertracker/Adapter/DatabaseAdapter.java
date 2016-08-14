@@ -102,7 +102,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
         }
 
-        return checkDB != null ? true : false;
+        return checkDB != null;
 
     }
 

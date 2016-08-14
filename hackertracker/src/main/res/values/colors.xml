@@ -20,4 +20,6 @@
     <color name="star">#ffcc00</color>
 
     <color name="background">#2e3542</color>
+
+    <color name="item_background">#1e232b</color>
 </resources>

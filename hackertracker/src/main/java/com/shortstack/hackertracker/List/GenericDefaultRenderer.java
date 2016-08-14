@@ -1,10 +1,6 @@
 package com.shortstack.hackertracker.List;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
-import android.os.Build;
-import android.support.v4.app.ActivityOptionsCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,10 +8,9 @@ import android.widget.TextView;
 
 import com.pedrogomez.renderers.Renderer;
 import com.shortstack.hackertracker.Activity.DetailsActivity;
+import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
-
-import org.parceler.Parcels;
 
 import java.util.List;
 
@@ -76,7 +71,7 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
         displayNewIcon();
         displayCategory();
 
-        highlightText();
+        updateBookmark();
     }
 
     private void displayCategory() {
@@ -95,7 +90,7 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
         return getContent().isStarred();
     }
 
-    private void highlightText() {
+    public void updateBookmark() {
         bookmark.setVisibility( isOnSchedule() ? View.VISIBLE : View.GONE );
     }
 
@@ -115,17 +110,21 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
 
     @Override
     public void onClick(View view) {
-        Activity context = (Activity) getContext();
-        Intent intent = new Intent(context, DetailsActivity.class);
-        intent.putExtra("item", Parcels.wrap(getContent()));
+//        Activity context = (Activity) getContext();
+//        Intent intent = new Intent(context, DetailsActivity.class);
+//        intent.putExtra("item", Parcels.wrap(getContent()));
+//
+//        ActivityOptionsCompat options = ActivityOptionsCompat.
+//                makeSceneTransitionAnimation(context, container, "category");
+//
+//        context.startActivity(intent, options.toBundle());
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            context.getWindow().setExitTransition(null);
+//        }
 
-        ActivityOptionsCompat options = ActivityOptionsCompat.
-                makeSceneTransitionAnimation(context, container, "category");
 
-        context.startActivity(intent, options.toBundle());
+        MaterialAlert.create(getContext()).setView(new DetailsActivity(getContext(), getContent(), this)).show();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            context.getWindow().setExitTransition(null);
-        }
     }
 }

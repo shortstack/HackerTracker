@@ -1,38 +1,34 @@
 package com.shortstack.hackertracker.Activity;
 
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
-import android.os.Build;
-import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.MenuItem;
 import android.view.View;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterStarred;
 import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.List.GenericDefaultRenderer;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
-
-import org.parceler.Parcels;
 
 import java.util.Calendar;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Admin on 8/8/2016.
  */
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends FrameLayout {
 
+    private final GenericDefaultRenderer mRenderer;
     private Default item;
-
-    @Bind(R.id.my_toolbar)
-    Toolbar toolbar;
 
     @Bind(R.id.title)
     TextView title;
@@ -64,33 +60,31 @@ public class DetailsActivity extends AppCompatActivity {
     @Bind(R.id.container)
     View container;
 
-    //@Bind(R.id.isNew)
-    //View isNew;
+    @Bind(R.id.action_bookmark)
+    ImageView bookmark;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.details);
+    public DetailsActivity(Context context, Default item, GenericDefaultRenderer genericDefaultRenderer) {
+        super(context);
+        init();
+        this.item = item;
+        display();
+
+        mRenderer = genericDefaultRenderer;
+
+    }
+
+    private void init() {
+        inflate(getContext(), R.layout.details_contents, this);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
-        if (getIntent().getExtras() != null) {
-            item = Parcels.unwrap(getIntent().getExtras().getParcelable("item"));
-        } else if (savedInstanceState != null) {
-            item = Parcels.unwrap(savedInstanceState.getParcelable("item"));
-        }
-
-
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            container.setTransitionName("category");
-            getWindow().setEnterTransition(null);
-        }
-
+    private void display() {
         displayText();
         displaySpeakerIcons();
         displayNewIcon();
         displayCategory();
+
+        updateBookmark();
     }
 
     private void displayText() {
@@ -100,10 +94,14 @@ public class DetailsActivity extends AppCompatActivity {
             host.setText(getContent().getName());
             host.setVisibility(View.VISIBLE);
         }
-        time.setText(getContent().getFullTimeStamp(this));
+        time.setText(getContent().getFullTimeStamp(getContext()));
         time.setVisibility(View.VISIBLE);
         location.setText(getContent().getLocation());
-        description.setText(item.getDescription());
+        if( item.hasDescription() ) {
+            description.setText(item.getDescription());
+        } else {
+            description.setVisibility(GONE);
+        }
 
 
     }
@@ -143,29 +141,11 @@ public class DetailsActivity extends AppCompatActivity {
 //        return super.onCreateOptionsMenu(menu);
 //    }
 
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                supportFinishAfterTransition();
-                return true;
 
-            case R.id.information:
-
-                break;
-            case R.id.share:
-                break;
-
-            case R.id.star:
-                updateSchedule();
-                break;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void updateSchedule() {
-        DatabaseAdapter myDbOfficialHelper = new DatabaseAdapter(this);
-        DatabaseAdapterStarred myDbHelperStars = new DatabaseAdapterStarred(this);
+    @OnClick(R.id.action_bookmark)
+    public void updateSchedule() {
+        DatabaseAdapter myDbOfficialHelper = new DatabaseAdapter(getContext());
+        DatabaseAdapterStarred myDbHelperStars = new DatabaseAdapterStarred(getContext());
         SQLiteDatabase dbOfficial = myDbOfficialHelper.getWritableDatabase();
         SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
 
@@ -192,8 +172,7 @@ public class DetailsActivity extends AppCompatActivity {
 
             // change star
             item.setStarred(1);
-            Toast.makeText(this, R.string.schedule_added, Toast.LENGTH_SHORT).show();
-
+            Toast.makeText(getContext(), R.string.schedule_added, Toast.LENGTH_SHORT).show();
         } else {
 
             // remove from starred database
@@ -205,10 +184,18 @@ public class DetailsActivity extends AppCompatActivity {
 
             // change star
             item.setStarred(0);
-            Toast.makeText(this, R.string.schedule_removed, Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), R.string.schedule_removed, Toast.LENGTH_SHORT).show();
         }
+        
+        mRenderer.updateBookmark();
+
+        updateBookmark();
 
         dbOfficial.close();
         dbStars.close();
+    }
+
+    private void updateBookmark() {
+        bookmark.setImageDrawable(getResources().getDrawable( item.isStarred() ? R.drawable.ic_bookmark_white_24dp : R.drawable.ic_bookmark_border_white_24dp));
     }
 }

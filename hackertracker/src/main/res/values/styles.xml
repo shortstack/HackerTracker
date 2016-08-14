@@ -48,7 +48,7 @@
     </style>
 
     <style name="page">
-        <item name="android:background">@color/background</item>
+        <item name="android:background">@color/item_background</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
     </style>
@@ -397,7 +397,7 @@
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">@color/white</item>
         <!-- Used for the background -->
-        <item name="android:background">@color/background</item>
+        <item name="android:background">@color/item_background</item>
     </style>
 
     <style name="MyTitleTextStyle">
