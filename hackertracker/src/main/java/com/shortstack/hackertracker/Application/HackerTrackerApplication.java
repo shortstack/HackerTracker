@@ -8,11 +8,16 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.graphics.Color;
+import android.media.RingtoneManager;
+import android.net.Uri;
+import android.os.Build;
 
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterStarred;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.BuildConfig;
+import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.AlarmReceiver;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
@@ -96,11 +101,25 @@ public class HackerTrackerApplication extends Application {
         alarmManager.set(AlarmManager.RTC_WAKEUP, when, pendingIntent);
     }
 
-    public static Notification getNotification(String content) {
+    public static Notification createNotification(Context context, Default content) {
+        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        int color = context.getResources().getColor(R.color.colorPrimary);
+
         Notification.Builder builder = new Notification.Builder(context);
-        builder.setContentTitle(context.getString(R.string.notification_title));
-        builder.setStyle(new Notification.BigTextStyle().bigText(content));
-        builder.setSmallIcon(R.drawable.ic_launcher);
+        builder.setContentTitle(content.getTitle());
+        builder.setContentText(String.format(context.getString(R.string.notification_text), content.getLocation()));
+        builder.setPriority(Notification.PRIORITY_MAX);
+        builder.setSound(soundUri);
+        builder.setVibrate(new long[] { 0, 250, 500, 250 });
+        builder.setLights(Color.MAGENTA, 3000, 1000);
+
+        builder.setSmallIcon(R.drawable.skull);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+
+            builder.setColor(color);
+        }
+        builder.setAutoCancel(true);
+
         return builder.build();
     }
 

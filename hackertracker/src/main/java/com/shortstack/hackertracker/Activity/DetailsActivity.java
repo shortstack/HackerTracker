@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.Activity;
 
+import android.app.Notification;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
@@ -167,7 +168,8 @@ public class DetailsActivity extends FrameLayout {
                 calendar.set(Calendar.SECOND, 0);
                 long when = calendar.getTimeInMillis() - 1200000;
 
-                HackerTrackerApplication.scheduleNotification(HackerTrackerApplication.getNotification("\"" + item.getTitle() + "\" is starting in 20 minutes in " + item.getLocation() + "."), when, item.getId());
+                Notification notification = HackerTrackerApplication.createNotification(getContext(), item);
+                HackerTrackerApplication.scheduleNotification(notification, when, item.getId());
             }
 
             // change star
@@ -186,7 +188,7 @@ public class DetailsActivity extends FrameLayout {
             item.setStarred(0);
             Toast.makeText(getContext(), R.string.schedule_removed, Toast.LENGTH_SHORT).show();
         }
-        
+
         mRenderer.updateBookmark();
 
         updateBookmark();

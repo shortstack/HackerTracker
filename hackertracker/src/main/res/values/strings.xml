@@ -247,6 +247,7 @@
     <string name="cancel">Cancel</string>
     <string name="okay">Okay</string>
     <string name="always_show_starred">Always show starred</string>
+    <string name="notification_text">Starting soon in %1$s.</string>
 
     <string-array name="updates">
         <item>08/04/16</item>
