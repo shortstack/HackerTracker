@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 
@@ -125,6 +126,29 @@ public class Default implements Serializable {
 
     public String getType() {
         return type;
+    }
+
+    public int getCategoryColorPosition() {
+        int count = 0;
+        switch (getType()){
+            case Constants.TYPE_EVENT:
+                count++;
+            case Constants.TYPE_CONTEST:
+                count++;
+            case Constants.TYPE_SPEAKER:
+                count++;
+            case Constants.TYPE_KIDS:
+                count++;
+            case Constants.TYPE_PARTY:
+                count++;
+            case Constants.TYPE_SKYTALKS:
+                count++;
+            case Constants.TYPE_DEMOLAB:
+                count++;
+            case Constants.TYPE_WORKSHOP:
+                count++;
+        }
+        return count;
     }
 
     public void setType(String type) {
@@ -303,5 +327,9 @@ public class Default implements Serializable {
 
     public String getDisplayTitle() {
         return/* "[" + getType() + "] " +*/ getTitle();
+    }
+
+    public boolean hasHost() {
+        return getName() != null && getName().length() > 0;
     }
 }

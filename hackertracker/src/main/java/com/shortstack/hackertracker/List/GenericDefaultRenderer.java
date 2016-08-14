@@ -3,8 +3,8 @@ package com.shortstack.hackertracker.List;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
 import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,7 +12,6 @@ import android.widget.TextView;
 
 import com.pedrogomez.renderers.Renderer;
 import com.shortstack.hackertracker.Activity.DetailsActivity;
-import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
 
@@ -81,32 +80,10 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
     }
 
     private void displayCategory() {
-        String type = getContent().getType();
-        int count = 0;
-        switch (type){
-            case Constants.TYPE_EVENT:
-                count++;
-            case Constants.TYPE_CONTEST:
-                count++;
-            case Constants.TYPE_SPEAKER:
-                count++;
-            case Constants.TYPE_KIDS:
-                count++;
-            case Constants.TYPE_PARTY:
-                count++;
-            case Constants.TYPE_SKYTALKS:
-                count++;
-            case Constants.TYPE_DEMOLAB:
-                count++;
-            case Constants.TYPE_WORKSHOP:
-                count++;
-        }
-
-
+        int count = getContent().getCategoryColorPosition();
         String[] allColors = getContext().getResources().getStringArray(R.array.colors);
 
         int color = Color.parseColor(allColors[count % allColors.length]);
-        //((FrameLayout)getRootView()).getChildAt(0).setBackgroundColor(color);
         category.setBackgroundColor(color);
     }
 
@@ -145,9 +122,10 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
         ActivityOptionsCompat options = ActivityOptionsCompat.
                 makeSceneTransitionAnimation(context, container, "category");
 
-
-
         context.startActivity(intent, options.toBundle());
-        context.getWindow().setExitTransition(null);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            context.getWindow().setExitTransition(null);
+        }
     }
 }

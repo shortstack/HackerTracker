@@ -14,7 +14,7 @@ import com.shortstack.hackertracker.R;
 
 public class MaterialAlert {
 
-    private AlertDialog.Builder mBuilder;
+    protected AlertDialog.Builder mBuilder;
     private Context mContext;
 
     private boolean mHasPositiveButton;
@@ -25,7 +25,7 @@ public class MaterialAlert {
         return new MaterialAlert(context);
     }
 
-    private MaterialAlert(Context context) {
+    public MaterialAlert(Context context) {
         mContext = context;
         mBuilder = new AlertDialog.Builder(context, R.style.MyAlertDialogStyle);
     }

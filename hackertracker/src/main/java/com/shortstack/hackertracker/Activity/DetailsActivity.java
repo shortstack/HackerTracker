@@ -1,11 +1,11 @@
 package com.shortstack.hackertracker.Activity;
 
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
@@ -82,8 +82,6 @@ public class DetailsActivity extends AppCompatActivity {
         }
 
 
-        toolbar.setTitle(item.getTitle());
-
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             container.setTransitionName("category");
             getWindow().setEnterTransition(null);
@@ -92,16 +90,22 @@ public class DetailsActivity extends AppCompatActivity {
         displayText();
         displaySpeakerIcons();
         displayNewIcon();
+        displayCategory();
     }
 
     private void displayText() {
         title.setText(getContent().getTitle());
-        host.setText(getContent().getName());
-        host.setVisibility(View.VISIBLE);
+
+        if( getContent().hasHost() ) {
+            host.setText(getContent().getName());
+            host.setVisibility(View.VISIBLE);
+        }
         time.setText(getContent().getFullTimeStamp(this));
         time.setVisibility(View.VISIBLE);
         location.setText(getContent().getLocation());
         description.setText(item.getDescription());
+
+
     }
 
     private void displaySpeakerIcons() {
@@ -114,26 +118,38 @@ public class DetailsActivity extends AppCompatActivity {
         //isNew.setVisibility(getContent().isNew() ? View.VISIBLE : View.GONE);
     }
 
+    private void displayCategory() {
+        int count = getContent().getCategoryColorPosition();
+        String[] allColors = getResources().getStringArray(R.array.colors);
+
+        int color = Color.parseColor(allColors[count % allColors.length]);
+        category.setBackgroundColor(color);
+    }
+
     private Default getContent() {
         return item;
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.details, menu);
-
-        if (item.getLink() == null || item.getLink().equals("") || item.getLink().equals(" ")) {
-            menu.findItem(R.id.information).setVisible(false);
-        } else {
-            menu.findItem(R.id.information).setVisible(true);
-        }
-
-        return super.onCreateOptionsMenu(menu);
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.details, menu);
+//
+//        if (item.getLink() == null || item.getLink().equals("") || item.getLink().equals(" ")) {
+//            menu.findItem(R.id.information).setVisible(false);
+//        } else {
+//            menu.findItem(R.id.information).setVisible(true);
+//        }
+//
+//        return super.onCreateOptionsMenu(menu);
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            case android.R.id.home:
+                supportFinishAfterTransition();
+                return true;
+
             case R.id.information:
 
                 break;

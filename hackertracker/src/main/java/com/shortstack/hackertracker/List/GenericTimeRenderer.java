@@ -48,10 +48,10 @@ public class GenericTimeRenderer extends Renderer<Date> {
 
             long hourDiff = getDateDiff(currentDate, content, TimeUnit.HOURS);
             if (hourDiff >= 1) {
-                stamp = stamp.concat("in " + hourDiff + " hrs");
+                stamp = stamp.concat("in " + hourDiff + " hr" + ( hourDiff > 1 ? "s":""));
             } else {
                 long dateDiff = getDateDiff(currentDate, content, TimeUnit.MINUTES);
-                stamp = stamp.concat("in " + dateDiff + " mins");
+                stamp = stamp.concat("in " + dateDiff + " min"+ ( dateDiff > 1 ? "s":""));
             }
 
             subheader.setText(stamp);

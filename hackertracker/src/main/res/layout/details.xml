@@ -11,11 +11,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
+        android:gravity="center"
         android:minHeight="?attr/actionBarSize"
-        android:title="Text"
-        app:title="text"
-        app:titleTextColor="@android:color/white"></android.support.v7.widget.Toolbar>
+        app:title="Details"
+        app:titleTextColor="@android:color/white">
 
+    </android.support.v7.widget.Toolbar>
 
     <LinearLayout
         style="@style/detailsLayout"
@@ -34,14 +35,19 @@
             android:fillViewport="true">
 
 
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="30dp">
 
 
-                <include layout="@layout/row" />
+                <include
+                    layout="@layout/row"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
 
                 <LinearLayout
                     android:id="@+id/number"
@@ -64,91 +70,11 @@
                 </LinearLayout>
 
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:paddingTop="10dp"
-                    android:paddingBottom="5dp">
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#232323"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="5dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/imageView3"
-                            android:src="@drawable/ic_info_outline_white_24dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp" />
-
-                        <TextView
-                            style="@style/details_body"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="More Info"
-                            android:id="@+id/textView3" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#232323"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="5dp">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/imageView2"
-                            android:src="@drawable/ic_bookmark_border_white_24dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Bookmark"
-                            android:id="@+id/textView2"
-                            style="@style/details_body" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:orientation="horizontal"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:background="#232323"
-                        android:layout_gravity="center_horizontal"
-                        android:layout_margin="5dp" >
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/imageView4"
-                            android:src="@drawable/ic_share_white_24dp"
-                            android:layout_gravity="center_vertical"
-                            android:layout_marginLeft="10dp" />
-
-                        <TextView
-                            style="@style/details_body"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Share"
-                            android:id="@+id/textView4" />
-                    </LinearLayout>
-                </LinearLayout>
-
                 <TextView
                     android:id="@+id/description"
                     style="@style/details_body"
                     android:autoLink="all"
+                    android:background="#57000000"
                     android:linksClickable="true"
                     android:textIsSelectable="true" />
 
@@ -163,6 +89,54 @@
 
             </LinearLayout>
         </ScrollView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="1dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="1dp"
+            android:background="#57000000"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingBottom="5dp"
+            android:paddingTop="10dp">
+
+            <ImageView
+                android:id="@+id/imageView3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_info_outline_white_24dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp" />
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:src="@drawable/ic_bookmark_border_white_24dp" />
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:paddingRight="20dp"
+                android:paddingLeft="20dp"
+                android:src="@drawable/ic_share_white_24dp" />
+
+        </LinearLayout>
 
     </LinearLayout>
 
