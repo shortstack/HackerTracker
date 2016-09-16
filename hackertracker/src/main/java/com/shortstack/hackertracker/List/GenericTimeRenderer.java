@@ -6,7 +6,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.pedrogomez.renderers.Renderer;
-import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
 
@@ -36,7 +36,7 @@ public class GenericTimeRenderer extends Renderer<Date> {
     @Override
     public void render(List<Object> payloads) {
         Date content = getContent();
-        Date currentDate = HackerTrackerApplication.getApplication().getCurrentDate();
+        Date currentDate = App.getApplication().getCurrentDate();
 
 
         header.setText(Default.getTimeStamp(getContext(), content));

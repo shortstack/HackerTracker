@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterStarred;
-import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.List.GenericDefaultRenderer;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
@@ -168,8 +168,8 @@ public class DetailsActivity extends FrameLayout {
                 calendar.set(Calendar.SECOND, 0);
                 long when = calendar.getTimeInMillis() - 1200000;
 
-                Notification notification = HackerTrackerApplication.createNotification(getContext(), item);
-                HackerTrackerApplication.scheduleNotification(notification, when, item.getId());
+                Notification notification = App.createNotification(getContext(), item);
+                App.scheduleNotification(notification, when, item.getId());
             }
 
             // change star
@@ -182,7 +182,7 @@ public class DetailsActivity extends FrameLayout {
             dbOfficial.execSQL("UPDATE data SET starred=" + 0 + " WHERE id=" + item.getId());
 
             // remove alarm
-            HackerTrackerApplication.cancelNotification(item.getId());
+            App.cancelNotification(item.getId());
 
             // change star
             item.setStarred(0);

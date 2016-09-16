@@ -4,9 +4,9 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
 
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 
 import org.parceler.Parcel;
 
@@ -89,6 +89,8 @@ public class Default implements Serializable {
     }
 
     public String getTitle() {
+        if( title.endsWith("\n") )
+            return title.substring(0, title.indexOf("\n"));
         return title;
     }
 
@@ -240,7 +242,7 @@ public class Default implements Serializable {
 
         String time = "";
 
-        if (SharedPreferencesUtil.shouldShowMilitaryTime()) {
+        if (App.getStorage().shouldShowMilitaryTime()) {
             time = getBegin();
         } else {
             Date date = getBeginDateObject();
@@ -261,7 +263,7 @@ public class Default implements Serializable {
         String time;
         DateFormat writeFormat;
 
-        if (SharedPreferencesUtil.shouldShowMilitaryTime()) {
+        if (App.getStorage().shouldShowMilitaryTime()) {
             writeFormat = new SimpleDateFormat("HH:mm");
         } else {
             writeFormat = new SimpleDateFormat("h:mm aa");

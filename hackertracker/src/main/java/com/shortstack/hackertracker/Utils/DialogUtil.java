@@ -18,12 +18,10 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.shortstack.hackertracker.Activity.HomeActivity;
-import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.OfficialList;
 import com.shortstack.hackertracker.R;
@@ -78,37 +76,6 @@ public class DialogUtil {
 
     }
 
-    public static AlertDialog emptyScheduleDialog(final Context context) {
-
-        LayoutInflater inflater =
-                (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.dialog_schedule, null);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
-
-        AlertDialog dialog = builder.create();
-
-        dialog.setView(view, 0, 0, 0, 0);
-
-        Button cancelButton = (Button) view.findViewById(R.id.dismiss);
-        final Dialog finalDialog = dialog;
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finalDialog.dismiss();
-            }
-        });
-        CheckBox checkBox = (CheckBox) view.findViewById(R.id.dont_show_suggestions);
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                SharedPreferencesUtil.showSuggestions(b);
-            }
-        });
-
-        return dialog;
-
-    }
 
     public static AlertDialog clearScheduleDialog(final Context context) {
 
@@ -296,7 +263,7 @@ public class DialogUtil {
 
     public static File getOutputMediaFile()
     {
-        Context context = HackerTrackerApplication.getAppContext();
+        Context context = App.getAppContext();
 
         // checks to see if the external storage SD card is mounted and has write access
         if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)) {
@@ -315,14 +282,14 @@ public class DialogUtil {
 
             return new File(mediaStorageDir.getPath() + File.separator + context.getString(R.string.filename));
         } else {
-            Toast.makeText(HackerTrackerApplication.getAppContext(), R.string.no_storage, Toast.LENGTH_LONG).show();
+            Toast.makeText(App.getAppContext(), R.string.no_storage, Toast.LENGTH_LONG).show();
         }
 
         return null;
     }
 
     public static Boolean backupDatabaseCSV() {
-        SQLiteDatabase db = HackerTrackerApplication.dbHelper.getReadableDatabase();
+        SQLiteDatabase db = App.dbHelper.getReadableDatabase();
 
         Log.d("CSV", "backupDatabaseCSV");
         Boolean returnCode;

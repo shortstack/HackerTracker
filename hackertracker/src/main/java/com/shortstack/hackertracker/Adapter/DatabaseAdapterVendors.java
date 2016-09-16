@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Application.App;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -171,7 +171,7 @@ public class DatabaseAdapterVendors extends SQLiteOpenHelper {
 
     public static void updateDatabase(HashMap<String, String> queryValues) {
 
-        DatabaseAdapterVendors myDbHelper = new DatabaseAdapterVendors(HackerTrackerApplication.getAppContext());
+        DatabaseAdapterVendors myDbHelper = new DatabaseAdapterVendors(App.getAppContext());
 
         SQLiteDatabase dbDefault = myDbHelper.getWritableDatabase();
 

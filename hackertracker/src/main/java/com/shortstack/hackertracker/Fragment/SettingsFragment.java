@@ -5,9 +5,9 @@ import android.os.Bundle;
 import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.DialogUtil;
-import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 
 /**
  * Created by Whitney Champion on 6/3/16.
@@ -46,10 +46,10 @@ public class SettingsFragment extends PreferenceFragmentCompat
 
                 if (preference.isEnabled()) {
                     // enable notifications
-                    SharedPreferencesUtil.allowPushNotifications(true);
+                    App.getStorage().allowPushNotifications(true);
                 } else {
                     // disable notifications
-                    SharedPreferencesUtil.allowPushNotifications(false);
+                    App.getStorage().allowPushNotifications(false);
                 }
 
                 return true;

@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import com.shortstack.hackertracker.Activity.HomeActivity;
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.OfficialList;
 import com.shortstack.hackertracker.R;
@@ -56,7 +57,7 @@ public class UpdateTask extends AsyncTask<String, Void, Boolean> {
                 dialog.dismiss();
 
                 // update last updated device date to last updated online date
-                SharedPreferencesUtil.saveLastUpdated(update);
+                App.getStorage().saveLastUpdated(update);
 
                 return true;
             } else {

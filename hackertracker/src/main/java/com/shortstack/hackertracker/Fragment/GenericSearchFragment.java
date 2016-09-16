@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.pedrogomez.renderers.RendererAdapter;
-import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.List.GenericRowFragment;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.Filter;
@@ -106,7 +106,7 @@ public class GenericSearchFragment extends GenericRowFragment {
             return result;
         }
 
-        SQLiteDatabase dbOfficial = HackerTrackerApplication.dbHelper.getWritableDatabase();
+        SQLiteDatabase dbOfficial = App.dbHelper.getWritableDatabase();
 
         Cursor hint = dbOfficial.rawQuery("SELECT * FROM data WHERE (type LIKE ?)", new String[]{"%" + string + "%"});
         Cursor titleOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});

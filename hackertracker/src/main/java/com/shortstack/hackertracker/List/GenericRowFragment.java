@@ -5,19 +5,15 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.shortstack.hackertracker.Alert.MaterialAlert;
-import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.Filter;
 import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 import com.shortstack.hackertracker.View.FilterView;
 
 import java.util.ArrayList;
@@ -26,6 +22,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 
 public class GenericRowFragment extends HackerTrackerFragment {
@@ -77,7 +74,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
     private void refreshContents() {
         adapter.clear();
 
-        Filter filter = SharedPreferencesUtil.getFilter();
+        Filter filter = App.getStorage().getFilter();
 
         List<Default> events = getEvents(filter);
         List<Object> objects = addTimeDividers(events);
@@ -95,7 +92,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
 
     private int findCurrentPositionByTime() {
         List<Default> collection = adapter.getCollection();
-        Date currentDate = HackerTrackerApplication.getApplication().getCurrentDate();
+        Date currentDate = App.getApplication().getCurrentDate();
 
         for (int i = 0; i < collection.size(); i++) {
             Object object = collection.get(i);
@@ -156,25 +153,9 @@ public class GenericRowFragment extends HackerTrackerFragment {
         return R.layout.fragment_list;
     }
 
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.schedule, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.action_settings:
-            case R.id.action_search:
-            case R.id.action_filter:
-                showFilters();
-                return true;
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    private void showFilters() {
-        Filter filter = SharedPreferencesUtil.getFilter();
+    @OnClick(R.id.filter)
+    public void showFilters() {
+        Filter filter = App.getStorage().getFilter();
 
         final FilterView view = new FilterView(getContext(), filter);
         MaterialAlert.create(getContext()).setTitle("Filter").setView(view).setBasicNegativeButton().setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {

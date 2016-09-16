@@ -10,7 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
-import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.Vendor;
 
@@ -23,13 +23,13 @@ public class HackerTrackerFragment extends Fragment {
 
     public HackerTrackerFragment() {
         // database
-        dbHelper = HackerTrackerApplication.dbHelper;
+        dbHelper = App.dbHelper;
     }
 
     public List<Vendor> getVendors() {
         ArrayList<Vendor> result = new ArrayList<>();
 
-        SQLiteDatabase db = HackerTrackerApplication.vendorDbHelper.getWritableDatabase();
+        SQLiteDatabase db = App.vendorDbHelper.getWritableDatabase();
 
         Cursor cursor = db.rawQuery("SELECT * FROM data ORDER BY title", new String[] {});
 
@@ -61,7 +61,7 @@ public class HackerTrackerFragment extends Fragment {
 
     public List<Default> getItemByDate(String ... type) {
         ArrayList<Default> result = new ArrayList<>();
-        SQLiteDatabase db = HackerTrackerApplication.dbHelper.getWritableDatabase();
+        SQLiteDatabase db = App.dbHelper.getWritableDatabase();
         Cursor cursor = db.rawQuery(getQueryString(type), type );
 
         try{

@@ -28,10 +28,9 @@ import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Api.ApiException;
 import com.shortstack.hackertracker.Api.Impl.SyncServiceImpl;
 import com.shortstack.hackertracker.Api.SyncService;
-import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Font.HelveticaTextView;
-import com.shortstack.hackertracker.Fragment.FAQFragment;
 import com.shortstack.hackertracker.Fragment.FragmentDrawer;
 import com.shortstack.hackertracker.Fragment.GenericSearchFragment;
 import com.shortstack.hackertracker.Fragment.MapsFragment;
@@ -47,9 +46,7 @@ import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Schedule.GenericScheduleFragment;
 import com.shortstack.hackertracker.Utils.ApiResponseUtil;
 import com.shortstack.hackertracker.Utils.DialogUtil;
-import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 import com.shortstack.hackertracker.Utils.UpdateTask;
-import com.shortstack.hackertracker.Vendors.VendorsFragment;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -309,10 +306,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 // kids
                 addToBackStack(R.string.kids, Constants.FRAGMENT_KIDS, GenericRowFragment.newInstance(Constants.TYPE_SKYTALKS));
                 break;
-            case 10:
-                // vendors
-                addToBackStack(R.string.vendors, Constants.FRAGMENT_VENDORS, VendorsFragment.newInstance(11));
-                break;
+
             case 11:
                 // maps
                 addToBackStack(R.string.maps, Constants.FRAGMENT_MAPS, MapsFragment.newInstance(12));
@@ -323,7 +317,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 break;
             case 13:
                 // faq
-                addToBackStack(R.string.faq, Constants.FRAGMENT_FAQ, FAQFragment.newInstance(14));
+                //addToBackStack(R.string.faq, Constants.FRAGMENT_FAQ, FAQFragment.newInstance(14));
                 break;
 
 
@@ -345,8 +339,8 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
 
     // clear schedule from DB
     public static void clearSchedule(Context context) {
-        SQLiteDatabase dbStars = HackerTrackerApplication.myDbHelperStars.getWritableDatabase();
-        SQLiteDatabase db = HackerTrackerApplication.dbHelper.getWritableDatabase();
+        SQLiteDatabase dbStars = App.myDbHelperStars.getWritableDatabase();
+        SQLiteDatabase db = App.dbHelper.getWritableDatabase();
 
         // delete all data in starred database
         dbStars.execSQL("DELETE FROM data");
@@ -435,7 +429,7 @@ public class HomeActivity extends AppCompatActivity implements FragmentDrawer.Fr
                 final String update = updateDate + " " + updateTime;
 
                 // get string of last device update
-                String strDate = SharedPreferencesUtil.getLastUpdated();
+                String strDate = App.getStorage().getLastUpdated();
 
                 // compare
                 try {

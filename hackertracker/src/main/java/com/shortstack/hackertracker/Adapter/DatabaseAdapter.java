@@ -7,11 +7,9 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.widget.Toast;
 
-import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Application.App;
 
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -170,8 +168,8 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
     public static void copyStarred() {
 
         // check if entry is already in starred database
-        DatabaseAdapterStarred myDbHelperStars = new DatabaseAdapterStarred(HackerTrackerApplication.getAppContext());
-        DatabaseAdapter myOfficialDbHelper = new DatabaseAdapter(HackerTrackerApplication.getAppContext());
+        DatabaseAdapterStarred myDbHelperStars = new DatabaseAdapterStarred(App.getAppContext());
+        DatabaseAdapter myOfficialDbHelper = new DatabaseAdapter(App.getAppContext());
 
         SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
         SQLiteDatabase dbDefault = myOfficialDbHelper.getWritableDatabase();
@@ -196,7 +194,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
     // add new items to db
     public static void updateDatabase(HashMap<String, String> queryValues) {
 
-        DatabaseAdapter myDbHelper = new DatabaseAdapter(HackerTrackerApplication.getAppContext());
+        DatabaseAdapter myDbHelper = new DatabaseAdapter(App.getAppContext());
 
         // open database
         SQLiteDatabase dbDefault = myDbHelper.getWritableDatabase();
