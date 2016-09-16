@@ -13,14 +13,6 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/skull_lg" />
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="40dp"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="10dp"
-        android:scaleType="fitStart"
-        android:src="@drawable/title_white" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,15 +23,17 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.shortstack.hackertracker.Font.HelveticaButton
+            <Button
+                android:id="@+id/map"
                 style="@style/button_home"
-                android:text="@string/wifi"
-                android:id="@+id/wifi" />
+                android:text="@string/maps" />
 
-            <com.shortstack.hackertracker.Font.HelveticaButton
+
+            <Button
                 style="@style/button_home"
-                android:text="@string/workshops"
-                android:id="@+id/workshop" />
+                android:id="@+id/uber"
+                android:text="@string/uber"/>
+
         </LinearLayout>
 
         <LinearLayout
@@ -47,30 +41,33 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.shortstack.hackertracker.Font.HelveticaButton
+            <Button
+                android:id="@+id/wifi"
                 style="@style/button_home"
-                android:text="@string/maps"
-                android:id="@+id/map" />
+                android:text="@string/wifi" />
 
-            <com.shortstack.hackertracker.Font.HelveticaButton
+            <Button
+                android:id="@+id/badge"
                 style="@style/button_home"
-                android:text="@string/vendors"
-                android:id="@+id/vendors" />
+                android:text="@string/badges" />
+
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <com.shortstack.hackertracker.Font.HelveticaButton
+            <Button
+                android:id="@+id/workshop"
                 style="@style/button_home"
-                android:text="@string/badges"
-                android:id="@+id/badge" />
 
-            <com.shortstack.hackertracker.Font.HelveticaButton
+                android:text="@string/workshops" />
+
+            <Button
+                android:id="@+id/radio"
                 style="@style/button_home"
-                android:text="@string/faq"
-                android:id="@+id/faqs" />
+                android:text="@string/radio" />
 
 
         </LinearLayout>
@@ -78,13 +75,19 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <com.shortstack.hackertracker.Font.HelveticaButton
+
+            <Button
+                android:id="@+id/faqs"
                 style="@style/button_home"
-                android:text="@string/radio"
-                android:id="@+id/radio" />
+                android:text="@string/faq" />
+
+            <Button
+                android:id="@+id/vendors"
+                style="@style/button_home"
+                android:text="@string/vendors" />
+
 
         </LinearLayout>
-
 
 
     </LinearLayout>
