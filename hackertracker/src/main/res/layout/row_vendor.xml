@@ -1,44 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              style="@style/vendor_row"
-              android:id="@+id/vendorLayout">
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:cardBackgroundColor="#57000000">
 
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp"
-        android:gravity="center_horizontal"
-        >
+        android:layout_height="match_parent">
 
-        <ImageView android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true"
-            android:id="@+id/vendor_logo"
-            style="@style/vendor_logo"/>
+        <LinearLayout
+            android:id="@+id/vendorLayout"
+            style="@style/vendor_row"
+            android:orientation="vertical"
+            tools:background="@color/background">
 
-    </LinearLayout>
+            <com.shortstack.hackertracker.Font.HelveticaTextView
+                android:id="@+id/vendor_title"
+                style="@style/button_map"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:gravity="center_vertical"
+                android:padding="10dp"
+                android:singleLine="true"
+                android:textSize="16dp" />
 
-    <com.shortstack.hackertracker.Font.HelveticaTextView
-        android:id="@+id/vendor_title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        style="@style/button_map"
-        android:textSize="16dp"
-        android:padding="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:singleLine="true" />
-    <TextView android:layout_width="fill_parent"
-              android:layout_height="wrap_content"  android:id="@+id/vendor_website"
-              style="@style/vendor_website"
-              android:linksClickable="true"
-              android:autoLink="all" />
-    <TextView android:layout_width="fill_parent"
-              android:layout_height="wrap_content"  android:id="@+id/vendor_body"
-              style="@style/vendor_body"/>
+            <TextView
+                android:id="@+id/vendor_website"
+                style="@style/vendor_website"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:autoLink="all"
+                android:linksClickable="true" />
 
-</LinearLayout>
+            <TextView
+                android:id="@+id/vendor_body"
+                style="@style/vendor_body"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+    </ScrollView>
+</android.support.v7.widget.CardView>
