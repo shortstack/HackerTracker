@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.R;
 
 import java.util.Timer;
@@ -27,9 +28,24 @@ public class SplashActivity extends AppCompatActivity {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                startHomeActivity();
+                startNextActivity();
             }
         }, SPLASH_DELAY);
+    }
+
+    private void startNextActivity() {
+        boolean seenOnboarding = App.getStorage().seenOnboarding();
+
+        if( seenOnboarding ) {
+            startHomeActivity();
+        } else {
+            startOnboardingActivity();
+        }
+    }
+
+    private void startOnboardingActivity() {
+        startActivity(new Intent(SplashActivity.this, TutorialActivity.class));
+        finish();
     }
 
     private void startHomeActivity() {
