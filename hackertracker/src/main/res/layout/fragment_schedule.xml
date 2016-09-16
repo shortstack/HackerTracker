@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -8,18 +9,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
+        android:clipToPadding="false"
         android:paddingBottom="30dp"
-        android:paddingTop="30dp"
-        android:clipToPadding="false" />
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp" />
 
     <include
+        android:id="@+id/empty"
+        layout="@layout/empty_feed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        layout="@layout/empty_feed"
-        android:layout_gravity="center"
-        android:id="@+id/empty" />
+        android:layout_gravity="center" />
 
-</FrameLayout>
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="24dp"
+        android:src="@drawable/ic_filter_list_white_24dp"
+        app:elevation="4dp"
+        app:pressedTranslationZ="12dp"
+        app:layout_behavior="com.shortstack.hacker.View.ScrollAwareFABBehavior"
+
+        />
+
+</android.support.design.widget.CoordinatorLayout>
 
