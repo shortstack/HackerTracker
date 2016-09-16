@@ -8,7 +8,6 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import com.shortstack.hackertracker.Home.HomeFragment;
 import com.shortstack.hackertracker.R;
@@ -26,8 +25,8 @@ public class TabHomeActivity extends AppCompatActivity {
     public static final int ITEM_HOME = 1;
     public static final int ITEM_SCHEDULE = 2;
 
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
+//    @Bind(R.id.toolbar)
+//    Toolbar toolbar;
     @Bind(R.id.tabs)
     TabLayout tabLayout;
     @Bind(R.id.viewpager)
@@ -38,7 +37,7 @@ public class TabHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_tab);
         ButterKnife.bind(this);
-        setSupportActionBar(toolbar);
+//        setSupportActionBar(toolbar);
         initViewPager();
     }
 
@@ -50,7 +49,7 @@ public class TabHomeActivity extends AppCompatActivity {
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-        viewPager.setCurrentItem(ITEM_HOME);
+        //viewPager.setCurrentItem(ITEM_HOME);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
