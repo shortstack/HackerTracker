@@ -62,4 +62,6 @@ dependencies {
     // Pretty Logger
     compile 'com.orhanobut:logger:1.15'
 
+    // PDF Viewer
+    compile 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
 }
