@@ -28,9 +28,9 @@ import java.util.Date;
 /**
  * Created by Whitney Champion on 3/19/14.
  */
-public class HackerTrackerApplication extends Application {
+public class App extends Application {
 
-    private static HackerTrackerApplication application;
+    private static App application;
     private static Context context;
     public static DatabaseAdapter dbHelper;
     public static DatabaseAdapterVendors vendorDbHelper;
@@ -38,6 +38,7 @@ public class HackerTrackerApplication extends Application {
     private static AlarmManager alarmManager;
     private BroadcastReceiver receiver;
     private PendingIntent pendingIntent;
+    private SharedPreferencesUtil storage;
 
     public void onCreate() {
         super.onCreate();
@@ -51,10 +52,10 @@ public class HackerTrackerApplication extends Application {
         setUpDatabase();
 
         // set up shared preferences
-        SharedPreferencesUtil.getInstance();
+        storage = new SharedPreferencesUtil();
 
         // register alarm broadcast
-        if (SharedPreferencesUtil.allowPushNotifications()) {
+        if (storage.allowPushNotifications()) {
             RegisterAlarmBroadcast();
         }
 
@@ -146,14 +147,25 @@ public class HackerTrackerApplication extends Application {
     }
 
     public static Context getAppContext() {
-        return HackerTrackerApplication.context;
+        return App.context;
     }
 
-    public static HackerTrackerApplication getApplication() {
+    public static App getApplication() {
         if (application == null) {
             throw new IllegalStateException("Application not initialized");
         }
         return application;
+    }
+
+    private SharedPreferencesUtil getPrivateStorage() {
+        if( storage == null ) {
+            storage = new SharedPreferencesUtil();
+        }
+        return storage;
+    }
+
+    public static SharedPreferencesUtil getStorage() {
+        return getApplication().getPrivateStorage();
     }
 
     public Date getCurrentDate() {
