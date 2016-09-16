@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.Typeface;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
-import android.text.Spannable;
 import android.text.util.Linkify;
 import android.view.LayoutInflater;
 import android.view.View;

@@ -49,7 +49,6 @@ public class VendorAdapter extends ArrayAdapter<Vendor> {
             holder.title = (TextView) row.findViewById(R.id.vendor_title);
             holder.website = (TextView) row.findViewById(R.id.vendor_website);
             holder.body = (TextView) row.findViewById(R.id.vendor_body);
-            holder.logo = (ImageView) row.findViewById(R.id.vendor_logo);
 
             holder.vendorLayout = (LinearLayout) row.findViewById(R.id.vendorLayout);
             row.setTag(holder);

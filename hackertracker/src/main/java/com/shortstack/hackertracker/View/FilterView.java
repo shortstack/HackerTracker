@@ -5,9 +5,9 @@ import android.util.AttributeSet;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Model.Filter;
 import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 
 import java.util.ArrayList;
 
@@ -72,7 +72,7 @@ public class FilterView extends LinearLayout {
 
         Filter filter = new Filter(strings);
 
-        SharedPreferencesUtil.saveFilter( filter );
+        App.getStorage().saveFilter( filter );
 
         return filter;
     }

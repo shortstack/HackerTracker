@@ -48,7 +48,7 @@ public class HomeFragment extends Fragment {
         list.setAdapter(adapter);
 
         adapter.add(new RendererContent<Void>(null, TYPE_HEADER));
-        adapter.add(getString(R.string.updates));
+        //adapter.add(getString(R.string.updates));
 
         String[] myItems = getResources().getStringArray(R.array.updates);
 
