@@ -135,6 +135,7 @@
         <item name="android:padding">5dp</item>
     </style>
 
+
     <style name="button_map_selected">
         <item name="android:textColor">@color/white</item>
         <item name="android:textAllCaps">true</item>
@@ -369,8 +370,8 @@
         <item name="android:textSize">16dp</item>
     </style>
 
-    <style name="button_home" parent="button_map">
-        <item name="android:layout_width">wrap_content</item>
+    <style name="button_home">
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_weight">1</item>
         <item name="android:layout_margin">5dp</item>

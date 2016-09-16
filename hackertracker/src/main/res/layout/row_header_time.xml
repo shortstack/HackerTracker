@@ -13,7 +13,7 @@
         android:paddingBottom="10dp"
         android:paddingTop="30dp"
         android:textColor="@android:color/white"
-        android:textSize="24dp"
+        android:textSize="@dimen/abc_text_size_headline_material"
         tools:background="@color/background"
         tools:text="10:00 AM"
         android:id="@+id/header" />
@@ -26,7 +26,7 @@
         android:gravity="center"
         android:paddingBottom="10dp"
         android:textColor="@android:color/white"
-        android:textSize="18dp"
+        android:textSize="@dimen/abc_text_size_subhead_material"
         android:id="@+id/subheader" />
 
 </LinearLayout>
