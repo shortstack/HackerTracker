@@ -3,7 +3,7 @@ package com.shortstack.hackertracker.Utils;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.shortstack.hackertracker.Application.HackerTrackerApplication;
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Model.Filter;
 
 import java.util.HashSet;
@@ -13,71 +13,78 @@ import java.util.HashSet;
  */
 public class SharedPreferencesUtil {
 
-    private static SharedPreferences sharedPreferences;
-    private static SharedPreferencesUtil instance = null;
+    public enum Key {
 
-    protected SharedPreferencesUtil() {
-        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(HackerTrackerApplication.getAppContext());
-    }
+        USER_FILTER("user_filter"),
+        USER_ALLOW_PUSH("user_allow_push_notifications"),
+        USER_MILITARY_TIME("user_use_military_time"),
+        USER_SEEN_ONBOARDING("user_seen_onboarding"),
 
-    public static SharedPreferencesUtil getInstance() {
+        APP_LAST_UPDATED("app_last_updated"),
+        ;
 
-        if(instance == null) {
-            instance = new SharedPreferencesUtil();
+
+        private final String name;
+
+        Key(String name) {
+            this.name = name;
         }
 
-        return instance;
+        @Override
+        public String toString() {
+            return name;
+        }
     }
 
-    public static void clearSharedPrefs() {
-        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
-        sharedPreferencesEditor.clear();
-        sharedPreferencesEditor.commit();
+    private SharedPreferences mPreferences;
+
+    public SharedPreferencesUtil() {
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(App.getAppContext());
     }
 
-    public static void saveLastUpdated(String date) {
-        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
-        sharedPreferencesEditor.putString("lastUpdated", date);
-        sharedPreferencesEditor.commit();
+    private SharedPreferences.Editor getEditor() {
+        return mPreferences.edit();
     }
 
-    public static String getLastUpdated() {
-        return sharedPreferences.getString("lastUpdated",null);
+    public void saveLastUpdated(String date) {
+        SharedPreferences.Editor editor = getEditor();
+        editor.putString(Key.APP_LAST_UPDATED.toString(), date);
+        editor.apply();
     }
 
-    public static void showSuggestions(boolean show) {
-        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
-        sharedPreferencesEditor.putBoolean("showSuggestions",show);
-        sharedPreferencesEditor.commit();
+    public String getLastUpdated() {
+        return mPreferences.getString(Key.APP_LAST_UPDATED.toString(), null);
     }
 
-    public static boolean showSuggestions() {
-        return sharedPreferences.getBoolean("showSuggestions",false);
+    public void allowPushNotifications(boolean show) {
+        SharedPreferences.Editor editor = getEditor();
+        editor.putBoolean(Key.USER_ALLOW_PUSH.toString(), show);
+        editor.apply();
     }
 
-    public static void allowPushNotifications(boolean show) {
-        SharedPreferences.Editor sharedPreferencesEditor = sharedPreferences.edit();
-        sharedPreferencesEditor.putBoolean("allowPushNotifications",show);
-        sharedPreferencesEditor.commit();
+    public boolean allowPushNotifications() {
+        return mPreferences.getBoolean(Key.USER_ALLOW_PUSH.toString(), true);
     }
 
-    public static boolean allowPushNotifications() {
-        return sharedPreferences.getBoolean("allowPushNotifications",true);
+    public boolean shouldShowMilitaryTime() {
+        return mPreferences.getBoolean(Key.USER_MILITARY_TIME.toString(), false);
     }
 
-    public static boolean shouldShowMilitaryTime() {
-        return sharedPreferences.getBoolean("militaryTime", false );
+    public void saveFilter(Filter filter) {
+        SharedPreferences.Editor editor = getEditor();
+        editor.putStringSet(Key.USER_FILTER.toString(), filter.getTypesSet());
+        editor.apply();
     }
 
-    public static void saveFilter(Filter filter) {
-        SharedPreferences.Editor edit = sharedPreferences.edit();
-
-        edit.putStringSet("filter_types", filter.getTypesSet());
-
-        edit.apply();
+    public Filter getFilter() {
+        return new Filter(mPreferences.getStringSet(Key.USER_FILTER.toString(), new HashSet<String>()));
     }
 
-    public static Filter getFilter() {
-        return new Filter(sharedPreferences.getStringSet("filter_types", new HashSet<String>()));
+    public boolean seenOnboarding() {
+        return mPreferences.getBoolean(Key.USER_SEEN_ONBOARDING.toString(), false);
+    }
+
+    public void markOnboardingSeen() {
+        getEditor().putBoolean(Key.USER_SEEN_ONBOARDING.toString(), true).apply();
     }
 }
