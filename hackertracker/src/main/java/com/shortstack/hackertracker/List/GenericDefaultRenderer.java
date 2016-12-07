@@ -1,6 +1,11 @@
 package com.shortstack.hackertracker.List;
 
+import android.app.Activity;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
+import android.os.Build;
+import android.support.v4.app.ActivityOptionsCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,15 +14,18 @@ import android.widget.TextView;
 import com.pedrogomez.renderers.Renderer;
 import com.shortstack.hackertracker.Activity.DetailsActivity;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
+
+import org.parceler.Parcels;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class GenericDefaultRenderer extends Renderer<Default> implements View.OnClickListener {
+public class GenericDefaultRenderer extends Renderer<Default> implements View.OnClickListener, View.OnLongClickListener {
 
     @Bind(R.id.title)
     TextView title;
@@ -62,6 +70,7 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
     @Override
     protected void hookListeners(View rootView) {
         rootView.setOnClickListener(this);
+        rootView.setOnLongClickListener(this);
     }
 
     @Override
@@ -87,11 +96,11 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
     }
 
     private boolean isOnSchedule() {
-        return getContent().isStarred();
+        return getContent().isBookmarked();
     }
 
     public void updateBookmark() {
-        bookmark.setVisibility( isOnSchedule() ? View.VISIBLE : View.GONE );
+        bookmark.setVisibility(isOnSchedule() ? View.VISIBLE : View.GONE);
     }
 
     private void displayText() {
@@ -110,21 +119,36 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
 
     @Override
     public void onClick(View view) {
-//        Activity context = (Activity) getContext();
-//        Intent intent = new Intent(context, DetailsActivity.class);
-//        intent.putExtra("item", Parcels.wrap(getContent()));
-//
-//        ActivityOptionsCompat options = ActivityOptionsCompat.
-//                makeSceneTransitionAnimation(context, container, "category");
-//
-//        context.startActivity(intent, options.toBundle());
-//
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            context.getWindow().setExitTransition(null);
-//        }
+        Activity context = (Activity) getContext();
+        Intent intent = new Intent(context, DetailsActivity.class);
+        intent.putExtra("item", Parcels.wrap(getContent()));
+
+        ActivityOptionsCompat options = ActivityOptionsCompat.
+                makeSceneTransitionAnimation(context, container, "category");
+
+        context.startActivity(intent, options.toBundle());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            context.getWindow().setExitTransition(null);
+        }
 
 
-        MaterialAlert.create(getContext()).setView(new DetailsActivity(getContext(), getContent(), this)).show();
+        //MaterialAlert.create(getContext()).setView(new DetailsView(getContext(), getContent(), this)).show();
 
+    }
+
+    @Override
+    public boolean onLongClick(View view) {
+        MaterialAlert.create(getContext()).setTitle(getContent().getTitle()).setMessage("Hello.").setPositiveButton(R.string.search, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                if( getContent().isBookmarked() ) {
+                    App.getApplication().getDatabaseController().unbookmark(getContent());
+                } else {
+                    App.getApplication().getDatabaseController().bookmark(getContent());
+                }
+            }
+        }).show();
+        return true;
     }
 }
