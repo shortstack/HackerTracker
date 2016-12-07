@@ -30,7 +30,7 @@
         android:src="@drawable/ic_filter_list_white_24dp"
         app:elevation="4dp"
         app:pressedTranslationZ="12dp"
-        app:layout_behavior="com.shortstack.hacker.View.ScrollAwareFABBehavior"
+        app:layout_behavior="com.shortstack.hackertracker.View.ScrollAwareFABBehavior"
 
         />
 
