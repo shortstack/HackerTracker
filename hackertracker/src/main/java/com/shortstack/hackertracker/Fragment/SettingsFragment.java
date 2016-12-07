@@ -7,7 +7,6 @@ import android.support.v7.preference.PreferenceFragmentCompat;
 
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Utils.DialogUtil;
 
 /**
  * Created by Whitney Champion on 6/3/16.
@@ -31,7 +30,7 @@ public class SettingsFragment extends PreferenceFragmentCompat
             public boolean onPreferenceClick(Preference preference) {
 
                 // show clear dialog
-                DialogUtil.clearScheduleDialog(getContext()).show();
+                //DialogUtil.clearScheduleDialog(getContext()).show();
 
                 return true;
             }

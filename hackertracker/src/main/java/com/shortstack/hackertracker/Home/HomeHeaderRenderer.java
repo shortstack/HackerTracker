@@ -86,4 +86,10 @@ public class HomeHeaderRenderer extends Renderer<Void> {
     public void onRadioClick() {
         showTextAlert(R.string.radio_title, R.string.radio_text);
     }
+
+    @OnClick(R.id.settings)
+    public void onSettingsClick() {
+        //Intent intent = new Intent(getContext(), SettingsActivity.class);
+        //getContext().startActivity(intent);
+    }
 }
