@@ -8,15 +8,19 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Application.App;
+import com.shortstack.hackertracker.Event.FavoriteEvent;
 import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.Filter;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.FilterView;
+import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -27,30 +31,34 @@ import butterknife.OnClick;
 
 public class GenericRowFragment extends HackerTrackerFragment {
 
-    protected static final String ARG_TYPE = "type";
-
     @Bind(R.id.list)
-    public
-    RecyclerView list;
+    public RecyclerView list;
 
-    private String[] mTypes;
     private GenericRowAdapter adapter;
 
+    @Bind(R.id.empty)
+    View empty;
 
-    public static GenericRowFragment newInstance(String... type) {
-        GenericRowFragment frag = new GenericRowFragment();
-        Bundle args = new Bundle();
-        args.putStringArray(ARG_TYPE, type);
-        frag.setArguments(args);
-
-        return (frag);
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Bundle args = getArguments();
-        if (args != null) mTypes = args.getStringArray(ARG_TYPE);
+        App.registerBusListener(this);
+        Logger.d("Registered.");
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        App.unregisterBusListener(this);
+        Logger.d("Destroyed.");
+    }
+
+    @Subscribe
+    public void handleFavoriteEvent(FavoriteEvent event ) {
+        Logger.d("Caught favorite event. " + event.getItem());
+
+        adapter.notifyItemUpdated( event.getItem() );
     }
 
 
@@ -82,8 +90,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
         adapter.addAll(objects);
         adapter.notifyDataSetChanged();
 
-
-        scrollToCurrentTime();
+        //scrollToCurrentTime();
     }
 
     private void scrollToCurrentTime() {
@@ -115,6 +122,12 @@ public class GenericRowFragment extends HackerTrackerFragment {
     }
 
     protected List<Default> getEvents( Filter filter ) {
+        if( filter.getTypesSet().size() == 0 ) {
+            empty.setVisibility(View.VISIBLE);
+            return Collections.emptyList();
+        }
+
+        empty.setVisibility(View.GONE);
         List<Default> events;
         events = getItemByDate(filter.getTypesArray());
         return events;
@@ -150,7 +163,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
     }
 
     protected int getContentView() {
-        return R.layout.fragment_list;
+        return R.layout.fragment_schedule;
     }
 
     @OnClick(R.id.filter)
