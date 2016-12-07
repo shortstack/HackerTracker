@@ -4,14 +4,13 @@ import android.app.Notification;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
@@ -23,7 +22,6 @@ import android.widget.Toast;
 import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Application.App;
-import com.shortstack.hackertracker.Fragment.DescriptionDetailsFragment;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
 
@@ -34,6 +32,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class DetailsActivity extends AppCompatActivity {
 
@@ -68,7 +67,19 @@ public class DetailsActivity extends AppCompatActivity {
 
 
 
+    // Description
 
+    @Bind(R.id.description)
+    TextView description;
+
+    @Bind(R.id.empty)
+    View empty;
+
+    @Bind(R.id.link_container)
+    View linkContainer;
+
+    @Bind(R.id.link)
+    TextView link;
 
 
 
@@ -76,10 +87,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
-    @Bind(R.id.tabs)
-    TabLayout tabLayout;
-    @Bind(R.id.viewpager)
-    ViewPager viewPager;
+
     private Default mItem;
 
     @Override
@@ -116,7 +124,7 @@ public class DetailsActivity extends AppCompatActivity {
             }
         });
 
-        initViewPager();
+        updateDescription();
 
         render();
     }
@@ -130,15 +138,31 @@ public class DetailsActivity extends AppCompatActivity {
         return true;
     }
 
-    private void initViewPager() {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        //adapter.addFragment(MainDetailsFragment.newInstance(mItem), "DETAILS");
-        adapter.addFragment(DescriptionDetailsFragment.newInstance(mItem), "DESCRIPTION");
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
+    private void updateDescription() {
+        boolean hasDescription = mItem.hasDescription();
+
+        if (hasDescription)
+            description.setText(mItem.getDescription());
+        empty.setVisibility(hasDescription ? View.GONE : View.VISIBLE);
+
+        boolean hasUrl = mItem.hasUrl();
+        if (hasUrl) {
+            link.setText(mItem.getPrettyUrl());
+        }
+        linkContainer.setVisibility(hasUrl ? View.VISIBLE : View.GONE);
     }
 
-
+    @OnClick(R.id.link_container)
+    public void onLinkClick() {
+        MaterialAlert.create(this).setTitle(R.string.link_warning).setMessage(String.format(getString(R.string.link_message), mItem.getLink().toLowerCase())).setPositiveButton(R.string.open_link, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                final Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(mItem.getLink()));
+                startActivity(intent);
+            }
+        })
+                .setBasicNegativeButton().show();
+    }
 
 
 
@@ -180,7 +204,7 @@ public class DetailsActivity extends AppCompatActivity {
 
     private void displayText() {
         title.setText(getContent().getDisplayTitle());
-        time.setText(getContent().getDateStamp() + " - " + getContent().getTimeStamp(this));
+        time.setText(getContent().getFullTimeStamp(this));
         location.setText(getContent().getLocation());
     }
 
