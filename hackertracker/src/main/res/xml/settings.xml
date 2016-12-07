@@ -7,7 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:defaultValue="True"
-        android:key="allowAnalytics"
+        android:key="user_analytics"
         android:summary="Allow us track anonymous usage and report crashes."
         android:title="Analytics" />
 
@@ -15,7 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:defaultValue="True"
-        android:key="allowNotifications"
+        android:key="user_allow_push_notifications"
         android:summary="Allow push notifications for upcoming bookmarks."
         android:title="Push Notifications" />
 
@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:defaultValue="False"
-        android:key="expiredEvents"
+        android:key="user_show_expired_events"
         android:summary="Show events that have already happened."
         android:title="Expired Events" />
 
@@ -31,7 +31,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:defaultValue="False"
-        android:key="militaryTime"
+        android:key="user_use_military_time"
         android:summary="Show 14:00 instead of 2:00 PM"
         android:title="24 hour time" />
 

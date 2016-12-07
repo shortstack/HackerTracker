@@ -18,19 +18,19 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         switch (key) {
-            case "allowAnalytics":
+            case "user_analytics":
                 //
                 break;
 
-            case "allowNotifications":
+            case "user_allow_push_notifications":
                 //
                 break;
 
-            case "militaryTime":
+            case "user_use_military_time":
                 App.getApplication().postBusEvent(new UpdateListContentsEvent());
                 break;
 
-            case "expiredEvents":
+            case "user_show_expired_events":
                 App.getApplication().postBusEvent(new UpdateListContentsEvent());
                 break;
         }

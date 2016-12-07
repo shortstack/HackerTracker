@@ -8,9 +8,6 @@ import com.shortstack.hackertracker.Model.Filter;
 
 import java.util.HashSet;
 
-/**
- * Created by Whitney Champion on 7/11/14.
- */
 public class SharedPreferencesUtil {
 
     public enum Key {
@@ -18,8 +15,9 @@ public class SharedPreferencesUtil {
         USER_FILTER("user_filter"),
         USER_ALLOW_PUSH("user_allow_push_notifications"),
         USER_MILITARY_TIME("user_use_military_time"),
-        USER_EXPIRED_EVENTS("expiredEvents"),
+        USER_EXPIRED_EVENTS("user_show_expired_events"),
         USER_SEEN_ONBOARDING("user_seen_onboarding"),
+        USER_ANALYTICS("user_analytics"),
 
         APP_LAST_UPDATED("app_last_updated"),
         ;
