@@ -62,12 +62,16 @@ public class HackerTrackerFragment extends Fragment {
         ArrayList<Default> result = new ArrayList<>();
         SQLiteDatabase db = App.getApplication().getDatabaseController().getSchedule();
 
+        boolean expiredEvents = App.getStorage().showExpiredEvents();
+
         Cursor cursor = db.rawQuery(getQueryString(type), type );
 
         try{
             if (cursor.moveToFirst()){
                 do{
-                    result.add(getDefaultFromCursor(cursor));
+                    Default obj = getDefaultFromCursor(cursor);
+                    if( expiredEvents || !obj.hasExpired())
+                        result.add(obj);
                 }while(cursor.moveToNext());
             }
         }finally{

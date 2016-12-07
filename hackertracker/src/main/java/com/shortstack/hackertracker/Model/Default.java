@@ -341,6 +341,16 @@ public class Default implements Serializable {
         return date;
     }
 
+    public boolean hasExpired() {
+        if (BuildConfig.DEBUG) {
+            Date date = new Date();
+            date.setTime(Constants.DEBUG_FORCE_TIME_DATE);
+            return date.after(getEndDateObject());
+        }
+
+        return new Date().after(getEndDateObject());
+    }
+
     @NonNull
     @SuppressLint("SimpleDateFormat")
     private DateFormat getDateFormat() {

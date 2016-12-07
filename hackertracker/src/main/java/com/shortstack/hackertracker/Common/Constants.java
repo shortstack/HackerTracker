@@ -5,6 +5,8 @@ package com.shortstack.hackertracker.Common;
  */
 public interface Constants {
 
+    long DEBUG_FORCE_TIME_DATE = 1470418500000L;
+
     int BOOKMARKED = 1;
     int UNBOOKMARKED = 0;
 

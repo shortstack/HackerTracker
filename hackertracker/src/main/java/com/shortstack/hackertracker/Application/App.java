@@ -175,7 +175,7 @@ public class App extends Application {
     public Date getCurrentDate() {
         if (BuildConfig.DEBUG) {
             Date date = new Date();
-            date.setTime(1470418200000L);
+            date.setTime(Constants.DEBUG_FORCE_TIME_DATE);
             return date;
         }
         return new Date();
