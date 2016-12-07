@@ -1,6 +1,8 @@
 package com.shortstack.hackertracker.Activity;
 
 import android.app.Notification;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
+import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Fragment.DescriptionDetailsFragment;
 import com.shortstack.hackertracker.Model.Default;
@@ -99,8 +102,10 @@ public class DetailsActivity extends AppCompatActivity {
 
         setTitle("");
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if( getSupportActionBar() != null ) {
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }
 
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -190,13 +195,8 @@ public class DetailsActivity extends AppCompatActivity {
         switch (item.getItemId()) {
             default:
                 return false;
-
-            case R.id.information:
-
-                return true;
-
             case R.id.share:
-
+                showShareAlert();
                 return true;
 
             case R.id.bookmark:
@@ -205,13 +205,44 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
+    private void showShareAlert() {
+        MaterialAlert.create(this).setTitle(R.string.action_share).setMessage(R.string.share_message).setNegativeButton(R.string.link_in_app, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // TODO: Generate an in-app link.
+
+                String text = "This is my text to send.";
+
+                StartShareActivity(text);
+            }
+        }).setPositiveButton(R.string.link_plain_text, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // TODO: Generate plain text description.
+                // Include:
+                // Title, Description, Time, Location, Category Type
+                String text = "This is my text to send.";
+
+                StartShareActivity(text);
+            }
+        }).show();
+    }
+
+    private void StartShareActivity(String text) {
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT, text);
+        sendIntent.setType("text/plain");
+        startActivity(sendIntent);
+    }
+
 
     public void updateSchedule() {
 
 
         // if not starred, star it
         if (mItem.isUnbookmarked()) {
-
+            App.getApplication().getDatabaseController().bookmark(mItem);
 
 
             long notifyTime = mItem.getNotificationTimeInMillis();
@@ -222,7 +253,7 @@ public class DetailsActivity extends AppCompatActivity {
 
             Toast.makeText(this, R.string.schedule_added, Toast.LENGTH_SHORT).show();
         } else {
-
+            App.getApplication().getDatabaseController().unbookmark(mItem);
 
 
             // remove alarm

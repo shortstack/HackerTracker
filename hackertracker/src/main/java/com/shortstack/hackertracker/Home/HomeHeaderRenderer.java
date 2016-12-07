@@ -7,11 +7,12 @@ import android.view.ViewGroup;
 
 import com.pedrogomez.renderers.Renderer;
 import com.shortstack.hackertracker.Activity.MapsActivity;
+import com.shortstack.hackertracker.Activity.SettingsActivity;
+import com.shortstack.hackertracker.Activity.VendorsActivity;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Fragment.FAQActivity;
 import com.shortstack.hackertracker.Fragment.InformationFragment;
 import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Activity.VendorsActivity;
 
 import java.util.List;
 
@@ -89,7 +90,11 @@ public class HomeHeaderRenderer extends Renderer<Void> {
 
     @OnClick(R.id.settings)
     public void onSettingsClick() {
-        //Intent intent = new Intent(getContext(), SettingsActivity.class);
-        //getContext().startActivity(intent);
+
+//        SettingsFragment fragment = new SettingsFragment();
+//        ((AppCompatActivity)getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
+
+        Intent intent = new Intent(getContext(), SettingsActivity.class);
+        getContext().startActivity(intent);
     }
 }

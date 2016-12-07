@@ -1,6 +1,8 @@
 package com.shortstack.hackertracker.Fragment;
 
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -76,7 +78,8 @@ public class DescriptionDetailsFragment extends HackerTrackerFragment {
         MaterialAlert.create(getContext()).setTitle(R.string.link_warning).setMessage(String.format(getString(R.string.link_message), mItem.getLink().toLowerCase())).setPositiveButton(R.string.open_link, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-
+                final Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(mItem.getLink()));
+                startActivity(intent);
             }
         })
                 .setBasicNegativeButton().show();

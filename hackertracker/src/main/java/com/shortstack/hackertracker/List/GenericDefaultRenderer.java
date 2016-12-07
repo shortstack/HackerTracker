@@ -139,16 +139,38 @@ public class GenericDefaultRenderer extends Renderer<Default> implements View.On
 
     @Override
     public boolean onLongClick(View view) {
-        MaterialAlert.create(getContext()).setTitle(getContent().getTitle()).setMessage("Hello.").setPositiveButton(R.string.search, new DialogInterface.OnClickListener() {
+
+
+        MaterialAlert alert = MaterialAlert.create(getContext()).setTitle(getContent().getTitle());
+
+        alert.setMessage(getContent().getDetailsDescription(getContext()));
+
+        alert.setNegativeButton(R.string.action_share, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                if( getContent().isBookmarked() ) {
+                // TODO: Handle share.
+            }
+        });
+
+
+        if( getContent().isBookmarked() ) {
+            alert.setPositiveButton(R.string.unbookmark, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
                     App.getApplication().getDatabaseController().unbookmark(getContent());
-                } else {
+                }
+            });
+        } else {
+            alert.setPositiveButton(R.string.bookmark, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
                     App.getApplication().getDatabaseController().bookmark(getContent());
                 }
-            }
-        }).show();
+            });
+        }
+
+
+        alert.show();
         return true;
     }
 }

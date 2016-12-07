@@ -66,7 +66,8 @@
                 android:textColor="@color/white"
                 android:textSize="17sp"
                 tools:text="My event is so fresh!\nSofresh!"
-                android:layout_margin="10dp" />
+                android:layout_margin="10dp"
+                android:autoLink="all"/>
         </ScrollView>
 
 

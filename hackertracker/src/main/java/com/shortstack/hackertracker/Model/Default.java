@@ -6,6 +6,7 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.shortstack.hackertracker.Application.App;
+import com.shortstack.hackertracker.BuildConfig;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.R;
 
@@ -365,7 +366,7 @@ public class Default implements Serializable {
     }
 
     private Calendar getCalendar() {
-        if( TextUtils.isEmpty(getBegin()) || TextUtils.isEmpty(getDate()))
+        if (TextUtils.isEmpty(getBegin()) || TextUtils.isEmpty(getDate()))
             return null;
 
         Calendar calendar = Calendar.getInstance();
@@ -385,7 +386,7 @@ public class Default implements Serializable {
 
     public long getNotificationTimeInMillis() {
         Calendar calendar = getCalendar();
-        if( calendar == null )
+        if (calendar == null)
             return 0;
         return calendar.getTimeInMillis() - 1200000;
     }
@@ -409,14 +410,22 @@ public class Default implements Serializable {
     public String getPrettyUrl() {
         String url = getLink().toLowerCase();
 
-        int index = url.indexOf("www.");
+        int index;
+
+
+        if (url.startsWith("http://") || url.startsWith("https://")) {
+            index = url.indexOf("//");
+            url = url.substring(index + 2);
+        }
+
+        index = url.indexOf("www.");
         if (index > 0)
             url = url.substring(index);
 
         index = url.indexOf("/");
         if (index > 1) {
 
-            Pattern p = Pattern.compile("[\\./]");
+            Pattern p = Pattern.compile("[\\./?]");
             Matcher m = p.matcher(url.substring(index + 1));
 
             if (m.find()) {
@@ -426,5 +435,16 @@ public class Default implements Serializable {
 
 
         return url;
+    }
+
+    public String getDetailsDescription(Context context) {
+        String result = "";
+
+        result = result.concat(getFullTimeStamp(context) + "\n");
+        result = result.concat(getLocation() + "\n");
+        result = result.concat(getType());
+
+
+        return result;
     }
 }

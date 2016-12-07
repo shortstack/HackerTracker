@@ -263,6 +263,11 @@
     <string name="link_message">Warning: external links can be dangerous. Are you sure you wish to open the following link?\n\n%1$s</string>
     <string name="open_link">Open Link</string>
     <string name="tut_hacker_jep"><![CDATA[Check out Hacker Jeopardy, it\'s definitely worth it.\n\nJust <font>don\'t fuck it up.</font>]]></string>
+    <string name="share_message">Would you like to share a plain text description or an in-app link?</string>
+    <string name="link_in_app">In-App Link</string>
+    <string name="link_plain_text">Plain Text</string>
+    <string name="unbookmark">Unbookmark</string>
+    <string name="bookmark">Bookmark</string>
 
 
     <string-array name="updates">
