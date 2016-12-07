@@ -12,6 +12,14 @@
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference
         </item>
         <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
+
+
+
+    </style>
+
+    <style name="PreferenceScreen" parent="MyMaterialTheme.Base">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white_alpha</item>
     </style>
 
     <style name="MyMaterialTheme" parent="MyMaterialTheme.Base"></style>
