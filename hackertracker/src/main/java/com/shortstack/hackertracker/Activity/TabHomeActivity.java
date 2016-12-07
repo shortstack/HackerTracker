@@ -10,8 +10,8 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
 import com.shortstack.hackertracker.Home.HomeFragment;
+import com.shortstack.hackertracker.List.GenericRowFragment;
 import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Schedule.GenericScheduleFragment;
 
 import java.util.ArrayList;
 import java.util.List;
