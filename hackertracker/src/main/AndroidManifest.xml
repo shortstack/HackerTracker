@@ -51,6 +51,9 @@
 
         <receiver android:name="com.shortstack.hackertracker.Utils.AlarmReceiver"></receiver>
 
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="3439e34f4fcc9d7eabf24f7ce529cd7415acc49d" />
     </application>
 
 </manifest>

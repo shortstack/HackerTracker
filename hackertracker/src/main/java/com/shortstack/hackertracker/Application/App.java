@@ -13,6 +13,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 
+import com.crashlytics.android.Crashlytics;
 import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.BuildConfig;
@@ -27,6 +28,8 @@ import com.squareup.otto.ThreadEnforcer;
 
 import java.io.IOException;
 import java.util.Date;
+
+import io.fabric.sdk.android.Fabric;
 
 /**
  * Created by Whitney Champion on 3/19/14.
@@ -50,6 +53,9 @@ public class App extends Application {
 
     public void onCreate() {
         super.onCreate();
+        
+        if( !BuildConfig.DEBUG )
+            Fabric.with(this, new Crashlytics());
 
         Logger.init().methodCount(1).hideThreadInfo();
 
