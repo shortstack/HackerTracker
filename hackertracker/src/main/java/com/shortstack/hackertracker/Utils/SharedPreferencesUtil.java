@@ -18,6 +18,7 @@ public class SharedPreferencesUtil {
         USER_FILTER("user_filter"),
         USER_ALLOW_PUSH("user_allow_push_notifications"),
         USER_MILITARY_TIME("user_use_military_time"),
+        USER_EXPIRED_EVENTS("expiredEvents"),
         USER_SEEN_ONBOARDING("user_seen_onboarding"),
 
         APP_LAST_UPDATED("app_last_updated"),
@@ -68,6 +69,10 @@ public class SharedPreferencesUtil {
 
     public boolean shouldShowMilitaryTime() {
         return mPreferences.getBoolean(Key.USER_MILITARY_TIME.toString(), false);
+    }
+
+    public boolean showExpiredEvents() {
+        return mPreferences.getBoolean(Key.USER_EXPIRED_EVENTS.toString(), false);
     }
 
     public void saveFilter(Filter filter) {

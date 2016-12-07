@@ -34,6 +34,11 @@
 
         <activity android:name=".Activity.DetailsActivity" />
 
+        <activity android:name=".Activity.SettingsActivity"
+            android:theme="@style/PreferenceScreen">
+
+        </activity>
+
         <activity android:name="com.shortstack.hackertracker.Fragment.InformationFragment" />
 
         <activity android:name="com.shortstack.hackertracker.Activity.MapsActivity" />

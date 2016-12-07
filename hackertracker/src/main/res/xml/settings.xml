@@ -1,42 +1,38 @@
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:key="preferenceTheme"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:key="preferenceTheme">
 
     <CheckBoxPreference
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:defaultValue="True"
         android:key="allowAnalytics"
-        android:title="Analytics"
         android:summary="Allow us track anonymous usage and report crashes."
-        android:defaultValue="True"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        android:title="Analytics" />
 
     <CheckBoxPreference
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:defaultValue="True"
         android:key="allowNotifications"
-        android:title="Push Notifications"
-        android:summary="Allow push notifications for upcoming starred events"
-        android:defaultValue="True"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:summary="Allow push notifications for upcoming bookmarks."
+        android:title="Push Notifications" />
 
     <CheckBoxPreference
-        android:key="militaryTime"
-        android:title="24 hour time"
-        android:summary="Show 14:00 instead of 2:00 PM"
-        android:defaultValue="False"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-
-
-    <Preference
-        android:key="clearSchedule"
-        android:title="Clear My Schedule"
-        android:summary="Clear all events from schedule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-    />
+        android:defaultValue="False"
+        android:key="expiredEvents"
+        android:summary="Show events that have already happened."
+        android:title="Expired Events" />
+
+    <CheckBoxPreference
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:defaultValue="False"
+        android:key="militaryTime"
+        android:summary="Show 14:00 instead of 2:00 PM"
+        android:title="24 hour time" />
 
 </PreferenceScreen>
