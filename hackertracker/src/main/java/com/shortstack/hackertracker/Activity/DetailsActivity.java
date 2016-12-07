@@ -120,7 +120,7 @@ public class DetailsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //What to do on back clicked
-                finish();
+                onBackPressed();
             }
         });
 
