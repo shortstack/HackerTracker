@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.Model;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
+import android.text.TextUtils;
 
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Common.Constants;
@@ -14,7 +15,10 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created with IntelliJ IDEA.
@@ -26,6 +30,11 @@ import java.util.Date;
 
 @Parcel
 public class Default implements Serializable {
+
+    private static final int EMPTY_CATEGORY = 0;
+
+    public static final int BOOKMARKED = 1;
+    public static final int UNBOOKMARKED = 0;
 
     private int id;
     private String type;
@@ -89,7 +98,7 @@ public class Default implements Serializable {
     }
 
     public String getTitle() {
-        if( title.endsWith("\n") )
+        if (!TextUtils.isEmpty(title) && title.endsWith("\n"))
             return title.substring(0, title.indexOf("\n"));
         return title;
     }
@@ -131,23 +140,29 @@ public class Default implements Serializable {
     }
 
     public int getCategoryColorPosition() {
-        int count = 0;
-        switch (getType()){
-            case Constants.TYPE_EVENT:
-                count++;
-            case Constants.TYPE_CONTEST:
-                count++;
-            case Constants.TYPE_SPEAKER:
-                count++;
-            case Constants.TYPE_KIDS:
-                count++;
-            case Constants.TYPE_PARTY:
-                count++;
-            case Constants.TYPE_SKYTALKS:
+        int count = -1;
+
+        if (TextUtils.isEmpty(getType()))
+            return EMPTY_CATEGORY;
+
+        switch (getType()) {
+            case Constants.TYPE_WORKSHOP:
                 count++;
             case Constants.TYPE_DEMOLAB:
                 count++;
-            case Constants.TYPE_WORKSHOP:
+            case Constants.TYPE_PARTY:
+                count++;
+            case Constants.TYPE_CONTEST:
+                count++;
+            case Constants.TYPE_KIDS:
+                count++;
+            case Constants.TYPE_VILLAGE:
+                count++;
+            case Constants.TYPE_EVENT:
+                count++;
+            case Constants.TYPE_SKYTALKS:
+                count++;
+            case Constants.TYPE_SPEAKER:
                 count++;
         }
         return count;
@@ -220,24 +235,36 @@ public class Default implements Serializable {
     }
 
     public boolean isTool() {
-        return getTool() == 1;
+        return getTool() != null && getTool() == 1;
     }
 
     public boolean isExploit() {
-        return getExploit() == 1;
+        return getExploit() != null && getExploit() == 1;
     }
 
     public boolean isDemo() {
-        return getDemo() == 1;
+        return getDemo() != null && getDemo() == 1;
     }
 
-    public boolean isStarred() {
-        return getStarred() == 1;
+    public boolean isBookmarked() {
+        return getStarred() != null && getStarred() == 1;
+    }
+
+    public boolean isUnbookmarked() {
+        return !isBookmarked();
+    }
+
+    public void setBookmarked() {
+        setStarred(BOOKMARKED);
+    }
+
+    public void setUnbookmarked() {
+        setStarred(UNBOOKMARKED);
     }
 
     public String getTimeStamp(Context context) {
         // No start time, return TBA.
-        if (getBegin().equals(""))
+        if (TextUtils.isEmpty(getBegin()))
             return context.getResources().getString(R.string.tba);
 
         String time = "";
@@ -327,15 +354,67 @@ public class Default implements Serializable {
         return String.format(context.getString(R.string.timestamp_full), getDateStamp(), getTimeStamp(context, begin), getTimeStamp(context, end));
     }
 
+    private Calendar getCalendar() {
+        if( TextUtils.isEmpty(getBegin()) || TextUtils.isEmpty(getDate()))
+            return null;
+
+        Calendar calendar = Calendar.getInstance();
+        String[] split = getDate().split("-");
+
+        calendar.set(Calendar.YEAR, Integer.parseInt(split[0]));
+        calendar.set(Calendar.MONTH, Integer.parseInt(split[1]) - 1);
+        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(split[2]));
+
+        split = getBegin().split(":");
+        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(split[0]));
+        calendar.set(Calendar.MINUTE, Integer.parseInt(split[1]));
+        calendar.set(Calendar.SECOND, 0);
+
+        return calendar;
+    }
+
+    public long getNotificationTimeInMillis() {
+        Calendar calendar = getCalendar();
+        if( calendar == null )
+            return 0;
+        return calendar.getTimeInMillis() - 1200000;
+    }
+
     public String getDisplayTitle() {
         return/* "[" + getType() + "] " +*/ getTitle();
     }
 
     public boolean hasHost() {
-        return getName() != null && getName().length() > 0;
+        return !TextUtils.isEmpty(getName());
     }
 
     public boolean hasDescription() {
-        return getDescription() != null && getDescription().length() > 0;
+        return !TextUtils.isEmpty(getDescription());
+    }
+
+    public boolean hasUrl() {
+        return !TextUtils.isEmpty(link);
+    }
+
+    public String getPrettyUrl() {
+        String url = getLink().toLowerCase();
+
+        int index = url.indexOf("www.");
+        if (index > 0)
+            url = url.substring(index);
+
+        index = url.indexOf("/");
+        if (index > 1) {
+
+            Pattern p = Pattern.compile("[\\./]");
+            Matcher m = p.matcher(url.substring(index + 1));
+
+            if (m.find()) {
+                url = url.substring(0, index + m.start() + 1);
+            }
+        }
+
+
+        return url;
     }
 }
