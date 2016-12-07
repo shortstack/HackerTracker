@@ -11,7 +11,7 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
-        android:name="com.shortstack.hackertracker.Application.HackerTrackerApplication"
+        android:name="com.shortstack.hackertracker.Application.App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
@@ -26,21 +26,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name="com.shortstack.hackertracker.Activity.HomeActivity"
-            android:icon="@drawable/skull"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" />
-
-        <activity
-            android:name="com.shortstack.hackertracker.Activity.DetailsActivity"
-            android:icon="@drawable/skull"
-            android:screenOrientation="portrait" />
 
         <activity
             android:name="com.shortstack.hackertracker.Activity.TabHomeActivity"
             android:icon="@drawable/skull"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".Activity.DetailsActivity" />
 
         <activity android:name="com.shortstack.hackertracker.Fragment.InformationFragment" />
 
