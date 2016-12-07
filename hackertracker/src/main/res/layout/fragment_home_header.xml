@@ -30,9 +30,9 @@
 
 
             <Button
-                style="@style/button_home"
                 android:id="@+id/uber"
-                android:text="@string/uber"/>
+                style="@style/button_home"
+                android:text="@string/uber" />
 
         </LinearLayout>
 
@@ -88,6 +88,11 @@
 
 
         </LinearLayout>
+
+        <Button
+            android:id="@+id/settings"
+            style="@style/button_home"
+            android:text="@string/settings" />
 
 
     </LinearLayout>

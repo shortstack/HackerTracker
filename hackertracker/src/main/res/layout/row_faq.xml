@@ -1,39 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    tools:background="@color/background"
-    android:paddingTop="12dp"
-    android:paddingBottom="12dp"
-    android:paddingRight="24dp"
-    android:paddingLeft="24dp">
+    android:padding="5dp">
 
-    <TextView
-        android:id="@+id/question"
+    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:autoLink="all"
-        android:linksClickable="true"
-        android:textColor="@color/white"
-        android:textColorLink="@color/light_gray"
-        android:textSize="18sp"
-        tools:text="Q. What is DEFCON?" />
-
-    <Space
-        android:layout_width="match_parent"
-        android:layout_height="20dp" />
-
-    <TextView
-        android:id="@+id/answer"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:autoLink="all"
-        android:linksClickable="true"
-        android:textColor="@color/white"
-        android:textColorLink="@color/light_gray"
-        android:textSize="14sp"
-        tools:text="DEFCON is a large convention..." />
+        app:cardBackgroundColor="#57000000"
+        app:cardCornerRadius="4dp">
 
-</LinearLayout>
+        <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="12dp"
+            android:paddingLeft="24dp"
+            android:paddingRight="24dp"
+            android:paddingTop="12dp">
+
+            <TextView
+                android:id="@+id/question"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:autoLink="all"
+                android:linksClickable="true"
+                android:textColor="@color/white"
+                android:textColorLink="@color/light_gray"
+                android:textSize="18sp"
+                tools:text="Q. What is DEFCON?" />
+
+            <Space
+                android:layout_width="match_parent"
+                android:layout_height="10dp" />
+
+            <TextView
+                android:id="@+id/answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:autoLink="all"
+                android:linksClickable="true"
+                android:textColor="@color/white"
+                android:textColorLink="@color/light_gray"
+                android:textSize="14sp"
+                tools:text="DEFCON is a large convention..." />
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+</FrameLayout>
