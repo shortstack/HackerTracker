@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import com.shortstack.hackertracker.Application.App;
+import com.shortstack.hackertracker.BuildConfig;
 import com.shortstack.hackertracker.R;
 
 import java.util.Timer;
@@ -18,7 +19,7 @@ import java.util.TimerTask;
  */
 public class SplashActivity extends AppCompatActivity {
 
-    public static final int SPLASH_DELAY = 450;
+    public static final int SPLASH_DELAY = BuildConfig.DEBUG ? 0 : 450;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,12 +34,17 @@ public class SplashActivity extends AppCompatActivity {
         }, SPLASH_DELAY);
     }
 
+
+
     private void startNextActivity() {
         boolean seenOnboarding = App.getStorage().seenOnboarding();
+
+        //seenOnboarding = !BuildConfig.DEBUG; // To force debug builds to see the onboarding.
 
         if( seenOnboarding ) {
             startHomeActivity();
         } else {
+            App.getStorage().markOnboardingSeen();
             startOnboardingActivity();
         }
     }
