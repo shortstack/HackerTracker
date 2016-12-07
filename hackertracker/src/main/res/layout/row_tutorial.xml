@@ -3,36 +3,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:gravity="center_horizontal"
     android:orientation="vertical"
-    tools:background="@color/background"
     android:paddingLeft="20dp"
-    android:paddingRight="20dp">
+    android:paddingRight="20dp"
+    tools:background="@color/background">
 
     <TextView
-        android:textColor="?colorPrimary"
+        android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Welcome to\nDEF CON 25"
-        android:textSize="40dp"
-        android:id="@+id/title"
         android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:textStyle="bold" />
+        android:text="Welcome to\nDEF CON 25"
+        android:textColor="?colorPrimary"
+        android:textSize="40dp"
+        android:textStyle="bold"
+        tools:visibility="gone" />
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/image"
-        android:src="@drawable/skull_lg" />
+        android:layout_width="wrap_content"
+        android:layout_height="300dp"
+        android:src="@drawable/tut_loc" />
 
     <TextView
         android:id="@+id/description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/badge_text_short"
-        android:textColor="@color/white"
         android:layout_marginBottom="20dp"
         android:gravity="center"
-        android:textSize="18dp" />
+        android:text="@string/tut_location"
+        android:textColor="@color/white"
+        android:textSize="17sp" />
 </LinearLayout>
