@@ -12,11 +12,11 @@ import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
-import android.support.v4.app.Fragment;
 
 import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.BuildConfig;
+import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.List.GenericRowFragment;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
@@ -185,15 +185,15 @@ public class App extends Application {
         return mDatabaseController;
     }
 
-    public static void registerBusListener(GenericRowFragment context ) {
+    public void registerBusListener(GenericRowFragment context ) {
         bus.register(context);
     }
 
-    public static void unregisterBusListener( Fragment context ) {
+    public void unregisterBusListener( GenericRowFragment context ) {
         bus.unregister(context);
     }
 
-    public static void postBusEvent( Object event ) {
+    public void postBusEvent( Object event ) {
         bus.post(event);
     }
 }

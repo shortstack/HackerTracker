@@ -8,10 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Event.FavoriteEvent;
+import com.shortstack.hackertracker.Event.UpdateListContentsEvent;
 import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.Filter;
@@ -43,22 +43,23 @@ public class GenericRowFragment extends HackerTrackerFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.registerBusListener(this);
-        Logger.d("Registered.");
+        App.getApplication().registerBusListener(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        App.unregisterBusListener(this);
-        Logger.d("Destroyed.");
+        App.getApplication().unregisterBusListener(this);
     }
 
     @Subscribe
     public void handleFavoriteEvent(FavoriteEvent event ) {
-        Logger.d("Caught favorite event. " + event.getItem());
-
         adapter.notifyItemUpdated( event.getItem() );
+    }
+
+    @Subscribe
+    public void handleUpdateListContentsEvent(UpdateListContentsEvent event) {
+        refreshContents();
     }
 
 

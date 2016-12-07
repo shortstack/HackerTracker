@@ -38,7 +38,7 @@ public class DatabaseController {
 
         setScheduleBookmarked(Constants.BOOKMARKED, item.getId());
 
-        App.postBusEvent(new FavoriteEvent(item.getId()));
+        App.getApplication().postBusEvent(new FavoriteEvent(item.getId()));
 
 
         List<Default> stars = getStars();
@@ -51,7 +51,7 @@ public class DatabaseController {
 
         setScheduleBookmarked(Constants.UNBOOKMARKED, item.getId());
 
-        App.postBusEvent(new FavoriteEvent(item.getId()));
+        App.getApplication().postBusEvent(new FavoriteEvent(item.getId()));
 
 
         List<Default> stars = getStars();
