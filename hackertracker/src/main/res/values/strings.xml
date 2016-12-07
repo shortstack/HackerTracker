@@ -5,7 +5,7 @@
     <string name="navigation_drawer_open">open navigation drawer</string>
     <string name="navigation_drawer_close">close navigation drawer</string>
     <string name="action_settings">Settings</string>
-    <string name="action_share">Share My Schedule</string>
+    <string name="action_share">Share</string>
 
     <!-- navigation drawer item labels  -->
     <string-array name="nav_drawer_labels">
@@ -243,7 +243,7 @@
 
     <string name="partners_rejectedcon">Has your paper been rejected from a security conference? Rejected Con is an online annual security conference that allows the presentations rejected by other conferences to see the light of day. Check them out at @Rejected_CON!\n\nhttp://twitter.com/rejected_con\nhttp://rejectedcon.com</string>
     <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
-    <string name="action_star">Favorite</string>
+    <string name="action_star">Bookmark</string>
     <string name="action_more_information">More Details</string>
     <string name="demo">DEMO</string>
     <string name="tool">TOOL</string>
@@ -255,6 +255,15 @@
     <string name="always_show_starred">Always show starred</string>
     <string name="notification_text">Starting soon in %1$s.</string>
     <string name="uber">Uber</string>
+    <string name="tut_introduction"><![CDATA[Welcome to <h1><font>DEFCON 25</font></h1>]]></string>
+    <string name="tut_location"><![CDATA[DEFCON 25 will be held<br>at the <font>Paris Hotel, Las Vegas</font>,<br>from <font>August 4th</font> till <font>August 9th</font>.]]></string>
+    <string name="tut_badge"></string>
+    <string name="tut_workshop"></string>
+    <string name="link_warning">External Link</string>
+    <string name="link_message">Warning: external links can be dangerous. Are you sure you wish to open the following link?\n\n%1$s</string>
+    <string name="open_link">Open Link</string>
+    <string name="tut_hacker_jep"><![CDATA[Check out Hacker Jeopardy, it\'s definitely worth it.\n\nJust <font>don\'t fuck it up.</font>]]></string>
+
 
     <string-array name="updates">
         <item>08/04/16</item>
