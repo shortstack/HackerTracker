@@ -2,7 +2,6 @@ package com.shortstack.hackertracker.Fragment;
 
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -11,7 +10,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 
 import com.pedrogomez.renderers.RendererAdapter;
-import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.List.GenericRowFragment;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.Filter;
@@ -21,10 +19,7 @@ import com.shortstack.hackertracker.Utils.ClearableEditText;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Iterator;
 import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
 
 import butterknife.Bind;
 import butterknife.OnFocusChange;
@@ -106,40 +101,40 @@ public class GenericSearchFragment extends GenericRowFragment {
             return result;
         }
 
-        SQLiteDatabase dbOfficial = App.dbHelper.getWritableDatabase();
-
-        Cursor hint = dbOfficial.rawQuery("SELECT * FROM data WHERE (type LIKE ?)", new String[]{"%" + string + "%"});
-        Cursor titleOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
-        Cursor bodyOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (description LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
-        Cursor nameOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (who LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
-        Cursor locationOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (location LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
-
-        // get search results from each query
-        getResults(hint);
-        getResults(titleOfficial);
-        getResults(bodyOfficial);
-        getResults(nameOfficial);
-        getResults(locationOfficial);
-
-        // close database
-        dbOfficial.close();
-
-        // sort by start time
-        Collections.sort(result, new ItemComparator());
-
-        SortedSet<Default> items = new TreeSet<Default>(new Comparator<Default>() {
-            @Override
-            public int compare(Default arg0, Default arg1) {
-                return String.valueOf(arg0.getId()).compareTo(String.valueOf(arg1.getId()));
-            }
-        });
-
-        Iterator<Default> iterator = result.iterator();
-        while (iterator.hasNext()) {
-            items.add(iterator.next());
-        }
+//        SQLiteDatabase dbOfficial = App.dbHelper.getWritableDatabase();
+//
+//        Cursor hint = dbOfficial.rawQuery("SELECT * FROM data WHERE (type LIKE ?)", new String[]{"%" + string + "%"});
+//        Cursor titleOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (title LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
+//        Cursor bodyOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (description LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
+//        Cursor nameOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (who LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
+//        Cursor locationOfficial = dbOfficial.rawQuery("SELECT * FROM data WHERE (location LIKE ?) AND type NOT LIKE 'Vendor'", new String[]{"%" + string + "%"});
+//
+//        // get search results from each query
+//        getResults(hint);
+//        getResults(titleOfficial);
+//        getResults(bodyOfficial);
+//        getResults(nameOfficial);
+//        getResults(locationOfficial);
+//
+//        // close database
+//        dbOfficial.close();
+//
+//        // sort by start time
+//        Collections.sort(result, new ItemComparator());
+//
+//        SortedSet<Default> items = new TreeSet<Default>(new Comparator<Default>() {
+//            @Override
+//            public int compare(Default arg0, Default arg1) {
+//                return String.valueOf(arg0.getId()).compareTo(String.valueOf(arg1.getId()));
+//            }
+//        });
+//
+//        Iterator<Default> iterator = result.iterator();
+//        while (iterator.hasNext()) {
+//            items.add(iterator.next());
+//        }
         result.clear();
-        result.addAll(items);
+//        result.addAll(items);
 
         return result;
     }

@@ -9,7 +9,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
-import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.Vendor;
@@ -19,11 +18,11 @@ import java.util.List;
 
 public class HackerTrackerFragment extends Fragment {
 
-    private DatabaseAdapter dbHelper;
+    //private DatabaseAdapter dbHelper;
 
     public HackerTrackerFragment() {
         // database
-        dbHelper = App.dbHelper;
+        //dbHelper = App.dbHelper;
     }
 
     public List<Vendor> getVendors() {
@@ -61,7 +60,8 @@ public class HackerTrackerFragment extends Fragment {
 
     public List<Default> getItemByDate(String ... type) {
         ArrayList<Default> result = new ArrayList<>();
-        SQLiteDatabase db = App.dbHelper.getWritableDatabase();
+        SQLiteDatabase db = App.getApplication().getDatabaseController().getSchedule();
+
         Cursor cursor = db.rawQuery(getQueryString(type), type );
 
         try{
@@ -73,7 +73,7 @@ public class HackerTrackerFragment extends Fragment {
         }finally{
             cursor.close();
         }
-        db.close();
+        //db.close();
 
         return result;
     }
@@ -96,7 +96,7 @@ public class HackerTrackerFragment extends Fragment {
     public List<Default> getStars() {
         ArrayList<Default> result = new ArrayList<>();
 
-        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        SQLiteDatabase db = App.getApplication().getDatabaseController().getSchedule();
 
         Cursor cursor = db.rawQuery("SELECT * FROM data WHERE date=? AND starred=1 ORDER BY date, begin", new String[]{});
 
@@ -112,7 +112,7 @@ public class HackerTrackerFragment extends Fragment {
             cursor.close();
         }
 
-        db.close();
+        //db.close();
 
         // return all items
         return result;

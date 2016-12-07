@@ -5,6 +5,9 @@ package com.shortstack.hackertracker.Common;
  */
 public interface Constants {
 
+    int BOOKMARKED = 1;
+    int UNBOOKMARKED = 0;
+
     String API_URL = "https://s3.amazonaws.com/defcon-api";
     String API_ERROR_MESSAGE = "\"errorMessage\":";
     String OFFICIAL_SCHEDULE = "/schedule-full.json";

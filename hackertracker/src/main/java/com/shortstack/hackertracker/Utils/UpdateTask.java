@@ -5,7 +5,6 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import com.shortstack.hackertracker.Activity.HomeActivity;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.Model.OfficialList;
@@ -23,7 +22,7 @@ public class UpdateTask extends AsyncTask<String, Void, Boolean> {
         this.schedule = schedule;
         this.update = update;
         this.context = context;
-        dialog = DialogUtil.getProgressDialog(context, context.getResources().getString(R.string.syncing));
+        //dialog = DialogUtil.getProgressDialog(context, context.getResources().getString(R.string.syncing));
     }
 
     private ProgressDialog dialog;
@@ -53,7 +52,7 @@ public class UpdateTask extends AsyncTask<String, Void, Boolean> {
             ArrayList<Default> officialArray = new ArrayList(Arrays.asList(schedule.getAll()));
 
             if (officialArray.size()!=0) {
-                HomeActivity.syncDatabase(officialArray, context);
+                //HomeActivity.syncDatabase(officialArray, context);
                 dialog.dismiss();
 
                 // update last updated device date to last updated online date

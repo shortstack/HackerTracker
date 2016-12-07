@@ -12,15 +12,18 @@ import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.app.Fragment;
 
-import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
-import com.shortstack.hackertracker.Adapter.DatabaseAdapterStarred;
+import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.BuildConfig;
+import com.shortstack.hackertracker.List.GenericRowFragment;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.AlarmReceiver;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
+import com.squareup.otto.Bus;
+import com.squareup.otto.ThreadEnforcer;
 
 import java.io.IOException;
 import java.util.Date;
@@ -32,16 +35,23 @@ public class App extends Application {
 
     private static App application;
     private static Context context;
-    public static DatabaseAdapter dbHelper;
+    //public static DatabaseAdapter dbHelper;
     public static DatabaseAdapterVendors vendorDbHelper;
-    public static DatabaseAdapterStarred myDbHelperStars;
     private static AlarmManager alarmManager;
     private BroadcastReceiver receiver;
     private PendingIntent pendingIntent;
     private SharedPreferencesUtil storage;
 
+
+    private static DatabaseController mDatabaseController;
+
+
+    private static Bus bus = new Bus();
+
     public void onCreate() {
         super.onCreate();
+
+        Logger.init().methodCount(1).hideThreadInfo();
 
         application = this;
 
@@ -58,6 +68,9 @@ public class App extends Application {
         if (storage.allowPushNotifications()) {
             RegisterAlarmBroadcast();
         }
+
+        bus = new Bus(ThreadEnforcer.MAIN);
+
 
     }
 
@@ -126,24 +139,15 @@ public class App extends Application {
 
     private void setUpDatabase() {
 
-        dbHelper = new DatabaseAdapter(context);
+        mDatabaseController = new DatabaseController(context);
+
         vendorDbHelper = new DatabaseAdapterVendors(context);
-        myDbHelperStars = new DatabaseAdapterStarred(context);
 
         try {
-
-            dbHelper.createDataBase();
             vendorDbHelper.createDataBase();
-            myDbHelperStars.createDataBase();
-
         } catch (IOException ioe) {
-
             throw new Error("Unable to create database");
-
         }
-
-        dbHelper.copyStarred();
-
     }
 
     public static Context getAppContext() {
@@ -175,5 +179,21 @@ public class App extends Application {
             return date;
         }
         return new Date();
+    }
+
+    public DatabaseController getDatabaseController() {
+        return mDatabaseController;
+    }
+
+    public static void registerBusListener(GenericRowFragment context ) {
+        bus.register(context);
+    }
+
+    public static void unregisterBusListener( Fragment context ) {
+        bus.unregister(context);
+    }
+
+    public static void postBusEvent( Object event ) {
+        bus.post(event);
     }
 }

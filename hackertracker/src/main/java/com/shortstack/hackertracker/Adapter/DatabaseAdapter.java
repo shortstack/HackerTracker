@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Application.App;
 
 import java.io.FileOutputStream;
@@ -31,28 +32,35 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
 
     private SQLiteDatabase myDataBase;
 
-    private final Context myContext;
+    private final Context mContext;
 
     public DatabaseAdapter(Context context) {
-
         super(context, DB_NAME, null, DB_VERSION);
-        this.myContext = context;
+        mContext = context;
 
+
+        try {
+            createDatabase();
+        } catch (IOException e) {
+            Logger.e(e.getMessage());
+        }
     }
 
     /**
      * creates sqlite database
      * */
-    public void createDataBase() throws IOException{
+    public void createDatabase() throws IOException{
 
         SQLiteDatabase db_test = this.getWritableDatabase();
         int version = db_test.getVersion();
-        myContext.deleteDatabase(DB_NAME);
+        mContext.deleteDatabase(DB_NAME);
         db_test.close();
 
-        boolean dbExist = checkDataBase();
+        boolean dbExist = doesDatabaseExist();
 
         if (!dbExist) {
+
+            Logger.d("Database does not exist. Creating new.");
 
             // create database
             SQLiteDatabase db = this.getWritableDatabase();
@@ -71,19 +79,19 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
             }
         }
 
-        this.close();
+        //this.close();
 
     }
 
     /**
      * check if database exists
      */
-    private boolean checkDataBase(){
+    private boolean doesDatabaseExist(){
 
         SQLiteDatabase checkDB = null;
 
         try{
-            String myPath = myContext.getDatabasePath(DB_NAME).getPath();
+            String myPath = mContext.getDatabasePath(DB_NAME).getPath();
             checkDB = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
             checkDB.setLocale(Locale.getDefault());
             checkDB.setVersion(DB_VERSION);
@@ -110,10 +118,10 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
     private void copyDataBase() throws IOException{
 
         // get db from assets
-        InputStream myInput = myContext.getAssets().open(DB_NAME);
+        InputStream myInput = mContext.getAssets().open(DB_NAME);
 
         // path of db to create
-        String outFileName = myContext.getDatabasePath(DB_NAME).getPath();
+        String outFileName = mContext.getDatabasePath(DB_NAME).getPath();
 
         // initialize output stream
         OutputStream myOutput = new FileOutputStream(outFileName);
@@ -135,7 +143,7 @@ public class DatabaseAdapter extends SQLiteOpenHelper {
     public void openDataBase() throws SQLException{
 
         // open the database
-        String myPath = myContext.getDatabasePath(DB_NAME).getPath();
+        String myPath = mContext.getDatabasePath(DB_NAME).getPath();
         myDataBase = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE | SQLiteDatabase.OPEN_READWRITE);
 
     }
