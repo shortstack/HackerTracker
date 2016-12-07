@@ -45,11 +45,10 @@ public class TabHomeActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         //adapter.addFragment(GenericScheduleFragment.newInstance(), "STARRED");
         adapter.addFragment(HomeFragment.newInstance(), "HOME");
-        adapter.addFragment(GenericScheduleFragment.newInstance(), "SCHEDULE");
         viewPager.setAdapter(adapter);
         tabLayout.setupWithViewPager(viewPager);
 
-        //viewPager.setCurrentItem(ITEM_HOME);
+        viewPager.setCurrentItem(ITEM_HOME);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
