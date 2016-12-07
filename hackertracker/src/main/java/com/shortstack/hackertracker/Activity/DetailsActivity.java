@@ -1,41 +1,43 @@
 package com.shortstack.hackertracker.Activity;
 
 import android.app.Notification;
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
+import android.os.Build;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
-import com.shortstack.hackertracker.Adapter.DatabaseAdapterStarred;
+import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Application.App;
-import com.shortstack.hackertracker.List.GenericDefaultRenderer;
+import com.shortstack.hackertracker.Fragment.DescriptionDetailsFragment;
 import com.shortstack.hackertracker.Model.Default;
 import com.shortstack.hackertracker.R;
 
-import java.util.Calendar;
+import org.parceler.Parcels;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
-/**
- * Created by Admin on 8/8/2016.
- */
-public class DetailsActivity extends FrameLayout {
+public class DetailsActivity extends AppCompatActivity {
 
-    private final GenericDefaultRenderer mRenderer;
-    private Default item;
+
 
     @Bind(R.id.title)
     TextView title;
-
-    @Bind(R.id.speaker)
-    TextView host;
 
     @Bind(R.id.time)
     TextView time;
@@ -43,8 +45,8 @@ public class DetailsActivity extends FrameLayout {
     @Bind(R.id.location)
     TextView location;
 
-    @Bind(R.id.description)
-    TextView description;
+    @Bind(R.id.category_text)
+    TextView categoryText;
 
     @Bind(R.id.demo)
     View demo;
@@ -55,56 +57,126 @@ public class DetailsActivity extends FrameLayout {
     @Bind(R.id.tool)
     View tool;
 
-    @Bind(R.id.category)
-    View category;
-
     @Bind(R.id.container)
     View container;
 
-    @Bind(R.id.action_bookmark)
-    ImageView bookmark;
+    @Bind(R.id.category)
+    View category;
 
-    public DetailsActivity(Context context, Default item, GenericDefaultRenderer genericDefaultRenderer) {
-        super(context);
-        init();
-        this.item = item;
-        display();
 
-        mRenderer = genericDefaultRenderer;
 
-    }
 
-    private void init() {
-        inflate(getContext(), R.layout.details_contents, this);
+
+
+
+
+
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+    @Bind(R.id.tabs)
+    TabLayout tabLayout;
+    @Bind(R.id.viewpager)
+    ViewPager viewPager;
+    private Default mItem;
+
+    @Override
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_details_tab);
         ButterKnife.bind(this);
+        setSupportActionBar(toolbar);
+
+        if( getIntent().getExtras() != null ) {
+            mItem = Parcels.unwrap(getIntent().getExtras().getParcelable("item"));
+        } else if ( savedInstanceState != null ) {
+            mItem = savedInstanceState.getParcelable("item");
+        }
+
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            container.setTransitionName("category");
+        }
+
+        setTitle("");
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
+
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //What to do on back clicked
+                finish();
+            }
+        });
+
+        initViewPager();
+
+        render();
     }
 
-    private void display() {
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.details, menu);
+
+        menu.findItem(R.id.bookmark).setIcon( isOnSchedule() ?  R.drawable.ic_bookmark_white_24dp : R.drawable.ic_bookmark_border_white_24dp );
+
+        return true;
+    }
+
+    private void initViewPager() {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        //adapter.addFragment(MainDetailsFragment.newInstance(mItem), "DETAILS");
+        adapter.addFragment(DescriptionDetailsFragment.newInstance(mItem), "DESCRIPTION");
+        viewPager.setAdapter(adapter);
+        tabLayout.setupWithViewPager(viewPager);
+    }
+
+
+
+
+
+
+    public void render() {
         displayText();
         displaySpeakerIcons();
-        displayNewIcon();
         displayCategory();
 
         updateBookmark();
     }
 
+    public Default getContent() {
+        return mItem;
+    }
+
+    private void displayCategory() {
+        int count = getContent().getCategoryColorPosition();
+
+        String[] allColors = getResources().getStringArray(R.array.colors);
+        String[] allLabels = getResources().getStringArray(R.array.filter_types);
+
+        int position = count % allColors.length;
+
+        int color = Color.parseColor(allColors[position]);
+        category.setBackgroundColor(color);
+
+        categoryText.setText(allLabels[position]);
+    }
+
+    private boolean isOnSchedule() {
+        return getContent().isBookmarked();
+    }
+
+    public void updateBookmark() {
+        //bookmark.setVisibility( isOnSchedule() ? View.VISIBLE : View.GONE );
+        invalidateOptionsMenu();
+    }
+
     private void displayText() {
-        title.setText(getContent().getTitle());
-
-        if( getContent().hasHost() ) {
-            host.setText(getContent().getName());
-            host.setVisibility(View.VISIBLE);
-        }
-        time.setText(getContent().getFullTimeStamp(getContext()));
-        time.setVisibility(View.VISIBLE);
+        title.setText(getContent().getDisplayTitle());
+        time.setText(getContent().getDateStamp() + " - " + getContent().getTimeStamp(this));
         location.setText(getContent().getLocation());
-        if( item.hasDescription() ) {
-            description.setText(item.getDescription());
-        } else {
-            description.setVisibility(GONE);
-        }
-
-
     }
 
     private void displaySpeakerIcons() {
@@ -113,91 +185,85 @@ public class DetailsActivity extends FrameLayout {
         demo.setVisibility(getContent().isDemo() ? View.VISIBLE : View.GONE);
     }
 
-    private void displayNewIcon() {
-        //isNew.setVisibility(getContent().isNew() ? View.VISIBLE : View.GONE);
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            default:
+                return false;
+
+            case R.id.information:
+
+                return true;
+
+            case R.id.share:
+
+                return true;
+
+            case R.id.bookmark:
+                updateSchedule();
+                return true;
+        }
     }
 
-    private void displayCategory() {
-        int count = getContent().getCategoryColorPosition();
-        String[] allColors = getResources().getStringArray(R.array.colors);
 
-        int color = Color.parseColor(allColors[count % allColors.length]);
-        category.setBackgroundColor(color);
-    }
-
-    private Default getContent() {
-        return item;
-    }
-
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        getMenuInflater().inflate(R.menu.details, menu);
-//
-//        if (item.getLink() == null || item.getLink().equals("") || item.getLink().equals(" ")) {
-//            menu.findItem(R.id.information).setVisible(false);
-//        } else {
-//            menu.findItem(R.id.information).setVisible(true);
-//        }
-//
-//        return super.onCreateOptionsMenu(menu);
-//    }
-
-
-    @OnClick(R.id.action_bookmark)
     public void updateSchedule() {
-        DatabaseAdapter myDbOfficialHelper = new DatabaseAdapter(getContext());
-        DatabaseAdapterStarred myDbHelperStars = new DatabaseAdapterStarred(getContext());
-        SQLiteDatabase dbOfficial = myDbOfficialHelper.getWritableDatabase();
-        SQLiteDatabase dbStars = myDbHelperStars.getWritableDatabase();
+
 
         // if not starred, star it
-        if (item.getStarred() == 0) {
+        if (mItem.isUnbookmarked()) {
 
-            // add to starred database
-            dbStars.execSQL("INSERT INTO data VALUES (" + item.getId() + ")");
-            dbOfficial.execSQL("UPDATE data SET starred=" + 1 + " WHERE id=" + item.getId());
 
-            // set up alarm
-            if (!item.getBegin().equals("")) {
-                Calendar calendar = Calendar.getInstance();
-                calendar.set(Calendar.YEAR, Integer.parseInt(item.getDate().split("-")[0]));
-                calendar.set(Calendar.MONTH, Integer.parseInt(item.getDate().split("-")[1]) - 1);
-                calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(item.getDate().split("-")[2]));
-                calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(item.getBegin().split(":")[0]));
-                calendar.set(Calendar.MINUTE, Integer.parseInt(item.getBegin().split(":")[1]));
-                calendar.set(Calendar.SECOND, 0);
-                long when = calendar.getTimeInMillis() - 1200000;
 
-                Notification notification = App.createNotification(getContext(), item);
-                App.scheduleNotification(notification, when, item.getId());
+            long notifyTime = mItem.getNotificationTimeInMillis();
+            if( notifyTime > 0 ) {
+                Notification notification = App.createNotification(this, mItem);
+                App.scheduleNotification(notification, notifyTime, mItem.getId());
             }
 
-            // change star
-            item.setStarred(1);
-            Toast.makeText(getContext(), R.string.schedule_added, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.schedule_added, Toast.LENGTH_SHORT).show();
         } else {
 
-            // remove from starred database
-            dbStars.delete("data", "id=" + item.getId(), null);
-            dbOfficial.execSQL("UPDATE data SET starred=" + 0 + " WHERE id=" + item.getId());
+
 
             // remove alarm
-            App.cancelNotification(item.getId());
+            App.cancelNotification(mItem.getId());
 
-            // change star
-            item.setStarred(0);
-            Toast.makeText(getContext(), R.string.schedule_removed, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.schedule_removed, Toast.LENGTH_SHORT).show();
         }
 
-        mRenderer.updateBookmark();
+
 
         updateBookmark();
 
-        dbOfficial.close();
-        dbStars.close();
+        Logger.d("Posting event.");
     }
 
-    private void updateBookmark() {
-        bookmark.setImageDrawable(getResources().getDrawable( item.isStarred() ? R.drawable.ic_bookmark_white_24dp : R.drawable.ic_bookmark_border_white_24dp));
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 }
