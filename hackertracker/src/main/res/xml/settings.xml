@@ -5,6 +5,15 @@
     android:layout_width="match_parent">
 
     <CheckBoxPreference
+        android:key="allowAnalytics"
+        android:title="Analytics"
+        android:summary="Allow us track anonymous usage and report crashes."
+        android:defaultValue="True"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <CheckBoxPreference
         android:key="allowNotifications"
         android:title="Push Notifications"
         android:summary="Allow push notifications for upcoming starred events"
