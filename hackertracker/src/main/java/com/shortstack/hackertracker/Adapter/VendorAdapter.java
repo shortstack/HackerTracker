@@ -10,7 +10,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.shortstack.hackertracker.Model.Vendor;
-import com.shortstack.hackertracker.R;
 
 import junit.framework.Assert;
 
@@ -46,11 +45,6 @@ public class VendorAdapter extends ArrayAdapter<Vendor> {
 
             holder = new VendorHolder();
 
-            holder.title = (TextView) row.findViewById(R.id.vendor_title);
-            holder.website = (TextView) row.findViewById(R.id.vendor_website);
-            holder.body = (TextView) row.findViewById(R.id.vendor_body);
-
-            holder.vendorLayout = (LinearLayout) row.findViewById(R.id.vendorLayout);
             row.setTag(holder);
 
 

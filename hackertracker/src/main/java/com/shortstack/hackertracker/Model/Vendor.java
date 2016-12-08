@@ -1,12 +1,14 @@
 package com.shortstack.hackertracker.Model;
 
+import java.io.Serializable;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Whitney Champion
  * Date: 7/15/13
  * Time: 11:17 PM
  */
-public class Vendor {
+public class Vendor implements Serializable {
 
     private int id;
     private String title;
