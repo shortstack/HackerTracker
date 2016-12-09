@@ -15,6 +15,8 @@ import butterknife.ButterKnife;
 
 public class VendorBottomSheetDialogFragment extends android.support.design.widget.BottomSheetDialogFragment {
 
+    public static final String ARG_VENDOR = "VENDOR";
+
     @Bind(R.id.title)
     TextView title;
 
@@ -29,7 +31,7 @@ public class VendorBottomSheetDialogFragment extends android.support.design.widg
         VendorBottomSheetDialogFragment fragment = new VendorBottomSheetDialogFragment();
 
         Bundle bundle = new Bundle();
-        bundle.putSerializable("VENDOR", vendor);
+        bundle.putSerializable(ARG_VENDOR, vendor);
         fragment.setArguments(bundle);
 
         return fragment;
@@ -44,7 +46,7 @@ public class VendorBottomSheetDialogFragment extends android.support.design.widg
         dialog.setContentView(view);
         ButterKnife.bind(this, view);
 
-        Vendor vendor = (Vendor) getArguments().getSerializable("VENDOR");
+        Vendor vendor = (Vendor) getArguments().getSerializable(ARG_VENDOR);
 
         if( vendor == null ) {
             Logger.e("Vendor is null. Can not render bottom sheet.");
