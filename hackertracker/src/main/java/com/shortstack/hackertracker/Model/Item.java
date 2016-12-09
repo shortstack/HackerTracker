@@ -6,7 +6,6 @@ import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
 import com.shortstack.hackertracker.Application.App;
-import com.shortstack.hackertracker.BuildConfig;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.R;
 
@@ -343,13 +342,8 @@ public class Item implements Serializable {
     }
 
     public boolean hasExpired() {
-        if (BuildConfig.DEBUG) {
-            Date date = new Date();
-            date.setTime(Constants.DEBUG_FORCE_TIME_DATE);
-            return date.after(getEndDateObject());
-        }
-
-        return new Date().after(getEndDateObject());
+        Date date = App.getApplication().getCurrentDate();
+        return date.after(getEndDateObject());
     }
 
     @NonNull

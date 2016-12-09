@@ -50,6 +50,7 @@ public class App extends Application {
 
 
     private static Bus bus = new Bus();
+    public long DEBUG_TIME_EXTRA = 0;
 
     public void onCreate() {
         super.onCreate();
@@ -181,7 +182,7 @@ public class App extends Application {
     public Date getCurrentDate() {
         if (BuildConfig.DEBUG) {
             Date date = new Date();
-            date.setTime(Constants.DEBUG_FORCE_TIME_DATE);
+            date.setTime(Constants.DEBUG_FORCE_TIME_DATE + DEBUG_TIME_EXTRA);
             return date;
         }
         return new Date();

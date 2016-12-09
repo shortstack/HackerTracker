@@ -2,19 +2,23 @@ package com.shortstack.hackertracker.List;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Application.App;
+import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Event.FavoriteEvent;
 import com.shortstack.hackertracker.Event.UpdateListContentsEvent;
 import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
-import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.Model.Filter;
+import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.FilterView;
 import com.squareup.otto.Subscribe;
@@ -23,6 +27,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -40,16 +46,58 @@ public class GenericRowFragment extends HackerTrackerFragment {
     View empty;
 
 
+    public Handler mHandler = new Handler() {
+        public void handleMessage(Message msg) {
+            Logger.d("Refreshing schedule.");
+            App.getApplication().DEBUG_TIME_EXTRA += Constants.TIMER_INTERVAL_FIVE_MIN * 5;
+//                App.getApplication().postBusEvent( new RefreshTimerEvenr() );
+            if( adapter != null )
+                adapter.notifyTimeChanged();
+        }
+    };
+    private Timer mTimer;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         App.getApplication().registerBusListener(this);
+
+
+
+
+
+
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
         App.getApplication().unregisterBusListener(this);
+    }
+
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        mHandler.obtainMessage(1).sendToTarget();
+
+        Date currentDate = App.getApplication().getCurrentDate();
+        long time = currentDate.getTime();
+        time = time % Constants.TIMER_INTERVAL;
+
+        mTimer = new Timer();
+        mTimer.scheduleAtFixedRate(new TimerTask() {
+            public void run() {
+                mHandler.obtainMessage(1).sendToTarget();
+            }
+        }, time, Constants.TIMER_INTERVAL );
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        mTimer.cancel();
     }
 
     @Subscribe
