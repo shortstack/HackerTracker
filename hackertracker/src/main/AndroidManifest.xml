@@ -32,8 +32,6 @@
             android:icon="@drawable/skull"
             android:screenOrientation="portrait" />
 
-        <activity android:name=".Activity.DetailsActivity" />
-
         <activity android:name=".Activity.SettingsActivity"
             android:theme="@style/PreferenceScreen">
 
