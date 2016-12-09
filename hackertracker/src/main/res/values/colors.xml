@@ -2,22 +2,15 @@
 <resources>
     <color name="colorPrimary">#5050a1</color>
     <color name="colorPrimaryDark">#5050a1</color>
-    <color name="textColorPrimary">#FFFFFF</color>
-    <color name="windowBackground">#FFFFFF</color>
-    <color name="navigationBarColor">#000000</color>
     <color name="colorAccent">#6464b7</color>
     <color name="colorLightAccent">#A0A0EF</color>
 
-    <color name="black_alpha">#dd000000</color>
-    <color name="black_alpha_hover">#EE000000</color>
     <color name="white_alpha">#8cffffff</color>
     <color name="light_gray">#dddddd</color>
-    <color name="dark_gray">#282828</color>
     <color name="green">#6464b7</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
     <color name="dark_green">#525284</color>
-    <color name="star">#ffcc00</color>
 
     <color name="background">#2e3542</color>
     <color name="card_background">#57000000</color>

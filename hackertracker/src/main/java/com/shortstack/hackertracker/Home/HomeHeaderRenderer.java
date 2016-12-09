@@ -23,7 +23,7 @@ import butterknife.OnClick;
 public class HomeHeaderRenderer extends Renderer<Void> {
     @Override
     protected View inflate(LayoutInflater inflater, ViewGroup parent) {
-        View view = inflater.inflate(R.layout.fragment_home_header, parent, false);
+        View view = inflater.inflate(R.layout.header_home, parent, false);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -50,12 +50,12 @@ public class HomeHeaderRenderer extends Renderer<Void> {
 
     @OnClick(R.id.badge)
     public void onBadgeClick() {
-        showInformationAlert(R.layout.fragment_badges);
+        showInformationAlert(R.layout.alert_badges);
     }
 
     @OnClick(R.id.wifi)
     public void onWifiClick() {
-        showInformationAlert(R.layout.fragment_wifi);
+        showInformationAlert(R.layout.alert_wifi);
     }
 
     @OnClick(R.id.map)
@@ -68,7 +68,6 @@ public class HomeHeaderRenderer extends Renderer<Void> {
 
     @OnClick(R.id.vendors)
     public void onVendorsClick() {
-        //showInformationAlert(R.layout.fragment_vendors);
         Intent intent = new Intent(getContext(), VendorsActivity.class);
         getContext().startActivity(intent);
     }

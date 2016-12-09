@@ -13,7 +13,7 @@ import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Event.FavoriteEvent;
 import com.shortstack.hackertracker.Event.UpdateListContentsEvent;
 import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
-import com.shortstack.hackertracker.Model.Default;
+import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.Model.Filter;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.FilterView;
@@ -85,7 +85,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
 
         Filter filter = App.getStorage().getFilter();
 
-        List<Default> events = getEvents(filter);
+        List<Item> events = getEvents(filter);
         List<Object> objects = addTimeDividers(events);
 
         adapter.addAll(objects);
@@ -99,15 +99,15 @@ public class GenericRowFragment extends HackerTrackerFragment {
     }
 
     private int findCurrentPositionByTime() {
-        List<Default> collection = adapter.getCollection();
+        List<Item> collection = adapter.getCollection();
         Date currentDate = App.getApplication().getCurrentDate();
 
         for (int i = 0; i < collection.size(); i++) {
             Object object = collection.get(i);
 
-            if( object instanceof Default ) {
+            if( object instanceof Item) {
 
-                Date beginDateObject = ((Default) object).getBeginDateObject();
+                Date beginDateObject = ((Item) object).getBeginDateObject();
                 if( beginDateObject.after(currentDate)) {
                     for (int i1 = i - 1; i1 >= 0; i1--) {
                         if( !(object instanceof String ) ) {
@@ -122,19 +122,19 @@ public class GenericRowFragment extends HackerTrackerFragment {
         return 0;
     }
 
-    protected List<Default> getEvents( Filter filter ) {
+    protected List<Item> getEvents(Filter filter ) {
         if( filter.getTypesSet().size() == 0 ) {
             empty.setVisibility(View.VISIBLE);
             return Collections.emptyList();
         }
 
         empty.setVisibility(View.GONE);
-        List<Default> events;
+        List<Item> events;
         events = getItemByDate(filter.getTypesArray());
         return events;
     }
 
-    private List<Object> addTimeDividers(List<Default> events) {
+    private List<Object> addTimeDividers(List<Item> events) {
         ArrayList<Object> result = new ArrayList<>();
 
         if (events.size() == 0)
@@ -144,11 +144,11 @@ public class GenericRowFragment extends HackerTrackerFragment {
         result.add(events.get(0).getBeginDateObject());
 
         for (int i = 0; i < events.size() - 1; i++) {
-            Default current = events.get(i);
+            Item current = events.get(i);
 
             result.add(current);
 
-            Default next = events.get(i + 1);
+            Item next = events.get(i + 1);
             if (!current.getDate().equals(next.getDate())) {
                 result.add(next.getDateStamp());
             }

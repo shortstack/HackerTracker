@@ -19,7 +19,7 @@ import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.BuildConfig;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.List.GenericRowFragment;
-import com.shortstack.hackertracker.Model.Default;
+import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.AlarmReceiver;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
@@ -121,7 +121,7 @@ public class App extends Application {
         alarmManager.set(AlarmManager.RTC_WAKEUP, when, pendingIntent);
     }
 
-    public static Notification createNotification(Context context, Default content) {
+    public static Notification createNotification(Context context, Item content) {
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         int color = context.getResources().getColor(R.color.colorPrimary);
 

@@ -2,30 +2,9 @@
 <resources>
 
     <string name="app_name">Hacker Tracker</string>
-    <string name="navigation_drawer_open">open navigation drawer</string>
-    <string name="navigation_drawer_close">close navigation drawer</string>
-    <string name="action_settings">Settings</string>
     <string name="action_share">Share</string>
 
     <!-- navigation drawer item labels  -->
-    <string-array name="nav_drawer_labels">
-        <item>@string/main</item>
-        <item>@string/speakers</item>
-        <item>@string/skytalks</item>
-        <item>@string/contests</item>
-        <item>@string/events</item>
-        <item>@string/parties</item>
-        <item>@string/villages</item>
-        <item>@string/workshops</item>
-        <item>@string/demolabs</item>
-        <item>@string/kids</item>
-        <item>@string/partners</item>
-
-        <item>@string/faq</item>
-        <item>@string/badges</item>
-        <item>@string/wifi</item>
-        <item>@string/radio</item>
-    </string-array>
 
     <string-array name="filter_types">
         <item>Speaker</item>
@@ -40,109 +19,33 @@
         <item>Workshop</item>
     </string-array>
 
-    <string name="home">DEF CON 24</string>
-    <string name="main">Home</string>
     <string name="speakers">Speakers</string>
     <string name="contests">Contests</string>
     <string name="vendors">Vendors</string>
-    <string name="books">Book Signings</string>
     <string name="demolabs">Demo Labs</string>
     <string name="villages">Villages</string>
     <string name="events">Events</string>
     <string name="parties">Parties</string>
     <string name="kids">Kids</string>
-    <string name="shuttle">Shuttle</string>
     <string name="skytalks">Skytalks</string>
     <string name="maps">Map</string>
-    <string name="partners">Partners</string>
     <string name="workshops">Workshops</string>
     <string name="faq">FAQ</string>
     <string name="badges">Badge Info</string>
     <string name="wifi">Wifi Info</string>
     <string name="radio">DEF CON Radio</string>
-    <string name="schedule">My Schedule</string>
-    <string name="links">Links</string>
-    <string name="search">Search</string>
     <string name="settings">Settings</string>
 
-    <string name="home_text">DC24 Schedule\nOfficial &amp; Unofficial</string>
-    <string name="updates">Updates</string>
-
-    <string name="yes">Yes</string>
-    <string name="no">No</string>
-
-    <string name="db_path">/data/data/com.shortstack.hackertracker/databases/</string>
-    <string name="db_name">hackertracker.sqlite</string>
-    <string name="oh_snap">Oh Snap!</string>
-    <string name="dont_show">Don\'t show this again</string>
-    <string name="empty">Check back later for more updates.\n\nSchedule updates are coming straight from the DEF CON Info Booth database, and will be added as they are made available.\n\nOn 8/5, you will be able to sync the schedule within the app, which will pull from info.defcon.org.\n\nThanks! :)</string>
-    <string name="empty_schedule">Looks like you don\'t have anything in your schedule yet!\n\nCheck out the speaker list, contests, parties, and events to make the most of your DEF CON 24 experience :)</string>
-    <string name="got_it">Got it!</string>
-    <string name="error_api">Error connecting to API</string>
-    <string name="error_api_desc">Please check your connection and try again :)</string>
-    <string name="sync_database">Check For Schedule Updates</string>
-    <string name="sync_check">Are you sure you want to check for updates? This will require your device to access the internet."</string>
-    <string name="updates_available">Update Available</string>
-    <string name="update_check">Would you like to update the schedule? This will not affect your saved schedule.</string>
     <string name="no_updates">Your schedule is up to date! :)</string>
-    <string name="checking_for_updates">Checking for schedule updates…</string>
-    <string name="syncing">Syncing database with updates…</string>
     <string name="schedule_finished">Schedule sync complete</string>
-    <string name="sync_availability">Sync will be available the Wednesday before DEF CON! :)</string>
-    <string name="up_to_date">Your schedule is already up to date! :)</string>
-    <string name="notification_title">DEF CON Schedule Notification</string>
-    <string name="vendors_message">Vendors not announced yet! Check back soon :)</string>
-    <string name="skytalks_message">Skytalks not announced yet! Check back soon :)</string>
-    <string name="demolabs_message">Demo labs not announced yet! Check back soon :)</string>
-    <string name="barcode_header">Save Barcode</string>
-    <string name="barcode_download">Save image to your device?</string>
-    <string name="schedule_cleared">Schedule cleared successfully</string>
-    <string name="schedule_clear">Clear My Schedule</string>
-    <string name="delete_all">Clear My Schedule</string>
-    <string name="close">Close</string>
-    <string name="check_for_updates">Check For Schedule Updates</string>
-    <string name="schedule_check">Are you sure you want to remove everything from your schedule?</string>
-    <string name="schedule_cancel">No, Cancel</string>
-    <string name="schedule_share">Check out my DEF CON 23 schedule</string>
-    <string name="schedule_share_save">Save schedule to CSV and Share</string>
-    <string name="schedule_save">Save schedule to CSV only</string>
-    <string name="schedule_options">Options</string>
-    <string name="no_storage">No external storage available!</string>
-    <string name="directory_fail">Failed to create directory</string>
-    <string name="filename">dc24_schedule.csv</string>
-    <string name="schedule_remove">Yes, Remove them</string>
-    <string name="schedule_removed">Removed from My Schedule</string>
-    <string name="schedule_added">Added to My Schedule</string>
-    <string name="schedule_sync">Yes, Check Now</string>
-    <string name="is_new">NEW</string>
     <string name="tba">TBA</string>
     <string name="save">Save</string>
-    <string name="save_cancel">No, Cancel</string>
     <string name="map_hotel">Hotel Map</string>
     <string name="map_con">Conference Map</string>
-    <string name="map_hotel_name">map_hotel.pdf</string>
-    <string name="map_con_name">map_defcon.pdf</string>
-    <string name="no_pdf_reader">No PDF reader found</string>
-    <string name="open_file">Open File</string>
-    <string name="backup_name">dc24_schedule.csv</string>
-    <string name="backup">Schedule saved in Downloads as "dc24_schedule.csv"</string>
 
     <string name="need_uber">Need an Uber to DEF CON?</string>
-    <string name="uber_location">Choose your destination…</string>
-    <string name="uber_find">Find An Uber</string>
-    <string name="uber_choose">Please choose your Uber destination from the dropdown menu above :)</string>
-
-    <string name="coming_soon_maps">Conference map will be posted when it becomes available!</string>
-
-    <string name="star_add">Add to My Schedule</string>
-    <string name="star_delete">Remove from My Schedule</string>
-
-    <string name="e4373">They see me rollin... they hatin...</string>
-    <string name="e4374">Pew pew!</string>
-    <string name="e4375">BRING ME MY SHOTGUN!</string>
 
     <string name="workshop_info_title">Workshop Info</string>
-    <string name="workshop_info">Click here to read about\nimportant workshop sign up details!</string>
     <string name="workshop_info_text">
         Workshops are free, first come, first served, and seats will fill up fast!\n\n
         To register for a workshop, you will need to go to the Bally\'s side in front of the cafe arcade between Thursday 07:00 to 15:00. We will have goons to pre-register you for the workshop(s) of your choosing.\n\n
@@ -156,12 +59,6 @@
         \n\nBadges go on sale 6AM Thursday morning! Welcome to LineCon! Bring a drink (and/or coffee), make some friends, and enjoy the ride. :)
     </string>
 
-    <string name="badge_text_short">
-        DEF CON badges cost $240. Cash Only.
-        \nThere are no pre-registrations.
-        \nStarts selling 6AM on Thursday.
-    </string>
-
     <string name="wifi_text">
         DEF CON WiFi registration information will be available at http://wifireg.defcon.org.\n\n
         DEF CON is FULLY network-enabled. Now that we\'ve perfected the art of a stable hacker con network, we\'re ascending to a higher level - we\'re providing you a network that you feel SAFE in using! Since DEF CON 18 we\'re WPA2 encrypted over-the-air, with a direct trunk out to the Internet. No peer-to-peer, no sniffing, just straight to the net (and internal servers). We\'ll provide login credentials at Registration. We know the 3G airwaves will be saturated so we\'re putting our own cred on the line to give you a net that even we would put our own mobile phones on.\n\n
@@ -173,10 +70,6 @@
         Music for Hacking. The DEF CON Year-Round Channel.\n\n
         Since 2013, SomaFM has provided the music for the DEF CON Chill room. That theme continues with SomaFM broadcasting this special year-round stream hosted by the DJs who entertain the DEF CON 24 chill room this year in Vegas.\n\n
         Check out http://somafm.com/defcon/ to listen online, or download the Android app here: https://somafm.com/mobile/android.html
-    </string>
-
-    <string name="shuttle_text">
-        <big>Airport Shuttle Service to DEF CON 23!</big>\n\nIt\'s a known fact: Vegas cab drivers can be … indirect. Even worse, it\'s a real challenge to keep a cab smelling daisy-fresh in 110 degree heat. So how does one get from the airport to Paris and Bally\'s without taking an unnecessary tour of Henderson and baking like a potato?\n\nThere is a way.\n\nWe\'ve partnered with LASxpress to shuttle DEF CON attendees from McCarran to their hotels, Paris and Bally\'s and otherwise. It costs 11 bucks (18 non-stop), and has the benefits of meet and greet service and immediate boarding.\n\nOf course, there is something of a vision-quest feeling to waiting around in the desert, sweating in a small space as you travel aimlessly throughout the universe. So, you can still do that, too.\n\nIf you\'d rather try the shuttle route, just click here to register: http://lasrescenter.hudsonltd.net/res?USERIDENTRY=DEFCON2014&amp;LOGON=GO
     </string>
 
     <string-array name="faq_questions">
@@ -243,16 +136,12 @@
 
     <string name="partners_rejectedcon">Has your paper been rejected from a security conference? Rejected Con is an online annual security conference that allows the presentations rejected by other conferences to see the light of day. Check them out at @Rejected_CON!\n\nhttp://twitter.com/rejected_con\nhttp://rejectedcon.com</string>
     <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
-    <string name="action_star">Bookmark</string>
-    <string name="action_more_information">More Details</string>
     <string name="demo">DEMO</string>
     <string name="tool">TOOL</string>
     <string name="exploit">EXPLOIT</string>
-    <string name="filter">Filter</string>
     <string name="timestamp_full">%1$s, %2$s - %3$s</string>
     <string name="cancel">Cancel</string>
     <string name="okay">Okay</string>
-    <string name="always_show_starred">Always show starred</string>
     <string name="notification_text">Starting soon in %1$s.</string>
     <string name="uber">Uber</string>
     <string name="tut_introduction"><![CDATA[Welcome to <h1><font>DEFCON 25</font></h1>]]></string>
@@ -263,9 +152,6 @@
     <string name="link_message">Warning: external links can be dangerous. Are you sure you wish to open the following link?\n\n%1$s</string>
     <string name="open_link">Open Link</string>
     <string name="tut_hacker_jep"><![CDATA[Check out Hacker Jeopardy, it\'s definitely worth it.\n\nJust <font>don\'t fuck it up.</font>]]></string>
-    <string name="share_message">Would you like to share a plain text description or an in-app link?</string>
-    <string name="link_in_app">In-App Link</string>
-    <string name="link_plain_text">Plain Text</string>
     <string name="unbookmark">Unbookmark</string>
     <string name="bookmark">Bookmark</string>
     <string name="collapse">Collapse</string>

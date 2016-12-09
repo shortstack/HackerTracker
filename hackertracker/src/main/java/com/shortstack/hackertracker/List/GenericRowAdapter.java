@@ -1,20 +1,20 @@
 package com.shortstack.hackertracker.List;
 
 import com.pedrogomez.renderers.RendererAdapter;
-import com.shortstack.hackertracker.Model.Default;
+import com.shortstack.hackertracker.Model.Item;
 
 import java.util.List;
 
-public class GenericRowAdapter extends RendererAdapter<Default> {
+public class GenericRowAdapter extends RendererAdapter<Item> {
     public GenericRowAdapter() {
         super(new GenericRowBuilder());
     }
 
     public void notifyItemUpdated(int item) {
-        List<Default> collection = getCollection();
+        List<Item> collection = getCollection();
         for (int i = 0; i < collection.size(); i++) {
-            if( collection.get(i) instanceof Default ) {
-                Default def = collection.get(i);
+            if( collection.get(i) instanceof Item) {
+                Item def = collection.get(i);
                 if (def.getId() == item) {
                     notifyItemChanged(i);
                     break;

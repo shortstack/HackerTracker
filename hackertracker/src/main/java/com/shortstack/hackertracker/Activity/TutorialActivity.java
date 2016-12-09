@@ -113,7 +113,7 @@ public class TutorialActivity extends AppCompatActivity {
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
             ViewGroup rootView = (ViewGroup) inflater.inflate(
-                    R.layout.row_tutorial, container, false);
+                    R.layout.fragment_tutorial, container, false);
             ButterKnife.bind(this, rootView);
 
             TutorialObject tutorial = tutorials[mPosition];

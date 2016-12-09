@@ -10,7 +10,7 @@ import com.pedrogomez.renderers.Renderer;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Home.DetailsBottomSheetDialogFragment;
-import com.shortstack.hackertracker.Model.Default;
+import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.ItemView;
 
@@ -19,7 +19,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class GenericDefaultRenderer extends Renderer<Default> implements View.OnClickListener, View.OnLongClickListener {
+public class GenericDefaultRenderer extends Renderer<Item> implements View.OnClickListener, View.OnLongClickListener {
 
     @Bind(R.id.item)
     ItemView item;

@@ -6,7 +6,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
-import com.shortstack.hackertracker.Model.Default;
+import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.ItemView;
 
@@ -36,7 +36,7 @@ public class DetailsBottomSheetDialogFragment extends android.support.design.wid
     View link;
 
 
-    public static DetailsBottomSheetDialogFragment newInstance(Default obj ) {
+    public static DetailsBottomSheetDialogFragment newInstance(Item obj ) {
         DetailsBottomSheetDialogFragment fragment = new DetailsBottomSheetDialogFragment();
 
         Bundle bundle = new Bundle();
@@ -51,11 +51,11 @@ public class DetailsBottomSheetDialogFragment extends android.support.design.wid
     @Override
     public void setupDialog(final Dialog dialog, int style) {
         super.setupDialog(dialog, style);
-        View view = View.inflate(getContext(), R.layout.activity_details_tab, null);
+        View view = View.inflate(getContext(), R.layout.bottom_sheet_details, null);
         dialog.setContentView(view);
         ButterKnife.bind(this, view);
 
-        Default obj = (Default) getArguments().getSerializable(ARG_OBJ);
+        Item obj = (Item) getArguments().getSerializable(ARG_OBJ);
 
         if( obj == null ) {
             Logger.e("Vendor is null. Can not render bottom sheet.");
@@ -68,7 +68,7 @@ public class DetailsBottomSheetDialogFragment extends android.support.design.wid
         displayDescription(obj);
     }
 
-    private void displayDescription(Default obj) {
+    private void displayDescription(Item obj) {
         boolean hasDescription = obj.hasDescription();
 
         if (hasDescription)

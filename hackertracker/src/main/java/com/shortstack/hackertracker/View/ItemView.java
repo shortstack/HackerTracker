@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import com.shortstack.hackertracker.Model.Default;
+import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
 
 import butterknife.Bind;
@@ -24,7 +24,7 @@ public class ItemView extends CardView {
 
     private int mDisplayMode = DISPLAY_MODE_FULL;
     private boolean mRoundCorners = true;
-    private Default mItem;
+    private Item mItem;
 
 
     @Bind(R.id.title)
@@ -96,12 +96,12 @@ public class ItemView extends CardView {
         addView(view);
     }
 
-    public void setItem( Default item ) {
+    public void setItem( Item item ) {
         mItem = item;
         renderItem();
     }
 
-    public Default getContent() {
+    public Item getContent() {
         return mItem;
     }
 

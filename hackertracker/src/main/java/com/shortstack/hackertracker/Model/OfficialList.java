@@ -7,13 +7,13 @@ public class OfficialList extends ApiBase {
 
     private String updateDate;
     private String updateTime;
-    private Default[] schedule;
+    private Item[] schedule;
 
-    public Default[] getAll() {
+    public Item[] getAll() {
         return schedule;
     }
 
-    public void setAll(Default[] schedule) {
+    public void setAll(Item[] schedule) {
         this.schedule = schedule;
     }
 

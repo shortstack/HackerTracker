@@ -11,7 +11,7 @@ import butterknife.ButterKnife;
 public class InformationFragment extends AppCompatActivity {
 
     private static final String ARG_LAYOUT_RES = "layout_res";
-    public static final int DEFAULT_LAYOUT = R.layout.fragment_maps;
+    public static final int DEFAULT_LAYOUT = R.layout.alert_badges;
 
 
     @Override

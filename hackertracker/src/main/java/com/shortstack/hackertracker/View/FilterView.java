@@ -54,7 +54,7 @@ public class FilterView extends LinearLayout {
     }
 
     private void init() {
-        inflate(getContext(), R.layout.filter, this);
+        inflate(getContext(), R.layout.alert_filter, this);
         ButterKnife.bind(this);
     }
 

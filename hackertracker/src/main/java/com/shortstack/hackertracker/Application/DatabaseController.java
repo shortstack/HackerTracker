@@ -9,7 +9,7 @@ import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Event.FavoriteEvent;
-import com.shortstack.hackertracker.Model.Default;
+import com.shortstack.hackertracker.Model.Item;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +30,7 @@ public class DatabaseController {
         mSchedule.close();
     }
 
-    public void bookmark(Default item) {
+    public void bookmark(Item item) {
 
 
 
@@ -41,12 +41,12 @@ public class DatabaseController {
         App.getApplication().postBusEvent(new FavoriteEvent(item.getId()));
 
 
-        List<Default> stars = getStars();
+        List<Item> stars = getStars();
         Logger.d("Stars: "+ stars.size());
 
     }
 
-    public void unbookmark(Default item) {
+    public void unbookmark(Item item) {
         item.setUnbookmarked();
 
         setScheduleBookmarked(Constants.UNBOOKMARKED, item.getId());
@@ -54,7 +54,7 @@ public class DatabaseController {
         App.getApplication().postBusEvent(new FavoriteEvent(item.getId()));
 
 
-        List<Default> stars = getStars();
+        List<Item> stars = getStars();
         Logger.d("Stars: "+ stars.size());
     }
 
@@ -70,8 +70,8 @@ public class DatabaseController {
         return mSchedule;
     }
 
-    public List<Default> getStars() {
-        ArrayList<Default> result = new ArrayList<>();
+    public List<Item> getStars() {
+        ArrayList<Item> result = new ArrayList<>();
 
 
 
@@ -97,8 +97,8 @@ public class DatabaseController {
 
 
     @NonNull
-    private Default getDefaultFromCursor(Cursor cursor) {
-        Default item = new Default();
+    private Item getDefaultFromCursor(Cursor cursor) {
+        Item item = new Item();
 
         item.setId(cursor.getInt(cursor.getColumnIndex("id")));
         item.setType(cursor.getString(cursor.getColumnIndex("type")));

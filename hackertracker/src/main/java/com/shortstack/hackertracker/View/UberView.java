@@ -37,7 +37,7 @@ public class UberView extends FrameLayout {
     private void init() {
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate(R.layout.uber, null);
+        View view = inflater.inflate(R.layout.alert_uber, null);
         ButterKnife.bind(this, view);
 
         addView(view);

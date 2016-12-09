@@ -10,7 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
 import com.shortstack.hackertracker.Application.App;
-import com.shortstack.hackertracker.Model.Default;
+import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.Model.Vendor;
 
 import java.util.ArrayList;
@@ -58,8 +58,8 @@ public class HackerTrackerFragment extends Fragment {
 
 
 
-    public List<Default> getItemByDate(String ... type) {
-        ArrayList<Default> result = new ArrayList<>();
+    public List<Item> getItemByDate(String ... type) {
+        ArrayList<Item> result = new ArrayList<>();
         SQLiteDatabase db = App.getApplication().getDatabaseController().getSchedule();
 
         boolean expiredEvents = App.getStorage().showExpiredEvents();
@@ -69,7 +69,7 @@ public class HackerTrackerFragment extends Fragment {
         try{
             if (cursor.moveToFirst()){
                 do{
-                    Default obj = getDefaultFromCursor(cursor);
+                    Item obj = getDefaultFromCursor(cursor);
                     if( expiredEvents || !obj.hasExpired())
                         result.add(obj);
                 }while(cursor.moveToNext());
@@ -97,8 +97,8 @@ public class HackerTrackerFragment extends Fragment {
         return query;
     }
 
-    public List<Default> getStars() {
-        ArrayList<Default> result = new ArrayList<>();
+    public List<Item> getStars() {
+        ArrayList<Item> result = new ArrayList<>();
 
         SQLiteDatabase db = App.getApplication().getDatabaseController().getSchedule();
 
@@ -123,8 +123,8 @@ public class HackerTrackerFragment extends Fragment {
     }
 
     @NonNull
-    private Default getDefaultFromCursor(Cursor cursor) {
-        Default item = new Default();
+    private Item getDefaultFromCursor(Cursor cursor) {
+        Item item = new Item();
 
         item.setId(cursor.getInt(cursor.getColumnIndex("id")));
         item.setType(cursor.getString(cursor.getColumnIndex("type")));

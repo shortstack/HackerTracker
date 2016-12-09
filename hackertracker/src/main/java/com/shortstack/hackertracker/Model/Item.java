@@ -30,7 +30,7 @@ import java.util.regex.Pattern;
  */
 
 @Parcel
-public class Default implements Serializable {
+public class Item implements Serializable {
 
     private static final int EMPTY_CATEGORY = 0;
 
@@ -213,11 +213,11 @@ public class Default implements Serializable {
         this.exploit = exploit;
     }
 
-    public Default() {
+    public Item() {
 
     }
 
-    public Default(int id, String title, String type, String description, String location, String who, String end, String begin, String link, String image, int demo, int tool, int exploit, int starred, int is_new) {
+    public Item(int id, String title, String type, String description, String location, String who, String end, String begin, String link, String image, int demo, int tool, int exploit, int starred, int is_new) {
         this.id = id;
         this.type = type;
         this.title = title;
@@ -431,6 +431,10 @@ public class Default implements Serializable {
             if (m.find()) {
                 url = url.substring(0, index + m.start() + 1);
             }
+        }
+
+        if( url.length() < getLink().length() ) {
+            url = url.concat("...");
         }
 
 

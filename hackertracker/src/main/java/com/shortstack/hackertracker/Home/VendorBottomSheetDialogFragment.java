@@ -42,7 +42,7 @@ public class VendorBottomSheetDialogFragment extends android.support.design.widg
     @Override
     public void setupDialog(final Dialog dialog, int style) {
         super.setupDialog(dialog, style);
-        View view = View.inflate(getContext(), R.layout.fragment_bottomsheet, null);
+        View view = View.inflate(getContext(), R.layout.bottom_sheet_vendor, null);
         dialog.setContentView(view);
         ButterKnife.bind(this, view);
 
