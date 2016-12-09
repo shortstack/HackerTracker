@@ -19,7 +19,7 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class GenericDefaultRenderer extends Renderer<Item> implements View.OnClickListener, View.OnLongClickListener {
+public class ItemRenderer extends Renderer<Item> implements View.OnClickListener, View.OnLongClickListener {
 
     @Bind(R.id.item)
     ItemView item;

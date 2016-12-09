@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class GenericRowBuilder extends RendererBuilder<Item> {
     public GenericRowBuilder() {
-        bind(Item.class, new GenericDefaultRenderer())
+        bind(Item.class, new ItemRenderer())
                 .bind(String.class, new GenericHeaderRenderer())
                 .bind(Date.class, new GenericTimeRenderer());
     }
