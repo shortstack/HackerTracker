@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="10dp"
     tools:background="@color/background">
@@ -18,36 +19,43 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <CheckBox
+            <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/speaker"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/speakers" />
+                android:text="@string/speakers"
+                app:buttonTint="@color/category_speaker"
+                />
 
-            <CheckBox
+            <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/skytalk"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/skytalks" />
+                android:text="@string/skytalks"
+                app:buttonTint="@color/category_skytalk"
+                />
 
-            <CheckBox
+            <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/events" />
+                android:text="@string/events"
+                app:buttonTint="@color/category_event"
+                />
 
-            <CheckBox
+            <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/village"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="@string/villages" />
+                android:text="@string/villages"
+                app:buttonTint="@color/category_village"
+                />
 
-            <CheckBox
+            <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/kids"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="false"
+                app:buttonTint="@color/category_kids"
                 android:text="@string/kids" />
         </LinearLayout>
 
@@ -57,32 +65,33 @@
             android:layout_weight="1"
             android:orientation="vertical">
 
-            <CheckBox
+            <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/contest"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="false"
+                app:buttonTint="@color/category_contest"
                 android:text="@string/contests" />
 
-            <CheckBox
+            <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/party"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="false"
+                app:buttonTint="@color/category_party"
                 android:text="@string/parties" />
 
-            <CheckBox
+            <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/demo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="false"
-                android:text="@string/demolabs" />
+                app:buttonTint="@color/category_demo"
+                android:text="@string/demolabs"
+                />
 
-            <CheckBox
+            <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/workshop"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:checked="false"
+                app:buttonTint="@color/category_workshop"
                 android:text="@string/workshops" />
         </LinearLayout>
 

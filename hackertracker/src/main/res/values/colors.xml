@@ -10,7 +10,7 @@
 
     <color name="black_alpha">#dd000000</color>
     <color name="black_alpha_hover">#EE000000</color>
-    <color name="white_alpha">#33FFFFFF</color>
+    <color name="white_alpha">#8cffffff</color>
     <color name="light_gray">#dddddd</color>
     <color name="dark_gray">#282828</color>
     <color name="green">#6464b7</color>
@@ -20,6 +20,23 @@
     <color name="star">#ffcc00</color>
 
     <color name="background">#2e3542</color>
+    <color name="card_background">#57000000</color>
 
     <color name="item_background">#1e232b</color>
+
+
+    <!-- Category colours -->
+    <color name="category_speaker">#C62828</color>
+    <color name="category_skytalk">#AD1457</color>
+    <color name="category_event">#6A1B9A</color>
+    <color name="category_village">#4527A0</color>
+    <color name="category_kids">#283593</color>
+    <color name="category_contest">#1565C0</color>
+    <color name="category_party">#0277BD</color>
+    <color name="category_demo">#00838F</color>
+    <color name="category_workshop">#00695C</color>
+
+
+
+
 </resources>

@@ -2,15 +2,15 @@
 <resources>
 
     <string-array name="colors">
-        <item>#C62828</item>
-        <item>#AD1457</item>
-        <item>#6A1B9A</item>
-        <item>#4527A0</item>
-        <item>#283593</item>
-        <item>#1565C0</item>
-        <item>#0277BD</item>
-        <item>#00838F</item>
-        <item>#00695C</item>
+        <item>@color/category_speaker</item>
+        <item>@color/category_skytalk</item>
+        <item>@color/category_event</item>
+        <item>@color/category_village</item>
+        <item>@color/category_kids</item>
+        <item>@color/category_contest</item>
+        <item>@color/category_party</item>
+        <item>@color/category_demo</item>
+        <item>@color/category_workshop</item>
     </string-array>
 
 </resources>

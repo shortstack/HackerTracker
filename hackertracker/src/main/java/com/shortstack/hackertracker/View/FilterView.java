@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.View;
 
 import android.content.Context;
+import android.support.v7.widget.AppCompatCheckBox;
 import android.util.AttributeSet;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
@@ -17,7 +18,7 @@ import butterknife.ButterKnife;
 public class FilterView extends LinearLayout {
 
     @Bind({R.id.speaker, R.id.skytalk, R.id.event, R.id.village, R.id.kids, R.id.contest, R.id.party, R.id.demo, R.id.workshop})
-    CheckBox[] types;
+    AppCompatCheckBox[] types;
 
     public FilterView(Context context) {
         super(context);
