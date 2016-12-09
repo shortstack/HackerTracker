@@ -1,8 +1,5 @@
 package com.shortstack.hackertracker.Common;
 
-/**
- * Created by whitneychampion on 6/22/14.
- */
 public interface Constants {
 
     long DEBUG_FORCE_TIME_DATE = 1470418500000L;
@@ -31,45 +28,6 @@ public interface Constants {
     String TYPE_KIDS = "Kids";
     String TYPE_JOKE = "Joke";
     String TYPE_OMG = "Password";
-
-    String LONG_DAY_0 = "2016-08-03";
-    String LONG_DAY_1 = "2016-08-04";
-    String LONG_DAY_2 = "2016-08-05";
-    String LONG_DAY_3 = "2016-08-06";
-    String LONG_DAY_4 = "2016-08-07";
-
-    String DAY_0 = "Wednesday";
-    String DAY_1 = "Thursday";
-    String DAY_2 = "Friday";
-    String DAY_3 = "Saturday";
-    String DAY_4 = "Sunday";
-
-    String FRAGMENT_SCHEDULE = "SchedulePagerFragment";
-    String FRAGMENT_SPEAKERS = "SpeakerPagerFragment";
-    String FRAGMENT_CONTESTS = "ContestPagerFragment";
-    String FRAGMENT_EVENTS = "EventPagerFragment";
-    String FRAGMENT_PARTIES = "PartyPagerFragment";
-    String FRAGMENT_PARTNERS = "PartnersFragment";
-    String FRAGMENT_KIDS = "KidsPagerFragment";
-    String FRAGMENT_WORKSHOPS = "WorkshopPagerFragment";
-    String FRAGMENT_SKYTALKS = "SkytalksPagerFragment";
-    String FRAGMENT_BOOKS = "BooksPagerFragment";
-    String FRAGMENT_VILLAGES = "VillagePagerFragment";
-    String FRAGMENT_VENDORS = "VendorsFragment";
-    String FRAGMENT_DEMOLAB = "DemoLabsFragment";
-    String FRAGMENT_HOME = "HomeFragment";
-    String FRAGMENT_LINKS = "LinksFragment";
-    String FRAGMENT_MAPS = "MapsFragment";
-    String FRAGMENT_SEARCH = "SearchFragment";
-    String FRAGMENT_SHUTTLE = "ShuttleFragment";
-    String FRAGMENT_FAQ = "FAQFragment";
-    String FRAGMENT_BADGES = "BadgeFragment";
-    String FRAGMENT_WIFI = "WifiFragment";
-    String FRAGMENT_RADIO = "RadioFragment";
-    String FRAGMENT_WORKSHOP_INFO = "WorkshopInfoFragment";
-    String FRAGMENT_SETTINGS = "SettingsFragment";
-
-    String[] COLUMN_NAMES = {"Title","Speaker Name","Start Time","End Time","Date","Location"};
 
     String UBER_CLIENT_ID = "q1eUCeC1ZenbGmQD2vb0MytALvboEHhD";
 
