@@ -13,6 +13,7 @@ import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Fragment.FAQActivity;
 import com.shortstack.hackertracker.Fragment.InformationFragment;
 import com.shortstack.hackertracker.R;
+import com.shortstack.hackertracker.View.UberView;
 
 import java.util.List;
 
@@ -90,11 +91,12 @@ public class HomeHeaderRenderer extends Renderer<Void> {
 
     @OnClick(R.id.settings)
     public void onSettingsClick() {
-
-//        SettingsFragment fragment = new SettingsFragment();
-//        ((AppCompatActivity)getContext()).getSupportFragmentManager().beginTransaction().replace(R.id.container, fragment).addToBackStack(null).commit();
-
         Intent intent = new Intent(getContext(), SettingsActivity.class);
         getContext().startActivity(intent);
+    }
+
+    @OnClick(R.id.uber)
+    public void onUberClick() {
+        MaterialAlert.create(getContext()).setTitle(R.string.uber).setView( new UberView(getContext())).show();
     }
 }
