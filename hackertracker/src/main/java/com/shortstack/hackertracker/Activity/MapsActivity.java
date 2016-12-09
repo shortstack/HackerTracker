@@ -15,7 +15,7 @@ import butterknife.ButterKnife;
 
 public class MapsActivity extends AppCompatActivity {
 
-    public static final String ASSET_NAME = "map_defcon.pdf";
+    public static final String ASSET_NAME = "map_defcon_small.pdf";
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -53,6 +53,8 @@ public class MapsActivity extends AppCompatActivity {
                 progress.setVisibility(View.GONE);
             }
         }).load();
+
+
     }
 
     @Override
