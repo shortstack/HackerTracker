@@ -23,9 +23,7 @@
             android:clipChildren="false"
             android:clipToPadding="false"
 
-            android:paddingBottom="30dp"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp">
+            android:paddingBottom="30dp">
 
 
             <LinearLayout
@@ -37,7 +35,6 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
                     android:gravity="right"
                     android:orientation="horizontal">
 
@@ -59,8 +56,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:src="@drawable/ic_bookmark_border_white_24dp"
-                        android:id="@+id/bookmark" />
+                        android:src="@drawable/ic_star_border_white_24dp"
+                        android:id="@+id/star" />
 
                 </LinearLayout>
 
@@ -68,7 +65,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingBottom="10dp"
-                    android:paddingTop="10dp">
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp">
 
                     <TextView
                         android:id="@+id/description"

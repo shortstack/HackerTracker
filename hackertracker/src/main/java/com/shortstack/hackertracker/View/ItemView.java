@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
 
+import java.util.Random;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -50,6 +52,9 @@ public class ItemView extends CardView {
 
     @Bind(R.id.category)
     View category;
+
+    @Bind(R.id.star_bar)
+    View star;
 
 
     public ItemView(Context context) {
@@ -149,7 +154,7 @@ public class ItemView extends CardView {
     }
 
     private void renderBookmark() {
-        // TODO: Add bookmark to the layout, and handle the status.
+        star.setVisibility( new Random().nextBoolean() ? GONE : VISIBLE );
     }
 
     public void updateBookmark() {

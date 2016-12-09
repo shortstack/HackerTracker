@@ -14,19 +14,35 @@
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/rootLayout"
         android:layout_alignTop="@+id/rootLayout"
-        android:background="#ee837b" />
+        android:background="@color/category_speaker" />
 
     <LinearLayout
         android:id="@+id/rootLayout"
         style="@style/row"
-        android:layout_toEndOf="@+id/category"
         android:layout_toRightOf="@+id/category"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:layout_toStartOf="@+id/star_bar"
+        android:layout_toLeftOf="@+id/star_bar">
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/card_item_text"
-            tools:text="Young Hacker Talk" />
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/card_item_text"
+                android:layout_weight="1"
+                tools:text="Young Hacker Talk" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_star_white_24dp"
+                android:layout_alignParentEnd="true"
+                android:alpha=".65"
+                android:visibility="gone" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/location"
@@ -35,7 +51,7 @@
 
         <LinearLayout
             android:id="@+id/icons"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -62,15 +78,23 @@
         <TextView
             android:id="@+id/time"
             style="@style/card_item_text.small"
-            tools:text="Friday, 11:00 AM - 3:00 PM"
-            />
+            tools:text="Friday, 11:00 AM - 3:00 PM" />
 
         <TextView
             android:id="@+id/category_text"
             style="@style/card_item_text.small"
-            tools:text="Event"
-            />
+            tools:text="Event" />
 
     </LinearLayout>
+
+    <View
+        android:id="@+id/star_bar"
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/rootLayout"
+        android:layout_alignTop="@+id/rootLayout"
+        android:background="@color/colorPrimary"
+        android:layout_alignParentRight="true"
+        android:focusableInTouchMode="false" />
 
 </RelativeLayout>
