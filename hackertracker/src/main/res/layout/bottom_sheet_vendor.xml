@@ -3,13 +3,14 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@color/background"
     android:orientation="vertical">
 
     <TextView
         android:id="@+id/title"
         android:layout_width="match_parent"
         android:layout_height="80dp"
-        android:background="?colorPrimary"
+        android:background="@color/card_background"
         android:elevation="5dp"
 
         android:gravity="center"
@@ -23,32 +24,29 @@
     <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp">
+        android:paddingBottom="30dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <Button
+            <ImageView
                 android:id="@+id/link"
-                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
-                android:text="Website"
-                android:textColor="?colorPrimary" />
+                android:src="@drawable/ic_link_white_24dp"
+                android:padding="10dp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:paddingBottom="30dp"
-                android:paddingRight="10dp"
                 android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:paddingTop="20dp">
 
 
@@ -70,6 +68,11 @@
 
 
             </FrameLayout>
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                layout="@layout/row_footer" />
 
         </LinearLayout>
 

@@ -25,7 +25,7 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class VendorsActivity extends AppCompatActivity {
-    
+
     @Bind(R.id.toolbar)
     Toolbar toolbar;
 
@@ -35,7 +35,7 @@ public class VendorsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.fragment_vendors);
+        setContentView(R.layout.activity_vendors);
         ButterKnife.bind(this);
 
         setSupportActionBar(toolbar);

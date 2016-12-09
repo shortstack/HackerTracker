@@ -1,5 +1,7 @@
 package com.shortstack.hackertracker.Model;
 
+import android.text.TextUtils;
+
 import java.io.Serializable;
 
 /**
@@ -56,4 +58,7 @@ public class Vendor implements Serializable {
         this.image = image;
     }
 
+    public boolean hasLink() {
+        return !TextUtils.isEmpty(link);
+    }
 }

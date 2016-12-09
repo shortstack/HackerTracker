@@ -1,17 +1,22 @@
 package com.shortstack.hackertracker.Home;
 
 import android.app.Dialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
+import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Model.Vendor;
 import com.shortstack.hackertracker.R;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class VendorBottomSheetDialogFragment extends android.support.design.widget.BottomSheetDialogFragment {
 
@@ -25,6 +30,9 @@ public class VendorBottomSheetDialogFragment extends android.support.design.widg
 
     @Bind(R.id.empty)
     View empty;
+
+    @Bind(R.id.link)
+    View link;
 
 
     public static VendorBottomSheetDialogFragment newInstance( Vendor vendor ) {
@@ -46,7 +54,7 @@ public class VendorBottomSheetDialogFragment extends android.support.design.widg
         dialog.setContentView(view);
         ButterKnife.bind(this, view);
 
-        Vendor vendor = (Vendor) getArguments().getSerializable(ARG_VENDOR);
+        Vendor vendor = getContent();
 
         if( vendor == null ) {
             Logger.e("Vendor is null. Can not render bottom sheet.");
@@ -58,6 +66,26 @@ public class VendorBottomSheetDialogFragment extends android.support.design.widg
         boolean isDescriptionEmpty = TextUtils.isEmpty(vendor.getDescription());
         empty.setVisibility( isDescriptionEmpty ? View.VISIBLE : View.GONE );
         description.setText(vendor.getDescription());
+
+        link.setVisibility( vendor.hasLink() ? View.VISIBLE : View.GONE );
     }
 
+    private Vendor getContent() {
+        return (Vendor) getArguments().getSerializable(ARG_VENDOR);
+    }
+
+    @OnClick(R.id.link)
+    public void onLinkClick() {
+        MaterialAlert.create(getContext())
+                .setTitle(R.string.link_warning)
+                .setMessage(String.format(getContext().getString(R.string.link_message), getContent().getLink().toLowerCase()))
+                .setPositiveButton(R.string.open_link, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        final Intent intent = new Intent(Intent.ACTION_VIEW).setData(Uri.parse(getContent().getLink()));
+                        getContext().startActivity(intent);
+                    }
+                }).setBasicNegativeButton()
+                .show();
+    }
 }
