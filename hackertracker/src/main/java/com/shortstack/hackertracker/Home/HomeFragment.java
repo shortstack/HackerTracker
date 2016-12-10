@@ -17,9 +17,6 @@ import com.shortstack.hackertracker.R;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by Whitney Champion on 3/29/14.
- */
 public class HomeFragment extends Fragment {
 
     private static final int TYPE_HEADER = 0;
@@ -59,7 +56,7 @@ public class HomeFragment extends Fragment {
             update[0] = myItems[i];
             update[1] = myItems[i+1];
 
-            adapter.add(update);
+            //adapter.add(update);
         }
 
         return rootView;
