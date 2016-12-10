@@ -15,6 +15,7 @@ import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Event.FavoriteEvent;
+import com.shortstack.hackertracker.Event.RefreshTimerEvent;
 import com.shortstack.hackertracker.Event.UpdateListContentsEvent;
 import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
 import com.shortstack.hackertracker.Model.Filter;
@@ -48,11 +49,14 @@ public class GenericRowFragment extends HackerTrackerFragment {
 
     public Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
-            Logger.d("Refreshing schedule.");
-            App.getApplication().DEBUG_TIME_EXTRA += Constants.TIMER_INTERVAL_FIVE_MIN * 5;
-//                App.getApplication().postBusEvent( new RefreshTimerEvenr() );
+            Logger.d(">>Refreshing<<");
+
+            App.getApplication().DEBUG_TIME_EXTRA += Constants.TIMER_INTERVAL_FIVE_MIN / 5;
+
+            App.getApplication().postBusEvent( new RefreshTimerEvent() );
             if (adapter != null)
                 adapter.notifyTimeChanged();
+
         }
     };
     private Timer mTimer;
@@ -91,7 +95,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
             public void run() {
                 mHandler.obtainMessage(1).sendToTarget();
             }
-        }, time, Constants.TIMER_INTERVAL);
+        }, time, Constants.TIMER_INTERVAL * 5);
     }
 
     @Override

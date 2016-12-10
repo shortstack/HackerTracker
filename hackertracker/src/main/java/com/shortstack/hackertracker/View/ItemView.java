@@ -1,17 +1,24 @@
 package com.shortstack.hackertracker.View;
 
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
+import android.graphics.PorterDuff;
 import android.support.v7.widget.CardView;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.DecelerateInterpolator;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.shortstack.hackertracker.Application.App;
+import com.shortstack.hackertracker.Event.RefreshTimerEvent;
 import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
+import com.squareup.otto.Subscribe;
 
 import java.util.Random;
 
@@ -22,6 +29,7 @@ public class ItemView extends CardView {
 
     public static final int DISPLAY_MODE_MIN = 0;
     public static final int DISPLAY_MODE_FULL = 1;
+    public static final int PROGRESS_UPDATE_DURATION = 100;
 
 
     private int mDisplayMode = DISPLAY_MODE_FULL;
@@ -56,6 +64,8 @@ public class ItemView extends CardView {
     @Bind(R.id.star_bar)
     View star;
 
+    @Bind(R.id.progress)
+    ProgressBar progress;
 
     public ItemView(Context context) {
         super(context);
@@ -110,11 +120,46 @@ public class ItemView extends CardView {
         return mItem;
     }
 
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        App.getApplication().registerBusListener(this);
+
+    }
+
+    @Override
+    protected void onDetachedFromWindow() {
+        super.onDetachedFromWindow();
+        App.getApplication().unregisterBusListener(this);
+    }
+
+    @Subscribe
+    public void onRefreshTimeEvent(RefreshTimerEvent event ) {
+        updateProgressBar();
+    }
+
     private void renderItem() {
         renderText();
         renderIcon();
         renderCategoryColour();
         renderBookmark();
+        setProgressBar();
+    }
+
+    private void setProgressBar() {
+        progress.setProgress(getProgress());
+    }
+
+    public void updateProgressBar() {
+        ObjectAnimator animation = ObjectAnimator.ofInt(progress, "progress", getProgress());
+        animation.setDuration(PROGRESS_UPDATE_DURATION);
+        animation.setInterpolator(new DecelerateInterpolator());
+        animation.start();
+    }
+
+    private int getProgress() {
+        return (int)((getContent().getProgress()) * 100 );
     }
 
     private void renderText() {
@@ -144,6 +189,9 @@ public class ItemView extends CardView {
         int position = count % allColors.length;
 
         category.setBackgroundColor(allColors[position]);
+
+
+        progress.getProgressDrawable().setColorFilter(allColors[position], PorterDuff.Mode.SRC_IN);
 
         if( mDisplayMode == DISPLAY_MODE_MIN ) {
             categoryText.setVisibility(GONE);

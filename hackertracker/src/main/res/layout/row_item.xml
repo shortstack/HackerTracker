@@ -16,85 +16,117 @@
         android:layout_alignTop="@+id/rootLayout"
         android:background="@color/category_speaker" />
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/rootLayout"
-        style="@style/row"
-        android:layout_toRightOf="@+id/category"
-        android:orientation="vertical"
-        android:layout_toStartOf="@+id/star_bar"
-        android:layout_toLeftOf="@+id/star_bar">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/category"
+        android:layout_toRightOf="@+id/category">
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/title"
-                style="@style/card_item_text"
-                android:layout_weight="1"
-                tools:text="Young Hacker Talk" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/ic_star_white_24dp"
-                android:layout_alignParentEnd="true"
-                android:alpha=".65"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/location"
-            style="@style/card_item_text"
-            tools:text="Track 1" />
-
-        <LinearLayout
-            android:id="@+id/icons"
+        <ProgressBar
+            style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:max="100"
+            android:progress="24"
+            android:progressDrawable="@drawable/progress_bar"
+            android:alpha=".8"
+            android:layout_alignParentLeft="false"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="false"
+            android:layout_marginTop="0dp"
+            android:layout_alignParentBottom="false"
+            android:layout_alignBottom="@+id/container"
+            android:layout_alignTop="@+id/container"
+            android:id="@+id/progress" />
+
+        <LinearLayout
+            style="@style/row"
+            android:orientation="vertical"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="0dp"
+            android:layout_toLeftOf="@+id/star_bar"
+            android:layout_toStartOf="@+id/star_bar"
+            android:id="@+id/container">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/title"
+                    style="@style/card_item_text"
+                    android:layout_weight="1"
+                    android:text="Compelled Decryption - State of the Art in Doctrinal Perversions" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:alpha=".65"
+                    android:src="@drawable/ic_star_white_24dp"
+                    android:visibility="gone" />
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/demo"
-                style="@style/card_item_text.category"
-                android:text="@string/demo"
-                android:textColor="@color/white_alpha" />
+                android:id="@+id/location"
+                style="@style/card_item_text"
+                android:layout_weight="1"
+                android:text="Track 1" />
+
+            <LinearLayout
+                android:id="@+id/icons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/demo"
+                    style="@style/card_item_text.category"
+                    android:text="@string/demo"
+                    android:textColor="@color/white_alpha" />
+
+                <TextView
+                    android:id="@+id/exploit"
+                    style="@style/card_item_text.category"
+                    android:text="@string/exploit"
+                    android:textColor="@color/white_alpha" />
+
+                <TextView
+                    android:id="@+id/tool"
+                    style="@style/card_item_text.category"
+                    android:text="@string/tool"
+                    android:textColor="@color/white_alpha" />
+
+            </LinearLayout>
 
             <TextView
-                android:id="@+id/exploit"
-                style="@style/card_item_text.category"
-                android:text="@string/exploit"
-                android:textColor="@color/white_alpha" />
+                android:id="@+id/time"
+                style="@style/card_item_text.small"
+                tools:text="Friday, 11:00 AM - 3:00 PM" />
 
             <TextView
-                android:id="@+id/tool"
-                style="@style/card_item_text.category"
-                android:text="@string/tool"
-                android:textColor="@color/white_alpha" />
+                android:id="@+id/category_text"
+                style="@style/card_item_text.small"
+                tools:text="Event" />
 
         </LinearLayout>
 
-        <TextView
-            android:id="@+id/time"
-            style="@style/card_item_text.small"
-            tools:text="Friday, 11:00 AM - 3:00 PM" />
+        <ImageView
+            android:id="@+id/star_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:focusableInTouchMode="false"
+            android:paddingRight="3dp"
+            android:paddingTop="3dp"
+            android:scaleType="fitStart"
+            android:src="@drawable/ic_star_white_24dp" />
 
-        <TextView
-            android:id="@+id/category_text"
-            style="@style/card_item_text.small"
-            tools:text="Event" />
+    </RelativeLayout>
 
-    </LinearLayout>
-
-    <View
-        android:id="@+id/star_bar"
-        android:layout_width="10dp"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/rootLayout"
-        android:layout_alignTop="@+id/rootLayout"
-        android:background="@color/colorPrimary"
-        android:layout_alignParentRight="true"
-        android:focusableInTouchMode="false" />
 
 </RelativeLayout>

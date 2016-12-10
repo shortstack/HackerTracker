@@ -346,6 +346,30 @@ public class Item implements Serializable {
         return date.after(getEndDateObject());
     }
 
+    public boolean hasBegin() {
+        Date date = App.getApplication().getCurrentDate();
+        return date.after(getBeginDateObject());
+    }
+
+    public float getProgress() {
+        if( !hasBegin() )
+            return 0;
+
+        Date beginDateObject = getBeginDateObject();
+        Date endDateObject = getEndDateObject();
+        Date currentDate = App.getApplication().getCurrentDate();
+
+        float length = (endDateObject.getTime() - beginDateObject.getTime()) / 1000 / 60;
+        float p = (endDateObject.getTime() - currentDate.getTime()) / 1000 / 60;
+
+        if( p == 0 )
+            return 1;
+
+        float l = p / length;
+
+        return  1 - l;
+    }
+
     @NonNull
     @SuppressLint("SimpleDateFormat")
     private DateFormat getDateFormat() {

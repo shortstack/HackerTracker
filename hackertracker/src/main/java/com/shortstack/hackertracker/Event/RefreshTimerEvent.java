@@ -1,4 +1,4 @@
 package com.shortstack.hackertracker.Event;
 
-public class RefreshTimerEvenr {
+public class RefreshTimerEvent {
 }

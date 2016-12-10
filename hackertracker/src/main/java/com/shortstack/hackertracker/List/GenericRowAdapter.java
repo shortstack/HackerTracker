@@ -30,10 +30,6 @@ public class GenericRowAdapter extends RendererAdapter<Item> {
         boolean hasRemovedEvent = false;
 
         for (int i = collection.size() - 1; i >= 0; i--) {
-            if( collection.get(i) instanceof Date ) {
-                notifyItemChanged(i);
-            }
-
             if( collection.get(i) instanceof Item) {
                 Item def = (Item) collection.get(i);
 
@@ -42,8 +38,6 @@ public class GenericRowAdapter extends RendererAdapter<Item> {
                     notifyItemRemoved(i);
 
                     hasRemovedEvent = true;
-
-
                 }
             }
         }

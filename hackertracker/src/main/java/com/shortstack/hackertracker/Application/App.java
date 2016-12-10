@@ -162,9 +162,6 @@ public class App extends Application {
     }
 
     public static App getApplication() {
-        if (application == null) {
-            throw new IllegalStateException("Application not initialized");
-        }
         return application;
     }
 
@@ -202,5 +199,13 @@ public class App extends Application {
 
     public void postBusEvent( Object event ) {
         bus.post(event);
+    }
+
+    public void unregisterBusListener(Object itemView) {
+        bus.unregister(itemView);
+    }
+
+    public void registerBusListener(Object itemView) {
+        bus.register(itemView);
     }
 }

@@ -7,6 +7,7 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -15,18 +16,17 @@
         android:textColor="@android:color/white"
         android:textSize="@dimen/abc_text_size_headline_material"
         tools:background="@color/background"
-        tools:text="10:00 AM"
-        android:id="@+id/header" />
+        android:text="10:00 AM" />
 
     <TextView
-        tools:background="@color/background"
-        tools:text="10:00 AM"
+        android:id="@+id/subheader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingBottom="10dp"
         android:textColor="@android:color/white"
         android:textSize="@dimen/abc_text_size_subhead_material"
-        android:id="@+id/subheader" />
+        tools:background="@color/background"
+        android:text="10:00 AM" />
 
 </LinearLayout>
