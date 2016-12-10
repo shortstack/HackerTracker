@@ -1,8 +1,14 @@
 package com.shortstack.hackertracker.Common;
 
+import com.shortstack.hackertracker.BuildConfig;
+
 public interface Constants {
 
     long DEBUG_FORCE_TIME_DATE = 1470418500000L;
+    long TIMER_INTERVAL_FIVE_MIN = 300000;
+    long TIMER_INTERVAL_DEBUG = 20000;
+
+    long TIMER_INTERVAL = BuildConfig.DEBUG ? TIMER_INTERVAL_DEBUG : TIMER_INTERVAL_FIVE_MIN;
 
     int BOOKMARKED = 1;
     int UNBOOKMARKED = 0;
