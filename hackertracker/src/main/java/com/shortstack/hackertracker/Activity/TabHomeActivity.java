@@ -35,7 +35,7 @@ public class TabHomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home_tab);
+        setContentView(R.layout.activity_home);
         ButterKnife.bind(this);
 //        setSupportActionBar(toolbar);
         initViewPager();
