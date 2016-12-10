@@ -51,7 +51,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
             Logger.d("Refreshing schedule.");
             App.getApplication().DEBUG_TIME_EXTRA += Constants.TIMER_INTERVAL_FIVE_MIN * 5;
 //                App.getApplication().postBusEvent( new RefreshTimerEvenr() );
-            if( adapter != null )
+            if (adapter != null)
                 adapter.notifyTimeChanged();
         }
     };
@@ -61,10 +61,6 @@ public class GenericRowFragment extends HackerTrackerFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         App.getApplication().registerBusListener(this);
-
-
-
-
 
 
     }
@@ -80,29 +76,34 @@ public class GenericRowFragment extends HackerTrackerFragment {
     public void onResume() {
         super.onResume();
 
-        mHandler.obtainMessage(1).sendToTarget();
-
         Date currentDate = App.getApplication().getCurrentDate();
         long time = currentDate.getTime();
+
+        if (App.getStorage().shouldRefresh(time)) {
+            mHandler.obtainMessage(1).sendToTarget();
+        }
+
         time = time % Constants.TIMER_INTERVAL;
+
 
         mTimer = new Timer();
         mTimer.scheduleAtFixedRate(new TimerTask() {
             public void run() {
                 mHandler.obtainMessage(1).sendToTarget();
             }
-        }, time, Constants.TIMER_INTERVAL );
+        }, time, Constants.TIMER_INTERVAL);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mTimer.cancel();
+        App.getStorage().setLastRefreshTimer(App.getApplication().getCurrentDate().getTime());
     }
 
     @Subscribe
-    public void handleFavoriteEvent(FavoriteEvent event ) {
-        adapter.notifyItemUpdated( event.getItem() );
+    public void handleFavoriteEvent(FavoriteEvent event) {
+        adapter.notifyItemUpdated(event.getItem());
     }
 
     @Subscribe
@@ -153,12 +154,12 @@ public class GenericRowFragment extends HackerTrackerFragment {
         for (int i = 0; i < collection.size(); i++) {
             Object object = collection.get(i);
 
-            if( object instanceof Item) {
+            if (object instanceof Item) {
 
                 Date beginDateObject = ((Item) object).getBeginDateObject();
-                if( beginDateObject.after(currentDate)) {
+                if (beginDateObject.after(currentDate)) {
                     for (int i1 = i - 1; i1 >= 0; i1--) {
-                        if( !(object instanceof String ) ) {
+                        if (!(object instanceof String)) {
                             return i1;
                         }
                     }
@@ -170,8 +171,8 @@ public class GenericRowFragment extends HackerTrackerFragment {
         return 0;
     }
 
-    protected List<Item> getEvents(Filter filter ) {
-        if( filter.getTypesSet().size() == 0 ) {
+    protected List<Item> getEvents(Filter filter) {
+        if (filter.getTypesSet().size() == 0) {
             empty.setVisibility(View.VISIBLE);
             return Collections.emptyList();
         }

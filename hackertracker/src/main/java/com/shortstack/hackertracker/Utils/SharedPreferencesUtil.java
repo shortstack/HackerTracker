@@ -4,11 +4,14 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 import com.shortstack.hackertracker.Application.App;
+import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Filter;
 
 import java.util.HashSet;
 
 public class SharedPreferencesUtil {
+
+
 
     public enum Key {
 
@@ -19,6 +22,7 @@ public class SharedPreferencesUtil {
         USER_SEEN_ONBOARDING("user_seen_onboarding"),
         USER_ANALYTICS("user_analytics"),
 
+        APP_LAST_REFRESH("app_last_refresh"),
         APP_LAST_UPDATED("app_last_updated"),
         ;
 
@@ -89,5 +93,13 @@ public class SharedPreferencesUtil {
 
     public void markOnboardingSeen() {
         getEditor().putBoolean(Key.USER_SEEN_ONBOARDING.toString(), true).apply();
+    }
+
+    public void setLastRefreshTimer(long time) {
+        getEditor().putLong(Key.APP_LAST_REFRESH.toString(), time).apply();
+    }
+
+    public boolean shouldRefresh(long time) {
+        return time - mPreferences.getLong(Key.APP_LAST_REFRESH.toString(), 0) > Constants.TIMER_INTERVAL;
     }
 }
