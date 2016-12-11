@@ -29,7 +29,7 @@ public class ItemView extends CardView {
 
     public static final int DISPLAY_MODE_MIN = 0;
     public static final int DISPLAY_MODE_FULL = 1;
-    public static final int PROGRESS_UPDATE_DURATION = 100;
+    public static final int PROGRESS_UPDATE_DURATION_PER_PERCENT = 50;
 
 
     private int mDisplayMode = DISPLAY_MODE_FULL;
@@ -152,8 +152,9 @@ public class ItemView extends CardView {
     }
 
     public void updateProgressBar() {
-        ObjectAnimator animation = ObjectAnimator.ofInt(progress, "progress", getProgress());
-        animation.setDuration(PROGRESS_UPDATE_DURATION);
+        int progress = getProgress();
+        ObjectAnimator animation = ObjectAnimator.ofInt(this.progress, "progress", progress);
+        animation.setDuration(PROGRESS_UPDATE_DURATION_PER_PERCENT * ( progress - this.progress.getProgress()));
         animation.setInterpolator(new DecelerateInterpolator());
         animation.start();
     }

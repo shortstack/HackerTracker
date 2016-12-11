@@ -10,9 +10,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Application.App;
+import com.shortstack.hackertracker.BuildConfig;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Event.FavoriteEvent;
 import com.shortstack.hackertracker.Event.RefreshTimerEvent;
@@ -49,9 +49,8 @@ public class GenericRowFragment extends HackerTrackerFragment {
 
     public Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
-            Logger.d(">>Refreshing<<");
-
-            App.getApplication().DEBUG_TIME_EXTRA += Constants.TIMER_INTERVAL_FIVE_MIN / 5;
+//            Logger.d(">>Refreshing<<");
+            App.getApplication().DEBUG_TIME_EXTRA += Constants.TIMER_INTERVAL_FIVE_MIN;
 
             App.getApplication().postBusEvent( new RefreshTimerEvent() );
             if (adapter != null)
@@ -95,13 +94,16 @@ public class GenericRowFragment extends HackerTrackerFragment {
             public void run() {
                 mHandler.obtainMessage(1).sendToTarget();
             }
-        }, time, Constants.TIMER_INTERVAL * 5);
+        }, time, Constants.TIMER_INTERVAL);
     }
 
     @Override
     public void onPause() {
         super.onPause();
         mTimer.cancel();
+        if(BuildConfig.DEBUG) {
+            App.getApplication().DEBUG_TIME_EXTRA += Constants.DEBUG_PAUSE_TIME_SKIP;
+        }
         App.getStorage().setLastRefreshTimer(App.getApplication().getCurrentDate().getTime());
     }
 

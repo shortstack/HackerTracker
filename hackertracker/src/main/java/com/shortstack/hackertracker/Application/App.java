@@ -18,7 +18,6 @@ import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.BuildConfig;
 import com.shortstack.hackertracker.Common.Constants;
-import com.shortstack.hackertracker.List.GenericRowFragment;
 import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Utils.AlarmReceiver;
@@ -187,14 +186,6 @@ public class App extends Application {
 
     public DatabaseController getDatabaseController() {
         return mDatabaseController;
-    }
-
-    public void registerBusListener(GenericRowFragment context ) {
-        bus.register(context);
-    }
-
-    public void unregisterBusListener( GenericRowFragment context ) {
-        bus.unregister(context);
     }
 
     public void postBusEvent( Object event ) {
