@@ -16,6 +16,7 @@ import android.os.Build;
 import com.crashlytics.android.Crashlytics;
 import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
+import com.shortstack.hackertracker.Analytics.AnalyticsController;
 import com.shortstack.hackertracker.BuildConfig;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Item;
@@ -50,6 +51,7 @@ public class App extends Application {
 
     private static Bus bus = new Bus();
     public long DEBUG_TIME_EXTRA = 0;
+    private AnalyticsController mAnalyticsController;
 
     public void onCreate() {
         super.onCreate();
@@ -69,6 +71,8 @@ public class App extends Application {
 
         // set up shared preferences
         storage = new SharedPreferencesUtil();
+
+        mAnalyticsController = new AnalyticsController();
 
         // register alarm broadcast
         if (storage.allowPushNotifications()) {
@@ -186,6 +190,10 @@ public class App extends Application {
 
     public DatabaseController getDatabaseController() {
         return mDatabaseController;
+    }
+
+    public AnalyticsController getAnalyticsController() {
+        return mAnalyticsController;
     }
 
     public void postBusEvent( Object event ) {

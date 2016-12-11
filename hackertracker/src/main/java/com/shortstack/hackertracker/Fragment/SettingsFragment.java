@@ -8,6 +8,8 @@ import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Event.UpdateListContentsEvent;
 import com.shortstack.hackertracker.R;
 
+import static com.shortstack.hackertracker.Analytics.AnalyticsController.Analytics;
+
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
     @Override
@@ -17,24 +19,31 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+
+        Analytics event = Analytics.SETTINGS_EXPIRED_EVENT;
+
         switch (key) {
             case "user_analytics":
-                //
+                event = Analytics.SETTINGS_ANALYTICS;
                 break;
 
             case "user_allow_push_notifications":
-                //
+                event = Analytics.SETTINGS_NOTIFICATIONS;
                 break;
 
             case "user_use_military_time":
+                event = Analytics.SETTINGS_MILITARY_TIME;
                 App.getApplication().postBusEvent(new UpdateListContentsEvent());
                 break;
 
             case "user_show_expired_events":
+                event = Analytics.SETTINGS_EXPIRED_EVENT;
                 App.getApplication().postBusEvent(new UpdateListContentsEvent());
                 break;
         }
 
+        boolean value = sharedPreferences.getBoolean(key, false);
+        App.getApplication().getAnalyticsController().tagSettingsEvent(event, value);
     }
 
     @Override
