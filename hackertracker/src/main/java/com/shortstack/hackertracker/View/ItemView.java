@@ -64,6 +64,7 @@ public class ItemView extends CardView {
 
     @Bind(R.id.progress)
     ProgressBar progress;
+    private ObjectAnimator mAnimation;
 
     public ItemView(Context context) {
         super(context);
@@ -130,6 +131,11 @@ public class ItemView extends CardView {
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         App.getApplication().unregisterBusListener(this);
+
+        if( mAnimation != null ) {
+            mAnimation.cancel();
+            mAnimation = null;
+        }
     }
 
     @Subscribe
@@ -151,10 +157,18 @@ public class ItemView extends CardView {
 
     public void updateProgressBar() {
         int progress = getProgress();
-        ObjectAnimator animation = ObjectAnimator.ofInt(this.progress, "progress", progress);
-        animation.setDuration(PROGRESS_UPDATE_DURATION_PER_PERCENT * ( progress - this.progress.getProgress()));
-        animation.setInterpolator(new DecelerateInterpolator());
-        animation.start();
+
+        if( progress < this.progress.getProgress() ) {
+            setProgressBar();
+            return;
+        }
+
+        int duration = PROGRESS_UPDATE_DURATION_PER_PERCENT * (progress - this.progress.getProgress());
+
+        mAnimation = ObjectAnimator.ofInt(this.progress, "progress", progress);
+        mAnimation.setDuration(duration);
+        mAnimation.setInterpolator(new DecelerateInterpolator());
+        mAnimation.start();
     }
 
     private int getProgress() {

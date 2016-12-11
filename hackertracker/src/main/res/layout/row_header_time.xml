@@ -4,8 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:animateLayoutChanges="true">
+    android:orientation="vertical">
 
     <TextView
         android:id="@+id/header"
@@ -14,10 +13,10 @@
         android:gravity="center"
         android:paddingBottom="10dp"
         android:paddingTop="30dp"
+        android:text="10:00 AM"
         android:textColor="@android:color/white"
         android:textSize="@dimen/abc_text_size_headline_material"
-        tools:background="@color/background"
-        android:text="10:00 AM" />
+        tools:background="@color/background" />
 
     <TextView
         android:id="@+id/subheader"
@@ -25,9 +24,9 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingBottom="10dp"
+        android:text="in 15 min"
         android:textColor="@android:color/white"
         android:textSize="@dimen/abc_text_size_subhead_material"
-        tools:background="@color/background"
-        android:text="10:00 AM" />
+        tools:background="@color/background" />
 
 </LinearLayout>

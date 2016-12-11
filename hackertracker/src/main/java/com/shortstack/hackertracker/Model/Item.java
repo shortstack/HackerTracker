@@ -367,7 +367,7 @@ public class Item implements Serializable {
 
         float l = p / length;
 
-        return  1 - l;
+        return  Math.min(1.0f, 1 - l);
     }
 
     @NonNull
