@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.List;
+package com.shortstack.hackertracker.Renderer;
 
 import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import com.pedrogomez.renderers.Renderer;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Application.App;
-import com.shortstack.hackertracker.Home.DetailsBottomSheetDialogFragment;
+import com.shortstack.hackertracker.Fragment.DetailsBottomSheetDialogFragment;
 import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.ItemView;

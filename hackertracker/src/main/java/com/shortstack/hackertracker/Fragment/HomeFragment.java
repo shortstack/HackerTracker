@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Home;
+package com.shortstack.hackertracker.Fragment;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -11,7 +11,9 @@ import android.view.ViewGroup;
 import com.pedrogomez.renderers.RendererAdapter;
 import com.pedrogomez.renderers.RendererBuilder;
 import com.pedrogomez.renderers.RendererContent;
-import com.shortstack.hackertracker.List.GenericHeaderRenderer;
+import com.shortstack.hackertracker.Renderer.FAQRenderer;
+import com.shortstack.hackertracker.Renderer.HomeHeaderRenderer;
+import com.shortstack.hackertracker.Renderer.GenericHeaderRenderer;
 import com.shortstack.hackertracker.R;
 
 import butterknife.Bind;

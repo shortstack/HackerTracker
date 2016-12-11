@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Fragment;
+package com.shortstack.hackertracker.Activity;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,7 +10,7 @@ import android.view.View;
 
 import com.pedrogomez.renderers.RendererAdapter;
 import com.pedrogomez.renderers.RendererBuilder;
-import com.shortstack.hackertracker.Home.FAQRenderer;
+import com.shortstack.hackertracker.Renderer.FAQRenderer;
 import com.shortstack.hackertracker.R;
 
 import butterknife.Bind;

@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.List;
+package com.shortstack.hackertracker.Renderer;
 
 import android.view.LayoutInflater;
 import android.view.View;

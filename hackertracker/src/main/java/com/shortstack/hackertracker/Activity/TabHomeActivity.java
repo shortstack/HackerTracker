@@ -9,8 +9,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 
-import com.shortstack.hackertracker.Home.HomeFragment;
-import com.shortstack.hackertracker.List.GenericRowFragment;
+import com.shortstack.hackertracker.Fragment.HomeFragment;
+import com.shortstack.hackertracker.Fragment.GenericRowFragment;
 import com.shortstack.hackertracker.R;
 
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Home;
+package com.shortstack.hackertracker.Fragment;
 
 import android.app.Dialog;
 import android.content.DialogInterface;

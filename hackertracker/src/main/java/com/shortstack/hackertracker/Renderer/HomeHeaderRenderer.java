@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Home;
+package com.shortstack.hackertracker.Renderer;
 
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -10,7 +10,7 @@ import com.shortstack.hackertracker.Activity.MapsActivity;
 import com.shortstack.hackertracker.Activity.SettingsActivity;
 import com.shortstack.hackertracker.Activity.VendorsActivity;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
-import com.shortstack.hackertracker.Fragment.FAQActivity;
+import com.shortstack.hackertracker.Activity.FAQActivity;
 import com.shortstack.hackertracker.Fragment.InformationFragment;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.UberView;

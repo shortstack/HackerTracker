@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.List;
+package com.shortstack.hackertracker.Fragment;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
@@ -17,7 +17,7 @@ import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Event.FavoriteEvent;
 import com.shortstack.hackertracker.Event.RefreshTimerEvent;
 import com.shortstack.hackertracker.Event.UpdateListContentsEvent;
-import com.shortstack.hackertracker.Fragment.HackerTrackerFragment;
+import com.shortstack.hackertracker.List.GenericRowAdapter;
 import com.shortstack.hackertracker.Model.Filter;
 import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;

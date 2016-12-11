@@ -14,7 +14,7 @@ import android.view.View;
 import com.pedrogomez.renderers.RendererAdapter;
 import com.pedrogomez.renderers.RendererBuilder;
 import com.shortstack.hackertracker.Application.App;
-import com.shortstack.hackertracker.Home.VendorRenderer;
+import com.shortstack.hackertracker.Renderer.VendorRenderer;
 import com.shortstack.hackertracker.Model.Vendor;
 import com.shortstack.hackertracker.R;
 
