@@ -91,12 +91,17 @@ public class DetailsBottomSheetDialogFragment extends android.support.design.wid
 
         link.setVisibility(obj.hasUrl() ? View.VISIBLE : View.GONE);
 
-        star.setImageDrawable(getResources().getDrawable(obj.isBookmarked() ? R.drawable.ic_star_white_24dp : R.drawable.ic_star_border_white_24dp));
+        updateStarIcon();
+    }
+
+    private void updateStarIcon() {
+        star.setImageDrawable(getResources().getDrawable(getContent().isBookmarked() ? R.drawable.ic_star_white_24dp : R.drawable.ic_star_border_white_24dp));
     }
 
     @OnClick(R.id.star)
     public void onStarClick() {
         App.getApplication().getDatabaseController().bookmark(getContent());
+        updateStarIcon();
     }
 
     @OnClick(R.id.share)

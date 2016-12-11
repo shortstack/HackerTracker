@@ -64,8 +64,6 @@ public class GenericRowFragment extends HackerTrackerFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         App.getApplication().registerBusListener(this);
-
-
     }
 
     @Override

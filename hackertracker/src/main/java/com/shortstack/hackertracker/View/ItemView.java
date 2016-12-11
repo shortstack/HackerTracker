@@ -20,8 +20,6 @@ import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
 import com.squareup.otto.Subscribe;
 
-import java.util.Random;
-
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -203,7 +201,7 @@ public class ItemView extends CardView {
     }
 
     private void renderBookmark() {
-        star.setVisibility( new Random().nextBoolean() ? GONE : VISIBLE );
+        star.setVisibility( getContent().isBookmarked() ? VISIBLE : GONE );
     }
 
     public void updateBookmark() {

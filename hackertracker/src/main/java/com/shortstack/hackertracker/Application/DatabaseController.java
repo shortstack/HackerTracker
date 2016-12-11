@@ -31,18 +31,21 @@ public class DatabaseController {
     }
 
     public void bookmark(Item item) {
+        if( item.isBookmarked() ) {
+            unbookmark(item);
+        } else {
 
 
+            item.setBookmarked();
 
-        item.setBookmarked();
+            setScheduleBookmarked(Constants.BOOKMARKED, item.getId());
 
-        setScheduleBookmarked(Constants.BOOKMARKED, item.getId());
-
-        App.getApplication().postBusEvent(new FavoriteEvent(item.getId()));
+            App.getApplication().postBusEvent(new FavoriteEvent(item.getId()));
 
 
-        List<Item> stars = getStars();
-        Logger.d("Stars: "+ stars.size());
+            List<Item> stars = getStars();
+            Logger.d("Stars: " + stars.size());
+        }
 
     }
 
@@ -60,9 +63,7 @@ public class DatabaseController {
 
     private void setScheduleBookmarked(int state, int id) {
         String sql = "UPDATE data SET starred=" + state + " WHERE id=" + id;
-
         Logger.d("Writing: " + sql);
-
         mSchedule.execSQL(sql);
     }
 
@@ -73,12 +74,9 @@ public class DatabaseController {
     public List<Item> getStars() {
         ArrayList<Item> result = new ArrayList<>();
 
-
-
-        Cursor cursor = mSchedule.rawQuery("SELECT * FROM data WHERE date=? AND starred=1 ORDER BY date, begin", new String[]{});
+        Cursor cursor = mSchedule.rawQuery("SELECT * FROM data WHERE starred=1 ORDER BY date, begin", new String[]{});
 
         // get items from database
-
         try{
             if (cursor.moveToFirst()){
                 do{
@@ -116,6 +114,7 @@ public class DatabaseController {
         item.setDemo(cursor.getInt(cursor.getColumnIndex("demo")));
         item.setTool(cursor.getInt(cursor.getColumnIndex("tool")));
         item.setExploit(cursor.getInt(cursor.getColumnIndex("exploit")));
+        
         return item;
     }
 }
