@@ -132,6 +132,11 @@ public class ItemView extends CardView {
         super.onDetachedFromWindow();
         App.getApplication().unregisterBusListener(this);
 
+        finishAnimation();
+        setProgressBar();
+    }
+
+    private void finishAnimation() {
         if( mAnimation != null ) {
             mAnimation.cancel();
             mAnimation = null;
@@ -162,6 +167,10 @@ public class ItemView extends CardView {
             setProgressBar();
             return;
         }
+
+
+
+        finishAnimation();
 
         int duration = PROGRESS_UPDATE_DURATION_PER_PERCENT * (progress - this.progress.getProgress());
 
