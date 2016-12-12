@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.List;
 
 import com.pedrogomez.renderers.RendererAdapter;
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Model.Item;
 
 import java.util.Date;
@@ -25,6 +26,9 @@ public class GenericRowAdapter extends RendererAdapter<Item> {
     }
 
     public void notifyTimeChanged() {
+
+        if(App.getStorage().showExpiredEvents())
+            return;
 
         List collection = getCollection();
         boolean hasRemovedEvent = false;
