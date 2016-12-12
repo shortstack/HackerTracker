@@ -12,19 +12,6 @@ public class GenericRowAdapter extends RendererAdapter<Item> {
         super(new GenericRowBuilder());
     }
 
-    public void notifyItemUpdated(int item) {
-        List collection = getCollection();
-        for (int i = 0; i < collection.size(); i++) {
-            if( collection.get(i) instanceof Item) {
-                Item def = (Item) collection.get(i);
-                if (def.getId() == item) {
-                    notifyItemChanged(i);
-                    break;
-                }
-            }
-        }
-    }
-
     public void notifyTimeChanged() {
 
         if(App.getStorage().showExpiredEvents())

@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -14,7 +15,6 @@ import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.BuildConfig;
 import com.shortstack.hackertracker.Common.Constants;
-import com.shortstack.hackertracker.Event.FavoriteEvent;
 import com.shortstack.hackertracker.Event.RefreshTimerEvent;
 import com.shortstack.hackertracker.Event.UpdateListContentsEvent;
 import com.shortstack.hackertracker.List.GenericRowAdapter;
@@ -36,7 +36,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
-public class GenericRowFragment extends HackerTrackerFragment {
+public class GenericRowFragment extends Fragment {
 
     @Bind(R.id.list)
     public RecyclerView list;
@@ -103,11 +103,6 @@ public class GenericRowFragment extends HackerTrackerFragment {
             App.getApplication().DEBUG_TIME_EXTRA += Constants.DEBUG_PAUSE_TIME_SKIP;
         }
         App.getStorage().setLastRefreshTimer(App.getApplication().getCurrentDate().getTime());
-    }
-
-    @Subscribe
-    public void handleFavoriteEvent(FavoriteEvent event) {
-        adapter.notifyItemUpdated(event.getItem());
     }
 
     @Subscribe
