@@ -1,11 +1,11 @@
-package com.shortstack.hackertracker.Application;
+package com.shortstack.hackertracker.Database;
 
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 
-import com.orhanobut.logger.Logger;
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Event.FavoriteEvent;
 import com.shortstack.hackertracker.Model.Item;
@@ -29,42 +29,16 @@ public class DatabaseController {
         mSchedule.close();
     }
 
-    public void bookmark(Item item) {
-        if( item.isBookmarked() ) {
-            unbookmark(item);
-        } else {
+    public void toggleBookmark( Item item ) {
+        int value = item.isBookmarked() ? Constants.UNBOOKMARKED : Constants.BOOKMARKED;
+        setScheduleBookmarked(value, item.getId());
 
-
-            item.setBookmarked();
-
-            setScheduleBookmarked(Constants.BOOKMARKED, item.getId());
-
-            App.getApplication().postBusEvent(new FavoriteEvent(item.getId()));
-
-
-            List<Item> stars = getStars();
-            Logger.d("Stars: " + stars.size());
-        }
-
-    }
-
-    public void unbookmark(Item item) {
-        item.setUnbookmarked();
-
-        setScheduleBookmarked(Constants.UNBOOKMARKED, item.getId());
-
+        item.toggleBookmark();
         App.getApplication().postBusEvent(new FavoriteEvent(item.getId()));
-
-
-        List<Item> stars = getStars();
-        Logger.d("Stars: "+ stars.size());
     }
 
     private void setScheduleBookmarked(int state, int id) {
-
-        String sql = "UPDATE data SET starred=" + state + " WHERE id=" + id;
-        Logger.d("Writing: " + sql);
-        mSchedule.execSQL(sql);
+        mSchedule.execSQL("UPDATE data SET starred=" + state + " WHERE id=" + id);
 
     }
 

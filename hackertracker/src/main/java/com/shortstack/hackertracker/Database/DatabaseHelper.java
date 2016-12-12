@@ -1,9 +1,11 @@
-package com.shortstack.hackertracker.Application;
+package com.shortstack.hackertracker.Database;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.support.annotation.NonNull;
+
+import com.orhanobut.logger.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -15,8 +17,8 @@ import java.util.Locale;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final int BUFFER_SIZE = 1024;
-    private static String DB_NAME = "hackertracker.sqlite";
-    private static int DB_VERSION = 334;
+    private static final String DB_NAME = "hackertracker.sqlite";
+    private static final int DB_VERSION = 334;
 
     private final Context mContext;
 
@@ -37,7 +39,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         try {
             copyDatabaseFromAssets();
         } catch (IOException e) {
-            e.printStackTrace();
+            Logger.e(e.getCause(), "Unable to copy database from assets.");
         }
     }
 
