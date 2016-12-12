@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
-import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.ItemView;
@@ -100,13 +99,13 @@ public class DetailsBottomSheetDialogFragment extends android.support.design.wid
 
     @OnClick(R.id.star)
     public void onStarClick() {
-        App.getApplication().getDatabaseController().bookmark(getContent());
+        item.onBookmarkClick();
         updateStarIcon();
     }
 
     @OnClick(R.id.share)
     public void onShareClick() {
-
+        item.onShareClick();
     }
 
     @OnClick(R.id.link)

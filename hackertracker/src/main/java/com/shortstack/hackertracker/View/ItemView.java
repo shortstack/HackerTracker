@@ -2,6 +2,7 @@ package com.shortstack.hackertracker.View;
 
 import android.animation.ObjectAnimator;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.PorterDuff;
@@ -15,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.shortstack.hackertracker.Application.App;
+import com.shortstack.hackertracker.Event.FavoriteEvent;
 import com.shortstack.hackertracker.Event.RefreshTimerEvent;
 import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
@@ -86,7 +88,10 @@ public class ItemView extends CardView {
         getStyle(context, attrs);
         init();
         inflate();
+        setDisplayMode();
     }
+
+
 
     private void getStyle(Context context, AttributeSet attrs) {
         TypedArray a = context.getTheme().obtainStyledAttributes(
@@ -148,6 +153,26 @@ public class ItemView extends CardView {
         updateProgressBar();
     }
 
+    @Subscribe
+    public void onFavoriteEvent(FavoriteEvent event) {
+        if( event.getItem() == mItem.getId() ) {
+            updateBookmark();
+        }
+    }
+
+    private void setDisplayMode() {
+        switch (mDisplayMode) {
+            case DISPLAY_MODE_FULL:
+
+                break;
+
+            case DISPLAY_MODE_MIN:
+                time.setVisibility(GONE);
+                categoryText.setVisibility(GONE);
+                break;
+        }
+    }
+
     private void renderItem() {
         renderText();
         renderIcon();
@@ -168,8 +193,6 @@ public class ItemView extends CardView {
             return;
         }
 
-
-
         finishAnimation();
 
         int duration = PROGRESS_UPDATE_DURATION_PER_PERCENT * (progress - this.progress.getProgress());
@@ -188,12 +211,9 @@ public class ItemView extends CardView {
         title.setText(getContent().getDisplayTitle());
         location.setText(getContent().getLocation());
 
-        if( mDisplayMode == DISPLAY_MODE_MIN ) {
-            time.setVisibility(GONE);
-            return;
+        if( mDisplayMode == DISPLAY_MODE_FULL ) {
+            time.setText(getContent().getFullTimeStamp(getContext()));
         }
-
-        time.setText(getContent().getFullTimeStamp(getContext()));
     }
 
     private void renderIcon() {
@@ -211,20 +231,15 @@ public class ItemView extends CardView {
         int position = count % allColors.length;
 
         category.setBackgroundColor(allColors[position]);
-
-
         progress.getProgressDrawable().setColorFilter(allColors[position], PorterDuff.Mode.SRC_IN);
 
-        if( mDisplayMode == DISPLAY_MODE_MIN ) {
-            categoryText.setVisibility(GONE);
-            return;
+        if( mDisplayMode == DISPLAY_MODE_FULL ) {
+            categoryText.setText(allLabels[position]);
         }
-
-        categoryText.setText(allLabels[position]);
     }
 
     private void renderBookmark() {
-        star.setVisibility( getContent().isBookmarked() ? VISIBLE : GONE );
+        star.setVisibility( getContent().isBookmarked() ? VISIBLE : INVISIBLE );
     }
 
     public void updateBookmark() {
@@ -235,5 +250,17 @@ public class ItemView extends CardView {
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
         return dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+    }
+
+    public void onShareClick() {
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_TEXT, getContent().getDetailsDescription(getContext()));
+        intent.setType("text/plain");
+
+        getContext().startActivity(intent);
+    }
+
+    public void onBookmarkClick() {
+        App.getApplication().getDatabaseController().toggleBookmark(getContent());
     }
 }

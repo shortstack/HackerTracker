@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 
 import com.pedrogomez.renderers.Renderer;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
-import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Fragment.DetailsBottomSheetDialogFragment;
 import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
@@ -53,34 +52,23 @@ public class ItemRenderer extends Renderer<Item> implements View.OnClickListener
     public boolean onLongClick(View view) {
 
 
-        MaterialAlert alert = MaterialAlert.create(getContext()).setTitle(getContent().getTitle());
+        MaterialAlert alert = MaterialAlert.create(getContext()).setTitle(getContext().getString(R.string.details));
 
         alert.setMessage(getContent().getDetailsDescription(getContext()));
 
         alert.setNegativeButton(R.string.action_share, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                // TODO: Handle share.
+                item.onShareClick();
             }
         });
 
-
-        if( getContent().isBookmarked() ) {
-            alert.setPositiveButton(R.string.unbookmark, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    App.getApplication().getDatabaseController().unbookmark(getContent());
-                }
-            });
-        } else {
-            alert.setPositiveButton(R.string.bookmark, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    App.getApplication().getDatabaseController().bookmark(getContent());
-                }
-            });
-        }
-
+        alert.setPositiveButton( getContent().isBookmarked() ? R.string.unbookmark : R.string.bookmark, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                item.onBookmarkClick();
+            }
+        });
 
         alert.show();
         return true;

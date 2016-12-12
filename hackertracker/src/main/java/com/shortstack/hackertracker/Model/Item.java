@@ -352,7 +352,7 @@ public class Item implements Serializable {
     }
 
     public float getProgress() {
-        if( !hasBegin() )
+        if (!hasBegin())
             return 0;
 
         Date beginDateObject = getBeginDateObject();
@@ -362,12 +362,12 @@ public class Item implements Serializable {
         float length = (endDateObject.getTime() - beginDateObject.getTime()) / 1000 / 60;
         float p = (endDateObject.getTime() - currentDate.getTime()) / 1000 / 60;
 
-        if( p == 0 )
+        if (p == 0)
             return 1;
 
         float l = p / length;
 
-        return  Math.min(1.0f, 1 - l);
+        return Math.min(1.0f, 1 - l);
     }
 
     @NonNull
@@ -451,7 +451,7 @@ public class Item implements Serializable {
             }
         }
 
-        if( url.length() < getLink().length() ) {
+        if (url.length() < getLink().length()) {
             url = url.concat("...");
         }
 
@@ -462,11 +462,21 @@ public class Item implements Serializable {
     public String getDetailsDescription(Context context) {
         String result = "";
 
+        result = result.concat(getTitle() + "\n");
+
         result = result.concat(getFullTimeStamp(context) + "\n");
         result = result.concat(getLocation() + "\n");
-        result = result.concat(getType());
+        //result = result.concat(getType());
 
 
         return result;
+    }
+
+    public void toggleBookmark() {
+        if (isBookmarked()) {
+            setUnbookmarked();
+        } else {
+            setBookmarked();
+        }
     }
 }
