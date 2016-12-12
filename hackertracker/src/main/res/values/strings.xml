@@ -157,6 +157,7 @@
     <string name="collapse">Collapse</string>
     <string name="expand">Expand</string>
     <string name="empty_text">No further information available.\nYou\'ll have to look somewhere else.</string>
+    <string name="details">Details</string>
 
 
     <string-array name="updates">
