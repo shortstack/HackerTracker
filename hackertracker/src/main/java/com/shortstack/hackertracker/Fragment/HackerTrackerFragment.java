@@ -58,44 +58,8 @@ public class HackerTrackerFragment extends Fragment {
 
 
 
-    public List<Item> getItemByDate(String ... type) {
-        ArrayList<Item> result = new ArrayList<>();
-        SQLiteDatabase db = App.getApplication().getDatabaseController().getSchedule();
 
-        boolean expiredEvents = App.getStorage().showExpiredEvents();
 
-        Cursor cursor = db.rawQuery(getQueryString(type), type );
-
-        try{
-            if (cursor.moveToFirst()){
-                do{
-                    Item obj = getDefaultFromCursor(cursor);
-                    if( expiredEvents || !obj.hasExpired())
-                        result.add(obj);
-                }while(cursor.moveToNext());
-            }
-        }finally{
-            cursor.close();
-        }
-        //db.close();
-
-        return result;
-    }
-
-    @NonNull
-    private String getQueryString(String[] type) {
-        String query = "SELECT * FROM data ";
-        if( type.length > 0 ) {
-            query = query.concat("WHERE (");
-            for (int i = 0; i < type.length; i++) {
-                query = query.concat("type=?");
-                if (i < type.length - 1) query = query.concat(" OR ");
-            }
-            query = query.concat(")");
-        }
-        query = query.concat(" OR starred=1 ORDER BY date, begin");
-        return query;
-    }
 
     public List<Item> getStars() {
         ArrayList<Item> result = new ArrayList<>();

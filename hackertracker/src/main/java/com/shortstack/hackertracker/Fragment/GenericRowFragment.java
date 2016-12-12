@@ -183,7 +183,7 @@ public class GenericRowFragment extends HackerTrackerFragment {
 
         empty.setVisibility(View.GONE);
         List<Item> events;
-        events = getItemByDate(filter.getTypesArray());
+        events = App.getApplication().getDatabaseController().getItemByDate(filter.getTypesArray());
         return events;
     }
 

@@ -6,7 +6,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.support.annotation.NonNull;
 
 import com.orhanobut.logger.Logger;
-import com.shortstack.hackertracker.Adapter.DatabaseAdapter;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Event.FavoriteEvent;
 import com.shortstack.hackertracker.Model.Item;
@@ -19,13 +18,13 @@ public class DatabaseController {
     private SQLiteDatabase mSchedule;
 
     public DatabaseController(Context context) {
-        DatabaseAdapter scheduleAdapter = new DatabaseAdapter(context);
-        mSchedule = scheduleAdapter.getWritableDatabase();
+        DatabaseHelper databaseAdapter = new DatabaseHelper(context);
+        mSchedule = databaseAdapter.getWritableDatabase();
     }
+
 
     @Override
     protected void finalize() throws Throwable {
-        Logger.d("Calling finalize.");
         super.finalize();
         mSchedule.close();
     }
@@ -62,13 +61,55 @@ public class DatabaseController {
     }
 
     private void setScheduleBookmarked(int state, int id) {
+
         String sql = "UPDATE data SET starred=" + state + " WHERE id=" + id;
         Logger.d("Writing: " + sql);
         mSchedule.execSQL(sql);
+
     }
 
     public SQLiteDatabase getSchedule() {
         return mSchedule;
+    }
+
+    public List<Item> getItemByDate(String ... type) {
+
+
+
+        ArrayList<Item> result = new ArrayList<>();
+
+        boolean expiredEvents = App.getStorage().showExpiredEvents();
+
+        Cursor cursor = mSchedule.rawQuery(getQueryString(type), type );
+
+        try{
+            if (cursor.moveToFirst()){
+                do{
+                    Item obj = getDefaultFromCursor(cursor);
+                    if( expiredEvents || !obj.hasExpired())
+                        result.add(obj);
+                }while(cursor.moveToNext());
+            }
+        }finally{
+            cursor.close();
+        }
+
+        return result;
+    }
+
+    @NonNull
+    private String getQueryString(String[] type) {
+        String query = "SELECT * FROM data ";
+        if( type.length > 0 ) {
+            query = query.concat("WHERE (");
+            for (int i = 0; i < type.length; i++) {
+                query = query.concat("type=?");
+                if (i < type.length - 1) query = query.concat(" OR ");
+            }
+            query = query.concat(")");
+        }
+        query = query.concat(" OR starred=1 ORDER BY date, begin");
+        return query;
     }
 
     public List<Item> getStars() {
@@ -87,7 +128,6 @@ public class DatabaseController {
             cursor.close();
         }
 
-        //db.close();
 
         // return all items
         return result;
@@ -114,7 +154,7 @@ public class DatabaseController {
         item.setDemo(cursor.getInt(cursor.getColumnIndex("demo")));
         item.setTool(cursor.getInt(cursor.getColumnIndex("tool")));
         item.setExploit(cursor.getInt(cursor.getColumnIndex("exploit")));
-        
+
         return item;
     }
 }
