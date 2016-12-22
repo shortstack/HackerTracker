@@ -13,6 +13,7 @@ public class SharedPreferencesUtil {
 
 
 
+
     public enum Key {
 
         USER_FILTER("user_filter"),
@@ -24,6 +25,7 @@ public class SharedPreferencesUtil {
 
         APP_LAST_REFRESH("app_last_refresh"),
         APP_LAST_UPDATED("app_last_updated"),
+        APP_VIEW_PAGER_POSITION("app_view_pager_position"),
         ;
 
 
@@ -42,7 +44,7 @@ public class SharedPreferencesUtil {
     private SharedPreferences mPreferences;
 
     public SharedPreferencesUtil() {
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(App.getAppContext());
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(App.getApplication().getAppContext());
     }
 
     private SharedPreferences.Editor getEditor() {
@@ -101,5 +103,13 @@ public class SharedPreferencesUtil {
 
     public boolean shouldRefresh(long time) {
         return time - mPreferences.getLong(Key.APP_LAST_REFRESH.toString(), 0) > Constants.TIMER_INTERVAL;
+    }
+
+    public void setViewPagerPosition(int index) {
+        getEditor().putInt(Key.APP_VIEW_PAGER_POSITION.toString(), index).commit();
+    }
+
+    public int getViewPagerPosition() {
+        return mPreferences.getInt(Key.APP_VIEW_PAGER_POSITION.toString(), 0);
     }
 }

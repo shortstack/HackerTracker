@@ -39,7 +39,6 @@ public class DatabaseController {
 
     private void setScheduleBookmarked(int state, int id) {
         mSchedule.execSQL("UPDATE data SET starred=" + state + " WHERE id=" + id);
-
     }
 
     public SQLiteDatabase getSchedule() {
@@ -47,9 +46,6 @@ public class DatabaseController {
     }
 
     public List<Item> getItemByDate(String ... type) {
-
-
-
         ArrayList<Item> result = new ArrayList<>();
 
         boolean expiredEvents = App.getStorage().showExpiredEvents();

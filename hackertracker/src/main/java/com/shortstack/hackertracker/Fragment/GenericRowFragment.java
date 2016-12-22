@@ -33,7 +33,6 @@ import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 
 public class GenericRowFragment extends Fragment {
@@ -46,6 +45,10 @@ public class GenericRowFragment extends Fragment {
     @Bind(R.id.empty)
     View empty;
 
+    public static GenericRowFragment newInstance() {
+        return new GenericRowFragment();
+    }
+
 
     public Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
@@ -53,8 +56,12 @@ public class GenericRowFragment extends Fragment {
             App.getApplication().DEBUG_TIME_EXTRA += Constants.TIMER_INTERVAL_FIVE_MIN;
 
             App.getApplication().postBusEvent( new RefreshTimerEvent() );
-            if (adapter != null)
+            if (adapter != null) {
                 adapter.notifyTimeChanged();
+                if( adapter.getCollection().isEmpty() ) {
+                    // TODO: Show empty view.
+                }
+            }
 
         }
     };
@@ -215,7 +222,7 @@ public class GenericRowFragment extends Fragment {
         return R.layout.fragment_schedule;
     }
 
-    @OnClick(R.id.filter)
+    //@OnClick(R.id.filter)
     public void showFilters() {
         Filter filter = App.getStorage().getFilter();
 
@@ -228,4 +235,6 @@ public class GenericRowFragment extends Fragment {
             }
         }).show();
     }
+
+
 }

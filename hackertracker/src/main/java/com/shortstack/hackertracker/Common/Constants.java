@@ -1,13 +1,15 @@
 package com.shortstack.hackertracker.Common;
 
+import com.shortstack.hackertracker.BuildConfig;
+
 public interface Constants {
 
     long DEBUG_FORCE_TIME_DATE = 1470418500000L;
     long TIMER_INTERVAL_FIVE_MIN = 300000;
-    long TIMER_INTERVAL_DEBUG = 2000;
-    long DEBUG_PAUSE_TIME_SKIP = TIMER_INTERVAL_FIVE_MIN * 3;
+    long TIMER_INTERVAL_DEBUG = 5000;
+    long DEBUG_PAUSE_TIME_SKIP = TIMER_INTERVAL_FIVE_MIN * 30;
 
-    long TIMER_INTERVAL = /*BuildConfig.DEBUG ? TIMER_INTERVAL_DEBUG :*/ TIMER_INTERVAL_FIVE_MIN;
+    long TIMER_INTERVAL = BuildConfig.DEBUG ? TIMER_INTERVAL_DEBUG : TIMER_INTERVAL_FIVE_MIN;
 
     int BOOKMARKED = 1;
     int UNBOOKMARKED = 0;
@@ -20,7 +22,7 @@ public interface Constants {
     String TYPE_CONTEST = "Contest";
     String TYPE_EVENT = "Event";
     String TYPE_PARTY = "Party";
-    String TYPE_VENDOR = "Vendor";
+    String TYPE_VENDOR = "Company";
     String TYPE_DEMOLAB = "DemoLabs";
     String TYPE_SKYTALKS = "Skytalks";
     String TYPE_MESSAGE = "Message";
