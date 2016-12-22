@@ -40,6 +40,10 @@ public class SettingsFragment extends PreferenceFragmentCompat implements Shared
                 event = Analytics.SETTINGS_EXPIRED_EVENT;
                 App.getApplication().postBusEvent(new UpdateListContentsEvent());
                 break;
+
+            default:
+                // We're not tracking these events, ignore.
+                return;
         }
 
         boolean value = sharedPreferences.getBoolean(key, false);
