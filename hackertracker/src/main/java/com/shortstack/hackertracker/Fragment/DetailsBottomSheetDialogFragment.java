@@ -68,7 +68,7 @@ public class DetailsBottomSheetDialogFragment extends android.support.design.wid
         Item obj = getContent();
 
         if (obj == null) {
-            Logger.e("Vendor is null. Can not render bottom sheet.");
+            Logger.e("Company is null. Can not render bottom sheet.");
             return;
         }
 

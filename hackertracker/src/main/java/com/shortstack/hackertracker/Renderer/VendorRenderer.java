@@ -8,7 +8,7 @@ import android.widget.TextView;
 
 import com.pedrogomez.renderers.Renderer;
 import com.shortstack.hackertracker.Fragment.VendorBottomSheetDialogFragment;
-import com.shortstack.hackertracker.Model.Vendor;
+import com.shortstack.hackertracker.Model.Company;
 import com.shortstack.hackertracker.R;
 
 import java.util.List;
@@ -16,13 +16,16 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class VendorRenderer extends Renderer<Vendor> implements View.OnClickListener {
+public class VendorRenderer extends Renderer<Company> implements View.OnClickListener {
 
     @Bind(R.id.title)
     TextView title;
 
     @Bind(R.id.description)
     TextView description;
+
+    @Bind(R.id.partner)
+    View partner;
 
     @Override
     protected View inflate(LayoutInflater inflater, ViewGroup parent) {
@@ -41,6 +44,7 @@ public class VendorRenderer extends Renderer<Vendor> implements View.OnClickList
     public void render(List<Object> payloads) {
         title.setText(getContent().getTitle());
         description.setText(getContent().getDescription());
+        partner.setVisibility(getContent().isPartner() ? View.VISIBLE : View.GONE);
     }
 
 
