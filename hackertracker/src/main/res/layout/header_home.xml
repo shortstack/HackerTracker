@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -13,90 +14,6 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="1"
         android:src="@drawable/skull_lg" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/map"
-                style="@style/button_home"
-                android:text="@string/maps" />
-
-
-            <Button
-                android:id="@+id/uber"
-                style="@style/button_home"
-                android:text="@string/uber" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/wifi"
-                style="@style/button_home"
-                android:text="@string/wifi" />
-
-            <Button
-                android:id="@+id/badge"
-                style="@style/button_home"
-                android:text="@string/badges" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <Button
-                android:id="@+id/workshop"
-                style="@style/button_home"
-
-                android:text="@string/workshops" />
-
-            <Button
-                android:id="@+id/radio"
-                style="@style/button_home"
-                android:text="@string/radio" />
-
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <Button
-                android:id="@+id/faqs"
-                style="@style/button_home"
-                android:text="@string/faq" />
-
-            <Button
-                android:id="@+id/vendors"
-                style="@style/button_home"
-                android:text="@string/vendors" />
-
-
-        </LinearLayout>
-
-        <Button
-            android:id="@+id/settings"
-            style="@style/button_home"
-            android:text="@string/settings" />
-
-
-    </LinearLayout>
 
 
 </LinearLayout>
