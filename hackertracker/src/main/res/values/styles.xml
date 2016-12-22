@@ -17,8 +17,7 @@
     </style>
 
     <style name="PreferenceScreen" parent="MyMaterialTheme.Base">
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/white_alpha</item>
+
     </style>
 
     <style name="MyMaterialTheme" parent="MyMaterialTheme.Base"></style>
@@ -34,6 +33,10 @@
         <item name="preferenceTheme">@style/Theme.WtfPreference</item>
 
         <item name="android:checkboxStyle">@style/checkBoxStyle</item>
+
+        <!-- Preferences-->
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorSecondary">@color/white_alpha</item>
     </style>
 
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
