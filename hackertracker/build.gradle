@@ -80,7 +80,8 @@ dependencies {
     // Eventbus
     compile 'com.squareup:otto:1.3.8'
 
-
+    // Reviews
+    compile 'com.github.stkent:amplify:1.4.0'
 
     // Crash
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {

@@ -124,6 +124,12 @@ public class TabHomeActivity extends AppCompatActivity
 
         //Closing drawer on item click
         mDrawerLayout.closeDrawers();
+
+
+        if (Amplify.getSharedInstance().shouldPrompt()) {
+            ReviewBottomSheetDialogFragment review = ReviewBottomSheetDialogFragment.newInstance();
+            review.show(this.getSupportFragmentManager(), review.getTag());
+        }
     }
 
     private void updateFABVisibility() {

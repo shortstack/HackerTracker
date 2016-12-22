@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 
 import com.crashlytics.android.Crashlytics;
+import com.github.stkent.amplify.tracking.Amplify;
 import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.Analytics.AnalyticsController;
@@ -82,6 +83,13 @@ public class App extends Application {
         bus = new Bus(ThreadEnforcer.MAIN);
 
 
+        Amplify.initSharedInstance(this)
+                .setFeedbackEmailAddress(Constants.FEEDBACK_EMAIL)
+                .applyAllDefaultRules()
+                .setLastUpdateTimeCooldownDays(1);
+
+        if( BuildConfig.DEBUG )
+            mPerfUtil = new PerformanceUtil();
     }
 
     private void RegisterAlarmBroadcast() {
