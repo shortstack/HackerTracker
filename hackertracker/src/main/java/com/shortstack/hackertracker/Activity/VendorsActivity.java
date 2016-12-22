@@ -4,19 +4,20 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.pedrogomez.renderers.RendererAdapter;
 import com.pedrogomez.renderers.RendererBuilder;
 import com.shortstack.hackertracker.Application.App;
-import com.shortstack.hackertracker.Renderer.VendorRenderer;
-import com.shortstack.hackertracker.Model.Vendor;
+import com.shortstack.hackertracker.Model.Company;
 import com.shortstack.hackertracker.R;
+import com.shortstack.hackertracker.Renderer.VendorRenderer;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -24,73 +25,57 @@ import java.util.List;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class VendorsActivity extends AppCompatActivity {
-
-    @Bind(R.id.toolbar)
-    Toolbar toolbar;
+public class VendorsActivity extends Fragment {
 
     @Bind(R.id.list)
     RecyclerView list;
 
+    @Nullable
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_vendors);
-        ButterKnife.bind(this);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.activity_faq, container, false);
+        ButterKnife.bind(this, view);
+        return view;
+    }
 
-        setSupportActionBar(toolbar);
-
-        if (getSupportActionBar() != null) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-        }
-
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
-
-        List<Vendor> vendors = getVendors();
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
 
-        RendererBuilder rendererBuilder = new RendererBuilder().bind(Vendor.class, new VendorRenderer());
-
-        LinearLayoutManager layout = new LinearLayoutManager(this);
+        LinearLayoutManager layout = new LinearLayoutManager(getContext());
         list.setLayoutManager(layout);
-
 
         DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(list.getContext(),
                 layout.getOrientation());
         list.addItemDecoration(dividerItemDecoration);
 
+        RendererBuilder rendererBuilder = new RendererBuilder().bind(Company.class, new VendorRenderer());
 
         RendererAdapter adapter = new RendererAdapter(rendererBuilder);
         list.setAdapter(adapter);
 
-        adapter.addAll(vendors);
-
+        adapter.addAll(getVendors());
     }
 
-    public List<Vendor> getVendors() {
-        ArrayList<Vendor> result = new ArrayList<>();
+    public List<Company> getVendors() {
+        ArrayList<Company> result = new ArrayList<>();
 
-        SQLiteDatabase db = App.vendorDbHelper.getWritableDatabase();
+        SQLiteDatabase db = App.getApplication().vendorDbHelper.getWritableDatabase();
 
-        Cursor cursor = db.rawQuery("SELECT * FROM data ORDER BY title", new String[]{});
+        Cursor cursor = db.rawQuery("SELECT * FROM data", new String[]{});
 
         try {
             if (cursor.moveToFirst()) {
                 do {
 
-                    Vendor item = new Vendor();
+                    Company item = new Company();
 
                     item.setId(cursor.getInt(cursor.getColumnIndex("id")));
                     item.setTitle(cursor.getString(cursor.getColumnIndex("title")));
                     item.setDescription(cursor.getString(cursor.getColumnIndex("description")));
-                    item.setImage(cursor.getString(cursor.getColumnIndex("image")));
                     item.setLink(cursor.getString(cursor.getColumnIndex("link")));
+                    item.setPartner(cursor.getInt(cursor.getColumnIndex("partner")));
 
                     result.add(item);
                 } while (cursor.moveToNext());
