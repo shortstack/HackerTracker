@@ -171,7 +171,7 @@ public class DatabaseAdapterVendors extends SQLiteOpenHelper {
 
     public static void updateDatabase(HashMap<String, String> queryValues) {
 
-        DatabaseAdapterVendors myDbHelper = new DatabaseAdapterVendors(App.getAppContext());
+        DatabaseAdapterVendors myDbHelper = new DatabaseAdapterVendors(App.getApplication().getAppContext());
 
         SQLiteDatabase dbDefault = myDbHelper.getWritableDatabase();
 

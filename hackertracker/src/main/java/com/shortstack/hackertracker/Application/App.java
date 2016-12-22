@@ -19,9 +19,9 @@ import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.Analytics.AnalyticsController;
 import com.shortstack.hackertracker.BuildConfig;
 import com.shortstack.hackertracker.Common.Constants;
+import com.shortstack.hackertracker.Database.DatabaseController;
 import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Utils.AlarmReceiver;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
@@ -37,16 +37,16 @@ import io.fabric.sdk.android.Fabric;
 public class App extends Application {
 
     private static App application;
-    private static Context context;
+    private Context context;
     //public static DatabaseAdapter dbHelper;
-    public static DatabaseAdapterVendors vendorDbHelper;
-    private static AlarmManager alarmManager;
+    public DatabaseAdapterVendors vendorDbHelper;
+    private AlarmManager alarmManager;
     private BroadcastReceiver receiver;
     private PendingIntent pendingIntent;
     private SharedPreferencesUtil storage;
 
 
-    private static DatabaseController mDatabaseController;
+    private DatabaseController mDatabaseController;
 
 
     private static Bus bus = new Bus();
@@ -56,7 +56,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         
-        //if( !BuildConfig.DEBUG )
+        if( !BuildConfig.DEBUG )
             Fabric.with(this, new Crashlytics());
 
         Logger.init().methodCount(1).hideThreadInfo();
@@ -105,25 +105,25 @@ public class App extends Application {
         getBaseContext().unregisterReceiver(receiver);
     }
 
-    public static void cancelNotification(int id) {
-
-        Intent notificationIntent = new Intent(context, AlarmReceiver.class);
-        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, id);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, id, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        pendingIntent.cancel();
-
-        alarmManager.cancel(pendingIntent);
-    }
-
-    public static void scheduleNotification(Notification notification, long when, int id) {
-
-        Intent notificationIntent = new Intent(context, AlarmReceiver.class);
-        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, id);
-        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, when, pendingIntent);
-    }
+//    public static void cancelNotification(int id) {
+//
+//        Intent notificationIntent = new Intent(context, AlarmReceiver.class);
+//        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, id);
+//        PendingIntent pendingIntent = PendingIntent.getActivity(context, id, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        pendingIntent.cancel();
+//
+//        alarmManager.cancel(pendingIntent);
+//    }
+//
+//    public static void scheduleNotification(Notification notification, long when, int id) {
+//
+//        Intent notificationIntent = new Intent(context, AlarmReceiver.class);
+//        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, id);
+//        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        alarmManager.set(AlarmManager.RTC_WAKEUP, when, pendingIntent);
+//    }
 
     public static Notification createNotification(Context context, Item content) {
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -160,8 +160,8 @@ public class App extends Application {
         }
     }
 
-    public static Context getAppContext() {
-        return App.context;
+    public Context getAppContext() {
+        return context;
     }
 
     public static App getApplication() {
