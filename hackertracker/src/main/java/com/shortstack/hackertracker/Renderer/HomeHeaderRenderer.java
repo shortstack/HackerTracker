@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 
 import com.orhanobut.logger.Logger;
 import com.pedrogomez.renderers.Renderer;
-import com.shortstack.hackertracker.Activity.FAQActivity;
 import com.shortstack.hackertracker.Activity.MapsActivity;
 import com.shortstack.hackertracker.Activity.SettingsActivity;
 import com.shortstack.hackertracker.Activity.VendorsActivity;
@@ -158,8 +157,6 @@ public class HomeHeaderRenderer extends Renderer<Void> {
 
     //@OnClick(R.id.faqs)
     public void onFAQClick() {
-        Intent intent = new Intent(getContext(), FAQActivity.class);
-        getContext().startActivity(intent);
     }
 
     //@OnClick(R.id.workshop)
@@ -189,7 +186,7 @@ public class HomeHeaderRenderer extends Renderer<Void> {
 //        getContext().startActivity(intent);
 
 
-        InformationBottomSheetDialogFragment badges = InformationBottomSheetDialogFragment.newInstance("Badges", getContext().getString(R.string.badge_text));
+        InformationBottomSheetDialogFragment badges = InformationBottomSheetDialogFragment.newInstance("Badges", getContext().getString(R.string.badges_description));
         badges.show(((AppCompatActivity)getContext()).getSupportFragmentManager(), badges.getTag());
 
     }

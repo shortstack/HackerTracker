@@ -6,7 +6,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/wifi_text"
+        android:text="@string/wifi_description"
         android:padding="15dp"
         android:linksClickable="true"
         android:autoLink="all"

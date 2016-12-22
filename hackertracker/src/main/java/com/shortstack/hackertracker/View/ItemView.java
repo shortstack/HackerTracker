@@ -77,7 +77,7 @@ public class ItemView extends CardView {
     private void init() {
         setCardBackgroundColor(getResources().getColor(R.color.card_background));
 
-        if( mRoundCorners ) {
+        if (mRoundCorners) {
             float radius = convertDpToPixel(2, getContext());
             setRadius(radius);
         }
@@ -90,7 +90,6 @@ public class ItemView extends CardView {
         inflate();
         setDisplayMode();
     }
-
 
 
     private void getStyle(Context context, AttributeSet attrs) {
@@ -107,15 +106,15 @@ public class ItemView extends CardView {
     }
 
     private void inflate() {
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService( Context.LAYOUT_INFLATER_SERVICE );
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        View view = inflater.inflate( R.layout.row_item, null );
+        View view = inflater.inflate(R.layout.row_item, null);
         ButterKnife.bind(this, view);
 
         addView(view);
     }
 
-    public void setItem( Item item ) {
+    public void setItem(Item item) {
         mItem = item;
         renderItem();
     }
@@ -128,34 +127,35 @@ public class ItemView extends CardView {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        App.getApplication().registerBusListener(this);
-
+        if (!isInEditMode())
+            App.getApplication().registerBusListener(this);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        App.getApplication().unregisterBusListener(this);
+        if (!isInEditMode())
+            App.getApplication().unregisterBusListener(this);
 
         finishAnimation();
         setProgressBar();
     }
 
     private void finishAnimation() {
-        if( mAnimation != null ) {
+        if (mAnimation != null) {
             mAnimation.cancel();
             mAnimation = null;
         }
     }
 
     @Subscribe
-    public void onRefreshTimeEvent(RefreshTimerEvent event ) {
+    public void onRefreshTimeEvent(RefreshTimerEvent event) {
         updateProgressBar();
     }
 
     @Subscribe
     public void onFavoriteEvent(FavoriteEvent event) {
-        if( event.getItem() == mItem.getId() ) {
+        if (event.getItem() == mItem.getId()) {
             updateBookmark();
         }
     }
@@ -188,7 +188,7 @@ public class ItemView extends CardView {
     public void updateProgressBar() {
         int progress = getProgress();
 
-        if( progress < this.progress.getProgress() ) {
+        if (progress < this.progress.getProgress()) {
             setProgressBar();
             return;
         }
@@ -204,14 +204,14 @@ public class ItemView extends CardView {
     }
 
     private int getProgress() {
-        return (int)((getContent().getProgress()) * 100 );
+        return (int) ((getContent().getProgress()) * 100);
     }
 
     private void renderText() {
         title.setText(getContent().getDisplayTitle());
         location.setText(getContent().getLocation());
 
-        if( mDisplayMode == DISPLAY_MODE_FULL ) {
+        if (mDisplayMode == DISPLAY_MODE_FULL) {
             time.setText(getContent().getFullTimeStamp(getContext()));
         }
     }
@@ -233,23 +233,23 @@ public class ItemView extends CardView {
         category.setBackgroundColor(allColors[position]);
         progress.getProgressDrawable().setColorFilter(allColors[position], PorterDuff.Mode.SRC_IN);
 
-        if( mDisplayMode == DISPLAY_MODE_FULL ) {
+        if (mDisplayMode == DISPLAY_MODE_FULL) {
             categoryText.setText(allLabels[position]);
         }
     }
 
     private void renderBookmark() {
-        star.setVisibility( getContent().isBookmarked() ? VISIBLE : INVISIBLE );
+        star.setVisibility(getContent().isBookmarked() ? VISIBLE : INVISIBLE);
     }
 
     public void updateBookmark() {
         renderBookmark();
     }
 
-    private float convertDpToPixel(float dp, Context context){
+    private float convertDpToPixel(float dp, Context context) {
         Resources resources = context.getResources();
         DisplayMetrics metrics = resources.getDisplayMetrics();
-        return dp * ((float)metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
+        return dp * ((float) metrics.densityDpi / DisplayMetrics.DENSITY_DEFAULT);
     }
 
     public void onShareClick() {

@@ -12,6 +12,15 @@ import static com.shortstack.hackertracker.Analytics.AnalyticsController.Analyti
 
 public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
+    public static SettingsFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        SettingsFragment fragment = new SettingsFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+    
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
         addPreferencesFromResource(R.xml.settings);

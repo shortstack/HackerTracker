@@ -12,6 +12,7 @@
         android:layout_height="match_parent"
         android:background="@color/background"
         android:clipToPadding="false"
+        android:paddingTop="10dp"
         android:paddingBottom="20dp"
         tools:listitem="@layout/row_faq" />
 </android.support.design.widget.CoordinatorLayout>

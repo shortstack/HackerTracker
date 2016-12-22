@@ -16,9 +16,11 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.github.stkent.amplify.tracking.Amplify;
 import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Fragment.GenericRowFragment;
 import com.shortstack.hackertracker.Fragment.HomeFragment;
+import com.shortstack.hackertracker.Fragment.ReviewBottomSheetDialogFragment;
 import com.shortstack.hackertracker.Fragment.SettingsFragment;
 import com.shortstack.hackertracker.R;
 
@@ -30,6 +32,12 @@ public class TabHomeActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private static final int DEFAULT_FRAGMENT_INDEX = 1;
+    public static final int NAV_HOME = 0;
+    public static final int NAV_SCHEDULE = 1;
+    public static final int NAV_MAP = 2;
+    public static final int NAV_INFORMATION = 3;
+    public static final int NAV_VENDORS = 4;
+    public static final int NAV_SETTINGS = 5;
 
     @Bind(R.id.toolbar)
     Toolbar toolbar;
@@ -75,6 +83,7 @@ public class TabHomeActivity extends AppCompatActivity
 
         if (savedInstanceState == null) {
             mFragmentIndex = DEFAULT_FRAGMENT_INDEX;
+            mNavView.getMenu().getItem(mFragmentIndex).setChecked(true);
             loadFragment();
         }
     }
@@ -139,20 +148,23 @@ public class TabHomeActivity extends AppCompatActivity
     private Fragment getCurrentFragment() {
         switch (mFragmentIndex) {
             default:
-            case 0:
+            case NAV_HOME:
                 return HomeFragment.newInstance();
 
-            case 1:
+            case NAV_SCHEDULE:
                 return GenericRowFragment.newInstance();
 
-            case 2:
+            case NAV_MAP:
                 return MapsActivity.newInstance();
 
-            case 3:
-                return new VendorsActivity();
+            case NAV_INFORMATION:
+                return InformationActivity.newInstance();
 
-            case 4:
-                return new SettingsFragment();
+            case NAV_VENDORS:
+                return VendorsActivity.newInstance();
+
+            case NAV_SETTINGS:
+                return SettingsFragment.newInstance();
         }
     }
 

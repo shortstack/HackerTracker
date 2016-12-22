@@ -18,6 +18,8 @@ public interface Constants {
     String API_ERROR_MESSAGE = "\"errorMessage\":";
     String OFFICIAL_SCHEDULE = "/schedule-full.json";
 
+    String FEEDBACK_EMAIL = "chrisporter0111@gmail.com";
+
     String TYPE_SPEAKER = "Speaker";
     String TYPE_CONTEST = "Contest";
     String TYPE_EVENT = "Event";

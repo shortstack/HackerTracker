@@ -2,6 +2,8 @@ package com.shortstack.hackertracker.Fragment;
 
 import android.os.Bundle;
 
+import com.shortstack.hackertracker.Model.Information;
+
 public class InformationBottomSheetDialogFragment extends GenericBottomSheetDialogFragment {
 
     private static final String ARG_TITLE = "TITLE";
@@ -17,6 +19,10 @@ public class InformationBottomSheetDialogFragment extends GenericBottomSheetDial
         fragment.setArguments(bundle);
 
         return fragment;
+    }
+
+    public static InformationBottomSheetDialogFragment newInstance(Information content) {
+        return newInstance(content.getTitle(), content.getDescription());
     }
 
 
@@ -39,4 +45,6 @@ public class InformationBottomSheetDialogFragment extends GenericBottomSheetDial
     protected boolean hasLink() {
         return false;
     }
+
+
 }

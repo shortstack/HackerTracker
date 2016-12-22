@@ -52,7 +52,6 @@
             android:ellipsize="end"
             android:lineSpacingExtra="5sp"
             android:linksClickable="true"
-            android:minLines="3"
             android:textColor="@color/white_alpha"
             android:textSize="14sp"
             tools:text="You should bring tons of water, and ..." />

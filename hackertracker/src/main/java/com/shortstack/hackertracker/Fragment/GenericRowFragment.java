@@ -55,10 +55,10 @@ public class GenericRowFragment extends Fragment {
 //            Logger.d(">>Refreshing<<");
             App.getApplication().DEBUG_TIME_EXTRA += Constants.TIMER_INTERVAL_FIVE_MIN;
 
-            App.getApplication().postBusEvent( new RefreshTimerEvent() );
+            App.getApplication().postBusEvent(new RefreshTimerEvent());
             if (adapter != null) {
                 adapter.notifyTimeChanged();
-                if( adapter.getCollection().isEmpty() ) {
+                if (adapter.getCollection().isEmpty()) {
                     // TODO: Show empty view.
                 }
             }
@@ -106,7 +106,7 @@ public class GenericRowFragment extends Fragment {
     public void onPause() {
         super.onPause();
         mTimer.cancel();
-        if(BuildConfig.DEBUG) {
+        if (BuildConfig.DEBUG) {
             App.getApplication().DEBUG_TIME_EXTRA += Constants.DEBUG_PAUSE_TIME_SKIP;
         }
         App.getStorage().setLastRefreshTimer(App.getApplication().getCurrentDate().getTime());
@@ -139,14 +139,14 @@ public class GenericRowFragment extends Fragment {
         adapter.clear();
 
         Filter filter = App.getStorage().getFilter();
-
         List<Item> events = getEvents(filter);
         List<Object> objects = addTimeDividers(events);
 
         adapter.addAll(objects);
         adapter.notifyDataSetChanged();
 
-        //scrollToCurrentTime();
+        if( App.getStorage().showExpiredEvents() )
+            scrollToCurrentTime();
     }
 
     private void scrollToCurrentTime() {
