@@ -1,83 +1,214 @@
 package com.shortstack.hackertracker.Activity;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.TabLayout;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.view.ViewPager;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.MenuItem;
+import android.view.View;
 
-import com.shortstack.hackertracker.Fragment.HomeFragment;
+import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Fragment.GenericRowFragment;
+import com.shortstack.hackertracker.Fragment.HomeFragment;
+import com.shortstack.hackertracker.Fragment.SettingsFragment;
 import com.shortstack.hackertracker.R;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
-public class TabHomeActivity extends AppCompatActivity {
+public class TabHomeActivity extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-    public static final int ITEM_PROFILE = 0;
-    public static final int ITEM_HOME = 1;
-    public static final int ITEM_SCHEDULE = 2;
+    private static final int DEFAULT_FRAGMENT_INDEX = 1;
 
-//    @Bind(R.id.toolbar)
-//    Toolbar toolbar;
-    @Bind(R.id.tabs)
-    TabLayout tabLayout;
-    @Bind(R.id.viewpager)
-    ViewPager viewPager;
+    @Bind(R.id.toolbar)
+    Toolbar toolbar;
+//    @Bind(R.id.tabs)
+//    TabLayout tabLayout;
+//    @Bind(R.id.viewpager)
+//    ViewPager viewPager;
+
+    @Bind(R.id.drawer_layout)
+    DrawerLayout mDrawerLayout;
+    @Bind(R.id.nav_view)
+    NavigationView mNavView;
+
+    @Bind(R.id.filter)
+    FloatingActionButton fab;
+
+
+    private int mFragmentIndex = DEFAULT_FRAGMENT_INDEX;
+
+    private String[] activityTitles;
+
+    // flag to load home fragment when user presses back key
+    private boolean shouldLoadHomeFragOnBackPress = true;
+    private Handler mHandler;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-//        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
+
+
+        mHandler = new Handler();
+
+
         initViewPager();
+
+
+        activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
+
+
+        if (savedInstanceState == null) {
+            mFragmentIndex = DEFAULT_FRAGMENT_INDEX;
+            loadFragment();
+        }
+    }
+
+    private void loadFragment() {
+        // set toolbar title
+        //setToolbarTitle();
+
+        // if user select the current navigation menu again, don't do anything
+        // just close the navigation drawer
+        if (getSupportFragmentManager().findFragmentByTag(getFragmentTag()) != null) {
+            mDrawerLayout.closeDrawers();
+            return;
+        }
+
+        // Sometimes, when fragment has huge data, screen seems hanging
+        // when switching between navigation menus
+        // So using runnable, the fragment is loaded with cross fade effect
+        // This effect can be seen in GMail app
+        Runnable mPendingRunnable = new Runnable() {
+            @Override
+            public void run() {
+                // update the main content by replacing fragments
+                Fragment fragment = getCurrentFragment();
+                FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                        android.R.anim.fade_out);
+                fragmentTransaction.replace(R.id.frame, fragment, getFragmentTag());
+                fragmentTransaction.commitAllowingStateLoss();
+            }
+        };
+
+        // If mPendingRunnable is not null, then add to the message queue
+        if (mPendingRunnable != null) {
+            mHandler.post(mPendingRunnable);
+        }
+
+
+        Logger.d("Set new fragment." + getFragmentTag() + " " + getFragmenTitle());
+
+        invalidateOptionsMenu();
+
+        getSupportActionBar().setTitle(getFragmenTitle());
+
+
+        updateFABVisibility();
+
+        //Closing drawer on item click
+        mDrawerLayout.closeDrawers();
+    }
+
+    private void updateFABVisibility() {
+        fab.setVisibility( mFragmentIndex == 1 ? View.VISIBLE : View.GONE );
+    }
+
+    private Fragment getCurrentFragment() {
+        switch (mFragmentIndex) {
+            default:
+            case 0:
+                return HomeFragment.newInstance();
+
+            case 1:
+                return GenericRowFragment.newInstance();
+
+            case 2:
+                return MapsActivity.newInstance();
+
+            case 3:
+                return new VendorsActivity();
+
+            case 4:
+                return new SettingsFragment();
+        }
+    }
+
+
+    @OnClick(R.id.filter)
+    public void onFilterClick() {
+        for (Fragment fragment : getSupportFragmentManager().getFragments()) {
+            if( fragment instanceof GenericRowFragment )  {
+                ((GenericRowFragment)fragment).showFilters();
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
+            mDrawerLayout.closeDrawers();
+            return;
+        }
+
+        // This code loads home fragment when back key is pressed
+        // when user is in other fragment than home
+        if (shouldLoadHomeFragOnBackPress) {
+            // checking if user is on other navigation menu
+            // rather than home
+            if (mFragmentIndex != DEFAULT_FRAGMENT_INDEX) {
+                mFragmentIndex = DEFAULT_FRAGMENT_INDEX;
+                loadFragment();
+                return;
+            }
+        }
+
+        super.onBackPressed();
     }
 
     private void initViewPager() {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        //adapter.addFragment(GenericScheduleFragment.newInstance(), "STARRED");
-        adapter.addFragment(HomeFragment.newInstance(), "HOME");
-        adapter.addFragment(new GenericRowFragment(), "SCHEDULE");
-        viewPager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(viewPager);
 
-        viewPager.setCurrentItem(ITEM_HOME);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, mDrawerLayout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        mDrawerLayout.setDrawerListener(toggle);
+        toggle.syncState();
+
+        mNavView.setNavigationItemSelectedListener(this);
+
     }
 
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        mFragmentIndex = getFragmentIndex(item);
+        loadFragment();
+        return true;
+    }
 
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
+    private int getFragmentIndex( MenuItem item ) {
+        return item.getItemId() - R.id.nav_home;
+    }
 
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
+    private String getFragmentTag() {
+        return "home_fragment_" + mFragmentIndex;
+    }
 
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
+    private String getFragmenTitle() {
+        return activityTitles[mFragmentIndex];
     }
 }

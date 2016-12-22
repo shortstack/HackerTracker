@@ -28,13 +28,14 @@
     <string name="parties">Parties</string>
     <string name="kids">Kids</string>
     <string name="skytalks">Skytalks</string>
-    <string name="maps">Map</string>
+    <string name="map">Map</string>
     <string name="workshops">Workshops</string>
     <string name="faq">FAQ</string>
     <string name="badges">Badge Info</string>
     <string name="wifi">Wifi Info</string>
     <string name="radio">DEF CON Radio</string>
     <string name="settings">Settings</string>
+    <string name="schedule">Schedule</string>
 
     <string name="no_updates">Your schedule is up to date! :)</string>
     <string name="schedule_finished">Schedule sync complete</string>
@@ -126,6 +127,17 @@
         <item>There is a forum discussion thread in which you can ask follow up questions. https://forum.defcon.org/showthread.php?t=6845 </item>
     </string-array>
 
+    <string-array name="information_headers">
+        <item>Admission / Badges</item>
+        <item>Workshops</item>
+        <item>WiFi</item>
+        <item>DEF CON Radio</item>
+        <item>Vendors</item>
+        <item>Other</item>
+
+
+    </string-array>
+
     <string name="link_01"><b>official DC24 website</b>\n\nhttps://www.defcon.org/html/defcon-24/dc-24-index.html\n\n</string>
     <string name="link_02"><b>official DEF CON twitter</b>\n\nhttps://twitter.com/defcon\n\n</string>
     <string name="link_03" formatted="false"><b>DEF CON related twitter updates</b>&lt;br&gt;&lt;br&gt;&lt;a href=\"http://bit.ly/1Yqq3x0\"&gt;#defcon, #dc24, @defconparties, @defcon&lt;/a&gt;</string>
@@ -134,8 +146,7 @@
     <string name="link_06"><b>RSS Feed</b>\n\nhttps://www.defcon.org/defconrss.xml\n\n</string>
     <string name="link_07"><b>previous conference archives, info, speeches</b>\n\nhttps://www.defcon.org\n\n</string>
 
-    <string name="partners_rejectedcon">Has your paper been rejected from a security conference? Rejected Con is an online annual security conference that allows the presentations rejected by other conferences to see the light of day. Check them out at @Rejected_CON!\n\nhttp://twitter.com/rejected_con\nhttp://rejectedcon.com</string>
-    <string name="partners_defconparties">Your source of info for PARTIES AT DEF CON! Check them out at @defconparties!\n\n http://twitter.com/defconparties</string>
+
     <string name="demo">DEMO</string>
     <string name="tool">TOOL</string>
     <string name="exploit">EXPLOIT</string>
@@ -158,6 +169,25 @@
     <string name="expand">Expand</string>
     <string name="empty_text">No further information available.\nYou\'ll have to look somewhere else.</string>
     <string name="details">Details</string>
+    <string name="information">Information</string>
+    <string name="nav_home">Home</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="partners">Partners</string>
+    <string name="map_uber">Map &amp; Uber</string>
+    <string name="partner">PARTNER</string>
+
+    <string-array name="nav_item_activity_titles">
+        <item>@string/nav_home</item>
+        <item>@string/schedule</item>
+        <item>@string/map</item>
+        <item>@string/information</item>
+        <item>@string/settings</item>
+
+
+    </string-array>
 
 
     <string-array name="updates">
