@@ -43,6 +43,14 @@ public class GenericRowAdapter extends RendererAdapter<Item> {
                     notifyItemRemoved(i - 1);
                 }
             }
+
+            // If no events and only headers remain.
+            if( collection.size() == 2 ) {
+                if( collection.get(0) instanceof String && collection.get(1) instanceof Date ) {
+                    collection.clear();
+                    notifyItemRangeRemoved(0, 2);
+                }
+            }
         }
     }
 }
