@@ -23,6 +23,7 @@ import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Database.DatabaseController;
 import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
+import com.shortstack.hackertracker.Utils.AlarmReceiver;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
@@ -87,9 +88,6 @@ public class App extends Application {
                 .setFeedbackEmailAddress(Constants.FEEDBACK_EMAIL)
                 .applyAllDefaultRules()
                 .setLastUpdateTimeCooldownDays(1);
-
-        if( BuildConfig.DEBUG )
-            mPerfUtil = new PerformanceUtil();
     }
 
     private void RegisterAlarmBroadcast() {
@@ -113,27 +111,31 @@ public class App extends Application {
         getBaseContext().unregisterReceiver(receiver);
     }
 
-//    public static void cancelNotification(int id) {
-//
-//        Intent notificationIntent = new Intent(context, AlarmReceiver.class);
-//        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, id);
-//        PendingIntent pendingIntent = PendingIntent.getActivity(context, id, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//        pendingIntent.cancel();
-//
-//        alarmManager.cancel(pendingIntent);
-//    }
-//
-//    public static void scheduleNotification(Notification notification, long when, int id) {
-//
-//        Intent notificationIntent = new Intent(context, AlarmReceiver.class);
-//        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, id);
-//        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
-//        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//
-//        alarmManager.set(AlarmManager.RTC_WAKEUP, when, pendingIntent);
-//    }
+    public void cancelNotification(int id) {
 
-    public static Notification createNotification(Context context, Item content) {
+        Intent notificationIntent = new Intent(context, AlarmReceiver.class);
+        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, id);
+        PendingIntent pendingIntent = PendingIntent.getActivity(context, id, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        pendingIntent.cancel();
+
+        alarmManager.cancel(pendingIntent);
+    }
+
+    public void scheduleItemNotification( Item item ) {
+        scheduleNotification( createNotification(item), item.getNotificationTimeInMillis(), item.getId() );
+    }
+
+    public void scheduleNotification(Notification notification, long when, int id) {
+
+        Intent notificationIntent = new Intent(context, AlarmReceiver.class);
+        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, id);
+        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, when, pendingIntent);
+    }
+
+    public Notification createNotification(Item content) {
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         int color = context.getResources().getColor(R.color.colorPrimary);
 

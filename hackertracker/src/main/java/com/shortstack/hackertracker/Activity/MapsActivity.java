@@ -14,6 +14,8 @@ import com.joanzapata.pdfview.PDFView;
 import com.joanzapata.pdfview.listener.OnLoadCompleteListener;
 import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
+import com.shortstack.hackertracker.Analytics.AnalyticsController;
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.UberView;
 

@@ -35,6 +35,10 @@ public class DatabaseController {
 
         item.toggleBookmark();
         App.getApplication().postBusEvent(new FavoriteEvent(item.getId()));
+
+        if( item.isBookmarked() ) {
+            App.getApplication().scheduleItemNotification(item);
+        }
     }
 
     private void setScheduleBookmarked(int state, int id) {
