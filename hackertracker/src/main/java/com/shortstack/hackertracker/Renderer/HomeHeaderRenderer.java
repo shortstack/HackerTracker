@@ -1,26 +1,18 @@
 package com.shortstack.hackertracker.Renderer;
 
-import android.content.Intent;
 import android.provider.Settings;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.orhanobut.logger.Logger;
 import com.pedrogomez.renderers.Renderer;
-import com.shortstack.hackertracker.Activity.MapsActivity;
-import com.shortstack.hackertracker.Activity.SettingsActivity;
-import com.shortstack.hackertracker.Activity.VendorsActivity;
-import com.shortstack.hackertracker.Alert.MaterialAlert;
-import com.shortstack.hackertracker.Fragment.InformationBottomSheetDialogFragment;
-import com.shortstack.hackertracker.Fragment.InformationFragment;
 import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.View.UberView;
 
 import java.util.List;
 
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class HomeHeaderRenderer extends Renderer<Void> {
 
@@ -116,78 +108,8 @@ public class HomeHeaderRenderer extends Renderer<Void> {
         return result;
     }
 
-    private void showInformationAlert(int res) {
-        View view = LayoutInflater.from(getContext()).inflate(res, null);
-        MaterialAlert.create(getContext()).setView(view).show();
-    }
-
-    private void showTextAlert( int title, int message ) {
-        MaterialAlert.create(getContext()).setTitle(title).setMessage(message).show();
-    }
-
-    private void startInformationActivity( int res ) {
-        Intent intent = new Intent(getContext(), InformationFragment.class);
-        intent.putExtra("res", res);
-        getContext().startActivity(intent);
-    }
-
-//    @OnClick(R.id.badge)
-    public void onBadgeClick() {
-        showInformationAlert(R.layout.alert_badges);
-    }
-
-//    @OnClick(R.id.wifi)
-    public void onWifiClick() {
-        showInformationAlert(R.layout.alert_wifi);
-    }
-
-//    @OnClick(R.id.map)
-    public void onMapClick() {
-        //startInformationActivity(R.layout.fragment_maps);
-        Intent intent = new Intent(getContext(), MapsActivity.class);
-        //intent.putExtra("res", res);
-        getContext().startActivity(intent);
-    }
-
-    //@OnClick(R.id.vendors)
-    public void onVendorsClick() {
-        Intent intent = new Intent(getContext(), VendorsActivity.class);
-        getContext().startActivity(intent);
-    }
-
-    //@OnClick(R.id.faqs)
-    public void onFAQClick() {
-    }
-
-    //@OnClick(R.id.workshop)
-    public void onWorkshopClick() {
-        showTextAlert(R.string.workshop_info_title, R.string.workshop_info_text);
-    }
-
-    //@OnClick(R.id.radio)
-    public void onRadioClick() {
-        showTextAlert(R.string.radio_title, R.string.radio_text);
-    }
-
-//    @OnClick(R.id.settings)
-    public void onSettingsClick() {
-        Intent intent = new Intent(getContext(), SettingsActivity.class);
-        getContext().startActivity(intent);
-    }
-
-//    @OnClick(R.id.uber)
-    public void onUberClick() {
-        MaterialAlert.create(getContext()).setTitle(R.string.uber).setView( new UberView(getContext())).show();
-    }
-
-//    @OnClick(R.id.information)
-    public void onINformationClick() {
-//        Intent intent = new Intent(getContext(), InformationActivity.class);
-//        getContext().startActivity(intent);
-
-
-        InformationBottomSheetDialogFragment badges = InformationBottomSheetDialogFragment.newInstance("Badges", getContext().getString(R.string.badges_description));
-        badges.show(((AppCompatActivity)getContext()).getSupportFragmentManager(), badges.getTag());
-
+    @OnClick(R.id.logo)
+    public void onSkullClick() {
+        // TODO Implement skull animation.
     }
 }
