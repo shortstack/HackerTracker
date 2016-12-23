@@ -21,7 +21,6 @@
 
     <string name="speakers">Speakers</string>
     <string name="contests">Contests</string>
-    <string name="vendors">Vendors</string>
     <string name="demolabs">Demo Labs</string>
     <string name="villages">Villages</string>
     <string name="events">Events</string>
@@ -30,7 +29,6 @@
     <string name="skytalks">Skytalks</string>
     <string name="map">Map</string>
     <string name="workshops">Workshops</string>
-    <string name="faq">FAQ</string>
     <string name="badges">Badges &amp; Admission</string>
     <string name="wifi">DEF CON WiFi</string>
     <string name="radio">DEF CON Radio</string>
@@ -41,12 +39,7 @@
     <string name="schedule_finished">Schedule sync complete</string>
     <string name="tba">TBA</string>
     <string name="save">Save</string>
-    <string name="map_hotel">Hotel Map</string>
-    <string name="map_con">Conference Map</string>
 
-    <string name="need_uber">Need an Uber to DEF CON?</string>
-
-    <string name="workshop_info_title">Workshop Info</string>
     <string name="workshop_info_text">
         Workshops are free, first come, first served, and seats will fill up fast!\n\n
         To register for a workshop, you will need to go to the Bally\'s side in front of the cafe arcade between Thursday 07:00 to 15:00. We will have goons to pre-register you for the workshop(s) of your choosing.\n\n
@@ -66,7 +59,6 @@
         If you\'re feeling frisky, we\'ll still have the traditional \"open\" network for you - bring your laptop (we\'d recommend a clean OS, fully patched--you know the procedure) because we don\'t police what happens on that net. Share &amp; enjoy!
     </string>
 
-    <string name="radio_title">DEF CON Radio</string>
     <string name="radio_text">
         Music for Hacking. The DEF CON Year-Round Channel.\n\n
         Since 2013, SomaFM has provided the music for the DEF CON Chill room. That theme continues with SomaFM broadcasting this special year-round stream hosted by the DJs who entertain the DEF CON 24 chill room this year in Vegas.\n\n
@@ -127,25 +119,6 @@
         <item>There is a forum discussion thread in which you can ask follow up questions. https://forum.defcon.org/showthread.php?t=6845 </item>
     </string-array>
 
-    <string-array name="information_headers">
-        <item>Admission / Badges</item>
-        <item>Workshops</item>
-        <item>WiFi</item>
-        <item>DEF CON Radio</item>
-        <item>Vendors</item>
-        <item>Other</item>
-
-
-    </string-array>
-
-    <string name="link_01"><b>official DC24 website</b>\n\nhttps://www.defcon.org/html/defcon-24/dc-24-index.html\n\n</string>
-    <string name="link_02"><b>official DEF CON twitter</b>\n\nhttps://twitter.com/defcon\n\n</string>
-    <string name="link_03" formatted="false"><b>DEF CON related twitter updates</b>&lt;br&gt;&lt;br&gt;&lt;a href=\"http://bit.ly/1Yqq3x0\"&gt;#defcon, #dc24, @defconparties, @defcon&lt;/a&gt;</string>
-    <string name="link_04"><b>DEF CON forums</b>\n\nhttps://forum.defcon.org\n\n</string>
-    <string name="link_05"><b>DEF CON pictures - upload all your past DEF CON pictures. if you have an account on the forums, you have an account here.</b>\n\nhttps://pics.defcon.org\n\n</string>
-    <string name="link_06"><b>RSS Feed</b>\n\nhttps://www.defcon.org/defconrss.xml\n\n</string>
-    <string name="link_07"><b>previous conference archives, info, speeches</b>\n\nhttps://www.defcon.org\n\n</string>
-
 
     <string name="demo">DEMO</string>
     <string name="tool">TOOL</string>
@@ -156,7 +129,7 @@
     <string name="notification_text">Starting soon in %1$s.</string>
     <string name="uber">Uber</string>
     <string name="tut_introduction"><![CDATA[Welcome to <h1><font>DEFCON 25</font></h1>]]></string>
-    <string name="tut_location"><![CDATA[DEFCON 25 will be held<br>at the <font>Paris Hotel, Las Vegas</font>,<br>from <font>August 4th</font> till <font>August 9th</font>.]]></string>
+    <string name="tut_location">DEFCON 25 will be held at the Paris Hotel, Las Vegas, from August 4th till August 9th.</string>
     <string name="tut_badge"></string>
     <string name="tut_workshop"></string>
     <string name="link_warning">External Link</string>
@@ -165,8 +138,6 @@
     <string name="tut_hacker_jep"><![CDATA[Check out Hacker Jeopardy, it\'s definitely worth it.\n\nJust <font>don\'t fuck it up.</font>]]></string>
     <string name="unbookmark">Unbookmark</string>
     <string name="bookmark">Bookmark</string>
-    <string name="collapse">Collapse</string>
-    <string name="expand">Expand</string>
     <string name="empty_text">No further information available.\nYou\'ll have to look somewhere else.</string>
     <string name="details">Details</string>
     <string name="information">Information</string>
@@ -175,12 +146,10 @@
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="partners">Partners</string>
     <string name="map_uber">Map &amp; Uber</string>
     <string name="partners_vendors">Partners &amp; Vendors</string>
     <string name="partner">partner</string>
     <string name="where_when">Where &amp; When</string>
-    <string name="updates">Updates</string>
 
     <string-array name="nav_item_activity_titles">
         <item>@string/nav_home</item>
