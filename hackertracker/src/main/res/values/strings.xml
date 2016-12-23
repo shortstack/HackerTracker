@@ -180,6 +180,7 @@
     <string name="partners_vendors">Partners &amp; Vendors</string>
     <string name="partner">partner</string>
     <string name="where_when">Where &amp; When</string>
+    <string name="updates">Updates</string>
 
     <string-array name="nav_item_activity_titles">
         <item>@string/nav_home</item>
