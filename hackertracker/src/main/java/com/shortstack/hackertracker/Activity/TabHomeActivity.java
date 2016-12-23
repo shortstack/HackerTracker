@@ -17,7 +17,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.github.stkent.amplify.tracking.Amplify;
-import com.orhanobut.logger.Logger;
+import com.shortstack.hackertracker.Analytics.AnalyticsController;
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Fragment.GenericRowFragment;
 import com.shortstack.hackertracker.Fragment.HomeFragment;
 import com.shortstack.hackertracker.Fragment.ReviewBottomSheetDialogFragment;
@@ -82,17 +83,23 @@ public class TabHomeActivity extends AppCompatActivity
 
 
         if (savedInstanceState == null) {
-            mFragmentIndex = DEFAULT_FRAGMENT_INDEX;
-            mNavView.getMenu().getItem(mFragmentIndex).setChecked(true);
+            mFragmentIndex = App.getStorage().getViewPagerPosition();
+            forceMenuHighlighted();
             loadFragment();
         }
+    }
+
+    private void forceMenuHighlighted() {
+        mNavView.getMenu().getItem(mFragmentIndex).setChecked(true);
     }
 
     private void loadFragment() {
         // set toolbar title
         //setToolbarTitle();
 
+        App.getStorage().setViewPagerPosition(mFragmentIndex);
         tagAnalytics();
+
         // if user select the current navigation menu again, don't do anything
         // just close the navigation drawer
         if (getSupportFragmentManager().findFragmentByTag(getFragmentTag()) != null) {
@@ -123,11 +130,9 @@ public class TabHomeActivity extends AppCompatActivity
         }
 
 
-        Logger.d("Set new fragment." + getFragmentTag() + " " + getFragmenTitle());
-
         invalidateOptionsMenu();
 
-        getSupportActionBar().setTitle(getFragmenTitle());
+        getSupportActionBar().setTitle(getFragmentTitle());
 
 
         updateFABVisibility();
@@ -170,7 +175,7 @@ public class TabHomeActivity extends AppCompatActivity
     }
 
     private void updateFABVisibility() {
-        fab.setVisibility( mFragmentIndex == 1 ? View.VISIBLE : View.GONE );
+        fab.setVisibility(mFragmentIndex == 1 ? View.VISIBLE : View.GONE);
     }
 
     private Fragment getCurrentFragment() {
@@ -200,8 +205,8 @@ public class TabHomeActivity extends AppCompatActivity
     @OnClick(R.id.filter)
     public void onFilterClick() {
         for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-            if( fragment instanceof GenericRowFragment )  {
-                ((GenericRowFragment)fragment).showFilters();
+            if (fragment instanceof GenericRowFragment) {
+                ((GenericRowFragment) fragment).showFilters();
             }
         }
     }
@@ -246,7 +251,7 @@ public class TabHomeActivity extends AppCompatActivity
         return true;
     }
 
-    private int getFragmentIndex( MenuItem item ) {
+    private int getFragmentIndex(MenuItem item) {
         return item.getItemId() - R.id.nav_home;
     }
 
@@ -254,7 +259,13 @@ public class TabHomeActivity extends AppCompatActivity
         return "home_fragment_" + mFragmentIndex;
     }
 
-    private String getFragmenTitle() {
+    private String getFragmentTitle() {
         return activityTitles[mFragmentIndex];
+    }
+
+    public void loadFragment(int fragment) {
+        mFragmentIndex = fragment;
+        forceMenuHighlighted();
+        loadFragment();
     }
 }
