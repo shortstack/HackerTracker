@@ -49,6 +49,8 @@ public class HomeFragment extends Fragment {
         adapter.add(new RendererContent<Void>(null, TYPE_HEADER));
         //adapter.add(getString(R.string.updates));
 
+        adapter.add(new Navigation("Looking for something?", "Check out the information section", InformationFragment.class ));
+
         String[] myItems = getResources().getStringArray(R.array.updates);
 
 
