@@ -11,10 +11,12 @@ import android.view.ViewGroup;
 import com.pedrogomez.renderers.RendererAdapter;
 import com.pedrogomez.renderers.RendererBuilder;
 import com.pedrogomez.renderers.RendererContent;
-import com.shortstack.hackertracker.Renderer.FAQRenderer;
-import com.shortstack.hackertracker.Renderer.HomeHeaderRenderer;
-import com.shortstack.hackertracker.Renderer.GenericHeaderRenderer;
+import com.shortstack.hackertracker.Model.Navigation;
 import com.shortstack.hackertracker.R;
+import com.shortstack.hackertracker.Renderer.ActivityNavRenderer;
+import com.shortstack.hackertracker.Renderer.FAQRenderer;
+import com.shortstack.hackertracker.Renderer.GenericHeaderRenderer;
+import com.shortstack.hackertracker.Renderer.HomeHeaderRenderer;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -38,7 +40,10 @@ public class HomeFragment extends Fragment {
         RendererBuilder rendererBuilder = new RendererBuilder()
                 .bind(TYPE_HEADER, new HomeHeaderRenderer())
                 .bind(String.class, new GenericHeaderRenderer())
-                .bind(String[].class, new FAQRenderer());
+                .bind(String[].class, new FAQRenderer())
+                .bind(Navigation.class, new ActivityNavRenderer())
+
+                ;
 
         LinearLayoutManager layout = new LinearLayoutManager(getContext());
         list.setLayoutManager(layout);
@@ -46,9 +51,8 @@ public class HomeFragment extends Fragment {
         RendererAdapter adapter = new RendererAdapter(rendererBuilder);
         list.setAdapter(adapter);
 
-        adapter.add(new RendererContent<Void>(null, TYPE_HEADER));
-        //adapter.add(getString(R.string.updates));
 
+        adapter.add(new RendererContent<Void>(null, TYPE_HEADER)); // Skull
         adapter.add(new Navigation("Looking for something?", "Check out the information section", InformationFragment.class ));
 
         String[] myItems = getResources().getStringArray(R.array.updates);
@@ -60,7 +64,7 @@ public class HomeFragment extends Fragment {
             update[0] = myItems[i];
             update[1] = myItems[i+1];
 
-            //adapter.add(update);
+            adapter.add(update);
         }
 
         return rootView;
