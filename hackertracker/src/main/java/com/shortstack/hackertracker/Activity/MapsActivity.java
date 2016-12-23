@@ -54,6 +54,7 @@ public class MapsActivity extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_uber:
+                App.getApplication().getAnalyticsController().tagCustomEvent(AnalyticsController.Analytics.UBER);
                 MaterialAlert.create(getContext()).setTitle(R.string.uber).setView( new UberView(getContext())).show();
                 return true;
         }

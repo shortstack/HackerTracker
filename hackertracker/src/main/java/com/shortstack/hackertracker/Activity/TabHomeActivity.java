@@ -92,6 +92,7 @@ public class TabHomeActivity extends AppCompatActivity
         // set toolbar title
         //setToolbarTitle();
 
+        tagAnalytics();
         // if user select the current navigation menu again, don't do anything
         // just close the navigation drawer
         if (getSupportFragmentManager().findFragmentByTag(getFragmentTag()) != null) {
@@ -138,6 +139,33 @@ public class TabHomeActivity extends AppCompatActivity
         if (Amplify.getSharedInstance().shouldPrompt()) {
             ReviewBottomSheetDialogFragment review = ReviewBottomSheetDialogFragment.newInstance();
             review.show(this.getSupportFragmentManager(), review.getTag());
+        }
+    }
+
+    private void tagAnalytics() {
+        App.getApplication().getAnalyticsController().tagCustomEvent(getFragmentEvent());
+    }
+
+    private AnalyticsController.Analytics getFragmentEvent() {
+        switch (mFragmentIndex) {
+            default:
+            case NAV_HOME:
+                return AnalyticsController.Analytics.FRAGMENT_HOME;
+
+            case NAV_SCHEDULE:
+                return AnalyticsController.Analytics.FRAGMENT_SCHEDULE;
+
+            case NAV_MAP:
+                return AnalyticsController.Analytics.FRAGMENT_MAP;
+
+            case NAV_INFORMATION:
+                return AnalyticsController.Analytics.FRAGMENT_INFO;
+
+            case NAV_VENDORS:
+                return AnalyticsController.Analytics.FRAGMENT_COMPANIES;
+
+            case NAV_SETTINGS:
+                return AnalyticsController.Analytics.FRAGMENT_SETTINGS;
         }
     }
 

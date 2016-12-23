@@ -112,4 +112,8 @@ public class SharedPreferencesUtil {
     public int getViewPagerPosition() {
         return mPreferences.getInt(Key.APP_VIEW_PAGER_POSITION.toString(), 0);
     }
+
+    public boolean isTrackingAnalytics() {
+        return mPreferences.getBoolean(Key.USER_ANALYTICS.toString(), true);
+    }
 }

@@ -2,6 +2,8 @@ package com.shortstack.hackertracker.Analytics;
 
 import com.crashlytics.android.answers.Answers;
 import com.crashlytics.android.answers.CustomEvent;
+import com.shortstack.hackertracker.Application.App;
+import com.shortstack.hackertracker.Model.Filter;
 import com.shortstack.hackertracker.Model.Item;
 
 public class AnalyticsController {
@@ -21,9 +23,12 @@ public class AnalyticsController {
 
         UBER("Uber"),
 
-        VIEW_MAP("View Map"),
-        VIEW_FAQ("View FAQ"),
-        VIEW_VENDORS("View Vendors"),
+        FRAGMENT_HOME("View Home"),
+        FRAGMENT_SCHEDULE("View Schedule"),
+        FRAGMENT_MAP("View Map"),
+        FRAGMENT_INFO("View Information"),
+        FRAGMENT_COMPANIES("View Companies"),
+        FRAGMENT_SETTINGS("View Settings"),
 
         SCHEDULE_FILTERS("Schedule - Filters");
 
@@ -49,7 +54,7 @@ public class AnalyticsController {
         logCustom(new ItemEvent(event, item));
     }
 
-    public void tagSettingsEvent(Analytics event, boolean enabled ) {
+    public void tagSettingsEvent(Analytics event, boolean enabled) {
         logCustom(new SettingsEvent(event, enabled));
     }
 
@@ -57,7 +62,16 @@ public class AnalyticsController {
         logCustom(new CustomEvent(event.toString()));
     }
 
-    private void logCustom( CustomEvent event ) {
+    public void tagFiltersEvent(Filter filter) {
+        logCustom(new FilterEvent(filter));
+    }
+
+    private void logCustom(CustomEvent event) {
+        // Bypass to track if they're turning analytics off
+        if( !App.getStorage().isTrackingAnalytics() && !event.toString().contains(Analytics.SETTINGS_ANALYTICS.toString()) ) {
+            return;
+        }
+
         try {
             Answers.getInstance().logCustom(event);
         } catch (IllegalStateException ex) {
