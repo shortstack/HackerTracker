@@ -231,6 +231,7 @@ public class GenericRowFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Filter filter = view.save();
+                App.getApplication().getAnalyticsController().tagFiltersEvent(filter);
                 refreshContents();
             }
         }).show();

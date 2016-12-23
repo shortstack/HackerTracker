@@ -11,6 +11,8 @@ import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
+import com.shortstack.hackertracker.Analytics.AnalyticsController;
+import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.ItemView;
@@ -72,6 +74,8 @@ public class DetailsBottomSheetDialogFragment extends android.support.design.wid
             return;
         }
 
+        App.getApplication().getAnalyticsController().tagItemEvent(AnalyticsController.Analytics.EVENT_VIEW, getContent());
+
         item.setItem(obj);
 
         displayDescription(obj);
@@ -99,17 +103,25 @@ public class DetailsBottomSheetDialogFragment extends android.support.design.wid
 
     @OnClick(R.id.star)
     public void onStarClick() {
+        if( getContent().isBookmarked() ) {
+            App.getApplication().getAnalyticsController().tagItemEvent(AnalyticsController.Analytics.EVENT_UNBOOKMARK, getContent());
+        } else {
+            App.getApplication().getAnalyticsController().tagItemEvent(AnalyticsController.Analytics.EVENT_BOOKMARK, getContent());
+        }
         item.onBookmarkClick();
         updateStarIcon();
     }
 
     @OnClick(R.id.share)
     public void onShareClick() {
+        App.getApplication().getAnalyticsController().tagItemEvent(AnalyticsController.Analytics.EVENT_SHARE, getContent());
         item.onShareClick();
     }
 
     @OnClick(R.id.link)
     public void onLinkClick() {
+        App.getApplication().getAnalyticsController().tagItemEvent(AnalyticsController.Analytics.EVENT_LINK, getContent());
+
         MaterialAlert.create(getContext())
                 .setTitle(R.string.link_warning)
                 .setMessage(String.format(getContext().getString(R.string.link_message), getContent().getLink().toLowerCase()))
