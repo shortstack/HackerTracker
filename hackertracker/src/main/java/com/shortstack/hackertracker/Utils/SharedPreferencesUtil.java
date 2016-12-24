@@ -26,6 +26,8 @@ public class SharedPreferencesUtil {
         APP_LAST_REFRESH("app_last_refresh"),
         APP_LAST_UPDATED("app_last_updated"),
         APP_VIEW_PAGER_POSITION("app_view_pager_position"),
+
+        BETA_ALERT("beta_alert_4_0_beta")
         ;
 
 
@@ -115,5 +117,13 @@ public class SharedPreferencesUtil {
 
     public boolean isTrackingAnalytics() {
         return mPreferences.getBoolean(Key.USER_ANALYTICS.toString(), true);
+    }
+
+    public boolean shouldShowBetaAlert() {
+        return mPreferences.getBoolean(Key.BETA_ALERT.toString(), true);
+    }
+
+    public void markShownBetaAlert() {
+        getEditor().putBoolean(Key.BETA_ALERT.toString(), false).commit();
     }
 }

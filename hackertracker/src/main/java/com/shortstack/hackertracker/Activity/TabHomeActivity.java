@@ -17,6 +17,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.github.stkent.amplify.tracking.Amplify;
+import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Analytics.AnalyticsController;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Fragment.GenericRowFragment;
@@ -144,6 +145,15 @@ public class TabHomeActivity extends AppCompatActivity
         if (Amplify.getSharedInstance().shouldPrompt()) {
             ReviewBottomSheetDialogFragment review = ReviewBottomSheetDialogFragment.newInstance();
             review.show(this.getSupportFragmentManager(), review.getTag());
+        }
+
+        if( App.getStorage().shouldShowBetaAlert()) {
+            App.getStorage().markShownBetaAlert();
+            MaterialAlert.create(this).setTitle("Beta").setMessage("Welcome to the new Hacker Tracker. \nThis build has gone through heavy improvements, and still is in the beta stage. " +
+                    "While DEF CON isn't ongoing currently, the app will force the current time to be during the convention." +
+                    "Please use the app like you would, and report any issues or feedback you find would help us improve.\n\n" +
+                    "https://github.com/shortstack/HackerTracker" +
+                    "\n\nThank you.").show();
         }
     }
 
