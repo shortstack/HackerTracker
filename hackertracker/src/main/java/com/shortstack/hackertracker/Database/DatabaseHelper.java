@@ -18,7 +18,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final int BUFFER_SIZE = 1024;
     private static final String DB_NAME = "hackertracker.sqlite";
-    private static final int DB_VERSION = 334;
+    private static final int DB_VERSION = 340;
 
     private final Context mContext;
 
