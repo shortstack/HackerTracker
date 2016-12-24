@@ -49,3 +49,6 @@ keystore_password.txt
 hackertracker.keystore
 sql/instructions.txt
 export/
+gradle.properties
+hackertracker/fabric.properties
+projectFilesBackup/.idea/workspace.xml
