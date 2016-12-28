@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:padding="10dp"
     tools:background="@color/background">
@@ -21,42 +21,33 @@
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/speaker"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/checkBoxStyle"
                 android:text="@string/speakers"
-                app:buttonTint="@color/category_speaker"
-                />
+                app:buttonTint="@color/category_speaker" />
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/skytalk"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/checkBoxStyle"
                 android:text="@string/skytalks"
-                app:buttonTint="@color/category_skytalk"
-                />
+                app:buttonTint="@color/category_skytalk" />
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/event"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/checkBoxStyle"
                 android:text="@string/events"
-                app:buttonTint="@color/category_event"
-                />
+                app:buttonTint="@color/category_event" />
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/village"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                style="@style/checkBoxStyle"
                 android:text="@string/villages"
-                app:buttonTint="@color/category_village"
-                />
+                app:buttonTint="@color/category_village" />
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/kids"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:buttonTint="@color/category_kids"
-                android:text="@string/kids" />
+                style="@style/checkBoxStyle"
+                android:text="@string/kids"
+                app:buttonTint="@color/category_kids" />
         </LinearLayout>
 
         <LinearLayout
@@ -67,32 +58,27 @@
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/contest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:buttonTint="@color/category_contest"
-                android:text="@string/contests" />
+                style="@style/checkBoxStyle"
+                android:text="@string/contests"
+                app:buttonTint="@color/category_contest" />
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/party"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:buttonTint="@color/category_party"
-                android:text="@string/parties" />
+                style="@style/checkBoxStyle"
+                android:text="@string/parties"
+                app:buttonTint="@color/category_party" />
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/demo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:buttonTint="@color/category_demo"
+                style="@style/checkBoxStyle"
                 android:text="@string/demolabs"
-                />
+                app:buttonTint="@color/category_demo" />
 
             <android.support.v7.widget.AppCompatCheckBox
                 android:id="@+id/workshop"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:buttonTint="@color/category_workshop"
-                android:text="@string/workshops" />
+                style="@style/checkBoxStyle"
+                android:text="@string/workshops"
+                app:buttonTint="@color/category_workshop" />
         </LinearLayout>
 
     </LinearLayout>
