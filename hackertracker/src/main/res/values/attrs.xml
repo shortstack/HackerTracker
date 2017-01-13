@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="ItemView">
+        <attr name="displayMode" format="enum">
+            <enum name="min" value="0"/>
+            <enum name="full" value="1"/>
+        </attr>
+        <attr name="roundCorners" format="boolean"/>
+    </declare-styleable>
+
+</resources>

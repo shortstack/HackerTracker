@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:background="@color/background"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_filter_list_white_48dp" />
+
+    <TextView
+        android:id="@+id/textView"
+        style="@style/details_body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Filter your schedule to find what you&apos;re looking for."
+        android:gravity="center" />
+</LinearLayout>

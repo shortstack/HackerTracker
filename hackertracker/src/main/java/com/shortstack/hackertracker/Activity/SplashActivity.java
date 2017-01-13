@@ -1,58 +1,33 @@
 package com.shortstack.hackertracker.Activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 
 import com.shortstack.hackertracker.R;
 
-/**
- * Created with IntelliJ IDEA.
- * User: Whitney Champion
- * Date: 8/29/12
- * Time: 2:26 PM
- */
-public class SplashActivity extends Activity {
+import java.util.Timer;
+import java.util.TimerTask;
+
+public class SplashActivity extends AppCompatActivity {
+
+    public static final int SPLASH_DELAY = 450;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
 
-        /** set time to splash out */
-        final int welcomeScreenDisplay = 1200;
-
-        /** create a thread to show splash up to splash time */
-        Thread welcomeThread = new Thread() {
-
-            int wait = 0;
-
+        new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
-                try {
-                    super.run();
-                    /**
-                     * use while to get the splash time. Use sleep() to increase
-                     * the wait variable for every 100L.
-                     */
-                    while (wait < welcomeScreenDisplay) {
-                        sleep(100);
-                        wait += 100;
-                    }
-                } catch (Exception e) {
-                    System.out.println("EXc=" + e);
-                } finally {
-                    /**
-                     * Called after splash times up. Do some action after splash
-                     * times up. Here we moved to another main activity class
-                     */
-                    startActivity(new Intent(SplashActivity.this,
-                            HomeActivity.class));
-                    finish();
-                }
+                startHomeActivity();
             }
-        };
-        welcomeThread.start();
+        }, SPLASH_DELAY);
+    }
 
+    private void startHomeActivity() {
+        startActivity(new Intent(SplashActivity.this, TabHomeActivity.class));
+        finish();
     }
 }
