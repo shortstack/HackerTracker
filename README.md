@@ -22,6 +22,8 @@ If you find any bugs with the app, please create an issue.
   <tr>
 </table>
 
+<h2>Legacy Version</h2>
+A legacy version is stored <a href="https://github.com/Advice-Dog/HackerTracker/tree/legacy">here</a> to keep a record of <a href="https://github.com/shortstack">Shortstack's</a> work.
 
 <h2>iOS Version</h2>
 <a href="https://twitter.com/sethlaw">@Sethlaw</a> maintains the iOS version. You can download it on <a href="https://itunes.apple.com/us/app/hackertracker/id1021141595?ls=1&mt=8">iTunes</a>.
