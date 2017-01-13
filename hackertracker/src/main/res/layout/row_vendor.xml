@@ -1,44 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              style="@style/vendor_row"
-              android:id="@+id/vendorLayout">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:padding="5dp"
+    tools:background="@color/background">
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="4dp"
+        android:layout_marginTop="12dp"
+        android:alpha=".30"
+        android:src="@drawable/ic_people_white_24dp" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="20dp"
-        android:gravity="center_horizontal"
-        >
+        android:layout_alignParentTop="true"
+        android:layout_toEndOf="@+id/imageView2"
+        android:layout_toRightOf="@+id/imageView2"
+        android:orientation="vertical"
+        android:paddingBottom="12dp"
+        android:paddingLeft="12dp"
+        android:paddingRight="24dp"
+        android:paddingTop="12dp">
 
-        <ImageView android:layout_width="wrap_content"
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:linksClickable="true"
+            android:textColor="@color/white"
+            android:textSize="24sp"
+            tools:text="360 UNICORN TEAM" />
+
+        <TextView
+            android:id="@+id/partner"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/partner"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/description"
+            style="@style/TextAppearance.AppCompat.Body1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:adjustViewBounds="true"
-            android:id="@+id/vendor_logo"
-            style="@style/vendor_logo"/>
+            android:ellipsize="end"
+            android:lineSpacingExtra="5sp"
+            android:lines="3"
+            android:linksClickable="true"
+            android:textColor="@color/white_alpha"
+            android:textSize="14sp"
+            tools:text="360 Unicorn Team consists of..." />
+
 
     </LinearLayout>
 
-    <com.shortstack.hackertracker.Font.HelveticaTextView
-        android:id="@+id/vendor_title"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        style="@style/button_map"
-        android:textSize="16dp"
-        android:padding="10dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:singleLine="true" />
-    <TextView android:layout_width="fill_parent"
-              android:layout_height="wrap_content"  android:id="@+id/vendor_website"
-              style="@style/vendor_website"
-              android:linksClickable="true"
-              android:autoLink="all" />
-    <TextView android:layout_width="fill_parent"
-              android:layout_height="wrap_content"  android:id="@+id/vendor_body"
-              style="@style/vendor_body"/>
-
-</LinearLayout>
+    <!--</android.support.v7.widget.CardView>-->
+</RelativeLayout>

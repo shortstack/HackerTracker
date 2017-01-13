@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="10dp"
+    tools:background="@color/background">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/speaker"
+                style="@style/checkBoxStyle"
+                android:text="@string/speakers"
+                app:buttonTint="@color/category_speaker" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/skytalk"
+                style="@style/checkBoxStyle"
+                android:text="@string/skytalks"
+                app:buttonTint="@color/category_skytalk" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/event"
+                style="@style/checkBoxStyle"
+                android:text="@string/events"
+                app:buttonTint="@color/category_event" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/village"
+                style="@style/checkBoxStyle"
+                android:text="@string/villages"
+                app:buttonTint="@color/category_village" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/kids"
+                style="@style/checkBoxStyle"
+                android:text="@string/kids"
+                app:buttonTint="@color/category_kids" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/contest"
+                style="@style/checkBoxStyle"
+                android:text="@string/contests"
+                app:buttonTint="@color/category_contest" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/party"
+                style="@style/checkBoxStyle"
+                android:text="@string/parties"
+                app:buttonTint="@color/category_party" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/demo"
+                style="@style/checkBoxStyle"
+                android:text="@string/demolabs"
+                app:buttonTint="@color/category_demo" />
+
+            <android.support.v7.widget.AppCompatCheckBox
+                android:id="@+id/workshop"
+                style="@style/checkBoxStyle"
+                android:text="@string/workshops"
+                app:buttonTint="@color/category_workshop" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

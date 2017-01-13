@@ -1,23 +1,42 @@
-<PreferenceScreen
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:key="preferenceTheme"
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:key="preferenceTheme">
 
     <CheckBoxPreference
-        android:key="allowNotifications"
-        android:title="Push Notifications"
-        android:summary="Allow push notifications for upcoming starred events"
-        android:defaultValue="True"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
-
-    <Preference
-        android:key="clearSchedule"
-        android:title="Clear My Schedule"
-        android:summary="Clear all events from schedule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-    />
+        android:defaultValue="True"
+        android:key="user_analytics"
+        android:summary="Allow us track anonymous usage and report crashes."
+        android:title="Analytics" />
+
+    <CheckBoxPreference
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:defaultValue="True"
+        android:key="user_allow_push_notifications"
+        android:summary="Allow notifications for upcoming starred events."
+        android:title="Notifications"
+        />
+
+    <CheckBoxPreference
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:defaultValue="False"
+        android:key="user_show_expired_events"
+        android:summary="Show events that have already happened."
+        android:title="Expired Events" />
+
+    <CheckBoxPreference
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:defaultValue="False"
+        android:key="user_use_military_time"
+        android:summary="Show 14:00 instead of 2:00 PM"
+        android:title="24 hour time"
+        app:summaryOff="Show 2:00 PM."
+        app:summaryOn="Show 14:00." />
 
 </PreferenceScreen>

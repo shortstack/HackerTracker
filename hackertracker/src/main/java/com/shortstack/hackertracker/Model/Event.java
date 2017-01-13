@@ -11,6 +11,6 @@ import org.parceler.Parcel;
  */
 
 @Parcel
-public class Event extends Default {
+public class Event extends Item {
 
 }

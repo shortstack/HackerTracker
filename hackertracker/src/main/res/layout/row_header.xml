@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center"
+    android:textColor="@android:color/white"
+    android:textSize="@dimen/abc_text_size_display_1_material"
+    tools:background="@color/background"
+    tools:text="Wednesday"
+    android:paddingTop="30dp" />
