@@ -2,79 +2,73 @@ package com.shortstack.hackertracker.Fragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.v7.preference.Preference;
 import android.support.v7.preference.PreferenceFragmentCompat;
 
+import com.shortstack.hackertracker.Application.App;
+import com.shortstack.hackertracker.Event.UpdateListContentsEvent;
 import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Utils.DialogUtil;
-import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 
-/**
- * Created by Whitney Champion on 6/3/16.
- */
+import static com.shortstack.hackertracker.Analytics.AnalyticsController.Analytics;
 
-public class SettingsFragment extends PreferenceFragmentCompat
-        implements SharedPreferences.OnSharedPreferenceChangeListener {
+public class SettingsFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    SharedPreferences sharedPreferences;
-
+    public static SettingsFragment newInstance() {
+        
+        Bundle args = new Bundle();
+        
+        SettingsFragment fragment = new SettingsFragment();
+        fragment.setArguments(args);
+        return fragment;
+    }
+    
     @Override
     public void onCreatePreferences(Bundle bundle, String s) {
-
-        // add xml
         addPreferencesFromResource(R.xml.settings);
-
-        // set listener for "clear schedule" preference
-        Preference clearSchedule = findPreference("clearSchedule");
-        clearSchedule.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-
-                // show clear dialog
-                DialogUtil.clearScheduleDialog(getContext()).show();
-
-                return true;
-            }
-
-        });
-
-        // set listener for "allow notifications" preference
-        Preference allowNotifications = findPreference("allowNotifications");
-        allowNotifications.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
-
-            public boolean onPreferenceClick(Preference preference) {
-
-                if (preference.isEnabled()) {
-                    // enable notifications
-                    SharedPreferencesUtil.allowPushNotifications(true);
-                } else {
-                    // disable notifications
-                    SharedPreferencesUtil.allowPushNotifications(false);
-                }
-
-                return true;
-            }
-
-        });
     }
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
 
+        Analytics event = Analytics.SETTINGS_EXPIRED_EVENT;
+
+        switch (key) {
+            case "user_analytics":
+                event = Analytics.SETTINGS_ANALYTICS;
+                break;
+
+            case "user_allow_push_notifications":
+                event = Analytics.SETTINGS_NOTIFICATIONS;
+                break;
+
+            case "user_use_military_time":
+                event = Analytics.SETTINGS_MILITARY_TIME;
+                App.getApplication().postBusEvent(new UpdateListContentsEvent());
+                break;
+
+            case "user_show_expired_events":
+                event = Analytics.SETTINGS_EXPIRED_EVENT;
+                App.getApplication().postBusEvent(new UpdateListContentsEvent());
+                break;
+
+            default:
+                // We're not tracking these events, ignore.
+                return;
+        }
+
+        boolean value = sharedPreferences.getBoolean(key, false);
+        App.getApplication().getAnalyticsController().tagSettingsEvent(event, value);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        getPreferenceScreen().getSharedPreferences()
-                .registerOnSharedPreferenceChangeListener(this);
+        getPreferenceScreen().getSharedPreferences().registerOnSharedPreferenceChangeListener(this);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        getPreferenceScreen().getSharedPreferences()
-                .unregisterOnSharedPreferenceChangeListener(this);
+        getPreferenceScreen().getSharedPreferences().unregisterOnSharedPreferenceChangeListener(this);
     }
 
 }

@@ -1,19 +1,30 @@
 package com.shortstack.hackertracker.Common;
 
-/**
- * Created by whitneychampion on 6/22/14.
- */
+import com.shortstack.hackertracker.BuildConfig;
+
 public interface Constants {
+
+    long DEBUG_FORCE_TIME_DATE = 1470418500000L;
+    long TIMER_INTERVAL_FIVE_MIN = 300000;
+    long TIMER_INTERVAL_DEBUG = 5000;
+    long DEBUG_PAUSE_TIME_SKIP = TIMER_INTERVAL_FIVE_MIN * 30;
+
+    long TIMER_INTERVAL = BuildConfig.DEBUG ? TIMER_INTERVAL_DEBUG : TIMER_INTERVAL_FIVE_MIN;
+
+    int BOOKMARKED = 1;
+    int UNBOOKMARKED = 0;
 
     String API_URL = "https://s3.amazonaws.com/defcon-api";
     String API_ERROR_MESSAGE = "\"errorMessage\":";
     String OFFICIAL_SCHEDULE = "/schedule-full.json";
 
+    String FEEDBACK_EMAIL = "chrisporter0111@gmail.com";
+
     String TYPE_SPEAKER = "Speaker";
     String TYPE_CONTEST = "Contest";
     String TYPE_EVENT = "Event";
     String TYPE_PARTY = "Party";
-    String TYPE_VENDOR = "Vendor";
+    String TYPE_VENDOR = "Company";
     String TYPE_DEMOLAB = "DemoLabs";
     String TYPE_SKYTALKS = "Skytalks";
     String TYPE_MESSAGE = "Message";
@@ -26,45 +37,6 @@ public interface Constants {
     String TYPE_KIDS = "Kids";
     String TYPE_JOKE = "Joke";
     String TYPE_OMG = "Password";
-
-    String LONG_DAY_0 = "2016-08-03";
-    String LONG_DAY_1 = "2016-08-04";
-    String LONG_DAY_2 = "2016-08-05";
-    String LONG_DAY_3 = "2016-08-06";
-    String LONG_DAY_4 = "2016-08-07";
-
-    String DAY_0 = "Wednesday";
-    String DAY_1 = "Thursday";
-    String DAY_2 = "Friday";
-    String DAY_3 = "Saturday";
-    String DAY_4 = "Sunday";
-
-    String FRAGMENT_SCHEDULE = "SchedulePagerFragment";
-    String FRAGMENT_SPEAKERS = "SpeakerPagerFragment";
-    String FRAGMENT_CONTESTS = "ContestPagerFragment";
-    String FRAGMENT_EVENTS = "EventPagerFragment";
-    String FRAGMENT_PARTIES = "PartyPagerFragment";
-    String FRAGMENT_PARTNERS = "PartnersFragment";
-    String FRAGMENT_KIDS = "KidsPagerFragment";
-    String FRAGMENT_WORKSHOPS = "WorkshopPagerFragment";
-    String FRAGMENT_SKYTALKS = "SkytalksPagerFragment";
-    String FRAGMENT_BOOKS = "BooksPagerFragment";
-    String FRAGMENT_VILLAGES = "VillagePagerFragment";
-    String FRAGMENT_VENDORS = "VendorsFragment";
-    String FRAGMENT_DEMOLAB = "DemoLabsFragment";
-    String FRAGMENT_HOME = "HomeFragment";
-    String FRAGMENT_LINKS = "LinksFragment";
-    String FRAGMENT_MAPS = "MapsFragment";
-    String FRAGMENT_SEARCH = "SearchFragment";
-    String FRAGMENT_SHUTTLE = "ShuttleFragment";
-    String FRAGMENT_FAQ = "FAQFragment";
-    String FRAGMENT_BADGES = "BadgeFragment";
-    String FRAGMENT_WIFI = "WifiFragment";
-    String FRAGMENT_RADIO = "RadioFragment";
-    String FRAGMENT_WORKSHOP_INFO = "WorkshopInfoFragment";
-    String FRAGMENT_SETTINGS = "SettingsFragment";
-
-    String[] COLUMN_NAMES = {"Title","Speaker Name","Start Time","End Time","Date","Location"};
 
     String UBER_CLIENT_ID = "q1eUCeC1ZenbGmQD2vb0MytALvboEHhD";
 
@@ -86,6 +58,6 @@ public interface Constants {
     String UBER_ADDRESS_BELLAGIO = "3600 S Las Vegas Blvd, Las Vegas, NV 89109";
     String UBER_ADDRESS_PLANET_HOLLYWOOD = "3667 S Las Vegas Blvd, Las Vegas, NV 89109";
 
-    String[] UBER_LOCATIONS = {UBER_PARIS,UBER_BALLYS,UBER_TUSCANY,UBER_PLANET_HOLLYWOOD,UBER_MANDALAY,UBER_DEFAULT};
-
+    String[] UBER_LOCATIONS = {UBER_PARIS, UBER_BALLYS, UBER_TUSCANY, UBER_PLANET_HOLLYWOOD, UBER_CAESARS, UBER_MANDALAY, UBER_BELLAGIO, UBER_DEFAULT};
+    String[] UBER_ADDRESSES = {UBER_ADDRESS_PARIS, UBER_ADDRESS_BALLYS, UBER_ADDRESS_TUSCANY, UBER_ADDRESS_PLANET_HOLLYWOOD, UBER_ADDRESS_CAESARS, UBER_ADDRESS_MANDALAY, UBER_ADDRESS_BELLAGIO, UBER_ADDRESS_PARIS};
 }
