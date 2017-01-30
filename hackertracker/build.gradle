@@ -90,6 +90,9 @@ dependencies {
     // Reviews
     compile 'com.github.stkent:amplify:1.4.0'
 
+    // Networking
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
+
     // Crash
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
         transitive = true;
