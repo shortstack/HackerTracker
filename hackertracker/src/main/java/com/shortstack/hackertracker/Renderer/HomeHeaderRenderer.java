@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.orhanobut.logger.Logger;
 import com.pedrogomez.renderers.Renderer;
 import com.shortstack.hackertracker.R;
 
@@ -42,7 +41,7 @@ public class HomeHeaderRenderer extends Renderer<Void> {
             temp = temp.concat( "[" + i + "] = " + aChar);
         }
 
-        Logger.d(temp);
+//        Logger.d(temp);
 
         for (String s : source) {
 

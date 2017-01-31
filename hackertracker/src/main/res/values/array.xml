@@ -13,4 +13,21 @@
         <item>@color/category_workshop</item>
     </string-array>
 
+    <string-array name="sync_intervals">
+        <item>Never</item>
+        <item>Every 3 hours</item>
+        <item>Every 6 hours</item>
+        <item>Every 12 hours</item>
+        <item>Once a day</item>
+    </string-array>
+
+    <string-array name="sync_intervals_display">
+        <item>Will never automatically sync</item>
+        <item>Every 3 hours</item>
+        <item>Every 6 hours</item>
+        <item>Every 12 hours</item>
+        <item>Once a day</item>
+    </string-array>
+
+
 </resources>

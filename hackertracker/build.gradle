@@ -2,9 +2,10 @@ buildscript {
     repositories {
         mavenCentral()
         maven { url 'https://maven.fabric.io/public' }
+        jcenter()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0-beta1'
+        classpath 'com.android.tools.build:gradle:2.3.0-beta3'
         // These docs use an open ended version so that our plugin
         // can be updated quickly in response to Android tooling updates
 
@@ -88,6 +89,11 @@ dependencies {
 
     // Reviews
     compile 'com.github.stkent:amplify:1.4.0'
+
+    // Networking
+    compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+
 
     // Crash
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {

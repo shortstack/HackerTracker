@@ -37,6 +37,9 @@
         <!-- Preferences-->
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white_alpha</item>
+
+        <item name="android:dialogTheme">@style/MyAlertDialogStyle</item>
+        <item name="android:alertDialogTheme">@style/MyAlertDialogStyle</item>
     </style>
 
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
