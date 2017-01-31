@@ -92,6 +92,8 @@ dependencies {
 
     // Networking
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta3'
+    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+
 
     // Crash
     compile('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
