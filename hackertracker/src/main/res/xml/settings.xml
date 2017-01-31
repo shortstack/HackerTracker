@@ -1,8 +1,10 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:key="preferenceTheme">
+    android:key="preferenceTheme"
+    tools:background="@color/background">
 
     <CheckBoxPreference
         android:layout_width="match_parent"
@@ -18,8 +20,7 @@
         android:defaultValue="True"
         android:key="user_allow_push_notifications"
         android:summary="Allow notifications for upcoming starred events."
-        android:title="Notifications"
-        />
+        android:title="Notifications" />
 
     <CheckBoxPreference
         android:layout_width="match_parent"
@@ -38,5 +39,20 @@
         android:title="24 hour time"
         app:summaryOff="Show 2:00 PM."
         app:summaryOn="Show 14:00." />
+
+
+    <PreferenceCategory android:title="Syncing">
+
+        <ListPreference
+            android:entries="@array/sync_intervals"
+            android:entryValues="@array/sync_intervals_display"
+            android:key="list_preference"
+            android:title="Sync interavals"
+            android:summary="%s"/>
+
+        <Preference
+            android:key="exitlink"
+            android:title="Force Sync Schedule" />
+    </PreferenceCategory>
 
 </PreferenceScreen>
