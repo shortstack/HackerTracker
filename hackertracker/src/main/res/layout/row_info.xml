@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/card_background_light"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="5dp"
         app:cardElevation="2dp"
 
@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
             android:padding="5dp"
-            tools:background="@color/card_background_light">
+            tools:background="@color/white">
 
             <ImageView
                 android:id="@+id/imageView2"

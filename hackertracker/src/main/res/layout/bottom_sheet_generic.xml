@@ -60,7 +60,7 @@
                     android:ellipsize="end"
                     android:lineSpacingExtra="5sp"
                     android:linksClickable="true"
-                    android:textColor="@color/uber_white_40"
+                    android:textColor="@color/white"
                     android:textSize="14sp"
                     tools:text="360 Unicorn Team consists of..." />
 
