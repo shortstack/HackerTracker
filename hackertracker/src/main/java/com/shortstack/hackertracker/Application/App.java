@@ -1,188 +1,115 @@
 package com.shortstack.hackertracker.Application;
 
-import android.app.AlarmManager;
 import android.app.Application;
-import android.app.Notification;
-import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.graphics.Color;
-import android.media.RingtoneManager;
-import android.net.Uri;
-import android.os.Build;
 
 import com.crashlytics.android.Crashlytics;
 import com.github.stkent.amplify.tracking.Amplify;
 import com.orhanobut.logger.Logger;
-import com.shortstack.hackertracker.Adapter.DatabaseAdapterVendors;
 import com.shortstack.hackertracker.Analytics.AnalyticsController;
 import com.shortstack.hackertracker.BuildConfig;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Database.DatabaseController;
-import com.shortstack.hackertracker.Model.Item;
-import com.shortstack.hackertracker.R;
-import com.shortstack.hackertracker.Utils.AlarmReceiver;
+import com.shortstack.hackertracker.Utils.NotificationHelper;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
 
-import java.io.IOException;
 import java.util.Date;
 
 import io.fabric.sdk.android.Fabric;
 
-/**
- * Created by Whitney Champion on 3/19/14.
- */
+
 public class App extends Application {
 
-    private static App application;
-    private Context context;
-    //public static DatabaseAdapter dbHelper;
-    public DatabaseAdapterVendors vendorDbHelper;
-    private AlarmManager alarmManager;
-    private BroadcastReceiver receiver;
-    private PendingIntent pendingIntent;
-    private SharedPreferencesUtil storage;
+    private static App mApp;
+    private Context mContext;
 
 
+    // Eventbus
+    private Bus mBus;
+    // Storage
+    private SharedPreferencesUtil mStorage;
+    // Database
     private DatabaseController mDatabaseController;
-
-
-    private static Bus bus = new Bus();
-    public long DEBUG_TIME_EXTRA = 0;
+    // Notifications
+    private NotificationHelper mNotificationHelper;
+    // Analytics
     private AnalyticsController mAnalyticsController;
+
+
+    public long DEBUG_TIME_EXTRA = 0;
+
 
     public void onCreate() {
         super.onCreate();
-        
-        if( !BuildConfig.DEBUG )
-            Fabric.with(this, new Crashlytics());
 
-        Logger.init().methodCount(1).hideThreadInfo();
+        init();
+        initFabric();
+        initLogger();
+        initDatabase();
+        initStorage();
+        initAnalytics();
+        initNotifications();
+        initBus();
+        initFeedback();
+    }
 
-        application = this;
+    private void initBus() {
+        mBus = new Bus(ThreadEnforcer.MAIN);
+    }
 
-        // Assign the context to the Application Scope
-        context = getApplicationContext();
+    private void initNotifications() {
+        mNotificationHelper = new NotificationHelper(mContext);
+    }
 
-        // set up database
-        setUpDatabase();
-
-        // set up shared preferences
-        storage = new SharedPreferencesUtil();
-
+    private void initAnalytics() {
         mAnalyticsController = new AnalyticsController();
+    }
 
-        // register alarm broadcast
-        if (storage.allowPushNotifications()) {
-            RegisterAlarmBroadcast();
-        }
+    private void initStorage() {
+        mStorage = new SharedPreferencesUtil();
+    }
 
-        bus = new Bus(ThreadEnforcer.MAIN);
-
-
+    private void initFeedback() {
         Amplify.initSharedInstance(this)
                 .setFeedbackEmailAddress(Constants.FEEDBACK_EMAIL)
                 .applyAllDefaultRules()
                 .setLastUpdateTimeCooldownDays(1);
     }
 
-    private void RegisterAlarmBroadcast() {
-
-        BroadcastReceiver receiver = new BroadcastReceiver() {
-            @Override
-            public void onReceive(Context context, Intent intent) {
-            }
-
-        };
-
-        // register the alarm broadcast
-        registerReceiver(receiver, new IntentFilter(getPackageName()));
-        pendingIntent = PendingIntent.getBroadcast(this, 0, new Intent(getPackageName()), 0);
-        alarmManager = (AlarmManager) (this.getSystemService(Context.ALARM_SERVICE));
-
+    private void init() {
+        mApp = this;
+        mContext = getApplicationContext();
     }
 
-    private void UnregisterAlarmBroadcast() {
-        alarmManager.cancel(pendingIntent);
-        getBaseContext().unregisterReceiver(receiver);
+    private void initLogger() {
+        Logger.init().methodCount(1).hideThreadInfo();
     }
 
-    public void cancelNotification(int id) {
-
-        Intent notificationIntent = new Intent(context, AlarmReceiver.class);
-        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, id);
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, id, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-        pendingIntent.cancel();
-
-        alarmManager.cancel(pendingIntent);
+    private void initFabric() {
+        if( !BuildConfig.DEBUG )
+            Fabric.with(this, new Crashlytics());
     }
 
-    public void scheduleItemNotification( Item item ) {
-        scheduleNotification( createNotification(item), item.getNotificationTimeInMillis(), item.getId() );
-    }
 
-    public void scheduleNotification(Notification notification, long when, int id) {
-
-        Intent notificationIntent = new Intent(context, AlarmReceiver.class);
-        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, id);
-        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-        alarmManager.set(AlarmManager.RTC_WAKEUP, when, pendingIntent);
-    }
-
-    public Notification createNotification(Item content) {
-        Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-        int color = context.getResources().getColor(R.color.colorPrimary);
-
-        Notification.Builder builder = new Notification.Builder(context);
-        builder.setContentTitle(content.getTitle());
-        builder.setContentText(String.format(context.getString(R.string.notification_text), content.getLocation()));
-        builder.setPriority(Notification.PRIORITY_MAX);
-        builder.setSound(soundUri);
-        builder.setVibrate(new long[] { 0, 250, 500, 250 });
-        builder.setLights(Color.MAGENTA, 3000, 1000);
-
-        builder.setSmallIcon(R.drawable.skull);
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-
-            builder.setColor(color);
-        }
-        builder.setAutoCancel(true);
-
-        return builder.build();
-    }
-
-    private void setUpDatabase() {
-
-        mDatabaseController = new DatabaseController(context);
-
-        vendorDbHelper = new DatabaseAdapterVendors(context);
-
-        try {
-            vendorDbHelper.createDataBase();
-        } catch (IOException ioe) {
-            throw new Error("Unable to create database");
-        }
+    private void initDatabase() {
+        mDatabaseController = new DatabaseController(mContext);
     }
 
     public Context getAppContext() {
-        return context;
+        return mContext;
     }
 
     public static App getApplication() {
-        return application;
+        return mApp;
     }
 
     private SharedPreferencesUtil getPrivateStorage() {
-        if( storage == null ) {
-            storage = new SharedPreferencesUtil();
+        if( mStorage == null ) {
+            mStorage = new SharedPreferencesUtil();
         }
-        return storage;
+        return mStorage;
     }
 
     public static SharedPreferencesUtil getStorage() {
@@ -208,14 +135,18 @@ public class App extends Application {
     }
 
     public void postBusEvent( Object event ) {
-        bus.post(event);
+        mBus.post(event);
     }
 
     public void unregisterBusListener(Object itemView) {
-        bus.unregister(itemView);
+        mBus.unregister(itemView);
     }
 
     public void registerBusListener(Object itemView) {
-        bus.register(itemView);
+        mBus.register(itemView);
+    }
+
+    public NotificationHelper getNotificationHelper() {
+        return mNotificationHelper;
     }
 }
