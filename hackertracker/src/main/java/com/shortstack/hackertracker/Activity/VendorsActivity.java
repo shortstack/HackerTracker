@@ -65,33 +65,7 @@ public class VendorsActivity extends Fragment {
     }
 
     public List<Company> getVendors() {
-        ArrayList<Company> result = new ArrayList<>();
-
-        SQLiteDatabase db = App.getApplication().vendorDbHelper.getWritableDatabase();
-
-        Cursor cursor = db.rawQuery("SELECT * FROM data", new String[]{});
-
-        try {
-            if (cursor.moveToFirst()) {
-                do {
-
-                    Company item = new Company();
-
-                    item.setId(cursor.getInt(cursor.getColumnIndex("id")));
-                    item.setTitle(cursor.getString(cursor.getColumnIndex("title")));
-                    item.setDescription(cursor.getString(cursor.getColumnIndex("description")));
-                    item.setLink(cursor.getString(cursor.getColumnIndex("link")));
-                    item.setPartner(cursor.getInt(cursor.getColumnIndex("partner")));
-
-                    result.add(item);
-                } while (cursor.moveToNext());
-            }
-        } finally {
-            cursor.close();
-        }
-        db.close();
-
-        return result;
+        return App.getApplication().getDatabaseController().getVendors();
     }
 }
 

@@ -3,7 +3,6 @@ package com.shortstack.hackertracker.Database;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.support.annotation.NonNull;
 
 import com.orhanobut.logger.Logger;
 
@@ -12,29 +11,49 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.Locale;
 
-public class DatabaseHelper extends SQLiteOpenHelper {
+class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final int BUFFER_SIZE = 1024;
-    private static final String DB_NAME = "hackertracker.sqlite";
-    private static final int DB_VERSION = 340;
-
     private final Context mContext;
+    private final String DB_NAME;
+    private final int DB_VERSION;
 
-    public DatabaseHelper(Context context) {
-        super(context, DB_NAME, null, DB_VERSION);
+    DatabaseHelper(Context context, String name, int version) {
+        super(context, name, null, version);
         mContext = context;
+        DB_NAME = name;
+        DB_VERSION = version;
 
         if( isDatabaseEmpty() ) {
             initDatabase();
         }
     }
 
-    private void initDatabase() {
-        SQLiteDatabase database = getWritableDatabase();
-        database.setLocale(Locale.getDefault());
-        database.setVersion(DB_VERSION);
+    @Override
+    public void onCreate(SQLiteDatabase database) {
+        // TODO: Create the local database.
+        Logger.d("onCreate database -> " + DB_NAME + ": " + DB_VERSION);
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
+        // TODO: Update the local database, instead of just overriding it.
+        Logger.d("onUpgrade database -> " + DB_NAME + ": " + oldVersion + " to " + newVersion);
+    }
+
+    @Override
+    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
+        Logger.d("onDowngrade database -> " + DB_NAME + ": " + oldVersion + " to " + newVersion);
+        //super.onDowngrade(db, oldVersion, newVersion);
+    }
+
+    protected void initDatabase() {
+        //SQLiteDatabase database = getWritableDatabase();
+        //database.setLocale(Locale.getDefault());
+        //database.setVersion(DB_VERSION);
+
+        Logger.d("Creating DB " + DB_NAME);
 
         try {
             copyDatabaseFromAssets();
@@ -43,16 +62,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-
-    @Override
-    public void onCreate(SQLiteDatabase database) {
-        // Do nothing, database already on device.
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-
-    }
 
     private void copyDatabaseFromAssets() throws IOException {
 
@@ -83,8 +92,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return mContext.getAssets().open(DB_NAME);
     }
 
-    @NonNull
     private String getDatabasePath() {
         return mContext.getDatabasePath(DB_NAME).getPath();
     }
+
 }
