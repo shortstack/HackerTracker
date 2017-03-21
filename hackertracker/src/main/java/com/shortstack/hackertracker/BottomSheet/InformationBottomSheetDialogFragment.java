@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Fragment;
+package com.shortstack.hackertracker.BottomSheet;
 
 import android.os.Bundle;
 

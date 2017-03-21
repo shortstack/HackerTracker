@@ -19,17 +19,17 @@ import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.UberView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MapsActivity extends Fragment {
 
     public static final String ASSET_NAME = "map_defcon_small.pdf";
 
-    @Bind(R.id.viewer)
+    @BindView(R.id.viewer)
     PDFView pdfViewer;
 
-    @Bind(R.id.progress_container)
+    @BindView(R.id.progress_container)
     View progress;
 
     @Nullable

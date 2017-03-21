@@ -1,26 +1,24 @@
 package com.shortstack.hackertracker.Renderer;
 
-import android.content.DialogInterface;
 import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.pedrogomez.renderers.Renderer;
-import com.shortstack.hackertracker.Alert.MaterialAlert;
-import com.shortstack.hackertracker.Fragment.DetailsBottomSheetDialogFragment;
+import com.shortstack.hackertracker.BottomSheet.ScheduleItemBottomSheetDialogFragment;
 import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.ItemView;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class ItemRenderer extends Renderer<Item> implements View.OnClickListener, View.OnLongClickListener {
+public class ItemRenderer extends Renderer<Item> implements View.OnClickListener {
 
-    @Bind(R.id.item)
+    @BindView(R.id.item)
     ItemView item;
 
     @Override
@@ -33,7 +31,6 @@ public class ItemRenderer extends Renderer<Item> implements View.OnClickListener
     @Override
     protected void hookListeners(View rootView) {
         rootView.setOnClickListener(this);
-        rootView.setOnLongClickListener(this);
     }
 
     @Override
@@ -44,37 +41,7 @@ public class ItemRenderer extends Renderer<Item> implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        DetailsBottomSheetDialogFragment bottomSheetDialogFragment =  DetailsBottomSheetDialogFragment.newInstance(getContent());
+        ScheduleItemBottomSheetDialogFragment bottomSheetDialogFragment =  ScheduleItemBottomSheetDialogFragment.newInstance(getContent());
         bottomSheetDialogFragment.show(((AppCompatActivity)getContext()).getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
-    }
-
-    @Override
-    public boolean onLongClick(View view) {
-
-
-        MaterialAlert alert = MaterialAlert.create(getContext()).setTitle(getContext().getString(R.string.details));
-
-        alert.setMessage(getContent().getDetailsDescription(getContext()));
-
-        alert.setNegativeButton(R.string.action_share, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                item.onShareClick();
-            }
-        });
-
-        alert.setPositiveButton( getContent().isBookmarked() ? R.string.unbookmark : R.string.bookmark, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                item.onBookmarkClick();
-            }
-        });
-
-        alert.show();
-        return true;
-    }
-
-    public void updateBookmark() {
-        item.updateBookmark();
     }
 }

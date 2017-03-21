@@ -12,15 +12,15 @@ import com.shortstack.hackertracker.R;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ActivityNavRenderer extends Renderer<Navigation> implements View.OnClickListener {
 
-    @Bind(R.id.header)
+    @BindView(R.id.header)
     TextView header;
 
-    @Bind(R.id.description)
+    @BindView(R.id.description)
     TextView description;
 
     @Override

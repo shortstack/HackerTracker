@@ -9,22 +9,22 @@ import android.widget.TextView;
 
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Event.RefreshTimerEvent;
-import com.shortstack.hackertracker.Model.Item;
+import com.shortstack.hackertracker.Model.ItemViewModel;
 import com.shortstack.hackertracker.R;
 import com.squareup.otto.Subscribe;
 
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TimeView extends LinearLayout {
 
-    @Bind(R.id.header)
+    @BindView(R.id.header)
     TextView header;
 
-    @Bind(R.id.subheader)
+    @BindView(R.id.subheader)
     TextView subheader;
 
     private Date mDate;
@@ -82,7 +82,7 @@ public class TimeView extends LinearLayout {
     public void render() {
         Date currentDate = App.getApplication().getCurrentDate();
 
-        header.setText(Item.getTimeStamp(getContext(), mDate));
+        header.setText(ItemViewModel.getTimeStamp(getContext(), mDate));
 
         updateSubheader(currentDate);
     }

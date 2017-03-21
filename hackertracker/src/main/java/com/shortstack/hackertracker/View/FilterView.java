@@ -12,12 +12,12 @@ import com.shortstack.hackertracker.R;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 
 public class FilterView extends LinearLayout {
 
-    @Bind({R.id.speaker, R.id.skytalk, R.id.event, R.id.village, R.id.kids, R.id.contest, R.id.party, R.id.demo, R.id.workshop})
+    @BindViews({R.id.speaker, R.id.skytalk, R.id.event, R.id.village, R.id.kids, R.id.contest, R.id.party, R.id.demo, R.id.workshop})
     AppCompatCheckBox[] types;
 
     public FilterView(Context context) {
@@ -25,10 +25,10 @@ public class FilterView extends LinearLayout {
         init();
     }
 
-    public FilterView(Context context, Filter filter ) {
+    public FilterView(Context context, Filter filter) {
         super(context);
         init();
-        setFilter( filter );
+        setFilter(filter);
     }
 
     private void setFilter(Filter filter) {
@@ -36,7 +36,7 @@ public class FilterView extends LinearLayout {
         String[] typesArray = filter.getTypesArray();
         for (int i = 0; i < typesArray.length; i++) {
             for (int i1 = 0; i1 < keys.length; i1++) {
-                if( typesArray[i].equals(keys[i1])) {
+                if (typesArray[i].equals(keys[i1])) {
                     types[i1].setChecked(true);
                 }
             }
@@ -64,7 +64,7 @@ public class FilterView extends LinearLayout {
 
         for (int i = 0; i < types.length; i++) {
             CheckBox type = types[i];
-            if( type.isChecked() ) {
+            if (type.isChecked()) {
                 selected.add(keys[i]);
             }
         }
@@ -73,7 +73,7 @@ public class FilterView extends LinearLayout {
 
         Filter filter = new Filter(strings);
 
-        App.getStorage().saveFilter( filter );
+        App.getStorage().saveFilter(filter);
 
         return filter;
     }

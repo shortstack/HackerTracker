@@ -1,7 +1,5 @@
 package com.shortstack.hackertracker.Activity;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -18,15 +16,14 @@ import com.shortstack.hackertracker.Model.Company;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Renderer.VendorRenderer;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class VendorsActivity extends Fragment {
 
-    @Bind(R.id.list)
+    @BindView(R.id.list)
     RecyclerView list;
 
     public static VendorsActivity newInstance() {

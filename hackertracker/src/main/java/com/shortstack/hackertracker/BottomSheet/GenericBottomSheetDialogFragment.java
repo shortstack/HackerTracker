@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Fragment;
+package com.shortstack.hackertracker.BottomSheet;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -11,23 +11,23 @@ import android.widget.TextView;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
 public abstract class GenericBottomSheetDialogFragment extends android.support.design.widget.BottomSheetDialogFragment {
 
-    @Bind(R.id.title)
+    @BindView(R.id.title)
     TextView title;
 
-    @Bind(R.id.description)
+    @BindView(R.id.description)
     TextView description;
 
-    @Bind(R.id.empty)
+    @BindView(R.id.empty)
     View empty;
 
-    @Bind(R.id.link)
+    @BindView(R.id.link)
     View link;
 
 
@@ -35,7 +35,7 @@ public abstract class GenericBottomSheetDialogFragment extends android.support.d
     @Override
     public void setupDialog(final Dialog dialog, int style) {
         super.setupDialog(dialog, style);
-        View view = View.inflate(getContext(), R.layout.bottom_sheet_vendor, null);
+        View view = View.inflate(getContext(), R.layout.bottom_sheet_generic, null);
         dialog.setContentView(view);
         ButterKnife.bind(this, view);
 

@@ -7,18 +7,18 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.pedrogomez.renderers.Renderer;
-import com.shortstack.hackertracker.Fragment.InformationBottomSheetDialogFragment;
+import com.shortstack.hackertracker.BottomSheet.InformationBottomSheetDialogFragment;
 import com.shortstack.hackertracker.Model.Information;
 import com.shortstack.hackertracker.R;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class InformationRenderer extends Renderer<Information> implements View.OnClickListener {
 
-    @Bind(R.id.header)
+    @BindView(R.id.header)
     TextView header;
 
     @Override

@@ -17,16 +17,15 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.github.stkent.amplify.tracking.Amplify;
-import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Analytics.AnalyticsController;
 import com.shortstack.hackertracker.Application.App;
-import com.shortstack.hackertracker.Fragment.GenericRowFragment;
+import com.shortstack.hackertracker.BottomSheet.ReviewBottomSheetDialogFragment;
 import com.shortstack.hackertracker.Fragment.HomeFragment;
-import com.shortstack.hackertracker.Fragment.ReviewBottomSheetDialogFragment;
+import com.shortstack.hackertracker.Fragment.ScheduleFragment;
 import com.shortstack.hackertracker.Fragment.SettingsFragment;
 import com.shortstack.hackertracker.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -41,19 +40,19 @@ public class TabHomeActivity extends AppCompatActivity
     public static final int NAV_VENDORS = 4;
     public static final int NAV_SETTINGS = 5;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 //    @Bind(R.id.tabs)
 //    TabLayout tabLayout;
 //    @Bind(R.id.viewpager)
 //    ViewPager viewPager;
 
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-    @Bind(R.id.nav_view)
+    @BindView(R.id.nav_view)
     NavigationView mNavView;
 
-    @Bind(R.id.filter)
+    @BindView(R.id.filter)
     FloatingActionButton fab;
 
 
@@ -146,15 +145,6 @@ public class TabHomeActivity extends AppCompatActivity
             ReviewBottomSheetDialogFragment review = ReviewBottomSheetDialogFragment.newInstance();
             review.show(this.getSupportFragmentManager(), review.getTag());
         }
-
-        if( App.getStorage().shouldShowBetaAlert()) {
-            App.getStorage().markShownBetaAlert();
-            MaterialAlert.create(this).setTitle("Beta").setMessage("Welcome to the new Hacker Tracker. \nThis build has gone through heavy improvements, and still is in the beta stage. " +
-                    "While DEF CON isn't ongoing currently, the app will force the current time to be during the convention." +
-                    "Please use the app like you would, and report any issues or feedback you find would help us improve.\n\n" +
-                    "https://github.com/shortstack/HackerTracker" +
-                    "\n\nThank you.").show();
-        }
     }
 
     private void tagAnalytics() {
@@ -195,7 +185,7 @@ public class TabHomeActivity extends AppCompatActivity
                 return HomeFragment.newInstance();
 
             case NAV_SCHEDULE:
-                return GenericRowFragment.newInstance();
+                return ScheduleFragment.newInstance();
 
             case NAV_MAP:
                 return MapsActivity.newInstance();
@@ -215,8 +205,8 @@ public class TabHomeActivity extends AppCompatActivity
     @OnClick(R.id.filter)
     public void onFilterClick() {
         for (Fragment fragment : getSupportFragmentManager().getFragments()) {
-            if (fragment instanceof GenericRowFragment) {
-                ((GenericRowFragment) fragment).showFilters();
+            if (fragment instanceof ScheduleFragment) {
+                ((ScheduleFragment) fragment).showFilters();
             }
         }
     }

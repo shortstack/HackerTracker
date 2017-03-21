@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Fragment;
+package com.shortstack.hackertracker.BottomSheet;
 
 import android.app.Dialog;
 import android.content.DialogInterface;
@@ -14,47 +14,51 @@ import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Analytics.AnalyticsController;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Model.Item;
+import com.shortstack.hackertracker.Model.ItemViewModel;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.ItemView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class DetailsBottomSheetDialogFragment extends android.support.design.widget.BottomSheetDialogFragment {
+public class ScheduleItemBottomSheetDialogFragment extends android.support.design.widget.BottomSheetDialogFragment {
 
 
     public static final String ARG_OBJ = "VENDOR";
 
 
-    @Bind(R.id.item)
+    @BindView(R.id.item)
     ItemView item;
 
 
     // Description
 
-    @Bind(R.id.description)
+    @BindView(R.id.description)
     TextView description;
 
-    @Bind(R.id.empty)
+    @BindView(R.id.empty)
     View empty;
 
-    @Bind(R.id.link)
+    @BindView(R.id.link)
     View link;
 
-    @Bind(R.id.star)
+    @BindView(R.id.star)
     ImageView star;
 
-    @Bind(R.id.share)
+    @BindView(R.id.share)
     View share;
 
 
-    public static DetailsBottomSheetDialogFragment newInstance(Item obj) {
-        DetailsBottomSheetDialogFragment fragment = new DetailsBottomSheetDialogFragment();
+    public static ScheduleItemBottomSheetDialogFragment newInstance(Item obj) {
+        ScheduleItemBottomSheetDialogFragment fragment = new ScheduleItemBottomSheetDialogFragment();
 
+        long time = System.currentTimeMillis();
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARG_OBJ, obj);
         fragment.setArguments(bundle);
+
+        Logger.d("Serialize: " + (System.currentTimeMillis() - time));
 
         return fragment;
     }
@@ -63,11 +67,17 @@ public class DetailsBottomSheetDialogFragment extends android.support.design.wid
     @Override
     public void setupDialog(final Dialog dialog, int style) {
         super.setupDialog(dialog, style);
-        View view = View.inflate(getContext(), R.layout.bottom_sheet_details, null);
+        View view = View.inflate(getContext(), R.layout.bottom_sheet_schedule_item, null);
         dialog.setContentView(view);
         ButterKnife.bind(this, view);
 
-        Item obj = getContent();
+        long time = System.currentTimeMillis();
+
+
+        ItemViewModel obj = new ItemViewModel(getContent());
+
+        Logger.d("Serialize: " + (System.currentTimeMillis() - time));
+
 
         if (obj == null) {
             Logger.e("Company is null. Can not render bottom sheet.");
@@ -76,7 +86,7 @@ public class DetailsBottomSheetDialogFragment extends android.support.design.wid
 
         App.getApplication().getAnalyticsController().tagItemEvent(AnalyticsController.Analytics.EVENT_VIEW, getContent());
 
-        item.setItem(obj);
+        item.setItem(obj.getItem());
 
         displayDescription(obj);
     }
@@ -85,7 +95,7 @@ public class DetailsBottomSheetDialogFragment extends android.support.design.wid
         return (Item) getArguments().getSerializable(ARG_OBJ);
     }
 
-    private void displayDescription(Item obj) {
+    private void displayDescription(ItemViewModel obj) {
         boolean hasDescription = obj.hasDescription();
 
         if (hasDescription)

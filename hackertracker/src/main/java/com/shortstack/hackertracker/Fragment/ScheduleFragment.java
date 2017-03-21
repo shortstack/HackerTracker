@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.Fragment;
 
 import android.content.DialogInterface;
+import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -11,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.BuildConfig;
@@ -31,22 +33,22 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class GenericRowFragment extends Fragment {
+public class ScheduleFragment extends Fragment {
 
-    @Bind(R.id.list)
+    @BindView(R.id.list)
     public RecyclerView list;
 
     private GenericRowAdapter adapter;
 
-    @Bind(R.id.empty)
+    @BindView(R.id.empty)
     View empty;
 
-    public static GenericRowFragment newInstance() {
-        return new GenericRowFragment();
+    public static ScheduleFragment newInstance() {
+        return new ScheduleFragment();
     }
 
 
@@ -184,9 +186,14 @@ public class GenericRowFragment extends Fragment {
         }
 
         empty.setVisibility(View.GONE);
-        List<Item> events;
-        events = App.getApplication().getDatabaseController().getItemByDate(filter.getTypesArray());
-        return events;
+        try {
+            List<Item> events;
+            events = App.getApplication().getDatabaseController().getItemByDate(filter.getTypesArray());
+            return events;
+        } catch (SQLiteException ex) {
+            Logger.d("Could not open the database.");
+            return new ArrayList<>();
+        }
     }
 
     private List<Object> addTimeDividers(List<Item> events) {

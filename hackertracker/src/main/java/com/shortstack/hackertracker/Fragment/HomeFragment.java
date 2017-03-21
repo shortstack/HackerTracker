@@ -18,14 +18,14 @@ import com.shortstack.hackertracker.Renderer.FAQRenderer;
 import com.shortstack.hackertracker.Renderer.GenericHeaderRenderer;
 import com.shortstack.hackertracker.Renderer.HomeHeaderRenderer;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class HomeFragment extends Fragment {
 
     private static final int TYPE_HEADER = 0;
 
-    @Bind(R.id.list)
+    @BindView(R.id.list)
     RecyclerView list;
 
     public static HomeFragment newInstance() {
