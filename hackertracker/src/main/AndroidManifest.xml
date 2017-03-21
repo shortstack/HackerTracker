@@ -42,8 +42,6 @@
 
         <activity android:name="com.shortstack.hackertracker.Activity.VendorsActivity" />
 
-        <activity android:name="com.shortstack.hackertracker.Activity.TutorialActivity" />
-
         <activity android:name=".Activity.InformationActivity" />
 
         <receiver android:name="com.shortstack.hackertracker.Utils.AlarmReceiver"></receiver>
