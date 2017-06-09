@@ -77,6 +77,10 @@ dependencies {
     compile 'com.uber.sdk:rides-android:0.5.1'
 
 
+    // Sqlite Asset Helper
+    compile 'com.readystatesoftware.sqliteasset:sqliteassethelper:2.0.1'
+
+
     // Butterknife for View Binding
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
