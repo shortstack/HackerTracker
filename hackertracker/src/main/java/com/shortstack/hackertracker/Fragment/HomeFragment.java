@@ -11,12 +11,16 @@ import android.view.ViewGroup;
 import com.pedrogomez.renderers.RendererAdapter;
 import com.pedrogomez.renderers.RendererBuilder;
 import com.pedrogomez.renderers.RendererContent;
+import com.shortstack.hackertracker.Application.App;
+import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.Model.Navigation;
+import com.shortstack.hackertracker.Model.UpdatedItemsModel;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.Renderer.ActivityNavRenderer;
 import com.shortstack.hackertracker.Renderer.FAQRenderer;
 import com.shortstack.hackertracker.Renderer.GenericHeaderRenderer;
 import com.shortstack.hackertracker.Renderer.HomeHeaderRenderer;
+import com.shortstack.hackertracker.Renderer.ItemRenderer;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -41,6 +45,7 @@ public class HomeFragment extends Fragment {
                 .bind(TYPE_HEADER, new HomeHeaderRenderer())
                 .bind(String.class, new GenericHeaderRenderer())
                 .bind(String[].class, new FAQRenderer())
+                .bind(Item.class, new ItemRenderer())
                 .bind(Navigation.class, new ActivityNavRenderer())
 
                 ;
@@ -55,16 +60,30 @@ public class HomeFragment extends Fragment {
         adapter.add(new RendererContent<Void>(null, TYPE_HEADER)); // Skull
         adapter.add(new Navigation("Looking for something?", "Check out the information section", InformationFragment.class ));
 
-        String[] myItems = getResources().getStringArray(R.array.updates);
+
+        adapter.add("Updates");
 
 
-        for (int i = 0; i < myItems.length - 1; i+=2) {
+
+        int i1 = 10;
+
+        String[] myItems = new String[i1];
+
+
+        for (int i = 0; i < myItems.length; i++) {
             String[] update = new String[2];
 
-            update[0] = myItems[i];
-            update[1] = myItems[i+1];
+            UpdatedItemsModel model = new UpdatedItemsModel();
 
-            adapter.add(update);
+
+
+            update[0] = model.state == UpdatedItemsModel.STATE_NEW ? "NEW" : "UPDATED";
+            Item scheduleItem = App.getApplication().getDatabaseController().getScheduleItem(model.id);
+            update[1] = scheduleItem.getTitle();
+
+//            adapter.add(update);
+
+            adapter.add(scheduleItem);
         }
 
         return rootView;

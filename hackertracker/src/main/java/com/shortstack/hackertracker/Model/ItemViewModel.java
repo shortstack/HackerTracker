@@ -62,9 +62,13 @@ public class ItemViewModel {
             case Constants.TYPE_SPEAKER:
                 count++;
         }
+
+        if( count == -1 ) {
+            throw new IllegalStateException("Could not find category for Item: " + getItem().getTitle() + " with type: " + getItem().getType() );
+        }
+
         return count;
     }
-
 
 
     public String getTimeStamp(Context context) {
@@ -107,23 +111,13 @@ public class ItemViewModel {
     }
 
 
-
-
-
-
-
-
-
-
-
-
     public float getProgress() {
         if (!mItem.hasBegin())
             return 0;
 
         Date beginDateObject = mItem.getBeginDateObject();
         Date endDateObject = mItem.getEndDateObject();
-        Date currentDate = App.getApplication().getCurrentDate();
+        Date currentDate = App.getApplication().getTimeHelper().getCurrentDate();
 
         float length = (endDateObject.getTime() - beginDateObject.getTime()) / 1000 / 60;
         float p = (endDateObject.getTime() - currentDate.getTime()) / 1000 / 60;
@@ -144,11 +138,8 @@ public class ItemViewModel {
     }
 
 
-
-
-
     public String getDisplayTitle() {
-        return/* "[" + getType() + "] " +*/ mItem.getTitle();
+        return /*(BuildConfig.DEBUG ? mItem.getId() + " " : "") +*/ mItem.getTitle();
     }
 
     public boolean hasHost() {
@@ -222,7 +213,7 @@ public class ItemViewModel {
         return mItem.getId();
     }
 
-    public int getToolsVisibility(){
+    public int getToolsVisibility() {
         return mItem.isTool() ? View.VISIBLE : View.GONE;
     }
 

@@ -69,7 +69,7 @@ public class TimeView extends LinearLayout {
 
     @Subscribe
     public void onRefreshTimeEvent(RefreshTimerEvent event) {
-        Date currentDate = App.getApplication().getCurrentDate();
+        Date currentDate = App.getApplication().getTimeHelper().getCurrentDate();
         updateSubheader(currentDate);
     }
 
@@ -80,7 +80,7 @@ public class TimeView extends LinearLayout {
     }
 
     public void render() {
-        Date currentDate = App.getApplication().getCurrentDate();
+        Date currentDate = App.getApplication().getTimeHelper().getCurrentDate();
 
         header.setText(ItemViewModel.getTimeStamp(getContext(), mDate));
 

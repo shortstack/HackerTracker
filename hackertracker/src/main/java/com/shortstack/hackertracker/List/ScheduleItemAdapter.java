@@ -7,9 +7,11 @@ import com.shortstack.hackertracker.Model.Item;
 import java.util.Date;
 import java.util.List;
 
-public class GenericRowAdapter extends RendererAdapter<Item> {
-    public GenericRowAdapter() {
-        super(new GenericRowBuilder());
+public class ScheduleItemAdapter extends RendererAdapter<Item> {
+    public ScheduleItemAdapter() {
+        super(new ScheduleItemBuilder());
+
+
     }
 
     public void notifyTimeChanged() {

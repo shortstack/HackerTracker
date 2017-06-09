@@ -43,16 +43,33 @@ public class NotificationHelper {
         pendingIntent = PendingIntent.getBroadcast(mContext, 0, new Intent(mContext.getPackageName()), 0);
         alarmManager = (AlarmManager) (mContext.getSystemService(Context.ALARM_SERVICE));
 
+
     }
 
 
     public Notification getItemNotification(Item content) {
+        Notification.Builder builder = getNotificationBuilder();
+
+        builder.setContentTitle(content.getTitle());
+        builder.setContentText(String.format(mContext.getString(R.string.notification_text), content.getLocation()));
+
+        return builder.build();
+    }
+
+    public Notification getUpdatedItemNotification(Item content) {
+        Notification.Builder builder = getNotificationBuilder();
+
+        builder.setContentTitle(content.getTitle());
+        builder.setContentText(mContext.getString(R.string.notification_updated));
+
+        return builder.build();
+    }
+
+    private Notification.Builder getNotificationBuilder() {
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         int color = mContext.getResources().getColor(R.color.colorPrimary);
 
         Notification.Builder builder = new Notification.Builder(mContext);
-        builder.setContentTitle(content.getTitle());
-        builder.setContentText(String.format(mContext.getString(R.string.notification_text), content.getLocation()));
         builder.setPriority(Notification.PRIORITY_MAX);
         builder.setSound(soundUri);
         builder.setVibrate(new long[] { 0, 250, 500, 250 });
@@ -65,7 +82,7 @@ public class NotificationHelper {
         }
         builder.setAutoCancel(true);
 
-        return builder.build();
+        return builder;
     }
 
     public void scheduleItemNotification( Item item ) {
@@ -80,6 +97,15 @@ public class NotificationHelper {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         alarmManager.set(AlarmManager.RTC_WAKEUP, when, pendingIntent);
+    }
+
+    public void postNotification(Notification notification, int id) {
+        Intent notificationIntent = new Intent(mContext, AlarmReceiver.class);
+        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, id);
+        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+        alarmManager.set(AlarmManager.RTC_WAKEUP, 0, pendingIntent);
     }
 
     private void UnregisterAlarmBroadcast() {

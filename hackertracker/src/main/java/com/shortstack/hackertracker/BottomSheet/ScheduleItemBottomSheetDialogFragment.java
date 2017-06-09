@@ -53,12 +53,9 @@ public class ScheduleItemBottomSheetDialogFragment extends android.support.desig
     public static ScheduleItemBottomSheetDialogFragment newInstance(Item obj) {
         ScheduleItemBottomSheetDialogFragment fragment = new ScheduleItemBottomSheetDialogFragment();
 
-        long time = System.currentTimeMillis();
         Bundle bundle = new Bundle();
         bundle.putSerializable(ARG_OBJ, obj);
         fragment.setArguments(bundle);
-
-        Logger.d("Serialize: " + (System.currentTimeMillis() - time));
 
         return fragment;
     }
@@ -71,13 +68,7 @@ public class ScheduleItemBottomSheetDialogFragment extends android.support.desig
         dialog.setContentView(view);
         ButterKnife.bind(this, view);
 
-        long time = System.currentTimeMillis();
-
-
         ItemViewModel obj = new ItemViewModel(getContent());
-
-        Logger.d("Serialize: " + (System.currentTimeMillis() - time));
-
 
         if (obj == null) {
             Logger.e("Company is null. Can not render bottom sheet.");

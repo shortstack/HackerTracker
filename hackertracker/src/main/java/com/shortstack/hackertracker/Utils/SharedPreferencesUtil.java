@@ -12,7 +12,7 @@ import java.util.HashSet;
 public class SharedPreferencesUtil {
 
 
-
+    private static final int DEFAULT_DAYS_TO_LOAD = 0;
 
     public enum Key {
 
@@ -25,6 +25,7 @@ public class SharedPreferencesUtil {
         APP_LAST_REFRESH("app_last_refresh"),
         APP_LAST_UPDATED("app_last_updated"),
         APP_VIEW_PAGER_POSITION("app_view_pager_position"),
+        SCHEDULE_DAY_VIEW("app_day_view")
 
         ;
 
@@ -45,6 +46,9 @@ public class SharedPreferencesUtil {
 
     public SharedPreferencesUtil() {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(App.getApplication().getAppContext());
+
+        // Reset to only show the current day.
+        setScheduleDay(DEFAULT_DAYS_TO_LOAD);
     }
 
     private SharedPreferences.Editor getEditor() {
@@ -67,6 +71,16 @@ public class SharedPreferencesUtil {
         editor.apply();
     }
 
+    public void setScheduleDay(int pos ) {
+        SharedPreferences.Editor editor = getEditor();
+        editor.putInt(Key.SCHEDULE_DAY_VIEW.toString(), pos);
+        editor.apply();
+    }
+
+    public int getScheduleDay() {
+        return mPreferences.getInt(Key.SCHEDULE_DAY_VIEW.toString(), 0);
+    }
+
     public boolean allowPushNotifications() {
         return mPreferences.getBoolean(Key.USER_ALLOW_PUSH.toString(), true);
     }
@@ -77,6 +91,10 @@ public class SharedPreferencesUtil {
 
     public boolean showExpiredEvents() {
         return mPreferences.getBoolean(Key.USER_EXPIRED_EVENTS.toString(), false);
+    }
+
+    public boolean showActiveEventsOnly() {
+        return !showExpiredEvents();
     }
 
     public void saveFilter(Filter filter) {

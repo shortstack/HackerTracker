@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.Network;
 
 import com.google.gson.annotations.SerializedName;
+import com.shortstack.hackertracker.Model.Item;
 
 public class SyncResponse {
 
@@ -9,7 +10,7 @@ public class SyncResponse {
     @SerializedName("updateDate")
     public String date;
 
-    public ScheduleObject[] schedule;
+    public Item[] schedule;
 
     @Override
     public String toString() {

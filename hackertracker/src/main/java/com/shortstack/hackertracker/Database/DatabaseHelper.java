@@ -1,10 +1,9 @@
 package com.shortstack.hackertracker.Database;
 
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 import com.orhanobut.logger.Logger;
+import com.readystatesoftware.sqliteasset.SQLiteAssetHelper;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,7 +11,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-class DatabaseHelper extends SQLiteOpenHelper {
+class DatabaseHelper extends SQLiteAssetHelper {
 
     private static final int BUFFER_SIZE = 1024;
     private final Context mContext;
@@ -25,45 +24,34 @@ class DatabaseHelper extends SQLiteOpenHelper {
         DB_NAME = name;
         DB_VERSION = version;
 
-        if( isDatabaseEmpty() ) {
-            initDatabase();
-        }
+//        if (isDatabaseEmpty())
+//            initDatabase();
+
     }
 
-    @Override
-    public void onCreate(SQLiteDatabase database) {
-        // TODO: Create the local database.
-        Logger.d("onCreate database -> " + DB_NAME + ": " + DB_VERSION);
-    }
-
-    @Override
-    public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-        // TODO: Update the local database, instead of just overriding it.
-        Logger.d("onUpgrade database -> " + DB_NAME + ": " + oldVersion + " to " + newVersion);
-    }
-
-    @Override
-    public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        Logger.d("onDowngrade database -> " + DB_NAME + ": " + oldVersion + " to " + newVersion);
-        //super.onDowngrade(db, oldVersion, newVersion);
-    }
 
     protected void initDatabase() {
         //SQLiteDatabase database = getWritableDatabase();
         //database.setLocale(Locale.getDefault());
         //database.setVersion(DB_VERSION);
 
-        Logger.d("Creating DB " + DB_NAME);
+//        Logger.d("Creating DB " + DB_NAME);
 
         try {
+            Logger.d("Trying to copy " + DB_NAME.toUpperCase() + ".");
             copyDatabaseFromAssets();
         } catch (IOException e) {
-            Logger.e(e.getCause(), "Unable to copy database from assets.");
+            Logger.e(/*e.getCause(),*/ "Unable to copy " + DB_NAME.toUpperCase() + " from assets. " + e.getMessage());
+        } finally {
+            Logger.d("Finished copying " + DB_NAME.toUpperCase() + ".");
         }
     }
 
 
     private void copyDatabaseFromAssets() throws IOException {
+
+        String databasePath = getDatabasePath();
+        Logger.d("Path: " + databasePath);
 
         InputStream input = openDatabaseFromAssets();
         OutputStream output = new FileOutputStream(getDatabasePath());

@@ -4,7 +4,6 @@
     <item
         android:id="@+id/action_uber"
         android:title="@string/uber"
-        android:icon="@drawable/ic_local_taxi_white_24dp"
         app:showAsAction="ifRoom"
         />
 </menu>

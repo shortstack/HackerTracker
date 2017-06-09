@@ -29,7 +29,7 @@
         <activity
             android:name="com.shortstack.hackertracker.Activity.TabHomeActivity"
             android:icon="@drawable/skull"
-            android:screenOrientation="portrait" />
+            />
 
         <activity android:name=".Activity.SettingsActivity"
             android:theme="@style/PreferenceScreen">

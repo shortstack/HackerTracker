@@ -223,11 +223,21 @@ public class TabHomeActivity extends AppCompatActivity
         if (shouldLoadHomeFragOnBackPress) {
             // checking if user is on other navigation menu
             // rather than home
-            if (mFragmentIndex != DEFAULT_FRAGMENT_INDEX) {
-                mFragmentIndex = DEFAULT_FRAGMENT_INDEX;
+            if( mFragmentIndex == NAV_SETTINGS ) {
+                mFragmentIndex = NAV_SCHEDULE;
+                loadFragment();
+                return;
+            } else {
+                mFragmentIndex = NAV_SETTINGS;
                 loadFragment();
                 return;
             }
+
+//            if (mFragmentIndex != DEFAULT_FRAGMENT_INDEX) {
+//                mFragmentIndex = DEFAULT_FRAGMENT_INDEX;
+//                loadFragment();
+//                return;
+//            }
         }
 
         super.onBackPressed();

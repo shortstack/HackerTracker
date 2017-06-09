@@ -127,6 +127,7 @@
     <string name="cancel">Cancel</string>
     <string name="okay">Okay</string>
     <string name="notification_text">Starting soon in %1$s.</string>
+    <string name="notification_updated">Details have been updated.</string>
     <string name="uber">Uber</string>
     <string name="tut_introduction"><![CDATA[Welcome to <h1><font>DEFCON 25</font></h1>]]></string>
     <string name="tut_location">DEFCON 25 will be held at the Paris Hotel, Las Vegas, from August 4th till August 9th.</string>
@@ -150,6 +151,14 @@
     <string name="partners_vendors">Partners &amp; Vendors</string>
     <string name="partner">partner</string>
     <string name="where_when">Where &amp; When</string>
+    <string name="update_progress">(%1$d / %2$d)</string>
+    <string name="sync_done">Up to date!</string>
+    <string name="sync_error">There was a issue with syncing. Please try again later.</string>
+    <string name="sync_title">Syncing</string>
+    <string name="sync_init">Fetching latest information from server.</string>
+    <string name="alert_filter_title">Filter Categories</string>
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
 
     <string-array name="nav_item_activity_titles">
         <item>@string/nav_home</item>

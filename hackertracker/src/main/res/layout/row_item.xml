@@ -51,6 +51,14 @@
             android:layout_toStartOf="@+id/star_bar"
             android:id="@+id/container">
 
+            <TextView
+                android:id="@+id/updated"
+                style="@style/card_item_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Updated"
+                android:textStyle="bold" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -65,7 +73,6 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
                     android:alpha=".65"
                     android:src="@drawable/ic_star_white_24dp"
                     android:visibility="gone" />

@@ -1,10 +1,16 @@
 package com.shortstack.hackertracker.Model;
 
-import android.annotation.SuppressLint;
+import android.content.ContentValues;
+import android.database.Cursor;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
+import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Application.App;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -12,6 +18,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.Random;
 
 public class Item implements Serializable {
 
@@ -24,7 +32,7 @@ public class Item implements Serializable {
     private static final int NEW = 1;
 
     private int id;
-    private String type;
+    public String type;
     private String date;
     private String title;
     @SerializedName("who")
@@ -32,9 +40,8 @@ public class Item implements Serializable {
     private String description;
     private String begin;
     private String end;
-    private String location;
+    public String location;
     private String link;
-
 
 
     // State
@@ -47,6 +54,39 @@ public class Item implements Serializable {
     private int isTool;
     @SerializedName("exploit")
     private int isExploit;
+
+
+    // Generators
+
+
+    public Item() {
+        super();
+        id = new Random().nextInt();
+        title = "My event!";
+        location = "Debug Menus";
+        type = "Party";
+        begin = "10:00";
+        end = "10:50";
+        date = "2017-07-07";
+
+    }
+
+
+    public static Item CursorToItem(Gson gson, Cursor cursor) {
+        JSONObject object = new JSONObject();
+
+        int totalColumn = cursor.getColumnCount();
+
+        for (int i = 0; i < totalColumn; i++) {
+            try {
+                object.put(cursor.getColumnName(i), cursor.getString(i));
+            } catch (Exception e) {
+                Logger.e(e, "Failed to convert Cursor into JSONObject.");
+            }
+        }
+
+        return gson.fromJson(object.toString(), Item.class);
+    }
 
     public int getId() {
         return id;
@@ -87,7 +127,6 @@ public class Item implements Serializable {
     public String getLink() {
         return link;
     }
-
 
 
     // State
@@ -147,12 +186,17 @@ public class Item implements Serializable {
     }
 
     public boolean hasExpired() {
-        Date date = App.getApplication().getCurrentDate();
+        Date date = App.getApplication().getTimeHelper().getCurrentDate();
+        if (getEndDateObject() == null) {
+            Logger.e(title + " -- End Date is null!");
+            return false;
+        }
+
         return date.after(getEndDateObject());
     }
 
     public boolean hasBegin() {
-        Date date = App.getApplication().getCurrentDate();
+        Date date = App.getApplication().getTimeHelper().getCurrentDate();
         return date.after(getBeginDateObject());
     }
 
@@ -188,17 +232,39 @@ public class Item implements Serializable {
     }
 
     public static String getDateStamp(Date date) {
-        String time = "";
+        if (date == null) return "";
 
-        if (date != null) {
-            @SuppressLint("SimpleDateFormat")
-            DateFormat writeFormat = new SimpleDateFormat("EEEE");
-            time = writeFormat.format(date);
-        }
-
-        return time;
+        return App.getApplication().getTimeHelper().getRelativeDateStamp(date);
     }
 
+    //
+
+    public ContentValues getContentValues(Gson gson) {
+        ContentValues values = new ContentValues();
+
+        String json = gson.toJson(this);
+        try {
+            JSONObject object = new JSONObject(json);
+
+            Iterator<String> keys = object.keys();
+            String key;
+            while (keys.hasNext()) {
+                key = keys.next();
+                if (!key.equals("starred"))
+                    values.put(key, object.getString(key));
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        if (id == 7) {
+            Logger.d(values.toString());
+        }
+
+        return values;
+    }
 
 
     // Actions / Modifiers

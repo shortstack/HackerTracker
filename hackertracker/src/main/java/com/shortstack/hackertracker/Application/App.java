@@ -10,12 +10,12 @@ import com.shortstack.hackertracker.Analytics.AnalyticsController;
 import com.shortstack.hackertracker.BuildConfig;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Database.DatabaseController;
+import com.shortstack.hackertracker.Network.NetworkController;
 import com.shortstack.hackertracker.Utils.NotificationHelper;
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil;
+import com.shortstack.hackertracker.Utils.TimeHelper;
 import com.squareup.otto.Bus;
 import com.squareup.otto.ThreadEnforcer;
-
-import java.util.Date;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -36,9 +36,12 @@ public class App extends Application {
     private NotificationHelper mNotificationHelper;
     // Analytics
     private AnalyticsController mAnalyticsController;
+    // Networking
+    private NetworkController mNetworkController;
+    // Time
+    private TimeHelper mTimeHelper;
 
 
-    public long DEBUG_TIME_EXTRA = 0;
 
 
     public void onCreate() {
@@ -46,13 +49,23 @@ public class App extends Application {
 
         init();
         initFabric();
+        initTime();
         initLogger();
         initDatabase();
         initStorage();
         initAnalytics();
+        initNetwork();
         initNotifications();
         initBus();
         initFeedback();
+    }
+
+    private void initTime() {
+        mTimeHelper = new TimeHelper(mContext);
+    }
+
+    private void initNetwork() {
+        mNetworkController = new NetworkController(mContext);
     }
 
     private void initBus() {
@@ -116,14 +129,8 @@ public class App extends Application {
         return getApplication().getPrivateStorage();
     }
 
-    public Date getCurrentDate() {
-        // TODO: Uncomment when not forcing the time.
-//        if (BuildConfig.DEBUG) {
-            Date date = new Date();
-            date.setTime(Constants.DEBUG_FORCE_TIME_DATE + DEBUG_TIME_EXTRA);
-            return date;
-//        }
-//        return new Date();
+    public TimeHelper getTimeHelper() {
+        return mTimeHelper;
     }
 
     public DatabaseController getDatabaseController() {
@@ -132,6 +139,10 @@ public class App extends Application {
 
     public AnalyticsController getAnalyticsController() {
         return mAnalyticsController;
+    }
+
+    public NetworkController getNetworkController() {
+        return mNetworkController;
     }
 
     public void postBusEvent( Object event ) {
