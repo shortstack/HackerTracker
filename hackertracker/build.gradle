@@ -1,30 +1,9 @@
-buildscript {
-    repositories {
-        mavenCentral()
-        maven { url 'https://maven.fabric.io/public' }
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.0'
-        // These docs use an open ended version so that our plugin
-        // can be updated quickly in response to Android tooling updates
-
-        // We recommend changing it to the latest version from our changelog:
-        // https://docs.fabric.io/android/changelog.html#fabric-gradle-plugin
-        classpath 'io.fabric.tools:gradle:1.22.0'
-    }
-}
-
 apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
 apply plugin: 'maven'
 apply plugin: 'io.fabric'
 
 
-repositories {
-    mavenCentral()
-    maven { url "https://jitpack.io" }
-    maven { url 'https://maven.fabric.io/public' }
-}
 
 android {
     compileSdkVersion 25
@@ -50,12 +29,20 @@ android {
 
         }
     }
+
+    flavorDimensions "default"
+
     productFlavors {
         defaultFlavor {
+            dimension "default"
         }
     }
     packagingOptions {
         exclude 'META-INF/LICENSE.txt'
+    }
+
+    sourceSets {
+        main.java.srcDirs += 'src/main/kotlin'
     }
 }
 
@@ -64,6 +51,8 @@ configurations {
 }
 
 dependencies {
+    compile 'org.jetbrains.kotlin:kotlin-stdlib:0.6.+'
+
     compile fileTree(dir: 'libs', include: ['*.jar'])
     // Support Libraries
     compile 'com.android.support:support-v4:25.1.0'
@@ -74,7 +63,9 @@ dependencies {
     compile 'com.android.support:preference-v7:25.1.0'
 
     // Uber
-    compile 'com.uber.sdk:rides-android:0.5.1'
+    compile ( 'com.uber.sdk:rides-android:0.5.1' ) {
+        exclude group: 'org.apache.httpcomponents'
+    }
 
 
     // Sqlite Asset Helper
@@ -111,4 +102,11 @@ dependencies {
         transitive = true;
     }
     compile 'com.android.support.constraint:constraint-layout:1.0.0-beta4'
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+}
+
+repositories {
+    mavenCentral()
+    maven { url "https://jitpack.io" }
+    maven { url 'https://maven.fabric.io/public' }
 }
