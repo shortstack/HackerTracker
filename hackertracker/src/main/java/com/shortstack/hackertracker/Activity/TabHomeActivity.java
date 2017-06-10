@@ -182,7 +182,7 @@ public class TabHomeActivity extends AppCompatActivity
         switch (mFragmentIndex) {
             default:
             case NAV_HOME:
-                return HomeFragment.newInstance();
+                return HomeFragment.Companion.newInstance();
 
             case NAV_SCHEDULE:
                 return ScheduleFragment.newInstance();

@@ -8,6 +8,8 @@ import java.util.*
 
 class SplashActivity : AppCompatActivity() {
 
+    private val SPLASH_DELAY = 450
+
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
@@ -22,10 +24,5 @@ class SplashActivity : AppCompatActivity() {
     private fun startHomeActivity() {
         startActivity(Intent(this@SplashActivity, TabHomeActivity::class.java))
         finish()
-    }
-
-    companion object {
-
-        val SPLASH_DELAY = 450
     }
 }

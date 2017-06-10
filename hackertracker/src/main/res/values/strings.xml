@@ -159,6 +159,9 @@
     <string name="alert_filter_title">Filter Categories</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
+    <string name="nav_help_title">Looking for something?</string>
+    <string name="nav_help_body">Check out the information section</string>
+    <string name="updates">Updates</string>
 
     <string-array name="nav_item_activity_titles">
         <item>@string/nav_home</item>
