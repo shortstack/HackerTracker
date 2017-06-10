@@ -42,7 +42,7 @@
 
         <activity android:name="com.shortstack.hackertracker.Activity.VendorsActivity" />
 
-        <activity android:name=".Activity.InformationActivity" />
+        <activity android:name=".Fragment.InformationFragment" />
 
         <receiver android:name="com.shortstack.hackertracker.Utils.AlarmReceiver"></receiver>
 
