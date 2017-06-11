@@ -73,7 +73,7 @@ public class FilterView extends LinearLayout {
 
         Filter filter = new Filter(strings);
 
-        App.getStorage().saveFilter(filter);
+        App.Companion.getStorage().saveFilter(filter);
 
         return filter;
     }

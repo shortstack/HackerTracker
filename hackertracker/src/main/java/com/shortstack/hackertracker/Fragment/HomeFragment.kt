@@ -59,7 +59,7 @@ class HomeFragment : Fragment() {
             val model = UpdatedItemsModel()
 
             update[0] = if (model.state == UpdatedItemsModel.STATE_NEW) "NEW" else "UPDATED"
-            val scheduleItem = App.getApplication().databaseController.getScheduleItem(model.id)
+            val scheduleItem = App.application.databaseController.getScheduleItem(model.id)
             update[1] = scheduleItem.title
 
             adapter?.add(scheduleItem)

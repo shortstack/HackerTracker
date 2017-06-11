@@ -16,7 +16,6 @@ import com.orhanobut.logger.Logger;
 import com.pedrogomez.renderers.RendererContent;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Application.App;
-import com.shortstack.hackertracker.BuildConfig;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Event.RefreshTimerEvent;
 import com.shortstack.hackertracker.Event.UpdateListContentsEvent;
@@ -59,15 +58,12 @@ public class ScheduleFragment extends Fragment {
 
     public Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
-//            Logger.d(">>Refreshing<<");
-            App.getApplication().getTimeHelper().DEBUG_TIME_EXTRA += Constants.TIMER_INTERVAL_FIVE_MIN;
-
-//            if( App.getApplication().DEBUG_TIME_EXTRA == Constants.TIMER_INTERVAL_FIVE_MIN ) {
-//                NetworkController cont = App.getApplication().getNetworkController();
+//            if( App.Companion.getApplication().DEBUG_TIME_EXTRA == Constants.TIMER_INTERVAL_FIVE_MIN ) {
+//                NetworkController cont = App.Companion.getApplication().getNetworkController();
 //                cont.syncInBackground();
 //            }
 
-            App.getApplication().postBusEvent(new RefreshTimerEvent());
+            App.Companion.getApplication().postBusEvent(new RefreshTimerEvent());
             if (adapter != null) {
                 adapter.notifyTimeChanged();
                 updateFeedErrors();
@@ -80,13 +76,13 @@ public class ScheduleFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        App.getApplication().registerBusListener(this);
+        App.Companion.getApplication().registerBusListener(this);
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        App.getApplication().unregisterBusListener(this);
+        App.Companion.getApplication().unregisterBusListener(this);
     }
 
 
@@ -94,10 +90,10 @@ public class ScheduleFragment extends Fragment {
     public void onResume() {
         super.onResume();
 
-        Date currentDate = App.getApplication().getTimeHelper().getCurrentDate();
+        Date currentDate = App.Companion.getCurrentDate();
         long time = currentDate.getTime();
 
-        if (App.getStorage().shouldRefresh(time)) {
+        if (App.Companion.getStorage().shouldRefresh(time)) {
             mHandler.obtainMessage(1).sendToTarget();
         }
 
@@ -116,10 +112,8 @@ public class ScheduleFragment extends Fragment {
     public void onPause() {
         super.onPause();
         mTimer.cancel();
-        if (BuildConfig.DEBUG) {
-            App.getApplication().getTimeHelper().DEBUG_TIME_EXTRA += Constants.DEBUG_PAUSE_TIME_SKIP;
-        }
-        App.getStorage().setLastRefreshTimer(App.getApplication().getTimeHelper().getCurrentDate().getTime());
+
+        App.Companion.getStorage().setLastRefreshTimer(App.Companion.getCurrentDate().getTime());
     }
 
     @Subscribe
@@ -146,7 +140,7 @@ public class ScheduleFragment extends Fragment {
     }
 
     private boolean hasFilters() {
-        Filter filter = App.getStorage().getFilter();
+        Filter filter = App.Companion.getStorage().getFilter();
         return !filter.getTypesSet().isEmpty();
     }
 
@@ -174,7 +168,7 @@ public class ScheduleFragment extends Fragment {
         //adapter.add(new RendererContent<>("// Begin //", ScheduleItemBuilder.HEADER));
 
 
-        Filter filter = App.getStorage().getFilter();
+        Filter filter = App.Companion.getStorage().getFilter();
         List<Item> events = getEvents(filter);
 
 
@@ -188,7 +182,7 @@ public class ScheduleFragment extends Fragment {
 
         adapter.notifyDataSetChanged();
 
-        if (App.getStorage().showExpiredEvents())
+        if (App.Companion.getStorage().showExpiredEvents())
             scrollToCurrentTime();
     }
 
@@ -198,7 +192,7 @@ public class ScheduleFragment extends Fragment {
 
     private int findCurrentPositionByTime() {
         List<Item> collection = adapter.getCollection();
-        Date currentDate = App.getApplication().getTimeHelper().getCurrentDate();
+        Date currentDate = App.Companion.getCurrentDate();
 
         for (int i = 0; i < collection.size(); i++) {
             Object object = collection.get(i);
@@ -227,7 +221,7 @@ public class ScheduleFragment extends Fragment {
 
         try {
             List<Item> events;
-            events = App.getApplication().getDatabaseController().getItemByDate(filter.getTypesArray());
+            events = App.Companion.getApplication().getDatabaseController().getItemByDate(filter.getTypesArray());
             return events;
         } catch (SQLiteException ex) {
             Logger.e(ex, "Could not open the database.");
@@ -270,14 +264,14 @@ public class ScheduleFragment extends Fragment {
 
     //@OnClick(R.id.filter)
     public void showFilters() {
-        Filter filter = App.getStorage().getFilter();
+        Filter filter = App.Companion.getStorage().getFilter();
 
         final FilterView view = new FilterView(getContext(), filter);
         MaterialAlert.create(getContext()).setTitle(getString(R.string.alert_filter_title)).setView(view).setBasicNegativeButton().setPositiveButton(R.string.save, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 Filter filter = view.save();
-                App.getApplication().getAnalyticsController().tagFiltersEvent(filter);
+                App.Companion.getApplication().getAnalyticsController().tagFiltersEvent(filter);
                 refreshContents();
             }
         }).show();

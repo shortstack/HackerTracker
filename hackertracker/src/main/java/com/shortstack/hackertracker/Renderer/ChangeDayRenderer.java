@@ -35,7 +35,7 @@ public class ChangeDayRenderer extends Renderer<RendererContent<String>> {
 
     @OnClick(R.id.button)
     public void onButtonClick() {
-        App.getStorage().setScheduleDay(App.getStorage().getScheduleDay() + 1);
-        App.getApplication().postBusEvent(new UpdateListContentsEvent());
+        App.Companion.getStorage().setScheduleDay(App.Companion.getStorage().getScheduleDay() + 1);
+        App.Companion.getApplication().postBusEvent(new UpdateListContentsEvent());
     }
 }

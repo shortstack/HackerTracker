@@ -32,7 +32,7 @@ class VendorsFragment : Fragment() {
         val adapter = RendererAdapter<Any>(rendererBuilder)
         list!!.adapter = adapter
 
-        adapter.addAll(App.getApplication().databaseController.vendors)
+        adapter.addAll(App.application.databaseController.vendors)
     }
 
     companion object {

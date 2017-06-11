@@ -16,7 +16,7 @@ public class ScheduleItemAdapter extends RendererAdapter<Item> {
 
     public void notifyTimeChanged() {
 
-        if(App.getStorage().showExpiredEvents())
+        if(App.Companion.getStorage().showExpiredEvents())
             return;
 
         List collection = getCollection();

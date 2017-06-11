@@ -75,7 +75,7 @@ public class ScheduleItemBottomSheetDialogFragment extends android.support.desig
             return;
         }
 
-        App.getApplication().getAnalyticsController().tagItemEvent(AnalyticsController.Analytics.EVENT_VIEW, getContent());
+        App.Companion.getApplication().getAnalyticsController().tagItemEvent(AnalyticsController.Analytics.EVENT_VIEW, getContent());
 
         item.setItem(obj.getItem());
 
@@ -105,9 +105,9 @@ public class ScheduleItemBottomSheetDialogFragment extends android.support.desig
     @OnClick(R.id.star)
     public void onStarClick() {
         if( getContent().isBookmarked() ) {
-            App.getApplication().getAnalyticsController().tagItemEvent(AnalyticsController.Analytics.EVENT_UNBOOKMARK, getContent());
+            App.Companion.getApplication().getAnalyticsController().tagItemEvent(AnalyticsController.Analytics.EVENT_UNBOOKMARK, getContent());
         } else {
-            App.getApplication().getAnalyticsController().tagItemEvent(AnalyticsController.Analytics.EVENT_BOOKMARK, getContent());
+            App.Companion.getApplication().getAnalyticsController().tagItemEvent(AnalyticsController.Analytics.EVENT_BOOKMARK, getContent());
         }
         item.onBookmarkClick();
         updateStarIcon();
@@ -115,13 +115,13 @@ public class ScheduleItemBottomSheetDialogFragment extends android.support.desig
 
     @OnClick(R.id.share)
     public void onShareClick() {
-        App.getApplication().getAnalyticsController().tagItemEvent(AnalyticsController.Analytics.EVENT_SHARE, getContent());
+        App.Companion.getApplication().getAnalyticsController().tagItemEvent(AnalyticsController.Analytics.EVENT_SHARE, getContent());
         item.onShareClick();
     }
 
     @OnClick(R.id.link)
     public void onLinkClick() {
-        App.getApplication().getAnalyticsController().tagItemEvent(AnalyticsController.Analytics.EVENT_LINK, getContent());
+        App.Companion.getApplication().getAnalyticsController().tagItemEvent(AnalyticsController.Analytics.EVENT_LINK, getContent());
 
         MaterialAlert.create(getContext())
                 .setTitle(R.string.link_warning)

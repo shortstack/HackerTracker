@@ -29,7 +29,7 @@ class MapsFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             R.id.action_uber -> {
-                App.getApplication().analyticsController.tagCustomEvent(AnalyticsController.Analytics.UBER)
+                App.application.analyticsController.tagCustomEvent(AnalyticsController.Analytics.UBER)
                 MaterialAlert.create(context).setTitle(R.string.uber).setView(UberView(context)).show()
                 return true
             }

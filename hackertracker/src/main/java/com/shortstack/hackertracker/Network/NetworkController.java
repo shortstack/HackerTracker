@@ -67,7 +67,7 @@ public class NetworkController implements Callback<SyncResponse> {
             protected Void doInBackground(Void... params) {
                 long time = System.currentTimeMillis();
 
-                DatabaseController database = App.getApplication().getDatabaseController();
+                DatabaseController database = App.Companion.getApplication().getDatabaseController();
 
                 // Remove, only for debugging.
                 String[] stringArray = mContext.getResources().getStringArray(R.array.filter_types);
@@ -110,7 +110,7 @@ public class NetworkController implements Callback<SyncResponse> {
                 super.onPostExecute(aVoid);
                 setDialogMessage(mContext.getString(R.string.sync_done));
 
-                App.getApplication().postBusEvent(new UpdateListContentsEvent());
+                App.Companion.getApplication().postBusEvent(new UpdateListContentsEvent());
             }
         }.execute();
     }

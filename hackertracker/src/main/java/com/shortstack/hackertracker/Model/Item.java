@@ -186,7 +186,7 @@ public class Item implements Serializable {
     }
 
     public boolean hasExpired() {
-        Date date = App.getApplication().getTimeHelper().getCurrentDate();
+        Date date = App.Companion.getCurrentDate();
         if (getEndDateObject() == null) {
             Logger.e(title + " -- End Date is null!");
             return false;
@@ -196,7 +196,7 @@ public class Item implements Serializable {
     }
 
     public boolean hasBegin() {
-        Date date = App.getApplication().getTimeHelper().getCurrentDate();
+        Date date = App.Companion.getCurrentDate();
         return date.after(getBeginDateObject());
     }
 
@@ -234,7 +234,7 @@ public class Item implements Serializable {
     public static String getDateStamp(Date date) {
         if (date == null) return "";
 
-        return App.getApplication().getTimeHelper().getRelativeDateStamp(date);
+        return App.Companion.getRelativeDateStamp(date);
     }
 
     //

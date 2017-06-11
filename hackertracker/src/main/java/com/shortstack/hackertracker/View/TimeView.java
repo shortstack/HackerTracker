@@ -56,20 +56,20 @@ public class TimeView extends LinearLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if( App.getApplication() != null )
-            App.getApplication().registerBusListener(this);
+        if( App.Companion.getApplication() != null )
+            App.Companion.getApplication().registerBusListener(this);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if( App.getApplication() != null )
-            App.getApplication().unregisterBusListener(this);
+        if( App.Companion.getApplication() != null )
+            App.Companion.getApplication().unregisterBusListener(this);
     }
 
     @Subscribe
     public void onRefreshTimeEvent(RefreshTimerEvent event) {
-        Date currentDate = App.getApplication().getTimeHelper().getCurrentDate();
+        Date currentDate = App.Companion.getCurrentDate();
         updateSubheader(currentDate);
     }
 
@@ -80,7 +80,7 @@ public class TimeView extends LinearLayout {
     }
 
     public void render() {
-        Date currentDate = App.getApplication().getTimeHelper().getCurrentDate();
+        Date currentDate = App.Companion.getCurrentDate();
 
         header.setText(ItemViewModel.getTimeStamp(getContext(), mDate));
 

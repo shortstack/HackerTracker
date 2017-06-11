@@ -29,11 +29,11 @@ android {
         }
     }
 
-    flavorDimensions "default"
+    flavorDimensions "versionCode"
 
     productFlavors {
         defaultFlavor {
-            dimension "default"
+            dimension "versionCode"
         }
     }
     packagingOptions {

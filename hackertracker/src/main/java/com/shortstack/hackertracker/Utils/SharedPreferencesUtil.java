@@ -45,7 +45,7 @@ public class SharedPreferencesUtil {
     private SharedPreferences mPreferences;
 
     public SharedPreferencesUtil() {
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(App.getApplication().getAppContext());
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(App.Companion.getApplication().getAppContext());
 
         // Reset to only show the current day.
         setScheduleDay(DEFAULT_DAYS_TO_LOAD);

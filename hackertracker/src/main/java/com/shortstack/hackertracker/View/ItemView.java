@@ -134,14 +134,14 @@ public class ItemView extends CardView {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         if (!isInEditMode())
-            App.getApplication().registerBusListener(this);
+            App.Companion.getApplication().registerBusListener(this);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         if (!isInEditMode())
-            App.getApplication().unregisterBusListener(this);
+            App.Companion.getApplication().unregisterBusListener(this);
 
         finishAnimation();
         setProgressBar();
@@ -271,6 +271,6 @@ public class ItemView extends CardView {
     }
 
     public void onBookmarkClick() {
-        App.getApplication().getDatabaseController().toggleBookmark(getContent().getItem());
+        App.Companion.getApplication().getDatabaseController().toggleBookmark(getContent().getItem());
     }
 }

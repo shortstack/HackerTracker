@@ -23,13 +23,13 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
         var preference = findPreference("force_sync")
         preference.setOnClick {
-            val controller = App.getApplication().networkController
+            val controller = App.application.networkController
             controller.syncInForeground(context)
         }
 
         preference = findPreference("force_clear")
         preference.setOnClick {
-            App.getApplication().databaseController.schedule.delete("data", null, null)
+            App.application.databaseController.schedule.delete("data", null, null)
         }
     }
 
@@ -44,12 +44,12 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
             "user_use_military_time" -> {
                 event = Analytics.SETTINGS_MILITARY_TIME
-                App.getApplication().postBusEvent(UpdateListContentsEvent())
+                App.application.postBusEvent(UpdateListContentsEvent())
             }
 
             "user_show_expired_events" -> {
                 event = Analytics.SETTINGS_EXPIRED_EVENT
-                App.getApplication().postBusEvent(UpdateListContentsEvent())
+                App.application.postBusEvent(UpdateListContentsEvent())
             }
 
             else ->
@@ -58,7 +58,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         }
 
         val value = sharedPreferences.getBoolean(key, false)
-        App.getApplication().analyticsController.tagSettingsEvent(event, value)
+        App.application.analyticsController.tagSettingsEvent(event, value)
     }
 
     override fun onResume() {

@@ -70,10 +70,10 @@ public class DatabaseController {
         setScheduleBookmarked(value, item.getId());
 
         item.toggleBookmark();
-        App.getApplication().postBusEvent(new FavoriteEvent(item.getId()));
+        App.Companion.getApplication().postBusEvent(new FavoriteEvent(item.getId()));
 
         if (item.isBookmarked()) {
-            App.getApplication().getNotificationHelper().scheduleItemNotification(item);
+            App.Companion.getApplication().getNotificationHelper().scheduleItemNotification(item);
         }
     }
 
@@ -107,7 +107,7 @@ public class DatabaseController {
         String filter = "id=?";
         String[] args = new String[]{String.valueOf(item.getId())};
 
-        SQLiteDatabase schedule = App.getApplication().getDatabaseController().getSchedule();
+        SQLiteDatabase schedule = App.Companion.getApplication().getDatabaseController().getSchedule();
         ContentValues values = item.getContentValues(mGson);
         values.put("is_new", "1");
 
@@ -115,10 +115,10 @@ public class DatabaseController {
         if( rowsUpdated == 0 ) {
             schedule.insert(SCHEDULE_TABLE_NAME, null, values);
             // Change to insert new event.
-//            App.getApplication().postBusEvent(new UpdateListContentsEvent());
+//            App.Companion.getApplication().postBusEvent(new UpdateListContentsEvent());
         } else {
             // Change to update event.
-//            App.getApplication().postBusEvent(new UpdateListContentsEvent());
+//            App.Companion.getApplication().postBusEvent(new UpdateListContentsEvent());
 
 
 
@@ -140,7 +140,7 @@ public class DatabaseController {
 
             if( item1.isBookmarked() ) {
 
-                NotificationHelper notificationHelper = App.getApplication().getNotificationHelper();
+                NotificationHelper notificationHelper = App.Companion.getApplication().getNotificationHelper();
                 // Cancel the notification, in case the time changes.
                 notificationHelper.cancelNotification( item.getId() );
 
@@ -210,8 +210,8 @@ public class DatabaseController {
         selection = selection.concat(")");
 
         // Date
-        if( App.getStorage().showActiveEventsOnly()) {
-            Calendar currentDate = App.getApplication().getTimeHelper().getCurrentCalendar();
+        if( App.Companion.getStorage().showActiveEventsOnly()) {
+            Calendar currentDate = App.Companion.getCurrentCalendar();
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
             SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
 

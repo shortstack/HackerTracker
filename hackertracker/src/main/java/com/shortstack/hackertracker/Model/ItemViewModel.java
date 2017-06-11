@@ -78,7 +78,7 @@ public class ItemViewModel {
 
         String time = "";
 
-        if (App.getStorage().shouldShowMilitaryTime()) {
+        if (App.Companion.getStorage().shouldShowMilitaryTime()) {
             time = mItem.getBegin();
         } else {
             Date date = mItem.getBeginDateObject();
@@ -99,7 +99,7 @@ public class ItemViewModel {
         String time;
         DateFormat writeFormat;
 
-        if (App.getStorage().shouldShowMilitaryTime()) {
+        if (App.Companion.getStorage().shouldShowMilitaryTime()) {
             writeFormat = new SimpleDateFormat("HH:mm");
         } else {
             writeFormat = new SimpleDateFormat("h:mm aa");
@@ -117,7 +117,7 @@ public class ItemViewModel {
 
         Date beginDateObject = mItem.getBeginDateObject();
         Date endDateObject = mItem.getEndDateObject();
-        Date currentDate = App.getApplication().getTimeHelper().getCurrentDate();
+        Date currentDate = App.Companion.getCurrentDate();
 
         float length = (endDateObject.getTime() - beginDateObject.getTime()) / 1000 / 60;
         float p = (endDateObject.getTime() - currentDate.getTime()) / 1000 / 60;

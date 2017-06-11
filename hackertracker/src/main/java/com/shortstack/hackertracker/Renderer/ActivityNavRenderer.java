@@ -45,6 +45,6 @@ public class ActivityNavRenderer extends Renderer<Navigation> implements View.On
     @Override
     public void onClick(View view) {
         // TODO Use the class to handle multiple location.
-        ((TabHomeActivity)getContext()).loadFragment( TabHomeActivity.NAV_INFORMATION );
+        ((TabHomeActivity)getContext()).loadFragment(TabHomeActivity.Companion.getNAV_INFORMATION());
     }
 }
