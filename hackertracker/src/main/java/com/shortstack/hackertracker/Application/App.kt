@@ -23,9 +23,7 @@ import java.util.*
 
 class App : Application() {
 
-    var DEBUG_TIME_EXTRA = 0
-
-    var appContext: Context? = null
+    lateinit var appContext: Context
         private set
 
     // Eventbus

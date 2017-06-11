@@ -56,15 +56,13 @@ public class TimeView extends LinearLayout {
     @Override
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
-        if( App.Companion.getApplication() != null )
-            App.Companion.getApplication().registerBusListener(this);
+        App.Companion.getApplication().registerBusListener(this);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
-        if( App.Companion.getApplication() != null )
-            App.Companion.getApplication().unregisterBusListener(this);
+        App.Companion.getApplication().unregisterBusListener(this);
     }
 
     @Subscribe
