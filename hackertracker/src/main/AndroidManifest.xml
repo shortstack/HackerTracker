@@ -31,16 +31,11 @@
             android:icon="@drawable/skull"
             />
 
-        <activity android:name=".Activity.SettingsActivity"
-            android:theme="@style/PreferenceScreen">
-
-        </activity>
-
         <activity android:name="com.shortstack.hackertracker.Fragment.InformationFragment" />
 
-        <activity android:name="com.shortstack.hackertracker.Activity.MapsActivity" />
+        <activity android:name="com.shortstack.hackertracker.Activity.MapsFragment" />
 
-        <activity android:name="com.shortstack.hackertracker.Activity.VendorsActivity" />
+        <activity android:name="com.shortstack.hackertracker.Activity.VendorsFragment" />
 
         <activity android:name=".Fragment.InformationFragment" />
 

@@ -210,6 +210,8 @@
 
 
 
+
+
     <string-array name="badge_information">
         <item>@string/badges</item>
         <item>@string/badges_description</item>

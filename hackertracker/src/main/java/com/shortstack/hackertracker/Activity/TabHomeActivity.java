@@ -17,10 +17,12 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.github.stkent.amplify.tracking.Amplify;
+import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Analytics.AnalyticsController;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.BottomSheet.ReviewBottomSheetDialogFragment;
 import com.shortstack.hackertracker.Fragment.HomeFragment;
+import com.shortstack.hackertracker.Fragment.InformationFragment;
 import com.shortstack.hackertracker.Fragment.ScheduleFragment;
 import com.shortstack.hackertracker.Fragment.SettingsFragment;
 import com.shortstack.hackertracker.R;
@@ -82,8 +84,13 @@ public class TabHomeActivity extends AppCompatActivity
         activityTitles = getResources().getStringArray(R.array.nav_item_activity_titles);
 
 
+
+
         if (savedInstanceState == null) {
             mFragmentIndex = App.getStorage().getViewPagerPosition();
+
+            mFragmentIndex = 1;
+
             forceMenuHighlighted();
             loadFragment();
         }
@@ -96,6 +103,8 @@ public class TabHomeActivity extends AppCompatActivity
     private void loadFragment() {
         // set toolbar title
         //setToolbarTitle();
+
+        Logger.d("Setting fragment:" + mFragmentIndex);
 
         App.getStorage().setViewPagerPosition(mFragmentIndex);
         tagAnalytics();
@@ -188,16 +197,16 @@ public class TabHomeActivity extends AppCompatActivity
                 return ScheduleFragment.newInstance();
 
             case NAV_MAP:
-                return MapsActivity.newInstance();
+                return MapsFragment.Companion.newInstance();
 
             case NAV_INFORMATION:
-                return InformationActivity.newInstance();
+                return InformationFragment.Companion.newInstance();
 
             case NAV_VENDORS:
-                return VendorsActivity.newInstance();
+                return VendorsFragment.Companion.newInstance();
 
             case NAV_SETTINGS:
-                return SettingsFragment.newInstance();
+                return SettingsFragment.Companion.newInstance();
         }
     }
 
@@ -257,12 +266,32 @@ public class TabHomeActivity extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         mFragmentIndex = getFragmentIndex(item);
+
+        Logger.d("Selected item! " + mFragmentIndex);
+
         loadFragment();
         return true;
     }
 
     private int getFragmentIndex(MenuItem item) {
-        return item.getItemId() - R.id.nav_home;
+
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                return NAV_HOME;
+            case R.id.nav_schedule:
+                return NAV_SCHEDULE;
+            case R.id.nav_map:
+                return NAV_MAP;
+            case R.id.nav_information:
+                return NAV_INFORMATION;
+
+            case R.id.nav_companies:
+                return NAV_VENDORS;
+            case R.id.nav_settings:
+                return NAV_SETTINGS;
+        }
+
+        throw new IllegalStateException("Fragment out of bounds. Could not locate id." + item.getItemId());
     }
 
     private String getFragmentTag() {

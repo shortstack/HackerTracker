@@ -48,10 +48,6 @@ class InformationFragment : Fragment() {
         adapter?.add(Information(context, R.array.workshop_information))
         adapter?.add(Information(context, R.array.wifi_information))
         adapter?.add(Information(context, R.array.radio_information))
-        // radio
-        // workshop
-        // location/time
-        //
     }
 
     private fun addFAQ() {
