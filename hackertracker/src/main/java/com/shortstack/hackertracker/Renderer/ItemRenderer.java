@@ -41,7 +41,7 @@ public class ItemRenderer extends Renderer<Item> implements View.OnClickListener
 
     @Override
     public void onClick(View view) {
-        ScheduleItemBottomSheetDialogFragment bottomSheetDialogFragment =  ScheduleItemBottomSheetDialogFragment.newInstance(getContent());
+        ScheduleItemBottomSheetDialogFragment bottomSheetDialogFragment =  ScheduleItemBottomSheetDialogFragment.Companion.newInstance(getContent());
         bottomSheetDialogFragment.show(((AppCompatActivity)getContext()).getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
     }
 }

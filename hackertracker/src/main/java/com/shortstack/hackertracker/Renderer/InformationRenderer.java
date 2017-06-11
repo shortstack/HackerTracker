@@ -41,7 +41,7 @@ public class InformationRenderer extends Renderer<Information> implements View.O
 
     @Override
     public void onClick(View view) {
-        InformationBottomSheetDialogFragment badges = InformationBottomSheetDialogFragment.newInstance(getContent());
+        InformationBottomSheetDialogFragment badges = InformationBottomSheetDialogFragment.Companion.newInstance(getContent());
         badges.show(((AppCompatActivity)getContext()).getSupportFragmentManager(), badges.getTag());
     }
 }

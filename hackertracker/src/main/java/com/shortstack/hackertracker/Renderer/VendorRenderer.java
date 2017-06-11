@@ -50,7 +50,7 @@ public class VendorRenderer extends Renderer<Company> implements View.OnClickLis
 
     @Override
     public void onClick(View view) {
-        VendorBottomSheetDialogFragment bottomSheetDialogFragment =  VendorBottomSheetDialogFragment.newInstance(getContent());
+        VendorBottomSheetDialogFragment bottomSheetDialogFragment =  VendorBottomSheetDialogFragment.Companion.newInstance(getContent());
         bottomSheetDialogFragment.show(((AppCompatActivity)getContext()).getSupportFragmentManager(), bottomSheetDialogFragment.getTag());
     }
 }
