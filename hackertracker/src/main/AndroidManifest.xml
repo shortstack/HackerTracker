@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.shortstack.hackertracker"
-    android:installLocation="auto"
-   >
+    android:installLocation="auto">
 
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -15,29 +14,18 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/MyMaterialTheme">
+
         <activity
-            android:name="com.shortstack.hackertracker.Activity.SplashActivity"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait">
+            android:name="com.shortstack.hackertracker.Activity.TabHomeActivity"
+            android:icon="@drawable/skull">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
-
-        <activity
-            android:name="com.shortstack.hackertracker.Activity.TabHomeActivity"
-            android:icon="@drawable/skull"
-            />
-
-        <activity android:name="com.shortstack.hackertracker.Fragment.InformationFragment" />
-
-        <activity android:name="com.shortstack.hackertracker.Activity.MapsFragment" />
-
-        <activity android:name="com.shortstack.hackertracker.Activity.VendorsFragment" />
-
-        <activity android:name=".Fragment.InformationFragment" />
 
         <receiver android:name="com.shortstack.hackertracker.Utils.AlarmReceiver"></receiver>
 
