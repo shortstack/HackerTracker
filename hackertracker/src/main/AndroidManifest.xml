@@ -15,9 +15,7 @@
         android:label="@string/app_name"
         android:theme="@style/MyMaterialTheme">
 
-        <activity
-            android:name="com.shortstack.hackertracker.Activity.TabHomeActivity"
-            android:icon="@drawable/skull">
+        <activity android:name="com.shortstack.hackertracker.Activity.TabHomeActivity">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
