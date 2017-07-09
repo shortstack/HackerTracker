@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Activity
+package com.shortstack.hackertracker.Fragment
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
@@ -23,14 +23,14 @@ class VendorsFragment : Fragment() {
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val layout = LinearLayoutManager(context)
-        list!!.layoutManager = layout
+        list.layoutManager = layout
 
 
         val rendererBuilder = RendererBuilder<Any>()
                 .bind(Company::class.java, VendorRenderer())
 
         val adapter = RendererAdapter<Any>(rendererBuilder)
-        list!!.adapter = adapter
+        list.adapter = adapter
 
         adapter.addAll(App.application.databaseController.vendors)
     }
