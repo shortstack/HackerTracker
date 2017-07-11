@@ -1,0 +1,1509 @@
+{
+   "speakers" : [
+      {
+         "sptitle" : "Senior Information  Security Engineer, LinkedIn",
+         "who" : "Luke Young",
+         "indexsp" : "1",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@TheBoredEng  \"https://bored.engineer",
+         "bio" : "Luke Young is a security  researcher originally from the frozen plains of Minnesota who recently  migrated to the much warmer state of California. He presented at DEF CON 23  on the topic of exploiting bitflips in memory, DEF CON 24 on the subject of  large DDoS attacks and has investigated a variety of well-known products and  network protocols resulting in numerous CVE assignments. He spends his  free-time maintaining his position as one of the top researchers on various  bug bounty platforms and is currently working as a Senior Information  Security Engineer at LinkedIn."
+      },
+      {
+         "sptitle" : "Protiviti",
+         "who" : "Jon Medina",
+         "indexsp" : "2",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@ackSec",
+         "bio" : "Jon Medina CISSP, CCNP,  GCED is a security nerd who has worked in networking and security capacities  for everything from the Department of Defense, to the Fortune 500, to state  and local government. He currently works for Protiviti providing security consulting  for a wide variety of clients and industries. His interests outside of  security include traveling, hockey, strange beers, and his bulldog. He's  spoken at Shmoocon, BSides, and many other security events and conferences."
+      },
+      {
+         "sptitle" : "Founder, Comae  Technologies",
+         "who" : "Matt Suiche",
+         "indexsp" : "3",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@msuiche",
+         "bio" : "Matt Suiche is  recognized as one of the world's leading authorities on memory forensics and  application virtualization.     He is the founder of the United Arab Emirates based cyber-security start-up  Comae Technologies. Prior to founding Comae, he was the co-founder &  Chief Scientist of the application virtualization start-up CloudVolumes which  was acquired by VMware in 2014. He also worked as a researcher for the  Netherlands Forensic Institute.    His most notable research contributions  enabled the community to perform memory-based forensics for Mac OS X memory  snapshots but also Windows hibernation files.  Since 2009, Matt has been recognized as a Microsoft Most Valuable  Professional in Enterprise Security due to his various contributions to the  community."
+      },
+      {
+         "sptitle" : "Principal Application  Security Engineer, \"NCR\"  ",
+         "who" : "Weston Hecker",
+         "indexsp" : "4",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "With 12 Years  Pen-testing, 13 years' security research and programming experience. Weston  is currently working on the application security team of NCR Weston has  recently Spoken at Defcon 22,23 and 24, Blackhat 2016, HOPE11, Hardware.IO  2016, Takdowncon 2016, ICS cyber security 2016, Bsides Boston, Enterprise  Connect 2016 ISC2-Security Congress, SC-Congress Toronto and over 60 other  speaking engagements from regional events to University's on security subject  matter. Working with A Major University's research project with Department of  Homeland Security on 911 emergency systems and attack mitigation.Found  several vulnerabilities' in very popular software and firmware. Including  Microsoft, Qualcomm, Samsung, HTC, Verizon."
+      },
+      {
+         "sptitle" : "Senior Security Research  Engineer, Cisco Talos",
+         "who" : "Patrick DeSantis",
+         "indexsp" : "5",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@pat_r10t",
+         "bio" : "Patrick DeSantis is a  security researcher with Cisco Talos and focuses his efforts on discovery and  exploitation of vulnerabilities in technologies that have an impact on the  physical world, such as Industrial Control Systems (ICS), Supervisory Control  and Data Acquisition (SCADA), Internet of Things (IoT), and anything else  that looks like it's asking to be hacked. Patrick's background includes work  in both the public and private sectors, as well as a pile of information  security certifications and a few college degrees."
+      },
+      {
+         "sptitle" : "Security Researcher,  Lookou",
+         "who" : "Max Bazaliy",
+         "indexsp" : "6",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@mbazaliy",
+         "bio" : "Max is a Security  Researcher at Lookout with more than ten years of experience in areas as  reverse engineering, software security, vulnerability research and advanced  exploitation. Currently focusing on iOS exploitation, reverse engineering  advanced mobile malware and hardware attacks. Max was a lead security  researcher at Pegasus iOS malware investigation.    In the past few years, Max was a speaker on various security conferences,  including BlackHat, CCC, DEF CON , Ruxcon, RSA and BSides.    Max holds a Masters degree in Computer Science and currently is PhD student  at the National Technical University of Ukraine Kyiv Polytechnic Institute  where he's working on dissertation in code obfuscation and privacy area."
+      },
+      {
+         "sptitle" : "Hacker at NYC Resistor",
+         "who" : "Matt 'openfly' Joyce",
+         "indexsp" : "7",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Matt Joyce hates writing  in the third person.  He is a hacker at NYC Resistor in Brooklyn.  He used to do NASA shit for a project called Nebula.  He currently is doing this talk in no way representing current or past  employers.  Matt's last talk was at the American Homebrewer's  Association."
+      },
+      {
+         "sptitle" : "Senior Software Security  Engineer, Prevoty",
+         "who" : "Joe Rozner",
+         "indexsp" : "8",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@jrozner",
+         "bio" : "Joe (@jrozner) is a  software engineer at Prevoty where he has built semantic analysis tools,  language runtimes, generalized solutions to common vulnerability classes, and  designed novel integration technology leveraging runtime memory patching. He  has a passion for reverse engineering, exploitation, teaching, and sharing  research with others. He is the undisputed champion of the Brawndo and Booze  competition from DEF CON s past with  his Irish Car Mutilator winning in both the drink and dip categories."
+      },
+      {
+         "sptitle" : "Cloud Wrecker, Microsoft",
+         "who" : "Gerald Steere",
+         "indexsp" : "9",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@darkpawh",
+         "bio" : "Gerald Steere has been a member of the C+E Red Team since  joining Microsoft in June 2014. He regularly dives into the deepest corners  of Azure looking for vulnerabilities unique to the cloud scale environment  and collecting all the creds. Prior to that, he was a security auditor and  penetration tester for three civilian Federal agencies, where he acquired a  love for obtaining and cracking as many passwords as possible. He has spoken  on cloud security topics at multiple BlueHat events and most recently at  BSides Seattle."
+      },
+      {
+         "sptitle" : "CTO, Trimarc",
+         "who" : "Sean Metcalf",
+         "indexsp" : "10",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@pyrotek3",
+         "bio" : "Sean Metcalf is founder  and principal consultant at Trimarc Security, LLC (www.TrimarcSecurity.com),  which focuses on mitigating, detecting, and when possible, preventing modern  attack techniques. He is one of about 100 people in the world who holds the Microsoft  Certified Master Directory Services (MCM) certification, is a Microsoft MVP,  and has presented on Active Directory attack and defense at BSides, Shakacon,  Black Hat, DEF CON, and DerbyCon security conferences.    Sean has provided Active Directory and security expertise to government,  corporate, and educational entities since Active Directory was released. He  currently provides security consulting services to customers and regularly  posts interesting Active Directory security information on his blog,  ADSecurity.org."
+      },
+      {
+         "sptitle" : "Senior Associate, PwC",
+         "who" : "Matt Wixey",
+         "indexsp" : "11",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@darkartlab",
+         "bio" : "Matt Wixey is a  penetration tester on PwC's Threat and Vulnerability Management team in the  UK, and leads the team's research function. Prior to joining PwC, he led a  technical R&D team in a UK law enforcement agency. His research interests  include bypassing air-gaps, antivirus and sandbox technologies, and RF  hacking."
+      },
+      {
+         "sptitle" : "Director of Government  Affairs & IT Ninja, NENA: The 9-1-1 Association",
+         "who" : "CINCVolFLT (Trey Forgety)",
+         "indexsp" : "12",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@cincvolflt",
+         "bio" : "CINCVolFLT (Trey  Forgety) is Director of Government Affairs for NENA: The 9-1-1 Association.  He previously served as a Presidential Management Fellow in the U.S.  Department of Homeland Security's Office of Emergency Communications, with  rotations in the Federal Communications Commission's Public Safety and  Homeland Security Bureau, and the U.S. Department of Commerce's National  Telecommunications and Information Administration. A sometimes-piratical  sailor and inveterate tinkerer, CINCVolFLT's recent activities have included  promoting the use of new location technologies in wireless carriers'  networks, and serving as pro bono counsel to QueerCon. He holds a B.S. in  Applied Physics and a J.D., both from the University of Tennessee (GO VOLS!)."
+      },
+      {
+         "sptitle" : "Adversarial Engineer - LARES Consulting",
+         "who" : "Dennis Maldonado",
+         "indexsp" : "13",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@DennisMald",
+         "bio" : "Dennis Maldonado is a  Security Consultant at LARES Consulting. His current work includes  penetration testing, red teaming, and security research. Dennis' focus is  encompassing all forms information security into an assessment in order to  better simulate a real world attack against systems and infrastructure. As a  security researcher and evangelist, Dennis spends his time sharing what he  knows about Information Security with anyone willing to learn. Dennis  co-founded Houston Locksport in Houston, Texas where he shares his love for  lock-picking and physical security as well as Houston Area Hackers Anonymous  (HAHA), a meet-up for hackers and InfoSec professionals in the Houston area.  Dennis is also a returning speaker to DEF CON having spoken at DEF CON 23 and DEF CON 24."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "Salvador Mendoza",
+         "indexsp" : "14",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@Netxing  Blog: salmg.net",
+         "bio" : "Salvador Mendoza is a  security researcher focusing in tokenization processes, mag-stripe  information and embedded prototypes. He has presented on tokenization flaws  and payment methods at Black Hat USA, DEF CON, DerbyCon, Ekoparty, BugCON and  Troopers. Salvador designed different tools to pentest mag-stripe and  tokenization processes. In his designed toolset includes MagSpoofPI, JamSpay,  TokenGet and lately SamyKam.  "
+      },
+      {
+         "sptitle" : "Founder, DC101",
+         "who" : "HighWiz",
+         "indexsp" : "15",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Born of glitter and moon beams, HighWiz is the things that  dreams are made of and nightmares long to be... Years ago, with the help of  some very awesome people, he set about to create an event that would give the  n00bs of DEF CON a place to feel  welcomed and further their own pursuit of knowledge. HighWiz is the fabled  Man on the Mountain whom people seek to gain a taste of his forbidden  knowledge. He is a rare sighting at  DEF CON only to be glimpsed by those  lucky few."
+      },
+      {
+         "sptitle" : null,
+         "who" : "Malware Unicorn",
+         "indexsp" : "16",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "As a girl growing up, she was told she could be anything so  she decided to be a unicorn. Ever  since, she has made it her mission to ensure the truth is out there. Do not attempt to use malware pickup lines  on her as she will pull them apart and you risk having your face impaled.  Though she is fierce, she is also graceful, peaceful and determined. She is  also an awesome artist."
+      },
+      {
+         "sptitle" : "Director of Content & Coordination, DEF CON",
+         "who" : "Niki7a",
+         "indexsp" : "17",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@niki7a",
+         "bio" : "There is truly only one sorceress that ensures the  machinations of Def Con continue to move.  She is both in tune with the magic and digital functions and is the  power behind the CFP board from start to finish as well as the coordination  of so many other activities behind the curtain. She works tirelessly  year-round to make sure everything runs smoothly. Also, she is fun at parties  and awesome AF."
+      },
+      {
+         "sptitle" : "CFP Vocal Antagonizer, DEF CON",
+         "who" : "Roamer",
+         "indexsp" : "18",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Appearing in a cloud of  (cigarette) smoke, Roamer is a man full of whiskey and ideas. He has appeared  at DEF CON since before (almost) the  beginning. He is a renown author, speaker,  pontificator and is famous for giving the most entertaining Worldwide  Wardrive talk. He is also the Grand  Vizier of All Things Vendor - you are welcome."
+      },
+      {
+         "sptitle" : null,
+         "who" : "Wiseacre",
+         "indexsp" : "19",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Wiseacre was introduced  to DEF CON by Roamer. Though he appeared at his first DEF  CON because of the Capture the Flag  contest, Roamer and HighWiz showed him how to make DEF CON so much more than simply attending the  talks. From then on he made a point to  participate in as much as he could. Of  course, this was all within the limits of social anxiety so, if it allowed  participation as a wallflower, he was in! Now, he wants to make sure everyone  else gets to know as much as possible about this year's conference. In his private life, Mike hacks managers  and is happy anyone listens to him at all. Mike would like to thank Highwiz  for everything."
+      },
+      {
+         "sptitle" : null,
+         "who" : "Shaggy",
+         "indexsp" : "20",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Shaggy has the Voice of  Barry White, the brains of Albert Einstein and the soul of Bea Arthur. He has  a few philosophies on life: He believes that while the righteous keep moving  forward, those with clean hands become stronger and stronger . That the field  of battle between God and Satan is the human soul. It is in the soul that the battle rages  every moment of life. He also believes that one should Start by doing what's  necessary; then do what's possible; and suddenly you are doing the  impossible. Because You learn to speak by speaking, to study by studying, to  run by running, to work by working, and just so, you learn to love by loving.  All those who think to learn in any other way deceive themselves."
+      },
+      {
+         "sptitle" : "Difensiva Senior Engineer, DDTEK",
+         "who" : "Vulc@n",
+         "indexsp" : "21",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@tvidas, @ddtek",
+         "bio" : "Vulc@n have been involved  in the community since DEF CON 11, which in some ways seems recent but upon  reflection is clearly more than a decade ago.  In his early years he sprinted from talk to talk, dodging curious things  like mid-school aged folks with baby chickens, couches in purple-dyed pools,  and real dunk tanks. He even sat  through talks in the blistering heat in outdoor tents at Alexis Park. Starting with his second year attending, he  was pulled more and more into the CTF contest with then new-found and now  lifelong friends at Sk3wl of r00t.  Much of his time in the years since has been dedicated to playing in  CTF or organizing it (as part of DDTEK).  Ever since convincing one of his college professors to finance my  first DEF CON trip, the hacker scene has been kind to him. He now finds himself in possession of two  black badges (and leather jacket).  More recently he was part of the Cyber Grand Challenge development  team and was an on-stage referees for the all-computer hacking competition  this past summer. In summary, it seems  that he just keeps finding novel ways to be very involved with DEF CON and  CTF.  "
+      },
+      {
+         "sptitle" : "CTF organizer, Legit Business Syndicate",
+         "who" : "Hawaii John",
+         "indexsp" : "22",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@LegitBS_CTF, @hj_lbs",
+         "bio" : null
+      },
+      {
+         "sptitle" : "CTF organizer, DDTEK",
+         "who" : "Chris Eagle",
+         "indexsp" : "23",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@cseagle",
+         "bio" : null
+      },
+      {
+         "sptitle" : "CTF organizer,  Kenshoto",
+         "who" : "Invisigoth",
+         "indexsp" : "24",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@kenshoto",
+         "bio" : null
+      },
+      {
+         "sptitle" : "CTF organizer, Ghetto  Hackers",
+         "who" : "Caezar",
+         "indexsp" : "25",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : null
+      },
+      {
+         "sptitle" : "CTF organizer, Goon",
+         "who" : "Myles",
+         "indexsp" : "26",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : null
+      },
+      {
+         "sptitle" : "Security Expert @ Alibaba Inc. Ph.D of CUHK.",
+         "who" : "Min(Spark) Zheng",
+         "indexsp" : "27",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Min(Spark) Zheng, Security Expert @ Alibaba Inc. Ph.D of CUHK."
+      },
+      {
+         "sptitle" : "Security Engineer @  Alibaba Inc. Ph.D of CUHK.",
+         "who" : "Xiangyu Liu",
+         "indexsp" : "28",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Xiangyu Liu, Security  Engineer @ Alibaba Inc. Ph.D of CUHK."
+      },
+      {
+         "sptitle" : "Founder, DEF CON",
+         "who" : "The Dark Tangent",
+         "indexsp" : "29",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : null
+      },
+      {
+         "sptitle" : "Avast Security Ambassador",
+         "who" : "Garry Kasparov",
+         "indexsp" : "30",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@Kasparov63",
+         "bio" : "Garry Kasparov was born  in Baku, Azerbaijan, in the Soviet Union in 1963. He became the youngest  world chess champion in history in 1985 and was the world's top-rated player  for 20 years, until he retired in 2005. His matches against arch-rival  Anatoly Karpov and the IBM supercomputer Deep Blue popularized chess and  machine intelligence in unprecedented ways. Kasparov became a pro-democracy  leader in Russia and an outspoken defender of individual freedom around the  world, a mission he continues as the chairman of the New York-based Human  Rights Foundation. He is a Visiting Fellow at the Oxford-Martin School, where  his lectures focus on human-machine collaboration. Kasparov is a provocative  speaker who appears frequently before business, academic, and political  audiences to speak about decision-making, strategy, technology, and  artificial intelligence. His influential writings on politics, cognition, and  tech have appeared in dozens of major publications around the world. He has  written two acclaimed series of chess books and the bestsellers How Life  Imitates Chess on decision-making and Winter Is Coming on Russia and Vladimir  Putin. His new book, Deep Thinking: Where Machine Intelligence Ends and Human  Creativity Begins comes out in May 2017. In 2016, he was named a Security  Ambassador by Avast, where he discusses cybersecurity and the digital future.  He lives in New York City with his wife Dasha and their two children."
+      },
+      {
+         "sptitle" : "Attorney at Hurley,  Burish & Stanton, S.C.",
+         "who" : "Peyton \"Foofus\" Engel",
+         "indexsp" : "31",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "After 18 years in IT,  with 16 of those years spent in security and penetration testing, Foofus now  works as an attorney. But because he's  got significant experience with the Internet and security, one area of his practice  focuses on consulting with litigants where digital evidence is at stake. In this capacity he does forensic analysis  and assists other attorneys with strategy for presenting (or calling into  question) computer-based evidence. In  his spare time, Foofus enjoys cooking, playing guitar, and opera. Oh, and remember CoffeeWars? Foofus was pretty involved with that"
+      },
+      {
+         "sptitle" : "Chief Security  Researcher, Synack / Creator of Objective-See",
+         "who" : "Patrick Wardle",
+         "indexsp" : "32",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@patrickwardle, objective-see.com",
+         "bio" : "Patrick Wardle is the  Chief Security Researcher at Synack, and founder of Objective-See. Having  worked at NASA and the NSA, and well as presented at many security  conferences, he is intimately familiar with aliens, spies, and talking nerdy.  Currently, Patrick's focus is on automated vulnerability discovery, and the  emerging threats of OS X and mobile malware. In his personal time, Patrick  collects macOS malware and writes free macOS security tools."
+      },
+      {
+         "sptitle" : "Security Researcher,  Synack Inc.",
+         "who" : "Mikhail Sosonkin",
+         "indexsp" : "33",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@hexlogic, Blog  http://debugtrap.com/",
+         "bio" : "Mikhail Sosonkin is a  Security Researcher at Synack where he digs into the security aspects of low  level systems. He enjoys automating aspects of reverse engineering and  fuzzing in order to better understand application internals. Mikhail has a CS  degree from NYU, where he has also taught Application Security, and a  Software Engineering masters from Oxford University. Being a builder and a  hacker at heart, his interests are in vulnerability analysis, automation,  malware and reverse engineering. Mikhail much enjoys speaking at such  conferences as ZeroNights in Moscow and DEF CON in Las Vegas!"
+      },
+      {
+         "sptitle" : "Cranky law professor.",
+         "who" : "Andrea Matwyshyn",
+         "indexsp" : "34",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Dr. Andrea M. Matwyshyn is an academic and author whose work  focuses on technology and innovation policy, particularly information security, consumer privacy,  intellectual property, and technology workforce pipeline policy. Her full vitae is available here.  _  Professor Matwyshyn is a (tenured  full) professor of law / professor of computer science (by courtesy) at  Northeastern University, where she is the co-director of the Center for Law,  Innovation, and Creativity (CLIC). She is also a faculty affiliate of the  Center for Internet and Society at Stanford Law School and a visiting  research collaborator at the Center for Information Technology Policy at  Princeton University, where she was the Microsoft Visiting Professor of  Information Technology Policy during 2014-15.  Professor Matwyshyn is also a Senior  Fellow of the Cyber Statecraft Initiative at the Atlantic Council's Brent  Scowcroft Center on International Security and a US-UK Fulbright Commission  Cyber Security Scholar award recipient in 2016-2017.   _  She has worked in both the public and the private sector. In 2014, she  served as the Senior Policy Advisor/ Academic in Residence at the U.S.  Federal Trade Commission. As public  service, she has testified in Congress on issues of information security  regulation, and she maintains ongoing policy engagement. Prior to entering the academy, she was a  corporate attorney in private practice, focusing her work on technology  transactions. She continues to maintain collaborative technology industry  relationships and has authored articles for the popular business press.  _    Professor Matwyshyn has previously held primary appointments in University  of Pennsylvania's Wharton School, Northwestern University School of Law, and  the University of Florida Levin College of Law. She has also held visiting appointments or  affiliations at the University of Oxford, University of Cambridge, University  of Edinburgh, Singapore Management University, Indian School of Business,  University of Notre Dame, and Princeton University.   _  Her Erdos number is 4. Her primary hobbies are photography,  documentary film, and collecting books about Grace Hopper."
+      },
+      {
+         "sptitle" : "Commissioner, Federal  Trade Commission",
+         "who" : "Terrell McSweeny",
+         "indexsp" : "35",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@TMcSweenyFTC",
+         "bio" : "Terrell McSweeny was sworn in as a Commissioner of the Federal  Trade Commission on April 28, 2014, to a term that expires in September  2017.    Prior to joining the Commission, McSweeny served as Chief Counsel for  Competition Policy and Intergovernmental Relations for the U.S. Department of  Justice Antitrust Division. She joined the Antitrust Division after serving  as Deputy Assistant to the President and Domestic Policy Advisor to the Vice  President from January 2009 until February 2012, advising President Obama and  Vice President Biden on policy in a variety of areas, including health care,  innovation, intellectual property, energy, education, women's rights,  criminal justice and domestic violence.    McSweeny's government service  also includes her work as Senator Joe Biden's Deputy Chief of Staff and  Policy Director in the U.S. Senate, where she managed domestic and economic  policy development and legislative initiatives, and as Counsel on the Senate  Judiciary Committee, where she worked on issues such as criminal justice,  innovation, women's rights, domestic violence, judicial nominations and  immigration and civil rights. She also worked as an attorney at O'Melveny  & Myers LLP.    McSweeny is a graduate of Harvard University  and Georgetown University Law School."
+      },
+      {
+         "sptitle" : "FDA",
+         "who" : "Dr. Suzanne Schwartz",
+         "indexsp" : "36",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : null
+      },
+      {
+         "sptitle" : "Researcher, The Online  Privacy Foundation",
+         "who" : "Suggy (AKA Chris Sumner)",
+         "indexsp" : "37",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@thesuggmeister,https://www.onlineprivacyfoundation.org/",
+         "bio" : "Suggy is the lead  researcher and co-founder of the not-for-profit Online Privacy Foundation,  who contribute to the field of psychological research in online contexts. He  has authored papers and spoken on this topic at DEF CON and other noteworthy security, psychology,  artificial intelligence and machine learning conferences. For the past 4  years, Suggy has served as a member of the DEF CON CFP review board. By day, he works in  security strategy at Hewlett Packard Enterprise."
+      },
+      {
+         "sptitle" : "Senior security  researcher, Econocom Digital Security",
+         "who" : "Damien \"virtualabs\" Cauquil",
+         "indexsp" : "38",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@virtualabs,  https://www.digitalsecurity.fr",
+         "bio" : "Damien Cauquil is a senior security  researcher at Digital Security (CERT-UBIK), a French security company focused  on IoT and related ground breaking technologies. He spoke at various  international security conferences including Chaos Communication Camp,  Hack.lu,Hack In Paris and a dozen times at the Nuit du Hack (one of the  oldest French security conferences)."
+      },
+      {
+         "sptitle" : "Chief Technology Officer, Security  Consulting, BT Americas",
+         "who" : "Konstantinos Karagiannis",
+         "indexsp" : "39",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@konstanthacker",
+         "bio" : "Konstantinos Karagiannis  is the Chief Technology Officer for Security Consulting at BT Americas. In  addition to guiding the technical direction of ethical hacking and security  engagements, Konstantinos specializes in hacking financial applications,  including smart contracts and other blockchain implementations. He has spoken  at dozens of technical conferences around the world, including Black Hat  Europe, RSA, and ISF World Security Congress.  "
+      },
+      {
+         "sptitle" : "Chief Scientist, Cyber  ITL",
+         "who" : "Sarah Zatko",
+         "indexsp" : "40",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "cyber-itl.org",
+         "bio" : "Sarah Zatko is the Chief  Scientist at the Cyber Independent Testing Lab (CITL), where she develops  testing protocols to assess the security and risk profile of commercial  software. She also works on developing automated reporting mechanisms to make  such information understandable and accessible to a variety of software  consumers. The CITL is a non-profit organization dedicated to empowering  consumers to understand risk in software products. Sarah has degrees in Math  and Computer Science from MIT and Boston University. Prior to her position at  CITL, she worked as a computer security professional in the public and  private sector."
+      },
+      {
+         "sptitle" : "Founder, SparkFun  Electronics",
+         "who" : "Nathan Seidle",
+         "indexsp" : "41",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@chipaddict, @sparkfun,  www.sparkfun.com",
+         "bio" : "Nathan Seidle is the  founder of SparkFun Electronics in Boulder, Colo. Nathan founded SparkFun in  2003 while an undergraduate student studying electrical engineering. After  building the company across 14 years to over 130 employees he now heads the  SparkX Lab within SparkFun, tinkering, hacking and building new products.      Nathan has built a large catalog of off the beaten path projects including a  12' GPS clock, a wall sized Tetris interface, an autonomous miniature  electric bat-mobile, a safe cracking robot, and a hacked bathroom scale to  measure the weight of his beehive. He believes strongly in the need to teach  the next generation of technical citizens.    Nathan is a founding member of the Open Source Hardware Association. He  has served on the board of OSHWA and continues to promote and serve the  organization. Nathan has been invited to the White House to participate in  discussions around intellectual property policy and patent reform and  attended multiple White House Maker Faires. Nathan has spoken in front of  Congress on copyright and trademark policy. He has presented on the many  facets of manufacturing and open hardware at the National Science Foundation,  Google, and Sketching in Hardware. Nathan has guest lectured at numerous  institutions including MIT, Stanford and West Point Academy.     In their off time, Nathan and his wife Alicia can be found making rather  silly electronics projects together for their local Public Library, their  nieces and nephews, and Burning Man. Nathan and Alicia live in Boulder,  Colorado with their pet tree Alfonso.    "
+      },
+      {
+         "sptitle" : "Security Consultant from  DEVCORE",
+         "who" : "Orange Tsai",
+         "indexsp" : "42",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Cheng-Da Tsai, also as  known as Orange Tsai, is member of DEVCORE and CHROOT from Taiwan. Speaker of  conference such as HITCON, WooYun and AVTokyo. He participates numerous  Capture-the-Flags (CTF), and won 2nd place in DEF CON 22 as team member of HITCON.    Currently focusing on vulnerability research & web application security.  Orange enjoys to find vulnerabilities and participates Bug Bounty Program. He  is enthusiasm for Remote Code Execution (RCE), also uncovered RCE in several  vendors, such as Facebook, Uber, Apple, GitHub, Yahoo and Imgur."
+      },
+      {
+         "sptitle" : "Stanford University,  Center for International Security and Cooperation",
+         "who" : "Mr. Sean Kanuck",
+         "indexsp" : "43",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@seankanuck",
+         "bio" : "Sean Kanuck is an  attorney and strategic consultant who advises governments, corporations, and  entrepreneurs on the future of information technology. Sean is affiliated with Stanford  University's Center for International Security and Cooperation and has  received several international appointments, including: Chair of the Research  Advisory Group for the Global Commission on the Stability of Cyberspace  (Hague, Netherlands), Distinguished Visiting Fellow at Nanyang Technological  University (Singapore), and Distinguished Fellow with the Observer Research  Foundation (New Delhi, India). He  regularly gives keynote addresses for global audiences on a variety of cyber  topics, ranging from risk analysis to identity intelligence to arms  control.    Sean served as the United States' first National Intelligence Officer for  Cyber Issues from 2011 to 2016. He  came to the National Intelligence Council after a decade of experience in the  Central Intelligence Agency's Information Operations Center, including both  analytic and field assignments. In his  Senior Analytic Service role, he was a contributing author for the 2009 White  House Cyberspace Policy Review, an Intelligence Fellow with the Directorates  for Cybersecurity and Combating Terrorism at the National Security Council,  and a member of the United States delegation to the United Nations Group of Governmental  Experts on international information security.    Prior to government service, Sean practiced law with Skadden Arps in New  York, where he specialized in mergers and acquisitions, corporate finance,  and banking matters. He is admitted to  the bar in New York and Washington DC, and his academic publications focus on  information warfare and international law.  Sean holds degrees from Harvard University (A.B., J.D.), the London  School of Economics (M.Sc.), and the University of Oslo (LL.M.). He also proudly serves as a Trustee of the  Center for Excellence in Education, a charity promoting STEM education that  is based in McLean, Virginia."
+      },
+      {
+         "sptitle" : "Hacker, FireEye/Mandiant",
+         "who" : "Caleb Madrigal",
+         "indexsp" : "44",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@caleb_madrigal,  calebmadrigal.com  ",
+         "bio" : "Caleb Madrigal is a  programmer who enjoys hacking and mathing. He is currently working as a  senior software engineer on Incident Response software at Mandiant/FireEye.  Most of his recent work has been in Python, Jupyter, Javascript, and C. Caleb  has been into security for a while... in high school, he wrote his own (bad)  cryptography and steganography software. In college, he did a good bit of  \"informal pen testing\". Recently, Caleb has been playing around  with SDR, IoT hacking, packet crafting, and a good bit of  math/probability/AI/ML."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "Josh Pitts",
+         "indexsp" : "45",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@midnite_runr",
+         "bio" : "Josh Pitts has over 15  years experience conducting physical and IT security assessments, IT security  operations support, penetration testing, malware analysis, reverse  engineering and forensics. Josh has worked in US Government contracting,  commercial consulting, and silicon valley startups. He likes to write code  that patches code with other code via The Backdoor Factory (BDF), has  co-authored an open-source environmental keying framework (EBOWLA), and once  served in the US Marines."
+      },
+      {
+         "sptitle" : "Senior Application Security Engineer",
+         "who" : "Scott Behrens",
+         "indexsp" : "46",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@helloarbit",
+         "bio" : "Scott Behrens is currently employed as a senior application  security engineer for Netflix. Prior to Netflix Scott worked as a senior  security consultant at Neohapsis and an adjunct professor at DePaul  University. Scott's expertise lies in both building and breaking for  application security at scale. As an avid coder and researcher, he has  contributed to and released a number of open source tools for both attack and  defense. Scott has presented security research at DEF CON , DerbyCon, OWASP  AppSec USA, Shmoocon, Shakacon, Security Forum Hagenberg, Security B-sides  Chicago, and others."
+      },
+      {
+         "sptitle" : "Senior Cloud Security Engineer",
+         "who" : "Jeremy Heffner",
+         "indexsp" : "47",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Jeremy Heffner is a  software and security professional who has worked on numerous commercial and  government projects. His passion is  for securing and building scalable, survivable, and fault-tolerant  distributed systems. His focus  includes cyber attack and defense, information gathering and analysis, and  scaling systems globally through automation and dynamic optimization."
+      },
+      {
+         "sptitle" : "The Tor Project",
+         "who" : "Roger Dingledine",
+         "indexsp" : "48",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Roger Dingledine is  President and co-founder of the Tor Project, a non-profit that writes  software to keep people around the world safe on the Internet.    Roger is a leading researcher in anonymous communications and a frequent  public speaker. He coordinates and mentors academic researchers working on  Tor-related topics, he is on the board of organizers for the international  Privacy Enhancing Technologies Symposium (PETS), and he has authored or  co-authored over two dozen peer-reviewed research papers on anonymous  communications and privacy tools.    Among his achievements, Roger was chosen by the MIT Technology Review as one  of its top 35 innovators under 35, he co-authored the Tor design paper that  won a Usenix Security \"Test of Time\" award, and he has been  recognized by Foreign Policy magazine as one of its top 100 global  thinkers.    Roger graduated from The Massachusetts Institute of Technology and holds a  Master's degree in electrical engineering and computer science as well as  undergraduate degrees in computer science and mathematics."
+      },
+      {
+         "sptitle" : "Security Consultant, ZX  Security",
+         "who" : "David Karit Robinson",
+         "indexsp" : "49",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@nzkarit",
+         "bio" : "Dave/Karit has worked in  the IT industry for over 10 years. In this time he has developed a skillset  that encompasses various disciplines in the information security domain. Dave  is currently part of team at ZX Security in Wellington and works as a penetration  tester. Since joining ZX Security Dave has presented at Kiwicon, BSides  Canberra and Unrestcon and also at numerous local meetups; along with running  training at Kiwicon and Syscan. He has a keen interest in lock-picking and  all things wireless."
+      },
+      {
+         "sptitle" : "Chief Security  Researcher, Synack",
+         "who" : "Patrick Wardle",
+         "indexsp" : "50",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@patrickwardle,  objective-see.com    ",
+         "bio" : "Patrick Wardle is the  Chief Security Researcher at Synack, and founder of Objective-See. Having  worked at NASA and the NSA, and as well as presented at many security  conferences, he is intimately familiar with aliens, spies, and talking nerdy.  Currently, Patrick's focus is on automated vulnerability discovery, and the  emerging threats of OS X and mobile malware. In his personal time, Patrick  collects OS X malware and writes free OS X security tools."
+      },
+      {
+         "sptitle" : "Security Researcher,  Battelle Memorial Institute",
+         "who" : "Christopher Domas",
+         "indexsp" : "51",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@xoreaxeaxeax",
+         "bio" : "Christopher Domas is a  cyber security researcher and embedded systems engineer, currently  investigating low level processor exploitation. He is best known for releasing impractical  solutions to non-existent problems, including the world's first single  instruction C compiler (M/o/Vfuscator), toolchains for generating images in  program control flow graphs (REpsych), and Turing-machines in the vi text  editor. His more relevant work  includes the binary visualization tool ..cantor.dust.. and the memory  sinkhole x86 privilege escalation exploit."
+      },
+      {
+         "sptitle" : "Anti-abuse research lead,  Google",
+         "who" : "Elie Bursztein",
+         "indexsp" : "52",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@elie",
+         "bio" : "Elie Bursztein leads  Google's anti-abuse research, which helps protect users against Internet  threats. Elie has contributed to  applied-cryptography, machine learning for security, malware understanding,  and web security; authoring over fifty research papers in the field. Most  recently he was involved in finding the first SHA-1 collision.    Elie is a beret aficionado, tweets at @elie, and performs magic tricks in  his spare time. Born in Paris, he received a Ph.D from ENS-cachan in 2008  before working at Stanford University and ultimately joining Google in 2011.  He now lives with his wife in Mountain View, California."
+      },
+      {
+         "sptitle" : "Machine Hacker",
+         "who" : "XlogicX",
+         "indexsp" : "53",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@XlogicX",
+         "bio" : "XlogicX hacks at  anything low level. He's unmasked sanitized IP addresses in packets (because  checksums) and crafts his own pcaps with just xxd. He feeds complete garbage  to forensic tools, AV products, decompression software, and intrusion  detection systems. He made evil strings more evil (with automation) to  exploit high consumption regular expressions. Lately he has been declaring  war on assembly language (calling it too high-level) and doing all kinds of  ignorant things with machine code. More information can be found on  xlogicx.net"
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "\"Snide\" Owen",
+         "indexsp" : "54",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "\"Snide\" Owen  has worked in various IT fields from tech support to development. Combining  that knowledge he moved into the security field by way of Application  Security and is now on an offensive security research team. He enjoys both  making and breaking, tinkering with various technologies, and has  experimented for prolonged periods with PBX's and the obscure side of VoIP."
+      },
+      {
+         "sptitle" : "NDR",
+         "who" : "Svea Eckert",
+         "indexsp" : "55",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "Twitter: @sveckert  Website: www.sveaeckert.de",
+         "bio" : "Svea Eckert works as a freelance journalist for Germany's main  public service broadcaster \"Das Erste\" (ARD). She is researching  and reporting investigative issues for the PrimeTime news shows and high  quality documentaries. Her main focus lies on new technology: computer and  network security, digital economics and data protection.  Bigger projects and documentaries are for example \"Superpower  Wikileaks?\" (ARD), Facebook - Billion Dollar Business friendship\"  (ARD), her first book \"Monitored and spied out: Prism, NSA, Facebook  & Co\" and in 2015 \"Netwars\" (ARD). Svea Eckert studied  \"Journalism and Communications\" and Economics in Hamburg. She  completed her journalistic training at NDR, Hamburg and Hannover."
+      },
+      {
+         "sptitle" : "PhD",
+         "who" : "Andreas Dewes",
+         "indexsp" : "56",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "Twitter: @japh44  Github: adewes",
+         "bio" : "Andreas Dewes is a  trained physicist with a PhD in experimental quantum computing and a degree  in quantitative economics. He has a passion for data analysis and software  development. He has received numerous awards for his work on data analysis  and his work on data privacy and big data has been featured in the national  and international press."
+      },
+      {
+         "sptitle" : "Hacker and freelance  journalist",
+         "who" : "Hanno Bck",
+         "indexsp" : "57",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@hanno",
+         "bio" : "Hanno Bck is a hacker  and freelance journalist. He regularly covers IT security issues for the  German IT news site Golem.de and publishes the monthly Bulletproof TLS  Newsletter. He also runs the Fuzzing Project, an effort to improve the  security of free and open source software supported by the Linux Foundation's  Core Infrastructure Initiative."
+      },
+      {
+         "sptitle" : "Senior Software Engineer, Threat Research at Bastille",
+         "who" : "Matt Knight",
+         "indexsp" : "58",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@embeddedsec",
+         "bio" : "Matt Knight is a software engineer and applied security  researcher at Bastille, with a background in hardware, software, and wireless  security. Matt's research focuses on preventing exploitation of the myriad  wireless networking technologies that connect embedded devices to the  Internet of Things. Notably, in 2016 he exposed the internals of the  closed-source LoRa PHY based on blind signal analysis. Matt holds a BE in  Electrical Engineering from Dartmouth College."
+      },
+      {
+         "sptitle" : "Security Researcher at Bastille",
+         "who" : "Marc Newlin",
+         "indexsp" : "59",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@marcnewlin",
+         "bio" : "Marc Newlin is a  wireless security researcher at Bastille, where he discovered the MouseJack  and KeySniffer vulnerabilities affecting wireless mice and keyboards. A glutton for challenging side projects,  Marc competed solo in two DARPA challenges, placing third in the DARPA  Shredder Challenge, and second in the first tournament of the DARPA Spectrum  Challenge."
+      },
+      {
+         "sptitle" : "Co-Founder & CTO, SafeBreach",
+         "who" : "Itzik Kotler",
+         "indexsp" : "60",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@itzikkotler  www.ikotler.org",
+         "bio" : "Itzik Kotler is CTO and Co-Founder of SafeBreach. Itzik has  more than a decade of experience researching and working in the computer  security space. He is a recognized industry speaker, having spoken at DEFCON,  Black Hat USA, Hack In The Box, RSA, CCC and H2HC. Prior to founding  SafeBreach, Itzik served as CTO at Security-Art, an information security  consulting firm, and before that he was SOC Team Leader at Radware. (NASDQ:  RDWR)."
+      },
+      {
+         "sptitle" : "VP Security Research, SafeBreach",
+         "who" : "Amit Klein",
+         "indexsp" : "61",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "www.securitygalore.com",
+         "bio" : "Amit Klein is a world  renowned information security expert, with 26 years in information security  and over 30 published technical papers on this topic. Amit is VP Security  Research at SafeBreach, responsible for researching various infiltration,  exfiltration and lateral movement attacks. Before SafeBreach, Amit was CTO  for Trusteer (acquired by IBM) for 8.5 years. Prior to Trusteer, Amit was  chief scientist for Cyota (acquired by RSA) for 2 years, and prior to that,  director of Security and Research for Sanctum (acquired by Watchfire, now  part of IBM security division) for 7 years. Amit has a B.Sc. from the Hebrew  University in Mathematics and Physics (magna cum laude, Talpiot program),  recognized by InfoWorld as a CTO of the year 2010 , and has presented at  BlackHat USA, HITB, RSA USA, OWASP, CertConf, BlueHat, CyberTech, APWG and  AusCERT."
+      },
+      {
+         "sptitle" : "Red Team Lead",
+         "who" : "Andy Robbins",
+         "indexsp" : "62",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@_wald0",
+         "bio" : "As a Red Team lead, Andy Robbins has performed penetration  tests and red team assessments for a number of Fortune 100 commercial  clients, as well as federal and state agencies. Andy presented his research  on a critical flaw in the ACH payment processing standard in 2014 at DerbyCon  and the ISC2 World Congress, and has spoken at other conferences including  DEF CON , BSidesLV, ekoparty, ISSA International, and Paranoia Conf in Oslo.  He has a passion for offensive development and red team tradecraft, and helps  to develop and teach the \"Adaptive Red Team Tactics\" course at  BlackHat USA."
+      },
+      {
+         "sptitle" : "Offensive Engineer",
+         "who" : "Will Schroeder",
+         "indexsp" : "63",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@harmj0y",
+         "bio" : "Will Schroeder is a  offensive engineer and red teamer. He is a co-founder of Empire/Empyre,  BloodHound, and the Veil-Framework, developed PowerView and PowerUp, is an  active developer on the PowerSploit project, and is a Microsoft PowerShell  MVP. He has presented at a number of conferences, including DEF CON ,  DerbyCon, Troopers, BlueHat Israel, and various Security BSides."
+      },
+      {
+         "sptitle" : "Privacy, eCommerce & Consumer Protection Counsel,  Electronic Arts",
+         "who" : "Whitney Merrill",
+         "indexsp" : "64",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@wbm312",
+         "bio" : "Whitney Merrill is a hacker, ex-fed, and lawyer. She's  currently a privacy attorney at Electronic Arts (EA), and in her spare time,  she runs the Crypto & Privacy Village (come say hi!). Recently, she  served her country as an attorney at the Federal Trade Commission where she  worked on a variety of consumer protection matters including data security,  privacy, and deceptive marketing and advertising. Whitney received her J.D.  and master's degree in Computer Science from the University of Illinois at Urbana-Champaign."
+      },
+      {
+         "sptitle" : "Commissioner, Federal Trade Commission",
+         "who" : "Terrell McSweeny",
+         "indexsp" : "65",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@TMcSweenyFTC",
+         "bio" : "Terrell McSweeny serves  as a Commissioner of the Federal Trade Commission. This year marks her fourth  time at DEF CON . When it comes to tech issues, Commissioner McSweeny has  focused on the valuable role researchers and hackers can play protecting  consumer data security and privacy.  She opposes bad policy and legislative proposals like mandatory  backdoors and the criminalization of hacking and believes that enforcers like  the FTC should work with the researcher community to protect consumers. She wants companies to implement security  by design, privacy by design and data ethics design - but recognizes that, in  the absence of regulation, enforcement and research are the only means of  holding companies accountable for the choices they make in the ways that they  hold and use consumer data."
+      },
+      {
+         "sptitle" : "Penetration Tester,  Security Researcher",
+         "who" : "Artem Kondratenko",
+         "indexsp" : "66",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@artkond,  https://github.com/artkond,   https://artkond.com",
+         "bio" : "Artem is a Penetration  Tester at Kaspersky Lab. On time between red team engagements he is doing  security research of software and hardware appliances. Author of multiple  CVE's on VMware Virtualization Platforms (CVE-2016-5331, CVE-2016-7458,  CVE-2016-7459, CVE-2016-7460). Enjoys contributing to the community by  writing penetration testing tools such as Invoke-Vnc (PowerShell vnc  injector, part of CrackMapExec) and Rpivot (reverse socks4 proxy, now part of  BlackArch Linux Distro)."
+      },
+      {
+         "sptitle" : "Founder, DEF CON",
+         "who" : "Jeff Moss (Dark Tangent)",
+         "indexsp" : "67",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : null
+      },
+      {
+         "sptitle" : "DCG",
+         "who" : "Waz",
+         "indexsp" : "68",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : null
+      },
+      {
+         "sptitle" : "DCG and DC615",
+         "who" : "Brent White (B1TKILL3R)",
+         "indexsp" : "69",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : null
+      },
+      {
+         "sptitle" : "DCG Ambassador",
+         "who" : "Jayson Street",
+         "indexsp" : "70",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : null
+      },
+      {
+         "sptitle" : "DC801",
+         "who" : "Grifter",
+         "indexsp" : "71",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : null
+      },
+      {
+         "sptitle" : "DC010",
+         "who" : "Jun Li",
+         "indexsp" : "72",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : null
+      },
+      {
+         "sptitle" : "DC225",
+         "who" : "S0ups",
+         "indexsp" : "73",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : null
+      },
+      {
+         "sptitle" : "DC4420",
+         "who" : "Major Malfunction",
+         "indexsp" : "74",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : null
+      },
+      {
+         "sptitle" : "Director of Offensive Security @ Salesforce",
+         "who" : "FuzzyNop (Josh Schwartz)",
+         "indexsp" : "75",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "FuzzyNop and ceyx were  raised by computerized wolves with a penchant for fine art and rum based  cocktails. While technically from different mothers and also sides of the  world, they formed the first cyber wolf brothership shell-bent to ameliorate  the state of targeted malware implants to support the ongoing war against the  institutionalized mediocrity of the corporate shadow government. Working in  tandem with dolphin researchers funded by the oligarch llamas they have found  a way to synthesize powdered ethanol into mechanical pony fuel. Leading  Offensive Security functions at Salesforce is merely a front to confuse the  saurian overlords of their true purpose yet to be revealed...  "
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "ceyx (John Cramb)",
+         "indexsp" : "76",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : null
+      },
+      {
+         "sptitle" : "Staff Technologist - EFF",
+         "who" : "Cooper Quintin",
+         "indexsp" : "77",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@cooperq",
+         "bio" : "Cooperq is a security researcher and programmer at EFF. He has  worked on projects such as Privacy Badger, Canary Watch, Ethersheet, and  analysis of state sponsored malware. He has also performed security trainings  for activists, non profit workers and ordinary folks around the world. He  previously worked building websites for non-profits, such as Greenpeace,  Adbusters, and the Chelsea Manning Support Network. He also was a co-founder  of the Hackbloc hacktivist collective. In his spare time he enjoys playing  music and participating in street protests."
+      },
+      {
+         "sptitle" : "Journalist - Gizmodo Media",
+         "who" : "Kashmir Hill",
+         "indexsp" : "78",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@kashhill",
+         "bio" : "Kashmir Hill is a  journalist who writes about privacy and security. She is a senior reporter at  Gizmodo Media and has previously written for Fusion, Forbes Magazine and  Above The Law.  "
+      },
+      {
+         "sptitle" : "Stanford University,  Center for International Security and Cooperation",
+         "who" : "Mr. Sean Kanuck",
+         "indexsp" : "79",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@seankanuck",
+         "bio" : "Sean Kanuck is an  attorney and strategic consultant who advises governments, corporations, and  entrepreneurs on the future of information technology. Sean is affiliated with Stanford  University's Center for International Security and Cooperation and has  received several international appointments, including: Chair of the Research  Advisory Group for the Global Commission on the Stability of Cyberspace  (Hague, Netherlands), Distinguished Visiting Fellow at Nanyang Technological  University (Singapore), and Distinguished Fellow with the Observer Research  Foundation (New Delhi, India). He  regularly gives keynote addresses for global audiences on a variety of cyber  topics, ranging from risk analysis to identity intelligence to arms  control.    Sean served as the United States' first National Intelligence Officer for  Cyber Issues from 2011 to 2016. He  came to the National Intelligence Council after a decade of experience in the  Central Intelligence Agency's Information Operations Center, including both  analytic and field assignments. In his  Senior Analytic Service role, he was a contributing author for the 2009 White  House Cyberspace Policy Review, an Intelligence Fellow with the Directorates  for Cybersecurity and Combating Terrorism at the National Security Council,  and a member of the United States delegation to the United Nations Group of Governmental  Experts on international information security.    Prior to government service, Sean practiced law with Skadden Arps in New  York, where he specialized in mergers and acquisitions, corporate finance,  and banking matters. He is admitted to  the bar in New York and Washington DC, and his academic publications focus on  information warfare and international law.  Sean holds degrees from Harvard University (A.B., J.D.), the London  School of Economics (M.Sc.), and the University of Oslo (LL.M.). He also proudly serves as a Trustee of the  Center for Excellence in Education, a charity promoting STEM education that  is based in McLean, Virginia."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "El Kentaro",
+         "indexsp" : "80",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "El Kentaro / That Guy in  Tokyo.    El Kentaro has been a communications  facilitator between Japan and the rest of the world in the information  technology industry since 1996. For the last 7 years Kentaro has solely  focused on providing interpretation services for the infosec/cyber security  industry in Japan. Kentaro also provided the Japanese subtitles for the DEF  CON documentary released in 2015 and  is a member of the CODE BLUE Security Conference held annually in Japan.    "
+      },
+      {
+         "sptitle" : "Deputy Executive Director & General Counsel, Electronic  Frontier Foundation",
+         "who" : "Kurt Opsahl",
+         "indexsp" : "81",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@kurtopsahl, @eff",
+         "bio" : "KURT OPSAHL is the Deputy Executive Director and General  Counsel of the Electronic Frontier Foundation. In addition to representing  clients on civil liberties, free speech and privacy law, Opsahl counsels on  EFF projects and initiatives. Opsahl  is the lead attorney on the Coders' Rights Project. Before joining EFF, Opsahl worked at  Perkins Coie, where he represented technology clients with respect to  intellectual property, privacy, defamation, and other online liability  matters, including working on Kelly v. Arribasoft, MGM v. Grokster and CoStar  v. LoopNet. For his work responding to government subpoenas, Opsahl is proud  to have been called a \"rabid dog\" by the Department of Justice.  Prior to Perkins, Opsahl was a research fellow to Professor Pamela Samuelson  at the U.C. Berkeley School of Information Management & Systems. Opsahl  received his law degree from Boalt Hall, and undergraduate degree from U.C.  Santa Cruz. Opsahl co-authored \"Electronic Media and Privacy Law  Handbook.\" In 2007, Opsahl was named as one of the \"Attorneys of  the Year\" by California Lawyer magazine for his work on the O'Grady v.  Superior Court appeal. In 2014, Opsahl was elected to the USENIX Board of  Directors."
+      },
+      {
+         "sptitle" : "EFF Senior Staff Attorney",
+         "who" : "Nate Cardozo",
+         "indexsp" : "82",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "NATE CARDOZO is a Senior Staff Attorney on the Electronic  Frontier Foundation's digital civil liberties team. In addition to his focus  on free speech and privacy litigation, Nate works on EFF's Who Has Your Back?  report and Coders' Rights Project. Nate has projects involving cryptography  and the law, automotive privacy, government transparency, hardware hacking  rights, anonymous speech, electronic privacy law reform, Freedom of  Information Act litigation, and resisting the expansion of the surveillance state.  A 2009-2010 EFF Open Government Legal Fellow, Nate spent two years in private  practice before returning to his senses and to EFF in 2012. Nate has a B.A. in Anthropology and  Politics from U.C. Santa Cruz and a J.D. from U.C. Hastings where he has  taught first-year legal writing and moot court. He brews his own beer, has  been to India four times, and watches too much Bollywood."
+      },
+      {
+         "sptitle" : "EFF Director of Cyber security",
+         "who" : "Eva Galperin",
+         "indexsp" : "83",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "EVA GALPERIN is EFF's  Director of Cybersecurity. Prior to 2007, when she came to work for EFF, Eva  worked in security and IT in Silicon Valley and earned degrees in Political  Science and International Relations from SFSU. Her work is primarily focused  on providing privacy and security for vulnerable populations around the  world. To that end, she has applied the combination of her political science  and technical background to everything from organizing EFF's Tor Relay  Challenge, to writing privacy and security training materials (including  Surveillance Self Defense and the Digital First Aid Kit), and publishing  research on malware in Syria, Vietnam, Kazakhstan. When she is not collecting  new and exotic malware, she practices aerial circus arts and learning new  languages."
+      },
+      {
+         "sptitle" : "EFF Staff Attorney",
+         "who" : "Andrew Crocker",
+         "indexsp" : "84",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "ANDREW CROCKER is a staff  attorney on the Electronic Frontier Foundation's civil liberties team. He  focuses on EFF's national security and privacy docket, as well as the Coders'  Rights Project. While in law school, Andrew worked at the Berkman Center for  Internet and Society, the American Civil Liberties Union's Speech, Privacy,  and Technology Project, and the Center for Democracy and Technology. He  received his undergraduate and law degrees from Harvard University and an  M.F.A. in creative writing from New York University. His interests include  Boggle and donuts."
+      },
+      {
+         "sptitle" : "EFF Staff Attorney",
+         "who" : "Kit Walsh",
+         "indexsp" : "85",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "KIT WALSH is a staff  attorney at EFF, working on free speech, net neutrality, copyright, coders'  rights, and other issues that relate to freedom of expression and access to  knowledge. She has worked for years to support the rights of political  protesters, journalists, remix artists, and technologists to agitate for  social change and to express themselves through their stories and ideas.  Prior to joining EFF, Kit led the civil liberties and patent practice areas  at the Cyberlaw Clinic, part of Harvard's Berkman Center for Internet and  Society, and previously Kit worked at the law firm of Wolf, Greenfield &  Sacks, litigating patent, trademark, and copyright cases in courts across the  country. Kit holds a J.D. from Harvard Law School and a B.S. in neuroscience  from MIT, where she studied brain-computer interfaces and designed cyborgs  and artificial bacteria."
+      },
+      {
+         "sptitle" : "MWR InfoSecurity",
+         "who" : "William Knowles",
+         "indexsp" : "86",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@william_knows  ",
+         "bio" : "William Knowles is a  Security Consultant at MWR InfoSecurity. He is primarily involved in purple  team activities, which involves objective-based testing to simulate  real-world threats, and helping organizations to identify effective defenses  against them with regards to both prevention and detection. Prior to joining  the security industry, he completed a PhD in Computer Science at Lancaster  University. His research interests include post-exploitation activities and  offensive PowerShell."
+      },
+      {
+         "sptitle" : "craphound.com, science  fiction author, activist, journalist and blogger.",
+         "who" : "Cory Doctorow",
+         "indexsp" : "87",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@doctorow",
+         "bio" : "Cory Doctorow  (craphound.com) is a science fiction author, activist, journalist and blogger   the co-editor of Boing Boing (boingboing.net) and the author of WALKAWAY, a  novel for adults, a YA graphic novel called IN REAL LIFE, the nonfiction  business book INFORMATION DOESN'T WANT TO BE FREE, and young adult novels  like HOMELAND, PIRATE CINEMA and LITTLE BROTHER and novels for adults like  RAPTURE OF THE NERDS and MAKERS. He works for the Electronic Frontier  Foundation, is a MIT Media Lab Research Affiliate, is a Visiting Professor of  Computer Science at Open University and co-founded the UK Open Rights Group.  Born in Toronto, Canada, he now lives in Los Angeles."
+      },
+      {
+         "sptitle" : "Principal Security  Architect, Microsoft",
+         "who" : "Lee Holmes",
+         "indexsp" : "88",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Lee Holmes is the lead  security architect of Microsoft's Azure Management group, covering Azure  Stack,  System Center, and Operations Management Suite. He is author of the Windows  PowerShell Cookbook,  and an original member of the PowerShell development  team."
+      },
+      {
+         "sptitle" : "ICS Security Researcher,  NS-Focus",
+         "who" : "Cheng",
+         "indexsp" : "89",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Cheng Lei is an Industrial Control System Security  researcher at NSFocus. His interest is mainly about PLC and DCS vulnerability  exploitation and security enhancement. Over the years he has released three  Siemens CVE vulnerability"
+      },
+      {
+         "sptitle" : "Security Researcher at  the University of Tulsa",
+         "who" : "Jason Staggs, Ph.D.",
+         "indexsp" : "90",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Dr. Jason Staggs is an  independent information security researcher with strong interests in critical  infrastructure protection, telecommunications, penetration testing, network  security and digital forensics. Jason has spoken at national and international  conferences, authored various peer-reviewed publications and lectured  undergraduate and graduate level courses on a variety of cyber security  topics. His expertise in digital forensics has enabled him to provide  invaluable assistance to law enforcement agencies at the local, state and  federal levels in order to solve high-profile cybercrimes. In his spare time,  Jason enjoys reverse engineering proprietary network stacks in embedded  devices and diving through ancient RFCs to demystify obscure network protocols.  Jason attended graduate school at The University of Tulsa where he earned his  M.S. and Ph.D. degrees in Computer Science."
+      },
+      {
+         "sptitle" : "Lead product manager at Alsid",
+         "who" : "Romain Coltel",
+         "indexsp" : "91",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Romain Coltel is the lead product manager in a french startup,  Alsid IT, tackling Active Directory problems down to the core, and he's thus  currently doing a lot of research and development on various Active Directory  technologies. He's also teaching the well-received SANS SEC660 in France,  each time with the author's congratulations at the end of the session.  Before that, he was acquiring his experience in the french National  Cybersecurity Agency (ANSSI) as an IT auditor, where he performed penetration  testing, various security researches and tools development. As a development  example, he's the lead developer of dislocker, a tool to decrypt  BitLocker-encrypted partitions on Linux, OSX and FreeBSD. He also implemented  the AES-XEX and -XTS modes for the famous mbedTLS library."
+      },
+      {
+         "sptitle" : "Security auditor at ANSSI",
+         "who" : "Yves Le Provost",
+         "indexsp" : "92",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Yves Le Provost is a  security auditor for more than 10 years. He's working for ANSSI, the french  National Cybersecurity Agency since 5 years ago. During these five years  defending french administrations, he specialized in database security, OS  internals, SCADA architecture and penetration testing.  In parallel, he's teaching french engineering schools about various security  topics."
+      },
+      {
+         "sptitle" : "Director, IOACTIVE",
+         "who" : "K2",
+         "indexsp" : "93",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@ktwo_K2   GitHub: https://github.com/K2",
+         "bio" : "K2 (w00w00, ADM,  undernet, efnet, The Honeynet Project) is a devil in the details person who  does not take themselves too serious and appreciates a good laugh. Earlier  DEF CON presentations included  polymorphic shellcode in the form of ADMMutate (see ADM Crew), low-level  process detection, with page table analysis (Weird-Machine motivated shell  code) and using the branch tracing store backdoor trick on Windows to counter  Ransom ware, detect RoP (RunTime + HW Assisted) and draw cool graphs --  BlockFighting with a Hooker: BlockfFghter2!. All three of these are open source tools  available github.com/K2 (EhTrace and inVtero.Net are under active  development)."
+      },
+      {
+         "sptitle" : null,
+         "who" : "Ryan Baxendale",
+         "indexsp" : "94",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@ryancancomputer  https://github.com/ryanbaxendale",
+         "bio" : "Ryan Baxendale works as  a penetration tester in Singapore where he leads a team of professional  hackers. While his day is filled mainly with web and mobile penetration  tests, he is more interested developing security tools, discovering IPv6  networks, and mining the internet for targeted low hanging fruit. He has  previously spoken at XCon in Bejing on automating network pivoting and  pillaging with an Armitage script, and has spoken at OWASP chapter and Null  Security group meetings. https://www.linkedin.com/in/ryanbaxendale"
+      },
+      {
+         "sptitle" : "SecuringHardware.com",
+         "who" : "Joe FitzPatrick",
+         "indexsp" : "95",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@securelyfitz",
+         "bio" : "Joe is an Instructor and Researcher at  https://SecuringHardware.com. Joe has spent over a decade working on  low-level silicon debug, security validation, and penetration testing of  CPUS, SOCs, and microcontrollers. He has spent the past 5 years developing  and leading hardware security related training, instructing hundreds of  security researchers, pen testers, hardware validators worldwide. When not  teaching Applied Physical Attacks training, Joe is busy developing new course  content or working on contributions to the NSA Playset and other misdirected  hardware projects, which he regularly presents at all sorts of fun  conferences.  "
+      },
+      {
+         "sptitle" : "Senior Trouble Maker",
+         "who" : "Michael Leibowitz",
+         "indexsp" : "96",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@r00tkillah",
+         "bio" : "Michael has done  hard-time in real-time. An old-school computer engineer by education, he  spends his days hacking the mothership for a large semiconductor company.  Previously, he developed and tested embedded hardware and software, dicked  around with strap-on boot roms, mobile apps, office suites, and written some  secure software. On nights and weekends he hacks on electronics, writes DEF  CON CFPs, and contributes to the NSA  Playset.  "
+      },
+      {
+         "sptitle" : "Embedded Software Engineer",
+         "who" : "skud (Mark Williams)",
+         "indexsp" : "97",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@skudmunky",
+         "bio" : "Mark Williams is an embedded software engineer with experience  in robotics and computer vision. His interest in embedded systems security  and research builds off of a love for DIY projects, microcontrollers, and  breaking things."
+      },
+      {
+         "sptitle" : "Security Software Engineer, Lead",
+         "who" : "Sky (Rob Stanley)",
+         "indexsp" : "98",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Rob Stanley is a lead  security software engineer with a background in reverse engineering. He  enjoys working with low-level software, taking things apart and putting them  back together, and malware analysis. Lately, he has turned his passion  towards sharing his knowledge by teaching, and authoring CTF challenge  problems."
+      },
+      {
+         "sptitle" : "Technical Director of Data Science, Endgame",
+         "who" : "Hyrum Anderson",
+         "indexsp" : "99",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Hyrum Anderson is technical director of data scientist at Endgame, where he leads research on detecting adversaries and their tools using machine learning. Prior to joining Endgame he conducted information security and situational awareness research as a researcher at FireEye, Mandiant, Sandia National Laboratories and MIT Lincoln Laboratory. He received his PhD in Electrical Engineering (signal and image processing + machine learning) from the University of Washington and BS/MS degrees from Brigham Young University. Research interests include adversarial machine learning, deep learning, large-scale malware classification, active learning, and early time-series classification."
+      },
+      {
+         "sptitle" : "Security Consultant,  X-Force Red, IBM",
+         "who" : "Dimitry Snezhkov",
+         "indexsp" : "100",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@Op_Nomad",
+         "bio" : "Dimitry Snezhkov does  not like to refer to himself in the third person ;) but when he does he is a  Sr. Security Consultant for X-Force Red at IBM, currently focusing on  offensive security testing, code hacking and tool building."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "Zenofex",
+         "indexsp" : "101",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@exploiteers  @zenofex",
+         "bio" : "Zenofex (@zenofex) is a researcher withExploitee.rs.  Amir foundedExploitee.rswhich is a public research group and has  released exploits for over 45 devices including the Amazon FireTV, Roku Media  Player and the Google Chromecast. Amir is also a member of Austin Hackers and  has spoken at a number of security conferences including DEF CON, B-Sides  Austin, and InfoSec Southwest."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "0x00string",
+         "indexsp" : "102",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@0x00string",
+         "bio" : "0x00string (@0x00string) is hacker and security researcher, a  recent addition to Exploitee.rs who has presented at BSidesSATX and ISSW. His  previous published work includes Reverse Engineering The Kankun Smart Plug,  and Hacking The Samsung Allshare Cast Hub. His hobbies include bug collecting  and hacking all the things."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "CJ_000",
+         "indexsp" : "103",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@cj_000",
+         "bio" : "Cj_000 (@cj_000) is a researcher in the Cyber and Information  Security directorate at *redacted* and also a member of Exploitee.rs. CJ has  been involved in the release and responsible disclosure of vulnerabilities in  a number of devices including TV's, media players, and refrigerators. CJ has  presented at multiple DEF CON's and believes that a simple approach is often  the most elegant solution."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "Maximus64",
+         "indexsp" : "104",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@maximus64_",
+         "bio" : "Maximus64 (@maximus64_) is an undergraduate student at the  University of Central Florida. Khoa enjoys a hardware based approach in  researching embedded devices and is a master of the soldering iron.  Khoa has disclosed numerous vulnerabilities in various set-top boxes and  other smart devices to multiple vendors. He is currently listed on various  Security Hall of Fame pages for successful bug bounty submissions including  AT&T, Samsung and Roku."
+      },
+      {
+         "sptitle" : "Security Researcher, McAfee.",
+         "who" : "Mickey Shkatov",
+         "indexsp" : "105",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@HackingThings",
+         "bio" : "Mickey Shkatov is a security researcher and a member of the  Intel Advanced Threat Research team. His areas of expertise include  vulnerability research, hardware and firmware security, and embedded device  security"
+      },
+      {
+         "sptitle" : "Security Researcher, McAfee.",
+         "who" : "Jesse Michael",
+         "indexsp" : "106",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@jessemichael",
+         "bio" : "Jesse Michael has been working in security for over a decade  and is currently a member of the McAfee Advanced Threat Research team who  spends his time causing trouble and finding low-level hardware security  vulnerabilities in modern computing platforms"
+      },
+      {
+         "sptitle" : "Security Researcher",
+         "who" : "Oleksandr Bazhaniuk",
+         "indexsp" : "107",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@ABazhaniuk",
+         "bio" : "Oleksandr Bazhaniuk is a security researcher and reverse  engineer with background in automation of binary vulnerability analysis. He  is also a co-founder of DCUA, the first DEF CON group in Ukraine.  "
+      },
+      {
+         "sptitle" : null,
+         "who" : "Richard Thieme a.k.a.  neuralcowboy",
+         "indexsp" : "108",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "Twitter and skype:  neuralcowboy  Linked In and FB: Richard Thieme  Website: www.thiemeworks.com",
+         "bio" : "Richard Thieme is an  author and professional speaker focused on the challenges posed by new  technologies and the future, how to redesign ourselves to meet these  challenges, and creativity in response to radical change. His column,  \"Islands in the Clickstream,\" was distributed to subscribers in  sixty countries before collection as a book in 2004. When a friend at the  National Security Agency said after they worked together on ethics and  intelligence issues, \"The only way you can tell the truth is through  fiction,\" he returned to writing short stories, 19 of which are  collected in Mind Games. His latest work is the stunning novel FOAM,  published by Exurban Press September 2015. He is also co-author of the  critically extolled UFOs and Government: A Historical Inquiry, a 5-year  research project using material exclusively from government documents and  other primary sources, now in 65 university libraries    His work has been taught at universities in Europe, Australia, Canada,  and the United States, and he has guest lectured at numerous universities,  including Purdue University (CERIAS), the Technology, Literacy and Culture  Distinguished Speakers Series of the University of Texas, the Design  Matters lecture series at the University of Calgary, and as a Distinguished  Lecturer in Telecommunications Systems at Murray State University. He  addressed the reinvention of Europe as a cognitive artifact for curators  and artists at Museum Sztuki in Lodz, Poland, keynoted CONFidence in Krakow  2015, and keynoted The Real Truth: A World's Fair at Raven Row Gallery,  London, He recently keynoted Code Blue in Tokyo. He loved Tokyo. He has  spoken for the National Security Agency, the FBI, the Secret Service, the US  Department of the Treasury, and Los Alamos National Labs and has keynoted  hacker,security, and technology conferences around the world. He spoke at  DC 24 in 2016 for the 21st year."
+      },
+      {
+         "sptitle" : "Senior Security Specialist, AppRiver, LLC",
+         "who" : "Jim Nitterauer",
+         "indexsp" : "109",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "Twitter:  @jnitterauer  LinkedIn: https://www.linkedin.com/in/jnitterauer/   ",
+         "bio" : "Currently a Senior  Security Specialist at AppRiver, LLC., his team is responsible for global  network deployments and manages the SecureSurf global DNS infrastructure and  SecureTide global spam & virus filtering infrastructure as well as all  internal applications. They also manage security operations for the entire  company. He holds a CISSP certification. He is also well-versed in ethical  hacking and penetration testing techniques and has been involved in  technology since the late 1980s when punch cards were still a thing.    Jim has presented at NolaCon, ITEN WIRED, BSides Las Vegas, BSides Atlanta,  CircleCityCon and several smaller conferences. He regularly attends national  security conferences and is passionate about conveying the importance of  developing, implementing and maintaining security policies for organizations.  His talks convey unique and practical techniques that help attendees harden  their security in practical and easy-to-deploy ways.    Jim is a senior staff member with BSides Las Vegas, a member of the ITEN  WIRED Planning Committee and the president of the Florida Panhandle (ISC)2  Chapter. When not at the computer, Jim  can be found working out, playing guitar, traveling or just relaxing with an  adult beverage."
+      },
+      {
+         "sptitle" : "Security Analyst,  SensePost",
+         "who" : "5A1F (Saif El-Sherei)",
+         "indexsp" : "110",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@saif_sherei",
+         "bio" : "Saif is a senior analyst  with SensePost. He has a keen interest in exploit development and sharing  everything he learns. Over the years he has released several exploitation  tutorials, examples and a grammar-based browser fuzzer, wadi (DEF CON 23)."
+      },
+      {
+         "sptitle" : "Senior Security Analyst,  RiskSense, Inc.",
+         "who" : "Sean Dillon (zerosum0x0)",
+         "indexsp" : "111",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "https://twitter.com/zerosum0x0  https://zerosum0x0.blogspot.com  https://github.com/zerosum0x0",
+         "bio" : "Sean Dillon is a senior security analyst at RiskSense, Inc. He  has an established research focus on attacking the Windows kernel, and was  the first to reverse engineer the DOUBLEPULSAR SMB backdoor. He is a  co-author of the ETERNALBLUE Metasploit module and contributions to the  project. He has previously been a software engineer in the avionics and  insurance industries, and his favorite IDE is still GW-Basic on DOS."
+      },
+      {
+         "sptitle" : "Senior Security  Analyst, RiskSense, Inc.",
+         "who" : "Zach Harding (Aleph-Naught-)",
+         "indexsp" : "112",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "https://github.com/Aleph-Naught-",
+         "bio" : "Zach Harding is a senior  security analyst at RiskSense, Inc. Zach formerly served in the US Army as a  combat medic. He, along with Sean Dillon and others, improved leaked NSA code  to release the \"ExtraBacon 2.0\" Cisco ASA exploit package. He is an  avid tester of every penetration tool he can get a hold of. You know the guy  who's always looking for available public WiFi, or fiddling with a kiosk  machine? That's Zach.  "
+      },
+      {
+         "sptitle" : "Security Analyst at  Independent Security Evaluators",
+         "who" : "Manfred (@_EBFE)",
+         "indexsp" : "113",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@_EBFE",
+         "bio" : "Manfred (@_EBFE) has  been reverse engineering and exploiting MMORPGs for 20 years. During that  time, he ran a successful business based solely on exploiting online games in  order to supply virtual goods to retailers. He has reverse engineered  communication protocols for over 22 well known and popular MMORPGs and in  certain cases circumvented anti tampering and software/hardware  fingerprinting countermeasures. Manfred is currently a security researcher  and analyst at Independent Security Evaluators (@ISEsecurity).  "
+      },
+      {
+         "sptitle" : "Senior Data Scientist, ZeroFOX",
+         "who" : "Philip Tully",
+         "indexsp" : "114",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@phtully",
+         "bio" : "Philip Tully is a Principal Data Scientist at ZeroFOX. He  employs natural language processing and computer vision techniques in order  to develop predictive models for combating security threats emanating from  social networks. He earned his joint doctorate degree in computer science  from the Royal Institute of Technology (KTH) and the University of Edinburgh,  and has spoken at Black Hat, DEF CON , ShowMeCon and across the neuroscience  conference circuit. He's a hackademic that's interested in applying brain-inspired  algorithms to both blue and red team operations."
+      },
+      {
+         "sptitle" : "Chief Security Officer, 802 Secure",
+         "who" : "Michael T. Raggo",
+         "indexsp" : "115",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Michael T. Raggo, Chief  Security Officer, 802 Secure (CISSP, NSA-IAM, CSI) has over 20 years of  security research experience. His current focus is wireless IoT threats  impacting the enterprise. Michael is the author of Mobile Data Loss: Threats  & Countermeasures and Data Hiding: Exposing Concealed Data in  Multimedia, Operating Systems, Mobile Devices and Network Protocols for  Syngress Books, and contributing author for Information Security the  Complete Reference 2nd Edition. A former security trainer, Michael has  briefed international defense agencies including the FBI and Pentagon, is a  participating member of FSISAC/BITS and PCI, and is a frequent presenter at  security conferences, including Black Hat, DEF CON , Gartner, RSA, DoD Cyber  Crime, OWASP, HackCon, and SANS."
+      },
+      {
+         "sptitle" : "Security Analyst, ERNW  GmbH",
+         "who" : "Omar Eissa",
+         "indexsp" : "116",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Omar Eissa is a security  Analyst working for ERNW. His interests are network security and  reverse-engineering. He is a professional Cisco engineer with various years  of experience in enterprise and ISPs networks. He has given talks and  workshops at various telco events and conferences like Troopers17 and Black  Hat USA 2017.  "
+      },
+      {
+         "sptitle" : "Doctoral Researcher,  University College London",
+         "who" : "Vasilios Mavroudis",
+         "indexsp" : "117",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Vasilios Mavroudis is a doctoral researcher in the Information  Security Group at University College London. He studies security and privacy  aspects of digital ecosystems, with a focus on emerging technologies and  previously unknown attack vectors.  He is currently working on a  high-assurance cryptographic hardware. In cooperation with industrial  partners, he has recently prototyped a high-assurance hardware architecture,  that maintains its security properties even in the presence of malicious  hardware components.  Past works include his recent publication on the ultrasound tracking  ecosystem which received wide-spread attention and is considered the seminal  work on that ecosystem, and auditing tools for the Public Key Infrastructure  of Deutsche Bank. Moreover, he has participated in an international  consortium studying large-scale security threats in telecommunication  networks, and cooperated with UC Santa Barbara in several projects, including  a detection system for evasive web-malware.  Vasilios holds an Information Security MSc from UCL, and a BSc on Computer  Science from University of Macedonia, Greece."
+      },
+      {
+         "sptitle" : "Co-founder, Enigma Bridge Ltd",
+         "who" : "Dan Cvrcek",
+         "indexsp" : "118",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@dancvrcek",
+         "bio" : "Dan Cvrcek is a security  architect and engineer learning how to run his start-up Enigma Bridge. He has  extensive experience with large banking systems from operational procedures  to system architectures: Swift, card payment processing, UK Faster Payments,  large key management systems. His hardware encounters include smart cards,  custom and embedded systems, and hardware security modules, from design,  testing, defences to attacks. He reverse-engineered a hidden API of  Chrysalis-ITS crypto modules (now SafeNet) with Mike Bond, Steven Murdoch and  others. Dan got his uni degrees (PhD and Associate Prof.) from Brno  University of Technology, and had fun as a post-doc at the University of  Cambridge (2003-2004, 2007-2008), Deloitte London (2008-2009), start-ups,  freelance security consultant (2010-2016) - clients include Barclays and  Deutsche Bank, co-founded Enigma Bridge in 2015.  "
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "p3n3troot0r (Duncan Woodbury)",
+         "indexsp" : "119",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Car hacker by trade, embedded systems security engineer by  day. Entered the field of cyberauto security in 2012 through the Battelle  CAVE red team and had the opportunity to improve the world by hacking  transportation systems. Co-founded multiple security companies focused on  building tools for automated exploitation of automotive systems  (http://www.silent-cyber.com/), open-source frameworks for V2X, secure  digital asset management, and 3D printing electric cars  (https://hackaday.com/tag/lost-pla/) out of your garage  (http://fosscar.faikvm.com/trac/). DEF CON  lurker since the age of 17, recently having joined forces with friends  and mentors to organize and host the DEF CON  Car Hacking Village.    p3n3troot0r began working V2X with ginsback two years ago and realized the  opportunity, in lieu of any open-source or full-stack V2X implementation, to  bring the security community in to the driver's seat in the development of  next-gen cyberauto standards. Together they have engaged the thought leaders  in this space, and via the long-awaited integration of this stack into the  mainline Linux kernel, the global development community is given the  opportunity to participate in the development of automated and connected  transportation systems."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "ginsback (Nicholas Haltmeyer)",
+         "indexsp" : "120",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "AI researcher and  security professional. Began work in automotive security through the DEF  CON Car Hacking Village and have since  developed V2X software and routing schemes. Extensive experience in signal  processing and RF hacking, including vital sign monitoring, activity  recognition, and biometric identification through RF.    Given the (abyssal) state of automotive cybersecurity, ginsback aims to  develop and field tools for V2X that open collaboration with the hacker  community. As intelligent transit reaches critical mass, attacks on V2X  infrastructure have the potential to cause incredible damage. ginsback  partnered with p3n3troot0r to develop a free as in freedom V2X interface and  extend an invitation for the community to discover and fix flaws in the  design of what will soon be a massive network of connected vehicles."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "Nick Cano",
+         "indexsp" : "121",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@nickcano93  https://github.com/nickcanohttp://www.nostarch.com/gamehacking  https://www.livecoding.tv/darkstar_xeno",
+         "bio" : "Nick Cano is the author  of \"Game Hacking: Developing Autonomous Bots for Online Games\" (No  Starch Press), a Senior Security Architect at Cylance, and a life-long  programmer and hacker. Programming since the age of 12 and hacking games  since the age of 15, Nick has a strong background with both software  development and Reverse Engineering. Nick has a history developing and  selling bots for MMORPGs, advising game developers on hardening their games  against bots, and making innovations in the EDR space for next-gen AV  companies.  "
+      },
+      {
+         "sptitle" : "Sr. Managing Consultant,  IBM X-Force Red",
+         "who" : "Chris Thompson",
+         "indexsp" : "122",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Chris is Red Team  Operations Lead at IBM X-Force Red. He has extensive experience performing  penetration testing and red teaming for clients in a wide variety of  industries. He's led red teaming operations against defense contractors and  some of North America's largest banks.     He's on the board for CREST USA (crest-approved.org), working to help mature  the pentesting industry. Chris also teaches Network & Mobile Pentesting  at one of Canada's largest technical schools.     Hacking his way  through life, Chris likes to pretend he's a good drone pilot, lock picker,  and mountain biker."
+      },
+      {
+         "sptitle" : "Hacker / Technical  Editor, North Star Post",
+         "who" : "Jason Hernandez",
+         "indexsp" : "123",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@jason_nstar",
+         "bio" : "Jason Hernandez researches surveillance technology and reports  on it for the North Star Post. Jason has a BS in economics, and has worked in  the mining and technology industries. Jason has worked on algorithms to  detect surveillance aircraft from ADS-B flight data."
+      },
+      {
+         "sptitle" : "Editor and Journalist, North Star Post",
+         "who" : "Sam Richards",
+         "indexsp" : "124",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@minneapolisam",
+         "bio" : "Sam Richards is an independent journalist, and founder of the  North Star Post. Sam pieced together hundreds of FAA and corporate records to  uncover the FBI's secret fleet of surveillance aircraft."
+      },
+      {
+         "sptitle" : "Journalist, North Star Post",
+         "who" : "Jerod MacDonald-Evoy",
+         "indexsp" : "125",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@jerodmacevoy",
+         "bio" : "Jerod MacDonald-Evoy is a journalist with the North Star Post,  and a documentary filmmaker."
+      },
+      {
+         "sptitle" : "Security Engineer",
+         "who" : "trixr4skids",
+         "indexsp" : "126",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@trixr4skids",
+         "bio" : "trixr4skids is a  security engineer and a recovering consultant. He enjoys hardware hacking,  reverse engineering, the occasional webapp RCE, robots, beer, and of course  robots that bring him beer. As a child he enjoyed taking apart everything he  could get his hands on in a quest to figure out how it worked (his parents  did not always appreciate this). He could never figure out what the green  rectangles with the black rectangles on them did and often resorted to  smashing them with a hammer to see what was inside. Since then he has learned  more effective ways to go about discovering the secrets those black things  are hiding and even how to make them do different things than intended. His  current research projects include attacking embedded devices based on the  rabbit 2000/3000 CPUs, studying the security of payment card systems, and  hacking anything interesting that he can buy off eBay."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "Professor Plum",
+         "indexsp" : "127",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@professor__plum",
+         "bio" : "Professor Plum is an  experienced reverse engineer, developer, and digital forensics examiner. He  holds a graduate degree in Information Security from Johns Hopkins  University, and has worked numerous computer incident investigations spanning  the globe. He currently works as a Senior Threat Researcher for a Fortune 500  cybersecurity company and previously worked for the Department of Defense  performing vulnerability research, software development, and Computer Network  Operations."
+      },
+      {
+         "sptitle" : "Pentester, Wavestone",
+         "who" : "Ayoul3",
+         "indexsp" : "128",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@ayoul3__",
+         "bio" : "Ayoub is a pentester working for Wavestone, a consulting firm based in France. He got interested in Mainframe security in 2014 when, during an audit, he noticed the big security gap between this platform and standard systems like Windows and Unix. A gap that makes little sense since z/OS has been around for a while and is used by most major companies to perform critical business operations: wire transfer, claim refunds, bookings, etc.  If you want to test some of the tools showcased during the talk,  you can check out his tools: https://github.com/ayoul3/"
+      },
+      {
+         "sptitle" : "Principal Researcher, PerimeterX Inc.",
+         "who" : "Inbar Raz",
+         "indexsp" : "129",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@inbarraz  https://www.linkedin.com/in/inbar-raz-90a7913/",
+         "bio" : "Inbar has been reverse engineering for nearly as long as he  has been living. It started with a screwdriver, pliers, wire cutters, and his  grandfather's ECG machine, and gradually transitioned into less destructive  research. In 1984, aged 9, he started programming on his Dragon 64. At 13 he  got his first PC - Amstrad PC1512 - and within a year was already into  reverse engineering. It wasn't long before he discovered how to access the  X.25 network, Bitnet and Fidonet, and through high-school he was a key figure  in the Israeli BBS scene.    Inbar spent most of his career in the Internet and Data Security field, and  the only reason he's not in jail right now is because he chose the right side  of the law at an early age. In fact, nowadays he commonly lectures about  Ethical Hacking and Coordinated Vulnerability Disclosure.    Inbar specializes in outside-the-box approach to analyzing security and  finding vulnerabilities, and is currently the Principal Researcher at  PerimeterX, researching and educating the public on Automated Attacks on  Websites."
+      },
+      {
+         "sptitle" : "Equal Partner, Aleph",
+         "who" : "Eden Shochat",
+         "indexsp" : "130",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@eden  https://www.linkedin.com/in/edens/",
+         "bio" : "Eden Shochat builds  stuff, most recently Aleph, +$330MM venture capital fund; The Junction, voted  #1 startup program in Israel; face.com, a massive face recognition API  acquired by Facebook; Aternity, the leading user-centric enterprise IT  platform, acquired by Riverbed; and GeekCon, Europe's biggest makers  conference. Eden grew up in Nigeria, where he was bored into assembly  programming for the Z80 chip, graduated into the demo and cracking scenes  while being thrown out of high-school but ended up being a (somewhat)  productive member of society."
+      },
+      {
+         "sptitle" : "Security Researcher at Bastille Networks",
+         "who" : "Marc Newlin",
+         "indexsp" : "131",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Marc is a wireless security researcher at Bastille, where he  discovered the MouseJack and KeySniffer vulnerabilities affecting wireless  mice and keyboards. A glutton for challenging side projects, Marc competed  solo in two DARPA challenges, placing third in the DARPA Shredder Challenge,  and second in the first tournament of the DARPA Spectrum Challenge."
+      },
+      {
+         "sptitle" : "Security Researcher at  Bastille Networks",
+         "who" : "Logan Lamb",
+         "indexsp" : "132",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Logan joined Bastille Networks in 2014 as a security  researcher focusing on applications of SDR to IoT. Prior to joining Bastille  Networks, he was a member of CSIR at Oak Ridge National Lab where his focus  was on symbolic analysis of binaries and red-teaming critical infrastructure."
+      },
+      {
+         "sptitle" : "Founder and Principal Engineer at Web Sight.IO",
+         "who" : "Chris Grayson",
+         "indexsp" : "133",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Christopher Grayson (OSCE) is the  founder and principal engineer at Web Sight.IO. In this role he handles all  operations, development, and research efforts. Christopher is an avid  computing enthusiast hailing from Atlanta, Georgia. Having made a habit of  pulling things apart in childhood, Chris has found his professional home in  information security. Prior to founding Web Sight.IO, Chris was a senior  penetration tester at the security consultancy Bishop Fox, and a research  scientist at the Georgia Institute of Technology. During his tenure at these  organizations, Chris became a specialist in network penetration testing and  in the application of academic tactics to the information security industry,  both of which contributed to his current research focus of architecting and  implementing high-security N-tier systems. Chris attended the Georgia  Institute of Technology where he received a bachelor's degree in  computational media, a master's degree in computer science, and where he  organized and led the Grey H@t student hacking organization."
+      },
+      {
+         "sptitle" : "Partner, Bishop Fox",
+         "who" : "Francis Brown",
+         "indexsp" : "134",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Francis Brown, CISA, CISSP, MCSE, is a Managing Partner at  Bishop Fox (formerly Stach & Liu), a security consulting firm providing  IT security services to the Fortune 1000 and global financial institutions as  well as U.S. and foreign governments.  Before joining Stach & Liu, Francis served as an IT Security  Specialist with the Global Risk Assessment team of Honeywell International  where he performed network and application penetration testing, product security  evaluations, incident response, and risk assessments of critical  infrastructure. Prior to that, Francis  was a consultant with the Ernst & Young Advanced Security Centers and  conducted network, application, wireless, and remote access penetration tests  for Fortune 500 clients.     Francis has presented his research at  leading conferences such as Black Hat USA, DEF CON , RSA, InfoSec World,  ToorCon, and HackCon and has been cited in numerous industry and academic  publications.     Francis holds a Bachelor of Science  and Engineering from the University of Pennsylvania with a major in Computer  Science and Engineering and a minor in Psychology. While at Penn, Francis taught operating  system implementation, C programming, and participated in DARPA-funded  research into advanced intrusion prevention system techniques."
+      },
+      {
+         "sptitle" : "Security Analyst, Bishop  Fox",
+         "who" : "David Latimer",
+         "indexsp" : "135",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "David Latimer is a  Security Analyst at Bishop Fox, a security consulting firm providing IT  security services to the Fortune 500, global financial institutions, and  high-tech startups. In this role, he focuses on network and web application  penetration testing.     He won a state Cisco Networking  Skills competition for Arizona in 2013. He has acted as a network engineer  for one of Phoenixs largest datacenters, PhoenixNAP, where he architected  large-scale virtualization clusters and assisted with backup disaster  recovery services."
+      },
+      {
+         "sptitle" : "Security researcher, Microsoft",
+         "who" : "Marina Simakov",
+         "indexsp" : "136",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@simakov_marina",
+         "bio" : "Marina Simakov is a security researcher at Microsoft, with a  special interest in network security and authentication protocols. She holds  an M.Sc. in computer science, with several published articles, with a main  area of expertise in graph theory. Marina spoke at BlueHat IL 2016 regarding  attacks on local accounts."
+      },
+      {
+         "sptitle" : "Security researcher, Microsoft",
+         "who" : "Igal Gofman",
+         "indexsp" : "137",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@IgalGofman",
+         "bio" : "Igal Gofman is a  security researcher at Microsoft. Igal has a proven track record in network  security and threat intelligence. His research interest ranges from post  exploitation methods to intrusion detection systems. Before Microsoft, Igal  was a Threat Response Team Lead at Check Point Software Technologies leading  the development of the intrusion detection system."
+      },
+      {
+         "sptitle" : "Security Advisor,  Improsec",
+         "who" : "Morten Schenk",
+         "indexsp" : "138",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@Blomster81",
+         "bio" : "Morten Schenk  (@blomster81) is a security advisor and researcher at Improsec ApS, with a  background in penetration testing, red teaming and exploit development.  Having a high craving for learning and torture based on taking certifications  like OSCP, OSCE and OSEE, Morten's research is specifically focused on binary  exploitation and mitigation bypasses on Windows. He blogs about his research  athttps://improsec.com/blog/"
+      },
+      {
+         "sptitle" : "Head of Trust and  Security @ Bugcrowd",
+         "who" : "Jason Haddix",
+         "indexsp" : "139",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@jhaddix",
+         "bio" : "Jason is the Head of  Trust and Security at Bugcrowd. Jason trains and works with internal security  engineers to triage and validate hardcore vulnerabilities in mobile, web, and  IoT applications/devices. He also works with Bugcrowd to improve the security  industries relations with the researchers. Jason's interests and areas of  expertise include mobile penetration testing, black box web application  auditing, network/infrastructure security assessments, and static analysis.  Jason lives in Santa Barbara with his wife and three children. Before joining  Bugcrowd Jason was the Director of Penetration Testing for HP Fortify and  also held the #1 rank on the Bugcrowd leaderboard for 2014."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "Plore",
+         "indexsp" : "140",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@_plore",
+         "bio" : "Plore is an electrical  engineer and embedded software developer based in the United States. At DEF  CON 24, he spoke about cracking  high-security electronic safe locks."
+      },
+      {
+         "sptitle" : "Director of Cybersecurity, National Telecommunications and  Information Administration, US Department of Commerce",
+         "who" : "Allan Friedman",
+         "indexsp" : "141",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Allan Friedman is the Director of Cybersecurity Initiatives at  National Telecommunications and Information Administration in the US  Department of Commerce. He coordinates NTIA's multistakeholder processes,  bringing together the community on issues like vulnerability disclosure and  IoT Security. Prior to joining the Federal Government, Friedman spent over a  decade as a noted cybersecurity and technology policy researcher at Harvard's  Computer Science Department, the Brookings Institution, and George Washington  University's Engineering School. He has a degree in computer science from  Swarthmore College and a Ph.D. in public policy from Harvard University, and  is the Co-Author of \"Cybersecurity and Cyberwar: What Everyone Needs to  Know\"."
+      },
+      {
+         "sptitle" : null,
+         "who" : "TBA",
+         "indexsp" : "142",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Bio coming soon."
+      },
+      {
+         "sptitle" : "Special Counsel for National Security, Computer Crime &  Intellectual Property Section, Criminal Division, U.S. Department of Justice",
+         "who" : "Leonard Bailey",
+         "indexsp" : "143",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Mr. Bailey is Special  Counsel for National Security in the Computer Crime and Intellectual Property  Section. He has prosecuted computer  crime cases and routinely advises on cybersecurity, searching and seizing  electronic evidence, and conducting electronic surveillance. He has managed DOJ cyber policy as Senior  Counselor to the Assistant Attorney General for the National Security  Division and then as an Associate Deputy Attorney General. He has also served as Special Counsel and  Special Investigative Counsel for DOJ's Inspector General. Mr. Bailey is a graduate of Yale University  and Yale Law School. He has taught  courses on cybercrime and cybersecurity at Georgetown Law School and Columbus  School of Law in Washington, D.C."
+      },
+      {
+         "sptitle" : "Legislative Director, Office of Congressman James R. Langevin  (RI-02)",
+         "who" : "Nick Leiserson",
+         "indexsp" : "144",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Nick Leiserson is  Legislative Director to Congressman Jim Langevin (RI-02), a senior member of  the House Armed Services and Homeland Security Committees and the co-founder  of the Congressional Cybersecurity Caucus.  Leiserson serves as Rep. Langevin's principal advisor on an array of  issues, particularly homeland security; judiciary; and technology  policy. He holds a degree in computer  science from Brown University."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "Christian quaddi Dameff MD MS",
+         "indexsp" : "145",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@cdameffMD",
+         "bio" : "Christian (quaddi) Dameff is an emergency medicine physician,  former open capture the flag champion, prior Defcon speaker, and researcher.  Published works include topics such as therapeutic hypothermia after cardiac  arrest, novel drug targets for myocardial infarction patients, and other  Emergency Medicine related works with an emphasis on CPR optimization.  Security research topics including hacking critical healthcare infrastructure  and medical devices. This is his thirteenth Defcon."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "Jeff r3plicant Tully MD",
+         "indexsp" : "146",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@jefftullymd",
+         "bio" : "Jeff Tully is an anesthesiologist, pediatrician, and  researcher with an interest in understanding the ever-growing intersections  between health care and technology. Prior to medical school he worked on  hacking the genetic code of Salmonella bacteria to create anti-cancer  tools, and throughout medical training has remained involved in the  conversations and projects that will secure healthcare and protect our  patients as we face a brave new world of remote care, implantable medical  devices, and biohacking."
+      },
+      {
+         "sptitle" : "Deputy director of the Cyber Statecraft Initiative in the  Brent Scowcroft on International Security",
+         "who" : "Beau Woods",
+         "indexsp" : "147",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@beauwoods",
+         "bio" : "Beau Woods is the deputy director of the Cyber Statecraft  Initiative in the Brent Scowcroft on International Security. His focus is the  intersection of cyber (yes, he'll drink for that) security and the human  condition, primarily around Cyber Safety. This comes out of the I Am The  Cavalry initiative, ensuring the connected technology that can impact life  and safety is worthy of our trust. Beau started his career working at a  regional health provider, protecting patients by defending medical data and  devices."
+      },
+      {
+         "sptitle" : "Director of the Cyber Statecraft Initiative at the Atlantic  Council's Brent Scowcroft Center",
+         "who" : "Joshua Corman",
+         "indexsp" : "148",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Joshua Corman is the  director of the Cyber Statecraft Initiative at the Atlantic Council's Brent  Scowcroft Center and a founder of I am The Cavalry (dot org). Corman  previously served as CTO for Sonatype, director of security intelligence for  Akamai, and in senior research and strategy roles for The 451 Group and IBM  Internet Security Systems. He co-founded @RuggedSoftware and @IamTheCavalry  to encourage new security approaches in response to the world's increasing  dependence on digital infrastructure. Josh's unique approach to security in  the context of human factors, adversary motivations, and social impact has  helped position him as one of the most trusted names in security. He also  serving as an adjunct faculty for Carnegie Mellon's Heinz College and on the  2016 HHS Cybersecurity Task Force."
+      },
+      {
+         "sptitle" : "Privacy and security expert, Philips Healthcare",
+         "who" : "Michael C. McNeil",
+         "indexsp" : "149",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Michael C. McNeil is a  noted privacy and security expert who leads the Global Product Security and  Services organization at Philips Healthcare. In this capacity, McNeil leads  the global product security and data protection program for the company. He  is also a member of the Visual Privacy Advisory Council (VPAC) , Medical  Device Privacy Consortium (MDPC), Medical Device Innovation, Safety and  Services Consortium (MDISS) and a frequent speaker at privacy and security  conferences around the world."
+      },
+      {
+         "sptitle" : "Senior Security Consultant and Researcher, Rapid7",
+         "who" : "Jay Radcliffe",
+         "indexsp" : "150",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Jay Radcliffe is a Senior  Security Consultant and Researcher at Rapid7. He is an offensive penetration  tester with a knack for hardware hacking and embedded device security. He has  given dozens of presentations at conferences around the world including Defcon  and Blackhat including several on the security of insulin pumps."
+      },
+      {
+         "sptitle" : "Associate Director for Science & Strategic Partnerships,  FDA's Center for Devices & Radiological Health (CDRH)",
+         "who" : "Suzanne Schwartz, MD, MBA",
+         "indexsp" : "151",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Suzanne Schwartz, MD, MBA  is the Associate Director for Science & Strategic Partnerships at FDA's  Center for Devices & Radiological Health (CDRH). Among other public  health concerns, her portfolio has most notably included medical device  cybersecurity, for which she chairs CDRH's Cybersecurity Working Group. She  also co-chairs the Government Coordinating Council for Healthcare &  Public Health critical infrastructure sector. Before FDA, Suzanne was a full  time surgical faculty member at Weill Cornell Medical College."
+      },
+      {
+         "sptitle" : "Mobile R&D Team Leader, Check Point",
+         "who" : "Avi Bashan",
+         "indexsp" : "152",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Avi Bashan is a Team Leader at Check Point, former security  researcher at Lacoon Mobile Security. His daily job is to play around with  Android Internals, writing Linux kernel code and drinking a lot of coffee."
+      },
+      {
+         "sptitle" : "Security Researcher, Check Point",
+         "who" : "Slava Makkaveev",
+         "indexsp" : "153",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Slava Makkaveev is a  Security Researcher at Check Point. Slava has vast academic and professional  experience in the security field. Slava's day to day is mostly composed from  reversing and hacking malwares and operating systems for fun and profit."
+      },
+      {
+         "sptitle" : "Software Engineer",
+         "who" : "Denton Gentry",
+         "indexsp" : "154",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Denton Gentry is a  software engineer who has worked at a lot of places and plans to work at a  few more."
+      },
+      {
+         "sptitle" : "Principal Engineer, Cryptotronix LLC",
+         "who" : "Josh Datko",
+         "indexsp" : "155",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Josh Datko is the owner of Cryptotronix, an embedded security  consultancy. As a submarine officer, he was sent to Afghanistan to ensure  that the Tailiban did not develop a submarine force--mission accomplished! He  wrote a book on BeagleBones and crypto hardware which not many people have  read, talked about embedded security at Portland BSides and HOPE, and  presented a better way to make a hardware implant at DEF CON 22 which hopefully helped the NSA improve  their spying."
+      },
+      {
+         "sptitle" : "Embedded Engineer,  Cryptotronix, LLC",
+         "who" : "Chris Quartier",
+         "indexsp" : "156",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Chris is the lead  embedded hacker at Cryptotronix. He has worked at both big companies and IoT  startups as an embedded developer working on bare metal and embedded linux  board bring up, driver development, and trying to get those little logic  analyzer clips to stay connected to a target. He's hacked on radios, rail  guns, and fitness trackers but not all at the same time."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "0ctane",
+         "indexsp" : "157",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "0ctane is a longtime hobbyist hacker, with experience primarily in UNIX systems and hardware. Holding no official training or technical employment, 0ctane spends most of their free time building and restoring older computer systems, hanging out at surplus stores and tracking down X86 alternatives with an occasional dabbling in OSX and 802.11 exploitation. Other interests include SDR and RF exploration, networking, cryptography, computer history, distributed computing...really anything that sounds cool that I happen to stumble on at 3am."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "Redezem",
+         "indexsp" : "158",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Redezem hails from the  southern hemisphere, specifically Perth, Australia, the most isolated capital  city on the planet. He's been an avid computer tinkerer in this desolate,  sunny, beach-ridden wasteland from a young age, and has been a \"hacker\"  since he stole his dad's passwords to get at the internet as a kid. Having  worked part time as a web application developer during his undergraduate  degree in computer science, he specialised into intrusion detection in his  honours year, and is currently performing his PhD into new and fantastic  network anomaly detection mechanisms at Curtin University. He currently also  lectures, and works part-time as a security consultant."
+      },
+      {
+         "sptitle" : "Security researcher, @SafeBreach",
+         "who" : "Dor Azouri",
+         "indexsp" : "159",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Dor Azouri is a security professional, having 6+ years of unique experience with network security, malware research and infosec data analysis. Currently doing security research @SafeBreach."
+      },
+      {
+         "sptitle" : "Senior Security  Consultant, NCC Group",
+         "who" : "chaosdata",
+         "indexsp" : "160",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@chaosdatumz",
+         "bio" : "chaosdata (aka  \"Jeff\") is a security consultant by day, and sometimes by night. He  hacks on embedded systems, mobile apps and devices, web apps, and complicated  things that don't have names. He also like exotic candies."
+      },
+      {
+         "sptitle" : null,
+         "who" : "Tess Schrodinger",
+         "indexsp" : "161",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@TessSchrodinger",
+         "bio" : "Hacker Mom, Warrior,  Triathlete, Nerd Herder, Gourmet, Artist, Coach, Friend."
+      },
+      {
+         "sptitle" : "CTO, SeNet International",
+         "who" : "Gus Fritschie",
+         "indexsp" : "162",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@gfritschie  @senetsecurity",
+         "bio" : "Gus Fritschie has been  involved in information security since 2000.  About 5 years ago (after his previous Defcon presentation on iGaming  security) he transitioned a significant portion of his practice into the  gaming sector. Since then he has established himself and SeNet as the IT  security leader in in gaming. He has  supported a number of clients across the gaming spectrum from iGaming  operators, land-based casinos, gaming manufacturer, lotteries, tribal gaming,  and daily fantasy sports. In his free  time he is a recreationally poker player (both online and B&M).  "
+      },
+      {
+         "sptitle" : "Engineer, SeNet International",
+         "who" : "Evan Teitelman",
+         "indexsp" : "163",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : null
+      },
+      {
+         "sptitle" : "Sr. Security Engineer at  LeanKit Inc.",
+         "who" : "spaceB0x",
+         "indexsp" : "164",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@spaceB0xx  Website: www.untamedtheory.com  ",
+         "bio" : "spaceB0x is extremely  dedicated to his work in information security. He is the Sr. Security  Engineer at a software company called LeanKit. He likes, and occasionally  succeeds at, security dev-opsing, web application and network penetration  testing, and some other security things. He has written tools for secure key  management within automation infrastructures, capturing netflow data, and  pwning automated build systems. He loves the hacker community, learning new  things, and exploring new ideas."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "Yuwei Zheng",
+         "indexsp" : "165",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@huanglin_bupt",
+         "bio" : "Yuwei Zheng is a senior security researcher from Radio  Security Research Dept. of 360 Technology. He has rich experiences in  embedded systems over 10 years. He reversed blackberry BBM, PIN, BIS push  mail protocol, and decrypted the network stream successfully in 2011. He  successfully implemented a MITM attack for Blackberry BES based on a modified  ECMQV protocol of RIM. He focuses on the security issues of embedded hardware  and IOT systems. He was the speaker of DEF CON , HITB etc."
+      },
+      {
+         "sptitle" : "Hacker",
+         "who" : "Lin Huang",
+         "indexsp" : "166",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Lin HUANG is a wireless  security researcher and SDR technology expert, from Radio Security Research  Dept. of 360 Technology. Her interests include the security issues in  wireless communication, especially the cellular network security. She was the  speaker of some security conferences, DEF CON  , HITB, POC etc. She is the 3GPP SA3 delegate of 360 Technology.    "
+      },
+      {
+         "sptitle" : "Gotham Digital Science",
+         "who" : "Gabriel solstice Ryan",
+         "indexsp" : "167",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@s0lst1c3  github.com/s0lst1c3  solstice.me  blog.gdssecurity.com",
+         "bio" : "Gabriel is a pentester,  CTF player, and Offsec R&D. He currently works for Gotham Digital  Science, where he provides full scope red team penetration testing  capabilities for a diverse range of clients. Previously he has worked at  OGSystems and Rutgers University. He also is a member of the BSides Las Vegas  senior staff, coordinating wireless security for the event. Things that make  him excited include obscure wireless attacks, evading antivirus, and playing  with fire. In his spare time, he enjoys live music and riding motorcycles."
+      },
+      {
+         "sptitle" : "Director of penetration  testing, IOActive   ",
+         "who" : "Ilja van Sprundel",
+         "indexsp" : "168",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Ilja van Sprundel is  experienced in exploit development and network and application testing. As  IOActive's Director of Penetration Testing, he performs primarily gray-box  penetration testing engagements on mobile (specializing in iOS) and runtime  (specializing in Windows kernel) applications that require customized fuzzing  and source code review, identifying system vulnerabilities, and designing  custom security solutions for clients in technology development  telecommunications, and financial services. van Sprundel specializes in the  assessment of low-level kernel code and architecture/infrastructure design,  having security reviewed literally hundreds of thousands of lines of code.  However, as a Director, he also functions in a managerial capacity by overseeing  penetration testing engagements, providing oversight regarding technical  accuracy, serving as the point of contact between technical consultants and  technical stakeholders, and ensuring that engagements are delivered on time  and in alignment with customer's expectations. van Sprundel also is  responsible to mentor and guide Associate-level consultants as they grow both  their penetration testing and general consulting skillsets. He is the driver  behind the team's implementation of cutting-edge techniques and tools, guided  by both research and successful exploits performed during client engagements."
+      },
+      {
+         "sptitle" : "Senior Network Security Analyst, Arbor Networks",
+         "who" : "Steinthor Bjarnason",
+         "indexsp" : "169",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@sbjarnas",
+         "bio" : "Steinthor Bjarnason is a Senior Network Security Analyst on  Arbor Networks ASERT team, performing applied research on new technologies  and solutions to defend against DDoS attacks.    Steinthor has 17 years of experience working on Internet Security,  Cloud Security, SDN Security, Core Network Security and DDoS attack  mitigation. Steinthor is an inventor and principal of the Cisco Autonomic  Networking Initiative, with a specific focus on Security Automation where he  holds a number of related patents."
+      },
+      {
+         "sptitle" : "Security Architect,  Arbor Networks",
+         "who" : "Jason Jones",
+         "indexsp" : "170",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Jason Jones is the  Security Architect for Arbor Networks' ASERT team. His primary role involves  reverse engineering malware, architecting of internal malware processing  infrastructure, feed infrastructure and botnet monitoring infrastructure in  addition to other development tasks. Jason has spoken at various industry  conferences including BlackHat USA, FIRST, BotConf, REcon, and Ruxcon"
+      },
+      {
+         "sptitle" : "Chief Medical Officer,  Intel Corporation",
+         "who" : "John Sotos",
+         "indexsp" : "171",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "www.intel.com  www.sotos.com",
+         "bio" : "John Sotos is Chief  Medical Officer at Intel Corporation.  He has been programming computers continuously since 1970, excepting  four years of medical school at Johns Hopkins, where he also trained as a  transplantation cardiologist. His  professional interests include hacking the medical diagnostic process, first  with a book on edge cases, called \"Zebra Cards: An Aid to Obscure  Diagnosis,\" followed by six years as a medical technical consultant on  the popular television series \"House, MD.\" His masters degree in  artificial intelligence is from Stanford, and he is a co-founder of  Expertscape.com. He is a long-time air  rescue flight surgeon for the National Guard; however, the opinions presented  here are his own, and do not necessarily represent those of the Department of  Defense or Intel."
+      },
+      {
+         "sptitle" : "R&D Security Team  Leader, Wix.com",
+         "who" : "Tomer Cohen",
+         "indexsp" : "172",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Tomer Cohen leads the  team at Wix.com responsible for all R&D and production systems security.  Previous to that, Tomer has worked as an application security expert in  several firms. Tomer was also one of the founders of Magshimim cyber  training program, which teaches development and cyber security among  high-school students in the periphery of Israel."
+      },
+      {
+         "sptitle" : "Fraunhofer SIT",
+         "who" : "Stephan Huber",
+         "indexsp" : "173",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Stephan Huber is a security researcher at the Testlab mobile  security group at the Fraunhofer Institute for Secure Information Technology  (SIT). His main focus is Android application security testing and developing  new static and dynamic analysis techniques for app security evaluation. He  found different vulnerabilities in well-known Android applications and the  AOSP. In his spare time he enjoys teaching students in Android hacking."
+      },
+      {
+         "sptitle" : "Fraunhofer SIT",
+         "who" : "Siegfried Rasthofer",
+         "indexsp" : "174",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Siegfried Rasthofer is a  vulnerability- and malware-researcher at Fraunhofer SIT (Germany) and his  main research focus is on applied software security on Android applications.  He developed different tools that combine static and dynamic code analysis  for security purposes and he is the founder of the CodeInspect reverse  engineering tool. He likes to break Android applications and found various  AOSP exploits. Most of his research is published at top tier academic  conferences and industry conferences like DEF CON, BlackHat, HiTB, AVAR or  VirusBulletin."
+      },
+      {
+         "sptitle" : "OpenDNS (Cisco)",
+         "who" : "Thomas Mathew",
+         "indexsp" : "175",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Thomas Mathew is a Security Researcher at OpenDNS (now part of  Cisco) where he works on implementing pattern recognition algorithms to  classify malware and botnets. His main interest lies in using various time  series techniques on network sensor data to identify malicious threats.  Previously, Thomas was a researcher at UC Santa Cruz, the US Naval  Postgraduate School, and as a Product and Test Engineer at handsfree  streaming video camera company Looxcie, Inc. He presented at ISOI APT,  BruCon, FloCon and Kaspersky SAS."
+      },
+      {
+         "sptitle" : "Technical Leader at  OpenDNS Research Labs",
+         "who" : "Dhia Mahjoub",
+         "indexsp" : "176",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Dhia Mahjoub is the  Technical Leader at OpenDNS Research Labs (now part of Cisco) with more than  10 years of technology research experience in network protocols, graph  theory, sensor networks, and security. Dhia is the first member of the  OpenDNS research team and over the past four years, has been building threat  detection systems at global scale and leading research projects while  providing expert advice on strategic directions. He has a background in  Computer Networks and holds a PhD in Computer Science from Southern Methodist  University with a specialty in graph theory applied on Wireless Sensor  Networks. Dhia presented at conferences worldwide including APWG eCrime,  BSides, Botconf, ISOI, SOURCE Boston, Black Hat, DEF CON , Virus Bulletin, ShmooCon, Kaspersky SAS,  Infosecurity Europe, Infosecurity Intelligent Defence, BruCon, Hack.lu,  FloCon and RSA."
+      },
+      {
+         "sptitle" : "Senior Consultant, MANDIANT",
+         "who" : "Daniel Bohannon (DBO)",
+         "indexsp" : "177",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@danielhbohannon,",
+         "bio" : "Daniel Bohannon is a Senior Incident Response Consultant at  MANDIANT with over seven years of operations and information security  experience. He is the author of the Invoke-Obfuscation and  Invoke-CradleCrafter PowerShell obfuscation frameworks"
+      },
+      {
+         "sptitle" : "Lead Security Architect, Microsoft",
+         "who" : "Lee Holmes",
+         "indexsp" : "178",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@Lee_Holmes, http://www.leeholmes.com/blog/",
+         "bio" : "Lee Holmes is the lead  security architect of Microsoft's Azure Management group, covering Azure  Stack, System Center, and Operations Management Suite. He is author of the  Windows PowerShell Cookbook, and an original member of the PowerShell  development team."
+      },
+      {
+         "sptitle" : "CTO, Comsec group",
+         "who" : "Gil Cohen",
+         "indexsp" : "179",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@Gilco83  www.facebook.com/gilc83",
+         "bio" : "Gil is an experienced  application security instructor, architect, consultant and pentester just  starting his 12th year in the field.   With past experience in the civilian, government and military cyber security  industries, Gil currently serves as the CTO of Comsec Group, in charge of  training, research, service lines, methodologies and quality assurance.  With a long time record as an SQL injection fanatic, Gil was responsible for  publishing the \"SQL Injection Anywhere\" technique in 2010, which is  currently in use in a variety of automated scanners in the market, and  enables the blind detection and exploitation of potential injections in any  part of the SQL statement.  He also has a taste for nostalgia, and has been working for  a while on abuses to protocols that software developers would prefer to  forget."
+      },
+      {
+         "sptitle" : "Senior Security  Associate, Bishop Fox",
+         "who" : "Dan AltF4 Petro",
+         "indexsp" : "180",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@BishopFox  @2600altf4",
+         "bio" : "Dan Petro is a Senior Security Associate at Bishop Fox, a  consulting firm providing cybersecurity services to the Fortune 500, global  financial institutions, and high-tech startups. In this role, he focuses on  application penetration testing and network penetration testing.    Dan likes to hear himself talk, often resulting in conference presentations  including several consecutive talks at Black Hat USA and DEF CON in addition  to appearances at HOPE, BSides, and ToorCon. He is widely known for the tools  he creates: the Rickmote Controller (a Chromecast-hacking device), Untwister  (a tool used for breaking pseudorandom number generators) and SmashBot (a  merciless Smash Bros noob-pwning machine). He also organizes Root the Box, a  capture the flag security competition.    Dan holds has a Master of Science in Computer Science from Arizona State  University and still doesn't regret it."
+      },
+      {
+         "sptitle" : "Security Analyst, Bishop Fox",
+         "who" : "Ben Morris",
+         "indexsp" : "181",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Ben Morris is a Security  Analyst at Bishop Fox, a consulting firm providing cybersecurity services to  the Fortune 500, global financial institutions, and high-tech startups. In  this role, he focuses on application penetration testing, network penetration  testing, and red-teaming.    Ben also enjoys performing drive-by pull requests on security tools and  bumbling his way into vulnerabilities in widely used PHP and .NET frameworks  and plugins. Ben has also contributed to Root the Box, a capture the flag  security competition."
+      },
+      {
+         "sptitle" : "Wireless security researcher",
+         "who" : "Haoqi Shan",
+         "indexsp" : "182",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Haoqi Shan is currently a wireless/hardware security  researcher in UnicornTeam of 360 Radio Security Research Dept. He focuses on  Wi-Fi penetration, GSM system, embedded device hacking, building hacking  tools, etc. He made serial presentations about Femto cell hacking, RFID  hacking and LTE devices hacking on DEF CON  , Cansecwest, Syscan360 and HITB, etc."
+      },
+      {
+         "sptitle" : "Wireless security  researcher",
+         "who" : "Jian Yuan",
+         "indexsp" : "183",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Yuan Jian is a security  researcher in UnicornTeam of 360 Radio Security Research Dept. He is mainly  focused on the security of Internet of things, NFC, GPS, etc. He was a  speaker at the DEF CON Car Hacking  Village."
+      },
+      {
+         "sptitle" : "Principal Security Researcher,Hewlett Packard Enterprise",
+         "who" : "Alvaro Muoz",
+         "indexsp" : "184",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : "@pwntester",
+         "bio" : "Alvaro Muoz (@pwntester) works as Principal Software Security  Researcher with HPE Security Fortify, Software Security Research (SSR). His  research focuses on different programming languages and web application  frameworks searching for vulnerabilities or unsafe uses of APIs. Before  joining the research team, he worked as an Application Security Consultant  helping enterprises to deploy their application security programs. Muoz has  presented at many Security conferences including DEF CON , RSA, AppSecEU, Protect, DISCCON, etc and  holds several infosec certifications, including OSCP, GWAPT and CISSP, and is  a proud member of int3pids CTF team. He blogs at  http://www.pwntester.com.  "
+      },
+      {
+         "sptitle" : "Senior Security QA Engineer, Hewlett Packard Enterprise",
+         "who" : "Alexandr Mirosh",
+         "indexsp" : "185",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Oleksandr Mirosh has  over 9 years of computer security experience, including vulnerability  research, penetration testing, reverse engineering, fuzzing, developing  exploits and consulting. He is working for HPE Software Security Research  team investigating and analyzing new threats, vulnerabilities, security  weaknesses, new techniques of exploiting security issues and development  vulnerability detection, protection and remediation rules. In the past, he  has performed a wide variety of security assessments, including design and  code reviews, threat modelling, testing and fuzzing in order to identify and  remove any existing or potentially emerging security defects in the software  of various customers.  "
+      },
+      {
+         "sptitle" : "Professor, Arizona State  University",
+         "who" : "Zardus (Yan Shoshitaishvili)",
+         "indexsp" : "186",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : "Zardus is one of the  hacking aces on Shellphish, the oldest-running CTF team in the world. He's  been attending DEF CON since 2001,  playing DEF CON CTF since 2009, and  talking at DEF CON since 2015.  Through this time, he also pursued a PhD in Computer Security, focusing on  Program Analysis. The application of cutting-edge academic program analysis  techniques to CTF (and, later, to his participation in the DARPA Cyber Grand  Challenge, where he led Shellphish to a 3rd-place victory and a big prize  payout) gave Yan a unique understanding of the actual capabilities of the  state of the art of program analysis, which in turn drove his research and  culminated in the release of the angr binary analysis framework and the  Mechanical Phish, one of the world's first autonomous Cyber Reasoning  Systems.  "
+      },
+      {
+         "sptitle" : null,
+         "who" : "DT",
+         "indexsp" : "187",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : null
+      },
+      {
+         "sptitle" : null,
+         "who" : "DT",
+         "indexsp" : "188",
+         "last_update" : "2017-07-10T19:37:57",
+         "media" : null,
+         "bio" : null
+      }
+   ],
+   "update_date" : "2017-07-28T10:12:00"
+}
