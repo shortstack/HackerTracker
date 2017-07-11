@@ -7,33 +7,41 @@
     <!-- navigation drawer item labels  -->
 
     <string-array name="filter_types">
-        <item>Speaker</item>
-        <item>Skytalks</item>
-        <item>Event</item>
-        <item>Villages</item>
-        <item>Kids</item>
+        <item>@string/official</item>
+        <item>@string/speakers</item>
+        <item>@string/skytalks</item>
+        <item>@string/events</item>
+        <item>@string/villages</item>
+        <item>@string/kids</item>
 
-        <item>Contest</item>
-        <item>Party</item>
-        <item>DemoLabs</item>
-        <item>Workshop</item>
+        <item>@string/contests</item>
+        <item>@string/parties</item>
+        <item>@string/demo_labs</item>
+        <item>@string/workshops</item>
     </string-array>
 
+    <string name="official">DEFCON</string>
     <string name="speakers">Speakers</string>
     <string name="contests">Contests</string>
-    <string name="demolabs">Demo Labs</string>
+    <string name="demo_labs">Demo Labs</string>
     <string name="villages">Villages</string>
     <string name="events">Events</string>
     <string name="parties">Parties</string>
     <string name="kids">Kids</string>
     <string name="skytalks">Skytalks</string>
-    <string name="map">Map</string>
     <string name="workshops">Workshops</string>
+
+
+
+    <string name="settings">Settings</string>
+    <string name="schedule">Schedule</string>
+    <string name="map">Map</string>
+
+
     <string name="badges">Badges &amp; Admission</string>
     <string name="wifi">DEF CON WiFi</string>
     <string name="radio">DEF CON Radio</string>
-    <string name="settings">Settings</string>
-    <string name="schedule">Schedule</string>
+
 
     <string name="no_updates">Your schedule is up to date! :)</string>
     <string name="schedule_finished">Schedule sync complete</string>
@@ -42,22 +50,22 @@
 
     <string name="workshop_info_text">
         Workshops are free, first come, first served, and seats will fill up fast!\n\n
-        To register for a workshop, you will need to go to the Bally\'s side in front of the cafe arcade between Thursday 07:00 to 15:00. We will have goons to pre-register you for the workshop(s) of your choosing.\n\n
+        Register for a workshop between Thursday 07:00 to 15:00. We will have goons to pre-register you for the workshop(s) of your choosing.\n\n
         If the workshop that you want has filled up before you got there, don\'t worry! Just like last year, if you come to the workshop area early the day of, you can wait in the standby line. If a seat opens up, it will be made available to the first person waiting to claim it.\n\n
         Please Note: You will be issued a workshop \"pass\". It will be required for class admission. If you lose it we can\'t help you, your seat will be made available for those in standby.
     </string>
 
     <string name="badges_description">
-        DEF CON regular badge pricing is $240, cash only, at the DEF CON registration area at Paris/Bally’s. See map for directions to registration area.
+        DEF CON regular badge pricing is $260, cash only, at the DEF CON registration area. See map for directions to registration area.
         \n\nDEF CON does not offer pre-registration.
         \n\nBadges go on sale 6AM Thursday morning! Welcome to LineCon! Bring a drink (and/or coffee), make some friends, and enjoy the ride. :)
     </string>
 
-    <string name="wifi_description">
+    <string name="wifi_description"><![CDATA[
         DEF CON WiFi registration information will be available at http://wifireg.defcon.org.\n\n
         DEF CON is FULLY network-enabled. Now that we\'ve perfected the art of a stable hacker con network, we\'re ascending to a higher level - we\'re providing you a network that you feel SAFE in using! Since DEF CON 18 we\'re WPA2 encrypted over-the-air, with a direct trunk out to the Internet. No peer-to-peer, no sniffing, just straight to the net (and internal servers). We\'ll provide login credentials at Registration. We know the 3G airwaves will be saturated so we\'re putting our own cred on the line to give you a net that even we would put our own mobile phones on.\n\n
-        If you\'re feeling frisky, we\'ll still have the traditional \"open\" network for you - bring your laptop (we\'d recommend a clean OS, fully patched--you know the procedure) because we don\'t police what happens on that net. Share &amp; enjoy!
-    </string>
+        If you\'re feeling frisky, we\'ll still have the traditional \"open\" network for you - bring your laptop (we\'d recommend a clean OS, fully patched—you know the procedure) because we don\'t police what happens on that net. Share & enjoy!
+    ]]></string>
 
     <string name="radio_text">
         Music for Hacking. The DEF CON Year-Round Channel.\n\n
@@ -66,57 +74,74 @@
     </string>
 
     <string-array name="faq_questions">
-        <item>When and where is DEF CON 24?</item>
-        <item>DEF CON is generally in the last week of July or first week of August in Las Vegas. DEF CON 24 will be held August 4&#8211;7, 2016 at Paris and Bally\'s in Las Vegas. Many people arrive a day early, and many stay a day later. Again this year we will have some things running on Thursday.</item>
-        <item>Is DEF CON 24 canceled? </item>
+        <item>When and where is DEF CON 25?</item>
+        <item>DEF CON is generally in the last week of July or first week of August in Las Vegas. DEF CON 25 will be held July 27–30, 2017, at Caesars Palace in Las Vegas. Many people arrive a day early, and many stay a day later. Again this year we will have some things running on Thursday.</item>
+        <item>Is DEF CON 25 canceled?</item>
         <item>No.</item>
         <item>How much is admission?</item>
-        <item>$240.00 USD, Cash for all four days. Everyone pays the same: The government, the media, the \'well known hackers\', the unknown script kiddies. The only discount is for Goons and speakers, who get to work without paying for the privilege. We only accept cash - no checks, no money orders, no travelers checks. We don\'t want to be a target of any State or Federal fishing expeditions.  </item>
-        <item>Can I pre&#8211;register for DEF CON? </item>
-        <item>No.    </item>
+        <item>$260.00 USD, Cash for all four days. Everyone pays the same: The government, the media, the ‘well known hackers’, the unknown script kiddies. The only discount is for Goons and speakers, who get to work without paying for the privilege. We only accept cash - no checks, no money orders, no travelers checks. We don\'t want to be a target of any State or Federal fishing expeditions.</item>
+        <item>Can I pre-register for DEF CON?</item>
+        <item>No.</item>
         <item>How many people will be there?</item>
-        <item>Last year we had more than 15,000 people at DEF CON! The last few years, attendence has been in the 12&#8211;14k range.</item>
-        <item>How much do rooms at Paris and Bally\'s cost, and how do I reserve a room?</item>
-        <item>The DEF CON rate is available at the following hotels: Paris, Bally\'s, Flamingo and Quad. Check out the DEF CON 24 Venue page for all the details! https://defcon.org/html/defcon-24/dc-24-venue.html </item>
+        <item>Last year we had more than 20,000 people at DEF CON! The last few years, attendance has been in the 15–19k range.</item>
+        <item>How much do rooms at Caesars Palace cost, and how do I reserve a room?</item>
+        <item>The DEF CON rate is available at the following hotels: Caesars Palace, Paris, Bally\'s, Flamingo and Quad. Check out the DEF CON 25 Venue page for all the details!</item>
         <item>I can\'t afford that.</item>
-        <item>Try the Ride and Room sharing threads on the Forums - https://forum.defcon.org/forumdisplay.php?f=26. You may also want to visit your Local DEF CON Groups meeting and see who you might want to bunk up with. It\'s important to mention you should use good judgment when sharing a room and consider who is sleeping next to you and who has access to your belongings. That said, there are a lot of great people looking to save a buck or pinch a penny, good luck. </item>
+        <item>Try the Ride and Room sharing threads on the Forums.
+
+            You may also want to visit your Local DEF CON Groups meeting and see who you might want to bunk up with. It\'s important to mention you should use good judgment when sharing a room and consider who is sleeping next to you and who has access to your belongings. That said, there are a lot of great people looking to save a buck or pinch a penny, good luck.</item>
+        <item>Can I get a discount on DEF CON badges?</item>
+        <item>DEF CON charges one price regardless of your social status or affiliation. Please know that we depend on attendee income to pay the costs of the conference and don\'t have sponsors to help defray the expenses.
+
+We sometimes get requests for discounts [students, veterans, children], unfortunately we don\'t want to try and validate if you are a current student, look at your ID to determine your age, decode military discharge papers, etc.
+
+If you really want to attend DEF CON for free then do something for the con.
+
+You could:
+Submit a CFP and be an accepted speaker or workshop instructor.
+Work on a contest, event, or village.
+Qualify for CTF/Contests that include entry.
+Find a team to become a Goon newbie.
+Contribute to content, or perform some entertainment.</item>
         <item>I need a letter of invite for my visa application, how do I get that?</item>
-        <item>In most cases, DEF CON can send a signed letter of invite, usually within a few short business days once we have all the info. If you also require verification of housing, we can put you in touch with someone to help you get your hotel stay organized, let us know if you need that.\n\n
+        <item>In most cases, DEF CON can send a signed letter of invite, usually within a few short business days once we have all the info. If you also require verification of housing, we can put you in touch with someone to help you get your hotel stay organized, let us know if you need that.
 
-            Along with your request, please email us the following to info(at)defcon(.)org\n\n
+Along with your request, please email us the following to info(at)defcon(.)org
 
-            Name as is on passport:\n
-            Passport number:\n
-            Country of issue:\n
-            Date of issue:\n
-            Date of expiration:\n
-            Country of origin:
+Name as is on passport:
+Passport number:
+Country of issue:
+Date of issue:
+Date of expiration:
+Country of origin:</item>
 
-        </item>
-        <item>How much is internet access in the rooms of Paris and Bally\'s?</item>
+        <item>How much is internet access in the rooms of Caesars Palace?</item>
         <item>We\'ll let you know soon. Internet access is available for free in the convention area.</item>
-        <item>Is there a free network at DEF CON? </item>
-        <item>Why yes, DEF CON 24 is FULLY network&#8211;enabled. Now that we\'ve perfected the art of a stable hacker con network, we\'re ascending to a higher level &#8211; we\'re providing you a network that you feel SAFE in using! Since DEF CON 18 we\'re WPA2 encrypted over&#8211;the&#8211;air, with a direct trunk out to the Internet. No peer&#8211;to&#8211;peer, no sniffing, just straight to the net (and internal servers). We\'ll provide login credentials at Registration. We know the 3G airwaves will be saturated so we\'re putting our own cred on the line to give you a net that even we would put our own mobile phones on.\n\n If you\'re feeling frisky, we\'ll still have the traditional \"open\" network for you &#8211; bring your laptop (we\'d recommend a clean OS, fully patched&#8212;you know the procedure) because we don\'t police what happens on that net. Share &amp;enjoy!  </item>
-        <item>Will Paris and Bally\'s allow free parking? </item>
-        <item>Yes. You will be able to park for free regardless if you have a room at Paris and Bally\'s.       </item>
+        <item>Is there a free network at DEF CON?</item>
+        <item><![CDATA[Why yes, DEF CON is FULLY network-enabled. Now that we\'ve perfected the art of a stable hacker con network, we\'re ascending to a higher level - we\'re providing you a network that you feel SAFE in using! Since DEF CON 18 we\'re WPA2 encrypted over-the-air, with a direct trunk out to the Internet. No peer-to-peer, no sniffing, just straight to the net (and internal servers). We\'ll provide login credentials at Registration. We know the 3G airwaves will be saturated so we\'re putting our own cred on the line to give you a net that even we would put our own mobile phones on.
+
+If you\'re feeling frisky, we\'ll still have the traditional "open" network for you - bring your laptop (we\'d recommend a clean OS, fully patched—you know the procedure) because we don\'t police what happens on that net. Share & enjoy!]]></item>
+        <item>Will Caesars Palace allow free parking?</item>
+        <item>Yes. You will be able to park for free regardless if you have a room at Caesars Palace.</item>
         <item>What about the smoking policy?</item>
-        <item>Due to the Clean Air Act in Las Vegas, the Vendor Area, Speaking rooms, and Hallways will be completely non&#8211;smoking in order to comply with the law. The Hotel will have designated smoking areas clearly posted. There is a discussion about it on the DEF CON Forums here: https://forum.defcon.org/showthread.php?t=8200     Any news and info will likely be posted there.</item>
+        <item>Due to the Clean Air Act in Las Vegas, the Vendor Area, Speaking rooms, and Hallways will be completely non-smoking in order to comply with the law. The Hotel will have designated smoking areas clearly posted. There is a discussion about it on the DEF CON Forums here: https://forum.defcon.org/showthread.php?t=8200
+Any news and info will likely be posted there.</item>
         <item>What is the age limit?</item>
-        <item>People have brought children to DEF CON &#8211; it is not recommended to do this unless you are going to constantly supervise them. It is generally an ‘adult’ atmosphere (language, booze, et cetera). If you\'ve never been to DEF CON, you may want to refrain from bringing your children (unless they are demanding that you bring them). While there are no age limits, we have consistently cooperated with parents and/or private investigators who are looking for children that ‘ran away from home’ to go to DEF CON. You must be 18 years of age or older to reserve a hotel room and to check&#8211;in. A valid ID is required upon check&#8211;in. DEF CON 24 will have enforcement of the 21 or older rule in certain "private" parties with possible bouncers at the doors checking IDs. This is generally the rule in all areas where alcohol is being served. However, DEF CON does not take responsibility for anything potentially indecent or offensive your minor may witness or participate in. The underage attendee is the responsibility of his or her guardian or themselves. The presentations are open to all ages. Observation of contests as they take place on the contest floor is open to all ages. Competition in some contests may have age restrictions due to laws. There is plenty fun to be had without booze and gambling! There is a discussion regarding fun for those under 21 on the forums. https://forum.defcon.org/showthread.php?t=8232 </item>
+        <item>People have brought children to DEF CON - it is not recommended to do this unless you are going to constantly supervise them. It is generally an ‘adult’ atmosphere (language, booze, et cetera). If you\'ve never been to DEF CON, you may want to refrain from bringing your children (unless they are demanding that you bring them). While there are no age limits, we have consistently cooperated with parents and/or private investigators who are looking for children that ‘ran away from home’ to go to DEF CON. You must be 18 years of age or older to reserve a hotel room and to check-in. A valid ID is required upon check-in. DEF CON 25 will have enforcement of the 21 or older rule in certain "private" parties with possible bouncers at the doors checking IDs. This is generally the rule in all areas where alcohol is being served. However, DEF CON does not take responsibility for anything potentially indecent or offensive your minor may witness or participate in. The underage attendee is the responsibility of his or her guardian or themselves. The presentations are open to all ages. Observation of contests as they take place on the contest floor is open to all ages. Competition in some contests may have age restrictions due to laws. There is plenty fun to be had without booze and gambling! There is a discussion regarding fun for those under 21 on the forums. https://forum.defcon.org/showthread.php?t=8232</item>
         <item>I want to speak, how do I give a talk?</item>
-        <item>GREAT! We are looking for and give preference to: unique research, new tool releases, Ø&#8211;day attacks (with responsible disclosure), highly technical material, social commentaries, and ground breaking material of any kind. Want to screen a new hacking documentary or release research? Consider DEF CON. To submit a speech, read the Announcement and complete the DEF CON 23 Call for Papers Form: https://www.defcon.org/html/defcon-23/dc-23-cfp-form.html CFP forms and questions should get mailed to: talks/at/defcon.org</item>
+        <item>GREAT! We are looking for and give preference to: unique research, new tool releases, Ø-day attacks (with responsible disclosure), highly technical material, social commentaries, and ground breaking material of any kind. Want to screen a new hacking documentary or release research? Consider DEF CON. To submit a speech, read the Announcement and complete the DEF CON 25 Call for Papers Form: https://www.defcon.org/html/defcon-25/dc-25-cfp-form.html CFP forms and questions should get mailed to: talks/at/defcon.org</item>
         <item>When does the CFP Close? Can I get an Extension?</item>
-        <item>DEF CON 24 Call For Papers will close on May 2, 2016.</item>
+        <item>DEF CON 25 Call For Papers will close on May 1, 2017.</item>
         <item>How can I help or participate?</item>
-        <item>DEF CON is not a spectator sport! Before the con, during, and after there are chances for you to get involved. Below is a list of this years contests and events. This list may not be complete so check the forums to see what people are up to. Go to the forums for more info on Contests and Events: https://forum.defcon.org/forumdisplay.php?f=767 </item>
+        <item>DEF CON is not a spectator sport! Before the con, during, and after there are chances for you to get involved. Below is a list of this years contests and events. This list may not be complete so check the forums to see what people are up to. Go to the forums for more info on Contests and Events: https://forum.defcon.org/forum/defcon/dc25-official-unofficial-parties-social-gatherings-events-contests</item>
         <item>How do I become a Vendor?</item>
-        <item>You may apply for vendorhood at http://defconvendors.com/. If you want a space in our vendor area, you need to apply. Because of limited space and our attempt to have a diversity of vendors, you may not be able to get a booth. It is wise to think of staffing issues - if you are one person do you want to spend your entire time behind a vendors booth?</item>
-        <item>I\'m press, how do I sign up, why can\'t I get in for free (I\'m just doing my job)? </item>
-        <item>Please check out the DEF CON 24 Press Registration page (https://www.defcon.org/html/defcon-24/dc-24-press.html) if you wish press credentials. Lots of people come to DEF CON and are doing their job; security professionals, federal agents, and the press. It wouldn\'t be fair to DEF CON attendees if we exempted one group from paying. If you are a major network and plan on doing a two minute piece showing all the people with blue hair, you probably shouldn\'t bother applying for a press pass - you won\'t get one. If you are a security writer or from a real publication please submit, and someone will respond with an answer.</item>
-        <item>What should I bring to DEF CON? </item>
-        <item>It depends on what you\'re going to do at DEF CON. This is discussed in quite some depth on the unofficial DC FAQ (http://defcon.stotan.org/faq/) , as well as a thread in the DC Forums (https://forum.defcon.org/showthread.php?t=5483). You may want to bring fancy (or outrageously silly) clothes for the Black and White Balls, annual Friday and Saturday night events where everyone shows off nifty attire. SWAG is Always recommended, people LOVE to trade! You never know when or where a t&#8211;shirt with your .org will come in handy. Government SWAG is a hot commodity, however, DT wishes to pillage those goods first! Its generally a good idea if you are a pale geek to have some sunscreen at the top of your list. Other honorable mentions are: Blister preventions, Band&#8211;aids, Gel shoe inserts, Personal cooling devices, Pain relievers and antacids, Bottle openers, Personal voice recorders, water filters, and last but not least an Alibi.</item>
-        <item>This FAQ didn\'t answer my questions, or was unclear, how can I get further information? </item>
-        <item>There is a forum discussion thread in which you can ask follow up questions. https://forum.defcon.org/showthread.php?t=6845 </item>
+        <item>Keep an eye out for the Vendor registration opening. If you want a space in our vendor area, you need to apply. Because of limited space and our attempt to have a diversity of vendors, you may not be able to get a booth. It is wise to think of staffing issues - if you are one person do you want to spend your entire time behind a vendors booth?</item>
+        <item>I\'m press, how do I sign up, why can\'t I get in for free (I\'m just doing my job)?</item>
+        <item>Please check out the DEF CON 25 Press Registration page (opening soon) if you wish press credentials. Lots of people come to DEF CON and are doing their job; security professionals, federal agents, and the press. It wouldn\'t be fair to DEF CON attendees if we exempted one group from paying. If you are a major network and plan on doing a two minute piece showing all the people with blue hair, you probably shouldn\'t bother applying for a press pass - you won\'t get one. If you are a security writer or from a real publication please submit, and someone will respond with an answer.</item>
+        <item>What should I bring to DEF CON?</item>
+        <item>It depends on what you\'re going to do at DEF CON. This is discussed in quite some depth on the unofficial DC FAQ, as well as a thread in the DC Forums. You may want to bring fancy (or outrageously silly) clothes for the Black and White Balls, annual Friday and Saturday night events where everyone shows off nifty attire. SWAG is Always recommended, people LOVE to trade! You never know when or where a t-shirt with your .org will come in handy. Government SWAG is a hot commodity, however, DT wishes to pillage those goods first! Its generally a good idea if you are a pale geek to have some sunscreen at the top of your list. Other honorable mentions are: Blister preventions, Band-aids, Gel shoe inserts, Personal cooling devices, Pain relievers and antacids, Bottle openers, Personal voice recorders, water filters, and last but not least an Alibi.</item>
+        <item>This FAQ didn\'t answer my questions, or was unclear, how can I get further information?</item>
+        <item>There is a forum discussion thread in which you can ask follow up questions. https://forum.defcon.org/showthread.php?t=6845</item>
     </string-array>
 
 
@@ -130,7 +155,7 @@
     <string name="notification_updated">Details have been updated.</string>
     <string name="uber">Uber</string>
     <string name="tut_introduction"><![CDATA[Welcome to <h1><font>DEFCON 25</font></h1>]]></string>
-    <string name="tut_location">DEFCON 25 will be held at the Paris Hotel, Las Vegas, from August 4th till August 9th.</string>
+    <string name="tut_location">DEF CON 25 will be held July 27–30, 2017, at Caesars Palace in Las Vegas.\n\nMany people arrive a day early, and many stay a day later. Again this year we will have some things running on Thursday.</string>
     <string name="tut_badge"></string>
     <string name="tut_workshop"></string>
     <string name="link_warning">External Link</string>
@@ -153,7 +178,7 @@
     <string name="where_when">Where &amp; When</string>
     <string name="update_progress">(%1$d / %2$d)</string>
     <string name="sync_done">Up to date!</string>
-    <string name="sync_error">There was a issue with syncing. Please try again later.</string>
+    <string name="sync_error">There was a issue with syncing.\n\nPlease try again later.</string>
     <string name="sync_title">Syncing</string>
     <string name="sync_init">Fetching latest information from server.</string>
     <string name="alert_filter_title">Filter Categories</string>
@@ -162,6 +187,11 @@
     <string name="nav_help_title">Looking for something?</string>
     <string name="nav_help_body">Check out the information section</string>
     <string name="updates">Updates</string>
+    <string name="defcon_year">DEFCON 25</string>
+    <string name="tutorial_schedule">Filter your schedule to find what you\'re looking for.</string>
+    <string name="empty_feed">Couldn\'t find anything.</string>
+    <string name="map_day_title">DAY</string>
+    <string name="map_night_title">NIGHT</string>
 
     <string-array name="nav_item_activity_titles">
         <item>@string/nav_home</item>
@@ -171,46 +201,6 @@
         <item>@string/partners_vendors</item>
         <item>@string/settings</item>
     </string-array>
-
-
-    <string-array name="updates">
-        <item>08/04/16</item>
-        <item>Updated Biohacking village schedule! :)</item>
-        <item>08/03/16</item>
-        <item>Catch a movie at DEF CON Movie Night on Thurs/Fri/Sat!</item>
-        <item>08/03/16</item>
-        <item>Updated Skytalks schedule! Updated DEF CON Saturday night line-up!</item>
-        <item>08/03/16</item>
-        <item>Added Capture the Packet, Sheep City, and Packet Detective contests! Check them out in the PHV. Also, DEF CON Radio is now in the menu on the left. :)</item>
-        <item>08/02/16</item>
-        <item>Toxic BBQ is back this year! Check out the events on Thursday for more info! Added WiFi info in the menu. Added IoT 0-day track. Added abstracts to R00tz events. Check out the N00b Party on Thursday! Check out TravelCon on Friday! If you want a sticker, find ze password! And then find @shortxstack!</item>
-        <item>08/02/16</item>
-        <item>If you find me around the con Thurs-Sun, speak the *password* once you find it and you will receive MAYBE the coolest sticker ever made! ;) Also, fixed the push notifications--re-star your starred items if you want notifications, because I can\'t tell time, apparently.</item>
-        <item>07/31/16</item>
-        <item>Updated con map *again*! Added Mohawk-Con! Also, new location for this year\'s Unofficial DEF CON Shoot! It will be at the Clark County Shooting Complex.</item>
-        <item>07/30/16</item>
-        <item>Updated con map! Added Hack Fortress, Data Duplication Village, Lawyer Meetup, a few parties. Also, World Run and DEF CON Half Marathon! 4! MORE! DAYS! Start hydrating NOW!</item>
-        <item>07/28/16</item>
-        <item>Welcome, Biohacking Village! Also, check out the Crash and Compile contest, and the #Demonsaw and #Telephreak parties! All Thursday workshop times changed. Badge info now available in the menu. Many thanks to @defcon for the generous recognition! :)</item>
-        <item>07/25/16</item>
-        <item>Welcome, @DCDarkNet and @tiarac0n! ;)</item>
-        <item>07/21/16</item>
-        <item>Wall of Sheep announced their DJ lineup! Now in events.</item>
-        <item>07/19/16</item>
-        <item>Demo labs are live! Added crypto village, wireless village, and other minor schedule updates.</item>
-        <item>07/11/16</item>
-        <item>You can now get an Uber to the con with a click! Defaults to Paris. Updated official schedule, parties, and village schedules.</item>
-        <item>07/05/16</item>
-        <item>Skytalks, vendors, more parties, village schedules, and events! 1 month to go! :)</item>
-        <item>06/22/16</item>
-        <item>Added a partners section :) Check them out in the menu on the left - @Rejected_CON and @defconparties! The @Rejected_CON CFP closes 9/30!</item>
-        <item>06/20/16</item>
-        <item>Starting early this year with updates! Ramping up for DC24. Added official schedule and workshops. Can\'t wait to see everyone in August!</item>
-    </string-array>
-
-
-
-
 
     <string-array name="badge_information">
         <item>@string/badges</item>
