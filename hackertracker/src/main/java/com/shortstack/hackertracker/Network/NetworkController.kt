@@ -106,7 +106,8 @@ open class NetworkController(private val context: Context) : Callback<SyncRespon
 
 
     override fun onFailure(call: Call<SyncResponse>, t: Throwable) {
-        setDialogMessage(context.getString(R.string.sync_error))
+        Logger.d("Network Sync onFailure: " + t.message)
+        setDialogMessage(context.getString(R.string.sync_error) + if (BuildConfig.DEBUG) "\n\nonFailure:\n" + t.message else "")
     }
 
     private fun setDialogMessage(message: String) {
