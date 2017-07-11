@@ -7,6 +7,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import com.shortstack.hackertracker.Application.App;
+import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Filter;
 import com.shortstack.hackertracker.R;
 
@@ -17,7 +18,7 @@ import butterknife.ButterKnife;
 
 public class FilterView extends LinearLayout {
 
-    @BindViews({R.id.speaker, R.id.skytalk, R.id.event, R.id.village, R.id.kids, R.id.contest, R.id.party, R.id.demo, R.id.workshop})
+    @BindViews({R.id.official, R.id.speaker, R.id.skytalk, R.id.event, R.id.village, R.id.kids, R.id.contest, R.id.party, R.id.demo, R.id.workshop})
     AppCompatCheckBox[] types;
 
     public FilterView(Context context) {
@@ -32,7 +33,7 @@ public class FilterView extends LinearLayout {
     }
 
     private void setFilter(Filter filter) {
-        String[] keys = getContext().getResources().getStringArray(R.array.filter_types);
+        String[] keys = Constants.TYPES;
         String[] typesArray = filter.getTypesArray();
         for (int i = 0; i < typesArray.length; i++) {
             for (int i1 = 0; i1 < keys.length; i1++) {
@@ -56,11 +57,13 @@ public class FilterView extends LinearLayout {
     private void init() {
         inflate(getContext(), R.layout.alert_filter, this);
         ButterKnife.bind(this);
+
+
     }
 
     public Filter save() {
         ArrayList<String> selected = new ArrayList<>();
-        String[] keys = getContext().getResources().getStringArray(R.array.filter_types);
+        String[] keys = Constants.TYPES;
 
         for (int i = 0; i < types.length; i++) {
             CheckBox type = types[i];

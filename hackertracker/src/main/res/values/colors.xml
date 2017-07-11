@@ -18,6 +18,7 @@
 
 
     <!-- Category colours -->
+    <color name="category_official">#c77228</color>
     <color name="category_speaker">#C62828</color>
     <color name="category_skytalk">#AD1457</color>
     <color name="category_event">#6A1B9A</color>

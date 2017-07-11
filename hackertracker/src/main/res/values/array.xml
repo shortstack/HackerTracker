@@ -2,6 +2,7 @@
 <resources>
 
     <string-array name="colors">
+        <item>@color/category_official</item>
         <item>@color/category_speaker</item>
         <item>@color/category_skytalk</item>
         <item>@color/category_event</item>
