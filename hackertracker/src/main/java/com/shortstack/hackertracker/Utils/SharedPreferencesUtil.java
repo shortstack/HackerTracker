@@ -25,9 +25,7 @@ public class SharedPreferencesUtil {
         APP_LAST_REFRESH("app_last_refresh"),
         APP_LAST_UPDATED("app_last_updated"),
         APP_VIEW_PAGER_POSITION("app_view_pager_position"),
-        SCHEDULE_DAY_VIEW("app_day_view")
-
-        ;
+        SCHEDULE_DAY_VIEW("app_day_view");
 
 
         private final String name;
@@ -71,7 +69,7 @@ public class SharedPreferencesUtil {
         editor.apply();
     }
 
-    public void setScheduleDay(int pos ) {
+    public void setScheduleDay(int pos) {
         SharedPreferences.Editor editor = getEditor();
         editor.putInt(Key.SCHEDULE_DAY_VIEW.toString(), pos);
         editor.apply();

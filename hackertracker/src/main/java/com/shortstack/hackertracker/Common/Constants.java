@@ -4,7 +4,7 @@ import com.shortstack.hackertracker.BuildConfig;
 
 public interface Constants {
 
-    String API_URL_BASE = "https://info.defcon.org/";
+    String API_URL_BASE = "https://info.defcon.org/json/";
 
     long DEBUG_FORCE_TIME_DATE = 1470418500000L;
     long TIMER_INTERVAL_FIVE_MIN = 300000;
@@ -22,12 +22,13 @@ public interface Constants {
 
     String FEEDBACK_EMAIL = "chrisporter0111@gmail.com";
 
+    String TYPE_OFFICIAL = "Official";
     String TYPE_SPEAKER = "Speaker";
     String TYPE_CONTEST = "Contest";
     String TYPE_EVENT = "Event";
     String TYPE_PARTY = "Party";
     String TYPE_VENDOR = "Company";
-    String TYPE_DEMOLAB = "DemoLabs";
+    String TYPE_DEMO_LAB = "DemoLabs";
     String TYPE_SKYTALKS = "Skytalks";
     String TYPE_MESSAGE = "Message";
     String TYPE_VILLAGE = "Villages";
@@ -39,6 +40,9 @@ public interface Constants {
     String TYPE_KIDS = "Kids";
     String TYPE_JOKE = "Joke";
     String TYPE_OMG = "Password";
+
+    String[] TYPES = { TYPE_OFFICIAL, TYPE_SPEAKER, TYPE_SKYTALKS, TYPE_EVENT, TYPE_VILLAGE,
+            TYPE_KIDS, TYPE_CONTEST, TYPE_PARTY, TYPE_DEMO_LAB, TYPE_WORKSHOP };
 
     String UBER_CLIENT_ID = "q1eUCeC1ZenbGmQD2vb0MytALvboEHhD";
 

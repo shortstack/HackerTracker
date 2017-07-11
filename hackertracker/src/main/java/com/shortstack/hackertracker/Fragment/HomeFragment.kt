@@ -9,10 +9,8 @@ import android.view.ViewGroup
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.pedrogomez.renderers.RendererContent
-import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Model.Item
 import com.shortstack.hackertracker.Model.Navigation
-import com.shortstack.hackertracker.Model.UpdatedItemsModel
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Renderer.*
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -50,20 +48,20 @@ class HomeFragment : Fragment() {
         // Updates title
         adapter?.add(getString(R.string.updates))
 
-        val myItems = arrayOfNulls<String>(10)
-
-
-        for (i in myItems.indices) {
-            val update = arrayOfNulls<String>(2)
-
-            val model = UpdatedItemsModel()
-
-            update[0] = if (model.state == UpdatedItemsModel.STATE_NEW) "NEW" else "UPDATED"
-            val scheduleItem = App.application.databaseController.getScheduleItem(model.id)
-            update[1] = scheduleItem.title
-
-            adapter?.add(scheduleItem)
-        }
+//        val myItems = arrayOfNulls<String>(10)
+//
+//
+//        for (i in myItems.indices) {
+//            val update = arrayOfNulls<String>(2)
+//
+//            val model = UpdatedItemsModel()
+//
+//            update[0] = if (model.state == UpdatedItemsModel.STATE_NEW) "NEW" else "UPDATED"
+//            val scheduleItem = App.application.databaseController.getScheduleItemFromId(model.id)
+//            update[1] = scheduleItem.title
+//
+//            adapter?.add(scheduleItem)
+//        }
     }
 
     private fun addHelpNavigation() {

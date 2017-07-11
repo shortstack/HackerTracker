@@ -19,7 +19,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.Random;
 
 public class Item implements Serializable {
 
@@ -32,44 +31,29 @@ public class Item implements Serializable {
     private static final int NEW = 1;
 
     private int id;
-    public String type;
-    private String date;
+    @SerializedName("entry_type")
+    private String type;
+
     private String title;
     @SerializedName("who")
-    private String host;
+    private String hostString;
+    private Speaker host;
+
     private String description;
-    private String begin;
-    private String end;
-    public String location;
+
+    private String startDate;
+    private String endDate;
+
+    private String location;
     private String link;
+    private String dctvChannel;
+    private String includes;
 
 
     // State
     private int isNew;
     @SerializedName("starred")
     private int isBookmarked;
-    @SerializedName("demo")
-    private int isDemo;
-    @SerializedName("tool")
-    private int isTool;
-    @SerializedName("exploit")
-    private int isExploit;
-
-
-    // Generators
-
-
-    public Item() {
-        super();
-        id = new Random().nextInt();
-        title = "My event!";
-        location = "Debug Menus";
-        type = "Party";
-        begin = "10:00";
-        end = "10:50";
-        date = "2017-07-07";
-
-    }
 
 
     public static Item CursorToItem(Gson gson, Cursor cursor) {
@@ -101,19 +85,19 @@ public class Item implements Serializable {
     }
 
     public String getHost() {
-        return host;
+        return hostString;
     }
 
     public String getBegin() {
-        return begin;
+        return startDate;
     }
 
     public String getEnd() {
-        return end;
+        return endDate;
     }
 
     public String getDate() {
-        return date;
+        return startDate.substring(0, 11);
     }
 
     public String getLocation() {
@@ -132,15 +116,15 @@ public class Item implements Serializable {
     // State
 
     public boolean isTool() {
-        return isTool == TOOL;
+        return includes != null && includes.contains("Tool");
     }
 
     public boolean isExploit() {
-        return isExploit == EXPLOIT;
+        return includes != null && includes.contains("Exploit");
     }
 
     public boolean isDemo() {
-        return isDemo == DEMO;
+        return includes != null && includes.contains("Demo");
     }
 
     public boolean isBookmarked() {
@@ -158,7 +142,7 @@ public class Item implements Serializable {
 
     // Date
     private DateFormat getDateFormat() {
-        return new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        return new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
     }
 
 
@@ -176,23 +160,22 @@ public class Item implements Serializable {
 
 
     public Date getBeginDateObject() {
-        String dateStr = getDate() + " " + getBegin();
-        return getDateObject(dateStr);
+        return getDateObject(startDate);
     }
 
     Date getEndDateObject() {
-        String dateStr = getDate() + " " + getEnd();
-        return getDateObject(dateStr);
+        return getDateObject(endDate);
     }
 
     public boolean hasExpired() {
         Date date = App.Companion.getCurrentDate();
-        if (getEndDateObject() == null) {
+        Date end = getEndDateObject();
+        if (end == null) {
             Logger.e(title + " -- End Date is null!");
             return false;
         }
 
-        return date.after(getEndDateObject());
+        return date.after(end);
     }
 
     public boolean hasBegin() {
@@ -258,11 +241,6 @@ public class Item implements Serializable {
             e.printStackTrace();
         }
 
-
-        if (id == 7) {
-            Logger.d(values.toString());
-        }
-
         return values;
     }
 
@@ -283,6 +261,15 @@ public class Item implements Serializable {
         } else {
             setBookmarked();
         }
+    }
+
+
+    public void setLocation( String location ) {
+        this.location = location;
+    }
+
+    public void setType( String type ) {
+        this.type = type;
     }
 
 }

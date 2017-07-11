@@ -23,8 +23,6 @@ import com.shortstack.hackertracker.Model.ItemViewModel;
 import com.shortstack.hackertracker.R;
 import com.squareup.otto.Subscribe;
 
-import java.util.Random;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -156,7 +154,9 @@ public class ItemView extends CardView {
 
     @Subscribe
     public void onRefreshTimeEvent(RefreshTimerEvent event) {
+//        long time = System.currentTimeMillis();
         updateProgressBar();
+//        Logger.d("Refreshed in " + ( System.currentTimeMillis() - time));
     }
 
     @Subscribe
@@ -180,7 +180,7 @@ public class ItemView extends CardView {
     }
 
     private void renderItem() {
-        updated.setVisibility( new Random().nextBoolean() ? VISIBLE : GONE);
+        //updated.setVisibility( new Random().nextBoolean() ? VISIBLE : GONE);
 
         renderText();
         renderIcon();

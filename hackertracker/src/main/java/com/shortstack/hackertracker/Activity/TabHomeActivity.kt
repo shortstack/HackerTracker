@@ -11,14 +11,10 @@ import android.view.MenuItem
 import android.view.View
 import butterknife.ButterKnife
 import com.github.stkent.amplify.tracking.Amplify
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.Analytics.AnalyticsController
 import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.BottomSheet.ReviewBottomSheetDialogFragment
-import com.shortstack.hackertracker.Fragment.HomeFragment
-import com.shortstack.hackertracker.Fragment.InformationFragment
-import com.shortstack.hackertracker.Fragment.ScheduleFragment
-import com.shortstack.hackertracker.Fragment.SettingsFragment
+import com.shortstack.hackertracker.Fragment.*
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -27,11 +23,11 @@ class TabHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     private var mFragmentIndex = DEFAULT_FRAGMENT_INDEX
 
-    private var activityTitles: Array<String>? = null
+    private val titles: Array<String> by lazy { resources.getStringArray(R.array.nav_item_activity_titles) }
 
     // flag to load home fragment when user presses back key
     private val shouldLoadHomeFragOnBackPress = true
-    private var mHandler: Handler? = null
+    private var mHandler: Handler = Handler()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,24 +36,17 @@ class TabHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         ButterKnife.bind(this)
         setSupportActionBar(toolbar)
 
-
-        mHandler = Handler()
-
-
         initViewPager()
-
-
-        activityTitles = resources.getStringArray(R.array.nav_item_activity_titles)
 
         filter.setOnClickListener { onFilterClick() }
 
-
         if (savedInstanceState == null) {
-            mFragmentIndex = App.storage?.viewPagerPosition ?: 1
+            mFragmentIndex = App.storage.viewPagerPosition
             forceMenuHighlighted()
             loadFragment()
         }
     }
+
 
     private fun forceMenuHighlighted() {
         nav_view!!.menu.getItem(mFragmentIndex).isChecked = true
@@ -67,9 +56,9 @@ class TabHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         // set toolbar title
         //setToolbarTitle();
 
-        Logger.d("Setting fragment:" + mFragmentIndex)
+//        Logger.d("Setting fragment:" + mFragmentIndex)
 
-        App.storage?.viewPagerPosition = mFragmentIndex
+        App.storage.viewPagerPosition = mFragmentIndex
         tagAnalytics()
 
         // if user select the current navigation menu again, don't do anything
@@ -94,10 +83,7 @@ class TabHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
 
         // If mPendingRunnable is not null, then add to the message queue
-        if (mPendingRunnable != null) {
-            mHandler!!.post(mPendingRunnable)
-        }
-
+        mHandler.post(mPendingRunnable)
 
         invalidateOptionsMenu()
 
@@ -117,7 +103,7 @@ class TabHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     }
 
     private fun tagAnalytics() {
-        App.application?.analyticsController?.tagCustomEvent(fragmentEvent)
+        App.application.analyticsController.tagCustomEvent(fragmentEvent)
     }
 
     private val fragmentEvent: AnalyticsController.Analytics
@@ -135,7 +121,7 @@ class TabHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
                 NAV_SETTINGS -> AnalyticsController.Analytics.FRAGMENT_SETTINGS
 
-                else ->  throw IllegalStateException("Could not locale the corrent fragment from index $mFragmentIndex.")
+                else -> throw IllegalStateException("Could not locale the correct fragment from index $mFragmentIndex.")
             }
         }
 
@@ -204,7 +190,7 @@ class TabHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         mFragmentIndex = getFragmentIndex(item)
 
-        Logger.d("Selected item! " + mFragmentIndex)
+//        Logger.d("Selected item! " + mFragmentIndex)
 
         loadFragment()
         return true
@@ -229,7 +215,7 @@ class TabHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         get() = "home_fragment_" + mFragmentIndex
 
     private val fragmentTitle: String
-        get() = activityTitles!![mFragmentIndex]
+        get() = titles[mFragmentIndex]
 
     fun loadFragment(fragment: Int) {
         mFragmentIndex = fragment
@@ -239,7 +225,7 @@ class TabHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     companion object {
 
-        private val DEFAULT_FRAGMENT_INDEX = 1
+        val DEFAULT_FRAGMENT_INDEX = 1
         val NAV_HOME = 0
         val NAV_SCHEDULE = 1
         val NAV_MAP = 2

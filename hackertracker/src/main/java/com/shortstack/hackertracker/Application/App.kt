@@ -91,8 +91,7 @@ class App : Application() {
 
         lateinit var application: App
 
-        val storage: SharedPreferencesUtil?
-            get() = application?.mStorage
+        val storage: SharedPreferencesUtil by lazy { application.mStorage }
 
         fun getCurrentCalendar() : Calendar = application.timeHelper.currentCalendar
 

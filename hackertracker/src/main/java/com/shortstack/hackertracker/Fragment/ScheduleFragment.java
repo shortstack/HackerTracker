@@ -13,16 +13,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.orhanobut.logger.Logger;
-import com.pedrogomez.renderers.RendererContent;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Event.RefreshTimerEvent;
 import com.shortstack.hackertracker.Event.UpdateListContentsEvent;
 import com.shortstack.hackertracker.List.ScheduleItemAdapter;
-import com.shortstack.hackertracker.List.ScheduleItemBuilder;
 import com.shortstack.hackertracker.Model.Filter;
 import com.shortstack.hackertracker.Model.Item;
+import com.shortstack.hackertracker.Model.Speaker;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.FilterView;
 import com.squareup.otto.Subscribe;
@@ -58,6 +57,7 @@ public class ScheduleFragment extends Fragment {
 
     public Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
+            //Logger.d("Updating list!");
 //            if( App.Companion.getApplication().DEBUG_TIME_EXTRA == Constants.TIMER_INTERVAL_FIVE_MIN ) {
 //                NetworkController cont = App.Companion.getApplication().getNetworkController();
 //                cont.syncInBackground();
@@ -162,10 +162,13 @@ public class ScheduleFragment extends Fragment {
 
     private void refreshContents() {
 
+        Logger.d("Refreshing schedule contents.");
 
         adapter.clear();
 
-        //adapter.add(new RendererContent<>("// Begin //", ScheduleItemBuilder.HEADER));
+
+        List<Speaker> speakers = App.Companion.getApplication().getDatabaseController().getSpeakers();
+        Logger.d("Got Speakers: "+ speakers.size());
 
 
         Filter filter = App.Companion.getStorage().getFilter();
@@ -174,8 +177,6 @@ public class ScheduleFragment extends Fragment {
 
         List<Object> objects = addTimeDividers(events);
         adapter.addAll(objects);
-
-        adapter.add(new RendererContent<>("// End //", ScheduleItemBuilder.FOOTER));
 
         updateFeedErrors();
 

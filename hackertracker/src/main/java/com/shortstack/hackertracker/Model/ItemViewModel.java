@@ -37,37 +37,15 @@ public class ItemViewModel {
     }
 
     public int getCategoryColorPosition() {
-        int count = -1;
-
         if (TextUtils.isEmpty(mItem.getType()))
             return EMPTY_CATEGORY;
 
-        switch (mItem.getType()) {
-            case Constants.TYPE_WORKSHOP:
-                count++;
-            case Constants.TYPE_DEMOLAB:
-                count++;
-            case Constants.TYPE_PARTY:
-                count++;
-            case Constants.TYPE_CONTEST:
-                count++;
-            case Constants.TYPE_KIDS:
-                count++;
-            case Constants.TYPE_VILLAGE:
-                count++;
-            case Constants.TYPE_EVENT:
-                count++;
-            case Constants.TYPE_SKYTALKS:
-                count++;
-            case Constants.TYPE_SPEAKER:
-                count++;
+        for (int i = 0; i < Constants.TYPES.length; i++) {
+            if( mItem.getType().equals(Constants.TYPES[i]))
+                return i;
         }
 
-        if( count == -1 ) {
-            throw new IllegalStateException("Could not find category for Item: " + getItem().getTitle() + " with type: " + getItem().getType() );
-        }
-
-        return count;
+        throw new IllegalStateException("Could not find category for Item: " + getItem().getTitle() + " with type: " + getItem().getType() );
     }
 
 
@@ -140,10 +118,6 @@ public class ItemViewModel {
 
     public String getDisplayTitle() {
         return /*(BuildConfig.DEBUG ? mItem.getId() + " " : "") +*/ mItem.getTitle();
-    }
-
-    public boolean hasHost() {
-        return !TextUtils.isEmpty(mItem.getHost());
     }
 
     public boolean hasDescription() {
