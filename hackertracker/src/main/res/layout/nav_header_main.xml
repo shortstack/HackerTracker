@@ -14,18 +14,18 @@
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="0dp"
         android:layout_marginTop="16dp"
         android:layout_weight="1"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/skull_lg" />
+        app:srcCompat="@drawable/skull_25" />
 
     <TextView
         android:id="@+id/textView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        android:text="DEF CON 25"
+        android:text="@string/defcon_year"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
         android:textColor="@color/white" />
 
