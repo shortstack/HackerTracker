@@ -5,6 +5,8 @@ import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.R;
@@ -341,7 +343,19 @@ public class Item implements Serializable {
 
     public boolean hasExpired() {
         Date date = App.getApplication().getCurrentDate();
-        return date.after(getEndDateObject());
+        Date endDateObject = getEndDateObject();
+
+        if (date == null || endDateObject == null) {
+            CrashlyticsCore core = Crashlytics.getInstance().core;
+            if (core != null) {
+                core.log("Item cannot check if expired! ");
+                core.log("Date null?" + (date == null) + ", endDate null? " + (endDateObject == null));
+            }
+
+            return false;
+        }
+        return date.after(endDateObject);
+
     }
 
     public boolean hasBegin() {
