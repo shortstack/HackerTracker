@@ -18,15 +18,15 @@ import com.uber.sdk.rides.client.SessionConfiguration;
 
 import java.util.Arrays;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class UberView extends FrameLayout {
 
-    @Bind(R.id.spinner)
+    @BindView(R.id.spinner)
     AppCompatSpinner spinner;
 
-    @Bind(R.id.uber_request_button)
+    @BindView(R.id.uber_request_button)
     RideRequestButton button;
 
     public UberView(Context context) {

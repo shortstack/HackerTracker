@@ -26,7 +26,7 @@ import com.shortstack.hackertracker.Fragment.ReviewBottomSheetDialogFragment;
 import com.shortstack.hackertracker.Fragment.SettingsFragment;
 import com.shortstack.hackertracker.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -41,19 +41,19 @@ public class TabHomeActivity extends AppCompatActivity
     public static final int NAV_VENDORS = 4;
     public static final int NAV_SETTINGS = 5;
 
-    @Bind(R.id.toolbar)
+    @BindView(R.id.toolbar)
     Toolbar toolbar;
 //    @Bind(R.id.tabs)
 //    TabLayout tabLayout;
 //    @Bind(R.id.viewpager)
 //    ViewPager viewPager;
 
-    @Bind(R.id.drawer_layout)
+    @BindView(R.id.drawer_layout)
     DrawerLayout mDrawerLayout;
-    @Bind(R.id.nav_view)
+    @BindView(R.id.nav_view)
     NavigationView mNavView;
 
-    @Bind(R.id.filter)
+    @BindView(R.id.filter)
     FloatingActionButton fab;
 
 
@@ -74,6 +74,8 @@ public class TabHomeActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
 
+
+
         mHandler = new Handler();
 
 
@@ -85,6 +87,9 @@ public class TabHomeActivity extends AppCompatActivity
 
         if (savedInstanceState == null) {
             mFragmentIndex = App.getStorage().getViewPagerPosition();
+
+            //mFragmentIndex = 0;
+
             forceMenuHighlighted();
             loadFragment();
         }
@@ -147,7 +152,7 @@ public class TabHomeActivity extends AppCompatActivity
             review.show(this.getSupportFragmentManager(), review.getTag());
         }
 
-        if( App.getStorage().shouldShowBetaAlert()) {
+        if (App.getStorage().shouldShowBetaAlert()) {
             App.getStorage().markShownBetaAlert();
             MaterialAlert.create(this).setTitle("Beta").setMessage("Welcome to the new Hacker Tracker. \nThis build has gone through heavy improvements, and still is in the beta stage. " +
                     "While DEF CON isn't ongoing currently, the app will force the current time to be during the convention." +
@@ -262,6 +267,22 @@ public class TabHomeActivity extends AppCompatActivity
     }
 
     private int getFragmentIndex(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.nav_home:
+                return 0;
+            case R.id.nav_information:
+                return 3;
+            case R.id.nav_schedule:
+                return 1;
+            case R.id.nav_companies:
+                return 4;
+            case R.id.nav_settings:
+                return 5;
+            case R.id.nav_map:
+                return 2;
+        }
+
+
         return item.getItemId() - R.id.nav_home;
     }
 

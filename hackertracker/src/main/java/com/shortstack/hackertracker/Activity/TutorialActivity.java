@@ -19,7 +19,7 @@ import android.widget.TextView;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.ViewPagerIndicatorDots;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -29,10 +29,10 @@ public class TutorialActivity extends AppCompatActivity {
     public static TutorialObject[] tutorials;
 
 
-    @Bind(R.id.viewpager)
+    @BindView(R.id.viewpager)
     ViewPager viewPager;
 
-    @Bind(R.id.indicator)
+    @BindView(R.id.indicator)
     ViewPagerIndicatorDots indicator;
 
     @Override
@@ -82,11 +82,11 @@ public class TutorialActivity extends AppCompatActivity {
         protected static final String ARG_POS = "arg_pos";
         private int mPosition;
 
-        @Bind(R.id.image)
+        @BindView(R.id.image)
         ImageView image;
-        @Bind(R.id.title)
+        @BindView(R.id.title)
         TextView title;
-        @Bind(R.id.description)
+        @BindView(R.id.description)
         TextView description;
 
 

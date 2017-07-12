@@ -11,6 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
+import com.orhanobut.logger.Logger;
 import com.pedrogomez.renderers.RendererAdapter;
 import com.pedrogomez.renderers.RendererBuilder;
 import com.shortstack.hackertracker.Application.App;
@@ -21,12 +24,12 @@ import com.shortstack.hackertracker.Renderer.VendorRenderer;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class VendorsActivity extends Fragment {
 
-    @Bind(R.id.list)
+    @BindView(R.id.list)
     RecyclerView list;
 
     public static VendorsActivity newInstance() {

@@ -15,12 +15,12 @@ import com.shortstack.hackertracker.View.ItemView;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ItemRenderer extends Renderer<Item> implements View.OnClickListener, View.OnLongClickListener {
 
-    @Bind(R.id.item)
+    @BindView(R.id.item)
     ItemView item;
 
     @Override

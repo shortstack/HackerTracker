@@ -31,18 +31,18 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
 public class GenericRowFragment extends Fragment {
 
-    @Bind(R.id.list)
+    @BindView(R.id.list)
     public RecyclerView list;
 
     private GenericRowAdapter adapter;
 
-    @Bind(R.id.empty)
+    @BindView(R.id.empty)
     View empty;
 
     public static GenericRowFragment newInstance() {

@@ -12,12 +12,12 @@ import com.shortstack.hackertracker.R;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindViews;
 import butterknife.ButterKnife;
 
 public class FilterView extends LinearLayout {
 
-    @Bind({R.id.speaker, R.id.skytalk, R.id.event, R.id.village, R.id.kids, R.id.contest, R.id.party, R.id.demo, R.id.workshop})
+    @BindViews({R.id.speaker, R.id.skytalk, R.id.event, R.id.village, R.id.kids, R.id.contest, R.id.party, R.id.demo, R.id.workshop})
     AppCompatCheckBox[] types;
 
     public FilterView(Context context) {

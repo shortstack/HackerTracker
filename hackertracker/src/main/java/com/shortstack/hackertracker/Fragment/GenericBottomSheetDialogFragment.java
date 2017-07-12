@@ -11,23 +11,23 @@ import android.widget.TextView;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 
 public abstract class GenericBottomSheetDialogFragment extends android.support.design.widget.BottomSheetDialogFragment {
 
-    @Bind(R.id.title)
+    @BindView(R.id.title)
     TextView title;
 
-    @Bind(R.id.description)
+    @BindView(R.id.description)
     TextView description;
 
-    @Bind(R.id.empty)
+    @BindView(R.id.empty)
     View empty;
 
-    @Bind(R.id.link)
+    @BindView(R.id.link)
     View link;
 
 

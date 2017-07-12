@@ -9,8 +9,6 @@ import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.R;
 
-import org.parceler.Parcel;
-
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -28,7 +26,7 @@ import java.util.regex.Pattern;
  * Description:
  */
 
-@Parcel
+
 public class Item implements Serializable {
 
     private static final int EMPTY_CATEGORY = 0;

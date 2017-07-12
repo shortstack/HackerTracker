@@ -17,7 +17,7 @@ import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.ItemView;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
@@ -27,25 +27,25 @@ public class DetailsBottomSheetDialogFragment extends android.support.design.wid
     public static final String ARG_OBJ = "VENDOR";
 
 
-    @Bind(R.id.item)
+    @BindView(R.id.item)
     ItemView item;
 
 
     // Description
 
-    @Bind(R.id.description)
+    @BindView(R.id.description)
     TextView description;
 
-    @Bind(R.id.empty)
+    @BindView(R.id.empty)
     View empty;
 
-    @Bind(R.id.link)
+    @BindView(R.id.link)
     View link;
 
-    @Bind(R.id.star)
+    @BindView(R.id.star)
     ImageView star;
 
-    @Bind(R.id.share)
+    @BindView(R.id.share)
     View share;
 
 

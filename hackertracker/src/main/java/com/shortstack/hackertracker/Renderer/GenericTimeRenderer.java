@@ -11,12 +11,12 @@ import com.shortstack.hackertracker.View.TimeView;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class GenericTimeRenderer extends Renderer<Date> {
 
-    @Bind(R.id.time_item)
+    @BindView(R.id.time_item)
     TimeView item;
 
     @Override

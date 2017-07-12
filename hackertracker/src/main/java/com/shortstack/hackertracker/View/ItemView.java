@@ -22,7 +22,7 @@ import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
 import com.squareup.otto.Subscribe;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ItemView extends CardView {
@@ -37,34 +37,34 @@ public class ItemView extends CardView {
     private Item mItem;
 
 
-    @Bind(R.id.title)
+    @BindView(R.id.title)
     TextView title;
 
-    @Bind(R.id.time)
+    @BindView(R.id.time)
     TextView time;
 
-    @Bind(R.id.location)
+    @BindView(R.id.location)
     TextView location;
 
-    @Bind(R.id.category_text)
+    @BindView(R.id.category_text)
     TextView categoryText;
 
-    @Bind(R.id.demo)
+    @BindView(R.id.demo)
     View demo;
 
-    @Bind(R.id.exploit)
+    @BindView(R.id.exploit)
     View exploit;
 
-    @Bind(R.id.tool)
+    @BindView(R.id.tool)
     View tool;
 
-    @Bind(R.id.category)
+    @BindView(R.id.category)
     View category;
 
-    @Bind(R.id.star_bar)
+    @BindView(R.id.star_bar)
     View star;
 
-    @Bind(R.id.progress)
+    @BindView(R.id.progress)
     ProgressBar progress;
     private ObjectAnimator mAnimation;
 

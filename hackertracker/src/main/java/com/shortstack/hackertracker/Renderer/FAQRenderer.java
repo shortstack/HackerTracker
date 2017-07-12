@@ -10,7 +10,7 @@ import com.shortstack.hackertracker.R;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FAQRenderer extends Renderer<String[]> {
@@ -18,10 +18,10 @@ public class FAQRenderer extends Renderer<String[]> {
     public static final int POS_QUESTION = 0;
     public static final int POS_ANSWER = 1;
 
-    @Bind(R.id.question)
+    @BindView(R.id.question)
     TextView question;
 
-    @Bind(R.id.answer)
+    @BindView(R.id.answer)
     TextView answer;
 
     @Override

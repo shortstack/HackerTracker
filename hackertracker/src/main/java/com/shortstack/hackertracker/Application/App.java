@@ -191,12 +191,12 @@ public class App extends Application {
 
     public Date getCurrentDate() {
         // TODO: Uncomment when not forcing the time.
-//        if (BuildConfig.DEBUG) {
-            Date date = new Date();
-            date.setTime(Constants.DEBUG_FORCE_TIME_DATE + DEBUG_TIME_EXTRA);
-            return date;
-//        }
-//        return new Date();
+////        if (BuildConfig.DEBUG) {
+//            Date date = new Date();
+//            date.setTime(Constants.DEBUG_FORCE_TIME_DATE + DEBUG_TIME_EXTRA);
+//            return date;
+////        }
+        return new Date();
     }
 
     public DatabaseController getDatabaseController() {

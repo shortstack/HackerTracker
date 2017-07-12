@@ -1,7 +1,5 @@
 package com.shortstack.hackertracker.Model;
 
-import org.parceler.Parcel;
-
 /**
  * Created with IntelliJ IDEA.
  * User: Whitney Champion
@@ -10,7 +8,6 @@ import org.parceler.Parcel;
  * Description:
  */
 
-@Parcel
 public class Event extends Item {
 
 }

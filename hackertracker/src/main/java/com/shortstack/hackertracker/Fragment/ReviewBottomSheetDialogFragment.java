@@ -13,12 +13,12 @@ import com.github.stkent.amplify.tracking.interfaces.IEventListener;
 import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ReviewBottomSheetDialogFragment extends BottomSheetDialogFragment {
 
-    @Bind(R.id.prompt_view)
+    @BindView(R.id.prompt_view)
     DefaultLayoutPromptView promptView;
 
     public static ReviewBottomSheetDialogFragment newInstance() {

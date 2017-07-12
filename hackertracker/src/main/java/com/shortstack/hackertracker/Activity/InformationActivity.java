@@ -17,14 +17,14 @@ import com.shortstack.hackertracker.Renderer.FAQRenderer;
 import com.shortstack.hackertracker.Renderer.GenericHeaderRenderer;
 import com.shortstack.hackertracker.Renderer.InformationRenderer;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
 public class InformationActivity extends Fragment {
 
 
-    @Bind(R.id.list)
+    @BindView(R.id.list)
     RecyclerView list;
 
 

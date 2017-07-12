@@ -16,15 +16,15 @@ import com.squareup.otto.Subscribe;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class TimeView extends LinearLayout {
 
-    @Bind(R.id.header)
+    @BindView(R.id.header)
     TextView header;
 
-    @Bind(R.id.subheader)
+    @BindView(R.id.subheader)
     TextView subheader;
 
     private Date mDate;

@@ -13,18 +13,18 @@ import com.shortstack.hackertracker.R;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class VendorRenderer extends Renderer<Company> implements View.OnClickListener {
 
-    @Bind(R.id.title)
+    @BindView(R.id.title)
     TextView title;
 
-    @Bind(R.id.description)
+    @BindView(R.id.description)
     TextView description;
 
-    @Bind(R.id.partner)
+    @BindView(R.id.partner)
     View partner;
 
     @Override
