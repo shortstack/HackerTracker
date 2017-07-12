@@ -89,7 +89,19 @@ public class VendorsActivity extends Fragment {
                     result.add(item);
                 } while (cursor.moveToNext());
             }
-        } finally {
+        } catch (IllegalStateException ex) {
+            Logger.e("Could not get vendors!");
+
+            CrashlyticsCore core = Crashlytics.getInstance().core;
+            core.log("Fail on getVendors: " + ex.getMessage());
+
+            if( cursor != null ) {
+                core.log("Cursor is not null.");
+                core.log("Title of Vendor is " + cursor.getString(cursor.getColumnIndex("title")));
+            }
+
+
+        }finally {
             cursor.close();
         }
         db.close();
