@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.Database
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
+import com.crashlytics.android.Crashlytics.getInstance
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
@@ -23,7 +24,7 @@ class DatabaseController(context: Context) {
 
 
     val SCHEDULE_VERSION = 210
-    val VENDOR_VERSION = 14
+    val VENDOR_VERSION = 12
     val SCHEDULE_TABLE_NAME = "schedule"
     val SPEAKERS_TABLE_NAME = "speakers"
 
@@ -263,6 +264,17 @@ class DatabaseController(context: Context) {
 
                         result.add(item)
                     } while (cursor.moveToNext())
+                }
+            } catch (ex: IllegalStateException) {
+                val core = getInstance().core
+                if( core != null ) {
+                    core.log("IllegalStateException in getVendors!")
+                    core.log("Results is now: " + result.size)
+                    if( result.size > 0 ) {
+                        core.log("Last result: " + result.last().title )
+                    }
+
+                    core.logException(ex)
                 }
             } finally {
                 cursor.close()

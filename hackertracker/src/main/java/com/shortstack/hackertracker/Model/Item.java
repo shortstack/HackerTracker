@@ -4,6 +4,8 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.text.TextUtils;
 
+import com.crashlytics.android.Crashlytics;
+import com.crashlytics.android.core.CrashlyticsCore;
 import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 import com.orhanobut.logger.Logger;
@@ -170,8 +172,15 @@ public class Item implements Serializable {
     public boolean hasExpired() {
         Date date = App.Companion.getCurrentDate();
         Date end = getEndDateObject();
-        if (end == null) {
-            Logger.e(title + " -- End Date is null!");
+
+        if (end == null || date == null ) {
+            Logger.e("Cannot check if item is expired. Something is null.");
+            CrashlyticsCore core = Crashlytics.getInstance().core;
+            if( core != null ) {
+                core.log("Could not check if item is expired, some date is null.");
+                core.log("Date null? == " + (date==null) + ", End null? == " + (end==null));
+                core.logException(new NullPointerException());
+            }
             return false;
         }
 
