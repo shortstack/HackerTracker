@@ -50,13 +50,13 @@
             android:title="Sync interavals"
             android:summary="%s"/>
 
-        <android.support.v7.preference.Preference
-            android:key="force_sync"
-            android:title="Force Sync Schedule" />
+        <!--<android.support.v7.preference.Preference-->
+            <!--android:key="force_sync"-->
+            <!--android:title="Force Sync Schedule" />-->
 
-        <android.support.v7.preference.Preference
-            android:key="force_clear"
-            android:title="CLEAR ALL SCHEDULE" />
+        <!--<android.support.v7.preference.Preference-->
+            <!--android:key="force_clear"-->
+            <!--android:title="CLEAR ALL SCHEDULE" />-->
     </android.support.v7.preference.PreferenceCategory>
 
 </android.support.v7.preference.PreferenceScreen>

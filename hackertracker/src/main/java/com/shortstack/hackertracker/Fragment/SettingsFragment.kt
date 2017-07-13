@@ -21,16 +21,16 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     override fun onCreatePreferences(bundle: Bundle?, s: String?) {
         addPreferencesFromResource(R.xml.settings)
 
-        var preference = findPreference("force_sync")
-        preference.setOnClick {
-            val controller = App.application.networkController
-            controller.syncInForeground(context)
-        }
-
-        preference = findPreference("force_clear")
-        preference.setOnClick {
-            App.application.databaseController.schedule.delete("data", null, null)
-        }
+//        var preference = findPreference("force_sync")
+//        preference.setOnClick {
+//            val controller = App.application.networkController
+//            controller.syncInForeground(context)
+//        }
+//
+//        preference = findPreference("force_clear")
+//        preference.setOnClick {
+//            App.application.databaseController.schedule.delete("data", null, null)
+//        }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
