@@ -197,17 +197,8 @@ public class Item implements Serializable {
             return null;
 
         Calendar calendar = Calendar.getInstance();
-        String[] split = getDate().split("-");
-
-        calendar.set(Calendar.YEAR, Integer.parseInt(split[0]));
-        calendar.set(Calendar.MONTH, Integer.parseInt(split[1]) - 1);
-        calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(split[2]));
-
-        split = getBegin().split(":");
-        calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(split[0]));
-        calendar.set(Calendar.MINUTE, Integer.parseInt(split[1]));
-        calendar.set(Calendar.SECOND, 0);
-
+        calendar.setTime(getBeginDateObject());
+        
         return calendar;
     }
 
