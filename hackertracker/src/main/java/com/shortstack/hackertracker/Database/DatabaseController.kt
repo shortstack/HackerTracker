@@ -63,7 +63,7 @@ class DatabaseController(context: Context) {
     }
 
     private fun setScheduleBookmarked(state: Int, id: Int) {
-        schedule.execSQL("UPDATE data SET starred=$state WHERE id=$id")
+        schedule.execSQL("UPDATE " + SCHEDULE_TABLE_NAME + " SET starred=$state WHERE id=$id")
     }
 
     fun addScheduleItem(item: Item) {
@@ -71,7 +71,7 @@ class DatabaseController(context: Context) {
 
         Logger.d("Inserted item.")
 
-        val cursor = schedule.rawQuery("SELECT * FROM data", arrayOf<String>())
+        val cursor = schedule.rawQuery("SELECT * FROM " + SCHEDULE_TABLE_NAME, arrayOf<String>())
         val count = cursor.count
         Logger.d("Count now: " + count)
 
