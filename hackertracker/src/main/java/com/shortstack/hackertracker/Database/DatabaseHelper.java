@@ -24,6 +24,8 @@ class DatabaseHelper extends SQLiteAssetHelper {
         DB_NAME = name;
         DB_VERSION = version;
 
+        setForcedUpgrade();
+
 //        if (isDatabaseEmpty())
 //            initDatabase();
 
