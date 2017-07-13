@@ -21,7 +21,8 @@ class MapFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        viewer.recycle()
+        if( viewer != null )
+            viewer.recycle()
     }
 
     companion object {
