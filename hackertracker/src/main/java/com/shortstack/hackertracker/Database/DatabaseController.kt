@@ -23,8 +23,8 @@ class DatabaseController(context: Context) {
     val VENDORS = "vendors.sqlite"
 
 
-    val SCHEDULE_VERSION = 210
-    val VENDOR_VERSION = 12
+    val SCHEDULE_VERSION = 212
+    val VENDOR_VERSION = 14
     val SCHEDULE_TABLE_NAME = "schedule"
     val SPEAKERS_TABLE_NAME = "speakers"
 
@@ -254,24 +254,18 @@ class DatabaseController(context: Context) {
                 if (cursor.moveToFirst()) {
                     do {
 
-                        val item = Company()
-
-                        item.id = cursor.getInt(cursor.getColumnIndex("id"))
-                        item.title = cursor.getString(cursor.getColumnIndex("title"))
-                        item.description = cursor.getString(cursor.getColumnIndex("description"))
-                        item.link = cursor.getString(cursor.getColumnIndex("link"))
-                        item.partner = cursor.getInt(cursor.getColumnIndex("partner"))
+                        val item = Company.CursorToCompany(mGson, cursor)
 
                         result.add(item)
                     } while (cursor.moveToNext())
                 }
             } catch (ex: IllegalStateException) {
                 val core = getInstance().core
-                if( core != null ) {
+                if (core != null) {
                     core.log("IllegalStateException in getVendors!")
                     core.log("Results is now: " + result.size)
-                    if( result.size > 0 ) {
-                        core.log("Last result: " + result.last().title )
+                    if (result.size > 0) {
+                        core.log("Last result: " + result.last().title)
                     }
 
                     core.logException(ex)
