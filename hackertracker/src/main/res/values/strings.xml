@@ -49,10 +49,9 @@
     <string name="save">Save</string>
 
     <string name="workshop_info_text">
-        Workshops are free, first come, first served, and seats will fill up fast!\n\n
-        Register for a workshop between Thursday 07:00 to 15:00. We will have goons to pre-register you for the workshop(s) of your choosing.\n\n
-        If the workshop that you want has filled up before you got there, don\'t worry! Just like last year, if you come to the workshop area early the day of, you can wait in the standby line. If a seat opens up, it will be made available to the first person waiting to claim it.\n\n
-        Please Note: You will be issued a workshop \"pass\". It will be required for class admission. If you lose it we can\'t help you, your seat will be made available for those in standby.
+        Workshop registration was held online July 5th. There is no on-site registration, signup sheet, and all seats (including standby) are sold out.\n\n
+        For more information on the workshops, please visit the DEF CON website.\n\n
+        Pre-registration will be online again for DEF CON 26.
     </string>
 
     <string name="badges_description">
