@@ -11,6 +11,7 @@ import com.google.gson.annotations.SerializedName;
 import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Application.App;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -27,23 +28,20 @@ public class Item implements Serializable {
     static final int BOOKMARKED = 1;
     static final int UNBOOKMARKED = 0;
 
-    private static final int TOOL = 1;
-    private static final int EXPLOIT = 1;
-    private static final int DEMO = 1;
-    private static final int NEW = 1;
-
-    private int id;
+    private int index;
     @SerializedName("entry_type")
     private String type;
 
     private String title;
+
     @SerializedName("who")
-    private String hostString;
-    private Speaker host;
+    private Speaker[] host;
 
     private String description;
 
+    @SerializedName("start_date")
     private String startDate;
+    @SerializedName("end_date")
     private String endDate;
 
     private String location;
@@ -51,10 +49,13 @@ public class Item implements Serializable {
     private String dctvChannel;
     private String includes;
 
+    @SerializedName("updated_at")
+    private String updatedAt;
+
 
     // State
-    private int isNew;
-    @SerializedName("starred")
+    //private int isNew;
+    @SerializedName("bookmarked")
     private int isBookmarked;
 
 
@@ -71,11 +72,20 @@ public class Item implements Serializable {
             }
         }
 
+        try {
+            String who = object.getString("who");
+            object.remove("who");
+            object.put("who", new JSONArray(who));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
         return gson.fromJson(object.toString(), Item.class);
     }
 
-    public int getId() {
-        return id;
+    public int getIndex() {
+        return index;
     }
 
     public String getTitle() {
@@ -84,10 +94,6 @@ public class Item implements Serializable {
 
     public String getDescription() {
         return description;
-    }
-
-    public String getHost() {
-        return hostString;
     }
 
     public String getBegin() {
@@ -114,6 +120,10 @@ public class Item implements Serializable {
         return link;
     }
 
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
 
     // State
 
@@ -131,14 +141,6 @@ public class Item implements Serializable {
 
     public boolean isBookmarked() {
         return isBookmarked == BOOKMARKED;
-    }
-
-    public boolean isUnbookmarked() {
-        return !isBookmarked();
-    }
-
-    public boolean isNew() {
-        return isNew == NEW;
     }
 
 
@@ -193,8 +195,9 @@ public class Item implements Serializable {
     }
 
     private Calendar getCalendar() {
-        if (TextUtils.isEmpty(getBegin()) || TextUtils.isEmpty(getDate()))
+        if (TextUtils.isEmpty(getBegin()) || TextUtils.isEmpty(getDate())) {
             return null;
+        }
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(getBeginDateObject());
@@ -204,8 +207,9 @@ public class Item implements Serializable {
 
     public long getNotificationTimeInMillis() {
         Calendar calendar = getCalendar();
-        if (calendar == null)
+        if (calendar == null) {
             return 0;
+        }
         return calendar.getTimeInMillis() - 1200000;
     }
 
@@ -233,7 +237,7 @@ public class Item implements Serializable {
             String key;
             while (keys.hasNext()) {
                 key = keys.next();
-                if (!key.equals("starred"))
+                if (!key.equals("bookmarked"))
                     values.put(key, object.getString(key));
             }
 
@@ -263,13 +267,12 @@ public class Item implements Serializable {
         }
     }
 
-
-    public void setLocation( String location ) {
-        this.location = location;
+    public Speaker[] getSpeakers() {
+        return host;
     }
 
-    public void setType( String type ) {
-        this.type = type;
+    @Override
+    public String toString() {
+        return index + " => " + title + ", " + location + ", " + type;
     }
-
 }
