@@ -11,6 +11,7 @@ import android.graphics.Color;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
+import android.support.v4.app.NotificationManagerCompat;
 
 import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
@@ -51,7 +52,11 @@ public class NotificationHelper {
         Notification.Builder builder = getNotificationBuilder();
 
         builder.setContentTitle(content.getTitle());
-        builder.setContentText(String.format(mContext.getString(R.string.notification_text), content.getLocation()));
+        if( content.getLocation() != null ) {
+            builder.setContentText(String.format(mContext.getString(R.string.notification_text), content.getLocation()));
+        } else {
+            builder.setContentText(mContext.getString(R.string.notification_text_blank));
+        }
 
         return builder.build();
     }
@@ -86,7 +91,7 @@ public class NotificationHelper {
     }
 
     public void scheduleItemNotification( Item item ) {
-        scheduleNotification(getItemNotification(item), item.getNotificationTimeInMillis(), item.getId() );
+        scheduleNotification(getItemNotification(item), item.getNotificationTimeInMillis(), item.getIndex() );
     }
 
     public void scheduleNotification(Notification notification, long when, int id) {
@@ -100,12 +105,16 @@ public class NotificationHelper {
     }
 
     public void postNotification(Notification notification, int id) {
-        Intent notificationIntent = new Intent(mContext, AlarmReceiver.class);
-        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, id);
-        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//        Intent notificationIntent = new Intent(mContext, AlarmReceiver.class);
+//        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION_ID, id);
+//        notificationIntent.putExtra(AlarmReceiver.NOTIFICATION, notification);
+//        PendingIntent pendingIntent = PendingIntent.getBroadcast(mContext, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+//
+//        alarmManager.set(AlarmManager.RTC_WAKEUP, 0, pendingIntent);
 
-        alarmManager.set(AlarmManager.RTC_WAKEUP, 0, pendingIntent);
+
+        NotificationManagerCompat managerCompat = (NotificationManagerCompat.from(mContext));
+        managerCompat.notify(id, notification);
     }
 
     private void UnregisterAlarmBroadcast() {
