@@ -19,7 +19,9 @@ import java.util.*
 
 class DatabaseController(context: Context) {
 
-    val SCHEDULE = "database_2.db"
+    val MAX_RECENT_UPDATES = 25
+
+    val SCHEDULE = "database.db"
     val VENDORS = "vendors.sqlite"
 
 
@@ -27,6 +29,13 @@ class DatabaseController(context: Context) {
     val VENDOR_VERSION = 14
     val SCHEDULE_TABLE_NAME = "schedule"
     val SPEAKERS_TABLE_NAME = "speakers"
+
+    val KEY_INDEX = "`index`"
+    val KEY_BOOKMARKED = "bookmarked"
+    val KEY_TYPE = "entry_type"
+    val KEY_END_DATE = "end_date"
+
+    val SELECT_ALL_FROM = "SELECT * from "
 
     val schedule: SQLiteDatabase
     val mVendors: SQLiteDatabase
@@ -52,10 +61,10 @@ class DatabaseController(context: Context) {
 
     fun toggleBookmark(item: Item) {
         val value = if (item.isBookmarked) Constants.UNBOOKMARKED else Constants.BOOKMARKED
-        setScheduleBookmarked(value, item.id)
+        setScheduleBookmarked(value, item.index)
 
         item.toggleBookmark()
-        App.application.postBusEvent(FavoriteEvent(item.id))
+        App.application.postBusEvent(FavoriteEvent(item.index))
 
         if (item.isBookmarked) {
             App.application.notificationHelper.scheduleItemNotification(item)
@@ -63,7 +72,7 @@ class DatabaseController(context: Context) {
     }
 
     private fun setScheduleBookmarked(state: Int, id: Int) {
-        schedule.execSQL("UPDATE " + SCHEDULE_TABLE_NAME + " SET starred=$state WHERE id=$id")
+        schedule.execSQL("UPDATE $SCHEDULE_TABLE_NAME SET $KEY_BOOKMARKED=$state WHERE $KEY_INDEX=$id")
     }
 
     fun addScheduleItem(item: Item) {
@@ -71,7 +80,7 @@ class DatabaseController(context: Context) {
 
         Logger.d("Inserted item.")
 
-        val cursor = schedule.rawQuery("SELECT * FROM " + SCHEDULE_TABLE_NAME, arrayOf<String>())
+        val cursor = schedule.rawQuery(SELECT_ALL_FROM + SCHEDULE_TABLE_NAME, arrayOf<String>())
         val count = cursor.count
         Logger.d("Count now: " + count)
 
@@ -85,54 +94,66 @@ class DatabaseController(context: Context) {
         cursor.close()
     }
 
-    fun updateScheduleItem(item: Item) {
-        val filter = "id=?"
-        val args = arrayOf(item.id.toString())
+    fun updateScheduleItem(item: Item): Boolean {
+
+        val filter = "$KEY_INDEX=?"
+        val args = arrayOf(item.index.toString())
 
         val schedule = App.application.databaseController.schedule
         val values = item.getContentValues(mGson)
 
-        values.remove("who")
-        values.remove("location")
         values.remove("index")
+        values.remove("bookmarked")
 
-        values.put("updated_at", System.currentTimeMillis())
+        val existing = getScheduleItemFromId(item.index)
 
-        Logger.d("Updating item: " + values)
+        if (existing?.updatedAt.equals(item.updatedAt)) {
+            return false
+        }
 
         val rowsUpdated = schedule.update(SCHEDULE_TABLE_NAME, values, filter, args)
         if (rowsUpdated == 0) {
+            // New event.
             schedule.insert(SCHEDULE_TABLE_NAME, null, values)
-            // Change to insert new event.
-            //            App.Companion.getApplication().postBusEvent(new UpdateListContentsEvent());
         } else {
-            // Change to update event.
-            //            App.Companion.getApplication().postBusEvent(new UpdateListContentsEvent());
-
-            val item1 = getScheduleItemFromId(item.id)
+            // Updated event.
+            val item1 = getScheduleItemFromId(item.index) ?: return false
 
             if (item1.isBookmarked) {
 
                 val notificationHelper = App.application.notificationHelper
                 // Cancel the notification, in case the time changes.
-                notificationHelper.cancelNotification(item.id)
+                notificationHelper.cancelNotification(item.index)
 
                 // Set a new one.
                 notificationHelper.scheduleItemNotification(item)
 
-                notificationHelper.postNotification(notificationHelper.getUpdatedItemNotification(item), item.id)
+                // If bookmarked, throw up a notification.
+                notificationHelper.postNotification(notificationHelper.getUpdatedItemNotification(item), item.index)
             }
         }
+
+        return true
     }
 
-    fun updateSchedule(items: List<Item>) {
+    fun updateSchedule(items: Array<Item>) {
+        val recent = App.storage.recentUpdates
+
         for (item in items) {
-            updateScheduleItem(item)
+            if ( updateScheduleItem(item) ) {
+                recent.add(item.index.toString())
+
+                if( recent.size > MAX_RECENT_UPDATES ) {
+                    recent.remove(recent.iterator().next())
+                }
+            }
         }
+
+        App.storage.recentUpdates = recent
     }
 
-    fun getScheduleItemFromId(id: Int): Item {
-        val cursor = schedule.query(SCHEDULE_TABLE_NAME, null, "id=?", arrayOf(id.toString()), null, null, null, null)
+    fun getScheduleItemFromId(id: Int): Item? {
+        val cursor = schedule.query(SCHEDULE_TABLE_NAME, null, "$KEY_INDEX=?", arrayOf(id.toString()), null, null, null, null)
 
         if (cursor.moveToFirst()) {
             val item = Item.CursorToItem(mGson, cursor)
@@ -141,7 +162,7 @@ class DatabaseController(context: Context) {
             return item
         }
 
-        return Item()
+        return null
     }
 
     @Throws(SQLiteException::class)
@@ -154,22 +175,21 @@ class DatabaseController(context: Context) {
 
 
         // Types
-        var selection = "( entry_type=?"
+        var selection = "( $KEY_TYPE=?"
         for (i in 0..type.size - 1 - 1) {
-            selection += " OR entry_type=?"
-
+            selection += " OR $KEY_TYPE=?"
         }
         selection += " ) "
 
         // Date
-        if (App.storage!!.showActiveEventsOnly()) {
+        if (App.storage.showActiveEventsOnly()) {
 
 
             val currentDate = App.getCurrentCalendar()
             val dateFormat = SimpleDateFormat("yyyy-MM-dd")
             val timeFormat = SimpleDateFormat("hh:mm")
 
-            selection += "AND ( end_date > ? )"
+            selection += "AND ( $KEY_END_DATE > ? )"
 
             args.add(timeFormat.format(currentDate.time))
         }
