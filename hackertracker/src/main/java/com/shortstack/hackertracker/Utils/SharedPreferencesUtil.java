@@ -8,6 +8,8 @@ import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Filter;
 
 import java.util.HashSet;
+import java.util.Set;
+import java.util.TreeSet;
 
 public class SharedPreferencesUtil {
 
@@ -22,6 +24,7 @@ public class SharedPreferencesUtil {
         USER_EXPIRED_EVENTS("user_show_expired_events"),
         USER_ANALYTICS("user_analytics"),
 
+        APP_UPDATED_EVENTS("app_updated_events"),
         APP_LAST_REFRESH("app_last_refresh"),
         APP_LAST_UPDATED("app_last_updated"),
         APP_VIEW_PAGER_POSITION("app_view_pager_position"),
@@ -66,6 +69,16 @@ public class SharedPreferencesUtil {
     public void allowPushNotifications(boolean show) {
         SharedPreferences.Editor editor = getEditor();
         editor.putBoolean(Key.USER_ALLOW_PUSH.toString(), show);
+        editor.apply();
+    }
+
+    public Set<String> getRecentUpdates() {
+        return mPreferences.getStringSet(Key.APP_UPDATED_EVENTS.toString(), new TreeSet<String>());
+    }
+
+    public void setRecentUpdates(Set<String> set) {
+        SharedPreferences.Editor editor = getEditor();
+        editor.putStringSet(Key.APP_UPDATED_EVENTS.toString(), set);
         editor.apply();
     }
 
