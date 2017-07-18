@@ -117,7 +117,7 @@ public class ItemViewModel {
 
 
     public String getDisplayTitle() {
-        return /*(BuildConfig.DEBUG ? mItem.getId() + " " : "") +*/ mItem.getTitle();
+        return /*(BuildConfig.DEBUG ? mItem.getIndex() + " " : "") +*/ mItem.getTitle();
     }
 
     public boolean hasDescription() {
@@ -184,7 +184,7 @@ public class ItemViewModel {
     }
 
     public int getId() {
-        return mItem.getId();
+        return mItem.getIndex();
     }
 
     public int getToolsVisibility() {
@@ -201,5 +201,9 @@ public class ItemViewModel {
 
     public int getBookmarkVisibility() {
         return mItem.isBookmarked() ? View.VISIBLE : View.INVISIBLE;
+    }
+
+    public Speaker[] getSpeakers() {
+        return mItem.getSpeakers();
     }
 }

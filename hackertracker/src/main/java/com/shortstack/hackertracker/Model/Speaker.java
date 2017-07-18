@@ -36,5 +36,8 @@ public class Speaker {
         return gson.fromJson(object.toString(), Speaker.class);
     }
 
+    public String getName() {
+        return name;
+    }
 
 }
