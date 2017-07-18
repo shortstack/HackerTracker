@@ -24,18 +24,22 @@ open class NetworkController(private val context: Context) : Callback<SyncRespon
 
     fun syncInForeground(context: Context) {
         showSyncingDialog(context)
-        sync()
+        sync(this)
     }
 
     fun syncInBackground() {
-        sync()
+        sync(this)
     }
 
-    private fun sync() {
+    fun syncWithCallback( callback: Callback<SyncResponse> ) {
+        sync(callback)
+    }
+
+    private fun sync(callback: Callback<SyncResponse>) {
         Logger.d("Syncing to server.")
         val retrofit = Retrofit.Builder().baseUrl(Constants.API_URL_BASE).addConverterFactory(GsonConverterFactory.create()).build()
         val service = retrofit.create(HTService::class.java)
-        service.sync.enqueue(this)
+        service.sync.enqueue(callback)
     }
 
 
@@ -60,25 +64,7 @@ open class NetworkController(private val context: Context) : Callback<SyncRespon
 
                 val database = App.application.databaseController
 
-                // Remove, only for debugging.
-                val stringArray = context.resources.getStringArray(R.array.filter_types)
-                val locationArray = arrayOf("Track 1", "Track 2", "Track 3", "DEFCON 101")
-                var index = 0
-
-
-                for (i in schedule.indices) {
-                    val scheduleObject = schedule[i]
-
-                    // Remove, only for debugging.
-                    scheduleObject.type = stringArray[index]
-                    index = ++index % stringArray.size
-                    scheduleObject.location = locationArray[index % locationArray.size]
-
-
-                    database.updateScheduleItem(scheduleObject)
-
-                    publishProgress(i)
-                }
+                database.updateSchedule(schedule)
 
                 Logger.d("Total update time: " + (System.currentTimeMillis() - time))
                 return null
@@ -107,7 +93,7 @@ open class NetworkController(private val context: Context) : Callback<SyncRespon
 
     override fun onFailure(call: Call<SyncResponse>, t: Throwable) {
         Logger.d("Network Sync onFailure: " + t.message)
-        setDialogMessage(context.getString(R.string.sync_error) + if (BuildConfig.DEBUG) "\n\nonFailure:\n" + t.message else "")
+        setDialogMessage(context.getString(R.string.sync_error))
     }
 
     private fun setDialogMessage(message: String) {
