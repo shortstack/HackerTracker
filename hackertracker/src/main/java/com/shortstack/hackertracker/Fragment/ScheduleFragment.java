@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -21,7 +22,6 @@ import com.shortstack.hackertracker.Event.UpdateListContentsEvent;
 import com.shortstack.hackertracker.List.ScheduleItemAdapter;
 import com.shortstack.hackertracker.Model.Filter;
 import com.shortstack.hackertracker.Model.Item;
-import com.shortstack.hackertracker.Model.Speaker;
 import com.shortstack.hackertracker.R;
 import com.shortstack.hackertracker.View.FilterView;
 import com.squareup.otto.Subscribe;
@@ -37,7 +37,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-public class ScheduleFragment extends Fragment {
+public class ScheduleFragment extends Fragment implements SwipeRefreshLayout.OnRefreshListener {
 
     @BindView(R.id.list)
     public RecyclerView list;
@@ -49,6 +49,9 @@ public class ScheduleFragment extends Fragment {
 
     @BindView(R.id.tutorial)
     View tutorial;
+
+    @BindView(R.id.swipe_refresh)
+    SwipeRefreshLayout swipe;
 
     public static ScheduleFragment newInstance() {
         return new ScheduleFragment();
@@ -131,11 +134,12 @@ public class ScheduleFragment extends Fragment {
         LinearLayoutManager layout = new LinearLayoutManager(getContext());
         list.setLayoutManager(layout);
 
+        swipe.setOnRefreshListener(this);
         adapter = new ScheduleItemAdapter();
         list.setAdapter(adapter);
 
         refreshContents();
-
+        
         return rootView;
     }
 
@@ -161,19 +165,12 @@ public class ScheduleFragment extends Fragment {
     }
 
     private void refreshContents() {
-
         Logger.d("Refreshing schedule contents.");
 
         adapter.clear();
 
-
-        List<Speaker> speakers = App.Companion.getApplication().getDatabaseController().getSpeakers();
-        Logger.d("Got Speakers: "+ speakers.size());
-
-
         Filter filter = App.Companion.getStorage().getFilter();
         List<Item> events = getEvents(filter);
-
 
         List<Object> objects = addTimeDividers(events);
         adapter.addAll(objects);
@@ -279,4 +276,9 @@ public class ScheduleFragment extends Fragment {
     }
 
 
+    @Override
+    public void onRefresh() {
+        App.Companion.getApplication().getNetworkController().syncInBackground();
+        swipe.setRefreshing(false);
+    }
 }
