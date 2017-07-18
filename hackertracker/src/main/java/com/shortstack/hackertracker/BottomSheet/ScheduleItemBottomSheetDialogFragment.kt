@@ -4,12 +4,10 @@ import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutCompat
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import butterknife.BindView
-import butterknife.OnClick
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.Alert.MaterialAlert
 import com.shortstack.hackertracker.Analytics.AnalyticsController
 import com.shortstack.hackertracker.Application.App
@@ -17,6 +15,7 @@ import com.shortstack.hackertracker.Model.Item
 import com.shortstack.hackertracker.Model.ItemViewModel
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.View.ItemView
+import com.shortstack.hackertracker.View.SpeakerView
 import kotlinx.android.synthetic.main.bottom_sheet_schedule_item.view.*
 import kotlinx.android.synthetic.main.empty_text.view.*
 
@@ -33,11 +32,19 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
 
         view.item!!.setItem(obj.item)
 
+        displaySpeakers(obj, view.speakers )
+
         displayDescription(obj, view.description, view.empty, view.link, view.star )
 
         view.star.setOnClickListener { onStarClick(view.item, view.star) }
         view.share.setOnClickListener { onShareClick(view.item) }
         view.link.setOnClickListener { onLinkClick() }
+    }
+
+    private fun  displaySpeakers(obj: ItemViewModel, speakers: LinearLayoutCompat) {
+        obj.speakers.iterator().forEach {
+            speakers.addView(SpeakerView(context, it))
+        }
     }
 
     private val content: Item
