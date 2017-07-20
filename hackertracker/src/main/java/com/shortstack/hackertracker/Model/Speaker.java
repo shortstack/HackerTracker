@@ -8,7 +8,9 @@ import com.orhanobut.logger.Logger;
 
 import org.json.JSONObject;
 
-public class Speaker {
+import java.io.Serializable;
+
+public class Speaker implements Serializable {
 
     private String title;
     @SerializedName("who")
