@@ -157,15 +157,16 @@ public class ScheduleFragment extends Fragment implements SwipeRefreshLayout.OnR
         tutorial.setVisibility(View.GONE);
         empty.setVisibility(View.GONE);
 
-        if (!hasFilters()) {
-            tutorial.setVisibility(View.VISIBLE);
-        } else if (!hasScheduleItems()) {
+//        if (!hasFilters()) {
+//            tutorial.setVisibility(View.VISIBLE);
+//        } else
+            if (!hasScheduleItems()) {
             empty.setVisibility(View.VISIBLE);
         }
     }
 
     private void refreshContents() {
-        Logger.d("Refreshing schedule contents.");
+        Logger.d("Refreshing database contents.");
 
         adapter.clear();
 
@@ -213,9 +214,9 @@ public class ScheduleFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     protected List<Item> getEvents(Filter filter) {
-        if( !hasFilters() ) {
-            return Collections.emptyList();
-        }
+//        if( !hasFilters() ) {
+//            return Collections.emptyList();
+//        }
 
         try {
             List<Item> events;
