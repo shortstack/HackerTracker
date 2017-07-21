@@ -35,9 +35,16 @@ public class FilterView extends LinearLayout {
     private void setFilter(Filter filter) {
         String[] keys = Constants.TYPES;
         String[] typesArray = filter.getTypesArray();
-        for (int i = 0; i < typesArray.length; i++) {
+
+        if( typesArray.length == 0 ) {
+            for (AppCompatCheckBox type : types) {
+                type.setChecked(true);
+            }
+        }
+
+        for (String aTypesArray : typesArray) {
             for (int i1 = 0; i1 < keys.length; i1++) {
-                if (typesArray[i].equals(keys[i1])) {
+                if (aTypesArray.equals(keys[i1])) {
                     types[i1].setChecked(true);
                 }
             }
