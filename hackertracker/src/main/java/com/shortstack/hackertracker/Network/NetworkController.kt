@@ -9,7 +9,6 @@ import com.shortstack.hackertracker.Alert.MaterialAlert
 import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.Event.UpdateListContentsEvent
-import com.shortstack.hackertracker.Model.Item
 import com.shortstack.hackertracker.R
 
 import retrofit2.Call
@@ -50,21 +49,29 @@ open class NetworkController(private val context: Context) : Callback<SyncRespon
 
     override fun onResponse(call: Call<SyncResponse>, response: Response<SyncResponse>) {
         if (response.isSuccessful) {
-            updateDatabase(response.body().schedule)
+            updateDatabase(response.body())
         } else {
             setDialogMessage(context.getString(R.string.sync_error))
         }
     }
 
-    private fun updateDatabase(schedule: Array<Item>) {
+    private fun updateDatabase(response: SyncResponse) {
         object : AsyncTask<Void, Int, Void?>() {
 
             override fun doInBackground(vararg params: Void): Void? {
                 val time = System.currentTimeMillis()
 
-                val database = App.application.databaseController
 
-                database.updateSchedule(schedule)
+                val storage = App.application.mStorage
+                if( storage.lastUpdated != response.updatedDate ) {
+                    storage.lastUpdated = response.updatedDate
+
+                    val database = App.application.databaseController
+
+                    database.updateSchedule(response = response)
+                } else {
+                    Logger.d("Already up to date!")
+                }
 
                 Logger.d("Total update time: " + (System.currentTimeMillis() - time))
                 return null
@@ -78,7 +85,7 @@ open class NetworkController(private val context: Context) : Callback<SyncRespon
             }
 
             private fun getProgress(vararg values: Int?): String {
-                return String.format(context.getString(R.string.update_progress), values[0], schedule.size)
+                return String.format(context.getString(R.string.update_progress), values[0], response.schedule.size)
             }
 
             override fun onPostExecute(aVoid: Void?) {

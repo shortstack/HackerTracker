@@ -6,10 +6,9 @@ import android.preference.PreferenceManager;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Filter;
+import com.shortstack.hackertracker.Model.RecentUpdates;
 
 import java.util.HashSet;
-import java.util.Set;
-import java.util.TreeSet;
 
 public class SharedPreferencesUtil {
 
@@ -24,6 +23,7 @@ public class SharedPreferencesUtil {
         USER_EXPIRED_EVENTS("user_show_expired_events"),
         USER_ANALYTICS("user_analytics"),
 
+        APP_LAST_SYNC_VERSION("app_last_sync_version"),
         APP_UPDATED_EVENTS("app_updated_events"),
         APP_LAST_REFRESH("app_last_refresh"),
         APP_LAST_UPDATED("app_last_updated"),
@@ -56,7 +56,7 @@ public class SharedPreferencesUtil {
         return mPreferences.edit();
     }
 
-    public void saveLastUpdated(String date) {
+    public void setLastUpdated(String date) {
         SharedPreferences.Editor editor = getEditor();
         editor.putString(Key.APP_LAST_UPDATED.toString(), date);
         editor.apply();
@@ -72,13 +72,27 @@ public class SharedPreferencesUtil {
         editor.apply();
     }
 
-    public Set<String> getRecentUpdates() {
-        return mPreferences.getStringSet(Key.APP_UPDATED_EVENTS.toString(), new TreeSet<String>());
+    public RecentUpdates getRecentUpdates() {
+        String string = mPreferences.getString(Key.APP_UPDATED_EVENTS.toString(), null);
+        if( string == null )
+            return new RecentUpdates();
+
+        return  App.application.getGson().fromJson(string, RecentUpdates.class);
     }
 
-    public void setRecentUpdates(Set<String> set) {
+    public void setRecentUpdates(RecentUpdates updates) {
         SharedPreferences.Editor editor = getEditor();
-        editor.putStringSet(Key.APP_UPDATED_EVENTS.toString(), set);
+        editor.putString(Key.APP_UPDATED_EVENTS.toString(), App.application.getGson().toJson(updates));
+        editor.apply();
+    }
+
+    public Integer getLastSyncVersion() {
+        return mPreferences.getInt(Key.APP_LAST_SYNC_VERSION.toString(), 0);
+    }
+
+    public void setLastSyncVersion( int version ) {
+        SharedPreferences.Editor editor = getEditor();
+        editor.putInt(Key.APP_LAST_SYNC_VERSION.toString(), version);
         editor.apply();
     }
 

@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.Fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -13,8 +14,12 @@ import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Model.Item
 import com.shortstack.hackertracker.Model.Navigation
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.Renderer.*
+import com.shortstack.hackertracker.Renderer.ActivityNavRenderer
+import com.shortstack.hackertracker.Renderer.HomeHeaderRenderer
+import com.shortstack.hackertracker.Renderer.ItemRenderer
+import com.shortstack.hackertracker.Renderer.SubHeaderRenderer
 import kotlinx.android.synthetic.main.fragment_list.*
+import java.text.SimpleDateFormat
 
 class HomeFragment : Fragment() {
 
@@ -29,8 +34,7 @@ class HomeFragment : Fragment() {
 
         val rendererBuilder = RendererBuilder<Any>()
                 .bind(TYPE_HEADER, HomeHeaderRenderer())
-                .bind(String::class.java, GenericHeaderRenderer())
-                .bind(Array<String>::class.java, FAQRenderer())
+                .bind(String::class.java, SubHeaderRenderer())
                 .bind(Item::class.java, ItemRenderer())
                 .bind(Navigation::class.java, ActivityNavRenderer())
 
@@ -41,18 +45,34 @@ class HomeFragment : Fragment() {
         list.adapter = adapter
 
         addHeader()
+
+
+
+
+        adapter?.add(App.storage.lastUpdated)
+
         addHelpNavigation()
         addUpdatedCards()
     }
 
+    @SuppressLint("SimpleDateFormat")
     private fun addUpdatedCards() {
         // Updates title
         adapter?.add(getString(R.string.updates))
 
+        var recentDate = ""
 
-        App.storage.recentUpdates.forEach {
-            val id = Integer.valueOf(it)
-            val scheduleItem = App.application.databaseController.getScheduleItemFromId(id)
+        val recentUpdates = App.storage.recentUpdates
+
+        for (update in recentUpdates.updates) {
+            if( update.date != recentDate ) {
+                recentDate = update.date
+                val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(update.date)
+                adapter?.add(SimpleDateFormat("MMMM dd h:mm aa").format(date))
+            }
+
+            val scheduleItem = App.application.databaseController.getScheduleItemFromId(id = update.id)
+
             adapter?.add(scheduleItem)
         }
     }

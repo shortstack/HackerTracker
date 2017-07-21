@@ -5,15 +5,13 @@ import com.shortstack.hackertracker.Model.Item
 
 class SyncResponse {
 
-    @SerializedName("updateTime")
-    var time: String? = null
-    @SerializedName("updateDate")
-    var date: String? = null
+    @SerializedName("update_date")
+    var updatedDate: String? = null
 
     lateinit var schedule: Array<Item>
 
 
     override fun toString(): String {
-        return time + ", " + date + ", " + schedule!!.size
+        return updatedDate + ", " + schedule.size
     }
 }

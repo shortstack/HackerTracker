@@ -1,7 +1,547 @@
 {
-  "update_date": "2017-07-28T10:12:00->iso8601",
+  "update_date": "2017-07-17T15:57:16",
   "schedule":
   [
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "fooqmr32tbnd41tua8vne8slls@google.com",
+   "start_date" : "2017-07-24T19:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#fooqmr32tbnd41tua8vne8slls@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Ri Ra Irish Pub, 3930 S Las Vegas Blvd, Las Vegas, NV 89119, USA",
+   "index" : "119",
+   "end_date" : "2017-07-24T19:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "NotSoSober party"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "hdh1t2baa624qf47uqpq13l6a8@google.com",
+   "start_date" : "2017-07-25T16:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#hdh1t2baa624qf47uqpq13l6a8@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Topgolf 4627 Koval Ln, Las Vegas, NV 89109",
+   "index" : "152",
+   "end_date" : "2017-07-25T16:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "Rapid7 & ServiceNow Topgolf Event"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "lhe1ql66l6drqdnl9dl48co38g@google.com",
+   "start_date" : "2017-07-25T17:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#lhe1ql66l6drqdnl9dl48co38g@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Topgolf 4627 Koval Lane Las Vegas, NV 89109",
+   "index" : "142",
+   "end_date" : "2017-07-25T17:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "R-CISC and TruSTAR"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "nu84a71s0p42mgk61in846lcf8@google.com",
+   "start_date" : "2017-07-25T17:30:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#nu84a71s0p42mgk61in846lcf8@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "3950 S Las Vegas Blvd, Las Vegas, NV 89119 ",
+   "index" : "144",
+   "end_date" : "2017-07-25T17:30:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "proficio"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "09gkqtior6sq7pvq1plmggs5p0@google.com",
+   "start_date" : "2017-07-25T17:30:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#09gkqtior6sq7pvq1plmggs5p0@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "RX Boiler Room, the Shoppes at Mandalay Bay",
+   "index" : "156",
+   "end_date" : "2017-07-25T17:30:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "GuidePoint's Annual Social Hour at RX Boiler Room"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "igep121jqbtdbak1907l4a701g@google.com",
+   "start_date" : "2017-07-25T19:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#igep121jqbtdbak1907l4a701g@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Ling Ling Club at Hakkasan LV in MGM Grand 3799 S Las Vegas Blvd Las Vegas, NV 89109",
+   "index" : "120",
+   "end_date" : "2017-07-25T19:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "Risky Biz 10 Year Party"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "c3qquh9s1of2bob819q9fvp8f8@google.com",
+   "start_date" : "2017-07-25T19:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#c3qquh9s1of2bob819q9fvp8f8@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "The Orchid Lounge at Mandalay Bay 3950 S Las Vegas Blvd, Las Vegas, NV 89119",
+   "index" : "135",
+   "end_date" : "2017-07-25T19:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "alienvault"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "iu6gf1oa7asank50g9f6acdmps@google.com",
+   "start_date" : "2017-07-25T20:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#iu6gf1oa7asank50g9f6acdmps@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Mandalay Bay 3950 South Las Vegas Boulevard Las Vegas, NV 89119 United States",
+   "index" : "159",
+   "end_date" : "2017-07-25T20:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "VeriClouds"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "vr5567n2ufh1t8o9fbint4ij5s@google.com",
+   "start_date" : "2017-07-25T21:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#vr5567n2ufh1t8o9fbint4ij5s@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Club Light at Mandalay Bay",
+   "index" : "145",
+   "end_date" : "2017-07-25T21:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "Distil Networks"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "4pk2bpcbjudr6444qcq0b7d0n4@google.com",
+   "start_date" : "2017-07-26T16:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#4pk2bpcbjudr6444qcq0b7d0n4@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Palm Foyer, Level 3",
+   "index" : "146",
+   "end_date" : "2017-07-26T16:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "QUEERCON"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "srkf0jq4kb183okco4qdvgucko@google.com",
+   "start_date" : "2017-07-26T17:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#srkf0jq4kb183okco4qdvgucko@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "4627 Koval Lane Las Vegas, NV 89109",
+   "index" : "143",
+   "end_date" : "2017-07-26T17:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "BlackHat Tee Time: TopGolf with TruSTAR"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "9v29i7bflpvqrppk0bgknat1c8@google.com",
+   "start_date" : "2017-07-26T17:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#9v29i7bflpvqrppk0bgknat1c8@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Border Grill @ Mandalay Bay",
+   "index" : "158",
+   "end_date" : "2017-07-26T17:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "CYBEREASON"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "58ht2k48h602c39gnncsfeq9e8@google.com",
+   "start_date" : "2017-07-26T18:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#58ht2k48h602c39gnncsfeq9e8@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Mandalay Bay Hotel 3950 S Las Vegas Blvd Las Vegas, NV 89119",
+   "index" : "136",
+   "end_date" : "2017-07-26T18:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "IOAsis Happy Hour"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "bqndpdl15hcckgavil6afk0f64@google.com",
+   "start_date" : "2017-07-26T18:30:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#bqndpdl15hcckgavil6afk0f64@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "3950 S Las Vegas Blvd, Las Vegas, NV 89119, USA",
+   "index" : "121",
+   "end_date" : "2017-07-26T18:30:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "Black Hat 2017 Hump Day Happy Hour"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "lvjm4g4rf8ph1a5agmb752ls8k@google.com",
+   "start_date" : "2017-07-26T18:30:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#lvjm4g4rf8ph1a5agmb752ls8k@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "To Be Announced",
+   "index" : "147",
+   "end_date" : "2017-07-26T18:30:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "MIMECAST"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "f2671q8u349h1e5r8ldo1lus88@google.com",
+   "start_date" : "2017-07-26T18:30:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#f2671q8u349h1e5r8ldo1lus88@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "TBD",
+   "index" : "148",
+   "end_date" : "2017-07-26T18:30:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "DIGITALGUARDIAN"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "mrhff040isqnna4k77ne00trmg@google.com",
+   "start_date" : "2017-07-26T19:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#mrhff040isqnna4k77ne00trmg@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Libertine Social (Mandalay Bay) 3950 S Las Vegas Blvd Las Vegas, NV 89119",
+   "index" : "122",
+   "end_date" : "2017-07-26T19:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "Flashpoint and Anomali"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "85gihb46sma3dds6ofubmg0bmc@google.com",
+   "start_date" : "2017-07-26T19:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#85gihb46sma3dds6ofubmg0bmc@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Topgolf, Las Vegas, NV 89103, USA",
+   "index" : "123",
+   "end_date" : "2017-07-26T19:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "EC-Council Executive Cocktail Reception at Black Hat"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "2vc506d5fhdqthtveshm7bsrcs@google.com",
+   "start_date" : "2017-07-26T19:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#2vc506d5fhdqthtveshm7bsrcs@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Border Grill, Mandalay Bay",
+   "index" : "150",
+   "end_date" : "2017-07-26T19:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "F5NETWORKS"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "8crfj6b1bujg9l8fq5l0niklsk@google.com",
+   "start_date" : "2017-07-26T19:30:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#8crfj6b1bujg9l8fq5l0niklsk@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : " LIGHT Nightclub in the Mandalay Bay Resort & Casino",
+   "index" : "139",
+   "end_date" : "2017-07-26T19:30:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "Optiv"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "9mnvick7v3k00ap21hu26aedko@google.com",
+   "start_date" : "2017-07-26T20:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#9mnvick7v3k00ap21hu26aedko@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Cosmopolitan Hotel in Las Vegas",
+   "index" : "124",
+   "end_date" : "2017-07-26T20:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "this party is canceled"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "l2oo9am7q6k1us0nka26dfckds@google.com",
+   "start_date" : "2017-07-26T20:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#l2oo9am7q6k1us0nka26dfckds@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : " Omnia, Caesars Palace",
+   "index" : "149",
+   "end_date" : "2017-07-26T20:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "CISCO"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "6n807ba7f07rrc94gpln010h44@google.com",
+   "start_date" : "2017-07-26T20:30:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#6n807ba7f07rrc94gpln010h44@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Skyfall Lounge, Delano Las Vegas 3940 S Las Vegas Blvd Las Vegas, NV 89119",
+   "index" : "138",
+   "end_date" : "2017-07-26T20:30:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "ZeroFox / cavirin"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "1lg5ookkrmh64662sj60maies8@google.com",
+   "start_date" : "2017-07-26T21:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#1lg5ookkrmh64662sj60maies8@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "The Pool at The Artisan Hotel Boutique 1501 West Sahara Avenue Las Vegas, NV 89102",
+   "index" : "133",
+   "end_date" : "2017-07-26T21:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "zParty"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "jkasl8dj8h7gf6f9g7b75ngleo@google.com",
+   "start_date" : "2017-07-26T21:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#jkasl8dj8h7gf6f9g7b75ngleo@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "minus5Â° Ice Experience Mandalay Bay 3950 South Las Vegas Boulevard Las Vegas, NV 89109",
+   "index" : "141",
+   "end_date" : "2017-07-26T21:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "Cylance"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "dm7c6gjp9cjkue5mi00sim259k@google.com",
+   "start_date" : "2017-07-26T22:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#dm7c6gjp9cjkue5mi00sim259k@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Tuscany Suites and Casino, 255 E Flamingo Rd, Las Vegas, NV 89169, USA",
+   "index" : "125",
+   "end_date" : "2017-07-26T22:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "BSidesLV Pool Party"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "1f1uotrqt2mu6td97k24l3ees0@google.com",
+   "start_date" : "2017-07-26T22:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#1f1uotrqt2mu6td97k24l3ees0@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Hakkasan, MGM Grand 3799 S Las Vegas Blvd Las Vegas, NV 89109",
+   "index" : "153",
+   "end_date" : "2017-07-26T22:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "rapid7"
+}
+,
 {
    "exploit" : 0,
    "dctv_channel" : "tba",
@@ -105,6 +645,26 @@
 {
    "exploit" : 0,
    "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "mu6ckqk290p6a29jcq5cbdu8lk@google.com",
+   "start_date" : "2017-07-27T12:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#mu6ckqk290p6a29jcq5cbdu8lk@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Room Banyan C, Mandalay Bay Convention Center",
+   "index" : "126",
+   "end_date" : "2017-07-27T12:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "2017 ISSA Members Lunch at Black Hat"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
    "who" : [
       {
          "indexsp" : "3",
@@ -150,6 +710,26 @@
    "end_date" : "2017-07-27T12:45:00",
    "updated_at" : "2017-07-10T19:37:57",
    "title" : "Jailbreaking Apple Watch"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "6hdksf5ou863prsabssc6i2qo4@google.com",
+   "start_date" : "2017-07-27T13:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#6hdksf5ou863prsabssc6i2qo4@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Banyan B Mandalay Bay 3950 Las Vegas Boulevard Las Vegas, Nevada  89119",
+   "index" : "127",
+   "end_date" : "2017-07-27T13:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "EWF Meet & Greet at Black Hat "
 }
 ,
 {
@@ -334,6 +914,46 @@
 {
    "exploit" : 0,
    "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "45m08b32mad1229q32o15rnm28@google.com",
+   "start_date" : "2017-07-27T16:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#45m08b32mad1229q32o15rnm28@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "https://goo.gl/maps/tT2SJgWYMk62",
+   "index" : "128",
+   "end_date" : "2017-07-27T16:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "DEFCON Toxic BBQ"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "ekf2lhakqfmus23s1h4ibr061s@google.com",
+   "start_date" : "2017-07-27T16:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#ekf2lhakqfmus23s1h4ibr061s@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Border Grill in Mandalay Bay (Lower Level) 3950 S Las Vegas Blvd. Las Vegas, Nevada 89119 USA (702) 632-7403",
+   "index" : "140",
+   "end_date" : "2017-07-27T16:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "(ISC)2 Member Reception at Black Hat 2017"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
    "who" : [
       {
          "indexsp" : "15",
@@ -419,6 +1039,66 @@
    "end_date" : "2017-07-27T17:45:00",
    "updated_at" : "2017-07-10T19:37:57",
    "title" : "The Last CTF Talk You'll Ever Need: AMA with 20 years of DEF  CON Capture-the-Flag organizers"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "j6hhb23k66jrkf8fu3f81g46e8@google.com",
+   "start_date" : "2017-07-27T18:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#j6hhb23k66jrkf8fu3f81g46e8@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "House of Blues, 3950 S Las Vegas Blvd, Las Vegas, NV 89119, USA",
+   "index" : "129",
+   "end_date" : "2017-07-27T18:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "ThreatConnect & DomainTools Black Hat Party 2017"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "udubpbtaoqe6u75sft41luc7hc@google.com",
+   "start_date" : "2017-07-27T19:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#udubpbtaoqe6u75sft41luc7hc@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "1923 Bourbon Bar Mandalay Bay",
+   "index" : "134",
+   "end_date" : "2017-07-27T19:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "CoreProhibition"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "hm7sopuvo3acd5h8b9mbj6b678@google.com",
+   "start_date" : "2017-07-27T20:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#hm7sopuvo3acd5h8b9mbj6b678@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Caesar's Palace Penthouse",
+   "index" : "155",
+   "end_date" : "2017-07-27T20:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "Tiaracon 2017 Quiet Party"
 }
 ,
 {
@@ -1210,6 +1890,26 @@
 {
    "exploit" : 0,
    "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "rr2spn2uafimpt3e4nmob0gg58@google.com",
+   "start_date" : "2017-07-28T17:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#rr2spn2uafimpt3e4nmob0gg58@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Mandalay Bay in the Coral Room",
+   "index" : "130",
+   "end_date" : "2017-07-28T17:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "Tenable Security Blackhat/Defcon Executive Cocktail Dinner"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
    "who" : [
       {
          "indexsp" : "66",
@@ -1346,6 +2046,26 @@
 {
    "exploit" : 0,
    "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "id4o1cad1o1curld3igpcu8cms@google.com",
+   "start_date" : "2017-07-28T20:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#id4o1cad1o1curld3igpcu8cms@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Caesar's Palace Penthouse",
+   "index" : "154",
+   "end_date" : "2017-07-28T20:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "TiaraCon 2017 Dance Party (DJKenny)"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
    "who" : [
       {
          "indexsp" : "79",
@@ -1432,6 +2152,26 @@
    "end_date" : "2017-07-28T22:00:00",
    "updated_at" : "2017-07-10T19:37:57",
    "title" : "Panel - An Evening with the EFF"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "buib7a143ikbcurgqkq6c72fj4@google.com",
+   "start_date" : "2017-07-28T22:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#buib7a143ikbcurgqkq6c72fj4@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Caesar's Palace, Modena.",
+   "index" : "151",
+   "end_date" : "2017-07-28T22:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "DefCon 25 Silent Disco"
 }
 ,
 {
@@ -2112,6 +2852,35 @@
    "dctv_channel" : "tba",
    "who" : [
       {
+         "indexsp" : "189",
+         "who" : "James Langevin"
+      },
+      {
+         "indexsp" : "190",
+         "who" : "Will Hurd"
+      }
+   ],
+   "tool" : 0,
+   "id" : null,
+   "start_date" : "2017-07-29T15:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#",
+   "location" : "Capri Room",
+   "demo" : 0,
+   "entry_type" : "Official",
+   "description" : "Q&A with Congressmen James Langevin and Will Hurd",
+   "index" : "117",
+   "end_date" : "2017-07-29T16:45:00",
+   "updated_at" : "2017-07-17T15:01:22",
+   "title" : "D.C. to DEF CON: Q&A with Congressmen James Langevin and Will Hurd"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [
+      {
          "indexsp" : "123",
          "who" : "Jason Hernandez"
       },
@@ -2494,6 +3263,66 @@
    "end_date" : "2017-07-29T22:00:00",
    "updated_at" : "2017-07-10T19:37:57",
    "title" : "D0 No H4RM: A Healthcare  Security Conversation"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "ll9sar5rbpb4dto2raqispikss@google.com",
+   "start_date" : "2017-07-29T20:01:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#ll9sar5rbpb4dto2raqispikss@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Caesars Palace Suite TBA",
+   "index" : "137",
+   "end_date" : "2017-07-29T20:01:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "DC801"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "k8bdufaeuklo4g1c7ciepie9sk@google.com",
+   "start_date" : "2017-07-29T21:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#k8bdufaeuklo4g1c7ciepie9sk@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "TBA",
+   "index" : "131",
+   "end_date" : "2017-07-29T21:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "DEFCON BATTLE ROYALE"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "4v29b9283igtojutspmhvft670@google.com",
+   "start_date" : "2017-07-29T22:30:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#4v29b9283igtojutspmhvft670@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "Skytalks room (Verona)",
+   "index" : "157",
+   "end_date" : "2017-07-29T22:30:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "303 Party"
 }
 ,
 {
@@ -3120,6 +3949,35 @@
    "dctv_channel" : "tba",
    "who" : [
       {
+         "indexsp" : "191",
+         "who" : "James Langevin"
+      },
+      {
+         "indexsp" : "192",
+         "who" : "Will Hurd"
+      }
+   ],
+   "tool" : 0,
+   "id" : null,
+   "start_date" : "2017-07-30T15:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#",
+   "location" : "101 Track",
+   "demo" : 0,
+   "entry_type" : "Official",
+   "description" : "Fireside Chat with Congressmen James Langevin and Will Hurd",
+   "index" : "118",
+   "end_date" : "2017-07-30T16:45:00",
+   "updated_at" : "2017-07-17T15:01:22",
+   "title" : "Bridging the Gap between D.C. and DEF CON"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [
+      {
          "indexsp" : "186",
          "who" : "Zardus (Yan Shoshitaishvili)"
       }
@@ -3188,6 +4046,26 @@
    "end_date" : "2017-07-30T18:30:00",
    "updated_at" : "2017-07-10T19:37:57",
    "title" : "Closing Ceremonies"
+}
+,
+{
+   "exploit" : 0,
+   "dctv_channel" : "tba",
+   "who" : [],
+   "tool" : 0,
+   "id" : "ri5gn38ovo45rrqv058cvs680o@google.com",
+   "start_date" : "2017-07-30T20:00:00",
+   "includes" : null,
+   "recommended" : "0",
+   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#ri5gn38ovo45rrqv058cvs680o@google.com",
+   "location" : null,
+   "demo" : 0,
+   "entry_type" : "Party",
+   "description" : "go find them",
+   "index" : "132",
+   "end_date" : "2017-07-30T20:00:00",
+   "updated_at" : "2017-07-17T15:57:16",
+   "title" : "Telephreak / 2600net Party "
 }
 
   ]
