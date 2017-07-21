@@ -45,9 +45,6 @@ class DatabaseController(private val context: Context, name: String = "DEFCON", 
     // SQL
     val SELECT_ALL_FROM = "SELECT * from "
 
-    val MAX_RECENT_UPDATES = 25
-
-
     init {
 //         This will call onCreate if the database is new.
         val db = writableDatabase
@@ -55,9 +52,18 @@ class DatabaseController(private val context: Context, name: String = "DEFCON", 
         if (isScheduleOutOfDate()) {
 //            Logger.d("Have not synced the current version. Update the database with the json.")
             updateDataSet(db)
-        }
-        else {
+        } else {
 //           Logger.d("database should be up to date, don't check json.")
+        }
+
+        // Backwards compat.
+        if (LegacyDatabaseController.exists(context)) {
+            val legacy = LegacyDatabaseController(context)
+            legacy.bookmarkedItems
+                    .forEach {
+                        toggleBookmark(db, it)
+                    }
+            legacy.deleteDatabase()
         }
     }
 
@@ -75,6 +81,7 @@ class DatabaseController(private val context: Context, name: String = "DEFCON", 
         var json = getJSONFromFile(PATCH_FILE)
         val patches = gson.fromJson(json, Patches::class.java)
         applyPatches(db, patches)
+
     }
 
     fun updateDataSet(db: SQLiteDatabase) {
@@ -133,7 +140,7 @@ class DatabaseController(private val context: Context, name: String = "DEFCON", 
         val values = item.getContentValues(App.application.gson)
 
 
-        values.put(KEY_INDEX, values.getAsInteger("index") )
+        values.put(KEY_INDEX, values.getAsInteger("index"))
         values.remove("index")
         values.remove("bookmarked")
 
@@ -181,9 +188,9 @@ class DatabaseController(private val context: Context, name: String = "DEFCON", 
         return null
     }
 
-    fun toggleBookmark(item: Item) {
+    fun toggleBookmark(db: SQLiteDatabase = writableDatabase, item: Item) {
         val value = if (item.isBookmarked) Constants.UNBOOKMARKED else Constants.BOOKMARKED
-        setScheduleBookmarked(value, item.index)
+        setScheduleBookmarked(db, value, item.index)
 
         item.toggleBookmark()
         App.application.postBusEvent(FavoriteEvent(item.index))
@@ -193,8 +200,8 @@ class DatabaseController(private val context: Context, name: String = "DEFCON", 
         }
     }
 
-    private fun setScheduleBookmarked(state: Int, id: Int) {
-        writableDatabase.execSQL("UPDATE $SCHEDULE_TABLE_NAME SET $KEY_BOOKMARKED=$state WHERE $KEY_INDEX=$id")
+    private fun setScheduleBookmarked(db: SQLiteDatabase = writableDatabase, state: Int, id: Int) {
+        db.execSQL("UPDATE $SCHEDULE_TABLE_NAME SET $KEY_BOOKMARKED=$state WHERE $KEY_INDEX=$id")
     }
 
     private fun getJSONFromFile(filename: String): String {

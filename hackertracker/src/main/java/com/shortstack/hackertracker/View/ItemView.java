@@ -16,6 +16,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.shortstack.hackertracker.Application.App;
+import com.shortstack.hackertracker.Database.DatabaseController;
 import com.shortstack.hackertracker.Event.FavoriteEvent;
 import com.shortstack.hackertracker.Event.RefreshTimerEvent;
 import com.shortstack.hackertracker.Model.Item;
@@ -271,6 +272,7 @@ public class ItemView extends CardView {
     }
 
     public void onBookmarkClick() {
-        App.Companion.getApplication().getDatabaseController().toggleBookmark(getContent().getItem());
+        DatabaseController databaseController = App.Companion.getApplication().getDatabaseController();
+        databaseController.toggleBookmark(databaseController.getWritableDatabase(), getContent().getItem());
     }
 }
