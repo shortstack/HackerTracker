@@ -9,7 +9,7 @@ import android.text.TextUtils
 import android.view.View
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.Alert.MaterialAlert
-import com.shortstack.hackertracker.Model.Company
+import com.shortstack.hackertracker.Model.Vendors
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.bottom_sheet_generic.view.*
 import kotlinx.android.synthetic.main.fragment_schedule.view.*
@@ -24,7 +24,7 @@ class VendorBottomSheetDialogFragment : BottomSheetDialogFragment() {
         val vendor = content
 
         if (vendor == null) {
-            Logger.e("Company is null. Can not render bottom sheet.")
+            Logger.e("Vendor is null. Can not render bottom sheet.")
             return
         }
 
@@ -39,8 +39,8 @@ class VendorBottomSheetDialogFragment : BottomSheetDialogFragment() {
         view.link.setOnClickListener { onLinkClick() }
     }
 
-    private val content: Company?
-        get() = arguments.getSerializable(ARG_VENDOR) as Company
+    private val content: Vendors.Vendor?
+        get() = arguments.getSerializable(ARG_VENDOR) as Vendors.Vendor
 
     fun onLinkClick() {
         MaterialAlert.create(context)
@@ -58,7 +58,7 @@ class VendorBottomSheetDialogFragment : BottomSheetDialogFragment() {
         val ARG_VENDOR = "VENDOR"
 
 
-        fun newInstance(vendor: Company): VendorBottomSheetDialogFragment {
+        fun newInstance(vendor: Vendors.Vendor): VendorBottomSheetDialogFragment {
             val fragment = VendorBottomSheetDialogFragment()
 
             val bundle = Bundle()

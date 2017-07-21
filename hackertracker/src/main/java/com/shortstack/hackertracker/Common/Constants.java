@@ -27,7 +27,7 @@ public interface Constants {
     String TYPE_CONTEST = "Contest";
     String TYPE_EVENT = "Event";
     String TYPE_PARTY = "Party";
-    String TYPE_VENDOR = "Company";
+    String TYPE_VENDOR = "Vendor";
     String TYPE_DEMO_LAB = "DemoLabs";
     String TYPE_SKYTALKS = "Skytalks";
     String TYPE_MESSAGE = "Message";
