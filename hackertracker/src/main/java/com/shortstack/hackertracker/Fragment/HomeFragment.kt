@@ -20,6 +20,7 @@ import com.shortstack.hackertracker.Renderer.ItemRenderer
 import com.shortstack.hackertracker.Renderer.SubHeaderRenderer
 import kotlinx.android.synthetic.main.fragment_list.*
 import java.text.SimpleDateFormat
+import java.util.*
 
 class HomeFragment : Fragment() {
 
@@ -47,9 +48,10 @@ class HomeFragment : Fragment() {
         addHeader()
 
 
+        val cal = Calendar.getInstance()
+        cal.time = Date(App.storage.lastRefresh)
 
-
-        adapter?.add(App.storage.lastUpdated)
+        adapter?.add("Last synced " + App.getRelativeDateStamp(Date(App.storage.lastRefresh)))
 
         addHelpNavigation()
         addUpdatedCards()
@@ -65,7 +67,7 @@ class HomeFragment : Fragment() {
         val recentUpdates = App.storage.recentUpdates
 
         for (update in recentUpdates.updates) {
-            if( update.date != recentDate ) {
+            if (update.date != recentDate) {
                 recentDate = update.date
                 val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(update.date)
                 adapter?.add(SimpleDateFormat("MMMM dd h:mm aa").format(date))

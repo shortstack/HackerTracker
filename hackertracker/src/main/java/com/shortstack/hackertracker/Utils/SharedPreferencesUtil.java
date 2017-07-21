@@ -132,8 +132,12 @@ public class SharedPreferencesUtil {
         return new Filter(mPreferences.getStringSet(Key.USER_FILTER.toString(), new HashSet<String>()));
     }
 
-    public void setLastRefreshTimer(long time) {
+    public void setLastRefresh(long time) {
         getEditor().putLong(Key.APP_LAST_REFRESH.toString(), time).apply();
+    }
+
+    public long getLastRefresh() {
+        return mPreferences.getLong(Key.APP_LAST_REFRESH.toString(), 0);
     }
 
     public boolean shouldRefresh(long time) {

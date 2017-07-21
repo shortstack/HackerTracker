@@ -116,7 +116,7 @@ public class ScheduleFragment extends Fragment implements SwipeRefreshLayout.OnR
         super.onPause();
         mTimer.cancel();
 
-        App.Companion.getStorage().setLastRefreshTimer(App.Companion.getCurrentDate().getTime());
+        App.Companion.getStorage().setLastRefresh(App.Companion.getCurrentDate().getTime());
     }
 
     @Subscribe
@@ -279,7 +279,7 @@ public class ScheduleFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        App.Companion.getApplication().getNetworkController().syncInBackground();
+        App.Companion.getApplication().getNetworkController().syncInForeground(getContext());
         swipe.setRefreshing(false);
     }
 }
