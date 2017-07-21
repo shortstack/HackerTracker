@@ -44,6 +44,11 @@ class TabHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
             mFragmentIndex = App.storage.viewPagerPosition
             forceMenuHighlighted()
             loadFragment()
+
+            if (Amplify.getSharedInstance().shouldPrompt()) {
+                val review = ReviewBottomSheetDialogFragment.newInstance()
+                review.show(this.supportFragmentManager, review.tag)
+            }
         }
     }
 
@@ -96,10 +101,7 @@ class TabHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         drawer_layout!!.closeDrawers()
 
 
-        if (Amplify.getSharedInstance().shouldPrompt()) {
-            val review = ReviewBottomSheetDialogFragment.newInstance()
-            review.show(this.supportFragmentManager, review.tag)
-        }
+
     }
 
     private fun tagAnalytics() {
