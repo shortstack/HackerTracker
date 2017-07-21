@@ -273,6 +273,6 @@ public class Item implements Serializable {
 
     @Override
     public String toString() {
-        return index + " => " + title + ", " + location + ", " + type;
+        return "{ id: " + index + ", title: \"" + title + "\", location: \"" + location + "\", \"type: " + type + "\" }";
     }
 }
