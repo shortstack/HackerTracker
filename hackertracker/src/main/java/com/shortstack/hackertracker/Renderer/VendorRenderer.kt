@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.pedrogomez.renderers.Renderer
 import com.shortstack.hackertracker.BottomSheet.VendorBottomSheetDialogFragment
-import com.shortstack.hackertracker.Model.Company
+import com.shortstack.hackertracker.Model.Vendors
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.row_vendor.view.*
 
-class VendorRenderer : Renderer<Company>(), View.OnClickListener {
+class VendorRenderer : Renderer<Vendors.Vendor>(), View.OnClickListener {
 
     override fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
         return inflater.inflate(R.layout.row_vendor, parent, false)
