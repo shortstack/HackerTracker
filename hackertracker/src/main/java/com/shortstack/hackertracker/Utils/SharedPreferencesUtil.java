@@ -9,6 +9,7 @@ import com.shortstack.hackertracker.Model.Filter;
 import com.shortstack.hackertracker.Model.RecentUpdates;
 
 import java.util.HashSet;
+import java.util.Map;
 
 public class SharedPreferencesUtil {
 
@@ -73,11 +74,27 @@ public class SharedPreferencesUtil {
     }
 
     public RecentUpdates getRecentUpdates() {
-        String string = mPreferences.getString(Key.APP_UPDATED_EVENTS.toString(), null);
-        if( string == null )
+
+        String string;
+
+        // Backwards compat.
+        Map<String, ?> map = mPreferences.getAll();
+        for(Map.Entry<String,?> entry : map.entrySet()) {
+            if (entry.getKey().equals(Key.APP_UPDATED_EVENTS.toString())) {
+                if( !entry.getValue().getClass().equals(String.class)) {
+                    getEditor().remove(Key.APP_UPDATED_EVENTS.toString()).apply();
+                }
+                break;
+            }
+        }
+
+        string = mPreferences.getString(Key.APP_UPDATED_EVENTS.toString(), null);
+
+
+        if (string == null)
             return new RecentUpdates();
 
-        return  App.application.getGson().fromJson(string, RecentUpdates.class);
+        return App.application.getGson().fromJson(string, RecentUpdates.class);
     }
 
     public void setRecentUpdates(RecentUpdates updates) {
@@ -90,7 +107,7 @@ public class SharedPreferencesUtil {
         return mPreferences.getInt(Key.APP_LAST_SYNC_VERSION.toString(), 0);
     }
 
-    public void setLastSyncVersion( int version ) {
+    public void setLastSyncVersion(int version) {
         SharedPreferences.Editor editor = getEditor();
         editor.putInt(Key.APP_LAST_SYNC_VERSION.toString(), version);
         editor.apply();
