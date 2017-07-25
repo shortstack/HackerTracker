@@ -121,6 +121,9 @@ class DatabaseController(private val context: Context, name: String = Constants.
     private fun initVendors(database: SQLiteDatabase, vendors: Vendors?) {
         database.beginTransaction()
 
+        // Ensure the database is empty so we don't get any dupes.
+        database.delete(VENDORS_TABLE_NAME, null, null )
+
         try {
 
             vendors?.vendors?.forEach {
