@@ -8,16 +8,46 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+
 
 
     <application
         android:name="com.shortstack.hackertracker.Application.App"
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/MyMaterialTheme">
 
-        <activity android:name="com.shortstack.hackertracker.Activity.TabHomeActivity">
+
+        <service android:name=".Task.SyncJob"
+            android:exported="false"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+        </service>
+
+        <service android:name=".Task.ReminderJob"
+            android:exported="false"
+            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
+            <intent-filter>
+                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE"/>
+            </intent-filter>
+
+        </service>
+
+
+        <service android:name=".Service.SyncService" />
+
+        <service android:name=".Service.UpdateDatabaseService" />
+
+        <activity android:name=".Activity.SplashActivity" />
+
+        <activity
+            android:name="com.shortstack.hackertracker.Activity.TabHomeActivity"
+            android:launchMode="singleTop"
+            android:configChanges="orientation|screenSize|keyboardHidden">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +62,7 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="3439e34f4fcc9d7eabf24f7ce529cd7415acc49d" />
+        <service android:name=".Service.SyncService" />
     </application>
 
 </manifest>
