@@ -17,8 +17,9 @@ import com.shortstack.hackertracker.Network.SyncResponse
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 
-class DatabaseController(private val context: Context, name: String = "DEFCON", version: Int = 1) : SQLiteOpenHelper(context, name, null, version) {
+class DatabaseController(private val context: Context, name: String = Constants.DEFCON_DATABASE_NAME, version: Int = 1) : SQLiteOpenHelper(context, name, null, version) {
 
     // Files
     private val PATCH_FILE = "patches.json"
@@ -82,6 +83,15 @@ class DatabaseController(private val context: Context, name: String = "DEFCON", 
         val patches = gson.fromJson(json, Patches::class.java)
         applyPatches(db, patches)
 
+        // Schedule
+        json = getJSONFromFile(SCHEDULE_FILE)
+        val response = gson.fromJson(json, SyncResponse::class.java)
+        initSchedule(db, response)
+
+        // Vendors
+        json = getJSONFromFile(VENDORS_FILE)
+        val vendors = gson.fromJson(json, Vendors::class.java)
+        initVendors(db, vendors)
     }
 
     fun updateDataSet(db: SQLiteDatabase) {
@@ -95,7 +105,7 @@ class DatabaseController(private val context: Context, name: String = "DEFCON", 
         // Vendors
         json = getJSONFromFile(VENDORS_FILE)
         val vendors = gson.fromJson(json, Vendors::class.java)
-        updateVendors(db, vendors)
+        initVendors(db, vendors)
     }
 
     private fun applyPatches(database: SQLiteDatabase, patches: Patches) {
@@ -108,32 +118,81 @@ class DatabaseController(private val context: Context, name: String = "DEFCON", 
                 }
     }
 
-    private fun updateVendors(database: SQLiteDatabase, vendors: Vendors?) {
-        vendors?.vendors?.forEach {
-            val values = it.getContentValues(App.application.gson)
-            values.remove("index")
-            database.insert(VENDORS_TABLE_NAME, null, values)
+    private fun initVendors(database: SQLiteDatabase, vendors: Vendors?) {
+        database.beginTransaction()
+
+        try {
+
+            vendors?.vendors?.forEach {
+                val values = it.getContentValues(App.application.gson)
+                values.remove("index")
+                database.insert(VENDORS_TABLE_NAME, null, values)
+            }
+
+            database.setTransactionSuccessful()
+        } finally {
+            database.endTransaction()
         }
+
     }
 
-    fun updateSchedule(database: SQLiteDatabase = writableDatabase, response: SyncResponse) {
+    fun updateSchedule(database: SQLiteDatabase = writableDatabase, response: SyncResponse): Int {
         App.storage.lastUpdated = response.updatedDate
         App.storage.lastSyncVersion = BuildConfig.VERSION_CODE
 
         val schedule = response.schedule
-        val recentUpdates = App.storage.recentUpdates
+        var count = 0
 
         for (item in schedule) {
             if (updateScheduleItem(database, item)) {
-                recentUpdates.add(item)
+                count++
             }
         }
 
-        App.storage.recentUpdates = recentUpdates
+        return count
     }
 
-    fun updateScheduleItem(db: SQLiteDatabase, item: Item): Boolean {
+    fun initSchedule(database: SQLiteDatabase = writableDatabase, response: SyncResponse) {
 
+        App.storage.lastUpdated = response.updatedDate
+        App.storage.lastSyncVersion = BuildConfig.VERSION_CODE
+
+        val schedule = response.schedule
+        val gson = App.application.gson
+
+        database.beginTransaction()
+
+        try {
+            schedule.forEach {
+                val values = it.getContentValues(gson)
+                values.put(KEY_INDEX, values.getAsInteger("index"))
+                values.remove("index")
+
+                database.insert(SCHEDULE_TABLE_NAME, null, values)
+            }
+            database.setTransactionSuccessful()
+        } finally {
+            database.endTransaction()
+        }
+    }
+
+    fun getRecentUpdates():List<Item> {
+        var result = ArrayList<Item>()
+
+        val cursor = readableDatabase.query(false, SCHEDULE_TABLE_NAME, null, null, null, null, null, "updated_at DESC", "25")
+
+        if (cursor.moveToFirst()) {
+            do {
+                result.add(Item.CursorToItem(App.application.gson, cursor))
+            } while (cursor.moveToNext())
+        }
+
+
+        return result
+    }
+
+
+    fun updateScheduleItem(db: SQLiteDatabase, item: Item): Boolean {
         val filter = "$KEY_INDEX=?"
         val args = arrayOf(item.index.toString())
 
@@ -243,22 +302,21 @@ class DatabaseController(private val context: Context, name: String = "DEFCON", 
         // Date
         if (App.storage.showActiveEventsOnly()) {
             val currentDate = App.getCurrentCalendar()
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd")
-            val timeFormat = SimpleDateFormat("hh:mm")
+            val dateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
 
             if (selection.isNotEmpty())
                 selection += "AND "
 
             selection += "( $KEY_END_DATE > ? )"
 
-            args.add(timeFormat.format(currentDate.time))
+            args.add(dateFormat.format(currentDate.time))
         }
 
 
         // Query
         val cursor = readableDatabase.query(SCHEDULE_TABLE_NAME, null, selection, args.toTypedArray(), null, null, KEY_START_DATE)
 
-        Logger.d("Selection: $selection Args: $args returns " + cursor.count + " rows.")
+//        Logger.d("Selection: $selection Args: $args returns " + cursor.count + " rows.")
 
 
         // Adding to list
@@ -313,4 +371,11 @@ class DatabaseController(private val context: Context, name: String = "DEFCON", 
             cursor.close()
             return result
         }
+
+    companion object {
+        fun exists(context: Context): Boolean {
+            val dbFile = context.getDatabasePath(Constants.DEFCON_DATABASE_NAME)
+            return dbFile.exists()
+        }
+    }
 }

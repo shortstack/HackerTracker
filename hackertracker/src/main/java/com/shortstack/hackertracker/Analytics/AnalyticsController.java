@@ -20,6 +20,7 @@ public class AnalyticsController {
         SETTINGS_NOTIFICATIONS("Settings - Notifications"),
         SETTINGS_EXPIRED_EVENT("Settings - Expired Events"),
         SETTINGS_MILITARY_TIME("Settings - 24 Time Mode"),
+        SETTINGS_SYNC_AUTO("Settings - Sync Auto"),
 
         UBER("Uber"),
 

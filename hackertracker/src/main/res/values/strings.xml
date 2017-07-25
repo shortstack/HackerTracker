@@ -186,13 +186,14 @@ Any news and info will likely be posted there.</item>
     <string name="tomorrow">Tomorrow</string>
     <string name="nav_help_title">Looking for something?</string>
     <string name="nav_help_body">Check out the information section</string>
-    <string name="updates">Updates</string>
+    <string name="updates">Recent Updates</string>
     <string name="defcon_year">DEFCON 25</string>
     <string name="tutorial_schedule">Filter your schedule to find what you\'re looking for.</string>
     <string name="empty_feed">Couldn\'t find anything.</string>
     <string name="map_day_title">DAY</string>
     <string name="map_night_title">NIGHT</string>
     <string name="notification_text_blank">Starting soon.</string>
+    <string name="empty_location">unknown location</string>
 
     <string-array name="nav_item_activity_titles">
         <item>@string/nav_home</item>

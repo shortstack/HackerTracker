@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.Activity
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.NavigationView
@@ -14,6 +15,8 @@ import com.github.stkent.amplify.tracking.Amplify
 import com.shortstack.hackertracker.Analytics.AnalyticsController
 import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.BottomSheet.ReviewBottomSheetDialogFragment
+import com.shortstack.hackertracker.BottomSheet.ScheduleItemBottomSheetDialogFragment
+import com.shortstack.hackertracker.Database.DatabaseController
 import com.shortstack.hackertracker.Fragment.*
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.activity_main.*
@@ -32,6 +35,15 @@ class TabHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        if( !DatabaseController.exists(this) ) {
+            startActivity(Intent(this, SplashActivity::class.java))
+            finish()
+            return
+        }
+
+
+
         setContentView(R.layout.activity_main)
         ButterKnife.bind(this)
         setSupportActionBar(toolbar)
@@ -50,8 +62,29 @@ class TabHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 review.show(this.supportFragmentManager, review.tag)
             }
         }
+
+        handleIntent(intent)
     }
 
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        handleIntent(intent)
+    }
+
+    private fun handleIntent(intent: Intent?) {
+        if (intent != null && intent.extras != null) {
+            val target = intent.extras.getInt("target")
+
+            val item = App.application.databaseController.getScheduleItemFromId(id = target)
+            if (item != null) {
+
+                val newInstance = ScheduleItemBottomSheetDialogFragment.newInstance(item)
+                newInstance.show(supportFragmentManager, newInstance.tag)
+
+            }
+        }
+    }
 
     private fun forceMenuHighlighted() {
         nav_view!!.menu.getItem(mFragmentIndex).isChecked = true

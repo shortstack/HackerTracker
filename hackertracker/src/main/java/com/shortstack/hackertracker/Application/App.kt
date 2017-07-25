@@ -2,7 +2,12 @@ package com.shortstack.hackertracker.Application
 
 import android.app.Application
 import android.content.Context
+import android.preference.PreferenceManager
 import com.crashlytics.android.Crashlytics
+import com.firebase.jobdispatcher.FirebaseJobDispatcher
+import com.firebase.jobdispatcher.GooglePlayDriver
+import com.firebase.jobdispatcher.Lifetime
+import com.firebase.jobdispatcher.Trigger
 import com.github.stkent.amplify.tracking.Amplify
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
@@ -12,48 +17,94 @@ import com.shortstack.hackertracker.Analytics.AnalyticsController
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.Database.DatabaseController
-import com.shortstack.hackertracker.Network.NetworkController
+import com.shortstack.hackertracker.Event.MainThreadBus
+import com.shortstack.hackertracker.Task.SyncJob
 import com.shortstack.hackertracker.Utils.NotificationHelper
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.Utils.TimeHelper
 import com.squareup.otto.Bus
-import com.squareup.otto.ThreadEnforcer
 import io.fabric.sdk.android.Fabric
 import java.util.*
 
 
+
+
 class App : Application() {
+
+    val SECONDS_TO_HOURS = 600
 
     lateinit var appContext: Context
         private set
 
     // Eventbus
-    val mBus: Bus by lazy { Bus(ThreadEnforcer.MAIN) }
+    val mBus: Bus by lazy { MainThreadBus() }
     // Storage
     val mStorage: SharedPreferencesUtil by lazy { SharedPreferencesUtil() }
     // Database
-    lateinit var databaseController: DatabaseController
-        private set
+    val databaseController: DatabaseController by lazy { DatabaseController(appContext) }
     // Notifications
     val notificationHelper: NotificationHelper by lazy { NotificationHelper(appContext) }
     // Analytics
     val analyticsController: AnalyticsController by lazy { AnalyticsController() }
-    // Networking
-    val networkController: NetworkController by lazy { NetworkController(appContext) }
     // Time
     val timeHelper: TimeHelper by lazy { TimeHelper(appContext) }
 
     val gson : Gson by lazy { GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create() }
 
+    val dispatcher : FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(appContext)) }
+
 
     override fun onCreate() {
         super.onCreate()
 
-        init()
-        initFabric()
-        initLogger()
-        initFeedback()
+        var time = System.currentTimeMillis()
 
+//        Logger.d("Creating App!")
+
+        init()
+//        Logger.d("init -- took " + (System.currentTimeMillis() - time) + " ms.")
+
+        initFabric()
+//        Logger.d("init fabric -- took " + (System.currentTimeMillis() - time) + " ms.")
+        initLogger()
+//        Logger.d("init logger -- took " + (System.currentTimeMillis() - time) + " ms.")
+        initFeedback()
+//        Logger.d("init feedback -- took " + (System.currentTimeMillis() - time) + " ms.")
+
+        if( !storage.isSyncScheduled) {
+            storage.setSyncScheduled()
+            scheduleSync()
+        }
+    }
+
+    fun scheduleSync() {
+
+        val hours = PreferenceManager.getDefaultSharedPreferences(this).getString("sync_interval", "6")
+
+        var value = hours.toInt()
+
+        Logger.d("Scheduling the sync. $value")
+        if( value == 0 ) {
+            cancelSync()
+            return
+        }
+
+        value *= SECONDS_TO_HOURS
+
+        val job = dispatcher.newJobBuilder()
+                .setService(SyncJob::class.java)
+                .setTag(SyncJob.TAG)
+                .setRecurring(true)
+                .setLifetime(Lifetime.FOREVER)
+                .setTrigger(Trigger.executionWindow(value, value + SECONDS_TO_HOURS))
+                .build()
+
+        dispatcher.mustSchedule(job)
+    }
+
+    fun cancelSync(){
+        Logger.d("Cancelling the sync.")
+        dispatcher.cancel(SyncJob.TAG)
     }
 
     private fun initFeedback() {
@@ -66,8 +117,6 @@ class App : Application() {
     private fun init() {
         application = this
         appContext = applicationContext
-
-        databaseController = DatabaseController(appContext)
     }
 
     private fun initLogger() {

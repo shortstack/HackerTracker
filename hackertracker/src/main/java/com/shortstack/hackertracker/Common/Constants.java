@@ -4,6 +4,8 @@ import com.shortstack.hackertracker.BuildConfig;
 
 public interface Constants {
 
+    String DEFCON_DATABASE_NAME = "DEFCON";
+
     String API_URL_BASE = "https://info.defcon.org/json/";
 
     long DEBUG_FORCE_TIME_DATE = 1470418500000L;
@@ -15,6 +17,9 @@ public interface Constants {
 
     int BOOKMARKED = 1;
     int UNBOOKMARKED = 0;
+
+    int SYNC_MODE_AUTO = 0;
+    int SYNC_MDOE_MANUAL = 1;
 
     String API_URL = "https://s3.amazonaws.com/defcon-api";
     String API_ERROR_MESSAGE = "\"errorMessage\":";

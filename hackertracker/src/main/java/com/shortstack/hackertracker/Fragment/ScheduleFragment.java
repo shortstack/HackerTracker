@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.Fragment;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.sqlite.SQLiteException;
 import android.os.Bundle;
 import android.os.Handler;
@@ -12,17 +13,20 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.orhanobut.logger.Logger;
 import com.shortstack.hackertracker.Alert.MaterialAlert;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Event.RefreshTimerEvent;
+import com.shortstack.hackertracker.Event.SyncResponseEvent;
 import com.shortstack.hackertracker.Event.UpdateListContentsEvent;
 import com.shortstack.hackertracker.List.ScheduleItemAdapter;
 import com.shortstack.hackertracker.Model.Filter;
 import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.R;
+import com.shortstack.hackertracker.Service.SyncService;
 import com.shortstack.hackertracker.View.FilterView;
 import com.squareup.otto.Subscribe;
 
@@ -60,12 +64,6 @@ public class ScheduleFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     public Handler mHandler = new Handler() {
         public void handleMessage(Message msg) {
-            //Logger.d("Updating list!");
-//            if( App.Companion.getApplication().DEBUG_TIME_EXTRA == Constants.TIMER_INTERVAL_FIVE_MIN ) {
-//                NetworkController cont = App.Companion.getApplication().getNetworkController();
-//                cont.syncInBackground();
-//            }
-
             App.Companion.getApplication().postBusEvent(new RefreshTimerEvent());
             if (adapter != null) {
                 adapter.notifyTimeChanged();
@@ -116,7 +114,6 @@ public class ScheduleFragment extends Fragment implements SwipeRefreshLayout.OnR
         super.onPause();
         mTimer.cancel();
 
-        App.Companion.getStorage().setLastRefresh(App.Companion.getCurrentDate().getTime());
     }
 
     @Subscribe
@@ -166,8 +163,6 @@ public class ScheduleFragment extends Fragment implements SwipeRefreshLayout.OnR
     }
 
     private void refreshContents() {
-        Logger.d("Refreshing database contents.");
-
         adapter.clear();
 
         Filter filter = App.Companion.getStorage().getFilter();
@@ -261,7 +256,6 @@ public class ScheduleFragment extends Fragment implements SwipeRefreshLayout.OnR
         return R.layout.fragment_schedule;
     }
 
-    //@OnClick(R.id.filter)
     public void showFilters() {
         Filter filter = App.Companion.getStorage().getFilter();
 
@@ -279,7 +273,17 @@ public class ScheduleFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Override
     public void onRefresh() {
-        App.Companion.getApplication().getNetworkController().syncInForeground(getContext());
+        Intent intent = new Intent(getContext(), SyncService.class);
+        getContext().startService(intent);
+    }
+
+
+    @Subscribe
+    public void handleSyncResponseEvent(SyncResponseEvent event) {
         swipe.setRefreshing(false);
+
+        if( event.getRowsUpdated() == 0 && event.getMode() == Constants.SYNC_MDOE_MANUAL ) {
+            Toast.makeText(getContext(), "Up to date!", Toast.LENGTH_SHORT).show();
+        }
     }
 }

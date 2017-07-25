@@ -11,7 +11,7 @@ import com.shortstack.hackertracker.R
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    inline fun Preference.setOnClick(crossinline func: Preference.() -> Unit ) {
+    inline fun Preference.setOnClick(crossinline func: Preference.() -> Unit) {
         this.onPreferenceClickListener = Preference.OnPreferenceClickListener {
             func()
             false
@@ -21,16 +21,6 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     override fun onCreatePreferences(bundle: Bundle?, s: String?) {
         addPreferencesFromResource(R.xml.settings)
 
-//        var preference = findPreference("force_sync")
-//        preference.setOnClick {
-//            val controller = App.application.networkController
-//            controller.syncInForeground(context)
-//        }
-//
-//        preference = findPreference("force_clear")
-//        preference.setOnClick {
-//            App.application.databaseController.schedule.delete("data", null, null)
-//        }
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
@@ -50,6 +40,11 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             "user_show_expired_events" -> {
                 event = Analytics.SETTINGS_EXPIRED_EVENT
                 App.application.postBusEvent(UpdateListContentsEvent())
+            }
+
+            "sync_interval" -> {
+                App.application.scheduleSync()
+                return
             }
 
             else ->

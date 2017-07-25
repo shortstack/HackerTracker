@@ -46,13 +46,6 @@ class HomeFragment : Fragment() {
         list.adapter = adapter
 
         addHeader()
-
-
-        val cal = Calendar.getInstance()
-        cal.time = Date(App.storage.lastRefresh)
-
-        adapter?.add("Last synced " + App.getRelativeDateStamp(Date(App.storage.lastRefresh)))
-
         addHelpNavigation()
         addUpdatedCards()
     }
@@ -60,22 +53,32 @@ class HomeFragment : Fragment() {
     @SuppressLint("SimpleDateFormat")
     private fun addUpdatedCards() {
         // Updates title
-        adapter?.add(getString(R.string.updates))
+
+        var lastDate :String
+
+        val cal = Calendar.getInstance()
+        cal.time = Date(App.storage.lastRefresh)
+
+        val refresh = App.storage.lastRefresh
+        if (refresh == 0L ) {
+            val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(App.storage.lastUpdated)
+            lastDate = "Last synced " + App.getRelativeDateStamp(date)
+        } else {
+            lastDate = "Last synced " + App.getRelativeDateStamp(Date(refresh))
+        }
+
+        adapter?.add(getString(R.string.updates) + "\n" + lastDate.toLowerCase())
 
         var recentDate = ""
 
-        val recentUpdates = App.storage.recentUpdates
-
-        for (update in recentUpdates.updates) {
-            if (update.date != recentDate) {
-                recentDate = update.date
-                val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(update.date)
-                adapter?.add(SimpleDateFormat("MMMM dd h:mm aa").format(date))
+        for (item in App.application.databaseController.getRecentUpdates()) {
+            if (item.updatedAt != recentDate) {
+                recentDate = item.updatedAt
+                val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(item.updatedAt)
+                adapter?.add("Updated " + SimpleDateFormat("MMMM dd h:mm aa").format(date))
             }
 
-            val scheduleItem = App.application.databaseController.getScheduleItemFromId(id = update.id)
-
-            adapter?.add(scheduleItem)
+            adapter?.add(item)
         }
     }
 

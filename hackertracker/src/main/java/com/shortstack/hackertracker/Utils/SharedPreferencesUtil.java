@@ -6,10 +6,8 @@ import android.preference.PreferenceManager;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.Model.Filter;
-import com.shortstack.hackertracker.Model.RecentUpdates;
 
 import java.util.HashSet;
-import java.util.Map;
 
 public class SharedPreferencesUtil {
 
@@ -24,6 +22,7 @@ public class SharedPreferencesUtil {
         USER_EXPIRED_EVENTS("user_show_expired_events"),
         USER_ANALYTICS("user_analytics"),
 
+        APP_SYNC_SCHEDULED("app_sync_scheduled"),
         APP_LAST_SYNC_VERSION("app_last_sync_version"),
         APP_UPDATED_EVENTS("app_updated_events"),
         APP_LAST_REFRESH("app_last_refresh"),
@@ -70,36 +69,6 @@ public class SharedPreferencesUtil {
     public void allowPushNotifications(boolean show) {
         SharedPreferences.Editor editor = getEditor();
         editor.putBoolean(Key.USER_ALLOW_PUSH.toString(), show);
-        editor.apply();
-    }
-
-    public RecentUpdates getRecentUpdates() {
-
-        String string;
-
-        // Backwards compat.
-        Map<String, ?> map = mPreferences.getAll();
-        for(Map.Entry<String,?> entry : map.entrySet()) {
-            if (entry.getKey().equals(Key.APP_UPDATED_EVENTS.toString())) {
-                if( !entry.getValue().getClass().equals(String.class)) {
-                    getEditor().remove(Key.APP_UPDATED_EVENTS.toString()).apply();
-                }
-                break;
-            }
-        }
-
-        string = mPreferences.getString(Key.APP_UPDATED_EVENTS.toString(), null);
-
-
-        if (string == null)
-            return new RecentUpdates();
-
-        return App.application.getGson().fromJson(string, RecentUpdates.class);
-    }
-
-    public void setRecentUpdates(RecentUpdates updates) {
-        SharedPreferences.Editor editor = getEditor();
-        editor.putString(Key.APP_UPDATED_EVENTS.toString(), App.application.getGson().toJson(updates));
         editor.apply();
     }
 
@@ -171,5 +140,13 @@ public class SharedPreferencesUtil {
 
     public boolean isTrackingAnalytics() {
         return mPreferences.getBoolean(Key.USER_ANALYTICS.toString(), true);
+    }
+
+    public boolean isSyncScheduled() {
+        return mPreferences.getBoolean(Key.APP_SYNC_SCHEDULED.toString(), false);
+    }
+
+    public void setSyncScheduled() {
+        getEditor().putBoolean(Key.APP_SYNC_SCHEDULED.toString(), true).apply();
     }
 }

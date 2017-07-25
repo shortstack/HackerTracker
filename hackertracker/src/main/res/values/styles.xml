@@ -38,8 +38,13 @@
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white_alpha</item>
 
-        <item name="android:dialogTheme">@style/MyAlertDialogStyle</item>
-        <item name="android:alertDialogTheme">@style/MyAlertDialogStyle</item>
+        <!--<item name="android:dialogTheme">@style/MyAlertDialogStyle</item>-->
+        <!--<item name="android:alertDialogTheme">@style/MyAlertDialogStyle</item>-->
+
+
+        <!-- AppCompat Dialog Attributes -->
+        <item name="dialogTheme">@style/AppCompatDialog</item>
+        <item name="alertDialogTheme">@style/AppCompatAlert</item>
     </style>
 
     <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
@@ -103,7 +108,7 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
-    <style name="MyAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="MyAlertDialogStyle" parent="Base.Theme.AppCompat.Dialog">
         <item name="android:windowTitleStyle">@style/MyTitleTextStyle</item>
         <!-- Used for the buttons -->
         <item name="colorAccent">@color/colorAccent</item>
@@ -111,6 +116,35 @@
         <item name="android:textColorPrimary">@color/white</item>
         <!-- Used for the background -->
         <item name="android:background">@color/item_background</item>
+    </style>
+
+
+
+    <!-- Generic Dialog Theme -->
+    <style name="AppCompatDialog" parent="Theme.AppCompat.Dialog">
+        <!-- Used for the title and text -->
+        <item name="android:textColorPrimary">@color/white</item>
+        <!-- Used for the background -->
+        <item name="android:background">@color/item_background</item>
+        <!-- Used for the buttons -->
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/category_official</item>
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+    </style>
+
+    <!-- Alert Dialog Theme -->
+    <style name="AppCompatAlert" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:textColorPrimary">@color/white</item>
+        <!-- Used for the background -->
+        <item name="android:background">@color/item_background</item>
+        <!-- Used for the buttons -->
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorControlHighlight">@color/category_official</item>
+
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
 
     <style name="MyTitleTextStyle">
