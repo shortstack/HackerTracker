@@ -74,7 +74,7 @@ class TimeView : LinearLayout {
 
     private fun updateSubheader(currentDate: Date) {
 
-        if (mDate!!.isToday()) {
+        if (mDate!!.isToday() && mDate!!.after(currentDate) ) {
             subheader!!.visibility = View.VISIBLE
 
             var stamp = ""
