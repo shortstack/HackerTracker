@@ -205,12 +205,13 @@ public class Item implements Serializable {
         return calendar;
     }
 
-    public long getNotificationTimeInMillis() {
+    public int getNotificationTime() {
+        Calendar current = Calendar.getInstance();
         Calendar calendar = getCalendar();
         if (calendar == null) {
             return 0;
         }
-        return calendar.getTimeInMillis() - 1200000;
+        return (int)((calendar.getTimeInMillis() - current.getTimeInMillis()) / 1000);
     }
 
     public String getDateStamp() {
