@@ -81,7 +81,10 @@ class App : Application() {
 
         val hours = PreferenceManager.getDefaultSharedPreferences(this).getString("sync_interval", "6")
 
-        var value = hours.toInt()
+        var value = hours.toIntOrNull()
+
+        if( value == null )
+            value = 6
 
         Logger.d("Scheduling the sync. $value")
         if( value == 0 ) {
