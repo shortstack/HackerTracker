@@ -31,7 +31,7 @@ import java.util.*
 
 class App : Application() {
 
-    val SECONDS_TO_HOURS = 600
+    val SECONDS_TO_HOURS = 3600
 
     lateinit var appContext: Context
         private set
@@ -78,6 +78,8 @@ class App : Application() {
     }
 
     fun scheduleSync() {
+
+        cancelSync()
 
         val hours = PreferenceManager.getDefaultSharedPreferences(this).getString("sync_interval", "6")
 
