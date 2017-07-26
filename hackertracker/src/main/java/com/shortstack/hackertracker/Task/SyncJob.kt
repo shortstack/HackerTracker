@@ -24,7 +24,7 @@ class SyncJob : JobService(), Callback<SyncResponse> {
 
 
     override fun onFailure(call: Call<SyncResponse>?, t: Throwable?) {
-
+        Logger.e(t, "SyncJob failure.")
     }
 
     override fun onResponse(call: Call<SyncResponse>?, response: Response<SyncResponse>?) {

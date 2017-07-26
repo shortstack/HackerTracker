@@ -280,10 +280,15 @@ public class ScheduleFragment extends Fragment implements SwipeRefreshLayout.OnR
 
     @Subscribe
     public void handleSyncResponseEvent(SyncResponseEvent event) {
+        if( event.getMode() != Constants.SYNC_MDOE_MANUAL )
+            return;
+
         swipe.setRefreshing(false);
 
-        if( event.getRowsUpdated() == 0 && event.getMode() == Constants.SYNC_MDOE_MANUAL ) {
+        if( event.getRowsUpdated() == 0 ) {
             Toast.makeText(getContext(), "Up to date!", Toast.LENGTH_SHORT).show();
+        } else if ( event.getRowsUpdated() == -1 ) {
+            Toast.makeText(getContext(), "Unable to sync.", Toast.LENGTH_SHORT).show();
         }
     }
 }

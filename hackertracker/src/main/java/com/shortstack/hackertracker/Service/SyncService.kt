@@ -7,6 +7,8 @@ import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.Event.SyncResponseEvent
 import com.shortstack.hackertracker.Network.HTService
+import com.shortstack.hackertracker.Network.SyncResponse
+import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
@@ -16,10 +18,16 @@ class SyncService : IntentService("DEFCONSyncService") {
 
         val retrofit = Retrofit.Builder().baseUrl(Constants.API_URL_BASE).addConverterFactory(GsonConverterFactory.create()).build()
         val service = retrofit.create(HTService::class.java)
-        val response = service.sync.execute()
+        var response : Response<SyncResponse>
+        try {
+            response = service.sync.execute()
+        }  catch (ex : Exception ) {
+            App.application.postBusEvent(SyncResponseEvent(-1, Constants.SYNC_MDOE_MANUAL))
+            return
+        }
 
         if (!response.isSuccessful) {
-            Logger.d("Syncing was not successful.")
+            App.application.postBusEvent(SyncResponseEvent(-1, Constants.SYNC_MDOE_MANUAL))
             return
         }
 
