@@ -7,7 +7,7 @@ public class ItemEvent extends CustomEvent {
 
     public ItemEvent(AnalyticsController.Analytics event, Item item) {
         super(event.toString());
-        putCustomAttribute("Id", item.getId());
+        putCustomAttribute("Id", item.getIndex());
         putCustomAttribute("Title", item.getTitle());
     }
 }

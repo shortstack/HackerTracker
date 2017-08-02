@@ -12,7 +12,7 @@ import java.util.HashSet;
 public class SharedPreferencesUtil {
 
 
-
+    private static final int DEFAULT_DAYS_TO_LOAD = 0;
 
     public enum Key {
 
@@ -20,15 +20,15 @@ public class SharedPreferencesUtil {
         USER_ALLOW_PUSH("user_allow_push_notifications"),
         USER_MILITARY_TIME("user_use_military_time"),
         USER_EXPIRED_EVENTS("user_show_expired_events"),
-        USER_SEEN_ONBOARDING("user_seen_onboarding"),
         USER_ANALYTICS("user_analytics"),
 
+        APP_SYNC_SCHEDULED("app_sync_scheduled"),
+        APP_LAST_SYNC_VERSION("app_last_sync_version"),
+        APP_UPDATED_EVENTS("app_updated_events"),
         APP_LAST_REFRESH("app_last_refresh"),
         APP_LAST_UPDATED("app_last_updated"),
         APP_VIEW_PAGER_POSITION("app_view_pager_position"),
-
-        BETA_ALERT("beta_alert_4_0_beta")
-        ;
+        SCHEDULE_DAY_VIEW("app_day_view");
 
 
         private final String name;
@@ -46,14 +46,17 @@ public class SharedPreferencesUtil {
     private SharedPreferences mPreferences;
 
     public SharedPreferencesUtil() {
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(App.getApplication().getAppContext());
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(App.Companion.getApplication().getAppContext());
+
+        // Reset to only show the current day.
+        setScheduleDay(DEFAULT_DAYS_TO_LOAD);
     }
 
     private SharedPreferences.Editor getEditor() {
         return mPreferences.edit();
     }
 
-    public void saveLastUpdated(String date) {
+    public void setLastUpdated(String date) {
         SharedPreferences.Editor editor = getEditor();
         editor.putString(Key.APP_LAST_UPDATED.toString(), date);
         editor.apply();
@@ -69,6 +72,26 @@ public class SharedPreferencesUtil {
         editor.apply();
     }
 
+    public Integer getLastSyncVersion() {
+        return mPreferences.getInt(Key.APP_LAST_SYNC_VERSION.toString(), 0);
+    }
+
+    public void setLastSyncVersion(int version) {
+        SharedPreferences.Editor editor = getEditor();
+        editor.putInt(Key.APP_LAST_SYNC_VERSION.toString(), version);
+        editor.apply();
+    }
+
+    public void setScheduleDay(int pos) {
+        SharedPreferences.Editor editor = getEditor();
+        editor.putInt(Key.SCHEDULE_DAY_VIEW.toString(), pos);
+        editor.apply();
+    }
+
+    public int getScheduleDay() {
+        return mPreferences.getInt(Key.SCHEDULE_DAY_VIEW.toString(), 0);
+    }
+
     public boolean allowPushNotifications() {
         return mPreferences.getBoolean(Key.USER_ALLOW_PUSH.toString(), true);
     }
@@ -81,6 +104,10 @@ public class SharedPreferencesUtil {
         return mPreferences.getBoolean(Key.USER_EXPIRED_EVENTS.toString(), false);
     }
 
+    public boolean showActiveEventsOnly() {
+        return !showExpiredEvents();
+    }
+
     public void saveFilter(Filter filter) {
         SharedPreferences.Editor editor = getEditor();
         editor.putStringSet(Key.USER_FILTER.toString(), filter.getTypesSet());
@@ -91,16 +118,12 @@ public class SharedPreferencesUtil {
         return new Filter(mPreferences.getStringSet(Key.USER_FILTER.toString(), new HashSet<String>()));
     }
 
-    public boolean seenOnboarding() {
-        return mPreferences.getBoolean(Key.USER_SEEN_ONBOARDING.toString(), false);
-    }
-
-    public void markOnboardingSeen() {
-        getEditor().putBoolean(Key.USER_SEEN_ONBOARDING.toString(), true).apply();
-    }
-
-    public void setLastRefreshTimer(long time) {
+    public void setLastRefresh(long time) {
         getEditor().putLong(Key.APP_LAST_REFRESH.toString(), time).apply();
+    }
+
+    public long getLastRefresh() {
+        return mPreferences.getLong(Key.APP_LAST_REFRESH.toString(), 0);
     }
 
     public boolean shouldRefresh(long time) {
@@ -119,11 +142,11 @@ public class SharedPreferencesUtil {
         return mPreferences.getBoolean(Key.USER_ANALYTICS.toString(), true);
     }
 
-    public boolean shouldShowBetaAlert() {
-        return mPreferences.getBoolean(Key.BETA_ALERT.toString(), true);
+    public boolean isSyncScheduled() {
+        return mPreferences.getBoolean(Key.APP_SYNC_SCHEDULED.toString(), false);
     }
 
-    public void markShownBetaAlert() {
-        getEditor().putBoolean(Key.BETA_ALERT.toString(), false).commit();
+    public void setSyncScheduled() {
+        getEditor().putBoolean(Key.APP_SYNC_SCHEDULED.toString(), true).apply();
     }
 }

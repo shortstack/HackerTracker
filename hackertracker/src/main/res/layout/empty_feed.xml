@@ -11,13 +11,13 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_filter_list_white_48dp" />
+        android:src="@drawable/skull_lg" />
 
     <TextView
         android:id="@+id/textView"
-        style="@style/details_body"
+        style="@style/card_item_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Filter your schedule to find what you&apos;re looking for."
+        android:text="@string/empty_feed"
         android:gravity="center" />
 </LinearLayout>

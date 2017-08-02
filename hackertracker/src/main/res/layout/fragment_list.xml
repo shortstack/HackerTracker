@@ -5,4 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingBottom="30dp"
+    android:clipToPadding="false"
     tools:listitem="@layout/row" />

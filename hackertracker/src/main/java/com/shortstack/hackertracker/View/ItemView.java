@@ -16,9 +16,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.shortstack.hackertracker.Application.App;
+import com.shortstack.hackertracker.Database.DatabaseController;
 import com.shortstack.hackertracker.Event.FavoriteEvent;
 import com.shortstack.hackertracker.Event.RefreshTimerEvent;
 import com.shortstack.hackertracker.Model.Item;
+import com.shortstack.hackertracker.Model.ItemViewModel;
 import com.shortstack.hackertracker.R;
 import com.squareup.otto.Subscribe;
 
@@ -34,7 +36,10 @@ public class ItemView extends CardView {
 
     private int mDisplayMode = DISPLAY_MODE_FULL;
     private boolean mRoundCorners = true;
-    private Item mItem;
+    private ItemViewModel mItem;
+
+    @BindView(R.id.updated)
+    View updated;
 
 
     @BindView(R.id.title)
@@ -115,11 +120,11 @@ public class ItemView extends CardView {
     }
 
     public void setItem(Item item) {
-        mItem = item;
+        mItem = new ItemViewModel(item);
         renderItem();
     }
 
-    public Item getContent() {
+    public ItemViewModel getContent() {
         return mItem;
     }
 
@@ -128,14 +133,14 @@ public class ItemView extends CardView {
     protected void onAttachedToWindow() {
         super.onAttachedToWindow();
         if (!isInEditMode())
-            App.getApplication().registerBusListener(this);
+            App.Companion.getApplication().registerBusListener(this);
     }
 
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
         if (!isInEditMode())
-            App.getApplication().unregisterBusListener(this);
+            App.Companion.getApplication().unregisterBusListener(this);
 
         finishAnimation();
         setProgressBar();
@@ -150,7 +155,9 @@ public class ItemView extends CardView {
 
     @Subscribe
     public void onRefreshTimeEvent(RefreshTimerEvent event) {
+//        long time = System.currentTimeMillis();
         updateProgressBar();
+//        Logger.d("Refreshed in " + ( System.currentTimeMillis() - time));
     }
 
     @Subscribe
@@ -174,6 +181,8 @@ public class ItemView extends CardView {
     }
 
     private void renderItem() {
+        //updated.setVisibility( new Random().nextBoolean() ? VISIBLE : GONE);
+
         renderText();
         renderIcon();
         renderCategoryColour();
@@ -216,10 +225,11 @@ public class ItemView extends CardView {
         }
     }
 
+    @SuppressWarnings("ResourceType")
     private void renderIcon() {
-        tool.setVisibility(getContent().isTool() ? View.VISIBLE : View.GONE);
-        exploit.setVisibility(getContent().isExploit() ? View.VISIBLE : View.GONE);
-        demo.setVisibility(getContent().isDemo() ? View.VISIBLE : View.GONE);
+        tool.setVisibility(getContent().getToolsVisibility());
+        exploit.setVisibility(getContent().getExploitVisibility());
+        demo.setVisibility(getContent().getDemoVisibility());
     }
 
     private void renderCategoryColour() {
@@ -238,8 +248,9 @@ public class ItemView extends CardView {
         }
     }
 
+    @SuppressWarnings("ResourceType")
     private void renderBookmark() {
-        star.setVisibility(getContent().isBookmarked() ? VISIBLE : INVISIBLE);
+        star.setVisibility(getContent().getBookmarkVisibility());
     }
 
     public void updateBookmark() {
@@ -261,6 +272,7 @@ public class ItemView extends CardView {
     }
 
     public void onBookmarkClick() {
-        App.getApplication().getDatabaseController().toggleBookmark(getContent());
+        DatabaseController databaseController = App.Companion.getApplication().getDatabaseController();
+        databaseController.toggleBookmark(databaseController.getWritableDatabase(), getContent().getItem());
     }
 }

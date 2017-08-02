@@ -20,6 +20,7 @@ public class AnalyticsController {
         SETTINGS_NOTIFICATIONS("Settings - Notifications"),
         SETTINGS_EXPIRED_EVENT("Settings - Expired Events"),
         SETTINGS_MILITARY_TIME("Settings - 24 Time Mode"),
+        SETTINGS_SYNC_AUTO("Settings - Sync Auto"),
 
         UBER("Uber"),
 
@@ -68,7 +69,7 @@ public class AnalyticsController {
 
     private void logCustom(CustomEvent event) {
         // Bypass to track if they're turning analytics off
-        if( !App.getStorage().isTrackingAnalytics() && !event.toString().contains(Analytics.SETTINGS_ANALYTICS.toString()) ) {
+        if( !App.Companion.getStorage().isTrackingAnalytics() && !event.toString().contains(Analytics.SETTINGS_ANALYTICS.toString()) ) {
             return;
         }
 
