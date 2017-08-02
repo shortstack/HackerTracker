@@ -15,7 +15,7 @@ class TimeHelper(mContext: Context) {
     val tomorrowString: String = mContext.getString(R.string.tomorrow)
 
     val currentDate: Date
-        get() = Date()
+            get() = Date(1501238280)
 
     val currentCalendar: Calendar
         get() {
