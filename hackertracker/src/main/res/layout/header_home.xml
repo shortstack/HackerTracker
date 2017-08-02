@@ -18,16 +18,14 @@
         android:paddingTop="10dp"
         android:src="@drawable/skull_25" />
 
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/textView4"
+    <com.shortstack.hackertracker.View.HackerTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_weight="1"
-        android:text="@string/defcon_year"
+        android:text="WELCOME TO"
         android:textColor="@color/white"
-        android:textSize="28sp" />
+        android:textSize="24sp" />
 
     <android.support.v7.widget.AppCompatImageView
         android:layout_gravity="center"
