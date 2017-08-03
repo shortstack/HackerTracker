@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#3f3f3f"
+    android:padding="20dp">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#131313"
+        android:orientation="horizontal"
+        android:padding="10dp" android:baselineAligned="false">
+
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <GridLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:columnCount="3"
+                android:rowCount="3">
+
+                <View
+                    android:layout_width="@dimen/d_pad_grid_size"
+                    android:layout_height="@dimen/d_pad_grid_size" />
+
+                <View
+
+                    android:id="@+id/nes_up"
+                    android:layout_width="@dimen/d_pad_grid_size"
+                    android:layout_height="@dimen/d_pad_grid_size"
+                    android:background="@color/black" />
+
+                <View
+                    android:layout_width="@dimen/d_pad_grid_size"
+                    android:layout_height="@dimen/d_pad_grid_size" />
+
+                <View
+                    android:id="@+id/nes_left"
+                    android:layout_width="@dimen/d_pad_grid_size"
+                    android:layout_height="@dimen/d_pad_grid_size"
+                    android:background="@color/black" />
+
+                <View
+                    android:layout_width="@dimen/d_pad_grid_size"
+                    android:layout_height="@dimen/d_pad_grid_size"
+                    android:background="@color/black" />
+
+                <View
+                    android:id="@+id/nes_right"
+                    android:layout_width="@dimen/d_pad_grid_size"
+                    android:layout_height="@dimen/d_pad_grid_size"
+                    android:background="@color/black" />
+
+                <View
+                    android:layout_width="@dimen/d_pad_grid_size"
+                    android:layout_height="@dimen/d_pad_grid_size" />
+
+                <View
+                    android:id="@+id/nes_down"
+                    android:layout_width="@dimen/d_pad_grid_size"
+                    android:layout_height="@dimen/d_pad_grid_size"
+                    android:background="@color/black" />
+
+                <View
+                    android:layout_width="@dimen/d_pad_grid_size"
+                    android:layout_height="@dimen/d_pad_grid_size" />
+
+            </GridLayout>
+
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/nes_skull"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="3"
+                android:scaleType="center"
+                app:srcCompat="@drawable/skull" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/nes_select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:background="@color/black" />
+
+                <Button
+                    android:id="@+id/nes_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:background="@color/black" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="bottom"
+            android:layout_weight="1"
+            android:gravity="bottom|center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:text="DEFCON"
+                android:textColor="@color/category_speaker"
+                android:textSize="24sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/nes_a"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:background="@color/black"
+                    android:text="A" />
+
+                <Button
+                    android:id="@+id/nes_b"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
+                    android:layout_weight="1"
+                    android:background="@color/black"
+                    android:text="B" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>
