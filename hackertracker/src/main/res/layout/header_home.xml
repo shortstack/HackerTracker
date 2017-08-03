@@ -12,10 +12,7 @@
         android:id="@+id/logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
         android:layout_weight="1"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
         android:src="@drawable/skull_25" />
 
     <com.shortstack.hackertracker.View.HackerTextView
