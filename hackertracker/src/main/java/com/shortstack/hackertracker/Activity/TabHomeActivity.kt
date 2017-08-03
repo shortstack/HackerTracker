@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
-import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
@@ -194,22 +193,7 @@ class TabHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSele
         }
     }
 
-    override fun onBackPressed() {
-        if (drawer_layout!!.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout!!.closeDrawers()
-            return
-        }
 
-        if (shouldLoadHomeFragOnBackPress) {
-            if (mFragmentIndex != DEFAULT_FRAGMENT_INDEX) {
-                mFragmentIndex = DEFAULT_FRAGMENT_INDEX
-                loadFragment()
-                return
-            }
-        }
-
-        super.onBackPressed()
-    }
 
     private fun initViewPager() {
 
