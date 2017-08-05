@@ -1,10 +1,13 @@
 package com.shortstack.hackertracker.Database
 
+import android.content.ContentValues
 import android.content.Context
+import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import android.database.sqlite.SQLiteOpenHelper
 import com.crashlytics.android.Crashlytics
+import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.BuildConfig
@@ -12,8 +15,11 @@ import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.Event.FavoriteEvent
 import com.shortstack.hackertracker.Model.Item
 import com.shortstack.hackertracker.Model.Speaker
+import com.shortstack.hackertracker.Model.Types
 import com.shortstack.hackertracker.Model.Vendors
 import com.shortstack.hackertracker.Network.SyncResponse
+import org.json.JSONException
+import org.json.JSONObject
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -51,7 +57,7 @@ class DatabaseController(private val context: Context, name: String = Constants.
         val db = writableDatabase
 
         if (isScheduleOutOfDate()) {
-//            Logger.d("Have not synced the current version. Update the database with the json.")
+            Logger.d("Have not synced the current version. Update the database with the json.")
             updateDataSet(db)
         } else {
 //           Logger.d("database should be up to date, don't check json.")
@@ -69,7 +75,7 @@ class DatabaseController(private val context: Context, name: String = Constants.
     }
 
 
-    private fun isScheduleOutOfDate() = App.storage.lastSyncVersion != BuildConfig.VERSION_CODE
+    private fun isScheduleOutOfDate() = App.storage.lastSyncVersion != BuildConfig.VERSION_CODE || BuildConfig.DEBUG
 
     protected fun finalize() {
         close()
@@ -88,10 +94,20 @@ class DatabaseController(private val context: Context, name: String = Constants.
         val response = gson.fromJson(json, SyncResponse::class.java)
         initSchedule(db, response)
 
+        initOtherDatabases(json, gson, db)
+    }
+
+    private fun initOtherDatabases(json: String, gson: Gson, db: SQLiteDatabase) {
         // Vendors
+        var json = json
         json = getJSONFromFile(VENDORS_FILE)
         val vendors = gson.fromJson(json, Vendors::class.java)
         initVendors(db, vendors)
+
+        // Event Types
+        json = getJSONFromFile(TYPES_FILE)
+        val types = gson.fromJson(json, Types::class.java)
+        initTypes(db, types)
     }
 
     fun updateDataSet(db: SQLiteDatabase) {
@@ -102,10 +118,7 @@ class DatabaseController(private val context: Context, name: String = Constants.
         val response = gson.fromJson(json, SyncResponse::class.java)
         updateSchedule(db, response)
 
-        // Vendors
-        json = getJSONFromFile(VENDORS_FILE)
-        val vendors = gson.fromJson(json, Vendors::class.java)
-        initVendors(db, vendors)
+        initOtherDatabases(json, gson, db)
     }
 
     private fun applyPatches(database: SQLiteDatabase, patches: Patches) {
@@ -121,8 +134,8 @@ class DatabaseController(private val context: Context, name: String = Constants.
     private fun initVendors(database: SQLiteDatabase, vendors: Vendors?) {
         database.beginTransaction()
 
-        // Ensure the database is empty so we don't get any dupes.
-        database.delete(VENDORS_TABLE_NAME, null, null )
+        // Clearing out the table.
+        database.delete(VENDORS_TABLE_NAME, null, null)
 
         try {
 
@@ -130,6 +143,25 @@ class DatabaseController(private val context: Context, name: String = Constants.
                 val values = it.getContentValues(App.application.gson)
                 values.remove("index")
                 database.insert(VENDORS_TABLE_NAME, null, values)
+            }
+
+            database.setTransactionSuccessful()
+        } finally {
+            database.endTransaction()
+        }
+    }
+
+    private fun initTypes(database: SQLiteDatabase, types: Types) {
+        database.beginTransaction()
+
+        // Clearing out the table.
+        database.delete(TYPES_TABLE_NAME, null, null)
+
+        try {
+
+            types.types.forEach {
+                val values = getContentValues(it, App.application.gson)
+                database.insert(TYPES_TABLE_NAME, null, values)
             }
 
             database.setTransactionSuccessful()
@@ -179,7 +211,7 @@ class DatabaseController(private val context: Context, name: String = Constants.
         }
     }
 
-    fun getRecentUpdates():List<Item> {
+    fun getRecentUpdates(): List<Item> {
         var result = ArrayList<Item>()
 
         val cursor = readableDatabase.query(false, SCHEDULE_TABLE_NAME, null, null, null, null, null, "updated_at DESC", "25")
@@ -339,6 +371,28 @@ class DatabaseController(private val context: Context, name: String = Constants.
         Logger.d("Updating database.")
     }
 
+    val types: List<Types.Type>
+        get() {
+            val result = ArrayList<Types.Type>()
+
+            val cursor = readableDatabase.rawQuery("$SELECT_ALL_FROM $TYPES_TABLE_NAME", arrayOf<String>())
+
+            try {
+                if (cursor.moveToFirst()) {
+                    do {
+                        result.add(fromCursor(Types.Type::class.java, cursor))
+                    } while (cursor.moveToNext())
+                }
+            } catch (ex: IllegalStateException) {
+                Logger.e(ex, "Could not fetch types.")
+                Crashlytics.getInstance().core.logException(ex)
+            } finally {
+                cursor.close()
+            }
+
+            return result
+        }
+
     val vendors: List<Vendors.Vendor>
         get() {
             val result = ArrayList<Vendors.Vendor>()
@@ -348,7 +402,7 @@ class DatabaseController(private val context: Context, name: String = Constants.
             try {
                 if (cursor.moveToFirst()) {
                     do {
-                        result.add(Vendors.Vendor.CursorToCompany(App.application.gson, cursor))
+                        result.add(fromCursor(Vendors.Vendor::class.java, cursor))
                     } while (cursor.moveToNext())
                 }
             } catch (ex: IllegalStateException) {
@@ -367,7 +421,7 @@ class DatabaseController(private val context: Context, name: String = Constants.
             val cursor = readableDatabase.rawQuery("$SELECT_ALL_FROM $SPEAKERS_TABLE_NAME", arrayOf<String>())
             if (cursor.moveToFirst()) {
                 do {
-                    result.add(Speaker.CursorToItem(App.application.gson, cursor))
+                    result.add(fromCursor(Speaker::class.java, cursor))
                 } while (cursor.moveToNext())
             }
 
@@ -379,6 +433,44 @@ class DatabaseController(private val context: Context, name: String = Constants.
         fun exists(context: Context): Boolean {
             val dbFile = context.getDatabasePath(Constants.DEFCON_DATABASE_NAME)
             return dbFile.exists()
+        }
+
+        fun <T> fromCursor(t: Class<T>, cursor: Cursor): T {
+
+            val obj = JSONObject()
+
+            val totalColumn = cursor.columnCount
+
+            for (i in 0..totalColumn - 1) {
+                try {
+                    obj.put(cursor.getColumnName(i), cursor.getString(i))
+                } catch (e: Exception) {
+                    Logger.e(e, "Failed to convert Cursor into JSONObject.")
+                }
+            }
+
+            return App.application.gson.fromJson(obj.toString(), t)
+        }
+
+        fun <T> getContentValues(t: T, gson: Gson ): ContentValues {
+            val values = ContentValues()
+
+            val json = gson.toJson(t)
+            try {
+                val obj = JSONObject(json)
+
+                val keys = obj.keys()
+                var key: String
+                while (keys.hasNext()) {
+                    key = keys.next()
+                    values.put(key, obj.getString(key))
+                }
+
+            } catch (e: JSONException) {
+                e.printStackTrace()
+            }
+
+            return values
         }
     }
 }
