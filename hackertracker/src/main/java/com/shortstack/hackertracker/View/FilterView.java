@@ -1,25 +1,36 @@
 package com.shortstack.hackertracker.View;
 
 import android.content.Context;
+import android.content.res.ColorStateList;
+import android.support.v4.widget.CompoundButtonCompat;
 import android.support.v7.widget.AppCompatCheckBox;
 import android.util.AttributeSet;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import com.shortstack.hackertracker.Application.App;
-import com.shortstack.hackertracker.Common.Constants;
+import com.shortstack.hackertracker.Database.DatabaseController;
 import com.shortstack.hackertracker.Model.Filter;
+import com.shortstack.hackertracker.Model.Types;
 import com.shortstack.hackertracker.R;
 
 import java.util.ArrayList;
+import java.util.List;
 
-import butterknife.BindViews;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class FilterView extends LinearLayout {
 
-    @BindViews({R.id.official, R.id.speaker, R.id.skytalk, R.id.event, R.id.village, R.id.kids, R.id.contest, R.id.party, R.id.demo, R.id.workshop})
-    AppCompatCheckBox[] types;
+    //    @BindViews({R.id.official, R.id.speaker, R.id.skytalk, R.id.event, R.id.village, R.id.kids, R.id.contest, R.id.party, R.id.demo, R.id.workshop})
+//    AppCompatCheckBox[] types;
+    AppCompatCheckBox[] checkboxes;
+
+    @BindView(R.id.filter_left)
+    LinearLayout left;
+
+    @BindView(R.id.filter_right)
+    LinearLayout right;
 
     public FilterView(Context context) {
         super(context);
@@ -33,19 +44,18 @@ public class FilterView extends LinearLayout {
     }
 
     private void setFilter(Filter filter) {
-        String[] keys = Constants.TYPES;
         String[] typesArray = filter.getTypesArray();
 
         if( typesArray.length == 0 ) {
-            for (AppCompatCheckBox type : types) {
+            for (AppCompatCheckBox type : checkboxes) {
                 type.setChecked(true);
             }
         }
 
         for (String aTypesArray : typesArray) {
-            for (int i1 = 0; i1 < keys.length; i1++) {
-                if (aTypesArray.equals(keys[i1])) {
-                    types[i1].setChecked(true);
+            for (int i1 = 0; i1 < checkboxes.length; i1++) {
+                if (aTypesArray.equals(checkboxes[i1].getText().toString())) {
+                    checkboxes[i1].setChecked(true);
                 }
             }
         }
@@ -65,17 +75,40 @@ public class FilterView extends LinearLayout {
         inflate(getContext(), R.layout.alert_filter, this);
         ButterKnife.bind(this);
 
+        DatabaseController controller = App.application.getDatabaseController();
+        List<Types.Type> types = controller.getTypes();
+
+        checkboxes = new AppCompatCheckBox[types.size()];
+
+        int[] stringArray = getContext().getResources().getIntArray(R.array.colors);
+
+        int states[][] = {{android.R.attr.state_checked}, {}};
+
+        for (int i = 0; i < types.size(); i++) {
+            Types.Type type = types.get(i);
+
+            AppCompatCheckBox box = new AppCompatCheckBox(getContext());
+            box.setText(type.getType());
+            CompoundButtonCompat.setButtonTintList(box, new ColorStateList(states, new int[]{stringArray[i], stringArray[i]}));
+
+            if (i < types.size() / 2)
+                left.addView(box);
+            else
+                right.addView(box);
+
+            checkboxes[i]= box;
+        }
+
 
     }
 
     public Filter save() {
         ArrayList<String> selected = new ArrayList<>();
-        String[] keys = Constants.TYPES;
 
-        for (int i = 0; i < types.length; i++) {
-            CheckBox type = types[i];
+        for (int i = 0; i < checkboxes.length; i++) {
+            CheckBox type = checkboxes[i];
             if (type.isChecked()) {
-                selected.add(keys[i]);
+                selected.add(checkboxes[i].getText().toString());
             }
         }
 
