@@ -17,10 +17,6 @@ public class MaterialAlert {
     protected AlertDialog.Builder mBuilder;
     private Context mContext;
 
-    private boolean mHasPositiveButton;
-    private boolean mHasNegativeButton;
-
-
     public static MaterialAlert create(Context context) {
         return new MaterialAlert(context);
     }
@@ -82,19 +78,16 @@ public class MaterialAlert {
     }
 
     public MaterialAlert setPositiveButton(int text, AlertDialog.OnClickListener listener) {
-        mHasPositiveButton = true;
         mBuilder.setPositiveButton(getString(text), listener);
         return this;
     }
 
     public MaterialAlert setNegativeButton(int text, AlertDialog.OnClickListener listener) {
-        mHasNegativeButton = true;
         mBuilder.setNegativeButton(getString(text), listener);
         return this;
     }
 
     public MaterialAlert setBasicNegativeButton(int text) {
-        mHasNegativeButton = true;
         mBuilder.setNegativeButton(getString(text), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -125,7 +118,6 @@ public class MaterialAlert {
     }
 
     public MaterialAlert setBasicPositiveButton() {
-        mHasPositiveButton = true;
         mBuilder.setPositiveButton(getString(R.string.okay), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
