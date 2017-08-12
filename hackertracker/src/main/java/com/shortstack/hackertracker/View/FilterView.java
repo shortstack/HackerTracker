@@ -22,8 +22,6 @@ import butterknife.ButterKnife;
 
 public class FilterView extends LinearLayout {
 
-    //    @BindViews({R.id.official, R.id.speaker, R.id.skytalk, R.id.event, R.id.village, R.id.kids, R.id.contest, R.id.party, R.id.demo, R.id.workshop})
-//    AppCompatCheckBox[] types;
     AppCompatCheckBox[] checkboxes;
 
     @BindView(R.id.filter_left)
