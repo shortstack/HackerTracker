@@ -8,7 +8,7 @@ public interface Constants {
 
     String API_URL_BASE = "https://info.defcon.org/json/";
 
-    long DEBUG_FORCE_TIME_DATE = 1470418500000L;
+    long DEBUG_FORCE_TIME_DATE = 1501355835000L;
     long TIMER_INTERVAL_FIVE_MIN = 300000;
     long TIMER_INTERVAL_DEBUG = 5000;
     long DEBUG_PAUSE_TIME_SKIP = TIMER_INTERVAL_FIVE_MIN * 30;
@@ -26,28 +26,6 @@ public interface Constants {
     String OFFICIAL_SCHEDULE = "/schedule-full.json";
 
     String FEEDBACK_EMAIL = "chrisporter0111@gmail.com";
-
-    String TYPE_OFFICIAL = "Official";
-    String TYPE_SPEAKER = "Speaker";
-    String TYPE_CONTEST = "Contest";
-    String TYPE_EVENT = "Event";
-    String TYPE_PARTY = "Party";
-    String TYPE_VENDOR = "Vendor";
-    String TYPE_DEMO_LAB = "DemoLabs";
-    String TYPE_SKYTALKS = "Skytalks";
-    String TYPE_MESSAGE = "Message";
-    String TYPE_VILLAGE = "Villages";
-    String TYPE_WORKSHOP = "Workshop";
-    String TYPE_BOOK = "Book-Signing";
-    String TYPE_UNOFFICIAL = "Un-Official";
-    String TYPE_DCIB = "DCIB";
-    String TYPE_STUPID = "Stupid";
-    String TYPE_KIDS = "Kids";
-    String TYPE_JOKE = "Joke";
-    String TYPE_OMG = "Password";
-
-    String[] TYPES = { TYPE_OFFICIAL, TYPE_SPEAKER, TYPE_SKYTALKS, TYPE_EVENT, TYPE_VILLAGE,
-            TYPE_KIDS, TYPE_CONTEST, TYPE_PARTY, TYPE_DEMO_LAB, TYPE_WORKSHOP };
 
     String UBER_CLIENT_ID = "q1eUCeC1ZenbGmQD2vb0MytALvboEHhD";
 

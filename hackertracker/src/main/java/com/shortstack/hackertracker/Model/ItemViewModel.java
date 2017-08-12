@@ -5,12 +5,12 @@ import android.text.TextUtils;
 import android.view.View;
 
 import com.shortstack.hackertracker.Application.App;
-import com.shortstack.hackertracker.Common.Constants;
 import com.shortstack.hackertracker.R;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,12 +40,14 @@ public class ItemViewModel {
         if (TextUtils.isEmpty(mItem.getType()))
             return EMPTY_CATEGORY;
 
-        for (int i = 0; i < Constants.TYPES.length; i++) {
-            if( mItem.getType().equals(Constants.TYPES[i]))
+        List<Types.Type> types = App.application.getDatabaseController().getTypes();
+
+        for (int i = 0; i < types.size(); i++) {
+            if( mItem.getType().equals(types.get(i).getType()))
                 return i;
         }
 
-        throw new IllegalStateException("Could not find category for Item: " + getItem().getTitle() + " with type: " + getItem().getType() );
+        return EMPTY_CATEGORY;
     }
 
 
