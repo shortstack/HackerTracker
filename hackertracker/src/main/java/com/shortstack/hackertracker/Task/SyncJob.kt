@@ -6,7 +6,7 @@ import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.Event.SyncResponseEvent
-import com.shortstack.hackertracker.Network.HTService
+import com.shortstack.hackertracker.Network.DatabaseService
 import com.shortstack.hackertracker.Network.SyncResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -33,7 +33,7 @@ class SyncJob : JobService(), Callback<SyncResponse> {
             return
         }
 
-        updateDatabase(response.body())
+        updateDatabase(response.body()!!)
     }
 
     fun updateDatabase(body: SyncResponse) {
@@ -64,8 +64,8 @@ class SyncJob : JobService(), Callback<SyncResponse> {
         Logger.d("Start!")
 
         val retrofit = Retrofit.Builder().baseUrl(Constants.API_URL_BASE).addConverterFactory(GsonConverterFactory.create()).build()
-        val service = retrofit.create(HTService::class.java)
-        service.sync.enqueue(this)
+        val service = retrofit.create(DatabaseService::class.java)
+        service.getScheduleJob.enqueue(this)
 
         tag = job.tag
 
