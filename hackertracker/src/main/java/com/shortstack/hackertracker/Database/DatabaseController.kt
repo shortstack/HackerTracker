@@ -59,23 +59,11 @@ class DatabaseController(private val context: Context, name: String = Constants.
         if (isScheduleOutOfDate()) {
             Logger.d("Have not synced the current version. Update the database with the json.")
             updateDataSet(db)
-        } else {
-//           Logger.d("database should be up to date, don't check json.")
-        }
-
-        // Backwards compat.
-        if (LegacyDatabaseController.exists(context)) {
-            val legacy = LegacyDatabaseController(context)
-            legacy.bookmarkedItems
-                    .forEach {
-                        toggleBookmark(db, it)
-                    }
-            legacy.deleteDatabase()
         }
     }
 
 
-    private fun isScheduleOutOfDate() = App.storage.lastSyncVersion != BuildConfig.VERSION_CODE || BuildConfig.DEBUG
+    private fun isScheduleOutOfDate() = App.storage.lastSyncVersion != BuildConfig.VERSION_CODE /*|| BuildConfig.DEBUG*/
 
     protected fun finalize() {
         close()
@@ -94,13 +82,12 @@ class DatabaseController(private val context: Context, name: String = Constants.
         val response = gson.fromJson(json, SyncResponse::class.java)
         initSchedule(db, response)
 
-        initOtherDatabases(json, gson, db)
+        initOtherDatabases(gson, db)
     }
 
-    private fun initOtherDatabases(json: String, gson: Gson, db: SQLiteDatabase) {
+    private fun initOtherDatabases(gson: Gson, db: SQLiteDatabase) {
         // Vendors
-        var json = json
-        json = getJSONFromFile(VENDORS_FILE)
+        var json = getJSONFromFile(VENDORS_FILE)
         val vendors = gson.fromJson(json, Vendors::class.java)
         initVendors(db, vendors)
 
@@ -118,7 +105,7 @@ class DatabaseController(private val context: Context, name: String = Constants.
         val response = gson.fromJson(json, SyncResponse::class.java)
         updateSchedule(db, response)
 
-        initOtherDatabases(json, gson, db)
+        initOtherDatabases(gson, db)
     }
 
     private fun applyPatches(database: SQLiteDatabase, patches: Patches) {
@@ -436,7 +423,11 @@ class DatabaseController(private val context: Context, name: String = Constants.
         }
 
         fun <T> fromCursor(t: Class<T>, cursor: Cursor): T {
+            val obj = getJsonObject(cursor)
+            return App.application.gson.fromJson(obj.toString(), t)
+        }
 
+        private fun getJsonObject(cursor: Cursor): JSONObject {
             val obj = JSONObject()
 
             val totalColumn = cursor.columnCount
@@ -448,8 +439,7 @@ class DatabaseController(private val context: Context, name: String = Constants.
                     Logger.e(e, "Failed to convert Cursor into JSONObject.")
                 }
             }
-
-            return App.application.gson.fromJson(obj.toString(), t)
+            return obj
         }
 
         fun <T> getContentValues(t: T, gson: Gson ): ContentValues {
