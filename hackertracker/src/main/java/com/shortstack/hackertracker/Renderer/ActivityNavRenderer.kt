@@ -4,7 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.pedrogomez.renderers.Renderer
-import com.shortstack.hackertracker.Activity.TabHomeActivity
+import com.shortstack.hackertracker.Activity.MainActivity
 import com.shortstack.hackertracker.Model.Navigation
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.row_nav.view.*
@@ -28,6 +28,6 @@ class ActivityNavRenderer : Renderer<Navigation>(), View.OnClickListener {
 
     override fun onClick(view: View) {
         // TODO Use the class to handle multiple location.
-        (context as TabHomeActivity).loadFragment(TabHomeActivity.NAV_INFORMATION)
+        (context as MainActivity).loadFragment(MainActivity.NAV_INFORMATION)
     }
 }

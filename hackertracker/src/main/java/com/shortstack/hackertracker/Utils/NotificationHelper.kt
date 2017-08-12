@@ -11,7 +11,7 @@ import android.os.Bundle
 import android.support.v4.app.NotificationManagerCompat
 import com.firebase.jobdispatcher.Trigger
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.Activity.TabHomeActivity
+import com.shortstack.hackertracker.Activity.MainActivity
 import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Model.Item
 import com.shortstack.hackertracker.R
@@ -103,7 +103,7 @@ class NotificationHelper(private val mContext: Context) {
     }
 
     private fun setItemPendingIntent(builder: Notification.Builder, item: Item? = null) {
-        val intent = Intent(mContext, TabHomeActivity::class.java)
+        val intent = Intent(mContext, MainActivity::class.java)
 
         if( item != null ) {
             val bundle = Bundle()

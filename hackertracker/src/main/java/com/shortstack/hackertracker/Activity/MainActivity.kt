@@ -22,7 +22,7 @@ import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
-class TabHomeActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
     private var mFragmentIndex = DEFAULT_FRAGMENT_INDEX
 

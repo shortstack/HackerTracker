@@ -54,7 +54,7 @@ class SplashActivity : AppCompatActivity() {
 
         Logger.d("Time spent on Splash " + (System.currentTimeMillis() - time ) + "ms.")
 
-        startActivity(Intent(this@SplashActivity, TabHomeActivity::class.java))
+        startActivity(Intent(this@SplashActivity, MainActivity::class.java))
         finish()
     }
 

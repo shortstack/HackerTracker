@@ -45,7 +45,7 @@
         <activity android:name=".Activity.SplashActivity" />
 
         <activity
-            android:name="com.shortstack.hackertracker.Activity.TabHomeActivity"
+            android:name="com.shortstack.hackertracker.Activity.MainActivity"
             android:launchMode="singleTop"
             android:configChanges="orientation|screenSize|keyboardHidden">
 
