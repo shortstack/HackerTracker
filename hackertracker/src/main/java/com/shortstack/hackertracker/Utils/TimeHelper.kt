@@ -2,6 +2,7 @@ package com.shortstack.hackertracker.Utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.isSoonish
 import com.shortstack.hackertracker.isToday
@@ -15,7 +16,12 @@ class TimeHelper(mContext: Context) {
     val tomorrowString: String = mContext.getString(R.string.tomorrow)
 
     val currentDate: Date
-        get() = Date()
+        get() {
+            val date = Date()
+            date.time = Constants.DEBUG_FORCE_TIME_DATE
+
+            return date;
+        }
 
     val currentCalendar: Calendar
         get() {
