@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
     android:padding="5dp"
-    tools:background="@color/background">
+    tools:background="?android:colorBackground">
 
     <ImageView
         android:id="@+id/imageView2"
@@ -26,66 +26,22 @@
         android:orientation="vertical"
         android:paddingBottom="12dp"
         android:paddingLeft="12dp"
-        android:paddingRight="19dp"
+        android:paddingRight="16dp"
         android:paddingTop="12dp">
 
         <TextView
             android:id="@+id/question"
+            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:linksClickable="true"
-            android:textColor="@color/white"
-            android:textSize="24sp"
             tools:text="What should I bring to DEF CON?" />
-
-        <Space
-            android:layout_width="match_parent"
-            android:layout_height="10dp"
-            android:visibility="gone" />
 
         <TextView
             android:id="@+id/answer"
-            style="@style/TextAppearance.AppCompat.Body1"
+            style="@style/Paragraph"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:autoLink="all"
-            android:ellipsize="end"
-            android:lineSpacingExtra="5sp"
-            android:linksClickable="true"
-            android:textColor="@color/white_alpha"
-            android:textSize="14sp"
             tools:text="You should bring tons of water, and ..." />
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-        </FrameLayout>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <Button
-                android:id="@+id/link"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Website"
-                android:textColor="?colorPrimary" />
-
-            <Button
-                android:id="@+id/expand"
-                style="@style/Widget.AppCompat.Button.Borderless"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Expand"
-                android:textColor="?colorPrimary" />
-
-        </LinearLayout>
 
     </LinearLayout>
 </RelativeLayout>

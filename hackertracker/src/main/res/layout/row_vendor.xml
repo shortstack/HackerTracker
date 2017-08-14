@@ -31,33 +31,27 @@
 
         <TextView
             android:id="@+id/title"
+            style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:linksClickable="true"
-            android:textColor="@color/white"
-            android:textSize="24sp"
             tools:text="360 UNICORN TEAM" />
 
         <TextView
             android:id="@+id/partner"
+            style="@style/TextAppearance.AppCompat.Body2"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="@string/partner"
-            android:textAllCaps="true"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
+            android:textAllCaps="true" />
 
         <TextView
             android:id="@+id/description"
-            style="@style/TextAppearance.AppCompat.Body1"
+            style="@style/Paragraph"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:ellipsize="end"
-            android:lineSpacingExtra="5sp"
             android:lines="3"
-            android:linksClickable="true"
-            android:textColor="@color/white_alpha"
-            android:textSize="14sp"
+            android:ellipsize="end"
             tools:text="360 Unicorn Team consists of..." />
 
 

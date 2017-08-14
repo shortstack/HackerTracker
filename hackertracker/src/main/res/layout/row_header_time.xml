@@ -7,26 +7,24 @@
     android:orientation="vertical">
 
     <TextView
+        style="@style/TextAppearance.AppCompat.Title"
         android:id="@+id/header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingBottom="10dp"
         android:paddingTop="30dp"
-        android:text="10:00 AM"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/abc_text_size_headline_material"
+        tools:text="10:00 AM"
         tools:background="@color/background" />
 
     <TextView
+        style="@style/TextAppearance.AppCompat.Caption"
         android:id="@+id/subheader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingBottom="10dp"
-        android:text="in 15 min"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/abc_text_size_subhead_material"
+        tools:text="in 15 min"
         tools:background="@color/background" />
 
 </LinearLayout>

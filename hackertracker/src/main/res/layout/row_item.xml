@@ -24,41 +24,26 @@
         android:layout_toRightOf="@+id/category">
 
         <ProgressBar
+            android:id="@+id/progress"
             style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:max="100"
-            android:progress="24"
-            android:progressDrawable="@drawable/progress_bar"
-            android:alpha=".8"
-            android:layout_alignParentLeft="false"
-            android:layout_marginLeft="0dp"
-            android:layout_alignParentTop="false"
-            android:layout_marginTop="0dp"
-            android:layout_alignParentBottom="false"
             android:layout_alignBottom="@+id/container"
             android:layout_alignTop="@+id/container"
-            android:id="@+id/progress" />
+            android:alpha=".8"
+            android:max="100"
+            android:progress="24"
+            android:progressDrawable="@drawable/progress_bar" />
 
         <LinearLayout
+            android:id="@+id/container"
             style="@style/row"
-            android:orientation="vertical"
             android:layout_alignParentLeft="true"
-            android:layout_marginLeft="0dp"
+            android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="0dp"
             android:layout_toLeftOf="@+id/star_bar"
             android:layout_toStartOf="@+id/star_bar"
-            android:id="@+id/container">
-
-            <TextView
-                android:id="@+id/updated"
-                style="@style/card_item_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Updated"
-                android:textStyle="bold"
-                android:visibility="gone"/>
+            android:orientation="vertical">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -67,9 +52,10 @@
 
                 <TextView
                     android:id="@+id/title"
-                    style="@style/card_item_text"
-                    android:layout_weight="1"
-                    android:text="Compelled Decryption - State of the Art in Doctrinal Perversions" />
+                    style="@style/TextAppearance.AppCompat.Body2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="Compelled Decryption - State of the Art in Doctrinal Perversions" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -81,44 +67,23 @@
 
             <TextView
                 android:id="@+id/location"
-                style="@style/card_item_text"
-                android:layout_weight="1"
-                android:text="Track 1" />
-
-            <LinearLayout
-                android:id="@+id/icons"
-                android:layout_width="match_parent"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/demo"
-                    style="@style/card_item_text.category"
-                    android:text="@string/demo"
-                    android:textColor="@color/white_alpha" />
-
-                <TextView
-                    android:id="@+id/exploit"
-                    style="@style/card_item_text.category"
-                    android:text="@string/exploit"
-                    android:textColor="@color/white_alpha" />
-
-                <TextView
-                    android:id="@+id/tool"
-                    style="@style/card_item_text.category"
-                    android:text="@string/tool"
-                    android:textColor="@color/white_alpha" />
-
-            </LinearLayout>
+                tools:text="Track 1" />
 
             <TextView
                 android:id="@+id/time"
-                style="@style/card_item_text.small"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 tools:text="Friday, 11:00 AM - 3:00 PM" />
 
             <TextView
                 android:id="@+id/category_text"
-                style="@style/card_item_text.small"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 tools:text="Event" />
 
         </LinearLayout>
@@ -127,9 +92,13 @@
             android:id="@+id/star_bar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_alignParentRight="true"
             android:focusableInTouchMode="false"
+            android:paddingEnd="3dp"
+            android:paddingLeft="3dp"
             android:paddingRight="3dp"
+            android:paddingStart="3dp"
             android:paddingTop="3dp"
             android:scaleType="fitStart"
             android:src="@drawable/ic_star_white_24dp" />
