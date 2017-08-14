@@ -5,8 +5,8 @@
     android:layout_height="match_parent"
     android:gravity="center"
     android:orientation="vertical"
-    tools:background="@color/background"
-    android:padding="20dp">
+    android:padding="20dp"
+    tools:background="@color/background">
 
     <ImageView
         android:id="@+id/imageView"
@@ -16,8 +16,9 @@
 
     <TextView
         android:id="@+id/textView"
-        style="@style/card_item_text"
+        style="@style/TextAppearance.AppCompat.Caption"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:gravity="center"
         android:text="@string/tutorial_schedule" />
 </LinearLayout>

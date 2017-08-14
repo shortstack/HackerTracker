@@ -12,19 +12,12 @@
         <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference
         </item>
         <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
-
-
     </style>
 
-    <style name="PreferenceScreen" parent="MyMaterialTheme.Base">
-
-    </style>
-
-    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base"></style>
-
-    <style name="MyMaterialTheme.Base" parent="Base.Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme.Base" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:colorBackground">@color/background</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -38,97 +31,61 @@
         <item name="android:textColorPrimary">@color/white</item>
         <item name="android:textColorSecondary">@color/white_alpha</item>
 
-        <!--<item name="android:dialogTheme">@style/MyAlertDialogStyle</item>-->
-        <!--<item name="android:alertDialogTheme">@style/MyAlertDialogStyle</item>-->
-
-
         <!-- AppCompat Dialog Attributes -->
         <item name="dialogTheme">@style/AppCompatDialog</item>
         <item name="alertDialogTheme">@style/AppCompatAlert</item>
+
+        <item name="checkboxStyle">@style/AppCheckBoxStyle</item>
     </style>
 
-    <style name="MyCustomTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabTextAppearance">@style/MyCustomTabText</item>
-        <item name="tabSelectedTextColor">@color/white</item>
+    <style name="AppCheckBoxStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textColor">@color/category_speaker</item>
     </style>
 
-    <style name="page">
-        <item name="android:background">@color/item_background</item>
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">match_parent</item>
+    <style name="AppTheme.Dark" parent="AppTheme.Base">
+        <item name="colorPrimary">@color/light_gray</item>
+        <item name="colorPrimaryDark">@color/light_gray</item>
+        <item name="colorAccent">@color/light_gray</item>
+        <item name="colorControlNormal">@color/light_gray</item>
+        <item name="colorControlHighlight">@color/light_gray</item>
+        <item name="android:colorBackground">@color/dark_background</item>
+        <item name="android:textColorPrimary">@color/text_primary_dark</item>
     </style>
 
-    <style name="row_nav">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingTop">10dp</item>
-        <item name="android:paddingBottom">8dp</item>
-        <item name="android:paddingLeft">15dp</item>
-        <item name="android:textSize">13sp</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:textAllCaps">true</item>
+    <style name="StyleTheme.Goon" parent="AppTheme.Dark">
+        <item name="colorPrimary">@color/colorPrimary_goon</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark_goon</item>
+        <item name="android:colorBackground">@color/colorPrimary</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary_Goon</item>
+        <item name="android:textColorSecondary">@color/textColorSecondary_Goon</item>
+        <item name="colorAccent">@color/colorAccent_Goon</item>
     </style>
 
-    <style name="row">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingLeft">10dp</item>
-        <item name="android:paddingRight">10dp</item>
-        <item name="android:paddingTop">5dp</item>
-        <item name="android:paddingBottom">5dp</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@drawable/row_text_color</item>
-        <!--<item name="android:background">@color/background</item>-->
-    </style>
 
-    <style name="card_item_text">
-        <!-- Layout -->
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-
-        <!-- Style-->
-        <item name="android:textColor">@color/white_alpha</item>
-        <item name="android:textSize">18sp</item>
-
-    </style>
-
-    <style name="card_item_text.small" parent="card_item_text">
-        <!-- Style -->
-        <item name="android:textSize">14sp</item>
-    </style>
-
-    <style name="card_item_text.category" parent="card_item_text.small">
-        <!-- Layout -->
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:paddingRight">5dp</item>
-    </style>
-
-    <style name="MyCustomTabText" parent="TextAppearance.AppCompat.Button">
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/white</item>
-    </style>
-
+    <!-- Used for Filter View -->
     <style name="MyAlertDialogStyle" parent="Base.Theme.AppCompat.Dialog">
-        <item name="android:windowTitleStyle">@style/MyTitleTextStyle</item>
+        <item name="android:windowTitleStyle">@style/windowTitleStyle</item>
         <!-- Used for the buttons -->
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/category_speaker</item>
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">@color/white</item>
         <!-- Used for the background -->
-        <item name="android:background">@color/item_background</item>
+        <item name="android:background">@color/background</item>
     </style>
 
-
+    <style name="windowTitleStyle">
+        <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+    </style>
 
     <!-- Generic Dialog Theme -->
     <style name="AppCompatDialog" parent="Theme.AppCompat.Dialog">
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">@color/white</item>
         <!-- Used for the background -->
-        <item name="android:background">@color/item_background</item>
+        <item name="android:background">@color/background</item>
         <!-- Used for the buttons -->
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlHighlight">@color/category_official</item>
+        <item name="colorControlHighlight">@color/colorAccent</item>
 
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -136,29 +93,32 @@
 
     <!-- Alert Dialog Theme -->
     <style name="AppCompatAlert" parent="Theme.AppCompat.Dialog.Alert">
-        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorPrimary">?colorPrimary</item>
         <!-- Used for the background -->
-        <item name="android:background">@color/item_background</item>
+        <item name="android:background">?android:colorBackground</item>
         <!-- Used for the buttons -->
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlHighlight">@color/category_official</item>
+        <item name="colorAccent">?attr/colorPrimary</item>
+        <item name="colorControlHighlight">?attr/colorPrimary</item>
 
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/category_speaker</item>
+        <item name="colorPrimaryDark">@color/category_speaker</item>
     </style>
 
-    <style name="MyTitleTextStyle">
-        <item name="android:textAppearance">@style/titleTextStyle</item>
+
+
+    <!-- Individual element styles. -->
+
+    <style name="Label" parent="TextAppearance.AppCompat.Body2">
+        <item name="android:paddingLeft">0dp</item>
+        <item name="android:paddingRight">5dp</item>
     </style>
 
-    <style name="titleTextStyle">
-        <item name="android:textSize">20sp</item>
-        <item name="android:textColor">@color/white</item>
+    <style name="Paragraph" parent="TextAppearance.AppCompat.Body1">
+        <item name="android:paddingLeft">12dp</item>
+        <item name="android:paddingRight">12dp</item>
+        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:autoLink">all</item>
     </style>
 
-    <style name="checkBoxStyle" parent="@android:style/Widget.Holo.Light.CompoundButton.CheckBox">
-        <item name="android:textColor">@color/white</item>
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-    </style>
+
 </resources>

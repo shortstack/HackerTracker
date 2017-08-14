@@ -8,7 +8,7 @@
 
     <TextView
         android:id="@+id/version"
-        style="@style/card_item_text"
+        style="@style/TextAppearance.AppCompat.Body2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"

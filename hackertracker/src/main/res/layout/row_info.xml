@@ -41,7 +41,7 @@
 
             <TextView
                 android:id="@+id/header"
-                style="@style/card_item_text"
+                style="@style/TextAppearance.AppCompat.Caption"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="false"
