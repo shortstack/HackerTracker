@@ -43,7 +43,7 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
 
     private fun  displaySpeakers(obj: ItemViewModel, speakers: LinearLayoutCompat) {
         obj.speakers.iterator().forEach {
-            speakers.addView(SpeakerView(context, it))
+            speakers.addView(SpeakerView(context, App.application.databaseController.getSpeaker(it)))
         }
     }
 
