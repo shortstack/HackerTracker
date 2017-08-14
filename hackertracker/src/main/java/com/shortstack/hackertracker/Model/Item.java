@@ -35,7 +35,7 @@ public class Item implements Serializable {
     private String title;
 
     @SerializedName("who")
-    private Speaker[] host;
+    private Speakers.Speaker[] host;
 
     private String description;
 
@@ -268,7 +268,7 @@ public class Item implements Serializable {
         }
     }
 
-    public Speaker[] getSpeakers() {
+    public Speakers.Speaker[] getSpeakers() {
         return host;
     }
 

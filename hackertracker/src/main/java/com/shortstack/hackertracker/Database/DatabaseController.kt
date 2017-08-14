@@ -14,7 +14,7 @@ import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.Event.FavoriteEvent
 import com.shortstack.hackertracker.Model.Item
-import com.shortstack.hackertracker.Model.Speaker
+import com.shortstack.hackertracker.Model.Speakers
 import com.shortstack.hackertracker.Model.Types
 import com.shortstack.hackertracker.Model.Vendors
 import com.shortstack.hackertracker.Network.SyncResponse
@@ -95,6 +95,10 @@ class DatabaseController(private val context: Context, name: String = Constants.
         json = getJSONFromFile(TYPES_FILE)
         val types = gson.fromJson(json, Types::class.java)
         initTypes(db, types)
+
+        json = getJSONFromFile(SPEAKERS_FILE)
+        val speakers = gson.fromJson(json, Speakers::class.java)
+        initSpeakers(db, speakers)
     }
 
     fun updateDataSet(db: SQLiteDatabase) {
@@ -156,6 +160,25 @@ class DatabaseController(private val context: Context, name: String = Constants.
             database.endTransaction()
         }
 
+    }
+
+    private fun initSpeakers(database: SQLiteDatabase, speakers: Speakers) {
+        database.beginTransaction()
+
+        // Clearing out the table.
+        database.delete(SPEAKERS_TABLE_NAME, null, null)
+
+        try {
+
+            speakers.speakers.forEach {
+                val values = getContentValues(it, App.application.gson)
+                database.insert(SPEAKERS_TABLE_NAME, null, values)
+            }
+
+            database.setTransactionSuccessful()
+        } finally {
+            database.endTransaction()
+        }
     }
 
     fun updateSchedule(database: SQLiteDatabase = writableDatabase, response: SyncResponse): Int {
@@ -402,13 +425,13 @@ class DatabaseController(private val context: Context, name: String = Constants.
             return result
         }
 
-    val speakers: List<Speaker>
+    val speakers: List<Speakers.Speaker>
         get() {
-            val result = ArrayList<Speaker>()
+            val result = ArrayList<Speakers.Speaker>()
             val cursor = readableDatabase.rawQuery("$SELECT_ALL_FROM $SPEAKERS_TABLE_NAME", arrayOf<String>())
             if (cursor.moveToFirst()) {
                 do {
-                    result.add(fromCursor(Speaker::class.java, cursor))
+                    result.add(fromCursor(Speakers.Speaker::class.java, cursor))
                 } while (cursor.moveToNext())
             }
 
@@ -442,7 +465,7 @@ class DatabaseController(private val context: Context, name: String = Constants.
             return obj
         }
 
-        fun <T> getContentValues(t: T, gson: Gson ): ContentValues {
+        fun <T> getContentValues(t: T, gson: Gson): ContentValues {
             val values = ContentValues()
 
             val json = gson.toJson(t)
@@ -462,5 +485,14 @@ class DatabaseController(private val context: Context, name: String = Constants.
 
             return values
         }
+    }
+
+    fun getSpeaker(speaker: Speakers.Speaker): Speakers.Speaker {
+        val cursor = readableDatabase.query(SPEAKERS_TABLE_NAME, null, "indexsp = ?", arrayOf(speaker.id.toString()), null, null, null)
+        if (cursor.count == 0)
+            return speaker
+        if( !cursor.moveToFirst() )
+             return speaker
+        return fromCursor(Speakers.Speaker::class.java, cursor)
     }
 }
