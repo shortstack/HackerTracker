@@ -51,7 +51,22 @@
             partner INTEGER 
         );"
     ]
-  }
+  },
+    {
+        "version": 2,
+        "commands": [
+            "DROP TABLE Speakers;",
+            "CREATE TABLE IF NOT EXISTS 
+                    Speakers (
+                        `indexsp` INTEGER PRIMARY KEY,
+                        who VARCHAR(255),
+                        sptitle VARCHAR(255),
+                        media VARCHAR(255),
+                        bio TEXT,
+                        last_update DATETIME
+                    );"
+        ] 
+    }
 ]
 }
 
