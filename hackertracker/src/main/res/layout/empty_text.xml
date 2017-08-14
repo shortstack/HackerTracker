@@ -2,12 +2,12 @@
 <TextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/empty"
+    style="@style/TextAppearance.AppCompat.Caption"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
     android:gravity="center"
     android:text="@string/empty_text"
-    android:textColor="@color/white_alpha"
     android:visibility="gone"
     tools:background="@color/background"
     tools:visibility="visible" />

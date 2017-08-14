@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#eff295">
+    android:layout_height="match_parent">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBarLayout"
@@ -16,7 +15,6 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
             app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
@@ -28,19 +26,12 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-
-        android:layout_below="@id/appBarLayout"
-
-        >
-
+        android:layout_below="@id/appBarLayout">
 
         <FrameLayout
             android:id="@+id/frame"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/background"
-
-            />
+            android:layout_height="match_parent" />
 
     </FrameLayout>
 
@@ -49,8 +40,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_gravity="bottom|end"
         android:layout_alignParentRight="true"
+        android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
         android:src="@drawable/ic_filter_list_white_24dp"
         app:elevation="4dp"

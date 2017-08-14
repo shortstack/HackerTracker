@@ -5,6 +5,7 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutCompat
+import android.view.ContextThemeWrapper
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -39,6 +40,11 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
         view.star.setOnClickListener { onStarClick(view.item, view.star) }
         view.share.setOnClickListener { onShareClick(view.item) }
         view.link.setOnClickListener { onLinkClick() }
+
+        view.tool.visibility = obj.toolsVisibility
+        view.exploit.visibility = obj.exploitVisibility
+        view.demo.visibility = obj.demoVisibility
+
     }
 
     private fun  displaySpeakers(obj: ItemViewModel, speakers: LinearLayoutCompat) {
@@ -54,10 +60,10 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
         val hasDescription = obj.hasDescription()
 
         if (hasDescription)
-            description!!.text = obj.description
-        empty!!.visibility = if (hasDescription) View.GONE else View.VISIBLE
+            description.text = obj.description
+        empty.visibility = if (hasDescription) View.GONE else View.VISIBLE
 
-        link!!.visibility = if (obj.hasUrl()) View.VISIBLE else View.GONE
+        link.visibility = if (obj.hasUrl()) View.VISIBLE else View.GONE
 
         updateStarIcon(star)
     }

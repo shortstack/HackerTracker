@@ -41,9 +41,6 @@ public class ItemView extends CardView {
     private boolean mRoundCorners = true;
     private ItemViewModel mItem;
 
-    @BindView(R.id.updated)
-    View updated;
-
 
     @BindView(R.id.title)
     TextView title;
@@ -57,14 +54,6 @@ public class ItemView extends CardView {
     @BindView(R.id.category_text)
     TextView categoryText;
 
-    @BindView(R.id.demo)
-    View demo;
-
-    @BindView(R.id.exploit)
-    View exploit;
-
-    @BindView(R.id.tool)
-    View tool;
 
     @BindView(R.id.category)
     View category;
@@ -189,7 +178,6 @@ public class ItemView extends CardView {
         //updated.setVisibility( new Random().nextBoolean() ? VISIBLE : GONE);
 
         renderText();
-        renderIcon();
         renderCategoryColour();
         renderBookmark();
         setProgressBar();
@@ -228,13 +216,6 @@ public class ItemView extends CardView {
         if (mDisplayMode == DISPLAY_MODE_FULL) {
             time.setText(getContent().getFullTimeStamp(getContext()));
         }
-    }
-
-    @SuppressWarnings("ResourceType")
-    private void renderIcon() {
-        tool.setVisibility(getContent().getToolsVisibility());
-        exploit.setVisibility(getContent().getExploitVisibility());
-        demo.setVisibility(getContent().getDemoVisibility());
     }
 
     private void renderCategoryColour() {
