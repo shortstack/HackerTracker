@@ -17,6 +17,6 @@
         android:layout_marginTop="16dp"
         android:layout_weight="1"
         android:scaleType="fitCenter"
-        app:srcCompat="@drawable/skull_25" />
+        app:srcCompat="?attr/logo_main" />
 
 </LinearLayout>

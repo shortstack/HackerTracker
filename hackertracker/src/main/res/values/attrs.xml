@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <attr name="logo_main" format="reference" />
+    <attr name="logo_secondary" format="reference" />
+
     <declare-styleable name="ItemView">
         <attr name="displayMode" format="enum">
             <enum name="min" value="0" />

@@ -16,6 +16,8 @@
 
     <style name="ThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
 
+        <item name="logo_main">@drawable/skull_25</item>
+        <item name="logo_secondary">@drawable/skull</item>
 
 
         <item name="windowActionBar">false</item>

@@ -16,7 +16,7 @@
         android:layout_weight="1"
         android:paddingBottom="10dp"
         android:paddingTop="10dp"
-        android:src="@drawable/skull_25" />
+        android:src="?attr/logo_main" />
 
     <TextView
         android:visibility="gone"
