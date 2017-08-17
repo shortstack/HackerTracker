@@ -89,16 +89,16 @@ class DatabaseController(private val context: Context, name: String = Constants.
         // Vendors
         var json = getJSONFromFile(VENDORS_FILE)
         val vendors = gson.fromJson(json, Vendors::class.java)
-        initVendors(db, vendors)
+        initTable(db, VENDORS_TABLE_NAME, vendors.vendors)
 
         // Event Types
         json = getJSONFromFile(TYPES_FILE)
         val types = gson.fromJson(json, Types::class.java)
-        initTypes(db, types)
+        initTable(db, TYPES_TABLE_NAME, types.types)
 
         json = getJSONFromFile(SPEAKERS_FILE)
         val speakers = gson.fromJson(json, Speakers::class.java)
-        initSpeakers(db, speakers)
+        initTable(db, SPEAKERS_TABLE_NAME, speakers.speakers)
     }
 
     fun updateDataSet(db: SQLiteDatabase) {
@@ -120,65 +120,6 @@ class DatabaseController(private val context: Context, name: String = Constants.
                         database.execSQL(command)
                     }
                 }
-    }
-
-    private fun initVendors(database: SQLiteDatabase, vendors: Vendors?) {
-        database.beginTransaction()
-
-        // Clearing out the table.
-        database.delete(VENDORS_TABLE_NAME, null, null)
-
-        try {
-
-            vendors?.vendors?.forEach {
-                val values = it.getContentValues(App.application.gson)
-                values.remove("index")
-                database.insert(VENDORS_TABLE_NAME, null, values)
-            }
-
-            database.setTransactionSuccessful()
-        } finally {
-            database.endTransaction()
-        }
-    }
-
-    private fun initTypes(database: SQLiteDatabase, types: Types) {
-        database.beginTransaction()
-
-        // Clearing out the table.
-        database.delete(TYPES_TABLE_NAME, null, null)
-
-        try {
-
-            types.types.forEach {
-                val values = getContentValues(it, App.application.gson)
-                database.insert(TYPES_TABLE_NAME, null, values)
-            }
-
-            database.setTransactionSuccessful()
-        } finally {
-            database.endTransaction()
-        }
-
-    }
-
-    private fun initSpeakers(database: SQLiteDatabase, speakers: Speakers) {
-        database.beginTransaction()
-
-        // Clearing out the table.
-        database.delete(SPEAKERS_TABLE_NAME, null, null)
-
-        try {
-
-            speakers.speakers.forEach {
-                val values = getContentValues(it, App.application.gson)
-                database.insert(SPEAKERS_TABLE_NAME, null, values)
-            }
-
-            database.setTransactionSuccessful()
-        } finally {
-            database.endTransaction()
-        }
     }
 
     private fun <T> initTable( database: SQLiteDatabase, table: String, array: Array<T>) {

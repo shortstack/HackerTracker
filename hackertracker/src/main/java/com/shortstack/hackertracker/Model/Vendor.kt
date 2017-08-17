@@ -12,7 +12,7 @@ import java.io.Serializable
 
 class Vendors {
 
-    val vendors: Array<Vendor>? = null
+    lateinit var vendors: Array<Vendor>
 
     class Vendor : Serializable {
 
