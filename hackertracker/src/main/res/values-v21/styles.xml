@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <style name="AppTheme.Base" parent="Base.Theme.AppCompat.Light.DarkActionBar">
-
+    <style name="AppTheme" parent="ThemeBase">
         <item name="android:windowContentTransitions">true</item>
         <item name="android:windowAllowEnterTransitionOverlap">true</item>
         <item name="android:windowAllowReturnTransitionOverlap">true</item>
@@ -11,30 +10,9 @@
         <item name="android:windowTranslucentStatus">true</item>
 
 
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-        <item name="android:colorBackground">@color/background</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">@color/colorAccent</item>
-        <item name="colorControlHighlight">@color/colorAccent</item>
-        <item name="preferenceTheme">@style/Theme.WtfPreference</item>
-
-        <item name="android:checkboxStyle">@style/checkBoxStyle</item>
-
-        <!-- Preferences-->
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/white_alpha</item>
-
+        <!-- AppCompat Dialog Attributes -->
         <item name="android:dialogTheme">@style/MyAlertDialogStyle</item>
         <item name="android:alertDialogTheme">@style/MyAlertDialogStyle</item>
-
-
-        <!-- AppCompat Dialog Attributes -->
-        <item name="dialogTheme">@style/AppCompatDialog</item>
-        <item name="alertDialogTheme">@style/AppCompatAlert</item>
-        <item name="android:colorAccent">@color/colorAccent</item>
     </style>
 
 

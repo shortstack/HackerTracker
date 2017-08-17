@@ -14,7 +14,10 @@
         <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
     </style>
 
-    <style name="AppTheme.Base" parent="Base.ThemeOverlay.AppCompat.Dark.ActionBar">
+    <style name="ThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
+
+
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:colorBackground">@color/background</item>
@@ -25,7 +28,7 @@
         <item name="colorControlHighlight">@color/colorAccent</item>
         <item name="preferenceTheme">@style/Theme.WtfPreference</item>
 
-        <item name="android:checkboxStyle">@style/checkBoxStyle</item>
+        <item name="android:checkboxStyle">@style/AppCheckBoxStyle</item>
 
         <!-- Preferences-->
         <item name="android:textColorPrimary">@color/white</item>
@@ -38,11 +41,17 @@
         <item name="checkboxStyle">@style/AppCheckBoxStyle</item>
     </style>
 
-    <style name="AppCheckBoxStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
-        <item name="android:textColor">@color/category_speaker</item>
+    <style name="AppTheme" parent="ThemeBase">
+
+
+
     </style>
 
-    <style name="AppTheme.Dark" parent="AppTheme.Base">
+    <style name="AppCheckBoxStyle" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="AppTheme.Dark" parent="AppTheme">
         <item name="colorPrimary">@color/light_gray</item>
         <item name="colorPrimaryDark">@color/light_gray</item>
         <item name="colorAccent">@color/light_gray</item>

@@ -3,10 +3,10 @@
 
     <declare-styleable name="ItemView">
         <attr name="displayMode" format="enum">
-            <enum name="min" value="0"/>
-            <enum name="full" value="1"/>
+            <enum name="min" value="0" />
+            <enum name="full" value="1" />
         </attr>
-        <attr name="roundCorners" format="boolean"/>
+        <attr name="roundCorners" format="boolean" />
     </declare-styleable>
 
 </resources>
