@@ -181,6 +181,22 @@ class DatabaseController(private val context: Context, name: String = Constants.
         }
     }
 
+    private fun <T> initTable( database: SQLiteDatabase, table: String, array: Array<T>) {
+        database.beginTransaction()
+
+        // Clearing out the table.
+        database.delete(table, null, null)
+        try {
+            array.forEach {
+                val values = getContentValues(it, App.application.gson)
+                database.insert(table, null, values)
+            }
+            database.setTransactionSuccessful()
+        } finally {
+            database.endTransaction()
+        }
+    }
+
     fun updateSchedule(database: SQLiteDatabase = writableDatabase, response: SyncResponse): Int {
         App.storage.lastUpdated = response.updatedDate
         App.storage.lastSyncVersion = BuildConfig.VERSION_CODE
