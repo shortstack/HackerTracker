@@ -16,7 +16,6 @@ class Vendors {
 
     class Vendor : Serializable {
 
-        var index: Int = 0
         var title: String? = null
         var description: String? = null
         var link: String? = null

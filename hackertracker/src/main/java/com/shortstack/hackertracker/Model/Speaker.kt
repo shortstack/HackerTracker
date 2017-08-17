@@ -4,22 +4,22 @@ import com.google.gson.annotations.SerializedName
 
 import java.io.Serializable
 
-class Speakers {
+public class Speakers {
 
     lateinit var speakers : Array<Speaker>
 
     inner class Speaker : Serializable {
 
         @SerializedName("sptitle")
-        private val title: String? = null
+        lateinit var title: String
         @SerializedName("who")
-        val name: String? = null
+        lateinit var name: String
         @SerializedName("indexsp")
         val id: Int = 0
 
-        private val lastUpdate: String? = null
-        private val media: String? = null
-        val bio: String? = null
+        lateinit var lastUpdate: String
+        lateinit var media: String
+        lateinit var bio: String
 
     }
 }
