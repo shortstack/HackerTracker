@@ -33,7 +33,10 @@ public class ItemViewModel {
     }
 
     public String getDescription() {
-        return mItem.getDescription().replace("\\\"", "\"");
+        String description = mItem.getDescription();
+        description =description.replaceAll("[.]. {2}", ".\n\n");
+        description = description.replaceAll("\n ", "\n");
+        return description;
     }
 
     public int getCategoryColorPosition() {
