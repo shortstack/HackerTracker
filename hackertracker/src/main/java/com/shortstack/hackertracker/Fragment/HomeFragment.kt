@@ -57,11 +57,11 @@ class HomeFragment : Fragment() {
         var lastDate :String
 
         val cal = Calendar.getInstance()
-        cal.time = Date(App.storage.lastRefresh)
+        cal.time = Date(App.application.storage.lastRefresh)
 
-        val refresh = App.storage.lastRefresh
+        val refresh = App.application.storage.lastRefresh
         if (refresh == 0L ) {
-            val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(App.storage.lastUpdated)
+            val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(App.application.storage.lastUpdated)
             lastDate = "Last synced " + App.getRelativeDateStamp(date)
         } else {
             lastDate = "Last synced " + App.getRelativeDateStamp(Date(refresh))

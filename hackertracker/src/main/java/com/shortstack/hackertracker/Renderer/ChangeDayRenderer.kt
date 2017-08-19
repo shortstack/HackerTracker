@@ -25,7 +25,7 @@ class ChangeDayRenderer : Renderer<RendererContent<String>>() {
     }
 
     fun onButtonClick() {
-        App.storage!!.scheduleDay = App.storage!!.scheduleDay + 1
+        App.application.storage!!.scheduleDay = App.application.storage!!.scheduleDay + 1
         App.application.postBusEvent(UpdateListContentsEvent())
     }
 }

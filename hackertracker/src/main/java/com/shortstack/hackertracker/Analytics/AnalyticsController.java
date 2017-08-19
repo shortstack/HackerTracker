@@ -69,7 +69,7 @@ public class AnalyticsController {
 
     private void logCustom(CustomEvent event) {
         // Bypass to track if they're turning analytics off
-        if( !App.Companion.getStorage().isTrackingAnalytics() && !event.toString().contains(Analytics.SETTINGS_ANALYTICS.toString()) ) {
+        if( !App.application.getStorage().isTrackingAnalytics() && !event.toString().contains(Analytics.SETTINGS_ANALYTICS.toString()) ) {
             return;
         }
 

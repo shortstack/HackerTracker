@@ -39,7 +39,7 @@ class App : Application() {
     // Eventbus
     val mBus: Bus by lazy { MainThreadBus() }
     // Storage
-    val mStorage: SharedPreferencesUtil by lazy { SharedPreferencesUtil() }
+    val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil() }
     // Database
     val databaseController: DatabaseController by lazy { DatabaseController(appContext) }
     // Notifications
@@ -152,7 +152,6 @@ class App : Application() {
 
         lateinit var application: App
 
-        val storage: SharedPreferencesUtil by lazy { application.mStorage }
 
         fun getCurrentCalendar() : Calendar = application.timeHelper.currentCalendar
 

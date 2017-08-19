@@ -114,7 +114,7 @@ public class FilterView extends LinearLayout {
 
         Filter filter = new Filter(strings);
 
-        App.Companion.getStorage().saveFilter(filter);
+        App.application.getStorage().saveFilter(filter);
 
         return filter;
     }

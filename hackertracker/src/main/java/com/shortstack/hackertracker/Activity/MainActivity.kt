@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         filter.setOnClickListener { onFilterClick() }
 
         if (savedInstanceState == null) {
-            mFragmentIndex = App.storage.viewPagerPosition
+            mFragmentIndex = App.application.storage.viewPagerPosition
             forceMenuHighlighted()
             loadFragment()
 
@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
 //        Logger.d("Setting fragment:" + mFragmentIndex)
 
-        App.storage.viewPagerPosition = mFragmentIndex
+        App.application.storage.viewPagerPosition = mFragmentIndex
         tagAnalytics()
 
         // if user select the current navigation menu again, don't do anything

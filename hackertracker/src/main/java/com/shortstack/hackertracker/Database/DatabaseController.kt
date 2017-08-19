@@ -63,7 +63,7 @@ class DatabaseController(private val context: Context, name: String = Constants.
     }
 
 
-    private fun isScheduleOutOfDate() = App.storage.lastSyncVersion != BuildConfig.VERSION_CODE /*|| BuildConfig.DEBUG*/
+    private fun isScheduleOutOfDate() = App.application.storage.lastSyncVersion != BuildConfig.VERSION_CODE/* || BuildConfig.DEBUG*/
 
     protected fun finalize() {
         close()

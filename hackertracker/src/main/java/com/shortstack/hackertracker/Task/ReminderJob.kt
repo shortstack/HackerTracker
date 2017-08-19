@@ -16,7 +16,7 @@ class ReminderJob : JobService() {
     }
 
     override fun onStartJob(jobParameters: JobParameters): Boolean {
-        if (App.Companion.storage.allowPushNotifications()) {
+        if (App.Companion.application.storage.allowPushNotifications()) {
 
             val extras = jobParameters.extras
             val id = extras?.getInt(NOTIFICATION_ID)

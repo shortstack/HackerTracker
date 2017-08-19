@@ -19,7 +19,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
 
         // if user settings allow push notifications, send notification
-        if (App.Companion.getStorage().allowPushNotifications()) {
+        if (App.application.getStorage().allowPushNotifications()) {
 
             NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 

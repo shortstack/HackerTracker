@@ -70,7 +70,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         val currentDate = App.getCurrentDate()
         var time = currentDate.time
 
-        if (App.storage.shouldRefresh(time)) {
+        if (App.application.storage.shouldRefresh(time)) {
             mHandler.obtainMessage(1).sendToTarget()
         }
 
@@ -143,7 +143,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun refreshContents() {
         adapter!!.clear()
 
-        val filter = App.storage.filter
+        val filter = App.application.storage.filter
         val events = getEvents(filter)
 
         val objects = addTimeDividers(events)

@@ -37,7 +37,7 @@ class SyncJob : JobService(), Callback<SyncResponse> {
     }
 
     fun updateDatabase(body: SyncResponse) {
-        val storage = App.storage
+        val storage = App.application.storage
 
         Logger.d("Tag: " + tag)
 
