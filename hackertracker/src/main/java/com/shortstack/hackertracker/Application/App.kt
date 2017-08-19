@@ -41,7 +41,7 @@ class App : Application() {
     // Storage
     val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil() }
     // Database
-    val databaseController: DatabaseController by lazy { DatabaseController(appContext) }
+    lateinit var databaseController: DEFCONDatabaseController
     // Notifications
     val notificationHelper: NotificationHelper by lazy { NotificationHelper(appContext) }
     // Analytics
@@ -80,7 +80,13 @@ class App : Application() {
     }
 
     fun updateDatabaseController() {
+        val name = if (storage.databaseSelected == 0) Constants.DEFCON_DATABASE_NAME else Constants.TOORCON_DATABASE_NAME
+        Logger.d("Creating database controller with database: $name")
+        databaseController = DEFCONDatabaseController(appContext)
+        databaseController.checkDatabase()
     }
+
+
     fun scheduleSync() {
 
         cancelSync()

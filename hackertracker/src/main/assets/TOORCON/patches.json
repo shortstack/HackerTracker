@@ -1,0 +1,36 @@
+{
+  "patches": [
+    {
+      "version": 1,
+      "commands": [
+        "CREATE TABLE IF NOT EXISTS 
+        Schedule (
+            `index` INTEGER PRIMARY KEY,
+            title VARCHAR(255),
+            who VARCHAR(255),
+            entry_type VARCHAR(255),
+            dctv_channel VARCHAR(255),
+            start_date DATETIME,
+            end_date DATETIME,
+            includes VARCHAR(255),
+            description TEXT,
+            location VARCHAR(255),
+            link VARCHAR(255),
+            updated_at DATETIME,
+            bookmarked INTEGER 
+        );",
+
+        "CREATE TABLE IF NOT EXISTS
+        Types (
+            `index` INTEGER PRIMARY KEY AUTOINCREMENT,
+            event_type VARCHAR(255)
+        );",
+
+    
+    ]
+  }
+]
+}
+
+
+
