@@ -8,6 +8,12 @@
     android:padding="20dp"
     tools:background="@color/background">
 
+    <TextView
+        style="@style/TextAppearance.AppCompat.Caption"
+        android:text="Where to?"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
 
     <android.support.v7.widget.AppCompatSpinner
         android:id="@+id/spinner"
@@ -22,6 +28,7 @@
     <com.uber.sdk.android.rides.RideRequestButton
         android:id="@+id/uber_request_button"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:background="?android:attr/colorBackground"/>
 
 </LinearLayout>

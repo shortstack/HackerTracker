@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
 /* //device/apps/common/assets/res/any/layout/simple_spinner_item.xml
 **
 ** Copyright 2008, The Android Open Source Project
@@ -18,13 +17,12 @@
 */
 -->
 <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@android:id/text1"
     style="?android:attr/spinnerDropDownItemStyle"
-    android:singleLine="true"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="40dp"
     android:ellipsize="marquee"
-    android:textColor="@color/background"
-    android:textSize="17sp"
-    android:paddingTop="3dp"
-    android:paddingBottom="3dp"/>
+    android:singleLine="true"
+    android:textColor="@color/white"
+    tools:text="Paris" />
