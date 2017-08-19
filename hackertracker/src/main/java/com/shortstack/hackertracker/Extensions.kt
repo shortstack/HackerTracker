@@ -1,7 +1,6 @@
 package com.shortstack.hackertracker
 
 import android.annotation.SuppressLint
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -41,6 +40,5 @@ fun Date.getDateDifference(date: Date, timeUnit: TimeUnit): Long {
 }
 
 @SuppressLint("SimpleDateFormat")
-fun DateFormat.get8601(): SimpleDateFormat {
-    return SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss")
-}
+fun Calendar.format8601(): String = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(this.time)
+
