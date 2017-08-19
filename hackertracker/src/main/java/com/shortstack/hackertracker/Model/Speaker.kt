@@ -1,25 +1,23 @@
 package com.shortstack.hackertracker.Model
 
 import com.google.gson.annotations.SerializedName
-
 import java.io.Serializable
 
-public class Speakers {
+data class Speakers(
+        val speakers: Array<Speaker>
+)
 
-    lateinit var speakers : Array<Speaker>
-
-    inner class Speaker : Serializable {
+data class Speaker(
 
         @SerializedName("sptitle")
-        lateinit var title: String
+        val title: String,
         @SerializedName("who")
-        lateinit var name: String
+        val name: String,
         @SerializedName("indexsp")
-        val id: Int = 0
+        val id: Int,
+        val lastUpdate: String,
+        val media: String,
+        val bio: String
 
-        lateinit var lastUpdate: String
-        lateinit var media: String
-        lateinit var bio: String
+) : Serializable
 
-    }
-}

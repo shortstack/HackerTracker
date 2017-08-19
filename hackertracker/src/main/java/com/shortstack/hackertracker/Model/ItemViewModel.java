@@ -205,7 +205,7 @@ public class ItemViewModel {
         return mItem.isBookmarked() ? View.VISIBLE : View.INVISIBLE;
     }
 
-    public Speakers.Speaker[] getSpeakers() {
+    public Speaker[] getSpeakers() {
         return mItem.getSpeakers();
     }
 }
