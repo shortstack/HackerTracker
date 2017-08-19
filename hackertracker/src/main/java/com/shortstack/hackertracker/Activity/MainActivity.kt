@@ -211,6 +211,46 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         super.onBackPressed()
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.search_menu, menu)
+
+        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+        val searchMenuItem = menu.findItem(R.id.search)
+        val searchView = searchMenuItem.actionView as SearchView
+
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+        //searchView.isSubmitButtonEnabled = true
+
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId) {
+            R.id.search -> {
+                val mPendingRunnable = Runnable {
+                    // update the main content by replacing fragments
+                    val fragment = SearchFragment.newInstance()
+
+                    val searchView = item.actionView as SearchView
+                    searchView.setOnQueryTextListener(fragment)
+
+
+
+
+                    val fragmentTransaction = supportFragmentManager.beginTransaction()
+                    fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
+                            android.R.anim.fade_out)
+                    fragmentTransaction.replace(R.id.frame, fragment, fragmentTag)
+                    fragmentTransaction.commitAllowingStateLoss()
+                }
+                mHandler.post(mPendingRunnable)
+                return true
+            }
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
     private fun initViewPager() {
 
         val toggle = ActionBarDrawerToggle(
