@@ -4,14 +4,18 @@ import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.design.widget.TabLayout
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v7.widget.LinearLayoutCompat
-import android.view.ContextThemeWrapper
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.shortstack.hackertracker.Alert.MaterialAlert
 import com.shortstack.hackertracker.Analytics.AnalyticsController
 import com.shortstack.hackertracker.Application.App
+import com.shortstack.hackertracker.Fragment.InformationFragment
 import com.shortstack.hackertracker.Model.Item
 import com.shortstack.hackertracker.Model.ItemViewModel
 import com.shortstack.hackertracker.R
@@ -45,6 +49,15 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
         view.exploit.visibility = obj.exploitVisibility
         view.demo.visibility = obj.demoVisibility
 
+
+        val color = resources.getIntArray(R.array.colors) [ obj.categoryColorPosition ]
+        view.tab_layout.setBackgroundColor(color)
+
+
+        view.tab_layout.addTab(view.tab_layout.newTab().setText("Description"))
+        view.tab_layout.addTab(view.tab_layout.newTab().setText("Author"))
+        view.tab_layout.tabGravity = TabLayout.GRAVITY_FILL
+
     }
 
     private fun  displaySpeakers(obj: ItemViewModel, speakers: LinearLayoutCompat) {
@@ -69,7 +82,7 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
     }
 
     private fun updateStarIcon( star: ImageView ) {
-        star!!.setImageDrawable(resources.getDrawable(if (content.isBookmarked) R.drawable.ic_star_white_24dp else R.drawable.ic_star_border_white_24dp))
+        star.setImageDrawable(resources.getDrawable(if (content.isBookmarked) R.drawable.ic_star_white_24dp else R.drawable.ic_star_border_white_24dp))
     }
 
     fun onStarClick( item: ItemView, star: ImageView ) {
@@ -103,7 +116,7 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
     companion object {
 
 
-        val ARG_OBJ = "VENDOR"
+        val ARG_OBJ = "ITEM"
 
 
         fun newInstance(obj: Item): ScheduleItemBottomSheetDialogFragment {
@@ -115,5 +128,16 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
 
             return fragment
         }
+    }
+
+    class PagerAdapter(fm : FragmentManager) : FragmentStatePagerAdapter(fm) {
+        override fun getItem(position: Int): Fragment {
+            return InformationFragment.newInstance()
+        }
+
+        override fun getCount(): Int {
+            return 2
+        }
+
     }
 }

@@ -15,8 +15,30 @@
             android:id="@+id/item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:roundCorners="false"
-            app:cardElevation="0dp"/>
+            app:cardElevation="0dp"
+            app:roundCorners="false">
+
+        </com.shortstack.hackertracker.View.ItemView>
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/tab_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginBottom="0dp"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:tabIndicatorColor="@color/white"/>
+
+        <android.support.v4.view.ViewPager
+            android:id="@+id/pager"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp" />
 
         <android.support.v4.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -66,7 +88,8 @@
                     android:id="@+id/icons"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:orientation="horizontal"
+                    android:visibility="gone">
 
                     <TextView
                         android:id="@+id/demo"
@@ -114,7 +137,8 @@
                     android:id="@+id/speakers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical" />
+                    android:orientation="vertical"
+                    android:visibility="gone"/>
 
 
                 <include layout="@layout/row_footer" />
