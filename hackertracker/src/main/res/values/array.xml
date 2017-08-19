@@ -12,13 +12,13 @@
         <item>@color/category_party</item>
         <item>@color/category_demo</item>
         <item>@color/category_workshop</item>
-        <item>@color/category_workshop</item>
-        <item>@color/category_workshop</item>
-        <item>@color/category_workshop</item>
-        <item>@color/category_workshop</item>
-        <item>@color/category_workshop</item>
-        <item>@color/category_workshop</item>
-        <item>@color/category_workshop</item>
+        <item>@color/category_official</item>
+        <item>@color/category_kids</item>
+        <item>@color/category_event</item>
+        <item>@color/category_village</item>
+        <item>@color/category_skytalk</item>
+        <item>@color/category_event</item>
+        <item>@color/category_official</item>
         <item>@color/category_workshop</item>
     </string-array>
 
