@@ -37,7 +37,7 @@ class App : Application() {
         private set
 
     // Eventbus
-    val mBus: Bus by lazy { MainThreadBus() }
+    val bus: Bus by lazy { MainThreadBus() }
     // Storage
     val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil() }
     // Database
@@ -145,15 +145,15 @@ class App : Application() {
 
 
     fun postBusEvent(event: Any) {
-        mBus.post(event)
+        bus.post(event)
     }
 
     fun unregisterBusListener(itemView: Any) {
-        mBus.unregister(itemView)
+        bus.unregister(itemView)
     }
 
     fun registerBusListener(itemView: Any) {
-        mBus.register(itemView)
+        bus.register(itemView)
     }
 
 
