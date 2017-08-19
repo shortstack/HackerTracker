@@ -9,7 +9,7 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 
 import com.shortstack.hackertracker.Application.App;
-import com.shortstack.hackertracker.Database.DatabaseController;
+import com.shortstack.hackertracker.Database.DEFCONDatabaseController;
 import com.shortstack.hackertracker.Model.Filter;
 import com.shortstack.hackertracker.Model.Types;
 import com.shortstack.hackertracker.R;
@@ -73,7 +73,7 @@ public class FilterView extends LinearLayout {
         inflate(getContext(), R.layout.alert_filter, this);
         ButterKnife.bind(this);
 
-        DatabaseController controller = App.application.getDatabaseController();
+        DEFCONDatabaseController controller = App.application.getDatabaseController();
         List<Types.Type> types = controller.getTypes();
 
         checkboxes = new AppCompatCheckBox[types.size()];
