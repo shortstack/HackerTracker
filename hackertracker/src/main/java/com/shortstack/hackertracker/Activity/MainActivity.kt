@@ -1,5 +1,7 @@
 package com.shortstack.hackertracker.Activity
 
+import android.app.SearchManager
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
@@ -8,14 +10,18 @@ import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
+import android.support.v7.widget.SearchView
+import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import butterknife.ButterKnife
 import com.github.stkent.amplify.tracking.Amplify
+import com.shortstack.hackertracker.Alert.MaterialAlert
 import com.shortstack.hackertracker.Analytics.AnalyticsController
 import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.BottomSheet.ReviewBottomSheetDialogFragment
 import com.shortstack.hackertracker.BottomSheet.ScheduleItemBottomSheetDialogFragment
+import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.Database.DatabaseController
 import com.shortstack.hackertracker.Fragment.*
 import com.shortstack.hackertracker.R
@@ -23,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+
 
     private var mFragmentIndex = DEFAULT_FRAGMENT_INDEX
 
@@ -36,7 +43,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if( !DatabaseController.exists(this) ) {
+        if (!DatabaseController.exists(this, Constants.DEFCON_DATABASE_NAME)) {
             startActivity(Intent(this, SplashActivity::class.java))
             finish()
             return
@@ -132,7 +139,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         //Closing drawer on item click
         drawer_layout!!.closeDrawers()
-
 
 
     }
