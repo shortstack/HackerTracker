@@ -30,5 +30,10 @@
             android:icon="@drawable/ic_settings_white_24dp"
             android:title="@string/settings" />
 
+        <item
+            android:id="@+id/nav_change_con"
+            android:icon="@drawable/ic_filter_list_white_24dp"
+            android:title="@string/change_con" />
+
     </group>
 </menu>

@@ -5,6 +5,7 @@ import com.shortstack.hackertracker.BuildConfig;
 public interface Constants {
 
     String DEFCON_DATABASE_NAME = "DEFCON";
+    String TOORCON_DATABASE_NAME = "TOORCON";
 
     String API_URL_BASE = "https://info.defcon.org/json/";
 

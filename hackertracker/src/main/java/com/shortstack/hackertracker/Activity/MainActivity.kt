@@ -263,6 +263,20 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.nav_change_con) {
+            MaterialAlert.create(this).setTitle("Hello").setItems(R.array.cons,
+                    { dialogInterface, i ->
+
+                        App.application.storage.databaseSelected = i
+                        App.application.updateDatabaseController()
+
+
+                    }).setBasicPositiveButton().show()
+            return true
+        }
+
+
+
         mFragmentIndex = getFragmentIndex(item)
 
 //        Logger.d("Selected item! " + mFragmentIndex)

@@ -194,6 +194,8 @@ Any news and info will likely be posted there.</item>
     <string name="map_night_title">NIGHT</string>
     <string name="notification_text_blank">Starting soon.</string>
     <string name="empty_location">unknown location</string>
+    <string name="change_con">Change Con</string>
+    <string name="toorcon">TOORCON</string>
     <string name="search">Search</string>
 
     <string-array name="nav_item_activity_titles">
@@ -203,6 +205,12 @@ Any news and info will likely be posted there.</item>
         <item>@string/information</item>
         <item>@string/partners_vendors</item>
         <item>@string/settings</item>
+        <item>@string/change_con</item>
+    </string-array>
+
+    <string-array name="cons">
+        <item>@string/defcon</item>
+        <item>@string/toorcon</item>
     </string-array>
 
     <string-array name="badge_information">

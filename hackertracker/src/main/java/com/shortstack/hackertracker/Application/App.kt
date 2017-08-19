@@ -71,12 +71,16 @@ class App : Application() {
         initFeedback()
 //        Logger.d("init feedback -- took " + (System.currentTimeMillis() - time) + " ms.")
 
-        if( !storage.isSyncScheduled) {
+        updateDatabaseController()
+
+        if (!storage.isSyncScheduled) {
             storage.setSyncScheduled()
             scheduleSync()
         }
     }
 
+    fun updateDatabaseController() {
+    }
     fun scheduleSync() {
 
         cancelSync()

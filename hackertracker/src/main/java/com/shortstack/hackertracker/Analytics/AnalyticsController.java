@@ -30,6 +30,7 @@ public class AnalyticsController {
         FRAGMENT_INFO("View Information"),
         FRAGMENT_COMPANIES("View Companies"),
         FRAGMENT_SETTINGS("View Settings"),
+        FRAGMENT_CHANGE_CON("View Change Con"),
 
         SCHEDULE_FILTERS("Schedule - Filters");
 

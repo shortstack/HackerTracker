@@ -28,6 +28,9 @@ public class SharedPreferencesUtil {
         APP_LAST_REFRESH("app_last_refresh"),
         APP_LAST_UPDATED("app_last_updated"),
         APP_VIEW_PAGER_POSITION("app_view_pager_position"),
+
+        APP_DATABASE_SELECTED("app_database_selected"),
+
         SCHEDULE_DAY_VIEW("app_day_view");
 
 
@@ -148,5 +151,13 @@ public class SharedPreferencesUtil {
 
     public void setSyncScheduled() {
         getEditor().putBoolean(Key.APP_SYNC_SCHEDULED.toString(), true).apply();
+    }
+
+    public int getDatabaseSelected() {
+        return mPreferences.getInt(Key.APP_DATABASE_SELECTED.toString(), 0);
+    }
+
+    public void setDatabaseSelected( int database ) {
+        getEditor().putInt(Key.APP_DATABASE_SELECTED.toString(), database).apply();
     }
 }
