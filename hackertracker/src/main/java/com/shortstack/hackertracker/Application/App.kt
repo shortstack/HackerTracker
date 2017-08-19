@@ -27,8 +27,6 @@ import io.fabric.sdk.android.Fabric
 import java.util.*
 
 
-
-
 class App : Application() {
 
     val SECONDS_TO_HOURS = 3600
@@ -49,9 +47,9 @@ class App : Application() {
     // Time
     val timeHelper: TimeHelper by lazy { TimeHelper(appContext) }
 
-    val gson : Gson by lazy { GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create() }
+    val gson: Gson by lazy { GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create() }
 
-    val dispatcher : FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(appContext)) }
+    val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(appContext)) }
 
 
     override fun onCreate() {
@@ -79,6 +77,7 @@ class App : Application() {
         }
     }
 
+
     fun updateDatabaseController() {
         val name = if (storage.databaseSelected == 0) Constants.DEFCON_DATABASE_NAME else Constants.TOORCON_DATABASE_NAME
         Logger.d("Creating database controller with database: $name")
@@ -95,11 +94,11 @@ class App : Application() {
 
         var value = hours.toIntOrNull()
 
-        if( value == null )
+        if (value == null)
             value = 6
 
         Logger.d("Scheduling the sync. $value")
-        if( value == 0 ) {
+        if (value == 0) {
             cancelSync()
             return
         }
@@ -117,7 +116,7 @@ class App : Application() {
         dispatcher.mustSchedule(job)
     }
 
-    fun cancelSync(){
+    fun cancelSync() {
         Logger.d("Cancelling the sync.")
         dispatcher.cancel(SyncJob.TAG)
     }
@@ -157,18 +156,24 @@ class App : Application() {
     }
 
 
-
     companion object {
 
         lateinit var application: App
 
+        fun getCurrentCalendar(): Calendar = application.timeHelper.currentCalendar
 
-        fun getCurrentCalendar() : Calendar = application.timeHelper.currentCalendar
+        fun getCurrentDate(): Date = application.timeHelper.currentDate
 
-        fun getCurrentDate() : Date = application.timeHelper.currentDate
-
-        fun getRelativeDateStamp( date: Date ) : String = application.timeHelper.getRelativeDateStamp(date)
+        fun getRelativeDateStamp(date: Date): String = application.timeHelper.getRelativeDateStamp(date)
 
 
     }
+
+
+    object Storage {
+        fun getStorage(): SharedPreferencesUtil {
+            return SharedPreferencesUtil()
+        }
+    }
+
 }
