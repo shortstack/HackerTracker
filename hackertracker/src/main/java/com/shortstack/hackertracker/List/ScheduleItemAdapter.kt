@@ -5,6 +5,8 @@ import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Model.Item
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 class ScheduleItemAdapter(private val layout: RecyclerView.LayoutManager, val list: RecyclerView) : RendererAdapter<Any>(ScheduleItemBuilder()) {
@@ -18,13 +20,28 @@ class ScheduleItemAdapter(private val layout: RecyclerView.LayoutManager, val li
         val app = App.application
         val filter = app.storage.filter
 
+        app.databaseController.getItems(*filter.typesArray, page = page)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                {
+                    Logger.d("Success " + it.size)
+                    addAllAndNotify(it)
+                    if (app.storage.showExpiredEvents()) {
+                        scrollToCurrentTime()
+                    }
+                }, {
+                e -> Logger.e(e, "Not success.")
+            }
+        )
 
-        val events = app.databaseController.getItemByDate(*filter.typesArray, page = page)
-        addAllAndNotify(events)
 
-        if (app.storage.showExpiredEvents()) {
-            scrollToCurrentTime()
-        }
+//        val events = app.databaseController.getItemByDate(*filter.typesArray, page = page)
+//        addAllAndNotify(events)
+//
+//        if (app.storage.showExpiredEvents()) {
+//            scrollToCurrentTime()
+//        }
     }
 
     private fun addAllAndNotify(elements: List<Item>) {
@@ -57,10 +74,11 @@ class ScheduleItemAdapter(private val layout: RecyclerView.LayoutManager, val li
         add(elements[elements.size - 1])
 
 
+//        notifyDataSetChanged()
 //        list.post({
-//            run {a
-//                Logger.d("Notify $size, ${collection.size} == ${collection.size - size}")
-//                notifyItemRangeInserted(size, collection.size - size)
+//            run {
+                Logger.d("Notify $size, ${collection.size} == ${collection.size - size}")
+                notifyItemRangeInserted(size, collection.size - size)
 
 //            }
 //        })

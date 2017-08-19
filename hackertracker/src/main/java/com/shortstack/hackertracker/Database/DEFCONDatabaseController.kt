@@ -12,9 +12,8 @@ import com.shortstack.hackertracker.Event.FavoriteEvent
 import com.shortstack.hackertracker.Model.*
 import com.shortstack.hackertracker.Network.SyncResponse
 import com.shortstack.hackertracker.format8601
+import io.reactivex.Observable
 import java.util.*
-import java.util.concurrent.Callable
-import kotlin.reflect.KCallable
 
 open class DEFCONDatabaseController(context: Context, name: String = Constants.DEFCON_DATABASE_NAME, version: Int = 1) : DatabaseController(context, name, version) {
 
@@ -203,7 +202,13 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
     private val SCHEDULE_PAGE_SIZE = 10
 
 
-    fun getItems() {
+    fun getItems(vararg type: String, page: Int = 0) : Observable<List<Item>> {
+        return Observable.create {
+            subscriber ->
+            val list = getItemByDate(*type, page = page)
+            subscriber.onNext(list)
+            subscriber.onComplete()
+        }
     }
 
 

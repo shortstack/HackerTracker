@@ -112,11 +112,11 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
                 val size = adapter.collection.size
                 adapter.load(page)
-                rootView.list.post {
-                    run {
-                        adapter.notifyItemRangeInserted(size, adapter.collection.size - size)
-                    }
-                }
+//                rootView.list.post {
+//                    run {
+//                        adapter.notifyItemRangeInserted(size, adapter.collection.size - size)
+//                    }
+//                }
             }
 
         })
@@ -144,7 +144,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         //            tutorial.setVisibility(View.VISIBLE);
         //        } else
         if (!hasScheduleItems()) {
-            empty!!.visibility = View.VISIBLE
+//            empty!!.visibility = View.VISIBLE
         }
     }
 
