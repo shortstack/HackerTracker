@@ -234,7 +234,7 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
 
     fun findByText( text : String ) : List<Item>{
         val columns = arrayOf("title").toMutableList()
-        return query(SCHEDULE_TABLE_NAME, Item::class.java, searchText = text, searchColumns = columns )
+        return query(SCHEDULE_TABLE_NAME, Item::class.java, searchText = text, searchColumns = columns, orderBy = KEY_START_DATE)
     }
 
 
@@ -250,7 +250,7 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
 
         if (type.isNotEmpty()) {
             val array = Array(type.size, { "$KEY_TYPE = ?" })
-            selection = array.joinToString(prefix = "(", separator = " OR ", postfix = ")")
+            selection = array.joinSQLOr()
         }
 
         // Date
