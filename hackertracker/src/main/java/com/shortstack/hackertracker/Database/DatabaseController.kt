@@ -10,6 +10,7 @@ import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.Model.Item
+import com.shortstack.hackertracker.joinSQLOr
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -20,6 +21,7 @@ abstract class DatabaseController(protected val context: Context, name: String, 
 
     // SQL
     val SELECT_ALL_FROM = "SELECT * from "
+    val LIKE = "LIKE ?"
 
     fun checkDatabase() {
         val db = writableDatabase
@@ -79,18 +81,43 @@ abstract class DatabaseController(protected val context: Context, name: String, 
         }
     }
 
-    protected fun <T> query(table: String, t: Class<T>,
-                            columns: Array<String>? = null, selection: String? = null, selectionArgs: Array<String>? = null,
-                            groupBy: String? = null, having: String? = null, orderBy: String? = null, limit: Int? = null, page: Int? = null
+    fun <T> query(table: String, t: Class<T>,
+                  columns: Array<String>? = null, selection: String? = null, selectionArgs: MutableList<String>? = null,
+                  groupBy: String? = null, having: String? = null, orderBy: String? = null, limit: Int? = null, page: Int = 0,
+                  searchColumns: MutableList<String>? = null, searchText: String? = null
     ): ArrayList<T> {
         val result = ArrayList<T>()
         var limitOffset: String? = null
+        var finalSelection = selection
+        var finalSelectArgs = selectionArgs
 
-        if (page != null && limit != null ) {
+        // Limit and offset
+        if (limit != null) {
             limitOffset = "${page * limit}, $limit"
         }
 
-        val cursor = readableDatabase.query(table, columns, selection, selectionArgs, groupBy, having, orderBy, limitOffset)
+
+        // Search by text
+        if (searchText != null) {
+
+            val columns = getSearchColumns(searchColumns!!)?.joinSQLOr()
+
+            if( finalSelection == null ) {
+                finalSelection = columns
+            } else {
+                finalSelection += columns
+            }
+
+            val array = Array<String>(searchColumns.size, { "%$searchText%" })
+
+            if (finalSelectArgs == null)
+                finalSelectArgs = array.toMutableList()
+            else
+                finalSelectArgs.addAll(array)
+        }
+
+
+        val cursor = readableDatabase.query(table, columns, finalSelection, finalSelectArgs?.toTypedArray(), groupBy, having, orderBy, limitOffset)
 
         if (cursor.moveToFirst()) {
             do {
@@ -102,6 +129,11 @@ abstract class DatabaseController(protected val context: Context, name: String, 
         return result
     }
 
+    fun getSearchColumns( searchColumns: MutableList<String> ) : Array<String>? {
+        return Array( searchColumns.size, {
+            "${searchColumns[it]} $LIKE"
+        } )
+    }
 
     protected fun getJSONFromFile(filename: String): String {
         try {

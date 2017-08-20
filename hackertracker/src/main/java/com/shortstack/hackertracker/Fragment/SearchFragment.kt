@@ -7,6 +7,7 @@ import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.Application.App
@@ -57,19 +58,17 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         val controller = App.application.databaseController
 
 
+        val time = System.currentTimeMillis()
 
-        for (item in controller.getItemByDate()) {
+
+        for (item in controller.findByText(text)) {
             if( item.title.contains(text, true)) {
                 getAdapter().add(item)
             }
         }
 
+        Logger.d("Time: " + (time - System.currentTimeMillis()))
 
-        for (item in controller.vendors) {
-            if( item.title.contains(text, true)) {
-                getAdapter().add(item)
-            }
-        }
 
         getAdapter().notifyDataSetChanged()
     }

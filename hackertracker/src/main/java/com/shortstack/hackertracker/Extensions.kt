@@ -42,3 +42,10 @@ fun Date.getDateDifference(date: Date, timeUnit: TimeUnit): Long {
 @SuppressLint("SimpleDateFormat")
 fun Calendar.format8601(): String = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(this.time)
 
+fun <T> kotlin.Array<out T>.joinSQLOr(): String { return joinToString(prefix = " (", separator = " OR ", postfix = ") ") }
+
+fun String.concat(text: String): String {
+    if (this.isNullOrEmpty())
+        return text
+    return this + text
+}

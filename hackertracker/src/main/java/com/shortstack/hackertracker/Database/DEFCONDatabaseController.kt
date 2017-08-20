@@ -41,6 +41,9 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
     val KEY_INDEX_SPEAKER = "indexsp"
 
 
+    private val SCHEDULE_PAGE_SIZE = 20
+
+
     override fun initDatabase(db: SQLiteDatabase, gson: Gson) {
         // Setting up databases
         var json = getJSONFromFile(PATCH_FILE)
@@ -127,6 +130,7 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
     }
 
 
+
     fun updateScheduleItem(db: SQLiteDatabase, item: Item): Boolean {
         val filter = "$KEY_INDEX=?"
         val args = arrayOf(item.index.toString())
@@ -199,7 +203,6 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
     }
 
 
-    private val SCHEDULE_PAGE_SIZE = 10
     fun getVendors():Observable<List<Vendors.Vendor>> {
         return Observable.create {
             subscriber ->
@@ -226,6 +229,12 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
             subscriber.onNext(list)
             subscriber.onComplete()
         }
+    }
+
+
+    fun findByText( text : String ) : List<Item>{
+        val columns = arrayOf("title").toMutableList()
+        return query(SCHEDULE_TABLE_NAME, Item::class.java, searchText = text, searchColumns = columns )
     }
 
 
@@ -259,12 +268,12 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
 
 
         return query(SCHEDULE_TABLE_NAME, Item::class.java,
-                selection = selection, selectionArgs = args.toTypedArray(),
+                selection = selection, selectionArgs = args,
                 orderBy = KEY_START_DATE, limit = SCHEDULE_PAGE_SIZE, page = page)
     }
 
     fun getSpeaker(speaker: Speaker): Speaker {
-        val query = query(SPEAKERS_TABLE_NAME, Speaker::class.java, selection = "$KEY_INDEX_SPEAKER = ?", selectionArgs = arrayOf(speaker.id.toString()))
+        val query = query(SPEAKERS_TABLE_NAME, Speaker::class.java, selection = "$KEY_INDEX_SPEAKER = ?", selectionArgs = arrayOf(speaker.id.toString()).toMutableList())
         if( query.size == 0 ) {
             Logger.e("Could not find speaker by id. $speaker")
             return speaker
