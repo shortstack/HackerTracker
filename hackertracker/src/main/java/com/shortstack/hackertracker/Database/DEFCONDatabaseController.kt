@@ -12,6 +12,7 @@ import com.shortstack.hackertracker.Event.FavoriteEvent
 import com.shortstack.hackertracker.Model.*
 import com.shortstack.hackertracker.Network.SyncResponse
 import com.shortstack.hackertracker.format8601
+import com.shortstack.hackertracker.joinSQLOr
 import io.reactivex.Observable
 import java.util.*
 
