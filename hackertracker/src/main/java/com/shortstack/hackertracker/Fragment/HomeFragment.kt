@@ -18,13 +18,15 @@ import com.shortstack.hackertracker.Renderer.ActivityNavRenderer
 import com.shortstack.hackertracker.Renderer.HomeHeaderRenderer
 import com.shortstack.hackertracker.Renderer.ItemRenderer
 import com.shortstack.hackertracker.Renderer.SubHeaderRenderer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class HomeFragment : Fragment() {
 
-    var adapter: RendererAdapter<Any>? = null
+    lateinit var adapter: RendererAdapter<Any>
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_list, container, false)
@@ -52,42 +54,54 @@ class HomeFragment : Fragment() {
 
     @SuppressLint("SimpleDateFormat")
     private fun addUpdatedCards() {
-        // Updates title
 
-        var lastDate :String
+        val app = App.application
+        app.databaseController.getRecent().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    // Updates title
 
-        val cal = Calendar.getInstance()
-        cal.time = Date(App.application.storage.lastRefresh)
+                    val size = adapter.collection.size
 
-        val refresh = App.application.storage.lastRefresh
-        if (refresh == 0L ) {
-            val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(App.application.storage.lastUpdated)
-            lastDate = "Last synced " + App.getRelativeDateStamp(date)
-        } else {
-            lastDate = "Last synced " + App.getRelativeDateStamp(Date(refresh))
-        }
+                    var lastDate :String
 
-        adapter?.add(getString(R.string.updates) + "\n" + lastDate.toLowerCase())
+                    val cal = Calendar.getInstance()
+                    cal.time = Date(app.storage.lastRefresh)
 
-        var recentDate = ""
+                    val refresh = app.storage.lastRefresh
+                    if (refresh == 0L ) {
+                        val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(app.storage.lastUpdated)
+                        lastDate = "Last synced " + App.getRelativeDateStamp(date)
+                    } else {
+                        lastDate = "Last synced " + App.getRelativeDateStamp(Date(refresh))
+                    }
 
-        for (item in App.application.databaseController.getRecentUpdates()) {
-            if (item.updatedAt != recentDate) {
-                recentDate = item.updatedAt
-                val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(item.updatedAt)
-                adapter?.add("Updated " + SimpleDateFormat("MMMM dd h:mm aa").format(date))
-            }
+                    adapter.add(getString(R.string.updates) + "\n" + lastDate.toLowerCase())
 
-            adapter?.add(item)
-        }
+                    var recentDate = ""
+
+                    for (item in it) {
+                        if (item.updatedAt != recentDate) {
+                            recentDate = item.updatedAt
+                            val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(item.updatedAt)
+                            adapter.add("Updated " + SimpleDateFormat("MMMM dd h:mm aa").format(date))
+                        }
+
+                        adapter.add(item)
+                    }
+
+                    adapter.notifyItemRangeInserted(size, adapter.collection.size - size )
+                }
+
+
+
     }
 
     private fun addHelpNavigation() {
-        adapter?.add(Navigation(getString(R.string.nav_help_title), getString(R.string.nav_help_body), InformationFragment::class.java))
+        adapter.addAndNotify(Navigation(getString(R.string.nav_help_title), getString(R.string.nav_help_body), InformationFragment::class.java))
     }
 
     private fun addHeader() {
-        adapter?.add(RendererContent<Void>(null, TYPE_HEADER))
+        adapter.addAndNotify(RendererContent<Void>(null, TYPE_HEADER))
     }
 
     companion object {

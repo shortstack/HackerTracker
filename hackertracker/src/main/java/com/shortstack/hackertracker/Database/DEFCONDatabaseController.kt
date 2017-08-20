@@ -200,6 +200,14 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
 
 
     private val SCHEDULE_PAGE_SIZE = 10
+    fun getRecent() :Observable<List<Item>> {
+        return Observable.create {
+            subscriber ->
+            val list = getRecentUpdates()
+            subscriber.onNext(list)
+            subscriber.onComplete()
+        }
+    }
 
 
     fun getItems(vararg type: String, page: Int = 0) : Observable<List<Item>> {
