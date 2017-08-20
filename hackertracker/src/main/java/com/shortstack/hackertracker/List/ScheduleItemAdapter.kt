@@ -4,7 +4,9 @@ import android.support.v7.widget.RecyclerView
 import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.Application.App
+import com.shortstack.hackertracker.Model.Day
 import com.shortstack.hackertracker.Model.Item
+import com.shortstack.hackertracker.Model.Time
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
@@ -24,16 +26,17 @@ class ScheduleItemAdapter(private val layout: RecyclerView.LayoutManager, val li
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                {
-                    Logger.d("Success " + it.size)
-                    addAllAndNotify(it)
-                    if (app.storage.showExpiredEvents()) {
-                        scrollToCurrentTime()
-                    }
-                }, {
-                e -> Logger.e(e, "Not success.")
-            }
-        )
+                        {
+                            Logger.d("Success " + it.size)
+                            addAllAndNotify(it)
+                            if (app.storage.showExpiredEvents()) {
+                                scrollToCurrentTime()
+                            }
+                        }, {
+                    e ->
+                    Logger.e(e, "Not success.")
+                }
+                )
 
 
 //        val events = app.databaseController.getItemByDate(*filter.typesArray, page = page)
@@ -51,9 +54,19 @@ class ScheduleItemAdapter(private val layout: RecyclerView.LayoutManager, val li
 
         val size = collection.size
 
+        val first = elements.first()
         if (size == 0) {
-            add(elements.first().dateStamp)
-            add(elements.first().beginDateObject)
+            addDay(first)
+            addTime(first)
+        } else {
+            val item = collection.last() as Item
+
+            if (first.date != item.date) {
+                addDay(first)
+            }
+            if (first.begin != item.begin) {
+                addTime(first)
+            }
         }
 
         for (i in 0..elements.size - 1 - 1) {
@@ -63,25 +76,25 @@ class ScheduleItemAdapter(private val layout: RecyclerView.LayoutManager, val li
 
             val next = elements[i + 1]
             if (current.date != next.date) {
-                add(next.dateStamp)
+                addDay(next)
             }
 
             if (current.begin != next.begin) {
-                add(next.beginDateObject)
+                addTime(next)
             }
         }
 
         add(elements[elements.size - 1])
 
+        notifyItemRangeInserted(size, collection.size - size)
+    }
 
-//        notifyDataSetChanged()
-//        list.post({
-//            run {
-                Logger.d("Notify $size, ${collection.size} == ${collection.size - size}")
-                notifyItemRangeInserted(size, collection.size - size)
+    private fun addDay(item: Item) {
+        add(Day(item.beginDateObject))
+    }
 
-//            }
-//        })
+    private fun addTime(item: Item) {
+        add(Time(item.beginDateObject))
     }
 
     private fun scrollToCurrentTime() {
