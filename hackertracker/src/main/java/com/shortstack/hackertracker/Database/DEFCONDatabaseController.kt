@@ -200,6 +200,15 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
 
 
     private val SCHEDULE_PAGE_SIZE = 10
+    fun getVendors():Observable<List<Vendors.Vendor>> {
+        return Observable.create {
+            subscriber ->
+            subscriber.onNext(vendors)
+            subscriber.onComplete()
+        }
+    }
+
+
     fun getRecent() :Observable<List<Item>> {
         return Observable.create {
             subscriber ->

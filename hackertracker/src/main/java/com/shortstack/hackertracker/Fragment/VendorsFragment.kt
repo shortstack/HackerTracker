@@ -12,6 +12,8 @@ import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Model.Vendors
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Renderer.VendorRenderer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
 class VendorsFragment : Fragment() {
@@ -32,7 +34,16 @@ class VendorsFragment : Fragment() {
         val adapter = RendererAdapter<Any>(rendererBuilder)
         list.adapter = adapter
 
-        adapter.addAll(App.application.databaseController.vendors)
+
+
+        App.application.databaseController.getVendors()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+            adapter.addAllAndNotify(it)
+        }
+
+
     }
 
     companion object {
