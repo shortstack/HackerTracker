@@ -1,12 +1,13 @@
 package com.shortstack.hackertracker
 
 import android.annotation.SuppressLint
+import com.shortstack.hackertracker.Application.App
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
 fun Date.isToday(): Boolean {
-    val current = Calendar.getInstance()
+    val current = App.getCurrentCalendar()
 
     val cal = Calendar.getInstance()
     cal.time = this
@@ -16,7 +17,7 @@ fun Date.isToday(): Boolean {
 }
 
 fun Date.isTomorrow(): Boolean {
-    val cal1 = Calendar.getInstance()
+    val cal1 = App.getCurrentCalendar()
     cal1.roll(Calendar.DAY_OF_YEAR, true)
 
     val cal2 = Calendar.getInstance()
@@ -26,7 +27,7 @@ fun Date.isTomorrow(): Boolean {
 }
 
 fun Date.isSoonish(SOON_DAYS_AMOUNT: Int): Boolean {
-    val cal1 = Calendar.getInstance()
+    val cal1 = App.getCurrentCalendar()
 
     val cal2 = Calendar.getInstance()
     cal2.time = this
