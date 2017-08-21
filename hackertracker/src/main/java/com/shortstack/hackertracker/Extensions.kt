@@ -1,10 +1,33 @@
 package com.shortstack.hackertracker
 
 import android.annotation.SuppressLint
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
+import android.support.v7.app.AppCompatActivity
 import com.shortstack.hackertracker.Application.App
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+
+inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
+    val fragmentTransaction = beginTransaction()
+    fragmentTransaction.func()
+    fragmentTransaction.commit()
+}
+
+fun FragmentManager.contains(tag: String) = findFragmentByTag(tag) != null
+
+fun AppCompatActivity.addFragment(fragment: Fragment, title: String, tag: String, frameId: Int) {
+    supportFragmentManager.inTransaction { add(frameId, fragment, tag) }
+    invalidateOptionsMenu()
+}
+
+fun AppCompatActivity.replaceFragment(fragment: Fragment, title: String, tag: String, frameId: Int) {
+    supportActionBar?.title = title
+    supportFragmentManager.inTransaction { replace(frameId, fragment, tag) }
+    invalidateOptionsMenu()
+}
 
 fun Date.isToday(): Boolean {
     val current = App.getCurrentCalendar()
@@ -43,7 +66,9 @@ fun Date.getDateDifference(date: Date, timeUnit: TimeUnit): Long {
 @SuppressLint("SimpleDateFormat")
 fun Calendar.format8601(): String = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(this.time)
 
-fun <T> kotlin.Array<out T>.joinSQLOr(): String { return joinToString(prefix = " (", separator = " OR ", postfix = ") ") }
+fun <T> kotlin.Array<out T>.joinSQLOr(): String {
+    return joinToString(prefix = " (", separator = " OR ", postfix = ") ")
+}
 
 fun String.concat(text: String): String {
     if (this.isNullOrEmpty())

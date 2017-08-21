@@ -4,7 +4,6 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
@@ -16,6 +15,7 @@ import android.view.MenuItem
 import android.view.View
 import butterknife.ButterKnife
 import com.github.stkent.amplify.tracking.Amplify
+import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.Alert.MaterialAlert
 import com.shortstack.hackertracker.Analytics.AnalyticsController
 import com.shortstack.hackertracker.Application.App
@@ -25,6 +25,8 @@ import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.Database.DatabaseController
 import com.shortstack.hackertracker.Fragment.*
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.contains
+import com.shortstack.hackertracker.replaceFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
@@ -34,11 +36,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private var mFragmentIndex = DEFAULT_FRAGMENT_INDEX
 
     private val titles: Array<String> by lazy { resources.getStringArray(R.array.nav_item_activity_titles) }
-
-    // flag to load home fragment when user presses back key
-    private val shouldLoadHomeFragOnBackPress = true
-    private var mHandler: Handler = Handler()
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -98,53 +95,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun loadFragment() {
-        // set toolbar title
-        //setToolbarTitle();
-
-//        Logger.d("Setting fragment:" + mFragmentIndex)
-
-        App.application.storage.viewPagerPosition = mFragmentIndex
-        tagAnalytics()
-
-        // if user select the current navigation menu again, don't do anything
-        // just close the navigation drawer
-        if (supportFragmentManager.findFragmentByTag(fragmentTag) != null) {
+        if (supportFragmentManager.contains(fragmentTag)) {
             drawer_layout!!.closeDrawers()
             return
         }
 
-        // Sometimes, when fragment has huge data, screen seems hanging
-        // when switching between navigation menus
-        // So using runnable, the fragment is loaded with cross fade effect
-        // This effect can be seen in GMail app
-        val mPendingRunnable = Runnable {
-            // update the main content by replacing fragments
-            val fragment = currentFragment
-            val fragmentTransaction = supportFragmentManager.beginTransaction()
-            fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                    android.R.anim.fade_out)
-            fragmentTransaction.replace(R.id.frame, fragment, fragmentTag)
-            fragmentTransaction.commitAllowingStateLoss()
-        }
+        replaceFragment(currentFragment, fragmentTitle, fragmentTag, R.id.frame)
 
-        // If mPendingRunnable is not null, then add to the message queue
-        mHandler.post(mPendingRunnable)
+        val app = App.application
 
-        invalidateOptionsMenu()
-
-        supportActionBar!!.title = fragmentTitle
-
+        app.storage.viewPagerPosition = mFragmentIndex
+        app.analyticsController.tagCustomEvent(fragmentEvent)
 
         updateFABVisibility()
 
         //Closing drawer on item click
         drawer_layout!!.closeDrawers()
-
-
-    }
-
-    private fun tagAnalytics() {
-        App.application.analyticsController.tagCustomEvent(fragmentEvent)
     }
 
     private val fragmentEvent: AnalyticsController.Analytics
@@ -206,14 +172,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             return
         }
 
-        if (shouldLoadHomeFragOnBackPress) {
-            if (mFragmentIndex != DEFAULT_FRAGMENT_INDEX) {
-                mFragmentIndex = DEFAULT_FRAGMENT_INDEX
-                loadFragment()
-                return
-            }
-        }
-
         super.onBackPressed()
     }
 
@@ -232,30 +190,35 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when(item.itemId) {
+        when (item.itemId) {
             R.id.search -> {
-                val mPendingRunnable = Runnable {
-                    // update the main content by replacing fragments
-                    val fragment = SearchFragment.newInstance()
+                val fragment = SearchFragment.newInstance()
 
-                    val searchView = item.actionView as SearchView
-                    searchView.setOnQueryTextListener(fragment)
+                val searchView = item.actionView as SearchView
+                searchView.setOnQueryTextListener(fragment)
+
+                replaceFragment(fragment, fragmentTitle, fragmentTag, R.id.frame)
+
+                item.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
+                    override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
+                        Logger.d("expended")
+                        return true
+                    }
+
+                    override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
+                        Logger.d("onCollapse")
+
+                        loadFragment()
 
 
-
-
-                    val fragmentTransaction = supportFragmentManager.beginTransaction()
-                    fragmentTransaction.setCustomAnimations(android.R.anim.fade_in,
-                            android.R.anim.fade_out)
-                    fragmentTransaction.replace(R.id.frame, fragment, fragmentTag)
-                    fragmentTransaction.commitAllowingStateLoss()
-                }
-                mHandler.post(mPendingRunnable)
-                return true
+                        return true
+                    }
+                })
             }
         }
         return super.onOptionsItemSelected(item)
     }
+
 
     private fun initViewPager() {
 
@@ -281,18 +244,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             return true
         }
 
-
-
-        mFragmentIndex = getFragmentIndex(item)
-
-//        Logger.d("Selected item! " + mFragmentIndex)
-
+        setFragmentIndex(item)
         loadFragment()
         return true
     }
 
-    private fun getFragmentIndex(item: MenuItem): Int {
+    private fun setFragmentIndex(item:MenuItem) {
+        mFragmentIndex = getFragmentIndex(item)
+    }
 
+    private fun getFragmentIndex(item: MenuItem): Int {
         when (item.itemId) {
             R.id.nav_home -> return NAV_HOME
             R.id.nav_schedule -> return NAV_SCHEDULE
@@ -303,7 +264,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             R.id.nav_settings -> return NAV_SETTINGS
         }
 
-        throw IllegalStateException("Could not find fragment with id: $item.itemId.")
+        throw IllegalStateException("Could not find fragment with id: ${item.itemId}.")
     }
 
     private val fragmentTag: String
