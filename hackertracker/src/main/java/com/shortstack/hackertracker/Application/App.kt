@@ -53,19 +53,10 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        var time = System.currentTimeMillis()
-
-//        Logger.d("Creating App!")
-
         init()
-//        Logger.d("init -- took " + (System.currentTimeMillis() - time) + " ms.")
-
         initFabric()
-//        Logger.d("init fabric -- took " + (System.currentTimeMillis() - time) + " ms.")
         initLogger()
-//        Logger.d("init logger -- took " + (System.currentTimeMillis() - time) + " ms.")
         initFeedback()
-//        Logger.d("init feedback -- took " + (System.currentTimeMillis() - time) + " ms.")
 
         updateDatabaseController()
 
@@ -74,7 +65,6 @@ class App : Application() {
             scheduleSync()
         }
     }
-
 
     fun updateDatabaseController() {
         val name = if (storage.databaseSelected == 0) Constants.DEFCON_DATABASE_NAME else Constants.TOORCON_DATABASE_NAME
