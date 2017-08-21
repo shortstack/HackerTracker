@@ -29,8 +29,6 @@ import java.util.*
 
 class App : Application() {
 
-    val SECONDS_TO_HOURS = 3600
-
     lateinit var appContext: Context
         private set
 
@@ -103,14 +101,14 @@ class App : Application() {
             return
         }
 
-        value *= SECONDS_TO_HOURS
+        value *= Constants.TIME_SECONDS_IN_HOUR
 
         val job = dispatcher.newJobBuilder()
                 .setService(SyncJob::class.java)
                 .setTag(SyncJob.TAG)
                 .setRecurring(true)
                 .setLifetime(Lifetime.FOREVER)
-                .setTrigger(Trigger.executionWindow(value, value + SECONDS_TO_HOURS))
+                .setTrigger(Trigger.executionWindow(value, value + Constants.TIME_SECONDS_IN_HOUR))
                 .build()
 
         dispatcher.mustSchedule(job)

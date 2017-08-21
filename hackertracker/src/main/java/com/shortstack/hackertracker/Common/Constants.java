@@ -9,6 +9,9 @@ public interface Constants {
 
     String API_URL_BASE = "https://info.defcon.org/json/";
 
+
+    int TIME_SECONDS_IN_HOUR = 3600;
+
     long DEBUG_FORCE_TIME_DATE = 1501355835000L;
     long TIMER_INTERVAL_FIVE_MIN = 300000;
     long TIMER_INTERVAL_DEBUG = 5000;
