@@ -110,13 +110,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         rootView.list.addOnScrollListener(object : ScheduleInfiniteScrollListener(layout) {
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-                val size = adapter.collection.size
                 adapter.load(page)
-//                rootView.list.post {
-//                    run {
-//                        adapter.notifyItemRangeInserted(size, adapter.collection.size - size)
-//                    }
-//                }
             }
 
         })
@@ -151,7 +145,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun refreshContents() {
         val size = adapter.collection.size
         adapter.clear()
-        adapter.notifyItemRangeRemoved(0, size )
+        adapter.notifyItemRangeRemoved(0, size)
 
 
         adapter.initContents()
@@ -180,7 +174,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         val syncRepository = SyncRepository(service)
         syncRepository.getSchedule()
-                .subscribeOn(Schedulers.newThread())
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {
