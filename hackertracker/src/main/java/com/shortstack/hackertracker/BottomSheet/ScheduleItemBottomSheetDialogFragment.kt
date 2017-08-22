@@ -82,11 +82,11 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
     }
 
     private fun updateStarIcon( star: ImageView ) {
-        star.setImageDrawable(resources.getDrawable(if (content.isBookmarked) R.drawable.ic_star_white_24dp else R.drawable.ic_star_border_white_24dp))
+        star.setImageDrawable(resources.getDrawable(if (content.isBookmarked()) R.drawable.ic_star_white_24dp else R.drawable.ic_star_border_white_24dp))
     }
 
     fun onStarClick( item: ItemView, star: ImageView ) {
-        if (content.isBookmarked) {
+        if (content.isBookmarked()) {
             App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_UNBOOKMARK, content)
         } else {
             App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_BOOKMARK, content)
@@ -105,7 +105,7 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
 
         MaterialAlert.create(context)
                 .setTitle(R.string.link_warning)
-                .setMessage(String.format(context.getString(R.string.link_message), content.link.toLowerCase()))
+                .setMessage(String.format(context.getString(R.string.link_message), content.link?.toLowerCase()))
                 .setPositiveButton(R.string.open_link) { dialogInterface, i ->
                     val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(content.link))
                     context.startActivity(intent)

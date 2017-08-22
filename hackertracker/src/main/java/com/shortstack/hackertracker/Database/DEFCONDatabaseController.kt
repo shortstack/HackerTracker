@@ -158,7 +158,7 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
             // Updated event.
             val item1 = findItem(item.index) ?: return false
 
-            if (item1.isBookmarked) {
+            if (item1.isBookmarked()) {
 
                 val notificationHelper = App.application.notificationHelper
                 // Cancel the notification, in case the time changes.
@@ -183,13 +183,13 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
     }
 
     fun toggleBookmark(db: SQLiteDatabase = writableDatabase, item: Item) {
-        val value = if (item.isBookmarked) Constants.UNBOOKMARKED else Constants.BOOKMARKED
+        val value = if (item.isBookmarked()) Constants.UNBOOKMARKED else Constants.BOOKMARKED
         setScheduleBookmarked(db, value, item.index)
 
         item.toggleBookmark()
         App.application.postBusEvent(FavoriteEvent(item.index))
 
-        if (item.isBookmarked) {
+        if (item.isBookmarked()) {
             App.application.notificationHelper.scheduleItemNotification(item)
         }
     }
@@ -199,7 +199,7 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
     }
 
 
-    fun getVendors():Observable<List<Vendors.Vendor>> {
+    fun getVendors():Observable<List<Vendor>> {
         return Observable.create {
             subscriber ->
             subscriber.onNext(vendors)
