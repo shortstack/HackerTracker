@@ -11,7 +11,7 @@ import android.widget.LinearLayout;
 import com.shortstack.hackertracker.Application.App;
 import com.shortstack.hackertracker.Database.DEFCONDatabaseController;
 import com.shortstack.hackertracker.Model.Filter;
-import com.shortstack.hackertracker.Model.Types;
+import com.shortstack.hackertracker.Model.Type;
 import com.shortstack.hackertracker.R;
 
 import java.util.ArrayList;
@@ -74,7 +74,7 @@ public class FilterView extends LinearLayout {
         ButterKnife.bind(this);
 
         DEFCONDatabaseController controller = App.application.getDatabaseController();
-        List<Types.Type> types = controller.getTypes();
+        List<Type> types = controller.getTypes();
 
         checkboxes = new AppCompatCheckBox[types.size()];
 
@@ -83,7 +83,7 @@ public class FilterView extends LinearLayout {
         int states[][] = {{android.R.attr.state_checked}, {}};
 
         for (int i = 0; i < types.size(); i++) {
-            Types.Type type = types.get(i);
+            Type type = types.get(i);
 
             AppCompatCheckBox box = new AppCompatCheckBox(getContext());
             box.setText(type.getType());
