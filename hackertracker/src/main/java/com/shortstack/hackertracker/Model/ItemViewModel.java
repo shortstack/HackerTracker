@@ -43,7 +43,7 @@ public class ItemViewModel {
         if (TextUtils.isEmpty(mItem.getType()))
             return EMPTY_CATEGORY;
 
-        List<Types.Type> types = App.application.getDatabaseController().getTypes();
+        List<Type> types = App.application.getDatabaseController().getTypes();
 
         for (int i = 0; i < types.size(); i++) {
             if( mItem.getType().equals(types.get(i).getType()))

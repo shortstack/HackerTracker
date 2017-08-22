@@ -21,7 +21,7 @@ import com.shortstack.hackertracker.Event.FavoriteEvent;
 import com.shortstack.hackertracker.Event.RefreshTimerEvent;
 import com.shortstack.hackertracker.Model.Item;
 import com.shortstack.hackertracker.Model.ItemViewModel;
-import com.shortstack.hackertracker.Model.Types;
+import com.shortstack.hackertracker.Model.Type;
 import com.shortstack.hackertracker.R;
 import com.squareup.otto.Subscribe;
 
@@ -223,7 +223,6 @@ public class ItemView extends CardView {
 
         int[] allColors = getResources().getIntArray(R.array.colors);
 
-        List<Types.Type> types = App.application.getDatabaseController().getTypes();
 
 
         int position = count % allColors.length;
@@ -232,6 +231,7 @@ public class ItemView extends CardView {
         progress.getProgressDrawable().setColorFilter(allColors[position], PorterDuff.Mode.SRC_IN);
 
         if (mDisplayMode == DISPLAY_MODE_FULL) {
+            List<Type> types = App.application.getDatabaseController().getTypes();
             categoryText.setText(types.get(position).getType());
         }
     }

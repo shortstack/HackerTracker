@@ -3,19 +3,15 @@ package com.shortstack.hackertracker.Model
 import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
-class Types : Serializable {
-
-    @SerializedName("event_types")
-    lateinit var types: Array<Type>
-
-    @SerializedName("update_date")
-    lateinit var date: String
+data class Types(
+        @SerializedName("event_types")
+        var types : Array<Type>,
+        @SerializedName("update_date")
+        var date : String
 
 
-    class Type {
+) : Serializable
 
+data class Type(
         @SerializedName("event_type")
-        lateinit var type: String
-
-    }
-}
+        var type : String)

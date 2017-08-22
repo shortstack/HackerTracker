@@ -277,8 +277,7 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
         return query.first()
     }
 
-    val types
-        get() = query(TYPES_TABLE_NAME, Types.Type::class.java)
+    val types by lazy { query(TYPES_TABLE_NAME, Type::class.java) }
 
     val speakers
         get() = query(SPEAKERS_TABLE_NAME, Speaker::class.java)
