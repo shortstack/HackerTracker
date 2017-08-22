@@ -144,7 +144,7 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
         values.remove("bookmarked")
 
 
-        val existing = getScheduleItemFromId(db, item.index)
+        val existing = findItem(item.index)
 
         if (existing?.updatedAt.equals(item.updatedAt)) {
             return false
@@ -156,7 +156,7 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
             db.insert(SCHEDULE_TABLE_NAME, null, values)
         } else {
             // Updated event.
-            val item1 = getScheduleItemFromId(db, item.index) ?: return false
+            val item1 = findItem(item.index) ?: return false
 
             if (item1.isBookmarked) {
 
@@ -175,16 +175,11 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
         return true
     }
 
-    fun getScheduleItemFromId(db: SQLiteDatabase = readableDatabase, id: Int): Item? {
-        val cursor = db.rawQuery("$SELECT_ALL_FROM $SCHEDULE_TABLE_NAME WHERE $KEY_INDEX = $id", arrayOf<String>())
-
-        if (cursor.moveToFirst()) {
-            val item = Item.CursorToItem(App.application.gson, cursor)
-            cursor.close()
-            return item
-        }
-
-        return null
+    fun findItem(id : Int): Item? {
+        val list = query(SCHEDULE_TABLE_NAME, Item::class.java, selection = "$KEY_INDEX = ?", selectionArgs = ArrayList(id))
+        if( list.isEmpty() )
+            return null
+        return list.first()
     }
 
     fun toggleBookmark(db: SQLiteDatabase = writableDatabase, item: Item) {

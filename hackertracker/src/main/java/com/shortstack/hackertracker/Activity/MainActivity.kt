@@ -76,17 +76,19 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         handleIntent(intent)
     }
 
-    private fun handleIntent(intent: Intent?) {
-        if (intent != null && intent.extras != null) {
-            val target = intent.extras.getInt("target")
+    private fun handleIntent(intent : Intent?) {
+        if (intent == null || intent.extras == null)
+            return
 
-            val item = App.application.databaseController.getScheduleItemFromId(id = target)
-            if (item != null) {
+        val target = intent.extras.getInt("target")
 
-                val newInstance = ScheduleItemBottomSheetDialogFragment.newInstance(item)
-                newInstance.show(supportFragmentManager, newInstance.tag)
+        if (target == 0)
+            return
 
-            }
+        val item = App.application.databaseController.findItem(id = target)
+        if (item != null) {
+            val fragment = ScheduleItemBottomSheetDialogFragment.newInstance(item)
+            fragment.show(supportFragmentManager, fragment.tag)
         }
     }
 
