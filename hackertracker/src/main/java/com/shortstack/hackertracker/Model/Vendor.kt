@@ -1,24 +1,15 @@
 package com.shortstack.hackertracker.Model
 
-import android.text.TextUtils
 import java.io.Serializable
 
-class Vendors {
+data class Vendors(
+        var vendors : Array<Vendor>
+)
 
-    lateinit var vendors: Array<Vendor>
+data class Vendor(
+        var title : String,
+        var description : String,
+        var link : String,
+        var partner : Int = 0
+) : Serializable
 
-    class Vendor : Serializable {
-
-        lateinit var title: String
-        lateinit var description: String
-        lateinit var link: String
-        var partner: Int = 0
-
-        val isPartner: Boolean
-            get() = partner == 1
-
-        fun hasLink(): Boolean {
-            return !TextUtils.isEmpty(link)
-        }
-    }
-}

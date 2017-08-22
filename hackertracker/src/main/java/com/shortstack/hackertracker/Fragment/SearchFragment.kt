@@ -12,7 +12,7 @@ import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Model.Item
-import com.shortstack.hackertracker.Model.Vendors
+import com.shortstack.hackertracker.Model.Vendor
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Renderer.ItemRenderer
 import com.shortstack.hackertracker.Renderer.VendorRenderer
@@ -43,7 +43,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
         val rendererBuilder = RendererBuilder<Any>()
                 .bind(Item::class.java, ItemRenderer())
-                .bind(Vendors.Vendor::class.java, VendorRenderer())
+                .bind(Vendor::class.java, VendorRenderer())
 
         adapter = RendererAdapter<Any>(rendererBuilder)
         list.adapter = adapter

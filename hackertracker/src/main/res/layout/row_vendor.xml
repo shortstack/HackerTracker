@@ -38,20 +38,12 @@
             tools:text="360 UNICORN TEAM" />
 
         <TextView
-            android:id="@+id/partner"
-            style="@style/TextAppearance.AppCompat.Body2"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="@string/partner"
-            android:textAllCaps="true" />
-
-        <TextView
             android:id="@+id/description"
             style="@style/Paragraph"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:lines="3"
             android:ellipsize="end"
+            android:lines="3"
             tools:text="360 Unicorn Team consists of..." />
 
 

@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.Application.App
-import com.shortstack.hackertracker.Model.Vendors
+import com.shortstack.hackertracker.Model.Vendor
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Renderer.VendorRenderer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -29,7 +29,7 @@ class VendorsFragment : Fragment() {
 
 
         val rendererBuilder = RendererBuilder<Any>()
-                .bind(Vendors.Vendor::class.java, VendorRenderer())
+                .bind(Vendor::class.java, VendorRenderer())
 
         val adapter = RendererAdapter<Any>(rendererBuilder)
         list.adapter = adapter

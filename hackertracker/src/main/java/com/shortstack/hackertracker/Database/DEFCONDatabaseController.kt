@@ -284,6 +284,6 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
         get() = query(SPEAKERS_TABLE_NAME, Speaker::class.java)
 
     val vendors
-        get() = query(VENDORS_TABLE_NAME, Vendors.Vendor::class.java)
+        get() = query(VENDORS_TABLE_NAME, Vendor::class.java)
 
 }

@@ -9,6 +9,7 @@ import android.text.TextUtils
 import android.view.View
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.Alert.MaterialAlert
+import com.shortstack.hackertracker.Model.Vendor
 import com.shortstack.hackertracker.Model.Vendors
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.bottom_sheet_generic.view.*
@@ -34,13 +35,11 @@ class VendorBottomSheetDialogFragment : BottomSheetDialogFragment() {
         view.empty!!.visibility = if (isDescriptionEmpty) View.VISIBLE else View.GONE
         view.description!!.text = vendor.description
 
-        view.link!!.visibility = if (vendor.hasLink()) View.VISIBLE else View.GONE
-
         view.link.setOnClickListener { onLinkClick() }
     }
 
-    private val content: Vendors.Vendor?
-        get() = arguments.getSerializable(ARG_VENDOR) as Vendors.Vendor
+    private val content: Vendor?
+        get() = arguments.getSerializable(ARG_VENDOR) as Vendor
 
     fun onLinkClick() {
         MaterialAlert.create(context)
@@ -58,7 +57,7 @@ class VendorBottomSheetDialogFragment : BottomSheetDialogFragment() {
         val ARG_VENDOR = "VENDOR"
 
 
-        fun newInstance(vendor: Vendors.Vendor): VendorBottomSheetDialogFragment {
+        fun newInstance(vendor: Vendor): VendorBottomSheetDialogFragment {
             val fragment = VendorBottomSheetDialogFragment()
 
             val bundle = Bundle()
