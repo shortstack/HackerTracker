@@ -8,16 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
+import com.shortstack.hackertracker.Model.FAQ
 import com.shortstack.hackertracker.Model.Information
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Renderer.FAQRenderer
 import com.shortstack.hackertracker.Renderer.GenericHeaderRenderer
 import com.shortstack.hackertracker.Renderer.InformationRenderer
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
 class InformationFragment : Fragment() {
 
-    var adapter: RendererAdapter<Any>? = null
+    lateinit var adapter: RendererAdapter<Any>
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater!!.inflate(R.layout.fragment_recyclerview, container, false)
@@ -30,7 +34,7 @@ class InformationFragment : Fragment() {
         list!!.layoutManager = layout
 
         val rendererBuilder = RendererBuilder<Any>()
-                .bind(Array<String>::class.java, FAQRenderer())
+                .bind(FAQ::class.java, FAQRenderer())
                 .bind(String::class.java, GenericHeaderRenderer())
                 .bind(Information::class.java, InformationRenderer())
 
@@ -39,31 +43,37 @@ class InformationFragment : Fragment() {
 
 
         addInformationButtons()
-        addFAQ()
+        getFAQ().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    adapter.addAllAndNotify(it)
+                }
+
     }
 
     private fun addInformationButtons() {
-        adapter?.add(Information(context, R.array.location_information))
-        adapter?.add(Information(context, R.array.badge_information))
-        adapter?.add(Information(context, R.array.workshop_information))
-        adapter?.add(Information(context, R.array.wifi_information))
-        adapter?.add(Information(context, R.array.radio_information))
+        adapter.add(Information(context, R.array.location_information))
+        adapter.add(Information(context, R.array.badge_information))
+        adapter.add(Information(context, R.array.workshop_information))
+        adapter.add(Information(context, R.array.wifi_information))
+        adapter.add(Information(context, R.array.radio_information))
+        adapter.notifyItemRangeInserted(0, adapter.collection.size)
     }
 
-    private fun addFAQ() {
-        adapter?.add("FAQ")
-
+    private fun getFAQ(): Observable<List<FAQ>> {
         val myItems = resources.getStringArray(R.array.faq_questions)
+        val result = ArrayList<FAQ>()
 
         var i = 0
         while (i < myItems.size - 1) {
-            val update = arrayOfNulls<String>(2)
-
-            update[0] = myItems[i]
-            update[1] = myItems[i + 1]
-
-            adapter?.add(update)
+            result.add(FAQ(myItems[i], myItems[i + 1]))
             i += 2
+        }
+
+        return Observable.create {
+            subscriber ->
+            subscriber.onNext(result)
+            subscriber.onComplete()
         }
     }
 
