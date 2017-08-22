@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit
 
 class TimeView : LinearLayout {
 
-    private var mDate: Date? = null
+    private var date: Date? = null
 
     constructor(context: Context) : super(context) {
         init()
@@ -55,39 +55,33 @@ class TimeView : LinearLayout {
 
     @Subscribe
     fun onRefreshTimeEvent(event: RefreshTimerEvent) {
-        val currentDate = App.getCurrentDate()
-        updateSubheader(currentDate)
+        updateSubheader()
     }
 
     fun setDate(date: Date) {
-        mDate = date
+        this.date = date
         render()
     }
 
     fun render() {
-        val currentDate = App.getCurrentDate()
-
-        header!!.text = ItemViewModel.getTimeStamp(context, mDate)
-
-        updateSubheader(currentDate)
+        header.text = ItemViewModel.getTimeStamp(context, date)
+        updateSubheader()
     }
 
-    private fun updateSubheader(currentDate: Date) {
+    private fun updateSubheader() {
+        val currentDate = App.getCurrentDate()
 
-        if (mDate!!.isToday() && mDate!!.after(currentDate) ) {
-            subheader!!.visibility = View.VISIBLE
+        if (date!!.isToday() && date!!.after(currentDate) ) {
+            subheader.visibility = View.VISIBLE
 
-            var stamp = ""
-
-            val hourDiff = currentDate.getDateDifference(mDate!!, TimeUnit.HOURS)
+            val hourDiff = currentDate.getDateDifference(date!!, TimeUnit.HOURS)
             if (hourDiff >= 1) {
-                stamp += ("in " + hourDiff + " hr" + if (hourDiff > 1) "s" else "")
+                subheader.text = String.format(context.getString(R.string.msg_in_hours), hourDiff )
             } else {
-                val dateDiff = currentDate.getDateDifference(mDate!!, TimeUnit.MINUTES)
-                stamp += ("in " + dateDiff + " min" + if (dateDiff > 1) "s" else "")
+                val dateDiff = currentDate.getDateDifference(date!!, TimeUnit.MINUTES)
+                subheader.text = String.format(context.getString(R.string.msg_in_mins), dateDiff )
             }
 
-            subheader!!.text = stamp
         } else {
             subheader!!.visibility = View.GONE
         }

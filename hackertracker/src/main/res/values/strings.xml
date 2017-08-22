@@ -198,6 +198,8 @@ Any news and info will likely be posted there.</item>
     <string name="defcon">DEFCON</string>
     <string name="toorcon">TOORCON</string>
     <string name="search">Search</string>
+    <string name="msg_in_hours">in %1$s hr</string>
+    <string name="msg_in_mins">in %1$s min</string>
 
     <string-array name="nav_item_activity_titles">
         <item>@string/nav_home</item>
