@@ -18,7 +18,6 @@ class ScheduleItemAdapter(private val layout: RecyclerView.LayoutManager, val li
     }
 
     fun load(page: Int = 0) {
-        Logger.d("Loading more $page")
         val app = App.application
         val filter = app.storage.filter
 
@@ -27,7 +26,6 @@ class ScheduleItemAdapter(private val layout: RecyclerView.LayoutManager, val li
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {
-                            Logger.d("Success " + it.size)
                             addAllAndNotify(it)
                             if (app.storage.showExpiredEvents()) {
                                 scrollToCurrentTime()
@@ -37,14 +35,6 @@ class ScheduleItemAdapter(private val layout: RecyclerView.LayoutManager, val li
                     Logger.e(e, "Not success.")
                 }
                 )
-
-
-//        val events = app.databaseController.getItemByDate(*filter.typesArray, page = page)
-//        addAllAndNotify(events)
-//
-//        if (app.storage.showExpiredEvents()) {
-//            scrollToCurrentTime()
-//        }
     }
 
     private fun addAllAndNotify(elements: List<Item>) {

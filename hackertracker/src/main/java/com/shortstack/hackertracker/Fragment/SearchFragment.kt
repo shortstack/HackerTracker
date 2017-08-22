@@ -19,6 +19,9 @@ import com.shortstack.hackertracker.Renderer.VendorRenderer
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
 class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
+
+    var adapter: RendererAdapter<Any>? = null
+
     override fun onQueryTextSubmit(query: String?): Boolean {
         return true
     }
@@ -42,15 +45,18 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
                 .bind(Item::class.java, ItemRenderer())
                 .bind(Vendors.Vendor::class.java, VendorRenderer())
 
-        val adapter = RendererAdapter<Any>(rendererBuilder)
+        adapter = RendererAdapter<Any>(rendererBuilder)
         list.adapter = adapter
     }
 
-    fun search( text : String ) {
-        getAdapter().collection.clear()
+    fun search(text: String) {
+        if (adapter == null)
+            return
 
-        if( text.isEmpty() ) {
-            getAdapter().notifyDataSetChanged()
+        adapter!!.collection.clear()
+
+        if (text.isEmpty()) {
+            adapter!!.notifyDataSetChanged()
             return
         }
 
@@ -62,21 +68,17 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
 
         for (item in controller.findByText(text)) {
-            if( item.title.contains(text, true)) {
-                getAdapter().add(item)
-            }
+            adapter!!.add(item)
         }
 
-        Logger.d("Time: " + (time - System.currentTimeMillis()))
+        Logger.d("Search time: " + (System.currentTimeMillis() - time) + "ms")
 
 
-        getAdapter().notifyDataSetChanged()
+        adapter!!.notifyDataSetChanged()
     }
 
-    private fun getAdapter() = list.adapter as RendererAdapter<Any>
-
     companion object {
-        fun newInstance():SearchFragment {
+        fun newInstance(): SearchFragment {
             return SearchFragment()
         }
     }
