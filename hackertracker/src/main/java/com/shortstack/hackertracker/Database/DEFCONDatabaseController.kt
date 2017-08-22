@@ -234,7 +234,7 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
 
 
     fun findByText( text : String ) : List<Item>{
-        val columns = arrayOf("title").toMutableList()
+        val columns = arrayOf("title", "description").toMutableList()
         return query(SCHEDULE_TABLE_NAME, Item::class.java, searchText = text, searchColumns = columns, orderBy = KEY_START_DATE)
     }
 
