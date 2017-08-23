@@ -185,9 +185,10 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
     }
 
     fun findItem(id : Int): Item? {
-        val list = query(SCHEDULE_TABLE_NAME, Item::class.java, selection = "$KEY_INDEX = ?", selectionArgs = ArrayList(id))
-        if( list.isEmpty() )
+        val list = query(SCHEDULE_TABLE_NAME, Item::class.java, selection = "$KEY_INDEX = ?", selectionArgs = arrayOf(id.toString()).toMutableList())
+        if( list.isEmpty() ) {
             return null
+        }
         return list.first()
     }
 
