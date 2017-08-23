@@ -12,10 +12,8 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
 import butterknife.ButterKnife
 import com.github.stkent.amplify.tracking.Amplify
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.Alert.MaterialAlert
 import com.shortstack.hackertracker.Analytics.AnalyticsController
 import com.shortstack.hackertracker.Application.App
@@ -135,7 +133,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
     private fun updateFABVisibility() {
-        filter!!.visibility = if (mFragmentIndex == 1) View.VISIBLE else View.GONE
+        filter!!.visibility = if (mFragmentIndex == NAV_SCHEDULE) View.VISIBLE else View.GONE
     }
 
     private val currentFragment: Fragment
@@ -155,8 +153,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 else -> throw IllegalStateException("Could not locate the correct fragment for index $mFragmentIndex.")
             }
-
-
         }
 
 
@@ -186,7 +182,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val searchView = searchMenuItem.actionView as SearchView
 
         searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-        //searchView.isSubmitButtonEnabled = true
 
         return true
     }
