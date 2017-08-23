@@ -12,15 +12,13 @@ import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Model.Item
-import com.shortstack.hackertracker.Model.Vendor
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Renderer.ItemRenderer
-import com.shortstack.hackertracker.Renderer.VendorRenderer
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
 class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
-    var adapter: RendererAdapter<Any>? = null
+    var adapter: RendererAdapter<Item>? = null
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         return true
@@ -43,13 +41,15 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
         val rendererBuilder = RendererBuilder<Any>()
                 .bind(Item::class.java, ItemRenderer())
-                .bind(Vendor::class.java, VendorRenderer())
 
-        adapter = RendererAdapter<Any>(rendererBuilder)
+
+        adapter = RendererAdapter<Item>(rendererBuilder)
         list.adapter = adapter
     }
 
     fun search(text: String) {
+        Logger.d("Searching $text")
+
         if (adapter == null)
             return
 
@@ -60,20 +60,9 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
             return
         }
 
-
-        val controller = App.application.databaseController
-
-
-        val time = System.currentTimeMillis()
-
-
-        for (item in controller.findByText(text)) {
-            adapter!!.add(item)
-        }
-
-        Logger.d("Search time: " + (System.currentTimeMillis() - time) + "ms")
-
-
+        val timeMillis = System.currentTimeMillis()
+        adapter!!.addAll(App.application.databaseController.findByText(text))
+        Logger.d("Time to search: ${System.currentTimeMillis() - timeMillis}ms" )
         adapter!!.notifyDataSetChanged()
     }
 
