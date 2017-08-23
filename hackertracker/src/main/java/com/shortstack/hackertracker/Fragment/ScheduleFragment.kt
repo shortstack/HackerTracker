@@ -179,15 +179,21 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 .subscribe(
                         {
                             Logger.d("OnSuccess")
-                            val rowsUpdated = App.application.databaseController.updateSchedule(response = it.syncResponse)
-                            swipe_refresh!!.isRefreshing = false
 
-                            if (rowsUpdated == 0)
-                                Toast.makeText(context, "Up to date!", Toast.LENGTH_SHORT).show()
-                            else if (rowsUpdated > 0) {
-                                App.application.postBusEvent(SyncResponseEvent(rowsUpdated))
-                                App.application.notificationHelper.scheduleUpdateNotification(rowsUpdated)
-                            }
+                            App.application.databaseController.update(response = it.syncResponse).subscribeOn(Schedulers.io())
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe {
+                                        swipe_refresh!!.isRefreshing = false
+
+                                        if (it == 0)
+                                            Toast.makeText(context, "Up to date!", Toast.LENGTH_SHORT).show()
+                                        else if (it > 0) {
+                                            App.application.postBusEvent(SyncResponseEvent(it))
+                                            App.application.notificationHelper.scheduleUpdateNotification(it)
+                                            refreshContents()
+                                        }
+                                    }
+
                         },
                         {
                             Logger.d("OnError " + it.message)

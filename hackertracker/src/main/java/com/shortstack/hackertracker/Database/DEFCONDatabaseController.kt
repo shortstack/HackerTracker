@@ -92,6 +92,15 @@ open class DEFCONDatabaseController(context: Context, name: String = Constants.D
         initOtherDatabases(gson, db)
     }
 
+    fun update(database: SQLiteDatabase = writableDatabase, response: SyncResponse): Observable<Int> {
+        return Observable.create {
+            emitter ->
+            val rows = updateSchedule(database, response)
+            emitter.onNext(rows)
+            emitter.onComplete()
+        }
+    }
+
     fun updateSchedule(database: SQLiteDatabase = writableDatabase, response: SyncResponse): Int {
         App.application.storage.lastUpdated = response.updatedDate
         App.application.storage.lastSyncVersion = BuildConfig.VERSION_CODE
