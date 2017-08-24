@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.Fragment
 
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -16,7 +17,6 @@ import com.shortstack.hackertracker.Model.Item
 import com.shortstack.hackertracker.Model.ItemViewModel
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.View.ItemView
-import kotlinx.android.synthetic.main.bottom_sheet_schedule_item.view.*
 import kotlinx.android.synthetic.main.empty_text.view.*
 import kotlinx.android.synthetic.main.fragment_item_description.view.*
 
@@ -33,8 +33,14 @@ class DescriptionFragment : Fragment() {
 
         displayDescription(obj, view.description, view.empty, view.link, view.star)
 
-        view.star.setOnClickListener { onStarClick(view.item, view.star) }
-        view.share.setOnClickListener { onShareClick(view.item) }
+        view.star.setOnClickListener {
+            TODO()
+        }
+        //onStarClick(view.item, view.star) }
+        view.share.setOnClickListener {
+            TODO()
+            //onShareClick(view.item)
+        }
         view.link.setOnClickListener { onLinkClick() }
 
         view.tool.visibility = obj.toolsVisibility
@@ -81,10 +87,10 @@ class DescriptionFragment : Fragment() {
         MaterialAlert.create(context)
                 .setTitle(R.string.link_warning)
                 .setMessage(String.format(context.getString(R.string.link_message), content.link?.toLowerCase()))
-                .setPositiveButton(R.string.open_link) { dialogInterface, i ->
+                .setPositiveButton(R.string.open_link, DialogInterface.OnClickListener { dialogInterface, i ->
                     val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(content.link))
                     context.startActivity(intent)
-                }.setBasicNegativeButton()
+                }).setBasicNegativeButton()
                 .show()
     }
 

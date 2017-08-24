@@ -2,6 +2,7 @@ package com.shortstack.hackertracker.Activity
 
 import android.app.SearchManager
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -231,7 +232,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.nav_change_con) {
             MaterialAlert.create(this).setTitle("Hello").setItems(R.array.cons,
-                    { dialogInterface, i ->
+                    DialogInterface.OnClickListener  { dialogInterface, i ->
 
                         App.application.storage.databaseSelected = i
                         App.application.updateDatabaseController()

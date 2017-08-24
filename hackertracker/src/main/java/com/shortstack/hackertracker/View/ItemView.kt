@@ -175,7 +175,7 @@ class ItemView : CardView {
     }
 
     private fun renderCategoryColour() {
-        val count = content!!.getCategoryColorPosition()
+        val count = content!!.categoryColorPosition
 
         val allColors = resources.getIntArray(R.array.colors)
 

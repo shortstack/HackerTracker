@@ -85,7 +85,6 @@ class Item : Serializable {
         return date
     }
 
-
     val beginDateObject : Date by lazy { getDateObject(begin) }
 
     val endDateObject : Date by lazy { getDateObject(end) }
@@ -154,6 +153,9 @@ class Item : Serializable {
                 if (key != "bookmarked")
                     values.put(key, `object`.getString(key))
             }
+
+            values.remove("end_date_object\$delegate")
+            values.remove("begin_date_object\$delegate")
 
         } catch (e : JSONException) {
             e.printStackTrace()

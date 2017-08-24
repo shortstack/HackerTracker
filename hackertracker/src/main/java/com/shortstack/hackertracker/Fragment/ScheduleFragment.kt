@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.Fragment
 
+import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -161,11 +162,15 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         val filter = App.application.storage.filter
 
         val view = FilterView(context, filter)
-        MaterialAlert.create(context).setTitle(getString(R.string.alert_filter_title)).setView(view).setBasicNegativeButton().setPositiveButton(R.string.save) { _, _ ->
+        MaterialAlert.create(context)
+                .setTitle(getString(R.string.alert_filter_title)).
+                setView(view)
+                .setBasicNegativeButton()
+                .setPositiveButton(R.string.save, DialogInterface.OnClickListener { _, _ ->
             val filter = view.save()
             App.application.analyticsController.tagFiltersEvent(filter)
             refreshContents()
-        }.show()
+        }).show()
     }
 
 
