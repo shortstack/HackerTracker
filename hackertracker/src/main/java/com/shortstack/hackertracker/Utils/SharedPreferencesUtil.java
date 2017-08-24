@@ -130,7 +130,7 @@ public class SharedPreferencesUtil {
     }
 
     public boolean shouldRefresh(long time) {
-        return time - mPreferences.getLong(Key.APP_LAST_REFRESH.toString(), 0) > Constants.TIMER_INTERVAL;
+        return time - mPreferences.getLong(Key.APP_LAST_REFRESH.toString(), 0) > Constants.Companion.getTIMER_INTERVAL();
     }
 
     public void setViewPagerPosition(int index) {

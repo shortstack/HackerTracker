@@ -3,15 +3,10 @@ package com.shortstack.hackertracker.Network
 import com.google.gson.annotations.SerializedName
 import com.shortstack.hackertracker.Model.Item
 
-class SyncResponse {
+data class SyncResponse(
 
     @SerializedName("update_date")
-    var updatedDate: String? = null
+    val updatedDate : String,
+    val schedule: Array<Item>
 
-    lateinit var schedule: Array<Item>
-
-
-    override fun toString(): String {
-        return updatedDate + ", " + schedule.size
-    }
-}
+)

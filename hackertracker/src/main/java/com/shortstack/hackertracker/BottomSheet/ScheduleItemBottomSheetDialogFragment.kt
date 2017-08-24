@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.BottomSheet
 
 import android.app.Dialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -26,7 +27,7 @@ import kotlinx.android.synthetic.main.empty_text.view.*
 
 class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.BottomSheetDialogFragment() {
 
-    override fun setupDialog(dialog: Dialog, style: Int) {
+    override fun setupDialog(dialog : Dialog, style : Int) {
         super.setupDialog(dialog, style)
         val view = View.inflate(context, R.layout.bottom_sheet_schedule_item, null)
         dialog.setContentView(view)
@@ -37,9 +38,9 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
 
         view.item!!.setItem(obj.item)
 
-        displaySpeakers(obj, view.speakers )
+        displaySpeakers(obj, view.speakers)
 
-        displayDescription(obj, view.description, view.empty, view.link, view.star )
+        displayDescription(obj, view.description, view.empty, view.link, view.star)
 
         view.star.setOnClickListener { onStarClick(view.item, view.star) }
         view.share.setOnClickListener { onShareClick(view.item) }
@@ -50,7 +51,7 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
         view.demo.visibility = obj.demoVisibility
 
 
-        val color = resources.getIntArray(R.array.colors) [ obj.categoryColorPosition ]
+        val color = resources.getIntArray(R.array.colors) [obj.categoryColorPosition]
         view.tab_layout.setBackgroundColor(color)
 
 
@@ -60,16 +61,16 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
 
     }
 
-    private fun  displaySpeakers(obj: ItemViewModel, speakers: LinearLayoutCompat) {
+    private fun displaySpeakers(obj : ItemViewModel, speakers : LinearLayoutCompat) {
         obj.speakers.iterator().forEach {
             speakers.addView(SpeakerView(context, App.application.databaseController.getSpeaker(it)))
         }
     }
 
-    private val content: Item
+    private val content : Item
         get() = arguments.getSerializable(ARG_OBJ) as Item
 
-    private fun displayDescription(obj: ItemViewModel, description: TextView, empty: View, link: View, star: ImageView ) {
+    private fun displayDescription(obj : ItemViewModel, description : TextView, empty : View, link : View, star : ImageView) {
         val hasDescription = obj.hasDescription()
 
         if (hasDescription)
@@ -81,11 +82,11 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
         updateStarIcon(star)
     }
 
-    private fun updateStarIcon( star: ImageView ) {
+    private fun updateStarIcon(star : ImageView) {
         star.setImageDrawable(resources.getDrawable(if (content.isBookmarked()) R.drawable.ic_star_white_24dp else R.drawable.ic_star_border_white_24dp))
     }
 
-    fun onStarClick( item: ItemView, star: ImageView ) {
+    fun onStarClick(item : ItemView, star : ImageView) {
         if (content.isBookmarked()) {
             App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_UNBOOKMARK, content)
         } else {
@@ -95,7 +96,7 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
         updateStarIcon(star)
     }
 
-    fun onShareClick( item: ItemView ) {
+    fun onShareClick(item : ItemView) {
         App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_SHARE, content)
         item.onShareClick()
     }
@@ -106,10 +107,10 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
         MaterialAlert.create(context)
                 .setTitle(R.string.link_warning)
                 .setMessage(String.format(context.getString(R.string.link_message), content.link?.toLowerCase()))
-                .setPositiveButton(R.string.open_link) { dialogInterface, i ->
+                .setPositiveButton(R.string.open_link, DialogInterface.OnClickListener { dialogInterface, i ->
                     val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(content.link))
                     context.startActivity(intent)
-                }.setBasicNegativeButton()
+                }).setBasicNegativeButton()
                 .show()
     }
 
@@ -119,7 +120,7 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
         val ARG_OBJ = "ITEM"
 
 
-        fun newInstance(obj: Item): ScheduleItemBottomSheetDialogFragment {
+        fun newInstance(obj : Item) : ScheduleItemBottomSheetDialogFragment {
             val fragment = ScheduleItemBottomSheetDialogFragment()
 
             val bundle = Bundle()
@@ -131,11 +132,11 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
     }
 
     class PagerAdapter(fm : FragmentManager) : FragmentStatePagerAdapter(fm) {
-        override fun getItem(position: Int): Fragment {
+        override fun getItem(position : Int) : Fragment {
             return InformationFragment.newInstance()
         }
 
-        override fun getCount(): Int {
+        override fun getCount() : Int {
             return 2
         }
 
