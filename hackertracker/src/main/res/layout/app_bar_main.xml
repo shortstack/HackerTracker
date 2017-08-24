@@ -44,8 +44,9 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
         android:src="@drawable/ic_filter_list_white_24dp"
-        app:elevation="4dp"
+        android:visibility="gone"
 
+        app:elevation="4dp"
         app:layout_behavior="com.shortstack.hackertracker.View.ScrollingFABBehavior"
         app:pressedTranslationZ="12dp" />
 

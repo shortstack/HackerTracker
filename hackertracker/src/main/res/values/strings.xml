@@ -200,6 +200,8 @@ Any news and info will likely be posted there.</item>
     <string name="search">Search</string>
     <string name="msg_in_hours">in %1$s hr</string>
     <string name="msg_in_mins">in %1$s min</string>
+    <string name="msg_up_to_date">Up to date!</string>
+    <string name="error_unable_to_sync">Unable to sync</string>
 
     <string-array name="nav_item_activity_titles">
         <item>@string/nav_home</item>

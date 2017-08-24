@@ -12,7 +12,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.Alert.MaterialAlert
 import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Common.Constants
@@ -22,6 +21,7 @@ import com.shortstack.hackertracker.Event.UpdateListContentsEvent
 import com.shortstack.hackertracker.List.ScheduleInfiniteScrollListener
 import com.shortstack.hackertracker.List.ScheduleItemAdapter
 import com.shortstack.hackertracker.Network.DatabaseService
+import com.shortstack.hackertracker.Network.FullResponse
 import com.shortstack.hackertracker.Network.SyncRepository
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.View.FilterView
@@ -35,11 +35,11 @@ import java.util.*
 
 class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
-    lateinit var adapter: ScheduleItemAdapter
+    lateinit var adapter : ScheduleItemAdapter
 
 
-    var mHandler: Handler = object : Handler() {
-        override fun handleMessage(msg: Message) {
+    var mHandler : Handler = object : Handler() {
+        override fun handleMessage(msg : Message) {
             App.application.postBusEvent(RefreshTimerEvent())
             if (adapter != null) {
                 adapter!!.notifyTimeChanged()
@@ -48,9 +48,9 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         }
     }
-    private var mTimer: Timer? = null
+    private var mTimer : Timer? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
         App.application.registerBusListener(this)
     }
@@ -89,15 +89,13 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     }
 
     @Subscribe
-    fun handleUpdateListContentsEvent(event: UpdateListContentsEvent) {
+    fun handleUpdateListContentsEvent(event : UpdateListContentsEvent) {
         refreshContents()
     }
 
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
+    override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
         val rootView = inflater!!.inflate(contentView, container, false) as ViewGroup
-        setHasOptionsMenu(true)
 
         val layout = LinearLayoutManager(context)
         rootView.list!!.layoutManager = layout
@@ -110,7 +108,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
 
         rootView.list.addOnScrollListener(object : ScheduleInfiniteScrollListener(layout) {
-            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+            override fun onLoadMore(page : Int, totalItemsCount : Int, view : RecyclerView) {
                 adapter.load(page)
             }
 
@@ -121,12 +119,12 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         return rootView
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         refreshContents()
     }
 
-    private fun hasScheduleItems(): Boolean {
+    private fun hasScheduleItems() : Boolean {
         return !adapter.collection.isEmpty()
     }
 
@@ -155,7 +153,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     }
 
-    private val contentView: Int
+    private val contentView : Int
         get() = R.layout.fragment_schedule
 
     fun showFilters() {
@@ -167,10 +165,10 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                 setView(view)
                 .setBasicNegativeButton()
                 .setPositiveButton(R.string.save, DialogInterface.OnClickListener { _, _ ->
-            val filter = view.save()
-            App.application.analyticsController.tagFiltersEvent(filter)
-            refreshContents()
-        }).show()
+                    val filter = view.save()
+                    App.application.analyticsController.tagFiltersEvent(filter)
+                    refreshContents()
+                }).show()
     }
 
 
@@ -181,37 +179,40 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         syncRepository.getSchedule()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        {
-                            Logger.d("OnSuccess")
+                .subscribe({
+                    onRefreshUpdate(it)
+                }, {
+                    onRefreshError(it)
+                })
 
-                            App.application.databaseController.update(response = it.syncResponse).subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe {
-                                        swipe_refresh!!.isRefreshing = false
+    }
 
-                                        if (it == 0)
-                                            Toast.makeText(context, "Up to date!", Toast.LENGTH_SHORT).show()
-                                        else if (it > 0) {
-                                            App.application.postBusEvent(SyncResponseEvent(it))
-                                            App.application.notificationHelper.scheduleUpdateNotification(it)
-                                            refreshContents()
-                                        }
-                                    }
+    private fun onRefreshError(it : Throwable) {
+        swipe_refresh?.isRefreshing = false
+        if (context != null)
+            Toast.makeText(context, context.getString(R.string.error_unable_to_sync), Toast.LENGTH_SHORT).show()
+    }
 
-                        },
-                        {
-                            Logger.d("OnError " + it.message)
-                            swipe_refresh!!.isRefreshing = false
-                            Toast.makeText(context, "Unable to sync.", Toast.LENGTH_SHORT).show()
+    private fun onRefreshUpdate(it : FullResponse) {
+        App.application.databaseController.update(response = it.syncResponse).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    swipe_refresh?.isRefreshing = false
 
-                        })
-
+                    if (it == 0)
+                        if (context != null)
+                            Toast.makeText(context, context.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
+                        else if (it > 0) {
+                            App.application.postBusEvent(SyncResponseEvent(it))
+                            App.application.notificationHelper.scheduleUpdateNotification(it)
+                            refreshContents()
+                        }
+                }
     }
 
     companion object {
 
-        fun newInstance(): ScheduleFragment {
+        fun newInstance() : ScheduleFragment {
             return ScheduleFragment()
         }
     }

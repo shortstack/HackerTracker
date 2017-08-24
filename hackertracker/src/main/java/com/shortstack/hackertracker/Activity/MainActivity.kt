@@ -13,6 +13,7 @@ import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import butterknife.ButterKnife
 import com.github.stkent.amplify.tracking.Amplify
 import com.shortstack.hackertracker.Alert.MaterialAlert
@@ -199,16 +200,11 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
                 item.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
                     override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
-                        Logger.d("expended")
                         return true
                     }
 
                     override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
-                        Logger.d("onCollapse")
-
                         loadFragment()
-
-
                         return true
                     }
                 })
