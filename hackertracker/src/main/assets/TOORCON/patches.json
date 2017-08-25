@@ -20,15 +20,53 @@
             bookmarked INTEGER 
         );",
 
+        "CREATE TABLE IF NOT EXISTS 
+        Locations (
+            `index` INTEGER PRIMARY KEY AUTOINCREMENT,
+            location VARCHAR(255)
+        );",
+
         "CREATE TABLE IF NOT EXISTS
         Types (
             `index` INTEGER PRIMARY KEY AUTOINCREMENT,
             event_type VARCHAR(255)
         );",
 
-    
+        "CREATE TABLE IF NOT EXISTS 
+        Speakers (
+            `index` INTEGER PRIMARY KEY,
+            who VARCHAR(255),
+            title VARCHAR(255),
+            media VARCHAR(255),
+            bio TEXT,
+            last_updated DATETIME 
+        );",
+
+        "CREATE TABLE IF NOT EXISTS 
+        Vendors (
+            `index` INTEGER PRIMARY KEY AUTOINCREMENT,
+            title VARCHAR(255),
+            description TEXT,
+            link VARCHAR(255),
+            partner INTEGER 
+        );"
     ]
-  }
+  },
+    {
+        "version": 2,
+        "commands": [
+            "DROP TABLE Speakers;",
+            "CREATE TABLE IF NOT EXISTS 
+                    Speakers (
+                        `indexsp` INTEGER PRIMARY KEY,
+                        who VARCHAR(255),
+                        sptitle VARCHAR(255),
+                        media VARCHAR(255),
+                        bio TEXT,
+                        last_update DATETIME
+                    );"
+        ] 
+    }
 ]
 }
 

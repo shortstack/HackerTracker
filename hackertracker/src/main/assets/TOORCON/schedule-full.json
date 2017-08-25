@@ -2,144 +2,1197 @@
   "update_date": "2017-07-17T15:57:16",
   "schedule":
   [
-{
-   "exploit" : 0,
-   "dctv_channel" : "tba",
-   "who" : [],
-   "tool" : 0,
-   "id" : "fooqmr32tbnd41tua8vne8slls@google.com",
-   "start_date" : "2017-07-24T19:00:00",
-   "includes" : null,
-   "recommended" : "0",
-   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#fooqmr32tbnd41tua8vne8slls@google.com",
-   "location" : null,
-   "demo" : 0,
-   "entry_type" : "Party",
-   "description" : "Ri Ra Irish Pub, 3930 S Las Vegas Blvd, Las Vegas, NV 89119, USA",
-   "index" : "119",
-   "end_date" : "2017-07-24T19:00:00",
-   "updated_at" : "2017-07-17T15:57:16",
-   "title" : "NotSoSober party"
-}
-,
-{
-   "exploit" : 0,
-   "dctv_channel" : "tba",
-   "who" : [],
-   "tool" : 0,
-   "id" : "hdh1t2baa624qf47uqpq13l6a8@google.com",
-   "start_date" : "2017-07-25T16:00:00",
-   "includes" : null,
-   "recommended" : "0",
-   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#hdh1t2baa624qf47uqpq13l6a8@google.com",
-   "location" : null,
-   "demo" : 0,
-   "entry_type" : "Party",
-   "description" : "Topgolf 4627 Koval Ln, Las Vegas, NV 89109",
-   "index" : "152",
-   "end_date" : "2017-07-25T16:00:00",
-   "updated_at" : "2017-07-17T15:57:16",
-   "title" : "Rapid7 & ServiceNow Topgolf Event"
-}
-,
-{
-   "exploit" : 0,
-   "dctv_channel" : "tba",
-   "who" : [],
-   "tool" : 0,
-   "id" : "lhe1ql66l6drqdnl9dl48co38g@google.com",
-   "start_date" : "2017-07-25T17:00:00",
-   "includes" : null,
-   "recommended" : "0",
-   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#lhe1ql66l6drqdnl9dl48co38g@google.com",
-   "location" : null,
-   "demo" : 0,
-   "entry_type" : "Party",
-   "description" : "Topgolf 4627 Koval Lane Las Vegas, NV 89109",
-   "index" : "142",
-   "end_date" : "2017-07-25T17:00:00",
-   "updated_at" : "2017-07-17T15:57:16",
-   "title" : "R-CISC and TruSTAR"
-}
-,
-{
-   "exploit" : 0,
-   "dctv_channel" : "tba",
-   "who" : [],
-   "tool" : 0,
-   "id" : "nu84a71s0p42mgk61in846lcf8@google.com",
-   "start_date" : "2017-07-25T17:30:00",
-   "includes" : null,
-   "recommended" : "0",
-   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#nu84a71s0p42mgk61in846lcf8@google.com",
-   "location" : null,
-   "demo" : 0,
-   "entry_type" : "Party",
-   "description" : "3950 S Las Vegas Blvd, Las Vegas, NV 89119 ",
-   "index" : "144",
-   "end_date" : "2017-07-25T17:30:00",
-   "updated_at" : "2017-07-17T15:57:16",
-   "title" : "proficio"
-}
-,
-{
-   "exploit" : 0,
-   "dctv_channel" : "tba",
-   "who" : [],
-   "tool" : 0,
-   "id" : "09gkqtior6sq7pvq1plmggs5p0@google.com",
-   "start_date" : "2017-07-25T17:30:00",
-   "includes" : null,
-   "recommended" : "0",
-   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#09gkqtior6sq7pvq1plmggs5p0@google.com",
-   "location" : null,
-   "demo" : 0,
-   "entry_type" : "Party",
-   "description" : "RX Boiler Room, the Shoppes at Mandalay Bay",
-   "index" : "156",
-   "end_date" : "2017-07-25T17:30:00",
-   "updated_at" : "2017-07-17T15:57:16",
-   "title" : "GuidePoint's Annual Social Hour at RX Boiler Room"
-}
-,
-{
-   "exploit" : 0,
-   "dctv_channel" : "tba",
-   "who" : [],
-   "tool" : 0,
-   "id" : "igep121jqbtdbak1907l4a701g@google.com",
-   "start_date" : "2017-07-25T19:00:00",
-   "includes" : null,
-   "recommended" : "0",
-   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#igep121jqbtdbak1907l4a701g@google.com",
-   "location" : null,
-   "demo" : 0,
-   "entry_type" : "Party",
-   "description" : "Ling Ling Club at Hakkasan LV in MGM Grand 3799 S Las Vegas Blvd Las Vegas, NV 89109",
-   "index" : "120",
-   "end_date" : "2017-07-25T19:00:00",
-   "updated_at" : "2017-07-17T15:57:16",
-   "title" : "Risky Biz 10 Year Party"
-}
-,
-{
-   "exploit" : 0,
-   "dctv_channel" : "tba",
-   "who" : [],
-   "tool" : 0,
-   "id" : "c3qquh9s1of2bob819q9fvp8f8@google.com",
-   "start_date" : "2017-07-25T19:00:00",
-   "includes" : null,
-   "recommended" : "0",
-   "link" : "https://www.defcon.org/html/defcon-25/dc-25-speakers.html#c3qquh9s1of2bob819q9fvp8f8@google.com",
-   "location" : null,
-   "demo" : 0,
-   "entry_type" : "Party",
-   "description" : "The Orchid Lounge at Mandalay Bay 3950 S Las Vegas Blvd, Las Vegas, NV 89119",
-   "index" : "135",
-   "end_date" : "2017-07-25T19:00:00",
-   "updated_at" : "2017-07-17T15:57:16",
-   "title" : "alienvault"
-}
+    {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "1",
+       "who" : "Lance James"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c1001",
+     "start_date" : "2017-09-02T10:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#1",
+     "location" : "Track 1",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "",
+     "index" : "1",
+     "end_date" : "2017-09-02T010:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Keynote: From Hacker to Home"
+ }
+ ,
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "2",
+       "who" : "Dominic Spill"
+   }
+   ,
+   {
+       "indexsp" : "3",
+       "who" : "Kyle Temkin"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c1002",
+     "start_date" : "2017-09-02T11:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#2",
+     "location" : "Track 1",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "",
+     "index" : "2",
+     "end_date" : "2017-09-02T011:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "FaceDancer 2.0 – next generation USB hacking"
+ }
+ ,
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "4",
+       "who" : "James Barclay"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c1001",
+     "start_date" : "2017-09-02T11:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#3",
+     "location" : "Track 2",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "The term zero-trust has become somewhat of a buzzword lately, but we haven’t seen many practical examples of how something like this is implemented. As fantastic as the BeyondCorp papers are, it can be a bit daunting to take concepts from it and build something real.
+
+     The SSH protocol in particular was of interest to us given how many times we use it on a daily basis, but aside from some comments in the source code for the Chrome Secure Shell extension, there wasn’t much to go on.
+
+     In this talk we’ll provide an in-depth look at how we built an SSH WebSockets proxy that natively supports the relay protocol built into the Chrome Secure Shell extension. We’ll also cover how we built a client proxy that supports the OpenSSH ProxyCommand directive, which allowed us to continue using standard SSH tooling on macOS, Windows, and *nix operating systems.",
+     "index" : "3",
+     "end_date" : "2017-09-02T11:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "From Zero to Zero-Trust: Lessons Learned Building a BeyondCorp SSH Proxy"
+ }
+ ,
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "5",
+       "who" : "Robert Portvliet"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c1001",
+     "start_date" : "2017-09-02T13:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#4",
+     "location" : "Track 1",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "Network accessible medical devices are ubiquitous in today’s clinical environment. These devices can be of great aid to healthcare professionals in assessing, treating and monitoring a patient’s condition. However, they can also fall victim to a number of systemic vulnerabilities that can expose personal health information or PHI, compromise the integrity of patient data in transit, and affect the availability of the devices themselves.
+
+     This talk looks at the methodology and approach to penetration testing of modern medical devices. It will provide an overview of the various stages of a medical device assessment, including discovery and analysis of a device’s remote and local attack surface, reverse engineering and exploitation of proprietary network protocols, vulnerability discovery in network services, compromising supporting systems, attacking common wireless protocols, exploitation of hardware debug interfaces and bus protocols and assessing proprietary wireless technologies.
+
+     It will also cover a number of real world vulnerabilities that the speaker has discovered during medical device penetration testing assessments. These include weak cryptographic implementations, device impersonation and data manipulation vulnerabilities in proprietary protocols, unauthenticated database interfaces, hardcoded credentials/keys and other sensitive information stored in firmware/binaries and the susceptibility of medical devices to remote denial of service attacks.
+
+     The talk will conclude with some suggestions on how some of the most common classes of medical device vulnerabilities might be remediated by vendors and also how hospitals and other healthcare providers can defend their medical devices in the meantime.",
+     "index" : "4",
+     "end_date" : "2017-09-02T13:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Open Up and Say 0×41414141: Attacking Medical Devices"
+ }
+ ,
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "6",
+       "who" : "Aaron Hnatiw"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c1005",
+     "start_date" : "2017-09-02T13:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#1",
+     "location" : "Track 2",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "Pentesters are tired of breaking things, writing a report, and walking away. Security teams are caught in a backlog that prevents them from ever staying ahead. Developers curse security for slowing them down. How can we address these seemingly incompatible and insurmountable issues in an organization, especially at scale? The answer to this may be found in a practice called “DevSecOps” that has been gaining momentum in large organizations that need to move fast and ensure a high level of security across their applications and operations. It is a practice that attempts to address all of these issues through two core principles- automation and education. Using experience gained from working with several large fortune 500 companies, this talk will cover the basics of DevSecOps, and dive into specific tools and processes that organizations of any size can implement to immediately improve their speed of delivery while maintaining a strong and measurable security baseline.",
+     "index" : "5",
+     "end_date" : "2017-09-02T13:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "How To Move Mountains"
+ }
+ ,
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "7",
+       "who" : "Mohamad Mokbel"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c1006",
+     "start_date" : "2017-09-02T14:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#6",
+     "location" : "Track 1",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "For someone who works with Wireshark on a daily basis, dealing with different protocols at varying layers in the OSI model, and writing custom display filters for multifarious purposes and scenarios, will soon realize that Wireshark doesn’t provide the management interface necessary to do all of that in a structured and standardized way. Thus, why I’m presenting SPF (ShellPcapFication), a shell framework that provides a sophisticated abstraction layer for TShark (console-based version of Wireshark) and Windows command shell interpreter. SPF features a custom, unique and simple declarative language called Eros that consists of only two constructs, four keywords, three Input operators, auxiliary logic, a function call operator, an INSERT statement, a specifier, and an include preprocessing directive. Additionally, a set of built-in helper commands are also provided by SPF to simplify interaction with Eros in a dynamic way.
+
+     In this talk, I’ll address the internals of SPF framework, its features, how it works, how to write constructs for it, and how SPF can be used to help achieve the following:
+
+     + The democratization of writing and sharing a standardized set of constructs based on Eros language
+     + The capability to use different constructs as building blocks to form complex operations
+     + Simplification of repetitive tasks
+     + Rich shell functionality
+     + Automation of Exploit Kit detection
+     + Protocol specific features/fields extraction
+     + Building self-contained and easy to manage self-explanatory units/constructs
+     + Functioning as a signature detection system (based on TShark powerful protocol dissectors)",
+     "index" : "6",
+     "end_date" : "2017-09-02T14:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "ShellPcapFication (SPF) – A Sophisticated Interactive Shell Framework"
+ }
+ ,
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "8",
+       "who" : "Ernest Wong"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c1007",
+     "start_date" : "2017-09-02T14:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#7",
+     "location" : "Track 2",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "Innovation is a key buzzword currently within the US military and is shaping the vision for our forces as being agile organizations able to adapt to a complex world. But does our military have the capabilities to protect vital national interests in cyber? The growth of the Internet in our globally connected world has meant that tools for cyber are constantly changing. Accordingly, do we have the capacity to gain the advantages needed to out-hack our adversaries in this domain? In this talk, we provide a relatively simple framework for different types of innovation (disruptive, breakthrough, sustaining, and incremental) in order to find better solutions to malicious cyberattacks. By doing so, we promote how “inside-the-box” thinking can help successfully defend cyberspace.",
+     "index" : "7",
+     "end_date" : "2017-09-02T14:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Defending Cyberspace by Thinking “1n51d3-th3-B0x”"
+ }
+ ,
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "9",
+       "who" : "Chema Alonso"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c1008",
+     "start_date" : "2017-09-02T15:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#8",
+     "location" : "Track 1",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "Bluetooth communications are on the increase. Millions of users use the technology to connect to peripherals that simplify and provide greater comfort and experience. There is a trick or hack for iOS 10.3.2 and earlier that takes advantage of the management of the profiles causing a great impact on the privacy of millions of users who use Bluetooth technology daily. From the iOS device information leak caused by the incorrect management of profiles, a lot of information about the user and their background may be obtained.",
+     "index" : "8",
+     "end_date" : "2017-09-02T15:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "DirtyTooth: Put music & lose your contacts"
+ }
+ ,
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "10",
+       "who" : "Gurney Halleck"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c1009",
+     "start_date" : "2017-09-02T15:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#9",
+     "location" : "Track 2",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "In this talk you will learn about cyber wargaming with table top exercises (TTX). A TTX is an all paper exercise but has aspect of a penetration test without impacting actual systems. It provides a rehearsal for response, mitigation and recovery of a cyber attack.
+
+     Subjects that will be address include: What is a cyber wargame TTX, what are the objectives, how is it run, who are the players, what are the advantages and disadvantages of a TTX, when is a TTX appropriate as opposed to a pentest or vulnerability assessment, what are the outcomes and how can they be used to improve an organization’s security.",
+     "index" : "9",
+     "end_date" : "2017-09-02T15:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Cyber Wargames: Table Top Exercises"
+ }
+ ,
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "11",
+       "who" : "Will Caput"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c1010",
+     "start_date" : "2017-09-02T16:30:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#10",
+     "location" : "Track 1",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "It is commonly thought that gift cards must be activated to have any monetary value. Often displayed on countertops and lining grocery store aisles, seemingly worthless unactivated gift cards are free for anyone to grab a handful. However, weaker security features than the average credit card makes these gift cards nearly as valuable as cash. Mass produced, their numbers follow a predictable pattern and have limited built-in security, such as a chip or pin, to prevent fraud.",
+     "index" : "10",
+     "end_date" : "2017-09-02T17:20:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Cash in the aisles: How gift cards are easily exploited"
+ }
+ ,
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "12",
+       "who" : "Tyler Cook"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c1011",
+     "start_date" : "2017-09-02T16:30:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#11",
+     "location" : "Track 2",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "In this presentation I would like to demonstrate how modern ad platforms can be hijacked by a malicious user to deliver an extremely targeted phishing campaign to an unsuspecting victim. This campaign can target anyone from a CEO to a college intern, and can be configured to show on any predetermined device.
+
+     Everyday, millions of people use social networks to reach out, interact, share, and partake in an ever growing digital consciousness. Behind these networks sit unseen ad platforms serving up relevant advertisements to whoever advertisers would like to target. Modern ad platforms are designed to allow advertisers to grow their revenue and brand presence while being easy enough to use that everyone from a fortune 500 executive, to a general contractor, can now take part in the digital advertising revolution.
+
+     What most non-advertisers don’t know is that while advertising to a broader audience is excellent for business, ads can be and have been, used as a sharp skewer, precisely targeting a single individual. Modern ad platforms have given advertisers the power to reach anyone they please, anywhere in the world; this power could be harnessed by malicious users to serve as a gateway onto the network of their intended victim.",
+     "index" : "11",
+     "end_date" : "2017-09-02T15:20:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "False Advertising: How Modern Ad Platforms Can Be Used for Targeted Exploitation"
+ }
+ ,
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "13",
+       "who" : "Marc Newlin"
+   },
+   {
+       "indexsp" : "14",
+       "who" : "Logan Lamb"
+   },{
+       "indexsp" : "15",
+       "who" : "Marc Newlin"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c1012",
+     "start_date" : "2017-09-02T15:30:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#12",
+     "location" : "Track 1",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "",
+     "index" : "12",
+     "end_date" : "2017-09-02T16:20:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Untitled"
+ }
+ ,
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "16",
+       "who" : "Chris Thompson / @retBandit"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c1013",
+     "start_date" : "2017-09-02T03:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#13",
+     "location" : "Track 2",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "Windows Defender Advanced Threat Protection will soon be available for all Blue Teams to utilize within Windows 10 Enterprise, which includes detection of post breach tools, tactics and techniques commonly used by Red Teams, as well as behavior analytics. Combined with Microsoft Advanced Threat Analytics for user behavior analytics across the Domain, Red Teamers will soon face a significantly more challenging time maintaining stealth while performing internal recon, lateral movement, and privilege escalation in Windows 10/Active Directory environments.
+
+     This talk highlights challenges to red teams posed by Microsoft’s new tools based on common hacking tools/techniques, and covers techniques which can be used to bypass, disable, or avoid high severity alerts within Windows Defender ATP and Microsoft ATA, as well as TTP used against mature organizations that may have additional controls in place such as Event Log Forwarding and Sysmon.",
+     "index" : "13",
+     "end_date" : "2017-09-02T03:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "MS Just Gave the Blue Team Tactical Nukes (And How Red Teams Need To Adapt)"
+ }
+ ,
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "17",
+       "who" : "Samy"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2014",
+     "start_date" : "2017-09-03T11:30:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#28",
+     "location" : "Track 1",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "In this talk I’ll share the exciting details on researching and creating attack tools to perform automated wireless keyfob reconnaissance and demonstrate wirelessly unlocking and starting cars. This will focus primarily on using low cost tools, investigating proprietary chips and protocols (with no datasheets available), and creating new tools to aid in research.",
+     "index" : "14",
+     "end_date" : "2017-09-03T11:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Vehicle Keyfob Reconnaissance & Attacks"
+ },
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "18",
+       "who" : "Ric Messier"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2015",
+     "start_date" : "2017-09-03T12:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#14",
+     "location" : "Track 1",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "Using a simulated ICS/SCADA environment using a Modbus-based Python setup, the presentation will show different ways of interacting with that environment. This includes breaking apart the Modbus protocol, how programmable logic controllers are setup with respect to the Modbus protocol and how to use Metasploit to manipulate the environment.",
+     "index" : "15",
+     "end_date" : "2017-09-03T12:20:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Hacking Around ICS and Modbus"
+ },
+
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "19",
+       "who" : "Aditya Balapure"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2016",
+     "start_date" : "2017-09-03T12:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#15",
+     "location" : "Track 2",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "WordPress currently runs a large part of the internet ecosystem. Most companies use it in some shape or form of its web presence as a company blog, website, forum etc. The bad guys have kept pace with the development of the core product and have constantly demonstrated new ways of identifying vulnerabilities on the platform, exploiting weaknesses and using the exploited infrastructure for fun and profit.
+
+     With more and more companies moving towards agile technologies and a DevOps culture it has been a challenge for the security teams to keep pace with the constant changes in their infrastructure. It has been difficult for the security teams to review each line of code and perform penetration test for every new feature that makes it to production. The talk discusses ways of managing the pace of software development changes for security teams and following an agile strategy to allow them to stay ahead of vulnerabilities/bugs in daily changes of production code and build better detection on their WordPress infrastructure.
+
+     We have been witnessing more of the web infrastructure moving towards API driven capabilities and same has been the story for WordPress providing leverage for attackers to use automated techniques.
+
+     The talk focuses on securing programmatic access to WordPress APIs, understanding its weaknesses and how attackers have been exploiting it with the help of major botnet networks. We would deep dive for learning about the techniques attackers/botnets have been using to do initial recon followed by exploitation on WordPress sites. This talk would share trends of how the attack space has looked in the last few years and has been changing with time for WordPress. As part of the learning experience security teams would learn simple strategies to reduce the exposure of their WordPress infrastructure to such attacks and stay a step ahead of the bad guys.",
+     "index" : "16",
+     "end_date" : "2017-09-03T12:20:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Agile Security in WordPress Deployments"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "20",
+       "who" : "Ulrich Lang (@objectsecurity)"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2017",
+     "start_date" : "2017-09-03T12:30:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#16",
+     "location" : "Track 1",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "Many cybersecurity experts have said for years that we need to do better whitelisting, and that relying on blacklisting and anomaly detection is not good enough anymore. Unfortunately, organizations often cannot technically implement the comprehensive security policies they want to (or should want to). This is because there are too many overlapping technical configs in too many places, and everything keeps changing dynamically. This is particularly hard for large, interconnected “IT landscapes” like IoT. We need better security policy automation tools that allow us to write policies in generic, simple terms, and automatically implement them, and update them if the IT landscape changes. This is of course easier said than done. In this talk we will present (and run a demo) of security policy automation we are developing as part of a current government R&D subcontract (across an interconnected medical device landscape and across an interconnected intelligent transport system). It allows to author generic policies, ingests numerous data sources, tests policies, generates technical policy configurations, and monitor. The presentation will explain technical approaches, benefits and challenges",
+     "index" : "17",
+     "end_date" : "2017-09-03T12:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Dynamic whitelisting and security policy automation – pipe-dream or not?"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "21",
+       "who" : "Kashish Mittal"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2018",
+     "start_date" : "2017-09-03T12:30:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#17",
+     "location" : "Track 2",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "For an outsider, the world of cybersecurity and hacking can be complex and mystifying. People are intrigued and terrified by the “400 lb hacker.” With phishing and other forms of social engineering still being one of the most common root cause of breach, there is a need to empower a company’s employees, especially the non-technical ones, to be able to defend and not fall prey to such attacks. Similarly, the increase in the amount of code being written along with the shortage of cybersecurity professionals calls for a need to train software developers in Security. Traditional methods of awareness including lectures, videos etc. have been ineffective in achieving this adequately. I claim this based on reports by organizations such as Experian, Ponemon etc. and the extensive internal research done at my current company. I present a novel system for cybersecurity training and awareness : Security Gamification including CTF ( Capture The Flags). The training emphasizes on a ‘no one left behind’ principle in which all the employees at a company get trained in CyberSecurity defense.
+
+     CTFs are online cybersecurity competitions that involve practical hands on training through Security puzzle solving. They are mostly played by current or aspiring Security professionals and have proven to be one of the best ways to learn about Security and defense. My training method is novel in that this is the first publicly released use of CTFs and Security puzzles to train developers and non-technical people. CTFs rely on the interactive ‘learning by doing’ methodology which has proven to be more successful than the one-way incoming lecture style. We use this methodology to gamify the Security training for technical as well as nontechnical employees by varying the scopes and level of challenges. The idea is to help the participants learn how to defend by making them break or hack things in a controlled environment. It helps the participants defend better by getting into the attacker mindset, thereby de-mystifying the hacking world. Additionally, the healthy competition amongst employees, the fun puzzle based format and the chance to work in teams all provides exceptional learning opportunities.
+
+     In my presentation, I will also delve into the key take-aways for people interested in building a similar system at their respective companies. This detailed interaction will contain discussions about the reconnaissance of Security awareness at a company needed as step one of building this system. Then, it will go on to demo some example challenges for both developers as well as non-technical employees. I also plan to include a brief section about how to present it such that the employees and leadership are excited about it rather than seeing it as a burden.
+
+     One of the many appealing things about this system is its ability to effectively track and quantifiably measure the increase in Security awareness and defense capabilities over time. Starting from the reconnaissance phase, all the way to successfully completing the implementation and even after that, the system provides functionality of number of challenges solved, time taken, number of attempts etc. for each employee which can also be combined per team, per department or the whole company etc.",
+     "index" : "18",
+     "end_date" : "2017-09-03T12:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "No one left behind : Security Defense through Gamification including CTFs"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "22",
+       "who" : "Kai Lu"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2019",
+     "start_date" : "2017-09-03T14:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#18",
+     "location" : "Track 1",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "FlexiSpy for Android is a spy app with full IM tracking, VoIP call recording and live call interception. It also can spy on messages, GPS, multimedia, Internet, applications, etc. In short, FlexiSpy can take total control of an Android mobile phone or tablet and spy on all its communications and activities from any computer with a web browser.
+     At the end of April 2017, Flexidie released the source code and binaries of the FlexiSpy Android spy app. I have been reviewing the leaked data and have finished the deep analysis of the app around the middle of May.",
+     "index" : "19",
+     "end_date" : "2017-09-03T14:20:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Dig Deep into FlexiSpy for Android"
+ },
+
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "23",
+       "who" : "Sharad Kumar"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2020",
+     "start_date" : "2017-09-03T14:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#19",
+     "location" : "Track 2",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "Starting from Espionage and ending at OSINT, our data gathering techniques has been developed magnificently. In 90′s, the security posture of national security, law enforcement agencies, Cyber Security agencies was totally different. At that time gathering, data about someone was very difficult due to fewer Internet resources.But, this digital era has overcome the techniques used for information gathering in 90′s by Intelligence Gathering. It includes gathering data from various public sources and their API. Activities which one performs in its entire lifespan is recorded by various public sources.Intelligence Gathering includes human, geo-location, open-source, signals, digital and financial intelligence. The CIA, NSA, and RGA are using OSINT for collecting data as collateral information.
+     In order to debunk people myth’s about information gathering, I made an open source tool called as OSINT-SPY which I will release after this talk. OSINT-SPY can find information about a person, email, an organization, person’s geolocation, domain names, publically available devices on the internet and so on. It can be used by Data Miners, Infosec Researchers, Penetration Testers and cyber crime investigator in order to find deep information about their target.
+     In this talk, my main focus will be to demonstrate different techniques to gather information from public API, resources and understanding the need of implementing OSINT in any organization because open sources may often be useful in penetrating across closed borders than open societies.",
+     "index" : "20",
+     "end_date" : "2017-09-03T14:20:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "From 90′s to 20′s | Espionage to Intelligence — Birth Of OSINT"
+ },
+
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "24",
+       "who" : "Rafael Fontes Souza"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2021",
+     "start_date" : "2017-09-03T14:30:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#20",
+     "location" : "Track 1",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "This presentation is about a creative approach to intrusion tests, as the popular saying would say: “–The dog is man’s best friend” (he makes you feel good and secure).
+
+     Let’s explore the vulnerability of layer eight, the human being, subject to error and the social engineering techniques; This is an innovative method, with art and style, will be simpler than it sounds; The dog will be used as an attack tool, which will carry a mobile phone hidden along with its pectoral collar.
+
+     The attack vectors are triggered automatically without any human interaction. This may include geographically close attacks, such as fake Wi-Fi access points, cellular base stations or local user attacks on a network, we can exploit DNS hijacking, packet injection, Evil-Twin, rogue router or ISP, and many other variants.
+
+     Furthermore, the target will connect to your rogue wifi access point and the rules are enabled with the DHCP configurations to allow fake AP to allocate IP address to the clients and forward traffic to a fake/malicious web-site; Then, the information can be stored easily as well the injection of malicious file to remotely control the victim.
+     And it’s done. You can drop your hacker dog in a park and expect him to hack people for you, quietly, that’s perfect!",
+     "index" : "21",
+     "end_date" : "2017-09-03T14:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "My dog is a hacker and will steal your data!"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "25",
+       "who" : "Ryan Satterfield"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2022",
+     "start_date" : "2017-09-03T14:30:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#21",
+     "location" : "Track X",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "Do you like binary analysis? Do you like gaining control of drones flying in the sky? Then this talk is for you. It covers consumer grade drones and their security flaws.",
+     "index" : "22",
+     "end_date" : "2017-09-03T14:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Gaining control of the sky: an in-depth drone security talk"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "26",
+       "who" : "Alain Iamburg"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2023",
+     "start_date" : "2017-09-03T15:30:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#22",
+     "location" : "Track 1",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "Serial flash chips are found in (almost) all embedded devices however they usually have little to no security protection enabled, thus exposing them to eavesdropping and tampering attacks. These chips contain critical data that can be leveraged during vulnerability research such as device firmware and bootloader images, certificates, and configurations.
+     
+     In this talk I will introduce the most common types of serial flash, and then walk through some practical security assessment techniques while sharing use cases from my prior engagements. I will discuss various hardware and software tools including a new tool I created called sniffROM.",
+     "index" : "23",
+     "end_date" : "2017-09-03T15:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Serial Flash Chips: The Little Elephants in the Lab"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "27",
+       "who" : "Billy / Cannibal"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2024",
+     "start_date" : "2017-09-03T15:30:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#23",
+     "location" : "Track 2",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "Bringing awareness to the pain felt in the healthcare industry from a security standpoint, what attackers are targeting, and how the industry needs to steer itself to prevent further patient risk and mishandling of data.
+
+     I’ll be covering a brief background on HIPAA, how it has set the stage for a series of failures, what those failures are, and things individuals and the medical industry can do to protect themselves",
+     "index" : "24",
+     "end_date" : "2017-09-03T15:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "The state of Security in the Medical Industry"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "28",
+       "who" : "Santiago Hernandez"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2025",
+     "start_date" : "2017-09-03T16:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#24",
+     "location" : "Track 1",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "This talk presents an analysis of security shortfalls in the implementation of the Remote Registry protocol by the latest Windows operating systems (such as Windows 10). The analysis shows how these weaknesses can be used by an attacker applying a man in the middle technique to write arbitrary data to the victim’s Windows registry, and consequently execute code remotely. The article also describes a tool capable of intercepting the Windows Registry protocol packets and modifying them.
+
+     The insertion of these values is not trivial, since the modification of the length of a field in a certain packet layer causes inconsistency in the control fields of the lower layers (such as lengths or checksums). Additionally, the following sequence number of a packet in a session is based on the length of the packet, causing the connection to break. The tool automatically recalculates all control fields for the TCP / IP / SMB2 / RPC layers of the different protocol packets, and applies an algorithm for correcting the sequence numbers of all packets so that, once a value has been entered by an attacker, the connection will not break. This tool is the only public application capable of performing a man in the middle attack on the Remote Windows Registry protocol.",
+     "index" : "25",
+     "end_date" : "2017-09-03T16:20:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "WinReg MiTM: Simple Injection and Remote Fileless Payload Execution"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "29",
+       "who" : "Marcelo Mansur"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2026",
+     "start_date" : "2017-09-03T16:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#25",
+     "location" : "Track 2",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "This talk starts with the beginnings of my own career in a dicey investment brokerage and discusses some old school boiler room practices before moving on to insider trading, cryptocurrencies, dark markets and the growing prevalence of hackers in the murky world of investment fraud. I’ll be covering:
+
+     -The scammers I worked for, what they sold and how they fooled us all
+     -Insider trading and false rumour spreading
+     -Amaranth, Galleon Group and Jonathan LeBed
+     -Cryptocurrency and online trading
+     -Fin4, The Macau 3 and The Wall Street/Kiev coalition
+     -The darknet exchanges for inside information
+     -Employee bribery and shopping lists of secrets
+     -What the hell are we supposed to do now?",
+     "index" : "26",
+     "end_date" : "2017-09-03T16:20:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Financial Crime: The Past, The Present and The Future"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "30",
+       "who" : "Guillermo Buendia"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2027",
+     "start_date" : "2017-09-03T16:30:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#26",
+     "location" : "Track 1",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "Back in 2016, it was very new the way how the Facebook mobile application implements content through Instant articles. A user can view content from third parties directly in the Facebook platform without requiring to open the Browser, for instance. This content can also be shared, saved, opened in browser and so on.
+
+     In this talk, we will share how this Instant articles, and the way the were shared, lead us to the possibility to access Facebook accounts and how through internet searches this became a huge problem! We’ll discuss how we identify the issue and how it was tested, reported, fixed, rewarded and also we talk about a new vector attack for further research",
+     "index" : "27",
+     "end_date" : "2017-09-03T16:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "How to obtain 100 Facebook accounts per day through internet searches"
+ },
+
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "31",
+       "who" : "Pavel Bansky"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2028",
+     "start_date" : "2017-09-03T16:30:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/conference/#27",
+     "location" : "Track 2",
+     "demo" : 0,
+     "entry_type" : "Conference",
+     "description" : "It is widely accepted that security mistakes are quicker and cheaper to fix the sooner they are identified after being introduced. With that as a guiding principle, DevSkim was developed to help identify certain insecure patterns as the developer is writing code within their IDE. Currently integrating with Visual Studio, Visual Studio Code, and Sublime, DevSkim is an open sourced extension that flags insecure patterns inline in the IDE, provides security guidance to explain the issue, and offers automatic fixes. DevSkim supports multiple programming and scripting languages, and its rules syntax makes adding a new rule for any language straightforward. The most effective security processes use layers of validation to identify and address security mistakes – DevSkim aims to be the first layer in that approach, complementing rather than replacing more time intensive build time Static Analysis, or post-build Dynamic Analysis.",
+     "index" : "28",
+     "end_date" : "2017-09-03T16:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Detecting security issues as fast as you making them"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "32",
+       "who" : "Josh Stroschein, PhD, VDA Labs"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19w1029",
+     "start_date" : "2017-09-01T09:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/workshops/#amt",
+     "location" : "Workshop",
+     "demo" : 0,
+     "entry_type" : "Workshops",
+     "description" : "Dive deep into real world malware events. Tear them apart. Unwrap the layers of obfuscation. Find the exploit. Protect your network. Explore exploits kits and ransomware. Join the fun and make the world a little safer.",
+     "index" : "29",
+     "end_date" : "2017-09-03T16:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Advanced Malware Training – 2 Day"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "32",
+       "who" : "Josh Stroschein, PhD, VDA Labs"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19w1030",
+     "start_date" : "2017-09-01T09:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/workshops/#soc",
+     "location" : "Workshop",
+     "demo" : 0,
+     "entry_type" : "Workshops",
+     "description" : "This is a great first malware and incident investigations class. The goal of the class is to consider the basic workflow of a typical internal IT security/SOC analyst, but go a number of steps beyond that. Rather than just guess about the severity of a particular security alert, how deep of an investigation is practical in 20min? You’d be surprised. But first you have to get comfortable with all the tools and techniques. That’s what we do in this class..",
+     "index" : "30",
+     "end_date" : "2017-09-03T16:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "The Hak5 Toolkit Workshop – 2Day"
+ },
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "33",
+       "who" : "Rob ‘mubix’ Fuller, Hak5"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2031",
+     "start_date" : "2017-09-01T09:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/workshops/#hak5",
+     "location" : "Workshop",
+     "demo" : 0,
+     "entry_type" : "Workshops",
+     "description" : "Learn the ins and outs of renowned information security tools in this two day, hands-­on Hak5 Toolkit class. From wireless auditing with the WiFi Pineapple to clandestine remove access with the USB Rubber Ducky and LAN Turtle. This class serves as an introduction to the techniques and best practices of exploiting these pen-testing tools. Using the WiFi Pineapple, students will learn the theory of wireless network operation, how to passively analyze the WiFi landscape, identify targets, configure attacks, and actively monitor and manipulate client traffic. Using the USB Rubber Ducky, students will learn how to effectively employ keystroke injection attacks by writing payloads to exfiltrate data, attain remote access, harvest credentials and brute force smartphone PIN codes. Using the LAN Turtle, students will learn how to maintain persistent remote access into networks using reverse shells as well as employ various man­-in-­the-­middle attacks. Nearly 30 exercises reinforce the theory and best practices taught throughout this class. Students will receive a special Hak5 field kit including print course material and one each of the Hak5 tools; WiFi Pineapple, USB Rubber Ducky and LAN Turtle.",
+     "index" : "31",
+     "end_date" : "2017-09-03T16:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "The Hak5 Toolkit Workshop"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "34",
+       "who" : "Joe Fitzpatrick, toothless.co"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2032",
+     "start_date" : "2017-09-01T09:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/workshops/#hhw",
+     "location" : "Workshop",
+     "demo" : 0,
+     "entry_type" : "Workshops",
+     "description" : "Hardware security analysis differs from software security analysis primarily in the tools and techniques required for the task at hand. However, many security researchers overestimate the learning curve required to begin successfully performing embedded hardware analysis. This training is specifically designed for security researchers who wish to improve their familiarity with hardware security and hardware implementations in particular. The training is built as a set of Capture the Flag (CTF) style assignments designed to familiarize students with common flaws in hardware implementations. In this training, students will learn to develop custom hardware implementations utilizing programmable logic, i.e. Field-Programmable Gate Arrays (FPGAs) and Complex Programmable Logic Devices (CPLDs). Students will thoroughly understand the advantages of building tools based on programmable logic, understand how hardware implementations are realized and exploit several common hardware security flaws",
+     "index" : "32",
+     "end_date" : "2017-09-03T16:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Hardware Hacking Workshop – 4 Day"
+ },
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "35",
+       "who" : "Michael Ossmann, Great Scott Gadgets"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19c2033",
+     "start_date" : "2017-09-01T09:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/workshops/#sdr",
+     "location" : "Workshop",
+     "demo" : 0,
+     "entry_type" : "Workshops",
+     "description" : "The two day Software Defined Radio (SDR) workshop at ToorCon is an introduction to digital signal processing, software radio, and the powerful tools that enable the growing array of SDR projects within the hacker community. This course takes a unique “software radio for hackers” approach, building on the participants’ knowledge of computer programming and introducing them to the forefront of digital radio technology. Participants will learn how to transmit, receive, and analyze radio signals and will be prepared to use this knowledge in the research of wireless communication security.",
+     "index" : "33",
+     "end_date" : "2017-09-03T16:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Software Defined Radio Workshop – 2 Day"
+ },
+
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "36",
+       "who" : "Alex Bazhanjuk"
+   },
+   {
+       "indexsp" : "37",
+       "who" : "Yuriy Bulygin"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19s1034",
+     "start_date" : "2017-09-01T09:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/seminars/",
+     "location" : "Seminars",
+     "demo" : 0,
+     "entry_type" : "Seminars",
+     "description" : "In this research, we’ve explored attack surface of hypervisor and firmware in two different platforms: arm and x86. We will explain different attack scenarios using interrupts and other interfaces, as well as interaction methods between firmware and hypervisor privilege levels. We will explore common vector attacks for both architectures",
+     "index" : "34",
+     "end_date" : "2017-09-01T10:20:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Explore firmware in different platforms with CHIPSEC framework"
+ },
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "38",
+       "who" : "Adam Brand"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19s1035",
+     "start_date" : "2017-09-01T10:30:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/seminars/",
+     "location" : "Seminars",
+     "demo" : 0,
+     "entry_type" : "Seminars",
+     "description" : "Threat Hunting is a fun way to turn the tables on attackers on your network by proactively looking for them instead of reacting to alerts. How can you get started in hunting? We’ll start with some hunting basics and then get into some things you CAN try at home (or at work) to find badness on computers or networks",
+     "index" : "35",
+     "end_date" : "2017-09-01T11:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "How to Hunt (Threats, not Bambi)"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "39",
+       "who" : "Robert C. Seacord"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19s1036",
+     "start_date" : "2017-09-01T13:30:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/seminars/",
+     "location" : "Seminars",
+     "demo" : 0,
+     "entry_type" : "Seminars",
+     "description" : "Java Serialization is an important and useful feature of Core Java that allows developers to transform a graph of Java objects into a stream of bytes for storage or transmission and then back into a graph of Java objects. Unfortunately, the Java Serialization architecture is highly insecure and has led to numerous vulnerabilities, including remote code execution (RCE) and denial-of-service (DoS) attacks. Any Java program that deserializes a stream is susceptible to such vulnerabilities unless proper mitigations are taken. One such mitigation strategy is look-ahead deserialization or look-ahead object input streams (LAOIS). This presentation examines Java deserialization vulnerabilities and evaluates various LAOIS solutions including JDK Enhancement Proposal (JEP) 290.",
+     "index" : "36",
+     "end_date" : "2017-09-01T14:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Combating Java Deserialization Vulnerabilities with LAOIS"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "40",
+       "who" : "Jon Medina"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19s1037",
+     "start_date" : "2017-09-01T15:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/seminars/",
+     "location" : "Seminars",
+     "demo" : 0,
+     "entry_type" : "Seminars",
+     "description" : "Software Defined Networking is no longer a fledgling technology. Google, Amazon, Facebook, and Verizon all rely on the scalability, programmability, flexibility, availability, and yes, security provided by SDN. So why is there so little discussion on the security risks, advantages, and current research on the topic?
+     This talk will provide a brief introduction to SDN and security, demonstrate ways of compromising and securing a Software Defined Network and will illustrate new ways of using the power of open source SDN coupled with machine learning to maintain self-defending networks.",
+     "index" : "37",
+     "end_date" : "2017-09-01T16:20:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "SDN and the future of network security"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+      {
+       "indexsp" : "41",
+       "who" : "Chuck McAuley"
+   }
+],
+     "tool" : 0,
+     "id" : "tc19s1038",
+     "start_date" : "2017-09-01T16:30:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/seminars/",
+     "location" : "Seminars",
+     "demo" : 0,
+     "entry_type" : "Seminars",
+     "description" : "The Mirai botnet has brought public awareness to the danger of poorly secured embedded devices. Its ability to propagate is fast and reliable. Its impact can be devastating and variants of it will be around for a long time. You need to identify it, stop it, and prevent its spread. I had the opportunity to become familiar with the structure, design, and weaknesses of Mirai and its variants. At this talk you’ll learn how to detect members of the botnet, mess with them through various means and setup a safe live fire lab environment for your own amusement. I will demonstrate how to join a C2 server, how to collect new samples for study, and some changes that have occurred since release of the source code. By the end you’ll be armed and ready to take the fight to these jerks. Unless you’re a botnet operator. Then you’ll learn about some of the mistakes you made.",
+     "index" : "38",
+     "end_date" : "2017-09-01T17:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Disrupting the Mirai Botnet"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+     ],
+     "tool" : 0,
+     "id" : "tc19v1039",
+     "start_date" : "2017-09-02T09:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/contests/",
+     "location" : "Contest",
+     "demo" : 0,
+     "entry_type" : "Contests",
+     "description" : "The TC:CTF will use a Jeopardy style board with challenges for folks who are trying it out for their first time to experienced CTFers. Challenges will span many domains including web hacking, system hacking, forensics, reverse engineering, and crypto. You can sign up onsite and you can follow us on twitter at @ToorconCTF There will be prizes for winners, including DragonBoards donated by Qualcomm!",
+     "index" : "39",
+     "end_date" : "2017-09-02T16:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Contest – TC:CTF"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+     ],
+     "tool" : 0,
+     "id" : "tc19v1040",
+     "start_date" : "2017-09-02T09:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/contests/",
+     "location" : "Contest",
+     "demo" : 0,
+     "entry_type" : "Contests",
+     "description" : "The Lockpicking Village is a special area where attendees can learn about locks, safes, and physical security. Attendees are given hands-on training with lockpicking, safecracking, and many other methods of attack. Some features of the village:
+
+     * Practice locks of varying difficulty to test your skills
+     * Safe and vault locks for those who want to try safecracking
+     * Collection of high security locks from around the world
+     * Mini-lectures throughout the weekend on various topics
+
+     This year’s lockpicking village is brought to you by www.lockwiki.com",
+     "index" : "40",
+     "end_date" : "2017-09-02T16:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Event – Lockpicking Village"
+ },
+ {
+
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+     ],
+     "tool" : 0,
+     "id" : "tc19v1041",
+     "start_date" : "2017-09-02T09:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/contests/",
+     "location" : "Contest",
+     "demo" : 0,
+     "entry_type" : "Contests",
+     "description" : "The Box is a mini-contest hosted inside the Toorcon Lockpicking / Tamper-Evident Village. The premise is simple: defuse a bomb! Make a mistake and get blown up. Don’t worry, you can respawn at the back of the line. The Box is an extremely realistic EOD challenge that will test your skills against a variety of traps, alarms, and tamper-evident sensors.
+
+     Official Rules:
+
+     * Do not cut any wires or remove any tape. The Box will instantly kill you in 99.9% of these situations and you’ll force the TEV staff to waste time making repairs.
+     
+
+     * If Rule #1 isn’t explicit enough, do not cause any permanent damage or modification to The Box.
+     
+
+     * Two players form a team; signups start on Friday in the TEV. Only team members can be near The Box during your run.
+     
+
+     * You are not provided any tools. What sort of EOD tech doesn’t bring tools? The Box can be beat with less than $5 of easily acquired equipment.
+     
+
+     * If you blow up, stop what you’re doing and step back from the box. You’re dead. Please don’t make us install the dye packs and flashbangs (seriously).
+     Please let datagram know if you have any questions. Good luck to all those who compete!",
+     "index" : "41",
+     "end_date" : "2017-09-02T16:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Contest – The Box"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+     ],
+     "tool" : 0,
+     "id" : "tc19v1042",
+     "start_date" : "2017-09-02T09:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/contests/",
+     "location" : "Contest",
+     "demo" : 0,
+     "entry_type" : "Contests",
+     "description" : "SOHOpelessly Broken, presented by Independent Security Evaluators (ISE), is back at ToorCon for our second year! We have expanded the contest to not only include SOHO routers, but other types of IoT devices such as network storage systems, cameras, and IP enabled toys!
+
+     Track 1: This is an at-con capture the flag style contest where contestants will be pitted against 15+ off-the-shelf IoT devices, hardened, but with known vulnerabilities. Contestants must identify weaknesses and exploit these devices to gain control. Pop as many as you can over the weekend to win.
+
+     Track 2: This is a surprise contest that will take place at random times throughout the conference.
+
+     Track 3: Hack shop area for people to actively hack and collaborate on selected devices.",
+     "index" : "42",
+     "end_date" : "2017-09-02T16:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Contest – SOHOpelessly Broken"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+     ],
+     "tool" : 0,
+     "id" : "tc19p1043",
+     "start_date" : "2017-09-02T22:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/contests/",
+     "location" : "",
+     "demo" : 0,
+     "entry_type" : "Contests",
+     "description" : "We’re back again for another year of fun. We have an entire establishment to hang out at, drinks, great DJs, and plenty of fun. Pay attention during the Con for more information and all of the details! Event sponsored by: Qualcomm!",
+     "index" : "43",
+     "end_date" : "2017-09-03T01:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Event - SATURDAY NIGHT PARTY"
+ },
+
+ {
+     "exploit" : 0,
+     "dctv_channel" : "0",
+     "who" : [
+     ],
+     "tool" : 0,
+     "id" : "tc19p1044",
+     "start_date" : "2017-09-02T22:00:00-07:00",
+     "includes" : "",
+     "recommended" : "0",
+     "link" : "https://sandiego.toorcon.net/contests/",
+     "location" : "",
+     "demo" : 0,
+     "entry_type" : "Contests",
+     "description" : "As all of the conference attendees roll into town, please come join us for a appetizers and drinks at the ToorCon Friday Night Reception. Meet up with old friends and make a few new ones! Afterwards, enjoy the dining and late night experiences San Diego’s Gas Lamp District has to offer.",
+     "index" : "44",
+     "end_date" : "2017-09-03T01:50:00-07:00",
+     "updated_at" : "2017-08-24T22:08:28-07:00",
+     "title" : "Event – FRIDAY NIGHT RECEPTION"
+ }
+
 ]
 }

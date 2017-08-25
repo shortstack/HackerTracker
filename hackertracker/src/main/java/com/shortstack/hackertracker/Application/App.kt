@@ -69,7 +69,7 @@ class App : Application() {
     fun updateDatabaseController() {
         val name = if (storage.databaseSelected == 0) Constants.DEFCON_DATABASE_NAME else Constants.TOORCON_DATABASE_NAME
         Logger.d("Creating database controller with database: $name")
-        databaseController = DEFCONDatabaseController(appContext)
+        databaseController = DEFCONDatabaseController(appContext, name = name)
         databaseController.checkDatabase()
     }
 
