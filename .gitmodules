@@ -1,0 +1,3 @@
+[submodule "conferences"]
+	path = conferences
+	url = https://github.com/BeezleLabs/conferences
