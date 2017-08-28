@@ -1,0 +1,6 @@
+[submodule "conferences"]
+	path = conferences
+	url = https://github.com/BeezleLabs/conferences
+[submodule "hackertracker/src/main/assets/conferences"]
+	path = hackertracker/src/main/assets/conferences
+	url = https://github.com/BeezleLabs/conferences
