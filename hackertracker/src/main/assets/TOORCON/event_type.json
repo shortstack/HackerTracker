@@ -12,6 +12,18 @@
       {
          "event_type" : "Contests"
       }
+      ,
+      {
+         "event_type" : "Parties"
+      }
+      ,
+      {
+         "event_type" : "Events"
+      }
+      ,
+      {
+         "event_type" : "Break"
+      }
    ],
    "update_date" : "2017-08-24T22:08:28-07:00"
 }
