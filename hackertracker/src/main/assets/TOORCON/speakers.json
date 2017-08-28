@@ -1,356 +1,333 @@
 {
-   "speakers" : [
-      {
-         "sptitle" : "",
-         "who" : "Lance James",
-         "indexsp" : "1",
-         "last_update" : "2017-08-24T22:08:28-07:00",
-         "media" : "",
-         "bio" : "Lance is an internationally renowned information security specialist. He has more than 20 years of experience in programming, network security, digital forensics, malware research, cryptography design, cryptanalysis, counterintelligence, and protocol exploitation. He provides advisory services to a wide range of government agencies and Fortune 500 organizations including America’s top financial services institutions. Credited with the identification of Zeus and other malware, Lance is an active contributor to the evolution of security practices and counterintelligence tactics and strategies. He is currently the  Chief Scientist at Flashpoint where he oversees Flashpoint’s research and development and engages in thought leadership. Prior to joining Flashpoint, Lance was the Head of Cyber Intelligence at Deloitte & Touche LLP."
-      },
-         {
-         "sptitle" : "",
-         "who" : "Dominic Spill",
-         "indexsp" : "2",
-         "last_update" : "2017-08-24T22:08:28-07:00",
-         "media" : "",
-         "bio" : "Dominic is a senior security researcher at Great Scott Gadgets where he writes software and firmware for open source hardware. His primary focus is sniffing and modifying communication protocols."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Kyle Temkin",
-         "indexsp" : "3",
-         "last_update" : "2017-08-24T22:08:28-07:00",
-         "media" : "",
-         "bio" : "Kyle J. Temkin leads the low-level Computer Architectures group at Assured Information Security, researching a variety of hardware hacking and architectural security topics. Kyle maintains and contributes to a variety of open-source projects, and probably spends way too much time reverse engineering and collecting electronic lab equipment."
-      },
-      {
-         "sptitle" : "",
-         "who" : "James Barclay",
-         "indexsp" : "4",
-         "last_update" : "2017-08-24T22:08:28-07:00",
-         "media" : "",
-         "bio" : "James Barclay is an R&D Engineer at Duo Labs, the security research and analysis team at Duo Security. Prior to joining Duo, James was a Tools Engineer at Pinterest, and an IT consultant before that. He’s contributed to a handful of open-source projects, and has been called an Apple nerd once or twice."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Robert Portvliet",
-         "indexsp" : "5",
-         "last_update" : "2017-08-24T22:08:28-07:00",
-         "media" : "",
-         "bio" : "Robert Portvliet is technical director of red team services at Cylance with over 8 years experience in various disciplines of penetration testing. His focus is on embedded systems and wireless penetration penetration testing and reverse engineering. Prior to joining Cylance, he was the network security service line lead for Foundstone and taught the ‘Ultimate Hacking: Wireless’ class at Blackhat 2011-2013."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Aaron Hnatiw",
-         "indexsp" : "6",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "As a Senior Security Researcher at Security Compass, Aaron Hnatiw is constantly looking into the future to find ways to secure the world of tomorrow. Whether that’s through security automation, blockchain technology, or machine learning/artificial intelligence, he’s always working on the leading edge of information security. He has worked in most aspects of the information technology field, holding previous positions as a security consultant, system administrator, software developer, and college professor in application security. In his spare time, Aaron enjoys writing security tools and contributing to the open source community."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Mohamad Mokbel",
-         "indexsp" : "7",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Mohamad Mokbel is a security researcher at Trend Micro, member of the Digital Vaccine Lab. He’s responsible for reverse engineering vulnerabilities and malware C&C communication protocols, among others, for the purpose of writing custom filters for TippingPoint NGIPS. Prior to joining Trend Micro, Mohamad worked for CIBC in the security operation center, one of the top five banks in Canada as a senior information security consultant – investigator (L3) where he realized that experience in the operation field is extremely important to understand the real sides of offense and defense. Prior to CIBC, Mohamad worked for Telus Security Lab as a reverse engineer/malware researcher for about 5 years. He’s been doing reverse code engineering for last 12 years.
-
-His research interests lie in the areas of reverse code engineering, malware research, intrusion detection/prevention systems, C++, compiler and software performance analysis, information security, and exotic communication protocols.
-
-Mohamad holds a MSc. in Computer Science from the University of Windsor and BSc. in Computer Engineering from the Lebanese International University."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Ernest Wong",
-         "indexsp" : "8",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Ernest Y. Wong is the Chief of Staff at the Army Cyber Institute and teaches Systems Engineering at West Point. He holds a Master of Military Science from Kuwait’s Mubarak al-Abdullah Staff College and earned a MS in management science & engineering and a MA in education from Stanford. He was a NASA Summer Faculty Fellow and has served in Iraq, Kuwait, and the Republic of Korea. He enjoys researching disruptive innovations and cyber resiliency."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Chema Alonso",
-         "indexsp" : "9",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Chema Alonso is the CDO – Chief Data Officer – at Telefónica. In this position he heads the company’s Big Data strategy, Advertising and the Fourth Platform. As part of the work to define the Fourth Platform, he also leads the Personal Data Bank team and is the main internal promoter of the Data Transparency Lab. He is also responsible for global cybersecurity and data security, having created the new Global Security Unit with the Information Security Global Business in B2B & B2C and Eleven Paths."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Gurney Halleck",
-         "indexsp" : "10",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "- Over twenty years in computer and network security
-- Concentration in offensive security
-- R&D in offensive cyber systems
-- Employed by a major aerospace corporation
-- Design and development of cyber range systems
-- Pentest and vulnerability assessment
-- Over two years Red Team lead in cyber wargame TTXs."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Will Caput",
-         "indexsp" : "11",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "I’m a professional pen-tester with over a decade of experience in the offensive security field."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Tyler Cook",
-         "indexsp" : "12",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "My name is Tyler, I like to break things"
-      },
-      {
-         "sptitle" : "",
-         "who" : "Marc Newlin",
-         "indexsp" : "13",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Marc is a wireless security researcher at Bastille, where he discovered the MouseJack and KeySniffer vulnerabilities affecting wireless mice and keyboards. A glutton for challenging side projects, Marc competed solo in two DARPA challenges, placing third in the DARPA Shredder Challenge, and second in the first tournament of the DARPA Spectrum Challenge."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Logan Lamb",
-         "indexsp" : "14",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Logan joined Bastille Networks in 2014 as a security researcher focusing on applications of SDR to IoT. Prior to joining Bastille Networks, he was a member of CSIR at Oak Ridge National Lab where his focus was on symbolic analysis of binaries and red-teaming critical infrastructure."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Chris Grayson",
-         "indexsp" : "15",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Christopher Grayson (OSCE) is the founder and principal engineer at Web Sight.IO. In this role he handles all operations, development, and research efforts. Christopher is an avid computing enthusiast hailing from Atlanta, Georgia. Having made a habit of pulling things apart in childhood, Chris has found his professional home in information security. Prior to founding Web Sight.IO, Chris was a senior penetration tester at the security consultancy Bishop Fox, and a research scientist at the Georgia Institute of Technology. During his tenure at these organizations, Chris became a specialist in network penetration testing and in the application of academic tactics to the information security industry, both of which contributed to his current research focus of architecting and implementing high-security N-tier systems. Chris attended the Georgia Institute of Technology where he received a bachelor’s degree in computational media, a master’s degree in computer science, and where he organized and led the Grey H@t student hacking organization."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Chris Thompson / @retBandit",
-         "indexsp" : "16",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Chris is Red Team Operations Lead at IBM X-Force Red. He has extensive experience performing penetration testing and red teaming for clients in a wide variety of industries. He’s led red teaming operations against defense contractors and some of North America’s largest banks.
-
-He’s on the board for CREST USA (crest-approved.org), working to help mature the pentesting industry. Chris also teaches Network & Mobile Pentesting at one of Canada’s largest technical schools.
-
-Hacking his way through life, Chris likes to pretend he’s a good drone pilot, lock picker, and mountain biker."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Samy",
-         "indexsp" : "17",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Samy Kamkar is a security researcher, best known for creating The MySpace Worm, one of the fastest spreading viruses of all time. He (attempts to) illustrate terrifying vulnerabilities with playfulness, and his exploits have been branded:
-
-“Controversial”, -The Wall Street Journal
-“Horrific”, -The New York Times
-“Now I want to fill my USB ports up with cement”, -Gizmodo
-
-He’s demonstrated usurping typical hardware for surreptitious means such as with KeySweeper, turning a standard USB wall charger into a covert, wireless keyboard sniffer, and SkyJack, a custom drone which takes over any other nearby drones allowing them to be controlled as a massive zombie swarm. He’s exposed issues around privacy, such as by developing the Evercookie which appeared in a top-secret NSA document revealed by Edward Snowden, exemplifying techniques used by governments and corporations for clandestine web tracking, and has discovered and released research around the illicit GPS and location tracking performed by Apple, Google and Microsoft mobile devices. He continues to produce new research and tools for the public as open source and open hardware."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Ric Messier",
-         "indexsp" : "18",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Ric Messier, GCIH, GSEC, CEH, CISSP, has spent decades in the fields of information security and information technology. He is currently the Director of Cyber Academic Programs at Circadence, a leader in innovative cybersecurity training platforms. He has spent previous lifetimes running security engineering teams at a global Internet service provider, created and managed graduate and undergraduate degree programs at a small school in New England, done security consulting for large and medium sized Fortune 500 companies and a variety of other jobs over the years. He has written several books on information security and digital forensics, as well as authored dozens of video training titles for O’Reilly Media and VTC."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Aditya Balapure",
-         "indexsp" : "19",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Aditya Balapure is a Senior Application Security Engineer at Grubhub Inc, former Application Security Engineer at Amazon. A builder, breaker and defender at heart Aditya likes to evangelize Product Security. With multiple years of experience in all forms of Information Security, some of his core interests are in the field of Application, Cloud Security and Malware Research."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Ulrich Lang (@objectsecurity)",
-         "indexsp" : "20",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Ulrich received his Ph.D. from the University of Cambridge Computer Laboratory (Security Group) on access policies for middleware in 2003, after having completed a Master’s Degree (M. Sc.) in Information Security from Royal Holloway College (London) in 1997. Ulrich is a renowned thought leader in access control policy, model-driven security, and Cloud/SOA/middleware security. He is on the Board of Directors of the Cloud Security Alliance (Silicon Valley Chapter). He is also responsible for the business and technical strategy, architecture and direction of ObjectSecurity and the OpenPMF product. He has published over 150 papers/presentations, and has previously worked as a proposal evaluator, project evaluator, conference program committee, panel moderator, consultant, book author."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Kashish Mittal",
-         "indexsp" : "21",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Kashish Mittal is a Security Researcher & Engineer. He has worked for companies such as Duo Security, Bank of America, Deutsche Bank etc. By choice, he is an ethical hacker and an addicted CTF player. He is a member of PPP (CMU’s elite CTF group). He also spent several years doing Security Research at CyLab, Pittsburgh. He has a BS and a MS from Carnegie Mellon University with a focus on Security. He is passionate about delivering Security awareness and education for employees, college students and high schoolers etc."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Kai Lu",
-         "indexsp" : "22",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Kai Lu(@k3vinlusec), security researcher from Fortinet’s FortiGuard Labs, works in HQ of Fortinet at Sunnyvale, CA, US. I’m interested in vulnerability founding and have found more than 30 vulnerabilities of products from Microsoft, Google, Adobe, Apple, as well as vulnerability analysis and android security including malware analysis and vulnerability research."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Sharad Kumar",
-         "indexsp" : "23",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Sharad Kumar is a cyber security researcher. His hard coded skills include Web Application Penetration Testing, Network Pentesting, Android, IOS Pentesting, Digital Forensics, Malware Analysis and shell coding.He is an active member of the cyber security community and has attended top cyber security conferences around the globe like BLACKHAT, RSA, COCON, HAKON etc. He has given various seminars, talks and online training to the USA, Scotland students.He is working as Cyber Security Engineer and Penetration Tester at Tutorialspoint."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Rafael Fontes Souza",
-         "indexsp" : "24",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Rafael Fontes Souza aka b4ckd00r is a Senior Information Security Consultant at CIPHER. He is a core member of Cipher Intelligence Labs – the advanced security team focused on penetration testing, application security and computer forensics for premier clients. He started studying at age 13 and since then has disclosed security vulnerabilities and has received recognition and awards from major companies such as Apple, Microsoft, ESET, HP and others. Being done hundreds of successful penetration tests for various organizations, including government, banking, commercial sectors, as well the payment card industry."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Ryan Satterfield",
-         "indexsp" : "25",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Ryan Satterfield hacks the world and has a passion for drones, internet of things, web applications, and anything else that uses code.
-
-Drone security is of the utmost importance, since everyone from your next door neighbor to law enforcement in various parts of the world are or have utilized consumer grade drones."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Alain Iamburg",
-         "indexsp" : "26",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Alain is a security researcher and computer engineer with a particular interest in embedded devices. He enjoys exploring systems, discovering vulnerabilities, and sharing knowledge."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Billy / Cannibal",
-         "indexsp" : "27",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "@cannibal has spent 10 years working in the medical device industry. While spending the majority of the time handling defensive security, he recently switched to the attack side after joining the Phobos Group in 2016. The handle “cannibal” comes from disassembling electronics and “cannibalizing” their components for other uses, so please feel free to approach with questions he’s pretty harmless."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Santiago Hernandez",
-         "indexsp" : "28",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Santiago Hernández is a cybersecurity researcher at 11Paths/Telefonica, Spain. He holds a degree in computer engineering and a master’s degree in information and telecommunications security. Its main field of activity is the study and discovery of new cybersecurity threats, as well as innovation in security products. Its main fields of interest are “low-level” security disciplines, such as reverse engineering or in-depth operating system security, along with the developing of new security tools. Some previous works includes, static analysis tools or study and implementation of new fuzzing approaches."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Marcelo Mansur",
-         "indexsp" : "29",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "After a few months as a headhunter I chose to focus purely on infosec due to my love for the community and all things hacker related. I now run a security recruitment, consulting and contracting company – but before all of this began I was a stockbroker. My initial involvement in the financial sector is where my interest in the topic of this talk began and I’ve kept my finger on the pulse of this subject throughout my career. I enjoy dark comedy, bad puns and conversations about hacking. I enjoy them more if absorbed with a few beers and a steak."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Guillermo Buendia",
-         "indexsp" : "30",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Guillermo is a Cyber Security Penetration Testing Consultant at Deloitte Mexico; he has worked for many Financial Institutions and Public sector for the last 5 years."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Pavel Bansky",
-         "indexsp" : "31",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "I was not accepted into the soccer team at the age of seven, so I start spending more time with the Sinclair ZX Spectrum+ and learned programming. I never played nor watched soccer from that point on.
-Today I work as a security engineer at Microsoft Trustworthy Computing."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Josh Stroschein, PhD, VDA Labs",
-         "indexsp" : "32",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : ""
-      },
-      {
-         "sptitle" : "",
-         "who" : "Rob ‘mubix’ Fuller, Hak5",
-         "indexsp" : "33",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : ""
-      },
-      {
-         "sptitle" : "",
-         "who" : "Joe Fitzpatrick, toothless.co",
-         "indexsp" : "34",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : ""
-      },
-      {
-         "sptitle" : "",
-         "who" : "Michael Ossmann, Great Scott Gadgets",
-         "indexsp" : "35",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : ""
-      },
-      {
-         "sptitle" : "",
-         "who" : "Alex Bazhanjuk",
-         "indexsp" : "36",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Alex Bazhaniuk (@ABazhaniuk) is an independent security researcher. Previously, Alex was a member of the Advanced Threat Research and Security Center of Excellence teams at Intel and Intel Security. His primary interest is the security and exploitation of low-level platform hardware and firmware, and binary analysis automation. His work has been presented at a number of security conferences. He is also a co-founder of DCUA, the first DEFCON group and CTF team in Ukraine."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Yuriy Bulygin",
-         "indexsp" : "37",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Yuriy Bulygin (@c7zero) has been the chief threat researcher at Intel Security/McAfee and led the Advanced Threat Research team. Previously, Yuriy led microprocessor vulnerability analysis team at Intel. Yuriy is the author of open source CHIPSEC framework."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Adam Brand",
-         "indexsp" : "38",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Adam got hooked on hacking early with BBS’s, wardialing, and game patching, and somewhere along the way turned that into a career. He currently works for an infosec consulting firm, Protiviti, where one of his focus areas is threat hunting/breach assessments."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Robert C. Seacord",
-         "indexsp" : "39",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Robert is a Technical Director with NCC Group where he works with software developers and software development organizations to eliminate vulnerabilities resulting from coding errors before they are deployed. Previously, Robert led the secure coding initiative in the CERT Division of Carnegie Mellon University’s Software Engineering Institute (SEI). Robert is also an adjunct professor in the School of Computer Science and the Information Networking Institute at Carnegie Mellon University. Robert is the author of six books, including The CERT C Coding Standard, Second Edition (Addison-Wesley, 2014), Secure Coding in C and C++, Second Edition (Addison-Wesley, 2013), The CERT Oracle Secure Coding Standard for Java (Addison-Wesley, 2012), and Java Coding Guidelines: 75 Recommendations for Reliable and Secure Programs (Addison-Wesley, 2014). Robert is on the Advisory Board for the Linux Foundation and an expert on the ISO/IEC JTC1/SC22/WG14 international standardization working group for the C programming language."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Jon Medina",
-         "indexsp" : "40",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Jon Medina CISSP, CCNP, GCED is a security nerd who has worked in networking and security capacities for everything from the Department of Defense, to the Fortune 500, to state and local government. He currently works for Protiviti providing security consulting for a wide variety of clients and industries. His interests outside of security include traveling, hockey, strange beers, and his bulldog. He’s spoken at Def Con, Shmoocon, BSides, and many other security events and conferences."
-      },
-      {
-         "sptitle" : "",
-         "who" : "Chuck McAuley",
-         "indexsp" : "41",
-         "last_update" : "2017-08-24T22:10:28-07:00",
-         "media" : "",
-         "bio" : "Chuck has been working in network security professionally for 15+ years. He currently is a Security Researcher at Ixia Communications, focused on Threat Intelligence and Exploit Research. Most of the time he lives in his cave in New Hampchusetts staring at PCAPs deciphering tea leaves. Sometimes he stumbles on something no one else has looked at and then talks about it."
-      }
-   ],
-   "update_date" : "2017-08-24T22:08:28-07:00"
+  "speakers" : [
+    {
+      "sptitle" : "",
+      "who" : "Lance James",
+      "indexsp" : "1",
+      "last_update" : "2017-08-24T22:08:28-07:00",
+      "media" : "",
+      "bio" : "Lance is an internationally renowned information security specialist. He has more than 20 years of experience in programming, network security, digital forensics, malware research, cryptography design, cryptanalysis, counterintelligence, and protocol exploitation. He provides advisory services to a wide range of government agencies and Fortune 500 organizations including America’s top financial services institutions. Credited with the identification of Zeus and other malware, Lance is an active contributor to the evolution of security practices and counterintelligence tactics and strategies. He is currently the  Chief Scientist at Flashpoint where he oversees Flashpoint’s research and development and engages in thought leadership. Prior to joining Flashpoint, Lance was the Head of Cyber Intelligence at Deloitte & Touche LLP."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Dominic Spill",
+      "indexsp" : "2",
+      "last_update" : "2017-08-24T22:08:28-07:00",
+      "media" : "",
+      "bio" : "Dominic is a senior security researcher at Great Scott Gadgets where he writes software and firmware for open source hardware. His primary focus is sniffing and modifying communication protocols."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Kyle Temkin",
+      "indexsp" : "3",
+      "last_update" : "2017-08-24T22:08:28-07:00",
+      "media" : "",
+      "bio" : "Kyle J. Temkin leads the low-level Computer Architectures group at Assured Information Security, researching a variety of hardware hacking and architectural security topics. Kyle maintains and contributes to a variety of open-source projects, and probably spends way too much time reverse engineering and collecting electronic lab equipment."
+    },
+    {
+      "sptitle" : "",
+      "who" : "James Barclay",
+      "indexsp" : "4",
+      "last_update" : "2017-08-24T22:08:28-07:00",
+      "media" : "",
+      "bio" : "James Barclay is an R&D Engineer at Duo Labs, the security research and analysis team at Duo Security. Prior to joining Duo, James was a Tools Engineer at Pinterest, and an IT consultant before that. He’s contributed to a handful of open-source projects, and has been called an Apple nerd once or twice."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Robert Portvliet",
+      "indexsp" : "5",
+      "last_update" : "2017-08-24T22:08:28-07:00",
+      "media" : "",
+      "bio" : "Robert Portvliet is technical director of red team services at Cylance with over 8 years experience in various disciplines of penetration testing. His focus is on embedded systems and wireless penetration penetration testing and reverse engineering. Prior to joining Cylance, he was the network security service line lead for Foundstone and taught the ‘Ultimate Hacking: Wireless’ class at Blackhat 2011-2013."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Aaron Hnatiw",
+      "indexsp" : "6",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "As a Senior Security Researcher at Security Compass, Aaron Hnatiw is constantly looking into the future to find ways to secure the world of tomorrow. Whether that’s through security automation, blockchain technology, or machine learning/artificial intelligence, he’s always working on the leading edge of information security. He has worked in most aspects of the information technology field, holding previous positions as a security consultant, system administrator, software developer, and college professor in application security. In his spare time, Aaron enjoys writing security tools and contributing to the open source community."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Mohamad Mokbel",
+      "indexsp" : "7",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Mohamad Mokbel is a security researcher at Trend Micro, member of the Digital Vaccine Lab. He’s responsible for reverse engineering vulnerabilities and malware C&C communication protocols, among others, for the purpose of writing custom filters for TippingPoint NGIPS. Prior to joining Trend Micro, Mohamad worked for CIBC in the security operation center, one of the top five banks in Canada as a senior information security consultant – investigator (L3) where he realized that experience in the operation field is extremely important to understand the real sides of offense and defense. Prior to CIBC, Mohamad worked for Telus Security Lab as a reverse engineer/malware researcher for about 5 years. He’s been doing reverse code engineering for last 12 years.\n\nHis research interests lie in the areas of reverse code engineering, malware research, intrusion detection/prevention systems, C++, compiler and software performance analysis, information security, and exotic communication protocols.\n\nMohamad holds a MSc. in Computer Science from the University of Windsor and BSc. in Computer Engineering from the Lebanese International University."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Ernest Wong",
+      "indexsp" : "8",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Ernest Y. Wong is the Chief of Staff at the Army Cyber Institute and teaches Systems Engineering at West Point. He holds a Master of Military Science from Kuwait’s Mubarak al-Abdullah Staff College and earned a MS in management science & engineering and a MA in education from Stanford. He was a NASA Summer Faculty Fellow and has served in Iraq, Kuwait, and the Republic of Korea. He enjoys researching disruptive innovations and cyber resiliency."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Chema Alonso",
+      "indexsp" : "9",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Chema Alonso is the CDO – Chief Data Officer – at Telefónica. In this position he heads the company’s Big Data strategy, Advertising and the Fourth Platform. As part of the work to define the Fourth Platform, he also leads the Personal Data Bank team and is the main internal promoter of the Data Transparency Lab. He is also responsible for global cybersecurity and data security, having created the new Global Security Unit with the Information Security Global Business in B2B & B2C and Eleven Paths."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Gurney Halleck",
+      "indexsp" : "10",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "- Over twenty years in computer and network security\n- Concentration in offensive security - R&D in offensive cyber systems\n- Employed by a major aerospace corporation\n- Design and development of cyber range systems\n- Pentest and vulnerability assessment\n- Over two years Red Team lead in cyber wargame TTXs."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Will Caput",
+      "indexsp" : "11",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "I’m a professional pen-tester with over a decade of experience in the offensive security field."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Tyler Cook",
+      "indexsp" : "12",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "My name is Tyler, I like to break things"
+    },
+    {
+      "sptitle" : "",
+      "who" : "Marc Newlin",
+      "indexsp" : "13",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Marc is a wireless security researcher at Bastille, where he discovered the MouseJack and KeySniffer vulnerabilities affecting wireless mice and keyboards. A glutton for challenging side projects, Marc competed solo in two DARPA challenges, placing third in the DARPA Shredder Challenge, and second in the first tournament of the DARPA Spectrum Challenge."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Logan Lamb",
+      "indexsp" : "14",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Logan joined Bastille Networks in 2014 as a security researcher focusing on applications of SDR to IoT. Prior to joining Bastille Networks, he was a member of CSIR at Oak Ridge National Lab where his focus was on symbolic analysis of binaries and red-teaming critical infrastructure."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Chris Grayson",
+      "indexsp" : "15",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Christopher Grayson (OSCE) is the founder and principal engineer at Web Sight.IO. In this role he handles all operations, development, and research efforts. Christopher is an avid computing enthusiast hailing from Atlanta, Georgia. Having made a habit of pulling things apart in childhood, Chris has found his professional home in information security. Prior to founding Web Sight.IO, Chris was a senior penetration tester at the security consultancy Bishop Fox, and a research scientist at the Georgia Institute of Technology. During his tenure at these organizations, Chris became a specialist in network penetration testing and in the application of academic tactics to the information security industry, both of which contributed to his current research focus of architecting and implementing high-security N-tier systems. Chris attended the Georgia Institute of Technology where he received a bachelor’s degree in computational media, a master’s degree in computer science, and where he organized and led the Grey H@t student hacking organization."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Chris Thompson / @retBandit",
+      "indexsp" : "16",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Chris is Red Team Operations Lead at IBM X-Force Red. He has extensive experience performing penetration testing and red teaming for clients in a wide variety of industries. He’s led red teaming operations against defense contractors and some of North America’s largest banks.\n\nHe’s on the board for CREST USA (crest-approved.org), working to help mature the pentesting industry. Chris also teaches Network & Mobile Pentesting at one of Canada’s largest technical schools.\n\nHacking his way through life, Chris likes to pretend he’s a good drone pilot, lock picker, and mountain biker."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Samy",
+      "indexsp" : "17",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Samy Kamkar is a security researcher, best known for creating The MySpace Worm, one of the fastest spreading viruses of all time. He (attempts to) illustrate terrifying vulnerabilities with playfulness, and his exploits have been branded:\n\n“Controversial”, -The Wall Street Journal\n“Horrific”, -The New York Times\n“Now I want to fill my USB ports up with cement”, -Gizmodo\n\nHe’s demonstrated usurping typical hardware for surreptitious means such as with KeySweeper, turning a standard USB wall charger into a covert, wireless keyboard sniffer, and SkyJack, a custom drone which takes over any other nearby drones allowing them to be controlled as a massive zombie swarm. He’s exposed issues around privacy, such as by developing the Evercookie which appeared in a top-secret NSA document revealed by Edward Snowden, exemplifying techniques used by governments and corporations for clandestine web tracking, and has discovered and released research around the illicit GPS and location tracking performed by Apple, Google and Microsoft mobile devices. He continues to produce new research and tools for the public as open source and open hardware."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Ric Messier",
+      "indexsp" : "18",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Ric Messier, GCIH, GSEC, CEH, CISSP, has spent decades in the fields of information security and information technology. He is currently the Director of Cyber Academic Programs at Circadence, a leader in innovative cybersecurity training platforms. He has spent previous lifetimes running security engineering teams at a global Internet service provider, created and managed graduate and undergraduate degree programs at a small school in New England, done security consulting for large and medium sized Fortune 500 companies and a variety of other jobs over the years. He has written several books on information security and digital forensics, as well as authored dozens of video training titles for O’Reilly Media and VTC."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Aditya Balapure",
+      "indexsp" : "19",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Aditya Balapure is a Senior Application Security Engineer at Grubhub Inc, former Application Security Engineer at Amazon. A builder, breaker and defender at heart Aditya likes to evangelize Product Security. With multiple years of experience in all forms of Information Security, some of his core interests are in the field of Application, Cloud Security and Malware Research."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Ulrich Lang (@objectsecurity)",
+      "indexsp" : "20",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Ulrich received his Ph.D. from the University of Cambridge Computer Laboratory (Security Group) on access policies for middleware in 2003, after having completed a Master’s Degree (M. Sc.) in Information Security from Royal Holloway College (London) in 1997. Ulrich is a renowned thought leader in access control policy, model-driven security, and Cloud/SOA/middleware security. He is on the Board of Directors of the Cloud Security Alliance (Silicon Valley Chapter). He is also responsible for the business and technical strategy, architecture and direction of ObjectSecurity and the OpenPMF product. He has published over 150 papers/presentations, and has previously worked as a proposal evaluator, project evaluator, conference program committee, panel moderator, consultant, book author."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Kashish Mittal",
+      "indexsp" : "21",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Kashish Mittal is a Security Researcher & Engineer. He has worked for companies such as Duo Security, Bank of America, Deutsche Bank etc. By choice, he is an ethical hacker and an addicted CTF player. He is a member of PPP (CMU’s elite CTF group). He also spent several years doing Security Research at CyLab, Pittsburgh. He has a BS and a MS from Carnegie Mellon University with a focus on Security. He is passionate about delivering Security awareness and education for employees, college students and high schoolers etc."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Kai Lu",
+      "indexsp" : "22",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Kai Lu(@k3vinlusec), security researcher from Fortinet’s FortiGuard Labs, works in HQ of Fortinet at Sunnyvale, CA, US. I’m interested in vulnerability founding and have found more than 30 vulnerabilities of products from Microsoft, Google, Adobe, Apple, as well as vulnerability analysis and android security including malware analysis and vulnerability research."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Sharad Kumar",
+      "indexsp" : "23",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Sharad Kumar is a cyber security researcher. His hard coded skills include Web Application Penetration Testing, Network Pentesting, Android, IOS Pentesting, Digital Forensics, Malware Analysis and shell coding.He is an active member of the cyber security community and has attended top cyber security conferences around the globe like BLACKHAT, RSA, COCON, HAKON etc. He has given various seminars, talks and online training to the USA, Scotland students.He is working as Cyber Security Engineer and Penetration Tester at Tutorialspoint."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Rafael Fontes Souza",
+      "indexsp" : "24",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Rafael Fontes Souza aka b4ckd00r is a Senior Information Security Consultant at CIPHER. He is a core member of Cipher Intelligence Labs – the advanced security team focused on penetration testing, application security and computer forensics for premier clients. He started studying at age 13 and since then has disclosed security vulnerabilities and has received recognition and awards from major companies such as Apple, Microsoft, ESET, HP and others. Being done hundreds of successful penetration tests for various organizations, including government, banking, commercial sectors, as well the payment card industry."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Ryan Satterfield",
+      "indexsp" : "25",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Ryan Satterfield hacks the world and has a passion for drones, internet of things, web applications, and anything else that uses code.\n\nDrone security is of the utmost importance, since everyone from your next door neighbor to law enforcement in various parts of the world are or have utilized consumer grade drones."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Alain Iamburg",
+      "indexsp" : "26",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Alain is a security researcher and computer engineer with a particular interest in embedded devices. He enjoys exploring systems, discovering vulnerabilities, and sharing knowledge."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Billy / Cannibal",
+      "indexsp" : "27",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "@cannibal has spent 10 years working in the medical device industry. While spending the majority of the time handling defensive security, he recently switched to the attack side after joining the Phobos Group in 2016. The handle “cannibal” comes from disassembling electronics and “cannibalizing” their components for other uses, so please feel free to approach with questions he’s pretty harmless."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Santiago Hernandez",
+      "indexsp" : "28",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Santiago Hernández is a cybersecurity researcher at 11Paths/Telefonica, Spain. He holds a degree in computer engineering and a master’s degree in information and telecommunications security. Its main field of activity is the study and discovery of new cybersecurity threats, as well as innovation in security products. Its main fields of interest are “low-level” security disciplines, such as reverse engineering or in-depth operating system security, along with the developing of new security tools. Some previous works includes, static analysis tools or study and implementation of new fuzzing approaches."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Marcelo Mansur",
+      "indexsp" : "29",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "After a few months as a headhunter I chose to focus purely on infosec due to my love for the community and all things hacker related. I now run a security recruitment, consulting and contracting company – but before all of this began I was a stockbroker. My initial involvement in the financial sector is where my interest in the topic of this talk began and I’ve kept my finger on the pulse of this subject throughout my career. I enjoy dark comedy, bad puns and conversations about hacking. I enjoy them more if absorbed with a few beers and a steak."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Guillermo Buendia",
+      "indexsp" : "30",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Guillermo is a Cyber Security Penetration Testing Consultant at Deloitte Mexico; he has worked for many Financial Institutions and Public sector for the last 5 years."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Pavel Bansky",
+      "indexsp" : "31",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "I was not accepted into the soccer team at the age of seven, so I start spending more time with the Sinclair ZX Spectrum+ and learned programming. I never played nor watched soccer from that point on.\n Today I work as a security engineer at Microsoft Trustworthy Computing."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Josh Stroschein, PhD, VDA Labs",
+      "indexsp" : "32",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : ""
+    },
+    {
+      "sptitle" : "",
+      "who" : "Rob ‘mubix’ Fuller, Hak5",
+      "indexsp" : "33",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : ""
+    },
+    {
+      "sptitle" : "",
+      "who" : "Joe Fitzpatrick, toothless.co",
+      "indexsp" : "34",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : ""
+    },
+    {
+      "sptitle" : "",
+      "who" : "Michael Ossmann, Great Scott Gadgets",
+      "indexsp" : "35",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : ""
+    },
+    {
+      "sptitle" : "",
+      "who" : "Alex Bazhanjuk",
+      "indexsp" : "36",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Alex Bazhaniuk (@ABazhaniuk) is an independent security researcher. Previously, Alex was a member of the Advanced Threat Research and Security Center of Excellence teams at Intel and Intel Security. His primary interest is the security and exploitation of low-level platform hardware and firmware, and binary analysis automation. His work has been presented at a number of security conferences. He is also a co-founder of DCUA, the first DEFCON group and CTF team in Ukraine."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Yuriy Bulygin",
+      "indexsp" : "37",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Yuriy Bulygin (@c7zero) has been the chief threat researcher at Intel Security/McAfee and led the Advanced Threat Research team. Previously, Yuriy led microprocessor vulnerability analysis team at Intel. Yuriy is the author of open source CHIPSEC framework."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Adam Brand",
+      "indexsp" : "38",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Adam got hooked on hacking early with BBS’s, wardialing, and game patching, and somewhere along the way turned that into a career. He currently works for an infosec consulting firm, Protiviti, where one of his focus areas is threat hunting/breach assessments."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Robert C. Seacord",
+      "indexsp" : "39",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Robert is a Technical Director with NCC Group where he works with software developers and software development organizations to eliminate vulnerabilities resulting from coding errors before they are deployed. Previously, Robert led the secure coding initiative in the CERT Division of Carnegie Mellon University’s Software Engineering Institute (SEI). Robert is also an adjunct professor in the School of Computer Science and the Information Networking Institute at Carnegie Mellon University. Robert is the author of six books, including The CERT C Coding Standard, Second Edition (Addison-Wesley, 2014), Secure Coding in C and C++, Second Edition (Addison-Wesley, 2013), The CERT Oracle Secure Coding Standard for Java (Addison-Wesley, 2012), and Java Coding Guidelines: 75 Recommendations for Reliable and Secure Programs (Addison-Wesley, 2014). Robert is on the Advisory Board for the Linux Foundation and an expert on the ISO/IEC JTC1/SC22/WG14 international standardization working group for the C programming language."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Jon Medina",
+      "indexsp" : "40",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Jon Medina CISSP, CCNP, GCED is a security nerd who has worked in networking and security capacities for everything from the Department of Defense, to the Fortune 500, to state and local government. He currently works for Protiviti providing security consulting for a wide variety of clients and industries. His interests outside of security include traveling, hockey, strange beers, and his bulldog. He’s spoken at Def Con, Shmoocon, BSides, and many other security events and conferences."
+    },
+    {
+      "sptitle" : "",
+      "who" : "Chuck McAuley",
+      "indexsp" : "41",
+      "last_update" : "2017-08-24T22:10:28-07:00",
+      "media" : "",
+      "bio" : "Chuck has been working in network security professionally for 15+ years. He currently is a Security Researcher at Ixia Communications, focused on Threat Intelligence and Exploit Research. Most of the time he lives in his cave in New Hampchusetts staring at PCAPs deciphering tea leaves. Sometimes he stumbles on something no one else has looked at and then talks about it."
+    }
+  ],
+  "update_date" : "2017-08-24T22:08:28-07:00"
 }
