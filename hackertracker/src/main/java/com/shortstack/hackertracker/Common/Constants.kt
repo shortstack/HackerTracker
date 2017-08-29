@@ -5,8 +5,8 @@ import com.shortstack.hackertracker.BuildConfig
 interface Constants {
     companion object {
 
-        val DEFCON_DATABASE_NAME = "DEFCON"
-        val TOORCON_DATABASE_NAME = "TOORCON"
+        val DEFCON_DATABASE_NAME = "DEFCON25"
+        val TOORCON_DATABASE_NAME = "TOORCON19"
 
         val API_URL_BASE = "https://info.defcon.org/json/"
 

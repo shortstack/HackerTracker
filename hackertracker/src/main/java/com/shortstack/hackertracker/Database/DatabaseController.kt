@@ -22,7 +22,7 @@ abstract class DatabaseController(protected val context: Context, name: String, 
     // SQL
     val SELECT_ALL_FROM = "SELECT * from "
     val LIKE = "LIKE ?"
-    val DATABASE_DIRECTORY = "conferences"
+    val DATABASE_DIRECTORY = "database"
 
     fun checkDatabase() {
         val db = writableDatabase

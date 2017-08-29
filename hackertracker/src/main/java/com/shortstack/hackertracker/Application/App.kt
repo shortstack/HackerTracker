@@ -69,10 +69,14 @@ class App : Application() {
 
     fun updateDatabaseController() {
         val name = if (storage.databaseSelected == 0) Constants.DEFCON_DATABASE_NAME else Constants.TOORCON_DATABASE_NAME
+        setTheme( if (storage.databaseSelected == 0) R.style.AppTheme else R.style.AppTheme_Toorcon )
+
         Logger.d("Creating database controller with database: $name")
         databaseController = DEFCONDatabaseController(appContext, name = name)
-        databaseController.checkDatabase()
-        setTheme( if (storage.databaseSelected == 0) R.style.AppTheme else R.style.AppTheme_Toorcon )
+
+        if(databaseController.exists()) {
+            databaseController.checkDatabase()
+        }
     }
 
 
@@ -87,7 +91,6 @@ class App : Application() {
         if (value == null)
             value = 6
 
-        Logger.d("Scheduling the sync. $value")
         if (value == 0) {
             cancelSync()
             return
@@ -107,7 +110,6 @@ class App : Application() {
     }
 
     fun cancelSync() {
-        Logger.d("Cancelling the sync.")
         dispatcher.cancel(SyncJob.TAG)
     }
 

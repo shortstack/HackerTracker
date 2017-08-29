@@ -42,7 +42,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (!DatabaseController.exists(this, Constants.DEFCON_DATABASE_NAME)) {
+        if (!DatabaseController.exists(this, App.application.databaseController.databaseName)) {
             startActivity(Intent(this, SplashActivity::class.java))
             finish()
             return
