@@ -1,0 +1,3 @@
+[submodule "hackertracker/src/main/assets/database"]
+	path = hackertracker/src/main/assets/database
+	url = https://github.com/BeezleLabs/conferences
