@@ -71,7 +71,7 @@ class FilterView : LinearLayout {
             box.text = type.type
             CompoundButtonCompat.setButtonTintList(box, ColorStateList(states, intArrayOf(stringArray[it], stringArray[it])))
 
-            if (it < types.size / 2)
+            if (it <= types.size / 2)
                 filter_left.addView(box)
             else
                 filter_right.addView(box)
