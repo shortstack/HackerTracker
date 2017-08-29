@@ -11,13 +11,16 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-class ScheduleItemAdapter(private val layout: RecyclerView.LayoutManager, val list: RecyclerView) : RendererAdapter<Any>(ScheduleItemBuilder()) {
+class ScheduleItemAdapter(private val listViews : ListViewsInterface,
+                          private val layout : RecyclerView.LayoutManager,
+                          val list : RecyclerView) : RendererAdapter<Any>(ScheduleItemBuilder()) {
 
     fun initContents() {
+        listViews.hideViews()
         load()
     }
 
-    fun load(page: Int = 0) {
+    fun load(page : Int = 0) {
         val app = App.application
         val filter = app.storage.filter
 
@@ -30,14 +33,18 @@ class ScheduleItemAdapter(private val layout: RecyclerView.LayoutManager, val li
                             if (app.storage.showExpiredEvents()) {
                                 scrollToCurrentTime()
                             }
+                            if(collection.isEmpty()) {
+                                listViews.showEmptyView()
+                            }
                         }, {
                     e ->
                     Logger.e(e, "Not success.")
+                    listViews.showErrorView()
                 }
                 )
     }
 
-    private fun addAllAndNotify(elements: List<Item>) {
+    private fun addAllAndNotify(elements : List<Item>) {
 
         if (elements.isEmpty())
             return
@@ -79,11 +86,11 @@ class ScheduleItemAdapter(private val layout: RecyclerView.LayoutManager, val li
         notifyItemRangeInserted(size, collection.size - size)
     }
 
-    private fun addDay(item: Item) {
+    private fun addDay(item : Item) {
         add(Day(item.beginDateObject))
     }
 
-    private fun addTime(item: Item) {
+    private fun addTime(item : Item) {
         add(Time(item.beginDateObject))
     }
 
@@ -91,7 +98,7 @@ class ScheduleItemAdapter(private val layout: RecyclerView.LayoutManager, val li
         layout.scrollToPosition(findCurrentPositionByTime())
     }
 
-    private fun findCurrentPositionByTime(): Int {
+    private fun findCurrentPositionByTime() : Int {
         val currentDate = App.getCurrentDate()
 
         for (i in collection.indices) {

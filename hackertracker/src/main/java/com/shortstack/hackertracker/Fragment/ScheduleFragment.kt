@@ -33,7 +33,10 @@ import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import java.util.*
 
 
-class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+
+
+class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListViewsInterface {
+
 
     lateinit var adapter : ScheduleItemAdapter
 
@@ -43,7 +46,6 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
             App.application.postBusEvent(RefreshTimerEvent())
             if (adapter != null) {
                 adapter!!.notifyTimeChanged()
-                updateFeedErrors()
             }
 
         }
@@ -102,7 +104,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
         rootView.swipe_refresh!!.setOnRefreshListener(this)
         rootView.swipe_refresh!!.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark)
-        adapter = ScheduleItemAdapter(layout, rootView.list)
+        adapter = ScheduleItemAdapter(this, layout, rootView.list)
 
 
 
@@ -122,23 +124,25 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         refreshContents()
+
+        if( App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME )
+            swipe_refresh.isEnabled = false
     }
 
     private fun hasScheduleItems() : Boolean {
         return !adapter.collection.isEmpty()
     }
 
-    private fun updateFeedErrors() {
+    override fun hideViews() {
+        empty.visibility = View.GONE
+    }
 
-        tutorial!!.visibility = View.GONE
-        empty!!.visibility = View.GONE
+    override fun showEmptyView() {
+        empty.visibility = View.VISIBLE
+    }
 
-        //        if (!hasFilters()) {
-        //            tutorial.setVisibility(View.VISIBLE);
-        //        } else
-        if (!hasScheduleItems()) {
-//            empty!!.visibility = View.VISIBLE
-        }
+    override fun showErrorView() {
+        empty.visibility = View.VISIBLE
     }
 
     private fun refreshContents() {
@@ -146,11 +150,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         adapter.clear()
         adapter.notifyItemRangeRemoved(0, size)
 
-
         adapter.initContents()
-
-        updateFeedErrors()
-
     }
 
     private val contentView : Int
@@ -200,13 +200,12 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
                     swipe_refresh?.isRefreshing = false
 
                     if (it == 0)
-                        if (context != null)
-                            Toast.makeText(context, context.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
-                        else if (it > 0) {
-                            App.application.postBusEvent(SyncResponseEvent(it))
-                            App.application.notificationHelper.scheduleUpdateNotification(it)
-                            refreshContents()
-                        }
+                        Toast.makeText(context, context.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
+                    else if (it > 0) {
+                        App.application.postBusEvent(SyncResponseEvent(it))
+                        App.application.notificationHelper.scheduleUpdateNotification(it)
+                        refreshContents()
+                    }
                 }
     }
 
