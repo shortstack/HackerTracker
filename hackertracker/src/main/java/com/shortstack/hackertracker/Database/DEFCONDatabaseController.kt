@@ -75,7 +75,6 @@ open class DEFCONDatabaseController(context : Context, name : String = Constants
                 values.put(KEY_INDEX, values.getAsInteger("index"))
                 values.remove("index")
 
-
                 database.insert(SCHEDULE_TABLE_NAME, null, values)
             }
             database.setTransactionSuccessful()
@@ -211,17 +210,29 @@ open class DEFCONDatabaseController(context : Context, name : String = Constants
 
 
     fun getVendors() : Observable<List<Vendor>> {
-        return Observable.just(vendors)
+        return Observable.create {
+            emitter ->
+            emitter.onNext(vendors)
+            emitter.onComplete()
+        }
     }
 
 
     fun getRecent() : Observable<List<Item>> {
-        return Observable.just(getRecentUpdates())
+        return Observable.create {
+            emitter ->
+            emitter.onNext(getRecentUpdates())
+            emitter.onComplete()
+        }
     }
 
 
     fun getItems(vararg type : String, page : Int = 0) : Observable<List<Item>> {
-        return Observable.just(getItemByDate(*type, page = page))
+        return Observable.create {
+            emitter ->
+            emitter.onNext(getItemByDate(*type, page = page))
+            emitter.onComplete()
+        }
     }
 
 
