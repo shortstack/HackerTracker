@@ -18,23 +18,5 @@
         android:paddingTop="10dp"
         android:src="?attr/logo_main" />
 
-    <TextView
-        android:visibility="gone"
-        android:id="@+id/textView4"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_weight="1"
-        android:text="@string/defcon_year"
-        android:textColor="@color/white"
-        android:textSize="28sp" />
-
-    <android.support.v7.widget.AppCompatImageView
-        android:layout_gravity="center"
-
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/defcon_year" />
-
 
 </LinearLayout>

@@ -18,6 +18,7 @@ import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.Database.DEFCONDatabaseController
 import com.shortstack.hackertracker.Event.MainThreadBus
+import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Task.SyncJob
 import com.shortstack.hackertracker.Utils.NotificationHelper
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil
@@ -71,6 +72,7 @@ class App : Application() {
         Logger.d("Creating database controller with database: $name")
         databaseController = DEFCONDatabaseController(appContext, name = name)
         databaseController.checkDatabase()
+        setTheme( if (storage.databaseSelected == 0) R.style.AppTheme else R.style.AppTheme_Toorcon )
     }
 
 

@@ -5,6 +5,7 @@ import android.preference.PreferenceManager
 import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.Model.Filter
+import com.shortstack.hackertracker.R
 import java.util.*
 
 class SharedPreferencesUtil {
@@ -95,8 +96,9 @@ class SharedPreferencesUtil {
         editor.apply()
     }
 
-    val filter : Filter
+    var filter : Filter
         get() = Filter(mPreferences.getStringSet(Key.USER_FILTER.toString(), HashSet<String>())!!)
+        set(filter) = editor.putStringSet(Key.USER_FILTER.toString(), filter.typesSet).apply()
 
     var lastRefresh : Long
         get() = mPreferences.getLong(Key.APP_LAST_REFRESH.toString(), 0)
@@ -125,6 +127,9 @@ class SharedPreferencesUtil {
     var databaseSelected : Int
         get() = mPreferences.getInt(Key.APP_DATABASE_SELECTED.toString(), 0)
         set(database) = editor.putInt(Key.APP_DATABASE_SELECTED.toString(), database).apply()
+
+    val databaseTheme : Int
+        get() = if( databaseSelected == 0 ) R.style.AppTheme else R.style.AppTheme_Toorcon
 
     companion object {
 

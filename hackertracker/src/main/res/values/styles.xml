@@ -46,7 +46,11 @@
     <style name="AppTheme" parent="ThemeBase">
 
 
+    </style>
 
+    <style name="AppTheme.Toorcon" parent="AppTheme">
+        <item name="logo_main">@drawable/toorcon_logo</item>
+        <item name="logo_secondary">@drawable/toorcon_logo</item>
     </style>
 
     <style name="AppCheckBoxStyle" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
@@ -77,7 +81,7 @@
     <style name="MyAlertDialogStyle" parent="Base.Theme.AppCompat.Dialog">
         <item name="android:windowTitleStyle">@style/windowTitleStyle</item>
         <!-- Used for the buttons -->
-        <item name="colorAccent">@color/category_speaker</item>
+        <item name="colorAccent">@color/colorAccent</item>
         <!-- Used for the title and text -->
         <item name="android:textColorPrimary">@color/white</item>
         <!-- Used for the background -->
@@ -111,8 +115,8 @@
         <item name="colorAccent">?attr/colorPrimary</item>
         <item name="colorControlHighlight">?attr/colorPrimary</item>
 
-        <item name="colorPrimary">@color/category_speaker</item>
-        <item name="colorPrimaryDark">@color/category_speaker</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
 
 
