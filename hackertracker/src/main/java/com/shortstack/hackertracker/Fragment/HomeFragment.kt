@@ -11,6 +11,7 @@ import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.pedrogomez.renderers.RendererContent
 import com.shortstack.hackertracker.Application.App
+import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.Model.Item
 import com.shortstack.hackertracker.Model.Navigation
 import com.shortstack.hackertracker.R
@@ -26,13 +27,13 @@ import java.util.*
 
 class HomeFragment : Fragment() {
 
-    lateinit var adapter: RendererAdapter<Any>
+    lateinit var adapter : RendererAdapter<Any>
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
         return inflater!!.inflate(R.layout.fragment_list, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val rendererBuilder = RendererBuilder<Any>()
@@ -58,46 +59,56 @@ class HomeFragment : Fragment() {
         val app = App.application
         app.databaseController.getRecent().subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    // Updates title
-
                     val size = adapter.collection.size
-
-                    var lastDate :String
-
-                    val cal = Calendar.getInstance()
-                    cal.time = Date(app.storage.lastRefresh)
-
-                    val refresh = app.storage.lastRefresh
-                    if (refresh == 0L ) {
-                        val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(app.storage.lastUpdated)
-                        lastDate = "Last synced " + App.getRelativeDateStamp(date)
-                    } else {
-                        lastDate = "Last synced " + App.getRelativeDateStamp(Date(refresh))
-                    }
-
-                    adapter.add(getString(R.string.updates) + "\n" + lastDate.toLowerCase())
-
-                    var recentDate = ""
-
-                    for (item in it) {
-                        if (item.updatedAt != recentDate) {
-                            recentDate = item.updatedAt
-                            val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(item.updatedAt)
-                            adapter.add("Updated " + SimpleDateFormat("MMMM dd h:mm aa").format(date))
-                        }
-
-                        adapter.add(item)
-                    }
-
-                    adapter.notifyItemRangeInserted(size, adapter.collection.size - size )
+                    addLastSyncDate()
+                    addRecentUpdates(it, size)
                 }
-
 
 
     }
 
+    private fun addRecentUpdates(it : List<Item>, size : Int) {
+        var recentDate = ""
+
+        for (item in it) {
+            if (item.updatedAt != recentDate) {
+                recentDate = item.updatedAt
+                val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(item.updatedAt)
+                adapter.add("Updated " + SimpleDateFormat("MMMM dd h:mm aa").format(date))
+            }
+
+            adapter.add(item)
+        }
+
+        adapter.notifyItemRangeInserted(size, adapter.collection.size - size)
+    }
+
+    private fun addLastSyncDate() {
+        // Can only sync DEFCON.
+        if (App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME)
+            return
+
+
+        val app = App.application
+        val lastDate : String
+
+        val cal = Calendar.getInstance()
+        cal.time = Date(app.storage.lastRefresh)
+
+        val refresh = app.storage.lastRefresh
+        if (refresh == 0L) {
+            val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(app.storage.lastUpdated)
+            lastDate = "Last synced " + App.getRelativeDateStamp(date)
+        } else {
+            lastDate = "Last synced " + App.getRelativeDateStamp(Date(refresh))
+        }
+
+        adapter.add(getString(R.string.updates) + "\n" + lastDate.toLowerCase())
+    }
+
     private fun addHelpNavigation() {
-        adapter.addAndNotify(Navigation(getString(R.string.nav_help_title), getString(R.string.nav_help_body), InformationFragment::class.java))
+        if (App.application.databaseController.databaseName == Constants.DEFCON_DATABASE_NAME)
+            adapter.addAndNotify(Navigation(getString(R.string.nav_help_title), getString(R.string.nav_help_body), InformationFragment::class.java))
     }
 
     private fun addHeader() {
@@ -108,7 +119,7 @@ class HomeFragment : Fragment() {
 
         private val TYPE_HEADER = 0
 
-        fun newInstance(): HomeFragment {
+        fun newInstance() : HomeFragment {
             return HomeFragment()
         }
     }
