@@ -1,13 +1,14 @@
 package com.shortstack.hackertracker.Model
 
-import java.util.Arrays
-import java.util.HashSet
+import java.util.*
 
-class Filter(val typesArray: Array<String>) {
+class Filter(val typesArray : Array<String>) {
 
-    constructor(types: Set<String>) : this(types.toTypedArray()) {}
+    constructor() : this(Array<String>(0, { "" })) {}
 
-    val typesSet: Set<String>
+    constructor(types : Set<String>) : this(types.toTypedArray()) {}
+
+    val typesSet : Set<String>
         get() = HashSet(Arrays.asList(*typesArray))
 
 }
