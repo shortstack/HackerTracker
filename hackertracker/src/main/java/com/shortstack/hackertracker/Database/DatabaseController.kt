@@ -22,6 +22,7 @@ abstract class DatabaseController(protected val context: Context, name: String, 
     // SQL
     val SELECT_ALL_FROM = "SELECT * from "
     val LIKE = "LIKE ?"
+    val DATABASE_DIRECTORY = "conferences"
 
     fun checkDatabase() {
         val db = writableDatabase
@@ -137,7 +138,8 @@ abstract class DatabaseController(protected val context: Context, name: String, 
 
     protected fun getJSONFromFile(filename: String): String {
         try {
-            val stream = context.assets.open("$databaseName/$filename")
+            val s = "$DATABASE_DIRECTORY/$databaseName/$filename"
+            val stream = context.assets.open(s)
 
             val size = stream.available()
 
