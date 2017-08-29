@@ -18,6 +18,7 @@ import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.Event.RefreshTimerEvent
 import com.shortstack.hackertracker.Event.SyncResponseEvent
 import com.shortstack.hackertracker.Event.UpdateListContentsEvent
+import com.shortstack.hackertracker.List.ListViewsInterface
 import com.shortstack.hackertracker.List.ScheduleInfiniteScrollListener
 import com.shortstack.hackertracker.List.ScheduleItemAdapter
 import com.shortstack.hackertracker.Network.DatabaseService
