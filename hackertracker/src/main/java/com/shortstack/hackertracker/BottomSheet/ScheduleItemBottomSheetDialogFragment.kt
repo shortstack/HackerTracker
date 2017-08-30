@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutCompat
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.shortstack.hackertracker.Activity.ItemActivity
 import com.shortstack.hackertracker.Alert.MaterialAlert
 import com.shortstack.hackertracker.Analytics.AnalyticsController
 import com.shortstack.hackertracker.Application.App
@@ -22,6 +23,7 @@ import com.shortstack.hackertracker.Model.ItemViewModel
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.View.ItemView
 import com.shortstack.hackertracker.View.SpeakerView
+import kotlinx.android.synthetic.main.bottom_sheet_schedule_item.*
 import kotlinx.android.synthetic.main.bottom_sheet_schedule_item.view.*
 import kotlinx.android.synthetic.main.empty_text.view.*
 
@@ -51,14 +53,21 @@ class ScheduleItemBottomSheetDialogFragment : android.support.design.widget.Bott
         view.demo.visibility = obj.demoVisibility
 
 
+//        initViewPager(obj, view)
+
+    }
+
+    private fun initViewPager(obj : ItemViewModel, view : View) {
         val color = resources.getIntArray(R.array.colors) [obj.categoryColorPosition]
         view.tab_layout.setBackgroundColor(color)
+
+        val adapter = ItemActivity.PagerAdapter(activity.supportFragmentManager, content)
+        view.pager.adapter = adapter
 
 
         view.tab_layout.addTab(view.tab_layout.newTab().setText("Description"))
         view.tab_layout.addTab(view.tab_layout.newTab().setText("Author"))
         view.tab_layout.tabGravity = TabLayout.GRAVITY_FILL
-
     }
 
     private fun displaySpeakers(obj : ItemViewModel, speakers : LinearLayoutCompat) {
