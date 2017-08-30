@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Renderer
+package com.shortstack.hackertracker.vendors
 
 import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater

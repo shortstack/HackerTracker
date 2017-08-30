@@ -11,7 +11,6 @@ import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.Model.Vendor
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.Renderer.VendorRenderer
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
 class VendorsFragment : Fragment(), VendorsContract.View {
