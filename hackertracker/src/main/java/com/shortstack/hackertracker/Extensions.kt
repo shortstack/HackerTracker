@@ -21,13 +21,13 @@ fun FragmentManager.contains(tag: String) = findFragmentByTag(tag) != null
 fun AppCompatActivity.addFragment(fragment: Fragment, title: String, tag: String, frameId: Int) {
     supportActionBar?.title = title
     supportFragmentManager.inTransaction { add(frameId, fragment, tag) }
-    invalidateOptionsMenu()
+    //invalidateOptionsMenu()
 }
 
 fun AppCompatActivity.replaceFragment(fragment: Fragment, title: String, tag: String, frameId: Int) {
     supportActionBar?.title = title
     supportFragmentManager.inTransaction { replace(frameId, fragment, tag) }
-    invalidateOptionsMenu()
+    //invalidateOptionsMenu()
 }
 
 fun Date.isToday(): Boolean {
