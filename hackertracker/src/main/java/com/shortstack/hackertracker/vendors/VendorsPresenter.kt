@@ -13,6 +13,7 @@ class VendorsPresenter(private val view : VendorsContract.View) : VendorsContrac
     private fun fetchVendors() {
         view.setProgressIndicator(true)
 
+        // TODO: This should use DI.
         App.application.databaseController.getVendors()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -21,6 +22,7 @@ class VendorsPresenter(private val view : VendorsContract.View) : VendorsContrac
                     view.showVendors(it.toTypedArray())
                 }, {
                     if (view.isActive()) {
+                        view.setProgressIndicator(false)
                         view.showLoadingVendorsError()
                     }
 

@@ -60,6 +60,7 @@ class VendorsFragment : Fragment(), VendorsContract.View {
         val adapter = RendererAdapter<Any>(rendererBuilder)
         list.adapter = adapter
 
+        // TODO: This should use DI instead.
         setPresenter(VendorsPresenter(this))
     }
 
