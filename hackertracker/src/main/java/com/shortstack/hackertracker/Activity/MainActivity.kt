@@ -28,6 +28,7 @@ import com.shortstack.hackertracker.Fragment.*
 import com.shortstack.hackertracker.Model.Filter
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.replaceFragment
+import com.shortstack.hackertracker.vendors.VendorsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 
