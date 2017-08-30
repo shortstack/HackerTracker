@@ -238,20 +238,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item : MenuItem) : Boolean {
         if (item.itemId == R.id.nav_change_con) {
-            MaterialAlert.create(this).setTitle(this.getString(R.string.msg_change_con)).setItems(R.array.cons,
-                    DialogInterface.OnClickListener { dialogInterface, i ->
-
-                        App.application.storage.databaseSelected = i
-                        App.application.updateDatabaseController()
-                        App.application.storage.filter = Filter()
-
-                        finish()
-                        startActivity(Intent(this, MainActivity::class.java))
-
-
-                    }).setBasicPositiveButton().show()
-
-            forceMenuHighlighted()
+            onChangeCon()
             return true
         }
 
@@ -259,6 +246,27 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         loadFragment()
 
         return true
+    }
+
+    fun changeCon() {
+        onChangeCon()
+    }
+
+    private fun onChangeCon() {
+        MaterialAlert.create(this).setTitle(this.getString(R.string.msg_change_con)).setItems(R.array.cons,
+                DialogInterface.OnClickListener { dialogInterface, i ->
+
+                    App.application.storage.databaseSelected = i
+                    App.application.updateDatabaseController()
+                    App.application.storage.filter = Filter()
+
+                    finish()
+                    startActivity(Intent(this, MainActivity::class.java))
+
+
+                }).setBasicPositiveButton().show()
+
+        forceMenuHighlighted()
     }
 
     private fun setFragmentIndex(item : MenuItem) {
