@@ -10,6 +10,7 @@ import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.Event.FavoriteEvent
 import com.shortstack.hackertracker.Model.*
+import com.shortstack.hackertracker.Network.FullResponse
 import com.shortstack.hackertracker.Network.SyncResponse
 import com.shortstack.hackertracker.format8601
 import com.shortstack.hackertracker.joinSQLOr
@@ -90,6 +91,18 @@ open class DEFCONDatabaseController(context : Context, name : String = Constants
         updateSchedule(db, response)
 
         initOtherDatabases(gson, db)
+    }
+
+    fun update(database : SQLiteDatabase = writableDatabase, response : FullResponse) : Observable<Int> {
+        return Observable.create {
+            emitter ->
+            Logger.d("Updating types with size: " + response.types.types.size)
+            initTable(database, TYPES_TABLE_NAME, response.types.types)
+            val rows = updateSchedule(database, response.syncResponse)
+
+            emitter.onNext(rows)
+            emitter.onComplete()
+        }
     }
 
     fun update(database : SQLiteDatabase = writableDatabase, response : SyncResponse) : Observable<Int> {

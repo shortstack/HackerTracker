@@ -12,6 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.Alert.MaterialAlert
 import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Common.Constants
@@ -32,8 +33,6 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import java.util.*
-
-
 
 
 class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListViewsInterface {
@@ -125,9 +124,6 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         refreshContents()
-
-        if( App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME )
-            swipe_refresh.isEnabled = false
     }
 
     private fun hasScheduleItems() : Boolean {
@@ -174,7 +170,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
 
     override fun onRefresh() {
-        val service = DatabaseService.create()
+        val service = DatabaseService.create(App.application.databaseController.databaseName)
 
         val syncRepository = SyncRepository(service)
         syncRepository.getSchedule()
@@ -192,10 +188,12 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         swipe_refresh?.isRefreshing = false
         if (context != null)
             Toast.makeText(context, context.getString(R.string.error_unable_to_sync), Toast.LENGTH_SHORT).show()
+
+        Logger.e(it, "Could not refresh sync.")
     }
 
     private fun onRefreshUpdate(it : FullResponse) {
-        App.application.databaseController.update(response = it.syncResponse).subscribeOn(Schedulers.io())
+        App.application.databaseController.update(response = it).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     swipe_refresh?.isRefreshing = false
@@ -209,6 +207,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
                     }
                 }
     }
+
 
     companion object {
 

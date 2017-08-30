@@ -9,6 +9,7 @@ interface Constants {
         val TOORCON_DATABASE_NAME = "TOORCON19"
 
         val API_URL_BASE = "https://info.defcon.org/json/"
+        val API_GITHUB_BASE = "https://raw.githubusercontent.com/BeezleLabs/conferences/master/"
 
 
         val TIME_SECONDS_IN_HOUR = 3600
