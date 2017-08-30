@@ -194,7 +194,7 @@ Any news and info will likely be posted there.</item>
     <string name="map_night_title">NIGHT</string>
     <string name="notification_text_blank">Starting soon.</string>
     <string name="empty_location">unknown location</string>
-    <string name="change_con">Change Con</string>
+    <string name="change_con">Change Conference</string>
     <string name="defcon">DEFCON</string>
     <string name="toorcon">TOORCON</string>
     <string name="search">Search</string>
@@ -203,6 +203,7 @@ Any news and info will likely be posted there.</item>
     <string name="msg_up_to_date">Up to date!</string>
     <string name="error_unable_to_sync">Unable to sync</string>
     <string name="msg_change_con">Change Con</string>
+    <string name="msg_change_cons">We\'re branching out to supporting multiple conferences.</string>
 
     <string-array name="nav_item_activity_titles">
         <item>@string/nav_home</item>

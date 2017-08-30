@@ -15,10 +15,7 @@ import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.Model.Item
 import com.shortstack.hackertracker.Model.Navigation
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.Renderer.ActivityNavRenderer
-import com.shortstack.hackertracker.Renderer.HomeHeaderRenderer
-import com.shortstack.hackertracker.Renderer.ItemRenderer
-import com.shortstack.hackertracker.Renderer.SubHeaderRenderer
+import com.shortstack.hackertracker.Renderer.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_list.*
@@ -41,6 +38,7 @@ class HomeFragment : Fragment() {
                 .bind(String::class.java, SubHeaderRenderer())
                 .bind(Item::class.java, ItemRenderer())
                 .bind(Navigation::class.java, ActivityNavRenderer())
+                .bind(TYPE_CHANGE_CON, ChangeConRenderer())
 
         val layout = LinearLayoutManager(context)
         list.layoutManager = layout
@@ -107,8 +105,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun addHelpNavigation() {
-        if (App.application.databaseController.databaseName == Constants.DEFCON_DATABASE_NAME)
+        if (App.application.databaseController.databaseName == Constants.DEFCON_DATABASE_NAME) {
             adapter.addAndNotify(Navigation(getString(R.string.nav_help_title), getString(R.string.nav_help_body), InformationFragment::class.java))
+            adapter.addAndNotify(RendererContent<Void>(null, TYPE_CHANGE_CON))
+        }
     }
 
     private fun addHeader() {
@@ -118,6 +118,7 @@ class HomeFragment : Fragment() {
     companion object {
 
         private val TYPE_HEADER = 0
+        private val TYPE_CHANGE_CON = 1
 
         fun newInstance() : HomeFragment {
             return HomeFragment()
