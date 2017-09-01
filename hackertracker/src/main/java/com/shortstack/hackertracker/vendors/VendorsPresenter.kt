@@ -1,29 +1,36 @@
 package com.shortstack.hackertracker.vendors
 
-import com.shortstack.hackertracker.Application.App
+import com.shortstack.hackertracker.Database.DEFCONDatabaseController
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class VendorsPresenter(private val view : VendorsContract.View) : VendorsContract.Presenter {
+class VendorsPresenter(@Inject private val database : DEFCONDatabaseController) : VendorsContract.Presenter {
 
-    override fun start() {
-        fetchVendors()
+    private var view : VendorsContract.View? = null
+
+    override fun <T> takeView(view : T) {
+        this.view = view as VendorsContract.View
+        loadVendors()
     }
 
-    private fun fetchVendors() {
-        view.setProgressIndicator(true)
+    override fun dropView() {
+        view = null
+    }
 
-        // TODO: This should use DI.
-        App.application.databaseController.getVendors()
+    private fun loadVendors() {
+        view?.setProgressIndicator(true)
+
+        database.getVendors()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    view.setProgressIndicator(false)
-                    view.showVendors(it.toTypedArray())
+                    view?.setProgressIndicator(false)
+                    view?.showVendors(it.toTypedArray())
                 }, {
-                    if (view.isActive()) {
-                        view.setProgressIndicator(false)
-                        view.showLoadingVendorsError()
+                    if (view?.isActive() ?: false) {
+                        view?.setProgressIndicator(false)
+                        view?.showLoadingVendorsError()
                     }
 
                 })

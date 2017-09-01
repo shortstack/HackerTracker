@@ -2,6 +2,8 @@ package com.shortstack.hackertracker
 
 interface BasePresenter {
 
-    fun start()
+    fun <T> takeView(view : T)
+
+    fun dropView()
 
 }

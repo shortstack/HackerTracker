@@ -24,31 +24,40 @@ import com.shortstack.hackertracker.Utils.NotificationHelper
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.Utils.TimeHelper
 import com.squareup.otto.Bus
+import dagger.android.AndroidInjector
+import dagger.android.DaggerApplication
 import io.fabric.sdk.android.Fabric
 import java.util.*
 
 
+
 class App : Application() {
 
-    lateinit var appContext: Context
+    fun applicationInjector() : AndroidInjector<out DaggerApplication> {
+        val appComponent = DaggerAppComponent.builder().application(this).build()
+        appComponent.inject(this)
+        return appComponent
+    }
+
+    lateinit var appContext : Context
         private set
 
     // Eventbus
-    val bus: Bus by lazy { MainThreadBus() }
+    val bus : Bus by lazy { MainThreadBus() }
     // Storage
-    val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil() }
+    val storage : SharedPreferencesUtil by lazy { SharedPreferencesUtil() }
     // Database
-    lateinit var databaseController: DEFCONDatabaseController
+    lateinit var databaseController : DEFCONDatabaseController
     // Notifications
-    val notificationHelper: NotificationHelper by lazy { NotificationHelper(appContext) }
+    val notificationHelper : NotificationHelper by lazy { NotificationHelper(appContext) }
     // Analytics
-    val analyticsController: AnalyticsController by lazy { AnalyticsController() }
+    val analyticsController : AnalyticsController by lazy { AnalyticsController() }
     // Time
-    val timeHelper: TimeHelper by lazy { TimeHelper(appContext) }
+    val timeHelper : TimeHelper by lazy { TimeHelper(appContext) }
 
-    val gson: Gson by lazy { GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create() }
+    val gson : Gson by lazy { GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create() }
 
-    val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(appContext)) }
+    val dispatcher : FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(appContext)) }
 
 
     override fun onCreate() {
@@ -69,12 +78,12 @@ class App : Application() {
 
     fun updateDatabaseController() {
         val name = if (storage.databaseSelected == 0) Constants.DEFCON_DATABASE_NAME else Constants.TOORCON_DATABASE_NAME
-        setTheme( if (storage.databaseSelected == 0) R.style.AppTheme else R.style.AppTheme_Toorcon )
+        setTheme(if (storage.databaseSelected == 0) R.style.AppTheme else R.style.AppTheme_Toorcon)
 
         Logger.d("Creating database controller with database: $name")
         databaseController = DEFCONDatabaseController(appContext, name = name)
 
-        if(databaseController.exists()) {
+        if (databaseController.exists()) {
             databaseController.checkDatabase()
         }
     }
@@ -135,35 +144,35 @@ class App : Application() {
     }
 
 
-    fun postBusEvent(event: Any) {
+    fun postBusEvent(event : Any) {
         bus.post(event)
     }
 
-    fun unregisterBusListener(itemView: Any) {
+    fun unregisterBusListener(itemView : Any) {
         bus.unregister(itemView)
     }
 
-    fun registerBusListener(itemView: Any) {
+    fun registerBusListener(itemView : Any) {
         bus.register(itemView)
     }
 
 
     companion object {
 
-        lateinit var application: App
+        lateinit var application : App
 
-        fun getCurrentCalendar(): Calendar = application.timeHelper.currentCalendar
+        fun getCurrentCalendar() : Calendar = application.timeHelper.currentCalendar
 
-        fun getCurrentDate(): Date = application.timeHelper.currentDate
+        fun getCurrentDate() : Date = application.timeHelper.currentDate
 
-        fun getRelativeDateStamp(date: Date): String = application.timeHelper.getRelativeDateStamp(date)
+        fun getRelativeDateStamp(date : Date) : String = application.timeHelper.getRelativeDateStamp(date)
 
 
     }
 
 
     object Storage {
-        fun getStorage(): SharedPreferencesUtil {
+        fun getStorage() : SharedPreferencesUtil {
             return SharedPreferencesUtil()
         }
     }

@@ -1,7 +1,6 @@
 package com.shortstack.hackertracker.vendors
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +10,16 @@ import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.Model.Vendor
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.di.ActivityScoped
+import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import javax.inject.Inject
 
-class VendorsFragment : Fragment(), VendorsContract.View {
+@ActivityScoped
+class VendorsFragment @Inject constructor() : DaggerFragment(), VendorsContract.View {
 
-    private var presenter : VendorsContract.Presenter? = null
+    @Inject
+    private lateinit var presenter : VendorsContract.Presenter
 
 
     override fun setPresenter(presenter : VendorsContract.Presenter) {
@@ -28,7 +32,12 @@ class VendorsFragment : Fragment(), VendorsContract.View {
 
     override fun onResume() {
         super.onResume()
-        presenter?.start()
+        presenter.takeView(this)
+    }
+
+    override fun onDestroy() {
+        presenter.dropView()
+        super.onDestroy()
     }
 
     override fun setProgressIndicator(active : Boolean) {
@@ -58,9 +67,6 @@ class VendorsFragment : Fragment(), VendorsContract.View {
 
         val adapter = RendererAdapter<Any>(rendererBuilder)
         list.adapter = adapter
-
-        // TODO: This should use DI instead.
-        setPresenter(VendorsPresenter(this))
     }
 
     companion object {
