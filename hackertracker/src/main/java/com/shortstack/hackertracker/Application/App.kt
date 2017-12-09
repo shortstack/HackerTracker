@@ -24,20 +24,12 @@ import com.shortstack.hackertracker.Utils.NotificationHelper
 import com.shortstack.hackertracker.Utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.Utils.TimeHelper
 import com.squareup.otto.Bus
-import dagger.android.AndroidInjector
-import dagger.android.DaggerApplication
 import io.fabric.sdk.android.Fabric
 import java.util.*
 
 
 
 class App : Application() {
-
-    fun applicationInjector() : AndroidInjector<out DaggerApplication> {
-        val appComponent = DaggerAppComponent.builder().application(this).build()
-        appComponent.inject(this)
-        return appComponent
-    }
 
     lateinit var appContext : Context
         private set

@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.vendors
 
 import android.os.Bundle
+import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
@@ -10,13 +11,11 @@ import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.Model.Vendor
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.di.ActivityScoped
-import dagger.android.support.DaggerFragment
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
 
-@ActivityScoped
-class VendorsFragment @Inject constructor() : DaggerFragment(), VendorsContract.View {
+
+class VendorsFragment : Fragment(), VendorsContract.View {
 
     @Inject
     private lateinit var presenter : VendorsContract.Presenter
