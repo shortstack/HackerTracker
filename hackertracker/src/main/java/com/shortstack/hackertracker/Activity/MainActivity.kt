@@ -10,6 +10,7 @@ import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
@@ -25,11 +26,15 @@ import com.shortstack.hackertracker.Database.DatabaseController
 import com.shortstack.hackertracker.Fragment.*
 import com.shortstack.hackertracker.Model.Filter
 import com.shortstack.hackertracker.R
+
 import com.shortstack.hackertracker.home.HomeFragment
+import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.vendors.VendorsFragment
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 
 
-class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
 
     private var mFragmentIndex = DEFAULT_FRAGMENT_INDEX
