@@ -13,6 +13,7 @@ import com.shortstack.hackertracker.Model.Vendor
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
+
 class VendorsFragment : Fragment(), VendorsContract.View {
 
     private var presenter : VendorsContract.Presenter? = null
