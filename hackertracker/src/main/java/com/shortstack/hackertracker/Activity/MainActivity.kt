@@ -27,6 +27,7 @@ import com.shortstack.hackertracker.Database.DatabaseController
 import com.shortstack.hackertracker.Fragment.*
 import com.shortstack.hackertracker.Model.Filter
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.home.HomeFragment
 import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.vendors.VendorsFragment
 import kotlinx.android.synthetic.main.activity_main.*
