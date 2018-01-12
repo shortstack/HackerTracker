@@ -146,7 +146,7 @@ open class DEFCONDatabaseController(context : Context, name : String = Constants
         initTable(db, SPEAKERS_TABLE_NAME, speakers.speakers)
     }
 
-    private val recentLimit = 100
+    private val recentLimit = 20
 
     fun getRecentUpdates() : List<Item> {
         return query(SCHEDULE_TABLE_NAME, Item::class.java, orderBy = "updated_at DESC", limit = recentLimit)
