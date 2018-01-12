@@ -80,19 +80,10 @@ class HomeFragment : Fragment(), HomeContract.View {
 
         // TODO: This should use DI.
         setPresenter(HomePresenter(context, this))
+
+        presenter?.start()
     }
-
-
-    override fun onResume() {
-        super.onResume()
-//        presenter?.takeView(this)
-    }
-
-    override fun onDestroy() {
-//        presenter?.dropView()
-        super.onDestroy()
-    }
-
+    
     override fun addAdapterItem(item : Any ) {
         adapter.addAndNotify(item)
     }
