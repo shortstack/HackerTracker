@@ -10,10 +10,12 @@ import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import butterknife.ButterKnife
 import com.github.stkent.amplify.tracking.Amplify
 import com.shortstack.hackertracker.Alert.MaterialAlert
 import com.shortstack.hackertracker.Analytics.AnalyticsController
@@ -25,18 +27,22 @@ import com.shortstack.hackertracker.Database.DatabaseController
 import com.shortstack.hackertracker.Fragment.*
 import com.shortstack.hackertracker.Model.Filter
 import com.shortstack.hackertracker.R
+
 import com.shortstack.hackertracker.home.HomeFragment
+import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.vendors.VendorsFragment
+import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.app_bar_main.*
 
 
-class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
 
     private var mFragmentIndex = DEFAULT_FRAGMENT_INDEX
 
-    private val titles: Array<String> by lazy { resources.getStringArray(R.array.nav_item_activity_titles) }
+    private val titles : Array<String> by lazy { resources.getStringArray(R.array.nav_item_activity_titles) }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
 
         if (!DatabaseController.exists(this, App.application.databaseController.databaseName)) {
@@ -46,6 +52,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         }
 
         setContentView(R.layout.activity_main)
+        ButterKnife.bind(this)
         setSupportActionBar(toolbar)
 
         initViewPager()
@@ -67,18 +74,18 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
     }
 
 
-    override fun getTheme(): Resources.Theme {
+    override fun getTheme() : Resources.Theme {
         val theme = super.getTheme()
         theme.applyStyle(App.application.storage.databaseTheme, true)
         return theme
     }
 
-    override fun onNewIntent(intent: Intent?) {
+    override fun onNewIntent(intent : Intent?) {
         super.onNewIntent(intent)
         handleIntent(intent)
     }
 
-    private fun handleIntent(intent: Intent?) {
+    private fun handleIntent(intent : Intent?) {
         if (intent == null || intent.extras == null)
             return
 
@@ -96,7 +103,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
 
     private fun forceMenuHighlighted() {
         val menu = nav_view!!.menu
-        if (menu.size() > mFragmentIndex)
+        if( menu.size() > mFragmentIndex )
             menu.getItem(mFragmentIndex).isChecked = true
     }
 
@@ -119,7 +126,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         drawer_layout!!.closeDrawers()
     }
 
-    private val fragmentEvent: AnalyticsController.Analytics
+    private val fragmentEvent : AnalyticsController.Analytics
         get() {
             return when (mFragmentIndex) {
                 NAV_HOME -> AnalyticsController.Analytics.FRAGMENT_HOME
@@ -142,7 +149,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         filter!!.visibility = if (mFragmentIndex == NAV_SCHEDULE) View.VISIBLE else View.GONE
     }
 
-    private val currentFragment: Fragment
+    private val currentFragment : Fragment
         get() {
             return when (mFragmentIndex) {
                 NAV_HOME -> HomeFragment.newInstance()
@@ -179,7 +186,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         super.onBackPressed()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+    override fun onCreateOptionsMenu(menu : Menu) : Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.search_menu, menu)
 
@@ -192,7 +199,7 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         return true
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+    override fun onOptionsItemSelected(item : MenuItem) : Boolean {
         when (item.itemId) {
             R.id.search -> {
                 val fragment = SearchFragment.newInstance()
@@ -203,11 +210,11 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
                 replaceFragment(fragment, fragmentTitle, fragmentTag, R.id.frame)
 
                 item.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-                    override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
+                    override fun onMenuItemActionExpand(p0 : MenuItem?) : Boolean {
                         return true
                     }
 
-                    override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
+                    override fun onMenuItemActionCollapse(p0 : MenuItem?) : Boolean {
                         loadFragment()
                         return true
                     }
@@ -226,13 +233,13 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         toggle.syncState()
 
         nav_view!!.setNavigationItemSelectedListener(this)
-        if (App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME) {
+        if( App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME ) {
             nav_view.menu.removeItem(R.id.nav_information)
         }
 
     }
 
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
+    override fun onNavigationItemSelected(item : MenuItem) : Boolean {
         if (item.itemId == R.id.nav_change_con) {
             onChangeCon()
             return true
@@ -265,11 +272,11 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         forceMenuHighlighted()
     }
 
-    private fun setFragmentIndex(item: MenuItem) {
+    private fun setFragmentIndex(item : MenuItem) {
         mFragmentIndex = getFragmentIndex(item)
     }
 
-    private fun getFragmentIndex(item: MenuItem): Int {
+    private fun getFragmentIndex(item : MenuItem) : Int {
         when (item.itemId) {
             R.id.nav_home -> return NAV_HOME
             R.id.nav_schedule -> return NAV_SCHEDULE
@@ -283,13 +290,13 @@ class MainActivity : DaggerAppCompatActivity(), NavigationView.OnNavigationItemS
         throw IllegalStateException("Could not find fragment with id: ${item.itemId}.")
     }
 
-    private val fragmentTag: String
+    private val fragmentTag : String
         get() = "home_fragment_" + mFragmentIndex
 
-    private val fragmentTitle: String
+    private val fragmentTitle : String
         get() = titles[mFragmentIndex]
 
-    fun loadFragment(fragment: Int) {
+    fun loadFragment(fragment : Int) {
         mFragmentIndex = fragment
         forceMenuHighlighted()
         loadFragment()

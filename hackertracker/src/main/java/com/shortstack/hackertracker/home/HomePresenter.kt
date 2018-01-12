@@ -14,15 +14,9 @@ import java.util.*
 
 // TODO: Should not pass Context, use DI.
 class HomePresenter(private val context : Context, private val view : HomeContract.View) : HomeContract.Presenter {
-    override fun <T> takeView(view : T) {
-        //
-        //fetchRecentUpdates()
-
+    override fun start() {
+        fetchRecentUpdates()
     }
-
-    override fun dropView() {
-    }
-
 
     fun fetchRecentUpdates() {
         view.setProgressIndicator(true)

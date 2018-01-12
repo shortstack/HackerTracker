@@ -2,11 +2,9 @@ package com.shortstack.hackertracker.Utils
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.os.Build
+import com.shortstack.hackertracker.*
 import com.shortstack.hackertracker.Common.Constants
-import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.isSoonish
-import com.shortstack.hackertracker.isToday
-import com.shortstack.hackertracker.isTomorrow
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -18,7 +16,8 @@ class TimeHelper(mContext: Context) {
     val currentDate: Date
         get() {
             val date = Date()
-            date.time = Constants.DEBUG_FORCE_TIME_DATE
+            if (BuildConfig.DEBUG)
+                date.time = Constants.DEBUG_FORCE_TIME_DATE
 
             return date;
         }
