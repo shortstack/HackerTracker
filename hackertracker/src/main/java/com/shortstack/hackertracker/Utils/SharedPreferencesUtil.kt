@@ -1,10 +1,10 @@
-package com.shortstack.hackertracker.Utils
+package com.shortstack.hackertracker.utils
 
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.shortstack.hackertracker.Application.App
-import com.shortstack.hackertracker.Common.Constants
-import com.shortstack.hackertracker.Model.Filter
+import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.Constants
+import com.shortstack.hackertracker.models.Filter
 import com.shortstack.hackertracker.R
 import java.util.*
 

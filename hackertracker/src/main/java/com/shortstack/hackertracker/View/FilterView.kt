@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.View
+package com.shortstack.hackertracker.view
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -8,8 +8,8 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import butterknife.ButterKnife
-import com.shortstack.hackertracker.Application.App
-import com.shortstack.hackertracker.Model.Filter
+import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.models.Filter
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.alert_filter.view.*
 import java.util.*

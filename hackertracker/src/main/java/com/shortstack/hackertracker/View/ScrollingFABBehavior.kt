@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.View
+package com.shortstack.hackertracker.view
 
 
 import android.content.Context

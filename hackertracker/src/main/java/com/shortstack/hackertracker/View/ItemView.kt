@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.View
+package com.shortstack.hackertracker.view
 
 import android.animation.ObjectAnimator
 import android.content.Context
@@ -11,11 +11,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import butterknife.ButterKnife
-import com.shortstack.hackertracker.Application.App
-import com.shortstack.hackertracker.Event.FavoriteEvent
-import com.shortstack.hackertracker.Event.RefreshTimerEvent
-import com.shortstack.hackertracker.Model.Item
-import com.shortstack.hackertracker.Model.ItemViewModel
+import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.event.FavoriteEvent
+import com.shortstack.hackertracker.event.RefreshTimerEvent
+import com.shortstack.hackertracker.models.Item
+import com.shortstack.hackertracker.models.ItemViewModel
 import com.shortstack.hackertracker.R
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.row_item.view.*

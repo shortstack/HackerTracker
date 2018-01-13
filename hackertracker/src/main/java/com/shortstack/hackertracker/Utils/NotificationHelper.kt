@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Utils
+package com.shortstack.hackertracker.utils
 
 import android.app.Notification
 import android.app.PendingIntent
@@ -11,11 +11,11 @@ import android.os.Bundle
 import android.support.v4.app.NotificationManagerCompat
 import com.firebase.jobdispatcher.Trigger
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.Activity.MainActivity
-import com.shortstack.hackertracker.Application.App
-import com.shortstack.hackertracker.Model.Item
+import com.shortstack.hackertracker.ui.activities.MainActivity
+import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.Task.ReminderJob
+import com.shortstack.hackertracker.network.task.ReminderJob
 
 class NotificationHelper(private val mContext: Context) {
 

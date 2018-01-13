@@ -1,10 +1,10 @@
-package com.shortstack.hackertracker.Analytics
+package com.shortstack.hackertracker.analytics
 
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
-import com.shortstack.hackertracker.Application.App
-import com.shortstack.hackertracker.Model.Filter
-import com.shortstack.hackertracker.Model.Item
+import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.models.Filter
+import com.shortstack.hackertracker.models.Item
 
 
 class AnalyticsController {

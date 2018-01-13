@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.View
+package com.shortstack.hackertracker.view
 
 import android.content.Context
 import android.util.AttributeSet
@@ -6,9 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import butterknife.ButterKnife
-import com.shortstack.hackertracker.Application.App
-import com.shortstack.hackertracker.Event.RefreshTimerEvent
-import com.shortstack.hackertracker.Model.ItemViewModel
+import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.event.RefreshTimerEvent
+import com.shortstack.hackertracker.models.ItemViewModel
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.getDateDifference
 import com.shortstack.hackertracker.isToday
