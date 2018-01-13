@@ -52,7 +52,7 @@ class HomeFragment : Fragment() {
 
     private fun fetchRecentUpdates() {
         setProgressIndicator(true)
-        
+
         App.application.databaseController.getRecent()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
