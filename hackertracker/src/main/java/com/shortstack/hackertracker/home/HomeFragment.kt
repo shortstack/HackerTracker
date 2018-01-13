@@ -9,54 +9,22 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
+import com.pedrogomez.renderers.RendererContent
+import com.shortstack.hackertracker.Application.App
+import com.shortstack.hackertracker.Fragment.InformationFragment
 import com.shortstack.hackertracker.Model.Item
 import com.shortstack.hackertracker.Model.Navigation
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Renderer.*
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import java.text.SimpleDateFormat
+import java.util.*
 
-class HomeFragment : Fragment(), HomeContract.View {
+class HomeFragment : Fragment() {
 
-    private var presenter : HomeContract.Presenter? = null
-    lateinit var adapter : RendererAdapter<Any>
-
-    override fun setPresenter(presenter : HomeContract.Presenter) {
-        this.presenter = presenter
-    }
-
-    override fun setProgressIndicator(active : Boolean) {
-        loading_progress.visibility = if (active) View.VISIBLE else View.GONE
-    }
-
-    override fun showRecentUpdates(items : Array<Item>) {
-        var recentDate = ""
-        val size = adapter.collection.size
-
-
-        for (item in items) {
-            if (item.updatedAt != recentDate) {
-                recentDate = item.updatedAt
-                val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(item.updatedAt)
-                adapter.add("Updated " + SimpleDateFormat("MMMM dd h:mm aa").format(date))
-            }
-
-            adapter.add(item)
-        }
-
-        adapter.notifyItemRangeInserted(size, adapter.collection.size - size)
-    }
-
-    override fun showLoadingRecentUpdatesError() {
-        Toast.makeText(context, "Could not fetch recent updates.", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun showLastSyncTimestamp(timestamp : String) {
-        adapter.add(timestamp)
-    }
-
-    override fun isActive() = isAdded
-
+    private lateinit var adapter : RendererAdapter<Any>
 
     override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
         return inflater!!.inflate(R.layout.fragment_recyclerview, container, false)
@@ -75,16 +43,98 @@ class HomeFragment : Fragment(), HomeContract.View {
         val layout = LinearLayoutManager(context)
         list.layoutManager = layout
 
-        adapter = RendererAdapter<kotlin.Any>(rendererBuilder)
+        adapter = RendererAdapter(rendererBuilder)
         list.adapter = adapter
 
-        // TODO: This should use DI.
-        setPresenter(HomePresenter(context, this))
 
-        presenter?.start()
+        fetchRecentUpdates()
     }
-    
-    override fun addAdapterItem(item : Any ) {
+
+    private fun fetchRecentUpdates() {
+        setProgressIndicator(true)
+
+        App.application.databaseController.getRecent()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    setProgressIndicator(false)
+
+                    // TODO: This could be a lot clearer.
+                    addAdapterItem(getHeader())
+                    addAdapterItem(getInformationNav())
+                    addAdapterItem(getChangeConCard())
+
+                    showLastSyncTimestamp(getLastSyncTimestamp())
+
+                    showRecentUpdates(it.toTypedArray())
+                }, {
+                    if (isAdded) {
+                        setProgressIndicator(false)
+                        showLoadingRecentUpdatesError()
+                    }
+                })
+    }
+
+
+    private fun setProgressIndicator(active : Boolean) {
+        loading_progress.visibility = if (active) View.VISIBLE else View.GONE
+    }
+
+    private fun showRecentUpdates(items : Array<Item>) {
+        var recentDate = ""
+        val size = adapter.collection.size
+
+
+        for (item in items) {
+            if (item.updatedAt != recentDate) {
+                recentDate = item.updatedAt
+                val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(item.updatedAt)
+                adapter.add("Updated " + SimpleDateFormat("MMMM dd h:mm aa").format(date))
+            }
+
+            adapter.add(item)
+        }
+
+        adapter.notifyItemRangeInserted(size, adapter.collection.size - size)
+    }
+
+    private fun showLoadingRecentUpdatesError() {
+        Toast.makeText(context, "Could not fetch recent updates.", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showLastSyncTimestamp(timestamp : String) {
+        adapter.add(timestamp)
+    }
+
+    private fun getHeader() : Any {
+        return RendererContent<Void>(null, TYPE_HEADER)
+    }
+
+    private fun getChangeConCard() : Any {
+        return RendererContent<Void>(null, TYPE_CHANGE_CON)
+    }
+
+    private fun getInformationNav() = Navigation(context.getString(R.string.nav_help_title), context.getString(R.string.nav_help_body), InformationFragment::class.java)
+
+    private fun getLastSyncTimestamp() : String {
+        val storage = App.application.storage
+        val lastDate : String
+
+        val cal = Calendar.getInstance()
+        cal.time = Date(storage.lastRefresh)
+
+        val refresh = storage.lastRefresh
+        if (refresh == 0L) {
+            val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(storage.lastUpdated)
+            lastDate = "Last synced " + App.getRelativeDateStamp(date)
+        } else {
+            lastDate = "Last synced " + App.getRelativeDateStamp(Date(refresh))
+        }
+
+        return "Last updated\n" + lastDate.toLowerCase()
+    }
+
+    private fun addAdapterItem(item : Any) {
         adapter.addAndNotify(item)
     }
 

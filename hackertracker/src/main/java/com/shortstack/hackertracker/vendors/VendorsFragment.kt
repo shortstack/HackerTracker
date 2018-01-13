@@ -9,45 +9,19 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
+import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Model.Vendor
 import com.shortstack.hackertracker.R
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
 
-class VendorsFragment : Fragment(), VendorsContract.View {
-
-    private var presenter : VendorsContract.Presenter? = null
-
-
-    override fun setPresenter(presenter : VendorsContract.Presenter) {
-        this.presenter = presenter
-    }
+class VendorsFragment : Fragment() {
 
     override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
         return inflater!!.inflate(R.layout.fragment_recyclerview, container, false)
     }
-
-    override fun onResume() {
-        super.onResume()
-        presenter?.start()
-    }
-
-    override fun setProgressIndicator(active : Boolean) {
-        loading_progress.visibility = if (active) View.VISIBLE else View.GONE
-    }
-
-    override fun showVendors(vendors : Array<Vendor>) {
-        (list.adapter as RendererAdapter<*>).addAllAndNotify(vendors.toMutableList())
-    }
-
-    override fun showLoadingVendorsError() {
-        Toast.makeText(context, "Could not load vendors.", Toast.LENGTH_SHORT).show()
-    }
-
-    override fun isActive() : Boolean {
-        return isAdded
-    }
-
 
     override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,9 +34,44 @@ class VendorsFragment : Fragment(), VendorsContract.View {
         val adapter = RendererAdapter<Any>(rendererBuilder)
         list.adapter = adapter
 
-        // TODO: This should use DI instead.
-        setPresenter(VendorsPresenter(this))
+        getVendors()
     }
+
+    private fun getVendors() {
+        setProgressIndicator(true)
+
+        App.application.databaseController.getVendors()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    setProgressIndicator(false)
+                    showVendors(it.toTypedArray())
+                }, {
+                    if (isActive()) {
+                        setProgressIndicator(false)
+                        showLoadingVendorsError()
+                    }
+
+                })
+    }
+
+
+    private fun setProgressIndicator(active : Boolean) {
+        loading_progress.visibility = if (active) View.VISIBLE else View.GONE
+    }
+
+    private fun showVendors(vendors : Array<Vendor>) {
+        (list.adapter as RendererAdapter<*>).addAllAndNotify(vendors.toMutableList())
+    }
+
+    private fun showLoadingVendorsError() {
+        Toast.makeText(context, "Could not load vendors.", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun isActive() : Boolean {
+        return isAdded
+    }
+
 
     companion object {
         fun newInstance() : VendorsFragment {
