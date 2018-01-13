@@ -13,7 +13,8 @@
         <item>@string/events</item>
         <item>@string/villages</item>
         <item>@string/kids</item>
-
+        <item>@string/labs</item>
+        <item>@string/breaks</item>
         <item>@string/contests</item>
         <item>@string/parties</item>
         <item>@string/demo_labs</item>
@@ -25,6 +26,8 @@
     <string name="contests">Contests</string>
     <string name="demo_labs">Demo Labs</string>
     <string name="villages">Villages</string>
+    <string name="labs">Labs</string>
+    <string name="breaks">Break</string>
     <string name="events">Events</string>
     <string name="parties">Parties</string>
     <string name="kids">Kids</string>
@@ -145,6 +148,23 @@ Any news and info will likely be posted there.</item>
     </string-array>
 
 
+    <string-array name="faq_questions_shmoo">
+        <item>TICKET PRICE </item>
+        <item>All general admission tickets for ShmooCon 2018 will be sold for $150</item>
+        <item>WHEN DO TICKETS GO ON SALE</item>
+        <item>Tickets for ShmooCon 2018 will be sold on Nov 1, Dec 1, and Dec 10, 2017 at noon, eastern time.  Be warned, tickets sell out very quickly.  Last year tickets sold out in just over 9 seconds (yes, you read that right) across the three rounds of sales.  These dates are subject to change so please keep an eye on our news page or follow us on twitter for updates.\n\nPlease read the rest of the information found on this page.  You should also take the time to familiarize yourself with the information on our registration page - http://shmoocon2.org/human-registration/</item>
+        <item>BARCODES</item>
+        <item>Everyone who purchases admission for ShmooCon will be issued a barcode.  Your barcode is extremely important.  It is your ticket into the con.\n\nAnyone over the age of 12 attending the con will need a barcode.\n\nShmooCon Mantra:\n\nThere will be many barcodes, but the one we send you is your own.\nYour barcode is your best friend.\nWithout it, you cannot get into the con.\nWithout the con, your barcode is useless.\nEach barcode can only be used once, so if you share it the first one in the door wins.</item>
+        <item>CANCELLATION POLICY</item>
+        <item>Firstly, just because you bought a ticket does not mean you’re entitled to a refund.\n\nBought a ticket and now you can’t make it to the con?  Give or sell your ticket to a friend, we don’t care!  Don’t have any friends?  Contact us and we may be able to lend you a friend for a day. (In other words, we may be able to work out a ticket exchange for you.)  If you’re still stuck in a bind and have a VERY good excuse, shoot us an email and we’ll try to work something out for you.\n\nAbsolutely no fees will be refunded after January 1, 2018.</item>
+        <item>SECOND HAND SALES</item>
+        <item>We know that this is a hot topic.  Let us first start by saying most of the feedback we get is that in general tickets are being sold to friends/co-workers/etc. at cost, or cost-plus (where plus equals a beer at the bar, $20 for my time, etc).  We’re alright with that.  Some tickets get donated to charity and auctioned off – we’re ok with that too.  Want to just give your ticket away to a poor college student or someone else – yup, that’s great as well.\n\nIf you’re looking for a legitimate way to sell your extra ticket to a stranger – contact us.  We usually have a waiting list and as long as you are willing to sell the ticket at cost, we will help you sell it.   Transactions managed this way also protect the buyer as we will reissue the barcode to the new purchaser.\n\nUnfortunately, every year some tickets do end up on eBay or being resold via other avenues often at 2-3 times cost.  We don’t approve of these tickets being sold for undeserved profit.  From what we can determine, this type of activity is a small percentage of overall sales and because of that we’ve pretty much chosen a monitor but do nothing approach.   If we see the volume increasing, we may take action but for now we’re of the mind to let the community police these sales.  The best way to stop these kinds of sales from happening?  Don’t buy them and encourage your friends to do the same.\n\nSome things to note if you are considering purchasing a ticket directly from someone you don’t know:\n\nWe don’t approve of it.\nWe won’t get involved.\nYou risk that barcode being sold again and our rules are the first one to the door wins.\nAnd yes.  Sometimes bad things happen.  One poor guy showed up with a code purchased on eBay and it was bad at the door.  If memory serves it was actually a barcode from the year prior.  Could this have been done in error? Maybe…and we’re not sure how it got resolved but he wasn’t let into the con with the bad barcode.\n\nIn summary – BUYING TICKETS FROM OTHERS IS DONE AT YOUR OWN RISK.</item>
+        <item>LAST BUT NOT LEAST</item>
+        <item>ShmooCon supports the free and open exchange of information.\n\nWe are proud to have attendees with unique and diverse viewpoints on just about any topic.  We want to foster the exchange of ideas among attendees and think the community benefits from inclusiveness.  To that end, we are committed to providing a friendly, lively, and welcoming environment for all.\n\nFor your part, please be awesome to one another.\n\nWhat is awesome?  In the most simplest terms it means tolerance and respect.  Be helpful, be kind, be responsible.  It makes the experience better for everyone.  Marginalization, intimidation, and harassment are examples of what is not awesome and will be addressed accordingly.\n\nIf someone is not being awesome to you or you see someone not being awesome, please tell a staff member or contact us at security@shmoocon.org (active and monitored 24/7 for the duration of the conference). If you, yourself, are not being awesome, be aware that the consequences are yours to bear.  This may include being asked to leave the conference without refund and/or dealing with the proper authorities should it be warranted.\n\nWe value our attendees, speakers, and all our volunteers – they (you!) are why we come together every year and we hope you will work with us to keep ShmooCon amazing.</item>
+        <item>QUESTIONS</item>
+        <item>All questions should be directed here - info@shmoocon.org.  Please include the name of your favorite astronaut.</item>
+    </string-array>
+
     <string name="demo">DEMO</string>
     <string name="tool">TOOL</string>
     <string name="exploit">EXPLOIT</string>
@@ -197,6 +217,8 @@ Any news and info will likely be posted there.</item>
     <string name="change_con">Change Conference</string>
     <string name="defcon">DEFCON</string>
     <string name="toorcon">TOORCON</string>
+    <string name="shmoocon">SHMOOCON</string>
+    <string name="cons">OH SNAP</string>
     <string name="search">Search</string>
     <string name="msg_in_hours">in %1$s hr</string>
     <string name="msg_in_mins">in %1$s min</string>
@@ -218,6 +240,7 @@ Any news and info will likely be posted there.</item>
     <string-array name="cons">
         <item>@string/defcon</item>
         <item>@string/toorcon</item>
+        <item>@string/shmoocon</item>
     </string-array>
 
     <string-array name="badge_information">

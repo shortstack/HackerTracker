@@ -79,8 +79,10 @@ class MapsFragment : Fragment() {
             if (App.application.databaseController.databaseName == Constants.DEFCON_DATABASE_NAME) {
                 maps = arrayOf(MapFragment.newInstance(MAP_DAY),
                         MapFragment.newInstance(MAP_NIGHT))
-            } else {
+            } else if (App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME) {
                 maps = arrayOf(MapFragment.newInstance(TOORCON))
+            } else {
+                maps = arrayOf(MapFragment.newInstance(SHMOOCON))
             }
         }
 
@@ -104,6 +106,7 @@ class MapsFragment : Fragment() {
         val MAP_DAY = "dc-25-floorplan-v8-final-public.pdf"
         val MAP_NIGHT = "dc-25-floorplan-v7.6-night.pdf"
         val TOORCON = "toorcon-19-map.pdf"
+        val SHMOOCON = "hilton.pdf"
 
         fun newInstance() : Fragment {
             return MapsFragment()

@@ -129,7 +129,7 @@ class SharedPreferencesUtil {
         set(database) = editor.putInt(Key.APP_DATABASE_SELECTED.toString(), database).apply()
 
     val databaseTheme : Int
-        get() = if( databaseSelected == 0 ) R.style.AppTheme else R.style.AppTheme_Toorcon
+        get() = if( databaseSelected == 0 ) R.style.AppTheme else if ( databaseSelected == 1) R.style.AppTheme_Toorcon else R.style.AppTheme_Shmoocon
 
     companion object {
 

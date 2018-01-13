@@ -8,6 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
+import com.shortstack.hackertracker.Application.App
+import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.Model.FAQ
 import com.shortstack.hackertracker.Model.Information
 import com.shortstack.hackertracker.R
@@ -37,12 +39,15 @@ class InformationFragment : Fragment() {
                 .bind(FAQ::class.java, FAQRenderer())
                 .bind(String::class.java, GenericHeaderRenderer())
                 .bind(Information::class.java, InformationRenderer())
+        loading_progress.visibility = View.GONE;
 
         adapter = RendererAdapter<Any>(rendererBuilder)
         list!!.adapter = adapter
 
+        if (App.application.databaseController.databaseName != Constants.SHMOOCON_DATABASE_NAME) {
+            addInformationButtons()
+        }
 
-        addInformationButtons()
         getFAQ().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
@@ -61,7 +66,12 @@ class InformationFragment : Fragment() {
     }
 
     private fun getFAQ(): Observable<List<FAQ>> {
-        val myItems = resources.getStringArray(R.array.faq_questions)
+        var myItems = resources.getStringArray(R.array.faq_questions);
+
+        if (App.application.databaseController.databaseName == Constants.SHMOOCON_DATABASE_NAME) {
+            myItems = resources.getStringArray(R.array.faq_questions_shmoo);
+        }
+
         val result = ArrayList<FAQ>()
 
         var i = 0

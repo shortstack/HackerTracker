@@ -233,7 +233,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view!!.setNavigationItemSelectedListener(this)
-        if( App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME ) {
+        if( App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME || App.application.databaseController.databaseName == Constants.SHMOOCON_DATABASE_NAME  ) {
             nav_view.menu.removeItem(R.id.nav_information)
         }
 
