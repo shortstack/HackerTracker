@@ -57,9 +57,6 @@ dependencies {
         exclude group: 'org.apache.httpcomponents'
     }
 
-    // Butterknife for View Binding
-    compile 'com.jakewharton:butterknife:8.5.1'
-    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     // Generic Renders for Lists
     compile 'com.github.Shyish:GenericRenderers:1.0.2'
     // Pretty Logger

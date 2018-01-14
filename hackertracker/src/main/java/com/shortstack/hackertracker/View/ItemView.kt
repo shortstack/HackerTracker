@@ -10,7 +10,6 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.DecelerateInterpolator
-import butterknife.ButterKnife
 import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Event.FavoriteEvent
 import com.shortstack.hackertracker.Event.RefreshTimerEvent
@@ -71,7 +70,6 @@ class ItemView : CardView {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
         val view = inflater.inflate(R.layout.row_item, null)
-        ButterKnife.bind(this, view)
 
         addView(view)
     }

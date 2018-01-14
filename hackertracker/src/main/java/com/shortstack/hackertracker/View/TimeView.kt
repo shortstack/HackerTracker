@@ -5,7 +5,6 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import butterknife.ButterKnife
 import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Event.RefreshTimerEvent
 import com.shortstack.hackertracker.Model.ItemViewModel
@@ -36,10 +35,7 @@ class TimeView : LinearLayout {
 
     private fun inflate() {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
         val view = inflater.inflate(R.layout.row_header_time, null)
-        ButterKnife.bind(this, view)
-
         addView(view)
     }
 

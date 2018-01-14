@@ -15,7 +15,6 @@ import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import butterknife.ButterKnife
 import com.github.stkent.amplify.tracking.Amplify
 import com.shortstack.hackertracker.Alert.MaterialAlert
 import com.shortstack.hackertracker.Analytics.AnalyticsController
@@ -52,7 +51,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         setContentView(R.layout.activity_main)
-        ButterKnife.bind(this)
         setSupportActionBar(toolbar)
 
         initViewPager()
