@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.Network
 
+import com.shortstack.hackertracker.Application.App
 import com.shortstack.hackertracker.Common.Constants
 import com.shortstack.hackertracker.Model.Types
 import io.reactivex.Single
@@ -29,7 +30,7 @@ interface DatabaseService {
         }
 
         fun create(database : String) : DatabaseService {
-            val retrofit = Retrofit.Builder().baseUrl(Constants.API_GITHUB_BASE + database + "/")
+            val retrofit = Retrofit.Builder().baseUrl(Constants.API_GITHUB_BASE + App.application.databaseController.databaseName + "/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build()
