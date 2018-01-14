@@ -30,7 +30,7 @@ interface DatabaseService {
         }
 
         fun create(database : String) : DatabaseService {
-            val retrofit = Retrofit.Builder().baseUrl(Constants.API_GITHUB_BASE + App.application.databaseController.databaseName + "/")
+            val retrofit = Retrofit.Builder().baseUrl(Constants.API_GITHUB_BASE + database + "/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build()
