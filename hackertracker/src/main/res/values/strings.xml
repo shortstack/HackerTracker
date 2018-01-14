@@ -149,9 +149,11 @@ Any news and info will likely be posted there.</item>
 
 
     <string-array name="faq_questions_shmoo">
+        <item>STREAMING</item>
+        <item>Live streaming of ShmooCon 2018\'s talks:\n\nOne Track Mind (Friday) / Bring it On! (Saturday, Sunday)\nhttps://livestream.com/ShmooConTrack3\n\nBelay It! (Saturday, Sunday)\nhttps://livestream.com/ShmooConTrack2\n\nBuild It! (Saturday, Sunday)\nhttps://livestream.com/ShmooConTrack1</item>
         <item>TICKET PRICE </item>
         <item>All general admission tickets for ShmooCon 2018 will be sold for $150</item>
-        <item>WHEN DO TICKETS GO ON SALE</item>
+        <item>TICKET SALES</item>
         <item>Tickets for ShmooCon 2018 will be sold on Nov 1, Dec 1, and Dec 10, 2017 at noon, eastern time.  Be warned, tickets sell out very quickly.  Last year tickets sold out in just over 9 seconds (yes, you read that right) across the three rounds of sales.  These dates are subject to change so please keep an eye on our news page or follow us on twitter for updates.\n\nPlease read the rest of the information found on this page.  You should also take the time to familiarize yourself with the information on our registration page - http://shmoocon2.org/human-registration/</item>
         <item>BARCODES</item>
         <item>Everyone who purchases admission for ShmooCon will be issued a barcode.  Your barcode is extremely important.  It is your ticket into the con.\n\nAnyone over the age of 12 attending the con will need a barcode.\n\nShmooCon Mantra:\n\nThere will be many barcodes, but the one we send you is your own.\nYour barcode is your best friend.\nWithout it, you cannot get into the con.\nWithout the con, your barcode is useless.\nEach barcode can only be used once, so if you share it the first one in the door wins.</item>
@@ -165,6 +167,8 @@ Any news and info will likely be posted there.</item>
         <item>All questions should be directed here - info@shmoocon.org.  Please include the name of your favorite astronaut.</item>
         <item>DIRECTIONS FROM HOTEL ROOM BLOCK</item>
         <item>The ShmooCon rate for a single/double room is $189/night.  You can book your reservation on our block by using the GROUP code SHMOO.  If you book a room outside of our block, please let us know (we only need your reservation id and last name), so that we can still get credit towards our room commitment.</item>
+        <item>METRO DIRECTIONS</item>
+        <item>Dupont Circle Metro Station (Red Line)\nExit at the north end of the station to Q Street. Walk four blocks north on Connecticut Avenue to the hotel. Fares vary from $1.85 depending on distance traveled. Additional information is available from Washington Metro.</item>
     </string-array>
 
     <string name="demo">DEMO</string>
