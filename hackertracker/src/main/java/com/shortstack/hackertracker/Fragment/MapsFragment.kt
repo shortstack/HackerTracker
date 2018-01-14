@@ -106,7 +106,7 @@ class MapsFragment : Fragment() {
         val MAP_DAY = "dc-25-floorplan-v8-final-public.pdf"
         val MAP_NIGHT = "dc-25-floorplan-v7.6-night.pdf"
         val TOORCON = "toorcon-19-map.pdf"
-        val SHMOOCON = "hilton.pdf"
+        val SHMOOCON = "shmoocon-2018-map.pdf"
 
         fun newInstance() : Fragment {
             return MapsFragment()
