@@ -143,10 +143,11 @@ class ItemViewModel(val item : Item) {
     fun getDetailsDescription(context : Context) : String {
         var result = ""
 
-        result = result + (item.title!! + "\n")
+        result += (item.title!! + "\n")
 
-        result = result + (getFullTimeStamp(context) + "\n")
-        result = result + (item.location!! + "\n")
+        result += (getFullTimeStamp(context) + "\n")
+        if (item.location != null)
+            result += (item.location + "\n")
         //result = result.concat(getType());
 
 
