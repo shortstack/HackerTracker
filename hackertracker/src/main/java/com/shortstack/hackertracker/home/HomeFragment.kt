@@ -33,7 +33,6 @@ class HomeFragment : Fragment(), HomeContract.View {
         var recentDate = ""
         val size = adapter.collection.size
 
-
         for (item in items) {
             if (item.updatedAt != recentDate) {
                 recentDate = item.updatedAt

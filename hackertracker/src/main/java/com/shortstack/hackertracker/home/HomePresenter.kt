@@ -66,11 +66,11 @@ class HomePresenter(private val context : Context, private val view : HomeContra
         val refresh = storage.lastRefresh
         if (refresh == 0L) {
             val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(storage.lastUpdated)
-            lastDate = "Last synced " + App.getRelativeDateStamp(date)
+            lastDate = App.getRelativeDateStamp(date)
         } else {
-            lastDate = "Last synced " + App.getRelativeDateStamp(Date(refresh))
+            lastDate = App.getRelativeDateStamp(Date(refresh))
         }
 
-        return "Last updated\n" + lastDate.toLowerCase()
+        return "Last updated " + lastDate
     }
 }

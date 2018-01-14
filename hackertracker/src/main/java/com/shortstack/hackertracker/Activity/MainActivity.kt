@@ -234,9 +234,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         nav_view!!.setNavigationItemSelectedListener(this)
         if( App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME || App.application.databaseController.databaseName == Constants.SHMOOCON_DATABASE_NAME  ) {
-            nav_view.menu.removeItem(R.id.nav_information)
+            nav_view.menu.getItem(2).setTitle(R.string.map)
         }
 
+        if( App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME ) {
+            nav_view.menu.removeItem(R.id.nav_information)
+        }
     }
 
     override fun onNavigationItemSelected(item : MenuItem) : Boolean {
