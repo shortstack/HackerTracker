@@ -15,6 +15,7 @@ import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.view.ViewGroup
 import com.github.stkent.amplify.tracking.Amplify
 import com.shortstack.hackertracker.Alert.MaterialAlert
 import com.shortstack.hackertracker.Analytics.AnalyticsController
@@ -26,15 +27,15 @@ import com.shortstack.hackertracker.Database.DatabaseController
 import com.shortstack.hackertracker.Fragment.*
 import com.shortstack.hackertracker.Model.Filter
 import com.shortstack.hackertracker.R
-
 import com.shortstack.hackertracker.home.HomeFragment
 import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.vendors.VendorsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
 
     private var mFragmentIndex = DEFAULT_FRAGMENT_INDEX
@@ -69,6 +70,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         handleIntent(intent)
+
+
+        setNavHeaderMargin()
+    }
+
+    private fun setNavHeaderMargin() {
+        val params = nav_view.getHeaderView(0).imageView.layoutParams as ViewGroup.MarginLayoutParams
+        params.topMargin = getStatusBarHeight()
     }
 
 
@@ -301,6 +310,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mFragmentIndex = fragment
         forceMenuHighlighted()
         loadFragment()
+    }
+
+    protected fun getStatusBarHeight(): Int {
+        var result = 0
+        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            result = resources.getDimensionPixelSize(resourceId)
+        }
+        return result
     }
 
     companion object {
