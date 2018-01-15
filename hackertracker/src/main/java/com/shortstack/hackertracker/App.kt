@@ -13,13 +13,13 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
+import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.event.MainThreadBus
 import com.shortstack.hackertracker.network.task.SyncJob
 import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.utils.TimeHelper
-import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.squareup.otto.Bus
 import io.fabric.sdk.android.Fabric
 import java.util.*
@@ -65,8 +65,8 @@ class App : Application() {
     }
 
     fun updateDatabaseController() {
-        val name = if (storage.databaseSelected == 0) Constants.DEFCON_DATABASE_NAME else Constants.TOORCON_DATABASE_NAME
-        setTheme( if (storage.databaseSelected == 0) R.style.AppTheme else R.style.AppTheme_Toorcon )
+        val name = if (storage.databaseSelected == 0) Constants.DEFCON_DATABASE_NAME else if (storage.databaseSelected == 1) Constants.TOORCON_DATABASE_NAME else Constants.SHMOOCON_DATABASE_NAME
+        setTheme( if (storage.databaseSelected == 0) R.style.AppTheme else if (storage.databaseSelected == 1) R.style.AppTheme_Toorcon else R.style.AppTheme_Shmoocon)
 
         Logger.d("Creating database controller with database: $name")
         databaseController = DEFCONDatabaseController(appContext, name = name)

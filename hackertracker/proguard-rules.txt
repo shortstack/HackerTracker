@@ -20,7 +20,6 @@
 #-keep class android.support.** { *; }
 #-keep interface android.support.** { *; }
 
-
 # Retrofit 2.X
 ## https://square.github.io/retrofit/ ##
 
@@ -28,6 +27,8 @@
 -keep class retrofit2.** { *; }
 -keepattributes Signature
 -keepattributes Exceptions
+-renamesourcefileattribute ProGuard
+-keepattributes SourceFile,LineNumberTable
 
 -keepclasseswithmembers class * {
     @retrofit2.http.* <methods>;

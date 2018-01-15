@@ -15,30 +15,31 @@ import android.support.v7.widget.SearchView
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import butterknife.ButterKnife
+import android.view.ViewGroup
 import com.github.stkent.amplify.tracking.Amplify
-import com.shortstack.hackertracker.utils.MaterialAlert
-import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.ui.ReviewBottomSheet
-import com.shortstack.hackertracker.ui.schedule.ScheduleItemBottomSheet
 import com.shortstack.hackertracker.Constants
-import com.shortstack.hackertracker.database.DatabaseController
-import com.shortstack.hackertracker.ui.*
-import com.shortstack.hackertracker.models.Filter
 import com.shortstack.hackertracker.R
-
+import com.shortstack.hackertracker.analytics.AnalyticsController
+import com.shortstack.hackertracker.database.DatabaseController
+import com.shortstack.hackertracker.models.Filter
+import com.shortstack.hackertracker.replaceFragment
+import com.shortstack.hackertracker.ui.ReviewBottomSheet
+import com.shortstack.hackertracker.ui.SearchFragment
+import com.shortstack.hackertracker.ui.SettingsFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
-import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
+import com.shortstack.hackertracker.ui.schedule.ScheduleItemBottomSheet
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
+import com.shortstack.hackertracker.utils.MaterialAlert
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
 
     private var mFragmentIndex = DEFAULT_FRAGMENT_INDEX
@@ -55,7 +56,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         setContentView(R.layout.activity_main)
-        ButterKnife.bind(this)
         setSupportActionBar(toolbar)
 
         initViewPager()
@@ -74,6 +74,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         }
 
         handleIntent(intent)
+
+
+        setNavHeaderMargin()
+    }
+
+    private fun setNavHeaderMargin() {
+        val params = nav_view.getHeaderView(0).imageView.layoutParams as ViewGroup.MarginLayoutParams
+        params.topMargin = getStatusBarHeight()
     }
 
 
@@ -236,10 +244,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         toggle.syncState()
 
         nav_view!!.setNavigationItemSelectedListener(this)
+        if( App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME || App.application.databaseController.databaseName == Constants.SHMOOCON_DATABASE_NAME  ) {
+            nav_view.menu.getItem(2).setTitle(R.string.map)
+        }
+
         if( App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME ) {
             nav_view.menu.removeItem(R.id.nav_information)
         }
-
     }
 
     override fun onNavigationItemSelected(item : MenuItem) : Boolean {
@@ -303,6 +314,15 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mFragmentIndex = fragment
         forceMenuHighlighted()
         loadFragment()
+    }
+
+    protected fun getStatusBarHeight(): Int {
+        var result = 0
+        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            result = resources.getDimensionPixelSize(resourceId)
+        }
+        return result
     }
 
     companion object {

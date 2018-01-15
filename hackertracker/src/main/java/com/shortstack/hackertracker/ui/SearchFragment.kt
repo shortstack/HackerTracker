@@ -37,7 +37,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         super.onViewCreated(view, savedInstanceState)
         val layout = LinearLayoutManager(context)
         list.layoutManager = layout
-
+        loading_progress.visibility = View.GONE;
 
         val rendererBuilder = RendererBuilder<Any>()
                 .bind(Item::class.java, ItemRenderer())

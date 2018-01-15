@@ -5,10 +5,10 @@ interface Constants {
 
         val DEFCON_DATABASE_NAME = "DEFCON25"
         val TOORCON_DATABASE_NAME = "TOORCON19"
+        val SHMOOCON_DATABASE_NAME = "SHMOOCON2018"
 
         val API_URL_BASE = "https://info.defcon.org/json/"
         val API_GITHUB_BASE = "https://raw.githubusercontent.com/BeezleLabs/conferences/master/"
-
 
         val TIME_SECONDS_IN_HOUR = 3600
 
