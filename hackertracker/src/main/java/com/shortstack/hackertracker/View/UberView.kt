@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.View
+package com.shortstack.hackertracker.view
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.View
 import android.widget.AdapterView
 import android.widget.AdapterView.OnItemSelectedListener
 import android.widget.FrameLayout
-import com.shortstack.hackertracker.Adapter.SpinnerAdapter
-import com.shortstack.hackertracker.Common.Constants
+import com.shortstack.hackertracker.utils.SpinnerAdapter
+import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.R
 import com.uber.sdk.android.core.UberSdk
 import com.uber.sdk.android.rides.RideParameters

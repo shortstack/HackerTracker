@@ -1,9 +1,9 @@
-package com.shortstack.hackertracker.View
+package com.shortstack.hackertracker.view
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import com.shortstack.hackertracker.Model.Speaker
+import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.row_speaker.view.*
 

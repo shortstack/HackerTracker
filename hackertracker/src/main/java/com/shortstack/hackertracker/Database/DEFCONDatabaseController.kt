@@ -1,17 +1,17 @@
-package com.shortstack.hackertracker.Database
+package com.shortstack.hackertracker.database
 
 import android.content.Context
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.Application.App
+import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
-import com.shortstack.hackertracker.Common.Constants
-import com.shortstack.hackertracker.Event.FavoriteEvent
-import com.shortstack.hackertracker.Model.*
-import com.shortstack.hackertracker.Network.FullResponse
-import com.shortstack.hackertracker.Network.SyncResponse
+import com.shortstack.hackertracker.Constants
+import com.shortstack.hackertracker.event.FavoriteEvent
+import com.shortstack.hackertracker.models.*
+import com.shortstack.hackertracker.network.FullResponse
+import com.shortstack.hackertracker.network.SyncResponse
 import com.shortstack.hackertracker.format8601
 import com.shortstack.hackertracker.joinSQLOr
 import io.reactivex.Observable

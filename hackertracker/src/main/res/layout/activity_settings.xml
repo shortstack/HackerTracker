@@ -43,7 +43,7 @@
 
         <fragment
             android:id="@+id/fragment"
-            android:name="com.shortstack.hackertracker.Fragment.SettingsFragment"
+            android:name="com.shortstack.hackertracker.ui.SettingsFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </FrameLayout>

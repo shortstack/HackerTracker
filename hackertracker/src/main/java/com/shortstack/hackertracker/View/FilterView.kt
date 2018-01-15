@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.View
+package com.shortstack.hackertracker.view
 
 import android.content.Context
 import android.content.res.ColorStateList
@@ -7,9 +7,9 @@ import android.support.v7.widget.AppCompatCheckBox
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
-import com.shortstack.hackertracker.Application.App
-import com.shortstack.hackertracker.Model.Filter
+import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.models.Filter
 import kotlinx.android.synthetic.main.alert_filter.view.*
 import java.util.*
 
