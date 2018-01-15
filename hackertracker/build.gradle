@@ -22,6 +22,7 @@ android {
 
         release {
             minifyEnabled true
+            useProguard false
         }
     }
     flavorDimensions "versionCode"
