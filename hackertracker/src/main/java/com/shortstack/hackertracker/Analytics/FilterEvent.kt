@@ -1,7 +1,7 @@
-package com.shortstack.hackertracker.Analytics
+package com.shortstack.hackertracker.analytics
 
 import com.crashlytics.android.answers.CustomEvent
-import com.shortstack.hackertracker.Model.Filter
+import com.shortstack.hackertracker.models.Filter
 
 class FilterEvent(filter : Filter) : CustomEvent(AnalyticsController.Analytics.SCHEDULE_FILTERS.toString()) {
 
