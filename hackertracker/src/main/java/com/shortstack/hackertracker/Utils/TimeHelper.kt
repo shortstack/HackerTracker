@@ -1,10 +1,9 @@
-package com.shortstack.hackertracker.Utils
+package com.shortstack.hackertracker.utils
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.os.Build
 import com.shortstack.hackertracker.*
-import com.shortstack.hackertracker.Common.Constants
+import com.shortstack.hackertracker.Constants
 import java.text.SimpleDateFormat
 import java.util.*
 

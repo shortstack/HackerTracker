@@ -25,6 +25,8 @@
     <color name="category_village">#4527A0</color>
     <color name="category_kids">#283593</color>
     <color name="category_contest">#1565C0</color>
+    <color name="category_lab">#fa36e7</color>
+    <color name="category_break">#0ed297</color>
     <color name="category_party">#0277BD</color>
     <color name="category_demo">#00838F</color>
     <color name="category_workshop">#00695C</color>

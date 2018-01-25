@@ -30,14 +30,14 @@
         android:layout_below="@id/appBarLayout"
         android:orientation="vertical">
 
-        <com.shortstack.hackertracker.View.ItemView
+        <com.shortstack.hackertracker.view.ItemView
             android:id="@+id/item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardElevation="0dp"
             app:roundCorners="false">
 
-        </com.shortstack.hackertracker.View.ItemView>
+        </com.shortstack.hackertracker.view.ItemView>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"

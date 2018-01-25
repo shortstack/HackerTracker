@@ -1,3 +1,3 @@
-package com.shortstack.hackertracker.Event
+package com.shortstack.hackertracker.event
 
 class FavoriteEvent(val item : Int)

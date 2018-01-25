@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     tools:background="@color/background">
 
-    <com.shortstack.hackertracker.View.TimeView
+    <com.shortstack.hackertracker.view.TimeView
         android:id="@+id/time_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

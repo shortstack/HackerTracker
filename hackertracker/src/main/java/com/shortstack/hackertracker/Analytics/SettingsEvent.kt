@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Analytics
+package com.shortstack.hackertracker.analytics
 
 import com.crashlytics.android.answers.CustomEvent
 

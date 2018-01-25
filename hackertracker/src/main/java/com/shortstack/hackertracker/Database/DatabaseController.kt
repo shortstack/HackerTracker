@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Database
+package com.shortstack.hackertracker.database
 
 import android.content.ContentValues
 import android.content.Context
@@ -7,9 +7,9 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.Application.App
+import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
-import com.shortstack.hackertracker.Model.Item
+import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.joinSQLOr
 import org.json.JSONArray
 import org.json.JSONException

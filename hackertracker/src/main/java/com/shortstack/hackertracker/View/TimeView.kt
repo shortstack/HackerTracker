@@ -1,17 +1,16 @@
-package com.shortstack.hackertracker.View
+package com.shortstack.hackertracker.view
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import butterknife.ButterKnife
-import com.shortstack.hackertracker.Application.App
-import com.shortstack.hackertracker.Event.RefreshTimerEvent
-import com.shortstack.hackertracker.Model.ItemViewModel
+import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.event.RefreshTimerEvent
 import com.shortstack.hackertracker.getDateDifference
 import com.shortstack.hackertracker.isToday
+import com.shortstack.hackertracker.models.ItemViewModel
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.row_header_time.view.*
 import java.util.*
@@ -36,10 +35,7 @@ class TimeView : LinearLayout {
 
     private fun inflate() {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
         val view = inflater.inflate(R.layout.row_header_time, null)
-        ButterKnife.bind(this, view)
-
         addView(view)
     }
 

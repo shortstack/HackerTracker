@@ -1,6 +1,6 @@
-package com.shortstack.hackertracker.Network
+package com.shortstack.hackertracker.network
 
-import com.shortstack.hackertracker.Model.Types
+import com.shortstack.hackertracker.models.Types
 import io.reactivex.Single
 import io.reactivex.Single.zip
 import io.reactivex.functions.BiFunction

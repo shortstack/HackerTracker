@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
-import com.shortstack.hackertracker.Application.App
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit

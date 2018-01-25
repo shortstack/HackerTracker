@@ -1,12 +1,13 @@
-package com.shortstack.hackertracker.Network
+package com.shortstack.hackertracker.network
 
-import com.shortstack.hackertracker.Common.Constants
-import com.shortstack.hackertracker.Model.Types
+import com.shortstack.hackertracker.Constants
+import com.shortstack.hackertracker.models.Types
 import io.reactivex.Single
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
+
 
 interface DatabaseService {
 
