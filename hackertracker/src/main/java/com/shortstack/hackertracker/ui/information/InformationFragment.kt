@@ -44,7 +44,7 @@ class InformationFragment : Fragment() {
         adapter = RendererAdapter<Any>(rendererBuilder)
         list!!.adapter = adapter
 
-        if (App.application.databaseController.databaseName != Constants.SHMOOCON_DATABASE_NAME) {
+        if (App.application.databaseController.databaseName != Constants.SHMOOCON_DATABASE_NAME && App.application.databaseController.databaseName != Constants.HACKWEST_DATABASE_NAME) {
             addInformationButtons()
         }
 
@@ -70,6 +70,8 @@ class InformationFragment : Fragment() {
 
         if (App.application.databaseController.databaseName == Constants.SHMOOCON_DATABASE_NAME) {
             myItems = resources.getStringArray(R.array.faq_questions_shmoo);
+        } else if (App.application.databaseController.databaseName == Constants.HACKWEST_DATABASE_NAME) {
+            myItems = resources.getStringArray(R.array.faq_questions_hw);
         }
 
         val result = ArrayList<FAQ>()

@@ -65,8 +65,22 @@ class App : Application() {
     }
 
     fun updateDatabaseController() {
-        val name = if (storage.databaseSelected == 0) Constants.DEFCON_DATABASE_NAME else if (storage.databaseSelected == 1) Constants.TOORCON_DATABASE_NAME else Constants.SHMOOCON_DATABASE_NAME
-        setTheme( if (storage.databaseSelected == 0) R.style.AppTheme else if (storage.databaseSelected == 1) R.style.AppTheme_Toorcon else R.style.AppTheme_Shmoocon)
+        val name = if (storage.databaseSelected == 0) Constants.DEFCON_DATABASE_NAME
+        else if (storage.databaseSelected == 1)
+            Constants.TOORCON_DATABASE_NAME
+        else if (storage.databaseSelected == 2)
+            Constants.SHMOOCON_DATABASE_NAME
+        else
+            Constants.HACKWEST_DATABASE_NAME
+
+        setTheme( if (storage.databaseSelected == 0)
+            R.style.AppTheme
+        else if (storage.databaseSelected == 1)
+            R.style.AppTheme_Toorcon
+        else if (storage.databaseSelected == 2)
+            R.style.AppTheme_Shmoocon
+        else
+            R.style.AppTheme_Hackwest)
 
         Logger.d("Creating database controller with database: $name")
         databaseController = DEFCONDatabaseController(appContext, name = name)

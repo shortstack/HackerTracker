@@ -171,6 +171,15 @@ Any news and info will likely be posted there.</item>
         <item>Dupont Circle Metro Station (Red Line)\nExit at the north end of the station to Q Street. Walk four blocks north on Connecticut Avenue to the hotel. Fares vary from $1.85 depending on distance traveled. Additional information is available from Washington Metro.</item>
     </string-array>
 
+    <string-array name="faq_questions_hw">
+        <item>When and where is HackWest?</item>
+        <item>Salt Lake City Utah, at the Salt Palace Convention Center. March 21-23, 2018.</item>
+        <item>How much is admission?</item>
+        <item>$100</item>
+        <item>Where can I get more information?</item>
+        <item>https://hackwest.org</item>
+    </string-array>
+
     <string name="demo">DEMO</string>
     <string name="tool">TOOL</string>
     <string name="exploit">EXPLOIT</string>
@@ -224,6 +233,7 @@ Any news and info will likely be posted there.</item>
     <string name="defcon">DEFCON</string>
     <string name="toorcon">TOORCON</string>
     <string name="shmoocon">SHMOOCON</string>
+    <string name="hackwest">HACKWEST</string>
     <string name="cons">OH SNAP</string>
     <string name="search">Search</string>
     <string name="msg_in_hours">in %1$s hr</string>
@@ -247,6 +257,7 @@ Any news and info will likely be posted there.</item>
         <item>@string/defcon</item>
         <item>@string/toorcon</item>
         <item>@string/shmoocon</item>
+        <item>@string/hackwest</item>
     </string-array>
 
     <string-array name="badge_information">

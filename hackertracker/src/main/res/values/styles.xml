@@ -60,6 +60,11 @@
         <item name="logo_secondary">@drawable/shmoocon_logo</item>
     </style>
 
+    <style name="AppTheme.Hackwest" parent="AppTheme">
+        <item name="logo_main">@drawable/hackwest_logo</item>
+        <item name="logo_secondary">@drawable/hackwest_logo</item>
+    </style>
+
     <style name="AppCheckBoxStyle" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
         <item name="android:textColor">@color/white</item>
     </style>
