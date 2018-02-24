@@ -28,6 +28,8 @@ class SplashActivity : AppCompatActivity() {
             splash_image.setBackgroundResource(R.drawable.shmoocon_14_wallpaper)
         } else if (App.application.databaseController.databaseName == Constants.HACKWEST_DATABASE_NAME) {
             splash_image.setBackgroundResource(R.drawable.hackwest_wallpaper)
+        } else if (App.application.databaseController.databaseName == Constants.LAYERONE_DATABASE_NAME) {
+            splash_image.setBackgroundResource(R.drawable.layerone_wallpaper)
         }
 
         App.application.registerBusListener(this)

@@ -180,6 +180,15 @@ Any news and info will likely be posted there.</item>
         <item>https://hackwest.org</item>
     </string-array>
 
+    <string-array name="faq_questions_l1">
+        <item>When and where is LayerOne?</item>
+        <item>LayerOne 2018 will be held at the Pasadena Hilton in Pasadena, CA on May 25-27, 2018. If you\'re not attending a training, the effective conference dates are May 26-27, 2018. For those of you flying in, the closest airport is the Hollywood/Burbank (Bob Hope) International Airport (BUR).</item>
+        <item>How much is admission?</item>
+        <item>$120</item>
+        <item>Where can I get more information?</item>
+        <item>https://layerone.org</item>
+    </string-array>
+
     <string name="demo">DEMO</string>
     <string name="tool">TOOL</string>
     <string name="exploit">EXPLOIT</string>
@@ -234,6 +243,7 @@ Any news and info will likely be posted there.</item>
     <string name="toorcon">TOORCON</string>
     <string name="shmoocon">SHMOOCON</string>
     <string name="hackwest">HACKWEST</string>
+    <string name="layerone">LAYERONE</string>
     <string name="cons">OH SNAP</string>
     <string name="search">Search</string>
     <string name="msg_in_hours">in %1$s hr</string>
@@ -258,6 +268,7 @@ Any news and info will likely be posted there.</item>
         <item>@string/toorcon</item>
         <item>@string/shmoocon</item>
         <item>@string/hackwest</item>
+        <item>@string/layerone</item>
     </string-array>
 
     <string-array name="badge_information">

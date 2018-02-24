@@ -70,8 +70,10 @@ class App : Application() {
             Constants.TOORCON_DATABASE_NAME
         else if (storage.databaseSelected == 2)
             Constants.SHMOOCON_DATABASE_NAME
-        else
+        else if (storage.databaseSelected == 3)
             Constants.HACKWEST_DATABASE_NAME
+        else
+            Constants.LAYERONE_DATABASE_NAME
 
         setTheme( if (storage.databaseSelected == 0)
             R.style.AppTheme
@@ -79,8 +81,10 @@ class App : Application() {
             R.style.AppTheme_Toorcon
         else if (storage.databaseSelected == 2)
             R.style.AppTheme_Shmoocon
+        else if (storage.databaseSelected == 3)
+            R.style.AppTheme_Hackwest
         else
-            R.style.AppTheme_Hackwest)
+            R.style.AppTheme_LayerOne)
 
         Logger.d("Creating database controller with database: $name")
         databaseController = DEFCONDatabaseController(appContext, name = name)

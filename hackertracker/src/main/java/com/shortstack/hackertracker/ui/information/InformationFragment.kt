@@ -72,6 +72,8 @@ class InformationFragment : Fragment() {
             myItems = resources.getStringArray(R.array.faq_questions_shmoo);
         } else if (App.application.databaseController.databaseName == Constants.HACKWEST_DATABASE_NAME) {
             myItems = resources.getStringArray(R.array.faq_questions_hw);
+        } else if (App.application.databaseController.databaseName == Constants.LAYERONE_DATABASE_NAME) {
+            myItems = resources.getStringArray(R.array.faq_questions_l1);
         }
 
         val result = ArrayList<FAQ>()
