@@ -112,7 +112,7 @@ class MapsFragment : Fragment() {
         val TOORCON = "toorcon-19-map.pdf"
         val SHMOOCON = "shmoocon-2018-map.pdf"
         val HACKWEST = "hackwest-map-small.pdf"
-        val LAYERONE = "layerone-map.pdf"
+        val LAYERONE = "layerone_map.pdf"
 
         fun newInstance() : Fragment {
             return MapsFragment()
