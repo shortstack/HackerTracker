@@ -133,7 +133,8 @@ class SharedPreferencesUtil {
         else if ( databaseSelected == 1) R.style.AppTheme_Toorcon
         else if ( databaseSelected == 2) R.style.AppTheme_Shmoocon
         else if ( databaseSelected == 3) R.style.AppTheme_Hackwest
-        else R.style.AppTheme_LayerOne
+        else if ( databaseSelected == 4) R.style.AppTheme_LayerOne
+        else R.style.AppTheme_BsidesOrl
 
     companion object {
 

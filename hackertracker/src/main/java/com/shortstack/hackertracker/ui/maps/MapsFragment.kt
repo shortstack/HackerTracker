@@ -85,6 +85,8 @@ class MapsFragment : Fragment() {
                 maps = arrayOf(MapFragment.newInstance(HACKWEST))
             } else if (App.application.databaseController.databaseName == Constants.LAYERONE_DATABASE_NAME) {
                 maps = arrayOf(MapFragment.newInstance(LAYERONE))
+            } else if (App.application.databaseController.databaseName == Constants.BSIDESORL_DATABASE_NAME) {
+                maps = arrayOf(MapFragment.newInstance(BSIDESORL))
             } else {
                 maps = arrayOf(MapFragment.newInstance(SHMOOCON))
             }
@@ -113,6 +115,7 @@ class MapsFragment : Fragment() {
         val SHMOOCON = "shmoocon-2018-map.pdf"
         val HACKWEST = "hackwest-map-small.pdf"
         val LAYERONE = "layerone_map.pdf"
+        val BSIDESORL = "bsidesorl_map.pdf"
 
         fun newInstance() : Fragment {
             return MapsFragment()

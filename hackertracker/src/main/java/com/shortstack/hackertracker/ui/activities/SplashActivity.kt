@@ -30,6 +30,8 @@ class SplashActivity : AppCompatActivity() {
             splash_image.setBackgroundResource(R.drawable.hackwest_wallpaper)
         } else if (App.application.databaseController.databaseName == Constants.LAYERONE_DATABASE_NAME) {
             splash_image.setBackgroundResource(R.drawable.layerone_wallpaper)
+        } else if (App.application.databaseController.databaseName == Constants.BSIDESORL_DATABASE_NAME) {
+            splash_image.setBackgroundResource(R.drawable.bsidesorl_wallpaper)
         }
 
         App.application.registerBusListener(this)

@@ -44,7 +44,10 @@ class InformationFragment : Fragment() {
         adapter = RendererAdapter<Any>(rendererBuilder)
         list!!.adapter = adapter
 
-        if (App.application.databaseController.databaseName != Constants.SHMOOCON_DATABASE_NAME && App.application.databaseController.databaseName != Constants.HACKWEST_DATABASE_NAME && App.application.databaseController.databaseName != Constants.LAYERONE_DATABASE_NAME) {
+        if (App.application.databaseController.databaseName != Constants.SHMOOCON_DATABASE_NAME
+                && App.application.databaseController.databaseName != Constants.HACKWEST_DATABASE_NAME
+                && App.application.databaseController.databaseName != Constants.LAYERONE_DATABASE_NAME
+                && App.application.databaseController.databaseName != Constants.BSIDESORL_DATABASE_NAME) {
             addInformationButtons()
         }
 
@@ -74,6 +77,8 @@ class InformationFragment : Fragment() {
             myItems = resources.getStringArray(R.array.faq_questions_hw);
         } else if (App.application.databaseController.databaseName == Constants.LAYERONE_DATABASE_NAME) {
             myItems = resources.getStringArray(R.array.faq_questions_l1);
+        } else if (App.application.databaseController.databaseName == Constants.BSIDESORL_DATABASE_NAME) {
+            myItems = resources.getStringArray(R.array.faq_questions_bsidesorl);
         }
 
         val result = ArrayList<FAQ>()

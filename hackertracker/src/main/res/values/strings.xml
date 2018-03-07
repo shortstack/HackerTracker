@@ -189,6 +189,13 @@ Any news and info will likely be posted there.</item>
         <item>https://layerone.org</item>
     </string-array>
 
+    <string-array name="faq_questions_bsidesorl">
+        <item>When and where is BSides Orlando?</item>
+        <item>B-Sides Orlando will be held at Full Sail University at the Full Sail Live Venue – 141 University Park Dr, Winter Park, FL 32792</item>
+        <item>How much is admission?</item>
+        <item>Attendee tickets are $20. You can get them now at Eventbrite. Students are free. (Student ID required) Please considering purchasing attendee, silver, or gold tickets to help us continue to provide a great learning experience to students for free.\n\nhttps://www.eventbrite.com/e/security-b-sides-orlando-2018-tickets-41971150842</item>
+    </string-array>
+
     <string name="demo">DEMO</string>
     <string name="tool">TOOL</string>
     <string name="exploit">EXPLOIT</string>
@@ -244,6 +251,7 @@ Any news and info will likely be posted there.</item>
     <string name="shmoocon">SHMOOCON</string>
     <string name="hackwest">HACKWEST</string>
     <string name="layerone">LAYERONE</string>
+    <string name="bsidesorl">BSIDES ORLANDO</string>
     <string name="cons">OH SNAP</string>
     <string name="search">Search</string>
     <string name="msg_in_hours">in %1$s hr</string>
@@ -269,6 +277,7 @@ Any news and info will likely be posted there.</item>
         <item>@string/shmoocon</item>
         <item>@string/hackwest</item>
         <item>@string/layerone</item>
+        <item>@string/bsidesorl</item>
     </string-array>
 
     <string-array name="badge_information">

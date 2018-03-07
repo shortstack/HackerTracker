@@ -8,6 +8,7 @@ interface Constants {
         val SHMOOCON_DATABASE_NAME = "SHMOOCON2018"
         val HACKWEST_DATABASE_NAME = "HACKWEST2018"
         val LAYERONE_DATABASE_NAME = "LAYERONE2018"
+        val BSIDESORL_DATABASE_NAME = "BSIDESORL2018"
 
         val API_URL_BASE = "https://info.defcon.org/json/"
         val API_GITHUB_BASE = "https://raw.githubusercontent.com/BeezleLabs/conferences/master/"
