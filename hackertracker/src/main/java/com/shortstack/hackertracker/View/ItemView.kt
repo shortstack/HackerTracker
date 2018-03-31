@@ -123,7 +123,7 @@ class ItemView : CardView {
 
             DISPLAY_MODE_MIN -> {
                 time!!.visibility = View.GONE
-                rootView.category_text!!.visibility = View.GONE
+                category_text!!.visibility = View.GONE
             }
         }
     }
@@ -185,12 +185,12 @@ class ItemView : CardView {
 
         if (mDisplayMode == DISPLAY_MODE_FULL) {
             val types = App.application.databaseController.types
-            rootView.category_text!!.text = types[position].type
+            category_text!!.text = types[position].type
         }
     }
 
     private fun renderBookmark() {
-        rootView.star_bar!!.visibility = content!!.bookmarkVisibility
+        star_bar!!.visibility = content!!.bookmarkVisibility
     }
 
     fun updateBookmark() {
