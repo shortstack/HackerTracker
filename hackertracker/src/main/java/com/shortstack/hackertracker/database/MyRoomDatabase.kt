@@ -4,22 +4,34 @@ import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.fromJsonFile
+import com.shortstack.hackertracker.models.Type
 import com.shortstack.hackertracker.models.Vendor
+import com.shortstack.hackertracker.models.response.Types
 import com.shortstack.hackertracker.models.response.Vendors
 
 /**
  * Created by Chris on 3/31/2018.
  */
-@Database(entities = [(Vendor::class)], version = 1)
+@Database(entities = [(Type::class), (Vendor::class)], version = 2)
 abstract class MyRoomDatabase : RoomDatabase() {
+
+    abstract fun typeDao(): TypeDao
 
     abstract fun vendorDao(): VendorDao
 
     fun init() {
         val gson = App.application.gson
 
-        val vendors = gson.fromJsonFile(VENDORS_FILE, Vendors::class.java)
-        vendorDao().insertAll(vendors.vendors.toList())
+        // Types
+        gson.fromJsonFile(TYPES_FILE, Types::class.java).let {
+            typeDao().insertAll(it.types.toList())
+        }
+
+        // Vendors
+        gson.fromJsonFile(VENDORS_FILE, Vendors::class.java).let {
+            vendorDao().insertAll(it.vendors.toList())
+        }
+
     }
 
 
