@@ -14,7 +14,7 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.Database.MyRoomDatabase
+import com.shortstack.hackertracker.database.MyRoomDatabase
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.event.MainThreadBus
@@ -24,7 +24,6 @@ import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.utils.TimeHelper
 import com.squareup.otto.Bus
 import io.fabric.sdk.android.Fabric
-import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

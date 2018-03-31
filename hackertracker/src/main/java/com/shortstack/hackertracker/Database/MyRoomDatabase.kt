@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.Database
+package com.shortstack.hackertracker.database
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase

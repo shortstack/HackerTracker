@@ -10,8 +10,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
-import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.Database.MyRoomDatabase
+import com.shortstack.hackertracker.database.MyRoomDatabase
 import com.shortstack.hackertracker.models.Vendor
 import com.shortstack.hackertracker.R
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -43,7 +42,7 @@ class VendorsFragment : Fragment() {
 
     private fun getVendors() {
         setProgressIndicator(true)
-        
+
         val context = context ?: return
         val db = Room.databaseBuilder(context, MyRoomDatabase::class.java, "database").build()
 
