@@ -5,6 +5,9 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
+import com.google.gson.Gson
+import com.orhanobut.logger.Logger
+import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -74,4 +77,24 @@ fun String.concat(text: String): String {
     if (this.isNullOrEmpty())
         return text
     return this + text
+}
+
+fun <T> Gson.fromJsonFile(filename : String, type : Class<T>) : T {
+    try {
+        val s = "database/DEFCON25/$filename"
+        val stream = App.application.assets.open(s)
+
+        val size = stream.available()
+
+        val buffer = ByteArray(size)
+
+        stream.read(buffer)
+        stream.close()
+
+        return fromJson(String(buffer), type)
+
+    } catch (e: IOException) {
+        Logger.e(e, "Could not create the database.")
+        throw e
+    }
 }

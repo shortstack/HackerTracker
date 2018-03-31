@@ -14,6 +14,9 @@ import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.network.SyncResponse
 import com.shortstack.hackertracker.format8601
 import com.shortstack.hackertracker.joinSQLOr
+import com.shortstack.hackertracker.models.response.Speakers
+import com.shortstack.hackertracker.models.response.Types
+import com.shortstack.hackertracker.models.response.Vendors
 import io.reactivex.Observable
 import java.util.*
 

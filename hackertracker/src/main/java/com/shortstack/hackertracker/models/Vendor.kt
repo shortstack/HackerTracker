@@ -1,15 +1,16 @@
 package com.shortstack.hackertracker.models
 
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
 import java.io.Serializable
 
-data class Vendors(
-        var vendors : Array<Vendor>
-)
-
+@Entity
 data class Vendor(
-        var title : String,
-        var description : String,
-        var link : String,
-        var partner : Int = 0
+        @PrimaryKey(autoGenerate = true)
+        val index: Int,
+        val title: String,
+        val description: String,
+        val link: String,
+        val partner: Int = 0
 ) : Serializable
 

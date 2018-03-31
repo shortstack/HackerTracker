@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker
 
 import android.app.Application
+import android.arch.persistence.room.Room
 import android.content.Context
 import android.preference.PreferenceManager
 import com.crashlytics.android.Crashlytics
@@ -13,6 +14,7 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
+import com.shortstack.hackertracker.Database.MyRoomDatabase
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.event.MainThreadBus
@@ -22,6 +24,10 @@ import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.utils.TimeHelper
 import com.squareup.otto.Bus
 import io.fabric.sdk.android.Fabric
+import io.reactivex.Scheduler
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 
 
@@ -58,10 +64,24 @@ class App : Application() {
 
         updateDatabaseController()
 
-        if (!storage.isSyncScheduled) {
-            storage.setSyncScheduled()
-            scheduleSync()
-        }
+
+        val db = Room.databaseBuilder(this, MyRoomDatabase::class.java, "database").build()
+
+        Single.fromCallable {
+            db.init()
+        }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+
+
+
+
+
+
+//        if (!storage.isSyncScheduled) {
+//            storage.setSyncScheduled()
+//            scheduleSync()
+//        }
     }
 
     fun updateDatabaseController() {
@@ -77,7 +97,7 @@ class App : Application() {
         else
             Constants.BSIDESORL_DATABASE_NAME
 
-        setTheme( if (storage.databaseSelected == 0)
+        setTheme(if (storage.databaseSelected == 0)
             R.style.AppTheme
         else if (storage.databaseSelected == 1)
             R.style.AppTheme_Toorcon
@@ -93,7 +113,7 @@ class App : Application() {
         Logger.d("Creating database controller with database: $name")
         databaseController = DEFCONDatabaseController(appContext, name = name)
 
-        if(databaseController.exists()) {
+        if (databaseController.exists()) {
             databaseController.checkDatabase()
         }
     }
