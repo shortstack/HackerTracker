@@ -38,11 +38,11 @@ import java.util.*
 class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListViewsInterface {
 
 
-    lateinit var adapter : ScheduleItemAdapter
+    lateinit var adapter: ScheduleItemAdapter
 
 
-    var mHandler : Handler = object : Handler() {
-        override fun handleMessage(msg : Message) {
+    var mHandler: Handler = object : Handler() {
+        override fun handleMessage(msg: Message) {
             App.application.postBusEvent(RefreshTimerEvent())
             if (adapter != null) {
                 adapter!!.notifyTimeChanged()
@@ -50,9 +50,9 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
         }
     }
-    private var mTimer : Timer? = null
+    private var mTimer: Timer? = null
 
-    override fun onCreate(savedInstanceState : Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         App.application.registerBusListener(this)
     }
@@ -91,42 +91,42 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     }
 
     @Subscribe
-    fun handleUpdateListContentsEvent(event : UpdateListContentsEvent) {
+    fun handleUpdateListContentsEvent(event: UpdateListContentsEvent) {
         refreshContents()
     }
 
 
-    override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
-        val rootView = inflater!!.inflate(contentView, container, false) as ViewGroup
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val rootView = inflater.inflate(contentView, container, false) as ViewGroup
 
         val layout = LinearLayoutManager(context)
-        rootView.list!!.layoutManager = layout
+        rootView.list.layoutManager = layout
 
-        rootView.swipe_refresh!!.setOnRefreshListener(this)
-        rootView.swipe_refresh!!.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark)
+        rootView.swipe_refresh.setOnRefreshListener(this)
+        rootView.swipe_refresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark)
         adapter = ScheduleItemAdapter(this, layout, rootView.list)
 
 
 
 
         rootView.list.addOnScrollListener(object : ScheduleInfiniteScrollListener(layout) {
-            override fun onLoadMore(page : Int, totalItemsCount : Int, view : RecyclerView) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
                 adapter.load(page)
             }
 
         })
-        rootView.list!!.adapter = adapter
+        rootView.list.adapter = adapter
 
 
         return rootView
     }
 
-    override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         refreshContents()
     }
 
-    private fun hasScheduleItems() : Boolean {
+    private fun hasScheduleItems(): Boolean {
         return !adapter.collection.isEmpty()
     }
 
@@ -150,16 +150,17 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         adapter.initContents()
     }
 
-    private val contentView : Int
+    private val contentView: Int
         get() = R.layout.fragment_schedule
 
     fun showFilters() {
+        val context = context ?: return
+
         val filter = App.application.storage.filter
 
         val view = FilterView(context, filter)
         MaterialAlert.create(context)
-                .setTitle(getString(R.string.alert_filter_title)).
-                setView(view)
+                .setTitle(getString(R.string.alert_filter_title)).setView(view)
                 .setBasicNegativeButton()
                 .setPositiveButton(R.string.save, DialogInterface.OnClickListener { _, _ ->
                     val filter = view.save()
@@ -184,22 +185,23 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
     }
 
-    private fun onRefreshError(it : Throwable) {
+    private fun onRefreshError(it: Throwable) {
         swipe_refresh?.isRefreshing = false
-        if (context != null)
-            Toast.makeText(context, context.getString(R.string.error_unable_to_sync), Toast.LENGTH_SHORT).show()
+        val context = context ?: return
+
+        Toast.makeText(context, context.getString(R.string.error_unable_to_sync), Toast.LENGTH_SHORT).show()
 
         Logger.e(it, "Could not refresh sync.")
     }
 
-    private fun onRefreshUpdate(it : FullResponse) {
+    private fun onRefreshUpdate(it: FullResponse) {
         App.application.databaseController.update(response = it).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     swipe_refresh?.isRefreshing = false
 
                     if (it == 0)
-                        Toast.makeText(context, context.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, context?.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
                     else if (it > 0) {
                         App.application.postBusEvent(SyncResponseEvent(it))
                         App.application.notificationHelper.scheduleUpdateNotification(it)
@@ -211,7 +213,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
     companion object {
 
-        fun newInstance() : ScheduleFragment {
+        fun newInstance(): ScheduleFragment {
             return ScheduleFragment()
         }
     }

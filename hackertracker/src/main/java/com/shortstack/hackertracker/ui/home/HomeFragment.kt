@@ -28,13 +28,13 @@ import java.util.*
 
 class HomeFragment : Fragment() {
 
-    private lateinit var adapter : RendererAdapter<Any>
+    private lateinit var adapter: RendererAdapter<Any>
 
-    override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
-        return inflater!!.inflate(R.layout.fragment_recyclerview, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_recyclerview, container, false)
     }
 
-    override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val rendererBuilder = RendererBuilder<Any>()
@@ -80,11 +80,11 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun setProgressIndicator(active : Boolean) {
+    private fun setProgressIndicator(active: Boolean) {
         loading_progress.visibility = if (active) View.VISIBLE else View.GONE
     }
 
-    private fun showRecentUpdates(items : Array<Item>) {
+    private fun showRecentUpdates(items: Array<Item>) {
         var recentDate = ""
         val size = adapter.collection.size
 
@@ -106,23 +106,26 @@ class HomeFragment : Fragment() {
         Toast.makeText(context, "Could not fetch recent updates.", Toast.LENGTH_SHORT).show()
     }
 
-    private fun showLastSyncTimestamp(timestamp : String) {
+    private fun showLastSyncTimestamp(timestamp: String) {
         adapter.add(timestamp)
     }
 
-    private fun getHeader() : Any {
+    private fun getHeader(): Any {
         return RendererContent<Void>(null, TYPE_HEADER)
     }
 
-    private fun getChangeConCard() : Any {
+    private fun getChangeConCard(): Any {
         return RendererContent<Void>(null, TYPE_CHANGE_CON)
     }
 
-    private fun getInformationNav() = Navigation(context.getString(R.string.nav_help_title), context.getString(R.string.nav_help_body), InformationFragment::class.java)
+    private fun getInformationNav(): Navigation? {
+        val context = context ?: return null
+        return Navigation(context.getString(R.string.nav_help_title), context.getString(R.string.nav_help_body), InformationFragment::class.java)
+    }
 
-    private fun getLastSyncTimestamp() : String {
+    private fun getLastSyncTimestamp(): String {
         val storage = App.application.storage
-        val lastDate : String
+        val lastDate: String
 
         val cal = Calendar.getInstance()
         cal.time = Date(storage.lastRefresh)
@@ -138,7 +141,7 @@ class HomeFragment : Fragment() {
         return "Last updated\n" + lastDate.toLowerCase()
     }
 
-    private fun addAdapterItem(item : Any) {
+    private fun addAdapterItem(item: Any?) {
         adapter.addAndNotify(item)
     }
 
@@ -147,7 +150,7 @@ class HomeFragment : Fragment() {
         val TYPE_HEADER = 0
         val TYPE_CHANGE_CON = 1
 
-        fun newInstance() : HomeFragment {
+        fun newInstance(): HomeFragment {
             return HomeFragment()
         }
     }

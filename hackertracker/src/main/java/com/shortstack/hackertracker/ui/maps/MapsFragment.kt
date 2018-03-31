@@ -17,17 +17,17 @@ import kotlinx.android.synthetic.main.fragment_maps.*
 class MapsFragment : Fragment() {
 
 
-    override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
-        val view = inflater!!.inflate(R.layout.fragment_maps, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val view = inflater.inflate(R.layout.fragment_maps, container, false)
         setHasOptionsMenu(true)
         return view
     }
 
 
-    override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = PagerAdapter(activity.supportFragmentManager)
+        val adapter = PagerAdapter(activity?.supportFragmentManager ?: return)
         pager.adapter = adapter
 
         if (App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME) {
@@ -38,19 +38,22 @@ class MapsFragment : Fragment() {
         tab_layout.tabGravity = TabLayout.GRAVITY_FILL
 
         tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab : TabLayout.Tab?) {}
-            override fun onTabUnselected(tab : TabLayout.Tab?) {}
-            override fun onTabSelected(tab : TabLayout.Tab?) {
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabSelected(tab: TabLayout.Tab?) {
                 pager.currentItem = tab!!.position
             }
 
         })
     }
 
-    override fun onOptionsItemSelected(item : MenuItem?) : Boolean {
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item!!.itemId) {
             R.id.action_uber -> {
+                val context = context ?: return true
+
                 App.Companion.application.analyticsController.tagCustomEvent(AnalyticsController.Analytics.UBER)
+
                 MaterialAlert.create(context).setTitle(com.shortstack.hackertracker.R.string.uber).setView(UberView(context)).show()
                 return true
             }
@@ -64,16 +67,16 @@ class MapsFragment : Fragment() {
         super.onDestroyView()
     }
 
-    override fun onCreateOptionsMenu(menu : Menu?, inflater : MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater!!.inflate(R.menu.maps, menu)
         if (App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME) {
             menu?.removeItem(R.id.action_uber)
         }
     }
 
-    class PagerAdapter(fm : FragmentManager) : FragmentStatePagerAdapter(fm) {
+    class PagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
-        var maps : Array<Fragment>
+        var maps: Array<Fragment>
 
         init {
             if (App.application.databaseController.databaseName == Constants.DEFCON_DATABASE_NAME) {
@@ -92,12 +95,12 @@ class MapsFragment : Fragment() {
             }
         }
 
-        override fun getItem(position : Int) : Fragment {
+        override fun getItem(position: Int): Fragment {
             return maps[position]
         }
 
 
-        override fun getCount() : Int {
+        override fun getCount(): Int {
             return maps.size
         }
 
@@ -117,7 +120,7 @@ class MapsFragment : Fragment() {
         val LAYERONE = "layerone_map.pdf"
         val BSIDESORL = "bsidesorl_map.pdf"
 
-        fun newInstance() : Fragment {
+        fun newInstance(): Fragment {
             return MapsFragment()
         }
     }

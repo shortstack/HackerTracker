@@ -82,6 +82,8 @@ class DescriptionFragment : Fragment() {
     }
 
     fun onLinkClick() {
+        val context = context ?: return
+
         App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_LINK, content)
 
         MaterialAlert.create(context)
@@ -95,7 +97,7 @@ class DescriptionFragment : Fragment() {
     }
 
     private val content : Item
-        get() = arguments.getSerializable(ARG_ITEM) as Item
+        get() = arguments?.getSerializable(ARG_ITEM) as Item
 
 
     companion object {

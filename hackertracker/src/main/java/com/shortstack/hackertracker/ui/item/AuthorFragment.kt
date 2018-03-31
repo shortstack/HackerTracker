@@ -26,9 +26,11 @@ class AuthorFragment : Fragment() {
     }
 
     private val content : Item
-        get() = arguments.getSerializable(ARG_ITEM) as Item
+        get() = arguments?.getSerializable(ARG_ITEM) as Item
 
     private fun displaySpeakers(obj : ItemViewModel, speakers : LinearLayoutCompat) {
+        val context = context ?: return
+
         obj.speakers.iterator().forEach {
             speakers.addView(SpeakerView(context, App.application.databaseController.getSpeaker(it)))
         }

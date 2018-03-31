@@ -10,13 +10,13 @@ import kotlinx.android.synthetic.main.fragment_map.*
 
 class MapFragment : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_map, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_map, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewer.fromAsset(arguments.getString(ARG_PDF)).onLoad { progress_container.visibility = View.GONE }.load()
+        viewer.fromAsset(arguments?.getString(ARG_PDF)).onLoad { progress_container.visibility = View.GONE }.load()
     }
 
     override fun onDestroyView() {

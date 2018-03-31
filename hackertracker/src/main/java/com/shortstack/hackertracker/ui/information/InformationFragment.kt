@@ -25,11 +25,11 @@ class InformationFragment : Fragment() {
 
     lateinit var adapter: RendererAdapter<Any>
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_recyclerview, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_recyclerview, container, false)
     }
 
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
         val layout = LinearLayoutManager(context)
@@ -60,6 +60,8 @@ class InformationFragment : Fragment() {
     }
 
     private fun addInformationButtons() {
+        val context = context ?: return
+
         adapter.add(Information(context, R.array.location_information))
         adapter.add(Information(context, R.array.badge_information))
         adapter.add(Information(context, R.array.workshop_information))
@@ -89,8 +91,7 @@ class InformationFragment : Fragment() {
             i += 2
         }
 
-        return Observable.create {
-            subscriber ->
+        return Observable.create { subscriber ->
             subscriber.onNext(result)
             subscriber.onComplete()
         }

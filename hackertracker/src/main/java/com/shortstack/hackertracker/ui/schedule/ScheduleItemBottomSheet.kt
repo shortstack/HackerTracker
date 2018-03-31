@@ -60,7 +60,7 @@ class ScheduleItemBottomSheet : android.support.design.widget.BottomSheetDialogF
         val color = resources.getIntArray(R.array.colors) [obj.categoryColorPosition]
         view.tab_layout.setBackgroundColor(color)
 
-        val adapter = ItemActivity.PagerAdapter(activity.supportFragmentManager, content)
+        val adapter = ItemActivity.PagerAdapter(activity?.supportFragmentManager ?: return, content)
         view.pager.adapter = adapter
 
 
@@ -70,13 +70,15 @@ class ScheduleItemBottomSheet : android.support.design.widget.BottomSheetDialogF
     }
 
     private fun displaySpeakers(obj : ItemViewModel, speakers : LinearLayoutCompat) {
+        val context = context ?: return
+
         obj.speakers.iterator().forEach {
             speakers.addView(SpeakerView(context, App.application.databaseController.getSpeaker(it)))
         }
     }
 
     private val content : Item
-        get() = arguments.getSerializable(ARG_OBJ) as Item
+        get() = arguments?.getSerializable(ARG_OBJ) as Item
 
     private fun displayDescription(obj : ItemViewModel, description : TextView, empty : View, link : View, star : ImageView) {
         val hasDescription = obj.hasDescription()
@@ -110,6 +112,8 @@ class ScheduleItemBottomSheet : android.support.design.widget.BottomSheetDialogF
     }
 
     fun onLinkClick() {
+        val context = context ?: return
+
         App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_LINK, content)
 
         MaterialAlert.create(context)
