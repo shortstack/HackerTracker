@@ -261,6 +261,11 @@ Any news and info will likely be posted there.</item>
     <string name="msg_change_con">Change Con</string>
     <string name="msg_change_cons">We\'re branching out to supporting multiple conferences.</string>
 
+    <string name="no_results_for">No results for \"%1$s\"</string>
+    <string name="no_results_message">Try expanding your search terms.</string>
+    <string name="nothing_to_show">Sorry, nothing to show</string>
+    <string name="nothing_here">Nothing here</string>
+
     <string-array name="nav_item_activity_titles">
         <item>@string/nav_home</item>
         <item>@string/schedule</item>

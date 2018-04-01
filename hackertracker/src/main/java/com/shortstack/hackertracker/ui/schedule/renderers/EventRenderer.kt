@@ -7,13 +7,19 @@ import android.view.ViewGroup
 import com.pedrogomez.renderers.Renderer
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.Event
+import com.shortstack.hackertracker.models.ItemViewModel
 import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
+import com.shortstack.hackertracker.view.ItemView
 import kotlinx.android.synthetic.main.row.view.*
 
-class EventRenderer : Renderer<Event>() {
+class EventRenderer(private val displayMode: Int = ItemView.DISPLAY_MODE_MIN) : Renderer<Event>() {
 
     override fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
         return inflater.inflate(R.layout.row, parent, false)
+    }
+
+    override fun setUpView(rootView: View?) {
+        rootView?.item?.setDisplayMode(displayMode)
     }
 
     override fun hookListeners(rootView: View?) {

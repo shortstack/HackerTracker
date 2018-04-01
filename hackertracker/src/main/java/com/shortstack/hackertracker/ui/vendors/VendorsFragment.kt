@@ -40,15 +40,19 @@ class VendorsFragment : Fragment() {
     }
 
     private fun getVendors() {
-//        setProgressIndicator(true)
+        setProgressIndicator(true)
 
         App.application.db.vendorDao().getAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-//                    setProgressIndicator(true)
-                    showVendors(it)
-//                    setProgressIndicator(false)
+                    setProgressIndicator(false)
+                    if (it.isEmpty()) {
+                        empty_view.visibility = View.VISIBLE
+                    } else {
+                        empty_view.visibility = View.GONE
+                        showVendors(it)
+                    }
                 }, {
                     setProgressIndicator(false)
                     showLoadingVendorsError()

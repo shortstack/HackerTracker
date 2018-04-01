@@ -16,8 +16,7 @@
         android:alpha=".30"
         android:src="@drawable/ic_info_outline_white_24dp" />
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -34,14 +33,16 @@
             style="@style/TextAppearance.AppCompat.Title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:text="What should I bring to DEF CON?" />
+            tools:text="@tools:sample/lorem" />
 
         <TextView
             android:id="@+id/answer"
             style="@style/Paragraph"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="You should bring tons of water, and ..." />
+            tools:ellipsize="end"
+            tools:maxLines="3"
+            tools:text="@tools:sample/lorem/random" />
 
     </LinearLayout>
 </RelativeLayout>

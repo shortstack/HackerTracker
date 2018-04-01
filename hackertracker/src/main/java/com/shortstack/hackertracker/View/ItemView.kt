@@ -132,6 +132,11 @@ class ItemView : CardView {
         }
     }
 
+    fun setDisplayMode(mode: Int) {
+        mDisplayMode = mode
+        setDisplayMode()
+    }
+
     private fun renderItem() {
         //updated.setVisibility( new Random().nextBoolean() ? VISIBLE : GONE);
 
