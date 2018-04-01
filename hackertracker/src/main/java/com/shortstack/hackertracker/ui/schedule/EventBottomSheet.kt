@@ -34,7 +34,7 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
 
         displayDescription(obj, view.description, view.empty, view.link, view.star)
 //
-//        view.star.setOnClickListener { onStarClick(view.item, view.star) }
+        view.star.setOnClickListener { onStarClick(view.item, view.star) }
 //        view.share.setOnClickListener { onShareClick(view.item) }
 //        view.link.setOnClickListener { onLinkClick() }
 //
@@ -76,11 +76,13 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
     }
 
     fun onStarClick(item : ItemView, star : ImageView) {
-//        if (content.isBookmarked()) {
-//            App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_UNBOOKMARK, content)
-//        } else {
-//            App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_BOOKMARK, content)
-//        }
+        val isBookmarking = !content.isBookmarked
+
+        if (isBookmarking) {
+            //            App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_BOOKMARK, content)
+        } else {
+            //            App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_UNBOOKMARK, content)
+        }
         item.onBookmarkClick()
         updateStarIcon(star)
     }

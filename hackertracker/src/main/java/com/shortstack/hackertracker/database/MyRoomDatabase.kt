@@ -2,6 +2,7 @@ package com.shortstack.hackertracker.database
 
 import android.arch.persistence.room.Database
 import android.arch.persistence.room.RoomDatabase
+import android.arch.persistence.room.TypeConverters
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.fromJsonFile
 import com.shortstack.hackertracker.models.*
@@ -13,6 +14,7 @@ import com.shortstack.hackertracker.models.response.Vendors
  * Created by Chris on 3/31/2018.
  */
 @Database(entities = [(Event::class), (Type::class), (Vendor::class), (Speaker::class)], version = 1)
+@TypeConverters(value = [(Converters::class)])
 abstract class MyRoomDatabase : RoomDatabase() {
 
     abstract fun eventDao(): EventDao

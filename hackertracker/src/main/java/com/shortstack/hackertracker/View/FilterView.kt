@@ -89,6 +89,8 @@ class FilterView : LinearLayout {
             box.text = type.type
             CompoundButtonCompat.setButtonTintList(box, ColorStateList(states, intArrayOf(stringArray[it], stringArray[it])))
 
+            box.isChecked = type.isSelected
+
             if (it <= types.size / 2)
                 filter_left.addView(box)
             else

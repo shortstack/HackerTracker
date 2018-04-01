@@ -10,4 +10,10 @@ data class Type(
         @SerializedName("event_type")
         val type: String,
         val colour: String,
-        val isSelected: Int = 0)
+        var isSelected: Boolean) {
+
+    init {
+        isSelected = true
+    }
+
+}

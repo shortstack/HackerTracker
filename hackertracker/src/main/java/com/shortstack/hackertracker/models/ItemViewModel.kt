@@ -47,7 +47,7 @@ class ItemViewModel(val item: Event) {
 
     fun getTimeStamp(context: Context): String {
         // No start time, return TBA.
-        if (TextUtils.isEmpty(item.begin))
+        if (item.begin == null)
             return context.resources.getString(R.string.tba)
 
         var time = ""
@@ -90,8 +90,7 @@ class ItemViewModel(val item: Event) {
 //        val begin = item.beginDateObject
 //        val end = item.endDateObject
 //
-//        return String.format(context.getString(R.string.timestamp_full), item.dateStamp, getTimeStamp(context, begin), getTimeStamp(context, end))
-        return ""
+        return String.format(context.getString(R.string.timestamp_full), App.getRelativeDateStamp(item.begin), getTimeStamp(context, item.begin), getTimeStamp(context, item.end))
     }
 
 

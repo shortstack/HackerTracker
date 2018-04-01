@@ -4,7 +4,9 @@ import android.support.v7.widget.RecyclerView
 import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.isSameDay
 import com.shortstack.hackertracker.models.Day
+import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.models.Time
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -34,7 +36,7 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
                 })
     }
 
-    private fun addAllAndNotify(elements: List<Item>) {
+    private fun addAllAndNotify(elements: List<Event>) {
 
         if (elements.isEmpty())
             return
@@ -46,9 +48,9 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
             addDay(first)
             addTime(first)
         } else {
-            val item = collection.last() as Item
+            val item = collection.last() as Event
 
-            if (first.date != item.date) {
+            if (!first.begin.isSameDay(item.begin)) {
                 addDay(first)
             }
             if (first.begin != item.begin) {
@@ -56,13 +58,15 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
             }
         }
 
-        for (i in 0..elements.size - 1 - 1) {
+        for (i in 0 until elements.size - 1) {
             val current = elements[i]
 
             add(current)
 
             val next = elements[i + 1]
-            if (current.date != next.date) {
+
+
+            if (!current.begin.isSameDay(next.begin)) {
                 addDay(next)
             }
 
@@ -76,12 +80,12 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
         notifyItemRangeInserted(size, collection.size - size)
     }
 
-    private fun addDay(item: Item) {
-        add(Day(item.beginDateObject))
+    private fun addDay(item: Event) {
+        add(Day(item.begin))
     }
 
-    private fun addTime(item: Item) {
-        add(Time(item.beginDateObject))
+    private fun addTime(item: Event) {
+        add(Time(item.begin))
     }
 
     private fun scrollToCurrentTime() {

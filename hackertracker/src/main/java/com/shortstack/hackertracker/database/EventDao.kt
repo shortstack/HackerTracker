@@ -25,5 +25,4 @@ interface EventDao {
 
     @Update
     fun update(item: Event)
-
 }

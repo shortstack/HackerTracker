@@ -16,9 +16,9 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.event.FavoriteEvent
 import com.shortstack.hackertracker.event.RefreshTimerEvent
 import com.shortstack.hackertracker.models.Event
-import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.models.ItemViewModel
 import com.squareup.otto.Subscribe
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.row_item.view.*
@@ -214,8 +214,16 @@ class ItemView : CardView {
     }
 
     fun onBookmarkClick() {
-//        val databaseController = App.application.databaseController
-//        databaseController.toggleBookmark(databaseController.writableDatabase, content!!.item)
+        val event = content?.item ?: return
+
+        event.isBookmarked = !event.isBookmarked
+
+        Single.fromCallable {
+            App.application.db.eventDao().update(event)
+        }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+
     }
 
     companion object {

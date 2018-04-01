@@ -32,6 +32,14 @@ fun AppCompatActivity.replaceFragment(fragment: Fragment, title: String, tag: St
     //invalidateOptionsMenu()
 }
 
+fun Date.isSameDay(date2: Date): Boolean {
+    val cal1 = Calendar.getInstance()
+    val cal2 = Calendar.getInstance()
+    cal1.time = this
+    cal2.time = date2
+    return cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR) && cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR)
+}
+
 fun Date.isToday(): Boolean {
     val current = App.getCurrentCalendar()
 
@@ -79,7 +87,7 @@ fun String.concat(text: String): String {
     return this + text
 }
 
-fun <T> Gson.fromJsonFile(filename : String, type : Class<T>) : T {
+fun <T> Gson.fromJsonFile(filename: String, type: Class<T>): T {
     try {
         val s = "database/${Constants.BSIDESORL_DATABASE_NAME}/$filename"
         val stream = App.application.assets.open(s)
