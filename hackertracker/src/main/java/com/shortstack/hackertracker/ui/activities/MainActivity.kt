@@ -31,7 +31,6 @@ import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
-import com.shortstack.hackertracker.ui.schedule.ScheduleItemBottomSheet
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import com.shortstack.hackertracker.utils.MaterialAlert
 import kotlinx.android.synthetic.main.activity_main.*
@@ -107,8 +106,8 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         val item = App.application.databaseController.findItem(id = target)
         if (item != null) {
-            val fragment = ScheduleItemBottomSheet.newInstance(item)
-            fragment.show(supportFragmentManager, fragment.tag)
+//            val fragment = ScheduleItemBottomSheet.newInstance(item)
+//            fragment.show(supportFragmentManager, fragment.tag)
         }
     }
 

@@ -13,7 +13,7 @@ import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.Item
-import com.shortstack.hackertracker.ui.schedule.renderers.ItemRenderer
+import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
 class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
@@ -40,7 +40,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         loading_progress.visibility = View.GONE;
 
         val rendererBuilder = RendererBuilder<Any>()
-                .bind(Item::class.java, ItemRenderer())
+                .bind(Item::class.java, EventRenderer())
 
 
         adapter = RendererAdapter<Item>(rendererBuilder)

@@ -18,7 +18,6 @@ import com.shortstack.hackertracker.ui.home.renderers.ChangeConRenderer
 import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.models.Navigation
 import com.shortstack.hackertracker.ui.home.renderers.HomeHeaderRenderer
-import com.shortstack.hackertracker.ui.schedule.renderers.ItemRenderer
 import com.shortstack.hackertracker.ui.home.renderers.SubHeaderRenderer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -40,7 +39,7 @@ class HomeFragment : Fragment() {
         val rendererBuilder = RendererBuilder<Any>()
                 .bind(TYPE_HEADER, HomeHeaderRenderer())
                 .bind(String::class.java, SubHeaderRenderer())
-//                .bind(Item::class.java, ItemRenderer())
+//                .bind(Item::class.java, EventRenderer())
                 .bind(Navigation::class.java, ActivityNavRenderer())
                 .bind(TYPE_CHANGE_CON, ChangeConRenderer())
 

@@ -4,6 +4,7 @@ import android.arch.persistence.room.Entity
 import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 /**
  * Created by Chris on 3/31/2018.
@@ -27,4 +28,4 @@ data class Event(
         val location: String?,
         val url: String?,
         val includes: String?
-)
+) : Serializable

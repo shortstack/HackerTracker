@@ -81,7 +81,7 @@ fun String.concat(text: String): String {
 
 fun <T> Gson.fromJsonFile(filename : String, type : Class<T>) : T {
     try {
-        val s = "database/DEFCON25/$filename"
+        val s = "database/${Constants.BSIDESORL_DATABASE_NAME}/$filename"
         val stream = App.application.assets.open(s)
 
         val size = stream.available()
