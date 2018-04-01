@@ -45,8 +45,6 @@
 
         <activity android:name=".ui.activities.SplashActivity" />
 
-        <activity android:name=".ui.item.ItemActivity" />
-
         <activity
             android:name="com.shortstack.hackertracker.ui.activities.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"

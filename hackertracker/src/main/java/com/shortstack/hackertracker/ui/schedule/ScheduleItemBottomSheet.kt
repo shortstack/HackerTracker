@@ -5,7 +5,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
@@ -15,16 +14,12 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.ui.item.ItemActivity
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.models.ItemViewModel
 import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.utils.MaterialAlert
 import com.shortstack.hackertracker.view.ItemView
-import com.shortstack.hackertracker.view.SpeakerView
-import kotlinx.android.synthetic.main.bottom_sheet_schedule_item.view.*
-import kotlinx.android.synthetic.main.empty_text.view.*
 
 class ScheduleItemBottomSheet : android.support.design.widget.BottomSheetDialogFragment() {
 
@@ -33,48 +28,36 @@ class ScheduleItemBottomSheet : android.support.design.widget.BottomSheetDialogF
         val view = View.inflate(context, R.layout.bottom_sheet_schedule_item, null)
         dialog.setContentView(view)
 
-        val obj = ItemViewModel(content)
+//        val obj = ItemViewModel(content)
 
         App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_VIEW, content)
 
-        view.item!!.setItem(obj.item)
-
-        displaySpeakers(obj, view.speakers)
-
-        displayDescription(obj, view.description, view.empty, view.link, view.star)
-
-        view.star.setOnClickListener { onStarClick(view.item, view.star) }
-        view.share.setOnClickListener { onShareClick(view.item) }
-        view.link.setOnClickListener { onLinkClick() }
-
-        view.tool.visibility = obj.toolsVisibility
-        view.exploit.visibility = obj.exploitVisibility
-        view.demo.visibility = obj.demoVisibility
+//        view.item!!.setItem(obj.item)
+//
+//        displaySpeakers(obj, view.speakers)
+//
+//        displayDescription(obj, view.description, view.empty, view.link, view.star)
+//
+//        view.star.setOnClickListener { onStarClick(view.item, view.star) }
+//        view.share.setOnClickListener { onShareClick(view.item) }
+//        view.link.setOnClickListener { onLinkClick() }
+//
+//        view.tool.visibility = obj.toolsVisibility
+//        view.exploit.visibility = obj.exploitVisibility
+//        view.demo.visibility = obj.demoVisibility
 
 
 //        initViewPager(obj, view)
 
     }
 
-    private fun initViewPager(obj : ItemViewModel, view : View) {
-        val color = resources.getIntArray(R.array.colors) [obj.categoryColorPosition]
-        view.tab_layout.setBackgroundColor(color)
-
-        val adapter = ItemActivity.PagerAdapter(activity?.supportFragmentManager ?: return, content)
-        view.pager.adapter = adapter
-
-
-        view.tab_layout.addTab(view.tab_layout.newTab().setText("Description"))
-        view.tab_layout.addTab(view.tab_layout.newTab().setText("Author"))
-        view.tab_layout.tabGravity = TabLayout.GRAVITY_FILL
-    }
 
     private fun displaySpeakers(obj : ItemViewModel, speakers : LinearLayoutCompat) {
         val context = context ?: return
 
-        obj.speakers.iterator().forEach {
-            speakers.addView(SpeakerView(context, App.application.databaseController.getSpeaker(it)))
-        }
+//        obj.speakers.iterator().forEach {
+//            speakers.addView(SpeakerView(context, App.application.databaseController.getSpeaker(it)))
+//        }
     }
 
     private val content : Item

@@ -6,8 +6,8 @@ import com.google.gson.annotations.SerializedName
 
 @Entity
 data class Type(
-        @PrimaryKey(autoGenerate = true)
-        val index: Int,
+        @PrimaryKey(autoGenerate = false)
         @SerializedName("event_type")
         val type: String,
+        val colour: String,
         val isSelected: Int = 0)

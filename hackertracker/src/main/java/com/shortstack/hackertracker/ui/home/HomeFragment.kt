@@ -40,7 +40,7 @@ class HomeFragment : Fragment() {
         val rendererBuilder = RendererBuilder<Any>()
                 .bind(TYPE_HEADER, HomeHeaderRenderer())
                 .bind(String::class.java, SubHeaderRenderer())
-                .bind(Item::class.java, ItemRenderer())
+//                .bind(Item::class.java, ItemRenderer())
                 .bind(Navigation::class.java, ActivityNavRenderer())
                 .bind(TYPE_CHANGE_CON, ChangeConRenderer())
 
@@ -70,7 +70,7 @@ class HomeFragment : Fragment() {
 
                     showLastSyncTimestamp(getLastSyncTimestamp())
 
-                    showRecentUpdates(it.toTypedArray())
+//                    showRecentUpdates(it.toTypedArray())
                 }, {
                     if (isAdded) {
                         setProgressIndicator(false)

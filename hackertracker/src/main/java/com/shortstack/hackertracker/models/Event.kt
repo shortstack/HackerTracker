@@ -1,14 +1,17 @@
 package com.shortstack.hackertracker.models
 
 import android.arch.persistence.room.Entity
+import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
-import java.util.*
 
 /**
  * Created by Chris on 3/31/2018.
  */
-@Entity
+@Entity(foreignKeys = [(ForeignKey(
+        entity = Type::class,
+        parentColumns = [("type")],
+        childColumns = [("type")]))])
 data class Event(
         @PrimaryKey(autoGenerate = false)
         val index: Int,
@@ -17,10 +20,11 @@ data class Event(
         val title: String,
         val description: String,
         @SerializedName("start_date")
-        val begin: Date,
+        val begin: String,
         @SerializedName("end_date")
-        val end: Date,
-        val location: String,
+        val end: String,
+
+        val location: String?,
         val url: String?,
-        val includes: String
+        val includes: String?
 )

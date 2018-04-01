@@ -109,12 +109,12 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
 
 
-        rootView.list.addOnScrollListener(object : ScheduleInfiniteScrollListener(layout) {
-            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-                adapter.load(page)
-            }
-
-        })
+//        rootView.list.addOnScrollListener(object : ScheduleInfiniteScrollListener(layout) {
+//            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+//                adapter.load(page)
+//            }
+//
+//        })
         rootView.list.adapter = adapter
 
 
@@ -171,6 +171,9 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
 
     override fun onRefresh() {
+
+
+
         val service = DatabaseService.create(App.application.databaseController.databaseName)
 
         val syncRepository = SyncRepository(service)

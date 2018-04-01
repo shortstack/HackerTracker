@@ -1,6 +1,5 @@
 package com.shortstack.hackertracker.ui.vendors
 
-import android.arch.persistence.room.Room
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -10,9 +9,9 @@ import android.view.ViewGroup
 import android.widget.Toast
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
-import com.shortstack.hackertracker.database.MyRoomDatabase
-import com.shortstack.hackertracker.models.Vendor
+import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.models.Vendor
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
@@ -41,17 +40,15 @@ class VendorsFragment : Fragment() {
     }
 
     private fun getVendors() {
-        setProgressIndicator(true)
+//        setProgressIndicator(true)
 
-        val context = context ?: return
-        val db = Room.databaseBuilder(context, MyRoomDatabase::class.java, "database").build()
-
-        db.vendorDao().getAll()
+        App.application.db.vendorDao().getAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    setProgressIndicator(false)
+//                    setProgressIndicator(true)
                     showVendors(it)
+//                    setProgressIndicator(false)
                 }, {
                     setProgressIndicator(false)
                     showLoadingVendorsError()
@@ -64,7 +61,7 @@ class VendorsFragment : Fragment() {
     }
 
     private fun showVendors(vendors: List<Vendor>) {
-        adapter?.addAllAndNotify(vendors.toMutableList())
+        adapter?.addAllAndNotify(vendors)
     }
 
     private fun showLoadingVendorsError() {

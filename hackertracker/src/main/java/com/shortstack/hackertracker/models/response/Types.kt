@@ -6,9 +6,7 @@ import java.io.Serializable
 
 data class Types(
         @SerializedName("event_types")
-        var types : Array<Type>,
+        val types: List<Type>,
         @SerializedName("update_date")
-        var date : String
-
-
+        val date: String
 ) : Serializable

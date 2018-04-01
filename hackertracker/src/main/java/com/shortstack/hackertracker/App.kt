@@ -53,6 +53,9 @@ class App : Application() {
     val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(appContext)) }
 
 
+    lateinit var db: MyRoomDatabase
+
+
     override fun onCreate() {
         super.onCreate()
 
@@ -64,17 +67,13 @@ class App : Application() {
         updateDatabaseController()
 
 
-        val db = Room.databaseBuilder(this, MyRoomDatabase::class.java, "database").build()
+        db = Room.databaseBuilder(this, MyRoomDatabase::class.java, "database").build()
 
         Single.fromCallable {
             db.init()
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
-
-
-
-
 
 
 //        if (!storage.isSyncScheduled) {

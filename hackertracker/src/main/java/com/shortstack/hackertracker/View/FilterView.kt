@@ -62,14 +62,12 @@ class FilterView : LinearLayout {
         super.onAttachedToWindow()
 
 
-
     }
 
     private fun init() {
         View.inflate(context, R.layout.alert_filter, this)
 
-        val db = Room.databaseBuilder(context, MyRoomDatabase::class.java, "database").build()
-        db.typeDao().getTypes()
+        App.application.db.typeDao().getTypes()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ types ->
@@ -77,8 +75,6 @@ class FilterView : LinearLayout {
                 }, {
 
                 })
-
-
     }
 
     private fun setCheckboxes(types: List<Type>) {
