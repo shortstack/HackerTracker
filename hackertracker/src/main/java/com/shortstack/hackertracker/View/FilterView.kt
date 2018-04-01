@@ -67,7 +67,7 @@ class FilterView : LinearLayout {
     private fun init() {
         View.inflate(context, R.layout.alert_filter, this)
 
-        App.application.db.typeDao().getTypes()
+        App.application.database.db.typeDao().getTypes()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ types ->

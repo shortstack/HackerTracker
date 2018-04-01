@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
     private fun fetchRecentUpdates() {
         setProgressIndicator(true)
 
-        App.application.db.eventDao().getRecentlyUpdated()
+        App.application.database.db.eventDao().getRecentlyUpdated()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

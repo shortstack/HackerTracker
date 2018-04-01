@@ -27,7 +27,7 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
         val filter = app.storage.filter
 
 
-        App.application.db.eventDao().getFullSchedule().subscribeOn(Schedulers.io())
+        App.application.database.db.eventDao().getFullSchedule().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     addAllAndNotify(it)

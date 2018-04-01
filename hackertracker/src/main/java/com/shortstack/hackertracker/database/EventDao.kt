@@ -13,6 +13,10 @@ interface EventDao {
     @Query("SELECT * FROM event ORDER BY `begin` ASC")
     fun getFullSchedule(): Flowable<List<Event>>
 
+    @Query("SELECT * FROM event ORDER BY `begin` ASC")
+    fun getUIThreadSchedule(): List<Event>
+
+
     @Query("SELECT * FROM event WHERE type LIKE :type ")
     fun getFilteredSchedule(type: String): Flowable<List<Event>>
 

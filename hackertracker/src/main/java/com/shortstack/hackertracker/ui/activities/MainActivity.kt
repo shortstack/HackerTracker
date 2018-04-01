@@ -17,6 +17,7 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.github.stkent.amplify.tracking.Amplify
+import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
@@ -32,6 +33,7 @@ import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import com.shortstack.hackertracker.utils.MaterialAlert
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
@@ -105,7 +107,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         if (target == 0)
             return
 
-        App.application.db.eventDao().getEventById(id = target)
+        App.application.database.db.eventDao().getEventById(id = target)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
@@ -272,18 +274,53 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun onChangeCon() {
-        MaterialAlert.create(this).setTitle(this.getString(R.string.msg_change_con)).setItems(R.array.cons,
-                DialogInterface.OnClickListener { dialogInterface, i ->
 
-                    App.application.storage.databaseSelected = i
-                    App.application.updateDatabaseController()
-                    App.application.storage.filter = Filter()
-
-                    finish()
-                    startActivity(Intent(this, MainActivity::class.java))
+        val cons = App.application.database.cons
 
 
-                }).setBasicPositiveButton().show()
+        App.application.database.cons.conferenceDao().getAll()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+
+
+                    val current = it.first { it.isSelected }
+
+                    val filtered = it.filter { !it.isSelected }
+                    val items = filtered.map { MaterialAlert.Item(it.title) }
+
+                    MaterialAlert.create(this).setTitle(current.title).setItems(items,
+                            DialogInterface.OnClickListener { dialogInterface, i ->
+
+                                Single.fromCallable {
+                                    val con = filtered[i]
+
+                                    current.isSelected = false
+                                    con.isSelected = true
+
+                                    cons.conferenceDao().update(current)
+                                    cons.conferenceDao().update(con)
+
+                                    App.application.database.initConference(con)
+
+                                }.subscribeOn(Schedulers.io())
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe({
+                                            dialogInterface.dismiss()
+                                            Logger.e("Finished!")
+                                        }, {
+                                            Logger.e("Could not update the current database. " + it.message)
+
+                                        })
+
+
+                            }).show()
+
+
+                }, {
+                    Logger.e("Could not update the current database. " + it.message)
+                })
+
 
         forceMenuHighlighted()
     }

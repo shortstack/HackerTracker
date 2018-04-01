@@ -42,7 +42,7 @@ class VendorsFragment : Fragment() {
     private fun getVendors() {
         setProgressIndicator(true)
 
-        App.application.db.vendorDao().getAll()
+        App.application.database.db.vendorDao().getAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

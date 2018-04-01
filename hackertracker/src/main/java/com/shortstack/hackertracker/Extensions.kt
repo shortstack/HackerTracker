@@ -87,9 +87,9 @@ fun String.concat(text: String): String {
     return this + text
 }
 
-fun <T> Gson.fromJsonFile(filename: String, type: Class<T>): T {
+fun <T> Gson.fromJsonFile(filename: String, type: Class<T>, root: String = Constants.BSIDESORL_DATABASE_NAME): T {
     try {
-        val s = "database/${Constants.BSIDESORL_DATABASE_NAME}/$filename"
+        val s = "database/$root/$filename"
         val stream = App.application.assets.open(s)
 
         val size = stream.available()

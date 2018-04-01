@@ -196,7 +196,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
     private fun onRefreshUpdate(it: FullResponse) {
         Single.fromCallable {
-            App.application.db.eventDao().update(it.syncResponse.events)
+            App.application.database.db.eventDao().update(it.syncResponse.events)
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({

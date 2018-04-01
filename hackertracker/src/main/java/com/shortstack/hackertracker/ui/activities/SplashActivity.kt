@@ -22,6 +22,9 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_activity)
 
+//        App.application.cons.conferenceDao().getCurrentCon()
+
+
 //        if( App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME ) {
 //            splash_image.setBackgroundResource(R.drawable.tc_19_wallpaper)
 //        } else if (App.application.databaseController.databaseName == Constants.SHMOOCON_DATABASE_NAME) {

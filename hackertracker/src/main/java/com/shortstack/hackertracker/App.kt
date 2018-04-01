@@ -1,7 +1,10 @@
 package com.shortstack.hackertracker
 
 import android.app.Application
+import android.arch.persistence.db.SupportSQLiteDatabase
+import android.arch.persistence.room.Database
 import android.arch.persistence.room.Room
+import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import android.preference.PreferenceManager
 import com.crashlytics.android.Crashlytics
@@ -16,6 +19,8 @@ import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.database.MyRoomDatabase
 import com.shortstack.hackertracker.analytics.AnalyticsController
+import com.shortstack.hackertracker.database.ConferenceDatabase
+import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.event.MainThreadBus
 import com.shortstack.hackertracker.network.task.SyncJob
 import com.shortstack.hackertracker.utils.NotificationHelper
@@ -27,6 +32,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
+import javax.security.auth.callback.Callback
 
 
 class App : Application() {
@@ -50,7 +56,7 @@ class App : Application() {
     val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(appContext)) }
 
 
-    lateinit var db: MyRoomDatabase
+    lateinit var database: DatabaseManager
 
 
     override fun onCreate() {
@@ -63,20 +69,7 @@ class App : Application() {
 
         updateDatabaseController()
 
-
-        db = Room.databaseBuilder(this, MyRoomDatabase::class.java, "database").build()
-
-        Single.fromCallable {
-            db.init()
-        }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe()
-
-
-//        if (!storage.isSyncScheduled) {
-//            storage.setSyncScheduled()
-//            scheduleSync()
-//        }
+        database = DatabaseManager(this)
     }
 
     fun updateDatabaseController() {

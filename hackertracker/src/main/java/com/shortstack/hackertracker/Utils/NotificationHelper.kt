@@ -132,7 +132,7 @@ class NotificationHelper(private val mContext: Context) {
 
 
     fun postNotification(id: Int) {
-        App.application.db.eventDao().getEventById(id = id)
+        App.application.database.db.eventDao().getEventById(id = id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
