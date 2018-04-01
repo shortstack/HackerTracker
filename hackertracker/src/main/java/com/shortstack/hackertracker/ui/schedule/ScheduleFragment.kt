@@ -28,6 +28,7 @@ import com.shortstack.hackertracker.ui.schedule.list.ScheduleInfiniteScrollListe
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleItemAdapter
 import com.shortstack.hackertracker.view.FilterView
 import com.squareup.otto.Subscribe
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_schedule.*
@@ -107,8 +108,6 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         adapter = ScheduleItemAdapter(this, layout, rootView.list)
 
 
-
-
 //        rootView.list.addOnScrollListener(object : ScheduleInfiniteScrollListener(layout) {
 //            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
 //                adapter.load(page)
@@ -171,10 +170,8 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
 
     override fun onRefresh() {
-
-
-
-        val service = DatabaseService.create(App.application.databaseController.databaseName)
+        // TODO: Get the database name.
+        val service = DatabaseService.create(Constants.DEFCON_DATABASE_NAME)
 
         val syncRepository = SyncRepository(service)
         syncRepository.getSchedule()
@@ -198,19 +195,23 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     }
 
     private fun onRefreshUpdate(it: FullResponse) {
-        App.application.databaseController.update(response = it).subscribeOn(Schedulers.io())
+        Single.fromCallable {
+            App.application.db.eventDao().update(it.syncResponse.events)
+        }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
+                .subscribe({
                     swipe_refresh?.isRefreshing = false
 
-                    if (it == 0)
-                        Toast.makeText(context, context?.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
-                    else if (it > 0) {
-                        App.application.postBusEvent(SyncResponseEvent(it))
-                        App.application.notificationHelper.scheduleUpdateNotification(it)
-                        refreshContents()
-                    }
-                }
+//                    if (it == 0)
+//                        Toast.makeText(context, context?.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
+//                    else if (it > 0) {
+//                        App.application.postBusEvent(SyncResponseEvent(it))
+//                        App.application.notificationHelper.scheduleUpdateNotification(it)
+//                        refreshContents()
+//                    }
+                }, {
+
+                })
     }
 
 

@@ -24,5 +24,17 @@ interface EventDao {
     fun insertAll(events: List<Event>)
 
     @Update
-    fun update(item: Event)
+    fun update(event: Event)
+
+    @Update
+    fun update(events: List<Event>)
+
+    @Query("SELECT * FROM event WHERE `index` = :id")
+    fun getEventById(id: Int): Flowable<Event>
+
+    @Query("SELECT * FROM event WHERE title LIKE :text")
+    fun findByText(text: String): Flowable<List<Event>>
+
+    @Query("SELECT * FROM event ORDER BY updatedAt DESC LIMIT 20")
+    fun getRecentlyUpdated(): Flowable<List<Event>>
 }

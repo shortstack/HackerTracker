@@ -8,8 +8,8 @@ import com.shortstack.hackertracker.event.SetupDatabaseEvent
 class UpdateDatabaseService : IntentService("DEFCONUpdateDatabaseService") {
 
     override fun onHandleIntent(intent : Intent?) {
-        val databaseController = App.application.databaseController
-        databaseController.checkDatabase()
-        App.application.postBusEvent(SetupDatabaseEvent())
+//        val databaseController = App.application.databaseController
+//        databaseController.checkDatabase()
+//        App.application.postBusEvent(SetupDatabaseEvent())
     }
 }

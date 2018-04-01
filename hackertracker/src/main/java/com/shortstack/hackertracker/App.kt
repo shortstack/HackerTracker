@@ -16,7 +16,6 @@ import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.database.MyRoomDatabase
 import com.shortstack.hackertracker.analytics.AnalyticsController
-import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.event.MainThreadBus
 import com.shortstack.hackertracker.network.task.SyncJob
 import com.shortstack.hackertracker.utils.NotificationHelper
@@ -39,8 +38,6 @@ class App : Application() {
     val bus: Bus by lazy { MainThreadBus() }
     // Storage
     val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil() }
-    // Database
-    lateinit var databaseController: DEFCONDatabaseController
     // Notifications
     val notificationHelper: NotificationHelper by lazy { NotificationHelper(appContext) }
     // Analytics
@@ -108,12 +105,6 @@ class App : Application() {
         else
             R.style.AppTheme_BsidesOrl)
 
-        Logger.d("Creating database controller with database: $name")
-        databaseController = DEFCONDatabaseController(appContext, name = name)
-
-        if (databaseController.exists()) {
-            databaseController.checkDatabase()
-        }
     }
 
 

@@ -29,20 +29,6 @@ class ItemViewModel(val item: Event) {
             return description
         }
 
-    val categoryColorPosition: Int
-        get() {
-            if (TextUtils.isEmpty(item.type))
-                return EMPTY_CATEGORY
-
-            val types = App.application.databaseController.types
-
-            for (i in types.indices) {
-                if (item.type == types[i].type)
-                    return i
-            }
-
-            return EMPTY_CATEGORY
-        }
 
 
     fun getTimeStamp(context: Context): String {

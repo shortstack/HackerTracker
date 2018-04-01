@@ -12,6 +12,7 @@ import com.pedrogomez.renderers.RendererBuilder
 import com.pedrogomez.renderers.RendererContent
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.home.renderers.ActivityNavRenderer
 import com.shortstack.hackertracker.ui.home.renderers.ChangeConRenderer
@@ -19,6 +20,7 @@ import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.models.Navigation
 import com.shortstack.hackertracker.ui.home.renderers.HomeHeaderRenderer
 import com.shortstack.hackertracker.ui.home.renderers.SubHeaderRenderer
+import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
@@ -39,7 +41,7 @@ class HomeFragment : Fragment() {
         val rendererBuilder = RendererBuilder<Any>()
                 .bind(TYPE_HEADER, HomeHeaderRenderer())
                 .bind(String::class.java, SubHeaderRenderer())
-//                .bind(Item::class.java, EventRenderer())
+                .bind(Event::class.java, EventRenderer())
                 .bind(Navigation::class.java, ActivityNavRenderer())
                 .bind(TYPE_CHANGE_CON, ChangeConRenderer())
 
@@ -56,7 +58,7 @@ class HomeFragment : Fragment() {
     private fun fetchRecentUpdates() {
         setProgressIndicator(true)
 
-        App.application.databaseController.getRecent()
+        App.application.db.eventDao().getRecentlyUpdated()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -69,7 +71,7 @@ class HomeFragment : Fragment() {
 
                     showLastSyncTimestamp(getLastSyncTimestamp())
 
-//                    showRecentUpdates(it.toTypedArray())
+                    showRecentUpdates(it)
                 }, {
                     if (isAdded) {
                         setProgressIndicator(false)
@@ -83,17 +85,17 @@ class HomeFragment : Fragment() {
         loading_progress.visibility = if (active) View.VISIBLE else View.GONE
     }
 
-    private fun showRecentUpdates(items: Array<Item>) {
+    private fun showRecentUpdates(items: List<Event>) {
         var recentDate = ""
         val size = adapter.collection.size
 
 
         for (item in items) {
-            if (item.updatedAt != recentDate) {
-                recentDate = item.updatedAt
-                val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(item.updatedAt)
-                adapter.add("Updated " + SimpleDateFormat("MMMM dd h:mm aa").format(date))
-            }
+//            if (item.updatedAt != recentDate) {
+//                recentDate = item.updatedAt
+//                val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(item.updatedAt)
+//                adapter.add("Updated " + SimpleDateFormat("MMMM dd h:mm aa").format(date))
+//            }
 
             adapter.add(item)
         }

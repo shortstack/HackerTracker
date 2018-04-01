@@ -14,7 +14,10 @@ import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import java.util.concurrent.TimeUnit
 
 class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
@@ -53,17 +56,22 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         if (adapter == null)
             return
 
-        adapter!!.collection.clear()
-
         if (text.isEmpty()) {
-            adapter!!.notifyDataSetChanged()
+            adapter?.clearAndNotify()
             return
         }
 
-        val timeMillis = System.currentTimeMillis()
-        adapter!!.addAll(App.application.databaseController.findByText(text))
-        Logger.d("Time to search: ${System.currentTimeMillis() - timeMillis}ms" )
-        adapter!!.notifyDataSetChanged()
+        App.application.db.eventDao().findByText("%$text%")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .debounce(300, TimeUnit.MILLISECONDS)
+                .subscribe({
+                    adapter?.clearAndNotify()
+                    adapter?.addAllAndNotify(it)
+
+                    val timeMillis = System.currentTimeMillis()
+                    Logger.d("Time to search: ${System.currentTimeMillis() - timeMillis}ms")
+                }, {})
     }
 
     companion object {

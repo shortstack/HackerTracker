@@ -22,17 +22,17 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_activity)
 
-        if( App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME ) {
-            splash_image.setBackgroundResource(R.drawable.tc_19_wallpaper)
-        } else if (App.application.databaseController.databaseName == Constants.SHMOOCON_DATABASE_NAME) {
-            splash_image.setBackgroundResource(R.drawable.shmoocon_14_wallpaper)
-        } else if (App.application.databaseController.databaseName == Constants.HACKWEST_DATABASE_NAME) {
-            splash_image.setBackgroundResource(R.drawable.hackwest_wallpaper)
-        } else if (App.application.databaseController.databaseName == Constants.LAYERONE_DATABASE_NAME) {
-            splash_image.setBackgroundResource(R.drawable.layerone_wallpaper)
-        } else if (App.application.databaseController.databaseName == Constants.BSIDESORL_DATABASE_NAME) {
-            splash_image.setBackgroundResource(R.drawable.bsidesorl_wallpaper)
-        }
+//        if( App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME ) {
+//            splash_image.setBackgroundResource(R.drawable.tc_19_wallpaper)
+//        } else if (App.application.databaseController.databaseName == Constants.SHMOOCON_DATABASE_NAME) {
+//            splash_image.setBackgroundResource(R.drawable.shmoocon_14_wallpaper)
+//        } else if (App.application.databaseController.databaseName == Constants.HACKWEST_DATABASE_NAME) {
+//            splash_image.setBackgroundResource(R.drawable.hackwest_wallpaper)
+//        } else if (App.application.databaseController.databaseName == Constants.LAYERONE_DATABASE_NAME) {
+//            splash_image.setBackgroundResource(R.drawable.layerone_wallpaper)
+//        } else if (App.application.databaseController.databaseName == Constants.BSIDESORL_DATABASE_NAME) {
+//            splash_image.setBackgroundResource(R.drawable.bsidesorl_wallpaper)
+//        }
 
         App.application.registerBusListener(this)
 

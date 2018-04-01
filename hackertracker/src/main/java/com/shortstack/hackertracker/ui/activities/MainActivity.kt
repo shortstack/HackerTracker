@@ -18,10 +18,8 @@ import android.view.View
 import android.view.ViewGroup
 import com.github.stkent.amplify.tracking.Amplify
 import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
-import com.shortstack.hackertracker.database.DatabaseController
 import com.shortstack.hackertracker.models.Filter
 import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.ReviewBottomSheet
@@ -30,9 +28,12 @@ import com.shortstack.hackertracker.ui.SettingsFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
+import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import com.shortstack.hackertracker.utils.MaterialAlert
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
@@ -48,11 +49,11 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (!DatabaseController.exists(this, App.application.databaseController.databaseName)) {
-            startActivity(Intent(this, SplashActivity::class.java))
-            finish()
-            return
-        }
+//        if (!DatabaseController.exists(this, App.application.databaseController.databaseName)) {
+//            startActivity(Intent(this, SplashActivity::class.java))
+//            finish()
+//            return
+//        }
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
@@ -104,11 +105,13 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         if (target == 0)
             return
 
-        val item = App.application.databaseController.findItem(id = target)
-        if (item != null) {
-//            val fragment = ScheduleItemBottomSheet.newInstance(item)
-//            fragment.show(supportFragmentManager, fragment.tag)
-        }
+        App.application.db.eventDao().getEventById(id = target)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    val fragment = EventBottomSheet.newInstance(it)
+                    fragment.show(supportFragmentManager, fragment.tag)
+                }
     }
 
     private fun forceMenuHighlighted() {
@@ -243,13 +246,13 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         toggle.syncState()
 
         nav_view!!.setNavigationItemSelectedListener(this)
-        if (App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME) {
-            nav_view.menu.getItem(2).setTitle(R.string.map)
-        }
-
-        if (App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME) {
-            nav_view.menu.removeItem(R.id.nav_information)
-        }
+//        if (App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME) {
+//            nav_view.menu.getItem(2).setTitle(R.string.map)
+//        }
+//
+//        if (App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME) {
+//            nav_view.menu.removeItem(R.id.nav_information)
+//        }
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {

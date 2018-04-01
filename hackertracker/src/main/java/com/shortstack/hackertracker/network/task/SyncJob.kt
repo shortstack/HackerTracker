@@ -46,14 +46,14 @@ class SyncJob : JobService(), Callback<SyncResponse> {
         if (storage.lastUpdated != body.updatedDate) {
             storage.lastUpdated = body.updatedDate
 
-            val database = App.application.databaseController
+//            val database = App.application.databaseController
 
-            val rowsUpdated = database.updateSchedule(response = body)
+//            val rowsUpdated = database.updateSchedule(response = body)
 
-            if (rowsUpdated > 0) {
-                App.application.postBusEvent(SyncResponseEvent(rowsUpdated))
-                App.application.notificationHelper.scheduleUpdateNotification(rowsUpdated)
-            }
+//            if (rowsUpdated > 0) {
+//                App.application.postBusEvent(SyncResponseEvent(rowsUpdated))
+//                App.application.notificationHelper.scheduleUpdateNotification(rowsUpdated)
+//            }
 
         } else {
             Logger.d("Already up to date!")
@@ -63,8 +63,8 @@ class SyncJob : JobService(), Callback<SyncResponse> {
     override fun onStartJob(job: JobParameters): Boolean {
         Logger.d("Start!")
 
-        if( App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME)
-            return false
+//        if( App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME)
+//            return false
 
         val retrofit = Retrofit.Builder().baseUrl(Constants.API_URL_BASE).addConverterFactory(GsonConverterFactory.create()).build()
         val service = retrofit.create(DatabaseService::class.java)

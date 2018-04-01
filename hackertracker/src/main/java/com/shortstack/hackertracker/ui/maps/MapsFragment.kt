@@ -30,9 +30,9 @@ class MapsFragment : Fragment() {
         val adapter = PagerAdapter(activity?.supportFragmentManager ?: return)
         pager.adapter = adapter
 
-        if (App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME) {
-            tab_layout.visibility = View.GONE
-        }
+//        if (App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME) {
+//            tab_layout.visibility = View.GONE
+//        }
         tab_layout.addTab(tab_layout.newTab().setText(getString(R.string.map_day_title)))
         tab_layout.addTab(tab_layout.newTab().setText(getString(R.string.map_night_title)))
         tab_layout.tabGravity = TabLayout.GRAVITY_FILL
@@ -69,9 +69,9 @@ class MapsFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
         inflater!!.inflate(R.menu.maps, menu)
-        if (App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME) {
-            menu?.removeItem(R.id.action_uber)
-        }
+//        if (App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME) {
+//            menu?.removeItem(R.id.action_uber)
+//        }
     }
 
     class PagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
@@ -79,20 +79,20 @@ class MapsFragment : Fragment() {
         var maps: Array<Fragment>
 
         init {
-            if (App.application.databaseController.databaseName == Constants.DEFCON_DATABASE_NAME) {
-                maps = arrayOf(MapFragment.newInstance(MAP_DAY),
-                        MapFragment.newInstance(MAP_NIGHT))
-            } else if (App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME) {
-                maps = arrayOf(MapFragment.newInstance(TOORCON))
-            } else if (App.application.databaseController.databaseName == Constants.HACKWEST_DATABASE_NAME) {
-                maps = arrayOf(MapFragment.newInstance(HACKWEST))
-            } else if (App.application.databaseController.databaseName == Constants.LAYERONE_DATABASE_NAME) {
-                maps = arrayOf(MapFragment.newInstance(LAYERONE))
-            } else if (App.application.databaseController.databaseName == Constants.BSIDESORL_DATABASE_NAME) {
-                maps = arrayOf(MapFragment.newInstance(BSIDESORL))
-            } else {
-                maps = arrayOf(MapFragment.newInstance(SHMOOCON))
-            }
+//            if (App.application.databaseController.databaseName == Constants.DEFCON_DATABASE_NAME) {
+            maps = arrayOf(MapFragment.newInstance(MAP_DAY),
+                    MapFragment.newInstance(MAP_NIGHT))
+//            } else if (App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME) {
+//                maps = arrayOf(MapFragment.newInstance(TOORCON))
+//            } else if (App.application.databaseController.databaseName == Constants.HACKWEST_DATABASE_NAME) {
+//                maps = arrayOf(MapFragment.newInstance(HACKWEST))
+//            } else if (App.application.databaseController.databaseName == Constants.LAYERONE_DATABASE_NAME) {
+//                maps = arrayOf(MapFragment.newInstance(LAYERONE))
+//            } else if (App.application.databaseController.databaseName == Constants.BSIDESORL_DATABASE_NAME) {
+//                maps = arrayOf(MapFragment.newInstance(BSIDESORL))
+//            } else {
+//                maps = arrayOf(MapFragment.newInstance(SHMOOCON))
+//            }
         }
 
         override fun getItem(position: Int): Fragment {
