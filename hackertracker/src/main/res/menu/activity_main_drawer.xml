@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group android:checkableBehavior="single" android:id="@+id/menu_top">
 
         <item
             android:id="@+id/nav_home"
@@ -10,6 +10,9 @@
             android:id="@+id/nav_schedule"
             android:icon="@drawable/ic_schedule_white_24dp"
             android:title="@string/schedule" />
+    </group>
+
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_map_white_24dp"
@@ -34,6 +37,5 @@
             android:id="@+id/nav_change_con"
             android:icon="@drawable/ic_filter_list_white_24dp"
             android:title="@string/change_con" />
-
     </group>
 </menu>

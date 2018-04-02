@@ -6,11 +6,13 @@ import com.google.gson.annotations.SerializedName
 
 @Entity
 data class Type(
-        @PrimaryKey(autoGenerate = false)
+        @PrimaryKey(autoGenerate = true)
+        val index : Int,
         @SerializedName("event_type")
         val type: String,
         val colour: String,
-        var isSelected: Boolean) {
+        var isSelected: Boolean,
+        var con : String) {
 
     init {
         isSelected = true

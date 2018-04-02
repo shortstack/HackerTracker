@@ -11,6 +11,7 @@ data class Vendor(
         val title: String,
         val description: String,
         val link: String,
-        val partner: Int = 0
+        val partner: Int = 0,
+        var con : String
 ) : Serializable
 

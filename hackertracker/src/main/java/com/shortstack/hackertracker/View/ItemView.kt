@@ -187,13 +187,13 @@ class ItemView : CardView {
         App.application.database.db.typeDao().getTypeForEvent(event)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
+                .subscribe({
                     category_text.text = it.type
                     val color = Color.parseColor(it.colour)
 
                     category.setBackgroundColor(color)
                     progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-                }
+                }, {})
     }
 
     private fun renderBookmark() {

@@ -16,5 +16,6 @@ data class Conference(
         val start: Date,
         val end: Date,
         val updated: Date,
+        val synced: Date?,
         var isSelected: Boolean
 )

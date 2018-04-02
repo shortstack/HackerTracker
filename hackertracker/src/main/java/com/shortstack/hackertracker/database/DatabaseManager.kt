@@ -1,33 +1,74 @@
 package com.shortstack.hackertracker.database
 
-import android.arch.persistence.room.Room
 import android.content.Context
+import com.orhanobut.logger.Logger
+import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.Event.ChangeConEvent
 import com.shortstack.hackertracker.models.Conference
+import com.shortstack.hackertracker.models.Event
+import com.shortstack.hackertracker.models.Type
+import com.shortstack.hackertracker.models.Vendor
+import io.reactivex.Flowable
+import io.reactivex.Scheduler
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 /**
  * Created by Chris on 3/31/2018.
  */
-class DatabaseManager(private val context: Context) {
+class DatabaseManager(context: Context) {
 
-    val cons: ConferenceDatabase
-    var db: MyRoomDatabase
+    val db: MyRoomDatabase = MyRoomDatabase.buildDatabase(context)
 
-    init {
-        cons = Room.databaseBuilder(context, ConferenceDatabase::class.java, CONFERENCE_DATABASE)
-                .allowMainThreadQueries().build()
-        cons.init()
+    fun changeConference(con: Conference) {
+        val current = db.currentConference
 
-        val current = cons.conferenceDao().getCurrentCon()
-        db = MyRoomDatabase.buildDatabase(context, current.directory)
+        if (current != null) {
+            current.isSelected = false
+            Logger.d("Updating current: " + current.index + " " + current.isSelected)
+            db.conferenceDao().update(current)
+        }
+        con.isSelected = true
+        Logger.d("Updating con: " + con.index + " " + con.isSelected)
+        db.conferenceDao().update(con)
+
+        db.currentConference = con
     }
 
-    fun initConference(conference: Conference) {
-        db = MyRoomDatabase.buildDatabase(context, conference.directory)
+    fun getCons(): Single<List<Conference>> {
+        return db.conferenceDao().getAll()
     }
 
-    companion object {
-        private const val CONFERENCE_DATABASE = "conference"
+    fun getRecentUpdates(): Flowable<List<Event>> {
+        return db.eventDao().getRecentlyUpdated(db.currentConference?.directory
+                ?: return db.eventDao().getRecentlyUpdated())
     }
 
+    fun getSchedule(): Flowable<List<Event>> {
+        return db.eventDao().getFullSchedule(db.currentConference?.directory
+                ?: return db.eventDao().getFullSchedule())
 
+    }
+
+    fun getTypes(): Single<List<Type>> {
+        return db.typeDao().getTypes(db.currentConference?.directory
+                ?: return db.typeDao().getTypes())
+    }
+
+    fun changeConference(con: Int) {
+        db.conferenceDao().getCon(con).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    changeConference(it)
+                    App.application.postBusEvent(ChangeConEvent())
+                }, {
+
+                })
+    }
+
+    fun getVendors(): Flowable<List<Vendor>> {
+        return db.vendorDao().getAll(db.currentConference?.directory
+                ?: return db.vendorDao().getAll())
+    }
 }

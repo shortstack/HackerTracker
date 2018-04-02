@@ -13,6 +13,9 @@ interface EventDao {
     @Query("SELECT * FROM event ORDER BY `begin` ASC")
     fun getFullSchedule(): Flowable<List<Event>>
 
+    @Query("SELECT * FROM event WHERE con = :con ORDER BY `begin` ASC")
+    fun getFullSchedule(con: String): Flowable<List<Event>>
+
     @Query("SELECT * FROM event ORDER BY `begin` ASC")
     fun getUIThreadSchedule(): List<Event>
 
@@ -41,4 +44,7 @@ interface EventDao {
 
     @Query("SELECT * FROM event ORDER BY updatedAt DESC LIMIT 20")
     fun getRecentlyUpdated(): Flowable<List<Event>>
+
+    @Query("SELECT * FROM event WHERE con = :con ORDER BY updatedAt DESC LIMIT 20")
+    fun getRecentlyUpdated(con : String): Flowable<List<Event>>
 }

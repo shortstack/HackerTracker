@@ -16,6 +16,7 @@ import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.utils.MaterialAlert
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
+import com.shortstack.hackertracker.Event.ChangeConEvent
 import com.shortstack.hackertracker.event.RefreshTimerEvent
 import com.shortstack.hackertracker.event.SyncResponseEvent
 import com.shortstack.hackertracker.event.UpdateListContentsEvent
@@ -77,23 +78,30 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         time %= Constants.TIMER_INTERVAL
 
 
-        mTimer = Timer()
-        mTimer!!.scheduleAtFixedRate(object : TimerTask() {
-            override fun run() {
-                mHandler.obtainMessage(1).sendToTarget()
-            }
-        }, time, Constants.TIMER_INTERVAL)
+        mTimer = Timer().also {
+            it.scheduleAtFixedRate(object : TimerTask() {
+                override fun run() {
+                    mHandler.obtainMessage(1).sendToTarget()
+                }
+            }, time, Constants.TIMER_INTERVAL)
+        }
     }
 
     override fun onPause() {
         super.onPause()
-        mTimer!!.cancel()
+        mTimer?.cancel()
+        mTimer = null
 
     }
 
     @Subscribe
     fun handleUpdateListContentsEvent(event: UpdateListContentsEvent) {
         refreshContents()
+    }
+
+    @Subscribe
+    fun onChangeConEvent(event: ChangeConEvent) {
+        adapter.initContents()
     }
 
 

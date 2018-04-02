@@ -19,8 +19,11 @@ import android.view.ViewGroup
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.Event.ChangeConEvent
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
+import com.shortstack.hackertracker.event.MainThreadBus
+import com.shortstack.hackertracker.event.SetupDatabaseEvent
 import com.shortstack.hackertracker.models.Filter
 import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.ReviewBottomSheet
@@ -33,11 +36,14 @@ import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import com.shortstack.hackertracker.utils.MaterialAlert
+import com.squareup.otto.Bus
+import com.squareup.otto.Subscribe
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 
 
@@ -51,14 +57,17 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-//        if (!DatabaseController.exists(this, App.application.databaseController.databaseName)) {
-//            startActivity(Intent(this, SplashActivity::class.java))
-//            finish()
+        if (!App.application.database.db.initialized) {
+            Logger.e("Database not initialized.")
+//            startA/*ctivity(Intent(this, SplashActivity::class.java))
+//            finish*/()
 //            return
-//        }
+        }
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
+        App.application.registerBusListener(this)
 
         initViewPager()
 
@@ -79,6 +88,35 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
 
         setNavHeaderMargin()
+
+
+        if (App.application.database.db.initialized)
+            addConferenceMenuItems()
+    }
+
+    override fun onDestroy() {
+        App.application.unregisterBusListener(this)
+        super.onDestroy()
+    }
+
+    @Subscribe
+    fun onDatabaseSetupEvent(event: SetupDatabaseEvent) {
+        addConferenceMenuItems()
+    }
+
+    private fun addConferenceMenuItems() {
+        App.application.database.db.conferenceDao().getAll()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    val menu = nav_view.menu
+                    it.forEach {
+                        menu.add(R.id.menu_top, 400 + it.index, 3, it.title)
+                    }
+
+                }, {
+
+                })
     }
 
     private fun setNavHeaderMargin() {
@@ -263,6 +301,12 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             return true
         }
 
+        if (item.itemId in 400..500) {
+            App.application.database.changeConference(item.itemId - 400)
+            drawer_layout.closeDrawers()
+            return true
+        }
+
         setFragmentIndex(item)
         loadFragment()
 
@@ -275,16 +319,16 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     private fun onChangeCon() {
 
-        val cons = App.application.database.cons
-
-
-        App.application.database.cons.conferenceDao().getAll()
+        App.application.database.getCons()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
 
 
                     val current = it.first { it.isSelected }
+
+
+                    App.application.database.db.currentConference = current
 
                     val filtered = it.filter { !it.isSelected }
                     val items = filtered.map { MaterialAlert.Item(it.title) }
@@ -295,13 +339,9 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                                 Single.fromCallable {
                                     val con = filtered[i]
 
-                                    current.isSelected = false
-                                    con.isSelected = true
+                                    App.application.database.changeConference(con)
 
-                                    cons.conferenceDao().update(current)
-                                    cons.conferenceDao().update(con)
-
-                                    App.application.database.initConference(con)
+                                    App.application.postBusEvent(ChangeConEvent())
 
                                 }.subscribeOn(Schedulers.io())
                                         .observeOn(AndroidSchedulers.mainThread())

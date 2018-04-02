@@ -10,10 +10,7 @@ import java.util.Date
 /**
  * Created by Chris on 3/31/2018.
  */
-@Entity(foreignKeys = [(ForeignKey(
-        entity = Type::class,
-        parentColumns = [("type")],
-        childColumns = [("type")]))])
+@Entity
 data class Event(
         @PrimaryKey(autoGenerate = false)
         val index: Int,
@@ -32,5 +29,6 @@ data class Event(
         val url: String?,
         val includes: String?,
 
-        var isBookmarked: Boolean
+        var isBookmarked: Boolean,
+        var con : String
 ) : Serializable

@@ -14,6 +14,9 @@ interface VendorDao {
     @Query("SELECT * FROM vendor")
     fun getAll(): Flowable<List<Vendor>>
 
+    @Query("SELECT * FROM vendor WHERE con = :con")
+    fun getAll(con: String): Flowable<List<Vendor>>
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(users: List<Vendor>)
 

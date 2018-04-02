@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.database
 import android.arch.persistence.room.*
 import com.shortstack.hackertracker.models.Conference
 import io.reactivex.Flowable
+import io.reactivex.Single
 
 /**
  * Created by Chris on 3/31/2018.
@@ -14,7 +15,7 @@ interface ConferenceDao {
     fun deleteAll()
 
     @Query("SELECT * FROM conference")
-    fun getAll(): Flowable<List<Conference>>
+    fun getAll(): Single<List<Conference>>
 
     @Query("SELECT * FROM conference")
     fun get(): List<Conference>
@@ -27,6 +28,9 @@ interface ConferenceDao {
 
     @Update
     fun update(conference: Conference)
+
+    @Query("SELECT * FROM conference where `index` = :id")
+    fun getCon(id: Int): Single<Conference>
 
 
 }

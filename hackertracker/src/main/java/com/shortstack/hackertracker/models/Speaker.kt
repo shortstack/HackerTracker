@@ -16,7 +16,8 @@ data class Speaker(
         val name: String,
         val lastUpdate: String,
         val media: String?,
-        val bio: String?
+        val bio: String?,
+        var con : String
 
 ) : Serializable
 

@@ -15,7 +15,7 @@ class ItemViewModel(val item: Event) {
 
     val title: String
         get() {
-            val title = item.title
+            val title = item.con + ", " + item.title
             if (!TextUtils.isEmpty(title) && title!!.endsWith("\n"))
                 return title.substring(0, title.indexOf("\n"))
             return title!!
@@ -81,7 +81,7 @@ class ItemViewModel(val item: Event) {
 
 
     /*(BuildConfig.DEBUG ? mItem.getIndex() + " " : "") +*/ val displayTitle: String
-        get() = item.title!!
+        get() = item.con + ", " + item.title!!
 
     fun hasDescription(): Boolean {
         return !TextUtils.isEmpty(item.description)

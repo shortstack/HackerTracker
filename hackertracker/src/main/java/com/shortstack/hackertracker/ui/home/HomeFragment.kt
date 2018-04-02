@@ -58,7 +58,7 @@ class HomeFragment : Fragment() {
     private fun fetchRecentUpdates() {
         setProgressIndicator(true)
 
-        App.application.database.db.eventDao().getRecentlyUpdated()
+        App.application.database.getRecentUpdates()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -69,7 +69,7 @@ class HomeFragment : Fragment() {
                     addAdapterItem(getInformationNav())
                     addAdapterItem(getChangeConCard())
 
-                    showLastSyncTimestamp(getLastSyncTimestamp())
+//                    showLastSyncTimestamp(getLastSyncTimestamp())
 
                     showRecentUpdates(it)
                 }, {

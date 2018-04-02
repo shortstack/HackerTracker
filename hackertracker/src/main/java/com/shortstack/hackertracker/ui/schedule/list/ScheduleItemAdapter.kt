@@ -18,6 +18,7 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
                           val list: RecyclerView) : RendererAdapter<Any>(ScheduleItemBuilder()) {
 
     fun initContents() {
+        clearAndNotify()
         listViews.hideViews()
         load()
     }
@@ -27,7 +28,7 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
         val filter = app.storage.filter
 
 
-        App.application.database.db.eventDao().getFullSchedule().subscribeOn(Schedulers.io())
+        App.application.database.getSchedule().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     addAllAndNotify(it)

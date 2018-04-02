@@ -10,8 +10,10 @@ import android.widget.Toast
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.Event.ChangeConEvent
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.Vendor
+import com.squareup.otto.Subscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
@@ -31,6 +33,8 @@ class VendorsFragment : Fragment() {
         val rendererBuilder = RendererBuilder<Vendor>()
                 .bind(Vendor::class.java, VendorRenderer())
 
+
+        App.application.registerBusListener(this)
         adapter = RendererAdapter(rendererBuilder)
 
         list.layoutManager = LinearLayoutManager(context)
@@ -39,10 +43,20 @@ class VendorsFragment : Fragment() {
         getVendors()
     }
 
+    override fun onDestroyView() {
+        App.application.unregisterBusListener(this)
+        super.onDestroyView()
+    }
+
+    @Subscribe
+    fun onChangeConEvent(event: ChangeConEvent) {
+        getVendors()
+    }
+
     private fun getVendors() {
         setProgressIndicator(true)
 
-        App.application.database.db.vendorDao().getAll()
+        App.application.database.getVendors()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -65,6 +79,7 @@ class VendorsFragment : Fragment() {
     }
 
     private fun showVendors(vendors: List<Vendor>) {
+        adapter?.clearAndNotify()
         adapter?.addAllAndNotify(vendors)
     }
 
