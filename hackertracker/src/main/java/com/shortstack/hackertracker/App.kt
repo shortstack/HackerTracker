@@ -1,10 +1,6 @@
 package com.shortstack.hackertracker
 
 import android.app.Application
-import android.arch.persistence.db.SupportSQLiteDatabase
-import android.arch.persistence.room.Database
-import android.arch.persistence.room.Room
-import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 import android.preference.PreferenceManager
 import com.crashlytics.android.Crashlytics
@@ -17,9 +13,7 @@ import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.database.MyRoomDatabase
 import com.shortstack.hackertracker.analytics.AnalyticsController
-import com.shortstack.hackertracker.database.ConferenceDatabase
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.event.MainThreadBus
 import com.shortstack.hackertracker.network.task.SyncJob
@@ -28,11 +22,7 @@ import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.utils.TimeHelper
 import com.squareup.otto.Bus
 import io.fabric.sdk.android.Fabric
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import java.util.*
-import javax.security.auth.callback.Callback
 
 
 class App : Application() {
