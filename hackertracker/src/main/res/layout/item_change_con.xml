@@ -9,8 +9,9 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:layout_margin="8dp"
-        app:cardBackgroundColor="@color/colorPrimaryDark"
+        app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="2dp"
+        app:cardElevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="H,3:1"
         app:layout_constraintEnd_toEndOf="parent"
@@ -31,7 +32,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/cons"
-                android:textColor="@color/white" />
+                android:textColor="@color/black" />
 
             <TextView
                 style="@style/TextAppearance.AppCompat.Body1"
@@ -39,7 +40,7 @@
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="@string/msg_change_cons"
-                android:textColor="@color/white" />
+                android:textColor="@color/black" />
 
             <Button
                 android:id="@+id/switch_con_button"
@@ -47,7 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:text="@string/change_con"
-                android:textColor="@color/white" />
+                android:textColor="@color/black" />
 
         </LinearLayout>
 

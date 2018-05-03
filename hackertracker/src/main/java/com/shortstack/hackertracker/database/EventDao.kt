@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.database
 
 import android.arch.persistence.room.*
+import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Event
 import io.reactivex.Flowable
 
@@ -46,5 +47,9 @@ interface EventDao {
     fun getRecentlyUpdated(): Flowable<List<Event>>
 
     @Query("SELECT * FROM event WHERE con = :con ORDER BY updatedAt DESC LIMIT 20")
-    fun getRecentlyUpdated(con : String): Flowable<List<Event>>
+    fun getRecentlyUpdated(con: String): Flowable<List<Event>>
+
+
+    @Query("SELECT * FROM event WHERE con = :con")
+    fun getEventTypes(con: String): Flowable<List<DatabaseEvent>>
 }

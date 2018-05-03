@@ -28,13 +28,23 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
         val filter = app.storage.filter
 
 
-        App.application.database.getSchedule().subscribeOn(Schedulers.io())
+
+        App.application.database.getEventTypes()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     addAllAndNotify(it)
                 }, {
                     listViews.showErrorView()
                 })
+
+//        App.application.database.getSchedule().subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                    addAllAndNotify(it)
+//                }, {
+//                    listViews.showErrorView()
+//                })
     }
 
     private fun addAllAndNotify(elements: List<Event>) {

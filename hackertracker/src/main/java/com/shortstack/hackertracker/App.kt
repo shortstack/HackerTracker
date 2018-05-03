@@ -16,6 +16,7 @@ import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.event.MainThreadBus
+import com.shortstack.hackertracker.models.Conference
 import com.shortstack.hackertracker.network.task.SyncJob
 import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
@@ -60,6 +61,17 @@ class App : Application() {
         updateDatabaseController()
 
         database = DatabaseManager(this)
+        updateTheme(database.getCurrentCon())
+    }
+
+    fun updateTheme(con: Conference?) {
+        val theme = when (con?.index) {
+            1 -> R.style.AppTheme_Hackwest
+            2 -> R.style.AppTheme_Toorcon
+            3 -> R.style.AppTheme_BsidesOrl
+            else -> R.style.AppTheme
+        }
+        setTheme(theme)
     }
 
     fun updateDatabaseController() {

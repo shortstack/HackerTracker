@@ -39,7 +39,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
     var currentConference: Conference? = null
 
-    var initialized: Boolean = false
+    var initialized: Boolean = true
 
     fun init() {
         val gson = App.application.gson
@@ -97,11 +97,14 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
 
         fun buildDatabase(context: Context): MyRoomDatabase {
-            return Room.databaseBuilder(context, MyRoomDatabase::class.java, DATABASE_NAME)
+            val database = Room.databaseBuilder(context, MyRoomDatabase::class.java, DATABASE_NAME)
                     .allowMainThreadQueries()
                     .addCallback(object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
+                            Logger.d("Database onCreate!")
+                            getInstance(context).initialized = false
+
                             Single.fromCallable {
                                 getInstance(context).init()
 
@@ -116,13 +119,15 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
                         override fun onOpen(db: SupportSQLiteDatabase) {
                             super.onOpen(db)
+                            Logger.d("Database onOpen!")
+
                             Logger.e("Database already initialized.")
-                            getInstance(context).initialized = true
-                            App.application.postBusEvent(SetupDatabaseEvent())
-
-
                         }
                     }).build()
+
+            INSTANCE = database
+
+            return database
 
         }
 

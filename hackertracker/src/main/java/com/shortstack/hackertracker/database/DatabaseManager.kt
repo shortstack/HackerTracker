@@ -4,10 +4,7 @@ import android.content.Context
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Event.ChangeConEvent
-import com.shortstack.hackertracker.models.Conference
-import com.shortstack.hackertracker.models.Event
-import com.shortstack.hackertracker.models.Type
-import com.shortstack.hackertracker.models.Vendor
+import com.shortstack.hackertracker.models.*
 import io.reactivex.Flowable
 import io.reactivex.Scheduler
 import io.reactivex.Single
@@ -21,14 +18,18 @@ class DatabaseManager(context: Context) {
 
     val db: MyRoomDatabase = MyRoomDatabase.buildDatabase(context)
 
-    fun changeConference(con: Conference) {
-        val current = db.currentConference
+    init {
 
-        if (current != null) {
-            current.isSelected = false
-            Logger.d("Updating current: " + current.index + " " + current.isSelected)
-            db.conferenceDao().update(current)
-        }
+    }
+
+    fun changeConference(con: Conference) {
+        val current = db.conferenceDao().getCurrentCon()
+
+        current.isSelected = false
+        Logger.d("Updating current: " + current.index + " " + current.isSelected)
+        db.conferenceDao().update(current)
+
+
         con.isSelected = true
         Logger.d("Updating con: " + con.index + " " + con.isSelected)
         db.conferenceDao().update(con)
@@ -70,5 +71,15 @@ class DatabaseManager(context: Context) {
     fun getVendors(): Flowable<List<Vendor>> {
         return db.vendorDao().getAll(db.currentConference?.directory
                 ?: return db.vendorDao().getAll())
+    }
+
+    fun getCurrentCon(): Conference {
+        val currentCon = db.conferenceDao().getCurrentCon()
+        db.currentConference = currentCon
+        return currentCon
+    }
+
+    fun getEventTypes() : Flowable<List<DatabaseEvent>> {
+        return db.eventDao().getEventTypes(db.currentConference!!.directory)
     }
 }

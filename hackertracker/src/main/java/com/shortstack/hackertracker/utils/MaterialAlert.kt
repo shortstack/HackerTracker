@@ -43,17 +43,17 @@ class MaterialAlert(private val mContext: Context) {
     fun setItems(items: List<Item>, listener: DialogInterface.OnClickListener): MaterialAlert {
         val adapter = object : ArrayAdapter<Item>(
                 mContext,
-                android.R.layout.select_dialog_item,
+                R.layout.select_dialog_item,
                 android.R.id.text1,
                 items) {
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
                 //Use super class to create the View
                 val v = super.getView(position, convertView, parent)
                 val tv = v.findViewById<View>(android.R.id.text1) as TextView
-                tv.setTextColor(Color.WHITE)
 
                 //Put the image on the TextView
-                tv.setCompoundDrawablesWithIntrinsicBounds(items[position].icon, 0, 0, 0)
+                if (items[position].icon != 0)
+                    tv.setCompoundDrawablesWithIntrinsicBounds(items[position].icon, 0, 0, 0)
 
                 //Add margin between image and text (support various screen densities)
                 val dp5 = (5 * mContext.resources.displayMetrics.density + 0.5f).toInt()

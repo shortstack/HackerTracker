@@ -8,6 +8,7 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.content.ContextCompat
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -19,6 +20,7 @@ import android.view.ViewGroup
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.Event.ChangeConEvent
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
@@ -59,14 +61,17 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         if (!App.application.database.db.initialized) {
             Logger.e("Database not initialized.")
-//            startA/*ctivity(Intent(this, SplashActivity::class.java))
-//            finish*/()
+//            startActivity(Intent(this, SplashActivity::class.java))
+//            finish()
 //            return
+        } else {
+            Logger.e("Database IS setup!")
         }
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
+        Logger.d("onCreate")
         App.application.registerBusListener(this)
 
         initViewPager()
@@ -78,7 +83,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             forceMenuHighlighted()
             loadFragment()
 
-            if (Amplify.getSharedInstance().shouldPrompt()) {
+            if (Amplify.getSharedInstance().shouldPrompt() && !BuildConfig.DEBUG) {
                 val review = ReviewBottomSheet.newInstance()
                 review.show(this.supportFragmentManager, review.tag)
             }
@@ -95,6 +100,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     override fun onDestroy() {
+        Logger.d("onDestroy")
         App.application.unregisterBusListener(this)
         super.onDestroy()
     }
@@ -104,14 +110,51 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         addConferenceMenuItems()
     }
 
+    @Subscribe
+    fun onChangeConEvent(event: ChangeConEvent) {
+        App.application.database.db.conferenceDao().getAll()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+
+                    val current = it.first { it.isSelected }
+
+                    App.application.updateTheme(current)
+
+                    nav_view.getHeaderView(0).nav_title.text = current.title
+
+                    val menu = nav_view.menu
+
+
+                    it.forEach {
+                        val item = menu.findItem(400 + it.index)
+                        if (item == null) {
+                            val item = menu.add(Menu.NONE, 400 + it.index, 3, it.title)
+                            item.icon = ContextCompat.getDrawable(this, R.drawable.ic_chevron_right_white_24dp)
+                        }
+                    }
+
+                    menu.removeItem(current.index + 400)
+
+                }, {
+
+                })
+    }
+
     private fun addConferenceMenuItems() {
         App.application.database.db.conferenceDao().getAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
+
+                    val current = it.first { it.isSelected }
+
+                    nav_view.getHeaderView(0).nav_title.text = current.title
+
                     val menu = nav_view.menu
-                    it.forEach {
-                        menu.add(R.id.menu_top, 400 + it.index, 3, it.title)
+                    it.filter { !it.isSelected }.forEach {
+                        val item = menu.add(Menu.NONE, 400 + it.index, 3, it.title)
+                        item.icon = ContextCompat.getDrawable(this, R.drawable.ic_chevron_right_white_24dp)
                     }
 
                 }, {
@@ -296,11 +339,6 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        if (item.itemId == R.id.nav_change_con) {
-            onChangeCon()
-            return true
-        }
-
         if (item.itemId in 400..500) {
             App.application.database.changeConference(item.itemId - 400)
             drawer_layout.closeDrawers()
@@ -311,58 +349,6 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         loadFragment()
 
         return true
-    }
-
-    fun changeCon() {
-        onChangeCon()
-    }
-
-    private fun onChangeCon() {
-
-        App.application.database.getCons()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-
-
-                    val current = it.first { it.isSelected }
-
-
-                    App.application.database.db.currentConference = current
-
-                    val filtered = it.filter { !it.isSelected }
-                    val items = filtered.map { MaterialAlert.Item(it.title) }
-
-                    MaterialAlert.create(this).setTitle(current.title).setItems(items,
-                            DialogInterface.OnClickListener { dialogInterface, i ->
-
-                                Single.fromCallable {
-                                    val con = filtered[i]
-
-                                    App.application.database.changeConference(con)
-
-                                    App.application.postBusEvent(ChangeConEvent())
-
-                                }.subscribeOn(Schedulers.io())
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe({
-                                            dialogInterface.dismiss()
-                                            Logger.e("Finished!")
-                                        }, {
-                                            Logger.e("Could not update the current database. " + it.message)
-
-                                        })
-
-
-                            }).show()
-
-
-                }, {
-                    Logger.e("Could not update the current database. " + it.message)
-                })
-
-
-        forceMenuHighlighted()
     }
 
     private fun setFragmentIndex(item: MenuItem) {
