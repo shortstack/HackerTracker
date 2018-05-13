@@ -6,12 +6,11 @@ import android.arch.persistence.room.Relation
 /**
  * Created by Chris on 4/4/2018.
  */
-class DatabaseEvent {
-    @Embedded
-    var event: Event? = null
-
-    @Relation(parentColumn = "type", entityColumn = "type", entity = Type::class)
-    var type: List<Type>? = null
-}
-
+data class DatabaseEvent(
+        @Embedded
+        val event: Event
+//        ,
+//        @Relation(parentColumn = "type", entityColumn = "type", entity = Type::class)
+//        var type: List<Type>
+)
 

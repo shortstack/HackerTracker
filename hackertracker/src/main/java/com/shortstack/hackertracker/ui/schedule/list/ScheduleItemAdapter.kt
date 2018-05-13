@@ -1,14 +1,10 @@
 package com.shortstack.hackertracker.ui.schedule.list
 
 import android.support.v7.widget.RecyclerView
-import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.isSameDay
-import com.shortstack.hackertracker.models.Day
-import com.shortstack.hackertracker.models.Event
-import com.shortstack.hackertracker.models.Item
-import com.shortstack.hackertracker.models.Time
+import com.shortstack.hackertracker.models.*
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
@@ -33,7 +29,7 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    addAllAndNotify(it)
+                    addAllAndNotify(it.map { it.event })
                 }, {
                     listViews.showErrorView()
                 })

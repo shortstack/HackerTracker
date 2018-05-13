@@ -50,6 +50,6 @@ interface EventDao {
     fun getRecentlyUpdated(con: String): Flowable<List<Event>>
 
 
-    @Query("SELECT * FROM event WHERE con = :con")
+    @Query("SELECT * FROM event WHERE con = :con ORDER BY `begin` ASC")
     fun getEventTypes(con: String): Flowable<List<DatabaseEvent>>
 }

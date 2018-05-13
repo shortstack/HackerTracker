@@ -40,16 +40,13 @@ import java.util.*
 class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListViewsInterface {
 
 
-    lateinit var adapter: ScheduleItemAdapter
+    private var adapter: ScheduleItemAdapter? = null
 
 
     var mHandler: Handler = object : Handler() {
         override fun handleMessage(msg: Message) {
             App.application.postBusEvent(RefreshTimerEvent())
-            if (adapter != null) {
-                adapter!!.notifyTimeChanged()
-            }
-
+            adapter?.notifyTimeChanged()
         }
     }
     private var mTimer: Timer? = null
@@ -101,7 +98,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
     @Subscribe
     fun onChangeConEvent(event: ChangeConEvent) {
-        adapter.initContents()
+        adapter?.initContents()
     }
 
 
@@ -134,7 +131,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     }
 
     private fun hasScheduleItems(): Boolean {
-        return !adapter.collection.isEmpty()
+        return adapter?.collection?.isEmpty() == false
     }
 
     override fun hideViews() {
@@ -150,11 +147,11 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     }
 
     private fun refreshContents() {
-        val size = adapter.collection.size
-        adapter.clear()
-        adapter.notifyItemRangeRemoved(0, size)
+        val size = adapter?.collection?.size ?: 0
+        adapter?.clear()
+        adapter?.notifyItemRangeRemoved(0, size)
 
-        adapter.initContents()
+        adapter?.initContents()
     }
 
     private val contentView: Int
