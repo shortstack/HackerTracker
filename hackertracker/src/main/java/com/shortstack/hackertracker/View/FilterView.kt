@@ -105,7 +105,7 @@ class FilterView : LinearLayout {
 
             box.isChecked = type.isSelected
 
-            if (it <= types.size / 2)
+            if ((it+1) <= types.size / 2)
                 filter_left.addView(box)
             else
                 filter_right.addView(box)
