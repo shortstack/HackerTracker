@@ -12,8 +12,8 @@ android {
         applicationId "com.shortstack.hackertracker"
         minSdkVersion 16
         targetSdkVersion 26
-        versionCode 91
-        versionName "4.0.20"
+        versionCode 92
+        versionName "4.0.21"
     }
     buildTypes {
         debug {
