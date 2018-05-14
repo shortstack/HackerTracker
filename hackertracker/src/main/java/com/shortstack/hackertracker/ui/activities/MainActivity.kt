@@ -1,10 +1,12 @@
 package com.shortstack.hackertracker.ui.activities
 
+import android.animation.Animator
+import android.animation.AnimatorListenerAdapter
 import android.app.SearchManager
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
@@ -265,17 +267,61 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
 
 
-    fun onFilterClick() {
-        for (fragment in supportFragmentManager.fragments) {
-            if (fragment is ScheduleFragment) {
-                fragment.showFilters()
+    private fun onFilterClick() {
+//        for (fragment in supportFragmentManager.fragments) {
+//            if (fragment is ScheduleFragment) {
+//                fragment.showFilters()
+//            }
+//        }
+
+        val cx = filters.width / 2
+        val cy = filters.height / 2
+
+        val radius = Math.hypot(cx.toDouble(), cy.toDouble())
+
+        if (filters.visibility == View.INVISIBLE) {
+
+
+            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ViewAnimationUtils.createCircularReveal(filters, cx, cy, 0f, radius.toFloat())
+            } else {
+                null
             }
+
+            filters.visibility = View.VISIBLE
+
+            anim?.start()
+        } else {
+
+            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ViewAnimationUtils.createCircularReveal(filters, cx, cy, radius.toFloat(), 0f)
+            } else {
+
+                filters.visibility = View.INVISIBLE
+                null
+            }
+
+            anim?.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                    super.onAnimationEnd(animation)
+                    filters.visibility = View.INVISIBLE
+                }
+            })
+
+            anim?.start()
         }
+
+
     }
 
     override fun onBackPressed() {
         if (drawer_layout!!.isDrawerOpen(GravityCompat.START)) {
             drawer_layout!!.closeDrawers()
+            return
+        }
+
+        if (filters.visibility == View.VISIBLE) {
+            onFilterClick()
             return
         }
 
