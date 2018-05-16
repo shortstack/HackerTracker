@@ -15,10 +15,7 @@ import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
@@ -26,9 +23,6 @@ import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.Event.ChangeConEvent
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
-import com.shortstack.hackertracker.event.MainThreadBus
-import com.shortstack.hackertracker.event.SetupDatabaseEvent
-import com.shortstack.hackertracker.models.Filter
 import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.ReviewBottomSheet
 import com.shortstack.hackertracker.ui.SearchFragment
@@ -39,15 +33,11 @@ import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
-import com.shortstack.hackertracker.utils.MaterialAlert
-import com.squareup.otto.Bus
 import com.squareup.otto.Subscribe
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.nav_header_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 
 
@@ -107,10 +97,10 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         super.onDestroy()
     }
 
-    @Subscribe
-    fun onDatabaseSetupEvent(event: SetupDatabaseEvent) {
-        addConferenceMenuItems()
-    }
+//    @Subscribe
+//    fun onDatabaseSetupEvent(event: SetupDatabaseEvent) {
+//        addConferenceMenuItems()
+//    }
 
     @Subscribe
     fun onChangeConEvent(event: ChangeConEvent) {
@@ -218,7 +208,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         app.storage.viewPagerPosition = mFragmentIndex
         app.analyticsController.tagCustomEvent(fragmentEvent)
 
-        updateFABVisibility()
+        //updateFABVisibility()
 
         //Closing drawer on item click
         drawer_layout!!.closeDrawers()
@@ -244,7 +234,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
 
     private fun updateFABVisibility() {
-        filter!!.visibility = View.VISIBLE
+        toggleFAB()
     }
 
     private val currentFragment: Fragment
@@ -268,14 +258,20 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
 
     private fun onFilterClick() {
-//        for (fragment in supportFragmentManager.fragments) {
-//            if (fragment is ScheduleFragment) {
-//                fragment.showFilters()
-//            }
-//        }
+        toggleFAB(onClick = true)
+    }
 
-        val cx = filters.width / 2
-        val cy = filters.height / 2
+    private fun toggleFilters() {
+
+
+//        val cx = filters.width / 2
+//        val cy = filters.height / 2
+
+        val position = IntArray(2)
+
+      filter.getLocationOnScreen(position)
+
+        val (cx, cy) = position
 
         val radius = Math.hypot(cx.toDouble(), cy.toDouble())
 
@@ -305,13 +301,55 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 override fun onAnimationEnd(animation: Animator?) {
                     super.onAnimationEnd(animation)
                     filters.visibility = View.INVISIBLE
+                    toggleFAB(onClick = false)
                 }
             })
 
             anim?.start()
         }
+    }
+
+    private fun toggleFAB(onClick: Boolean = false) {
 
 
+        val cx = filter.width / 2
+        val cy = filter.height / 2
+
+        val radius = Math.hypot(cx.toDouble(), cy.toDouble())
+
+        if (filter.visibility == View.INVISIBLE) {
+
+
+            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ViewAnimationUtils.createCircularReveal(filter, cx, cy, 0f, radius.toFloat())
+            } else {
+                null
+            }
+
+            filter.visibility = View.VISIBLE
+
+            anim?.start()
+        } else {
+
+            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ViewAnimationUtils.createCircularReveal(filter, cx, cy, radius.toFloat(), 0f)
+            } else {
+
+                filter.visibility = View.INVISIBLE
+                null
+            }
+
+            anim?.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                    super.onAnimationEnd(animation)
+                    filter.visibility = View.INVISIBLE
+                    if (onClick) toggleFilters()
+
+                }
+            })
+
+            anim?.start()
+        }
     }
 
     override fun onBackPressed() {
