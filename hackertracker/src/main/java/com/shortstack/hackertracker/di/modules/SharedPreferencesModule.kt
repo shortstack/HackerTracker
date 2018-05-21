@@ -1,6 +1,7 @@
-package com.shortstack.hackertracker.di
+package com.shortstack.hackertracker.di.modules
 
 import android.content.Context
+import com.shortstack.hackertracker.di.MyApplicationScope
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import dagger.Module
 import dagger.Provides

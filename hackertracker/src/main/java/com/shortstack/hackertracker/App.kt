@@ -16,6 +16,9 @@ import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.di.*
+import com.shortstack.hackertracker.di.modules.ContextModule
+import com.shortstack.hackertracker.di.modules.DatabaseModule
+import com.shortstack.hackertracker.di.modules.SharedPreferencesModule
 import com.shortstack.hackertracker.event.MainThreadBus
 import com.shortstack.hackertracker.network.task.SyncJob
 import com.shortstack.hackertracker.utils.NotificationHelper

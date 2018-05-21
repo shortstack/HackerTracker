@@ -1,5 +1,8 @@
 package com.shortstack.hackertracker.di
 
+import com.shortstack.hackertracker.di.modules.ContextModule
+import com.shortstack.hackertracker.di.modules.DatabaseModule
+import com.shortstack.hackertracker.di.modules.SharedPreferencesModule
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import dagger.Component
 
