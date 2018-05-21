@@ -68,6 +68,7 @@ class App : Application() {
 
         myComponent = DaggerMyComponent.builder()
                 .sharedPreferencesModule(SharedPreferencesModule())
+                .databaseModule(DatabaseModule())
                 .contextModule(ContextModule(this))
                 .build()
     }

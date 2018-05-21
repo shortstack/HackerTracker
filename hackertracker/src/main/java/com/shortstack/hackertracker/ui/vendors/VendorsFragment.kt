@@ -7,25 +7,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.models.Vendor
-import com.shortstack.hackertracker.utils.SharedPreferencesUtil
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
 
 
 class VendorsFragment : Fragment() {
 
-    //    @Inject
-    lateinit var database: DEFCONDatabaseController
-
     @Inject
-    lateinit var storage: SharedPreferencesUtil
+    lateinit var database: DEFCONDatabaseController
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_recyclerview, container, false)
@@ -33,8 +30,6 @@ class VendorsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        DaggerDatabaseInjector.create().inject(this)
-
         App.application.myComponent.inject(this)
 
         val layout = LinearLayoutManager(context)
@@ -52,21 +47,19 @@ class VendorsFragment : Fragment() {
     private fun getVendors() {
         setProgressIndicator(true)
 
-        Logger.e(storage.filter.toString())
+        database.getVendors()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    setProgressIndicator(false)
+                    showVendors(it.toTypedArray())
+                }, {
+                    if (isActive()) {
+                        setProgressIndicator(false)
+                        showLoadingVendorsError()
+                    }
 
-//        database.getVendors()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({
-//                    setProgressIndicator(false)
-//                    showVendors(it.toTypedArray())
-//                }, {
-//                    if (isActive()) {
-//                        setProgressIndicator(false)
-//                        showLoadingVendorsError()
-//                    }
-//
-//                })
+                })
     }
 
 
