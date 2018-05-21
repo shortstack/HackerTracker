@@ -37,6 +37,7 @@ import com.squareup.otto.Subscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.alert_filter.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 
@@ -69,6 +70,8 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         initViewPager()
 
         filter.setOnClickListener { onFilterClick() }
+
+        close.setOnClickListener { onFilterClick() }
 
         if (savedInstanceState == null) {
             mFragmentIndex = App.application.storage.viewPagerPosition
@@ -269,7 +272,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         val position = IntArray(2)
 
-      filter.getLocationOnScreen(position)
+        filter.getLocationOnScreen(position)
 
         val (cx, cy) = position
 
@@ -312,8 +315,8 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private fun toggleFAB(onClick: Boolean = false) {
 
 
-        val cx = filter.width / 2
-        val cy = filter.height / 2
+        val cx = filter.width / 2 - filters.width / 2
+        val cy = filter.height / 2 - filters.height / 2
 
         val radius = Math.hypot(cx.toDouble(), cy.toDouble())
 
