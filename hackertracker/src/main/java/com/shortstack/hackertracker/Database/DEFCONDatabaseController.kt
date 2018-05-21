@@ -5,19 +5,18 @@ import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteException
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.BuildConfig
-import com.shortstack.hackertracker.Constants
+import com.shortstack.hackertracker.*
 import com.shortstack.hackertracker.event.FavoriteEvent
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.network.SyncResponse
-import com.shortstack.hackertracker.format8601
-import com.shortstack.hackertracker.joinSQLOr
 import io.reactivex.Observable
 import java.util.*
 
-open class DEFCONDatabaseController(context : Context, name : String = Constants.DEFCON_DATABASE_NAME, version : Int = 1) : DatabaseController(context, name, version) {
+
+open class DEFCONDatabaseController : DatabaseController {
+
+    constructor(context: Context, name: String = Constants.DEFCON_DATABASE_NAME, version: Int = 1) : super(context, name, version)
 
     // Files
     private val PATCH_FILE = "patches.json"
@@ -46,7 +45,7 @@ open class DEFCONDatabaseController(context : Context, name : String = Constants
     private val SCHEDULE_PAGE_SIZE = 20
 
 
-    override fun initDatabase(db : SQLiteDatabase, gson : Gson) {
+    override fun initDatabase(db: SQLiteDatabase, gson: Gson) {
         // Setting up databases
         var json = getJSONFromFile(PATCH_FILE)
         val patches = gson.fromJson(json, Patches::class.java)
@@ -60,7 +59,7 @@ open class DEFCONDatabaseController(context : Context, name : String = Constants
         initOtherDatabases(gson, db)
     }
 
-    fun initSchedule(database : SQLiteDatabase = writableDatabase, response : SyncResponse) {
+    fun initSchedule(database: SQLiteDatabase = writableDatabase, response: SyncResponse) {
 
         App.application.storage.lastUpdated = response.updatedDate
         App.application.storage.lastSyncVersion = BuildConfig.VERSION_CODE
@@ -84,7 +83,7 @@ open class DEFCONDatabaseController(context : Context, name : String = Constants
         }
     }
 
-    override fun updateDatabase(gson : Gson, db : SQLiteDatabase) {
+    override fun updateDatabase(gson: Gson, db: SQLiteDatabase) {
         // Schedule
         var json = getJSONFromFile(SCHEDULE_FILE)
         val response = gson.fromJson(json, SyncResponse::class.java)
@@ -93,9 +92,8 @@ open class DEFCONDatabaseController(context : Context, name : String = Constants
         initOtherDatabases(gson, db)
     }
 
-    fun update(database : SQLiteDatabase = writableDatabase, response : FullResponse) : Observable<Int> {
-        return Observable.create {
-            emitter ->
+    fun update(database: SQLiteDatabase = writableDatabase, response: FullResponse): Observable<Int> {
+        return Observable.create { emitter ->
             Logger.d("Updating types with size: " + response.types.types.size)
             initTable(database, TYPES_TABLE_NAME, response.types.types)
             val rows = updateSchedule(database, response.syncResponse)
@@ -105,16 +103,15 @@ open class DEFCONDatabaseController(context : Context, name : String = Constants
         }
     }
 
-    fun update(database : SQLiteDatabase = writableDatabase, response : SyncResponse) : Observable<Int> {
-        return Observable.create {
-            emitter ->
+    fun update(database: SQLiteDatabase = writableDatabase, response: SyncResponse): Observable<Int> {
+        return Observable.create { emitter ->
             val rows = updateSchedule(database, response)
             emitter.onNext(rows)
             emitter.onComplete()
         }
     }
 
-    fun updateSchedule(database : SQLiteDatabase = writableDatabase, response : SyncResponse) : Int {
+    fun updateSchedule(database: SQLiteDatabase = writableDatabase, response: SyncResponse): Int {
         App.application.storage.lastUpdated = response.updatedDate
         App.application.storage.lastSyncVersion = BuildConfig.VERSION_CODE
 
@@ -130,7 +127,7 @@ open class DEFCONDatabaseController(context : Context, name : String = Constants
         return count
     }
 
-    override fun initOtherDatabases(gson : Gson, db : SQLiteDatabase) {
+    override fun initOtherDatabases(gson: Gson, db: SQLiteDatabase) {
         // Vendors
         var json = getJSONFromFile(VENDORS_FILE)
         val vendors = gson.fromJson(json, Vendors::class.java)
@@ -148,12 +145,12 @@ open class DEFCONDatabaseController(context : Context, name : String = Constants
 
     private val recentLimit = 20
 
-    fun getRecentUpdates() : List<Item> {
+    fun getRecentUpdates(): List<Item> {
         return query(SCHEDULE_TABLE_NAME, Item::class.java, orderBy = "updated_at DESC", limit = recentLimit)
     }
 
 
-    fun updateScheduleItem(db : SQLiteDatabase, item : Item) : Boolean {
+    fun updateScheduleItem(db: SQLiteDatabase, item: Item): Boolean {
         val filter = "$KEY_INDEX=?"
         val args = arrayOf(item.index.toString())
 
@@ -197,7 +194,7 @@ open class DEFCONDatabaseController(context : Context, name : String = Constants
         return true
     }
 
-    fun findItem(id : Int) : Item? {
+    fun findItem(id: Int): Item? {
         val list = query(SCHEDULE_TABLE_NAME, Item::class.java, selection = "$KEY_INDEX = ?", selectionArgs = arrayOf(id.toString()).toMutableList())
         if (list.isEmpty()) {
             return null
@@ -205,7 +202,7 @@ open class DEFCONDatabaseController(context : Context, name : String = Constants
         return list.first()
     }
 
-    fun toggleBookmark(db : SQLiteDatabase = writableDatabase, item : Item) {
+    fun toggleBookmark(db: SQLiteDatabase = writableDatabase, item: Item) {
         val value = if (item.isBookmarked()) Constants.UNBOOKMARKED else Constants.BOOKMARKED
         setScheduleBookmarked(db, value, item.index)
 
@@ -217,52 +214,49 @@ open class DEFCONDatabaseController(context : Context, name : String = Constants
         }
     }
 
-    private fun setScheduleBookmarked(db : SQLiteDatabase = writableDatabase, state : Int, id : Int) {
+    private fun setScheduleBookmarked(db: SQLiteDatabase = writableDatabase, state: Int, id: Int) {
         db.execSQL("UPDATE $SCHEDULE_TABLE_NAME SET $KEY_BOOKMARKED=$state WHERE $KEY_INDEX=$id")
     }
 
 
-    fun getVendors() : Observable<List<Vendor>> {
-        return Observable.create {
-            emitter ->
+    fun getVendors(): Observable<List<Vendor>> {
+        return Observable.create { emitter ->
             emitter.onNext(vendors)
             emitter.onComplete()
         }
     }
 
 
-    fun getRecent() : Observable<List<Item>> {
-        return Observable.create {
-            emitter ->
+    fun getRecent(): Observable<List<Item>> {
+        return Observable.create { emitter ->
             emitter.onNext(getRecentUpdates())
             emitter.onComplete()
         }
     }
 
 
-    fun getItems(vararg type : String, page : Int = 0) : Observable<List<Item>> {
-        return Observable.create {
-            emitter ->
+    fun getItems(vararg type: String, page: Int = 0): Observable<List<Item>> {
+        return Observable.create { emitter ->
             emitter.onNext(getItemByDate(*type, page = page))
             emitter.onComplete()
         }
     }
 
 
-    fun findByText(text : String) : List<Item> {
+    fun findByText(text: String): List<Item> {
         val columns = arrayOf("title", "description", "who").toMutableList()
         return query(SCHEDULE_TABLE_NAME, Item::class.java, searchText = text, searchColumns = columns, orderBy = KEY_START_DATE)
     }
 
 
     @Throws(SQLiteException::class)
-    fun getItemByDate(vararg type : String, page : Int = 0) : List<Item> {
+    fun getItemByDate(vararg type: String, page: Int = 0): List<Item> {
 
 
         val args = ArrayList(Arrays.asList(*type))
 
         // Types
-        var selection : String = ""
+        var selection: String = ""
 
         if (type.isNotEmpty()) {
             val array = Array(type.size, { "$KEY_TYPE = ?" })
@@ -288,7 +282,7 @@ open class DEFCONDatabaseController(context : Context, name : String = Constants
                 orderBy = KEY_START_DATE, limit = SCHEDULE_PAGE_SIZE, page = page)
     }
 
-    fun getSpeaker(speaker : Speaker) : Speaker {
+    fun getSpeaker(speaker: Speaker): Speaker {
         val query = query(SPEAKERS_TABLE_NAME, Speaker::class.java, selection = "$KEY_INDEX_SPEAKER = ?", selectionArgs = arrayOf(speaker.id.toString()).toMutableList())
         if (query.size == 0) {
             Logger.e("Could not find speaker by id. $speaker")

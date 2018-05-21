@@ -15,6 +15,7 @@ import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DEFCONDatabaseController
+import com.shortstack.hackertracker.di.*
 import com.shortstack.hackertracker.event.MainThreadBus
 import com.shortstack.hackertracker.network.task.SyncJob
 import com.shortstack.hackertracker.utils.NotificationHelper
@@ -27,13 +28,15 @@ import java.util.*
 
 class App : Application() {
 
+    lateinit var myComponent: MyComponent
+
     lateinit var appContext: Context
         private set
 
     // Eventbus
     val bus: Bus by lazy { MainThreadBus() }
     // Storage
-    val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil() }
+    val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil(appContext) }
     // Database
     lateinit var databaseController: DEFCONDatabaseController
     // Notifications
@@ -62,16 +65,21 @@ class App : Application() {
             storage.setSyncScheduled()
             scheduleSync()
         }
+
+        myComponent = DaggerMyComponent.builder()
+                .sharedPreferencesModule(SharedPreferencesModule())
+                .contextModule(ContextModule(this))
+                .build()
     }
 
     fun updateDatabaseController() {
         val name = if (storage.databaseSelected == 0) Constants.DEFCON_DATABASE_NAME else if (storage.databaseSelected == 1) Constants.TOORCON_DATABASE_NAME else Constants.SHMOOCON_DATABASE_NAME
-        setTheme( if (storage.databaseSelected == 0) R.style.AppTheme else if (storage.databaseSelected == 1) R.style.AppTheme_Toorcon else R.style.AppTheme_Shmoocon)
+        setTheme(if (storage.databaseSelected == 0) R.style.AppTheme else if (storage.databaseSelected == 1) R.style.AppTheme_Toorcon else R.style.AppTheme_Shmoocon)
 
         Logger.d("Creating database controller with database: $name")
         databaseController = DEFCONDatabaseController(appContext, name = name)
 
-        if(databaseController.exists()) {
+        if (databaseController.exists()) {
             databaseController.checkDatabase()
         }
     }
@@ -157,12 +165,4 @@ class App : Application() {
 
 
     }
-
-
-    object Storage {
-        fun getStorage(): SharedPreferencesUtil {
-            return SharedPreferencesUtil()
-        }
-    }
-
 }

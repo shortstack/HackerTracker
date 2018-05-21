@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.utils
 
+import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.shortstack.hackertracker.App
@@ -7,10 +8,12 @@ import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.models.Filter
 import com.shortstack.hackertracker.R
 import java.util.*
+import javax.inject.Inject
 
-class SharedPreferencesUtil {
 
-    enum class Key(private val tag : String) {
+class SharedPreferencesUtil @Inject constructor(context: Context) {
+
+    enum class Key(private val tag: String) {
 
         USER_FILTER("user_filter"),
         USER_ALLOW_PUSH("user_allow_push_notifications"),
@@ -29,24 +32,17 @@ class SharedPreferencesUtil {
 
         SCHEDULE_DAY_VIEW("app_day_view");
 
-        override fun toString() : String {
+        override fun toString(): String {
             return tag
         }
     }
 
-    private val mPreferences : SharedPreferences
+    private val mPreferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
 
-    init {
-        mPreferences = PreferenceManager.getDefaultSharedPreferences(App.application.appContext)
-
-        // Reset to only show the current day.
-        //scheduleDay = DEFAULT_DAYS_TO_LOAD
-    }
-
-    private val editor : SharedPreferences.Editor
+    private val editor: SharedPreferences.Editor
         get() = mPreferences.edit()
 
-    var lastUpdated : String
+    var lastUpdated: String
         get() = mPreferences.getString(Key.APP_LAST_UPDATED.toString(), null)
         set(date) {
             val editor = editor
@@ -54,19 +50,19 @@ class SharedPreferencesUtil {
             editor.apply()
         }
 
-    fun allowPushNotifications(show : Boolean) {
+    fun allowPushNotifications(show: Boolean) {
         val editor = editor
         editor.putBoolean(Key.USER_ALLOW_PUSH.toString(), show)
         editor.apply()
     }
 
-    var lastSyncVersion : Int
+    var lastSyncVersion: Int
         get() = mPreferences.getInt(Key.APP_LAST_SYNC_VERSION.toString(), 0)
         set(version) {
             editor.putInt(Key.APP_LAST_SYNC_VERSION.toString(), version).apply()
         }
 
-    var scheduleDay : Int
+    var scheduleDay: Int
         get() = mPreferences.getInt(Key.SCHEDULE_DAY_VIEW.toString(), 0)
         set(pos) {
             val editor = editor
@@ -74,62 +70,62 @@ class SharedPreferencesUtil {
             editor.apply()
         }
 
-    fun allowPushNotifications() : Boolean {
+    fun allowPushNotifications(): Boolean {
         return mPreferences.getBoolean(Key.USER_ALLOW_PUSH.toString(), true)
     }
 
-    fun shouldShowMilitaryTime() : Boolean {
+    fun shouldShowMilitaryTime(): Boolean {
         return mPreferences.getBoolean(Key.USER_MILITARY_TIME.toString(), false)
     }
 
-    fun showExpiredEvents() : Boolean {
+    fun showExpiredEvents(): Boolean {
         return mPreferences.getBoolean(Key.USER_EXPIRED_EVENTS.toString(), false)
     }
 
-    fun showActiveEventsOnly() : Boolean {
+    fun showActiveEventsOnly(): Boolean {
         return !showExpiredEvents()
     }
 
-    fun saveFilter(filter : Filter) {
+    fun saveFilter(filter: Filter) {
         val editor = editor
         editor.putStringSet(Key.USER_FILTER.toString(), filter.typesSet)
         editor.apply()
     }
 
-    var filter : Filter
+    var filter: Filter
         get() = Filter(mPreferences.getStringSet(Key.USER_FILTER.toString(), HashSet<String>())!!)
         set(filter) = editor.putStringSet(Key.USER_FILTER.toString(), filter.typesSet).apply()
 
-    var lastRefresh : Long
+    var lastRefresh: Long
         get() = mPreferences.getLong(Key.APP_LAST_REFRESH.toString(), 0)
         set(time) = editor.putLong(Key.APP_LAST_REFRESH.toString(), time).apply()
 
-    fun shouldRefresh(time : Long) : Boolean {
+    fun shouldRefresh(time: Long): Boolean {
         return time - mPreferences.getLong(Key.APP_LAST_REFRESH.toString(), 0) > Constants.TIMER_INTERVAL
     }
 
-    var viewPagerPosition : Int
+    var viewPagerPosition: Int
         get() = mPreferences.getInt(Key.APP_VIEW_PAGER_POSITION.toString(), 0)
         set(index) {
             editor.putInt(Key.APP_VIEW_PAGER_POSITION.toString(), index).commit()
         }
 
-    val isTrackingAnalytics : Boolean
+    val isTrackingAnalytics: Boolean
         get() = mPreferences.getBoolean(Key.USER_ANALYTICS.toString(), true)
 
-    val isSyncScheduled : Boolean
+    val isSyncScheduled: Boolean
         get() = mPreferences.getBoolean(Key.APP_SYNC_SCHEDULED.toString(), false)
 
     fun setSyncScheduled() {
         editor.putBoolean(Key.APP_SYNC_SCHEDULED.toString(), true).apply()
     }
 
-    var databaseSelected : Int
+    var databaseSelected: Int
         get() = mPreferences.getInt(Key.APP_DATABASE_SELECTED.toString(), 0)
         set(database) = editor.putInt(Key.APP_DATABASE_SELECTED.toString(), database).apply()
 
-    val databaseTheme : Int
-        get() = if( databaseSelected == 0 ) R.style.AppTheme else if ( databaseSelected == 1) R.style.AppTheme_Toorcon else R.style.AppTheme_Shmoocon
+    val databaseTheme: Int
+        get() = if (databaseSelected == 0) R.style.AppTheme else if (databaseSelected == 1) R.style.AppTheme_Toorcon else R.style.AppTheme_Shmoocon
 
     companion object {
 
