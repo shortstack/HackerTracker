@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.ui.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -10,32 +11,37 @@ import android.widget.Toast
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.pedrogomez.renderers.RendererContent
-import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.ui.information.InformationFragment
-import com.shortstack.hackertracker.ui.home.renderers.ActivityNavRenderer
-import com.shortstack.hackertracker.ui.home.renderers.ChangeConRenderer
+import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.models.Navigation
+import com.shortstack.hackertracker.ui.home.renderers.ActivityNavRenderer
+import com.shortstack.hackertracker.ui.home.renderers.ChangeConRenderer
 import com.shortstack.hackertracker.ui.home.renderers.HomeHeaderRenderer
-import com.shortstack.hackertracker.ui.schedule.renderers.ItemRenderer
 import com.shortstack.hackertracker.ui.home.renderers.SubHeaderRenderer
+import com.shortstack.hackertracker.ui.information.InformationFragment
+import com.shortstack.hackertracker.ui.schedule.renderers.ItemRenderer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import java.text.SimpleDateFormat
-import java.util.*
+import javax.inject.Inject
 
 class HomeFragment : Fragment() {
 
-    private lateinit var adapter : RendererAdapter<Any>
+    private lateinit var adapter: RendererAdapter<Any>
 
-    override fun onCreateView(inflater : LayoutInflater?, container : ViewGroup?, savedInstanceState : Bundle?) : View? {
-        return inflater!!.inflate(R.layout.fragment_recyclerview, container, false)
+    @Inject
+    lateinit var dataabase: DEFCONDatabaseController
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_recyclerview, container, false)
     }
 
-    override fun onViewCreated(view : View?, savedInstanceState : Bundle?) {
+    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        App.application.myComponent.inject(this)
 
         val rendererBuilder = RendererBuilder<Any>()
                 .bind(TYPE_HEADER, HomeHeaderRenderer())
@@ -57,18 +63,15 @@ class HomeFragment : Fragment() {
     private fun fetchRecentUpdates() {
         setProgressIndicator(true)
 
-        App.application.databaseController.getRecent()
+        dataabase.getRecent()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     setProgressIndicator(false)
 
-                    // TODO: This could be a lot clearer.
-                    addAdapterItem(getHeader())
-                    addAdapterItem(getInformationNav())
-                    addAdapterItem(getChangeConCard())
-
-                    showLastSyncTimestamp(getLastSyncTimestamp())
+                    adapter.addAndNotify(getHeader())
+                    adapter.addAndNotify(getInformationNav())
+                    adapter.addAndNotify(getChangeConCard())
 
                     showRecentUpdates(it.toTypedArray())
                 }, {
@@ -80,23 +83,18 @@ class HomeFragment : Fragment() {
     }
 
 
-    private fun setProgressIndicator(active : Boolean) {
+    private fun setProgressIndicator(active: Boolean) {
         loading_progress.visibility = if (active) View.VISIBLE else View.GONE
     }
 
-    private fun showRecentUpdates(items : Array<Item>) {
-        var recentDate = ""
+    @SuppressLint("SimpleDateFormat")
+    private fun showRecentUpdates(items: Array<Item>) {
         val size = adapter.collection.size
 
-
-        for (item in items) {
-            if (item.updatedAt != recentDate) {
-                recentDate = item.updatedAt
-                val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(item.updatedAt)
-                adapter.add("Updated " + SimpleDateFormat("MMMM dd h:mm aa").format(date))
-            }
-
-            adapter.add(item)
+        items.groupBy { it.updatedAt }.forEach {
+            val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(it.key)
+            adapter.add("Updated " + SimpleDateFormat("MMMM dd h:mm aa").format(date))
+            adapter.addAll(it.value)
         }
 
         adapter.notifyItemRangeInserted(size, adapter.collection.size - size)
@@ -106,50 +104,20 @@ class HomeFragment : Fragment() {
         Toast.makeText(context, "Could not fetch recent updates.", Toast.LENGTH_SHORT).show()
     }
 
-    private fun showLastSyncTimestamp(timestamp : String) {
-        adapter.add(timestamp)
-    }
+    private fun getHeader() = RendererContent<Void>(null, TYPE_HEADER)
 
-    private fun getHeader() : Any {
-        return RendererContent<Void>(null, TYPE_HEADER)
-    }
-
-    private fun getChangeConCard() : Any {
-        return RendererContent<Void>(null, TYPE_CHANGE_CON)
-    }
+    private fun getChangeConCard() = RendererContent<Void>(null, TYPE_CHANGE_CON)
 
     private fun getInformationNav() = Navigation(context.getString(R.string.nav_help_title), context.getString(R.string.nav_help_body), InformationFragment::class.java)
 
-    private fun getLastSyncTimestamp() : String {
-        val storage = App.application.storage
-        val lastDate : String
-
-        val cal = Calendar.getInstance()
-        cal.time = Date(storage.lastRefresh)
-
-        val refresh = storage.lastRefresh
-        if (refresh == 0L) {
-            val date = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(storage.lastUpdated)
-            lastDate = "Last synced " + App.getRelativeDateStamp(date)
-        } else {
-            lastDate = "Last synced " + App.getRelativeDateStamp(Date(refresh))
-        }
-
-        return "Last updated\n" + lastDate.toLowerCase()
-    }
-
-    private fun addAdapterItem(item : Any) {
-        adapter.addAndNotify(item)
-    }
 
     companion object {
 
-        val TYPE_HEADER = 0
-        val TYPE_CHANGE_CON = 1
+        const val TYPE_HEADER = 0
+        const val TYPE_CHANGE_CON = 1
 
-        fun newInstance() : HomeFragment {
+        fun newInstance(): HomeFragment {
             return HomeFragment()
         }
     }
-
 }

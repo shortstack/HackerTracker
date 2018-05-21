@@ -3,6 +3,8 @@ package com.shortstack.hackertracker.di
 import com.shortstack.hackertracker.di.modules.ContextModule
 import com.shortstack.hackertracker.di.modules.DatabaseModule
 import com.shortstack.hackertracker.di.modules.SharedPreferencesModule
+import com.shortstack.hackertracker.ui.activities.MainActivity
+import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import dagger.Component
 
@@ -13,5 +15,10 @@ import dagger.Component
 @MyApplicationScope
 interface MyComponent {
 
+    fun inject(mainActivity: MainActivity)
+
     fun inject(vendorsFragment: VendorsFragment)
+
+    fun inject(homeFragment: HomeFragment)
+
 }
