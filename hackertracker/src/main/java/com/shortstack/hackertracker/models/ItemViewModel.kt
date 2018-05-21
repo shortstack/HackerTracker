@@ -30,7 +30,6 @@ class ItemViewModel(val item: Event) {
         }
 
 
-
     fun getTimeStamp(context: Context): String {
         // No start time, return TBA.
         if (item.begin == null)
@@ -54,22 +53,19 @@ class ItemViewModel(val item: Event) {
 
     val progress: Float
         get() {
-//            if (!item.hasBegin())
-            return 0f
+            val beginDateObject = item.begin
+            val endDateObject = item.end
+            val currentDate = App.getCurrentDate()
 
-//            val beginDateObject = item.beginDateObject
-//            val endDateObject = item.endDateObject
-//            val currentDate = App.getCurrentDate()
-//
-//            val length = ((endDateObject.time - beginDateObject.time) / 1000 / 60).toFloat()
-//            val p = ((endDateObject.time - currentDate.time) / 1000 / 60).toFloat()
-//
-//            if (p == 0f)
-//                return 1f
-//
-//            val l = p / length
-//
-//            return Math.min(1.0f, 1 - l)
+            val length = ((endDateObject.time - beginDateObject.time) / 1000 / 60).toFloat()
+            val p = ((endDateObject.time - currentDate.time) / 1000 / 60).toFloat()
+
+            if (p == 0f)
+                return 1f
+
+            val l = p / length
+
+            return Math.min(1.0f, 1 - l)
         }
 
     fun getFullTimeStamp(context: Context): String {

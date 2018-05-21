@@ -58,8 +58,6 @@ class App : Application() {
         initLogger()
         initFeedback()
 
-        updateDatabaseController()
-
         database = DatabaseManager(this)
         updateTheme(database.getCurrentCon())
     }
@@ -73,35 +71,6 @@ class App : Application() {
         }
         setTheme(theme)
     }
-
-    fun updateDatabaseController() {
-        val name = if (storage.databaseSelected == 0) Constants.DEFCON_DATABASE_NAME
-        else if (storage.databaseSelected == 1)
-            Constants.TOORCON_DATABASE_NAME
-        else if (storage.databaseSelected == 2)
-            Constants.SHMOOCON_DATABASE_NAME
-        else if (storage.databaseSelected == 3)
-            Constants.HACKWEST_DATABASE_NAME
-        else if (storage.databaseSelected == 4)
-            Constants.LAYERONE_DATABASE_NAME
-        else
-            Constants.BSIDESORL_DATABASE_NAME
-
-        setTheme(if (storage.databaseSelected == 0)
-            R.style.AppTheme
-        else if (storage.databaseSelected == 1)
-            R.style.AppTheme_Toorcon
-        else if (storage.databaseSelected == 2)
-            R.style.AppTheme_Shmoocon
-        else if (storage.databaseSelected == 3)
-            R.style.AppTheme_Hackwest
-        else if (storage.databaseSelected == 4)
-            R.style.AppTheme_LayerOne
-        else
-            R.style.AppTheme_BsidesOrl)
-
-    }
-
 
     fun scheduleSync() {
 

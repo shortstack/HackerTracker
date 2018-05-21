@@ -80,6 +80,6 @@ class DatabaseManager(context: Context) {
     }
 
     fun getEventTypes() : Flowable<List<DatabaseEvent>> {
-        return db.eventDao().getEventTypes(db.currentConference!!.directory)
+        return db.eventDao().getEventTypes(db.currentConference!!.directory, App.getCurrentDate())
     }
 }

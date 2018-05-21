@@ -18,7 +18,7 @@ class TimeHelper(mContext: Context) {
             if (BuildConfig.DEBUG)
                 date.time = Constants.DEBUG_FORCE_TIME_DATE
 
-            return date;
+            return date
         }
 
     val currentCalendar: Calendar
