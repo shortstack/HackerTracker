@@ -16,6 +16,7 @@ import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.di.*
+import com.shortstack.hackertracker.di.modules.AnalyticsModule
 import com.shortstack.hackertracker.di.modules.ContextModule
 import com.shortstack.hackertracker.di.modules.DatabaseModule
 import com.shortstack.hackertracker.di.modules.SharedPreferencesModule
@@ -72,6 +73,7 @@ class App : Application() {
         myComponent = DaggerMyComponent.builder()
                 .sharedPreferencesModule(SharedPreferencesModule())
                 .databaseModule(DatabaseModule())
+                .analyticsModule(AnalyticsModule())
                 .contextModule(ContextModule(this))
                 .build()
     }
