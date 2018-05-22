@@ -37,9 +37,6 @@ class App : Application() {
     // Notifications
     @Deprecated("use DI")
     val notificationHelper: NotificationHelper by lazy { NotificationHelper(applicationContext) }
-    // Analytics
-    @Deprecated("use DI")
-    val analyticsController: AnalyticsController by lazy { AnalyticsController() }
     // Time
     @Deprecated("use DI")
     val timeHelper: TimeHelper by lazy { TimeHelper(applicationContext) }

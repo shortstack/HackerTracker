@@ -16,6 +16,7 @@ import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.event.BusProvider
 import com.shortstack.hackertracker.event.RefreshTimerEvent
@@ -28,6 +29,7 @@ import com.shortstack.hackertracker.ui.schedule.list.ListViewsInterface
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleInfiniteScrollListener
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleItemAdapter
 import com.shortstack.hackertracker.utils.MaterialAlert
+import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.view.FilterView
 import com.squareup.otto.Subscribe
@@ -49,6 +51,12 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
     @Inject
     lateinit var storage: SharedPreferencesUtil
+
+    @Inject
+    lateinit var analytics: AnalyticsController
+
+    @Inject
+    lateinit var notifications: NotificationHelper
 
 
     var mHandler: Handler = object : Handler() {
@@ -171,7 +179,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
                 .setBasicNegativeButton()
                 .setPositiveButton(R.string.save, DialogInterface.OnClickListener { _, _ ->
                     val filter = view.save()
-                    App.application.analyticsController.tagFiltersEvent(filter)
+                    analytics.tagFiltersEvent(filter)
                     refreshContents()
                 }).show()
     }
@@ -203,15 +211,14 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     private fun onRefreshUpdate(it: FullResponse) {
         database.update(response = it).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    rowsUpdated ->
+                .subscribe { rowsUpdated ->
                     swipe_refresh?.isRefreshing = false
 
                     if (rowsUpdated == 0)
                         Toast.makeText(context, context.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
                     else if (rowsUpdated > 0) {
                         BusProvider.bus.post(SyncResponseEvent(rowsUpdated))
-                        App.application.notificationHelper.scheduleUpdateNotification(rowsUpdated)
+                        notifications.scheduleUpdateNotification(rowsUpdated)
                         refreshContents()
                     }
                 }

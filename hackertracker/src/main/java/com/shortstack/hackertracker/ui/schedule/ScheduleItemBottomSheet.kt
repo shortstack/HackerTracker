@@ -5,7 +5,6 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.TabLayout
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
@@ -15,8 +14,9 @@ import android.widget.ImageView
 import android.widget.TextView
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.ui.item.ItemActivity
 import com.shortstack.hackertracker.analytics.AnalyticsController
+import com.shortstack.hackertracker.database.DEFCONDatabaseController
+import com.shortstack.hackertracker.database.DatabaseController
 import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.models.ItemViewModel
 import com.shortstack.hackertracker.ui.information.InformationFragment
@@ -25,17 +25,27 @@ import com.shortstack.hackertracker.view.ItemView
 import com.shortstack.hackertracker.view.SpeakerView
 import kotlinx.android.synthetic.main.bottom_sheet_schedule_item.view.*
 import kotlinx.android.synthetic.main.empty_text.view.*
+import javax.inject.Inject
 
 class ScheduleItemBottomSheet : android.support.design.widget.BottomSheetDialogFragment() {
 
+    @Inject
+    lateinit var analytics: AnalyticsController
+    
+    @Inject
+    lateinit var database : DEFCONDatabaseController
+    
     override fun setupDialog(dialog : Dialog, style : Int) {
         super.setupDialog(dialog, style)
+
+        App.application.myComponent.inject(this)
+
         val view = View.inflate(context, R.layout.bottom_sheet_schedule_item, null)
         dialog.setContentView(view)
 
         val obj = ItemViewModel(content)
 
-        App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_VIEW, content)
+        analytics.tagItemEvent(AnalyticsController.Analytics.EVENT_VIEW, content)
 
         view.item!!.setItem(obj.item)
 
@@ -51,27 +61,12 @@ class ScheduleItemBottomSheet : android.support.design.widget.BottomSheetDialogF
         view.exploit.visibility = obj.exploitVisibility
         view.demo.visibility = obj.demoVisibility
 
-
-//        initViewPager(obj, view)
-
     }
 
-    private fun initViewPager(obj : ItemViewModel, view : View) {
-        val color = resources.getIntArray(R.array.colors) [obj.categoryColorPosition]
-        view.tab_layout.setBackgroundColor(color)
-
-        val adapter = ItemActivity.PagerAdapter(activity.supportFragmentManager, content)
-        view.pager.adapter = adapter
-
-
-        view.tab_layout.addTab(view.tab_layout.newTab().setText("Description"))
-        view.tab_layout.addTab(view.tab_layout.newTab().setText("Author"))
-        view.tab_layout.tabGravity = TabLayout.GRAVITY_FILL
-    }
 
     private fun displaySpeakers(obj : ItemViewModel, speakers : LinearLayoutCompat) {
         obj.speakers.iterator().forEach {
-            speakers.addView(SpeakerView(context, App.application.databaseController.getSpeaker(it)))
+            speakers.addView(SpeakerView(context, database.getSpeaker(it)))
         }
     }
 
@@ -96,21 +91,21 @@ class ScheduleItemBottomSheet : android.support.design.widget.BottomSheetDialogF
 
     fun onStarClick(item : ItemView, star : ImageView) {
         if (content.isBookmarked()) {
-            App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_UNBOOKMARK, content)
+            analytics.tagItemEvent(AnalyticsController.Analytics.EVENT_UNBOOKMARK, content)
         } else {
-            App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_BOOKMARK, content)
+            analytics.tagItemEvent(AnalyticsController.Analytics.EVENT_BOOKMARK, content)
         }
         item.onBookmarkClick()
         updateStarIcon(star)
     }
 
     fun onShareClick(item : ItemView) {
-        App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_SHARE, content)
+        analytics.tagItemEvent(AnalyticsController.Analytics.EVENT_SHARE, content)
         item.onShareClick()
     }
 
     fun onLinkClick() {
-        App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_LINK, content)
+        analytics.tagItemEvent(AnalyticsController.Analytics.EVENT_LINK, content)
 
         MaterialAlert.create(context)
                 .setTitle(R.string.link_warning)

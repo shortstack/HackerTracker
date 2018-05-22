@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DEFCONDatabaseController
@@ -26,6 +27,8 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_activity)
+
+        App.application.myComponent.inject(this)
 
         val background = when (database.databaseName) {
             Constants.TOORCON_DATABASE_NAME -> R.drawable.tc_19_wallpaper

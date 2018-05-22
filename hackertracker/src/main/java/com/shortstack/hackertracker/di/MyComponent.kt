@@ -1,13 +1,17 @@
 package com.shortstack.hackertracker.di
 
+import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.di.modules.*
 import com.shortstack.hackertracker.network.task.ReminderJob
 import com.shortstack.hackertracker.network.task.SyncJob
+import com.shortstack.hackertracker.ui.SettingsFragment
 import com.shortstack.hackertracker.ui.activities.MainActivity
+import com.shortstack.hackertracker.ui.activities.SplashActivity
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
+import com.shortstack.hackertracker.ui.schedule.ScheduleItemBottomSheet
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleItemAdapter
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import dagger.Component
@@ -38,5 +42,13 @@ interface MyComponent {
     fun inject(syncJob: SyncJob)
 
     fun inject(scheduleFragment: ScheduleFragment)
+
+    fun inject(scheduleItemBottomSheet: ScheduleItemBottomSheet)
+
+    fun inject(settingsFragment: SettingsFragment)
+
+    fun inject(defconDatabaseController: DEFCONDatabaseController)
+
+    fun inject(splashActivity: SplashActivity)
 
 }

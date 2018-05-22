@@ -11,12 +11,18 @@ import com.shortstack.hackertracker.event.FavoriteEvent
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.network.SyncResponse
+import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import io.reactivex.Observable
 import java.util.*
+import javax.inject.Inject
 
 
 open class DEFCONDatabaseController : DatabaseController {
 
+    @Inject
+    lateinit var storage: SharedPreferencesUtil
+
+    @Inject
     constructor(context: Context, name: String = Constants.DEFCON_DATABASE_NAME, version: Int = 1) : super(context, name, version)
 
     // Files
@@ -44,6 +50,10 @@ open class DEFCONDatabaseController : DatabaseController {
 
 
     private val SCHEDULE_PAGE_SIZE = 20
+
+    init {
+//        App.application.myComponent.inject(this)
+    }
 
 
     override fun initDatabase(db: SQLiteDatabase, gson: Gson) {

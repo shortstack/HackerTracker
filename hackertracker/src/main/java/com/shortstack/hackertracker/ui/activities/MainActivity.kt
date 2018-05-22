@@ -53,6 +53,9 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     @Inject
     lateinit var database: DEFCONDatabaseController
 
+    @Inject
+    lateinit var analytics : AnalyticsController
+
     override fun onCreate(savedInstanceState: Bundle?) {
         App.application.myComponent.inject(this)
         
@@ -135,15 +138,13 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         replaceFragment(currentFragment, fragmentTitle, fragmentTag, R.id.frame)
 
-        val app = App.application
-
-        app.storage.viewPagerPosition = mFragmentIndex
-        app.analyticsController.tagCustomEvent(fragmentEvent)
+        storage.viewPagerPosition = mFragmentIndex
+        analytics.tagCustomEvent(fragmentEvent)
 
         updateFABVisibility()
 
         //Closing drawer on item click
-        drawer_layout!!.closeDrawers()
+        drawer_layout.closeDrawers()
     }
 
     private val fragmentEvent: AnalyticsController.Analytics
