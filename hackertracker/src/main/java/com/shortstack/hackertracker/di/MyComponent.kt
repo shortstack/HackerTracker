@@ -7,6 +7,7 @@ import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
+import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleItemAdapter
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import dagger.Component
@@ -35,5 +36,7 @@ interface MyComponent {
     fun inject(reminderJob: ReminderJob)
 
     fun inject(syncJob: SyncJob)
+
+    fun inject(scheduleFragment: ScheduleFragment)
 
 }
