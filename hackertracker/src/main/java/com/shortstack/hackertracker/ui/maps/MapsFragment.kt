@@ -41,10 +41,8 @@ class MapsFragment : Fragment() {
 
         if (database.databaseName == Constants.DEFCON_DATABASE_NAME) {
             tab_layout.apply {
-                setupWithViewPager(pager)
-                addTab(tab_layout.newTab().setText(getString(R.string.map_day_title)))
-                addTab(tab_layout.newTab().setText(getString(R.string.map_night_title)))
                 tabGravity = TabLayout.GRAVITY_FILL
+                setupWithViewPager(pager)
             }
         } else {
             tab_layout.visibility = View.GONE
@@ -99,6 +97,13 @@ class MapsFragment : Fragment() {
             return maps[position]
         }
 
+        override fun getPageTitle(position: Int): CharSequence {
+            return if (position == 0) {
+                "DAY"
+            } else {
+                "NIGHT"
+            }
+        }
 
         override fun getCount(): Int {
             return maps.size
