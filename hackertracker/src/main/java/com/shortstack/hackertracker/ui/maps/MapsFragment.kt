@@ -6,12 +6,12 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.view.*
-import com.shortstack.hackertracker.utils.MaterialAlert
-import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DEFCONDatabaseController
+import com.shortstack.hackertracker.utils.MaterialAlert
 import com.shortstack.hackertracker.view.UberView
 import kotlinx.android.synthetic.main.fragment_maps.*
 import javax.inject.Inject
@@ -83,15 +83,19 @@ class MapsFragment : Fragment() {
         init {
             App.application.myComponent.inject(this)
 
-            maps = when {
-                database.databaseName == Constants.DEFCON_DATABASE_NAME ->
-                    arrayOf(MapFragment.newInstance(MAP_DAY),
-                            MapFragment.newInstance(MAP_NIGHT))
-                database.databaseName == Constants.TOORCON_DATABASE_NAME ->
-                    arrayOf(MapFragment.newInstance(TOORCON))
-                else -> arrayOf(MapFragment.newInstance(SHMOOCON))
+            val name = database.databaseName
+
+            maps = when (name) {
+                Constants.SHMOOCON_DATABASE_NAME -> arrayOf(MapFragment.newInstance(SHMOOCON))
+                Constants.TOORCON_DATABASE_NAME -> arrayOf(MapFragment.newInstance(TOORCON))
+                Constants.HACKWEST_DATABASE_NAME -> arrayOf(MapFragment.newInstance(HACKWEST))
+                Constants.LAYERONE_DATABASE_NAME -> arrayOf(MapFragment.newInstance(LAYERONE))
+                Constants.BSIDESORL_DATABASE_NAME -> arrayOf(MapFragment.newInstance(BSIDESORL))
+                else -> arrayOf(MapFragment.newInstance(MAP_DAY),
+                        MapFragment.newInstance(MAP_NIGHT))
             }
         }
+
 
         override fun getItem(position: Int): Fragment {
             return maps[position]
@@ -117,10 +121,13 @@ class MapsFragment : Fragment() {
 
     companion object {
 
-        const val MAP_DAY = "dc-25-floorplan-v8-final-public.pdf"
-        const val MAP_NIGHT = "dc-25-floorplan-v7.6-night.pdf"
-        const val TOORCON = "toorcon-19-map.pdf"
-        const val SHMOOCON = "shmoocon-2018-map.pdf"
+        private const val MAP_DAY = "dc-25-floorplan-v8-final-public.pdf"
+        private const val MAP_NIGHT = "dc-25-floorplan-v7.6-night.pdf"
+        private const val TOORCON = "toorcon-19-map.pdf"
+        private const val SHMOOCON = "shmoocon-2018-map.pdf"
+        private const val HACKWEST = "hackwest-map-small.pdf"
+        private const val LAYERONE = "layerone_map.pdf"
+        private const val BSIDESORL = "bsidesorl_map.pdf"
 
         fun newInstance(): Fragment {
             return MapsFragment()

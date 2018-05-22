@@ -11,6 +11,7 @@ import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.R.id.loading_progress
 import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.models.FAQ
 import com.shortstack.hackertracker.models.Information
@@ -50,7 +51,6 @@ class InformationFragment : Fragment() {
         list.adapter = adapter
 
 
-
         getFAQ().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
@@ -74,13 +74,13 @@ class InformationFragment : Fragment() {
     }
 
     private fun getFAQ(): Observable<List<FAQ>> {
-
-        val items = if (database.databaseName == Constants.SHMOOCON_DATABASE_NAME) {
-            resources.getStringArray(R.array.faq_questions_shmoo)
-        } else {
-            resources.getStringArray(R.array.faq_questions)
+        val items = when {
+            database.databaseName == Constants.SHMOOCON_DATABASE_NAME -> resources.getStringArray(R.array.faq_questions_shmoo)
+            database.databaseName == Constants.HACKWEST_DATABASE_NAME -> resources.getStringArray(R.array.faq_questions_hw)
+            database.databaseName == Constants.LAYERONE_DATABASE_NAME -> resources.getStringArray(R.array.faq_questions_l1)
+            database.databaseName == Constants.BSIDESORL_DATABASE_NAME -> resources.getStringArray(R.array.faq_questions_bsidesorl)
+            else -> resources.getStringArray(R.array.faq_questions)
         }
-
 
         return Observable.create { subscriber ->
             subscriber.onNext(items.toList().windowed(size = 2, step = 2).map { FAQ(it[0], it[1]) })

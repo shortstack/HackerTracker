@@ -255,7 +255,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         toggle.syncState()
 
         nav_view!!.setNavigationItemSelectedListener(this)
-        if (database.databaseName == Constants.TOORCON_DATABASE_NAME || database.databaseName == Constants.SHMOOCON_DATABASE_NAME) {
+        if( database.databaseName != Constants.DEFCON_DATABASE_NAME  ) {
             nav_view.menu.getItem(2).setTitle(R.string.map)
         }
 

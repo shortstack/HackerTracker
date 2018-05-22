@@ -124,12 +124,12 @@ class SharedPreferencesUtil @Inject constructor(context: Context) {
         get() = mPreferences.getInt(Key.APP_DATABASE_SELECTED.toString(), 0)
         set(database) = editor.putInt(Key.APP_DATABASE_SELECTED.toString(), database).apply()
 
+
     val databaseTheme: Int
-        get() = if (databaseSelected == 0) R.style.AppTheme else if (databaseSelected == 1) R.style.AppTheme_Toorcon else R.style.AppTheme_Shmoocon
-
-    companion object {
-
-
-        private val DEFAULT_DAYS_TO_LOAD = 0
-    }
+        get() = if (databaseSelected == 0) R.style.AppTheme
+        else if (databaseSelected == 1) R.style.AppTheme_Toorcon
+        else if (databaseSelected == 2) R.style.AppTheme_Shmoocon
+        else if (databaseSelected == 3) R.style.AppTheme_Hackwest
+        else if (databaseSelected == 4) R.style.AppTheme_LayerOne
+        else R.style.AppTheme_BsidesOrl
 }
