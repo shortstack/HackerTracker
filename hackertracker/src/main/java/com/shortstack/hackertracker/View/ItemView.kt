@@ -12,6 +12,7 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.event.BusProvider
 import com.shortstack.hackertracker.event.FavoriteEvent
 import com.shortstack.hackertracker.event.RefreshTimerEvent
 import com.shortstack.hackertracker.models.Item
@@ -24,12 +25,12 @@ class ItemView : CardView {
 
     private var mDisplayMode = DISPLAY_MODE_FULL
     private var mRoundCorners = true
-    var content : ItemViewModel? = null
+    var content: ItemViewModel? = null
         private set
 
-    private var mAnimation : ObjectAnimator? = null
+    private var mAnimation: ObjectAnimator? = null
 
-    constructor(context : Context) : super(context) {
+    constructor(context: Context) : super(context) {
         init()
         inflate()
     }
@@ -45,7 +46,7 @@ class ItemView : CardView {
         }
     }
 
-    constructor(context : Context, attrs : AttributeSet) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
         getStyle(context, attrs)
         init()
         inflate()
@@ -53,7 +54,7 @@ class ItemView : CardView {
     }
 
 
-    private fun getStyle(context : Context, attrs : AttributeSet) {
+    private fun getStyle(context: Context, attrs: AttributeSet) {
         val a = context.theme.obtainStyledAttributes(
                 attrs,
                 R.styleable.ItemView,
@@ -74,7 +75,7 @@ class ItemView : CardView {
         addView(view)
     }
 
-    fun setItem(item : Item) {
+    fun setItem(item: Item) {
         content = ItemViewModel(item)
         renderItem()
     }
@@ -83,13 +84,13 @@ class ItemView : CardView {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         if (!isInEditMode)
-            App.application.registerBusListener(this)
+            BusProvider.bus.register(this)
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         if (!isInEditMode)
-            App.application.unregisterBusListener(this)
+            BusProvider.bus.unregister(this)
 
         finishAnimation()
         setProgressBar()
@@ -103,14 +104,14 @@ class ItemView : CardView {
     }
 
     @Subscribe
-    fun onRefreshTimeEvent(event : RefreshTimerEvent) {
+    fun onRefreshTimeEvent(event: RefreshTimerEvent) {
         //        long time = System.currentTimeMillis();
         updateProgressBar()
         //        Logger.d("Refreshed in " + ( System.currentTimeMillis() - time));
     }
 
     @Subscribe
-    fun onFavoriteEvent(event : FavoriteEvent) {
+    fun onFavoriteEvent(event: FavoriteEvent) {
         if (event.item == content!!.id) {
             updateBookmark()
         }
@@ -159,7 +160,7 @@ class ItemView : CardView {
         mAnimation!!.start()
     }
 
-    private fun getProgress() : Int {
+    private fun getProgress(): Int {
         return (content!!.progress * 100).toInt()
     }
 
@@ -197,7 +198,7 @@ class ItemView : CardView {
         renderBookmark()
     }
 
-    private fun convertDpToPixel(dp : Float, context : Context) : Float {
+    private fun convertDpToPixel(dp: Float, context: Context): Float {
         val resources = context.resources
         val metrics = resources.displayMetrics
         return dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)

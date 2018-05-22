@@ -6,6 +6,7 @@ import android.database.sqlite.SQLiteException
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.*
+import com.shortstack.hackertracker.event.BusProvider
 import com.shortstack.hackertracker.event.FavoriteEvent
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.FullResponse
@@ -207,7 +208,7 @@ open class DEFCONDatabaseController : DatabaseController {
         setScheduleBookmarked(db, value, item.index)
 
         item.toggleBookmark()
-        App.application.postBusEvent(FavoriteEvent(item.index))
+        BusProvider.bus.post(FavoriteEvent(item.index))
 
         if (item.isBookmarked()) {
             App.application.notificationHelper.scheduleItemNotification(item)

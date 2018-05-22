@@ -1,8 +1,6 @@
 package com.shortstack.hackertracker
 
 import android.app.Application
-import android.content.Context
-import android.preference.PreferenceManager
 import com.crashlytics.android.Crashlytics
 import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.firebase.jobdispatcher.GooglePlayDriver
@@ -15,17 +13,13 @@ import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DEFCONDatabaseController
-import com.shortstack.hackertracker.di.*
-import com.shortstack.hackertracker.di.modules.AnalyticsModule
-import com.shortstack.hackertracker.di.modules.ContextModule
-import com.shortstack.hackertracker.di.modules.DatabaseModule
-import com.shortstack.hackertracker.di.modules.SharedPreferencesModule
-import com.shortstack.hackertracker.event.MainThreadBus
+import com.shortstack.hackertracker.di.DaggerMyComponent
+import com.shortstack.hackertracker.di.MyComponent
+import com.shortstack.hackertracker.di.modules.*
 import com.shortstack.hackertracker.network.task.SyncJob
 import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.utils.TimeHelper
-import com.squareup.otto.Bus
 import io.fabric.sdk.android.Fabric
 import java.util.*
 
@@ -34,31 +28,34 @@ class App : Application() {
 
     lateinit var myComponent: MyComponent
 
-    lateinit var appContext: Context
-        private set
-
-    // Eventbus
-    val bus: Bus by lazy { MainThreadBus() }
     // Storage
-    val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil(appContext) }
+    @Deprecated(message = "Use DI")
+    val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil(applicationContext) }
     // Database
+    @Deprecated("use DI")
     lateinit var databaseController: DEFCONDatabaseController
     // Notifications
-    val notificationHelper: NotificationHelper by lazy { NotificationHelper(appContext) }
+    @Deprecated("use DI")
+    val notificationHelper: NotificationHelper by lazy { NotificationHelper(applicationContext) }
     // Analytics
+    @Deprecated("use DI")
     val analyticsController: AnalyticsController by lazy { AnalyticsController() }
     // Time
-    val timeHelper: TimeHelper by lazy { TimeHelper(appContext) }
+    @Deprecated("use DI")
+    val timeHelper: TimeHelper by lazy { TimeHelper(applicationContext) }
 
+    @Deprecated("use DI")
     val gson: Gson by lazy { GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create() }
 
-    val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(appContext)) }
+    @Deprecated("use DI")
+    val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(applicationContext)) }
 
 
     override fun onCreate() {
         super.onCreate()
 
-        init()
+        application = this
+
         initFabric()
         initLogger()
         initFeedback()
@@ -74,6 +71,7 @@ class App : Application() {
                 .sharedPreferencesModule(SharedPreferencesModule())
                 .databaseModule(DatabaseModule())
                 .analyticsModule(AnalyticsModule())
+                .notificationsModule(NotificationsModule())
                 .contextModule(ContextModule(this))
                 .build()
     }
@@ -91,7 +89,7 @@ class App : Application() {
         else
             Constants.BSIDESORL_DATABASE_NAME
 
-        setTheme( if (storage.databaseSelected == 0)
+        setTheme(if (storage.databaseSelected == 0)
             R.style.AppTheme
         else if (storage.databaseSelected == 1)
             R.style.AppTheme_Toorcon
@@ -105,7 +103,7 @@ class App : Application() {
             R.style.AppTheme_BsidesOrl)
 
         Logger.d("Creating database controller with database: $name")
-        databaseController = DEFCONDatabaseController(appContext, name = name)
+        databaseController = DEFCONDatabaseController(applicationContext, name = name)
 
         if (databaseController.exists()) {
             databaseController.checkDatabase()
@@ -117,12 +115,7 @@ class App : Application() {
 
         cancelSync()
 
-        val hours = PreferenceManager.getDefaultSharedPreferences(this).getString("sync_interval", "6")
-
-        var value = hours.toIntOrNull()
-
-        if (value == null)
-            value = 6
+        var value = storage.syncInterval
 
         if (value == 0) {
             cancelSync()
@@ -142,7 +135,7 @@ class App : Application() {
         dispatcher.mustSchedule(job)
     }
 
-    fun cancelSync() {
+    private fun cancelSync() {
         dispatcher.cancel(SyncJob.TAG)
     }
 
@@ -151,11 +144,6 @@ class App : Application() {
                 .setFeedbackEmailAddress(Constants.FEEDBACK_EMAIL)
                 .applyAllDefaultRules()
                 .setLastUpdateTimeCooldownDays(1)
-    }
-
-    private fun init() {
-        application = this
-        appContext = applicationContext
     }
 
     private fun initLogger() {
@@ -167,30 +155,17 @@ class App : Application() {
             Fabric.with(this, Crashlytics())
     }
 
-
-    fun postBusEvent(event: Any) {
-        bus.post(event)
-    }
-
-    fun unregisterBusListener(itemView: Any) {
-        bus.unregister(itemView)
-    }
-
-    fun registerBusListener(itemView: Any) {
-        bus.register(itemView)
-    }
-
-
     companion object {
 
         lateinit var application: App
 
+        @Deprecated(message = "Use DI to get a handle to TimeHelper instead.")
         fun getCurrentCalendar(): Calendar = application.timeHelper.currentCalendar
 
+        @Deprecated(message = "Use DI to get a handle to TimeHelper instead.")
         fun getCurrentDate(): Date = application.timeHelper.currentDate
 
+        @Deprecated(message = "Use DI to get a handle to TimeHelper instead.")
         fun getRelativeDateStamp(date: Date): String = application.timeHelper.getRelativeDateStamp(date)
-
-
     }
 }

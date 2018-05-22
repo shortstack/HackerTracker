@@ -1,9 +1,8 @@
 package com.shortstack.hackertracker.di
 
-import com.shortstack.hackertracker.di.modules.AnalyticsModule
-import com.shortstack.hackertracker.di.modules.ContextModule
-import com.shortstack.hackertracker.di.modules.DatabaseModule
-import com.shortstack.hackertracker.di.modules.SharedPreferencesModule
+import com.shortstack.hackertracker.di.modules.*
+import com.shortstack.hackertracker.network.task.ReminderJob
+import com.shortstack.hackertracker.network.task.SyncJob
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
@@ -15,7 +14,7 @@ import dagger.Component
 /**
  * Created by Chris on 5/21/2018.
  */
-@Component(modules = arrayOf(ContextModule::class, DatabaseModule::class, SharedPreferencesModule::class, AnalyticsModule::class))
+@Component(modules = [(ContextModule::class), (DatabaseModule::class), (SharedPreferencesModule::class), (AnalyticsModule::class), (NotificationsModule::class)])
 @MyApplicationScope
 interface MyComponent {
 
@@ -32,5 +31,9 @@ interface MyComponent {
     fun inject(pagerAdapter: MapsFragment.PagerAdapter)
 
     fun inject(scheduleItemAdapter: ScheduleItemAdapter)
+
+    fun inject(reminderJob: ReminderJob)
+
+    fun inject(syncJob: SyncJob)
 
 }

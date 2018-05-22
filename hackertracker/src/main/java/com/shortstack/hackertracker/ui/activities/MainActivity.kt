@@ -47,8 +47,6 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     private var mFragmentIndex = DEFAULT_FRAGMENT_INDEX
 
-    private val titles: Array<String> by lazy { resources.getStringArray(R.array.nav_item_activity_titles) }
-
     @Inject
     lateinit var storage: SharedPreferencesUtil
     
@@ -319,7 +317,9 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         get() = "home_fragment_" + mFragmentIndex
 
     private val fragmentTitle: String
-        get() = titles[mFragmentIndex]
+        get() {
+            return resources.getStringArray(R.array.nav_item_activity_titles)[mFragmentIndex]
+        }
 
     fun loadFragment(fragment: Int) {
         mFragmentIndex = fragment

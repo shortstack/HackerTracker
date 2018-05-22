@@ -13,19 +13,20 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.utils.MaterialAlert
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
+import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.event.BusProvider
 import com.shortstack.hackertracker.event.RefreshTimerEvent
 import com.shortstack.hackertracker.event.SyncResponseEvent
 import com.shortstack.hackertracker.event.UpdateListContentsEvent
 import com.shortstack.hackertracker.network.DatabaseService
 import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.network.SyncRepository
-import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.ui.schedule.list.ListViewsInterface
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleInfiniteScrollListener
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleItemAdapter
+import com.shortstack.hackertracker.utils.MaterialAlert
 import com.shortstack.hackertracker.view.FilterView
 import com.squareup.otto.Subscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -43,7 +44,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
     var mHandler : Handler = object : Handler() {
         override fun handleMessage(msg : Message) {
-            App.application.postBusEvent(RefreshTimerEvent())
+            BusProvider.bus.post(RefreshTimerEvent())
             if (adapter != null) {
                 adapter!!.notifyTimeChanged()
             }
@@ -54,12 +55,12 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
     override fun onCreate(savedInstanceState : Bundle?) {
         super.onCreate(savedInstanceState)
-        App.application.registerBusListener(this)
+        BusProvider.bus.register(this)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        App.application.unregisterBusListener(this)
+        BusProvider.bus.unregister(this)
     }
 
 
@@ -201,7 +202,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
                     if (it == 0)
                         Toast.makeText(context, context.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
                     else if (it > 0) {
-                        App.application.postBusEvent(SyncResponseEvent(it))
+                        BusProvider.bus.post(SyncResponseEvent(it))
                         App.application.notificationHelper.scheduleUpdateNotification(it)
                         refreshContents()
                     }

@@ -7,6 +7,7 @@ import android.support.v7.preference.PreferenceFragmentCompat
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController.Analytics
+import com.shortstack.hackertracker.event.BusProvider
 import com.shortstack.hackertracker.event.UpdateListContentsEvent
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -34,12 +35,12 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
             "user_use_military_time" -> {
                 event = Analytics.SETTINGS_MILITARY_TIME
-                App.application.postBusEvent(UpdateListContentsEvent())
+                BusProvider.bus.post(UpdateListContentsEvent())
             }
 
             "user_show_expired_events" -> {
                 event = Analytics.SETTINGS_EXPIRED_EVENT
-                App.application.postBusEvent(UpdateListContentsEvent())
+                BusProvider.bus.post(UpdateListContentsEvent())
             }
 
             "sync_interval" -> {

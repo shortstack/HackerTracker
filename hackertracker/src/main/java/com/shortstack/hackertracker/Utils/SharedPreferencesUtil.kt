@@ -21,6 +21,8 @@ class SharedPreferencesUtil @Inject constructor(context: Context) {
         USER_EXPIRED_EVENTS("user_show_expired_events"),
         USER_ANALYTICS("user_analytics"),
 
+        SYNC_INTERVAL("sync_interval"),
+
         APP_SYNC_SCHEDULED("app_sync_scheduled"),
         APP_LAST_SYNC_VERSION("app_last_sync_version"),
         APP_UPDATED_EVENTS("app_updated_events"),
@@ -120,16 +122,22 @@ class SharedPreferencesUtil @Inject constructor(context: Context) {
         editor.putBoolean(Key.APP_SYNC_SCHEDULED.toString(), true).apply()
     }
 
+    var syncInterval : Int
+        get() = mPreferences.getInt(Key.SYNC_INTERVAL.toString(), 6)
+        set(value) = mPreferences.edit().putInt(Key.SYNC_INTERVAL.toString(), value).apply()
+
     var databaseSelected: Int
         get() = mPreferences.getInt(Key.APP_DATABASE_SELECTED.toString(), 0)
         set(database) = editor.putInt(Key.APP_DATABASE_SELECTED.toString(), database).apply()
 
 
     val databaseTheme: Int
-        get() = if (databaseSelected == 0) R.style.AppTheme
-        else if (databaseSelected == 1) R.style.AppTheme_Toorcon
-        else if (databaseSelected == 2) R.style.AppTheme_Shmoocon
-        else if (databaseSelected == 3) R.style.AppTheme_Hackwest
-        else if (databaseSelected == 4) R.style.AppTheme_LayerOne
-        else R.style.AppTheme_BsidesOrl
+        get() = when (databaseSelected) {
+            0 -> R.style.AppTheme
+            1 -> R.style.AppTheme_Toorcon
+            2 -> R.style.AppTheme_Shmoocon
+            3 -> R.style.AppTheme_Hackwest
+            4 -> R.style.AppTheme_LayerOne
+            else -> R.style.AppTheme_BsidesOrl
+        }
 }

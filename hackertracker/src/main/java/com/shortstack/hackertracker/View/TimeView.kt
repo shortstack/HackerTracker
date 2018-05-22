@@ -7,6 +7,8 @@ import android.view.View
 import android.widget.LinearLayout
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.event.BusProvider
+import com.shortstack.hackertracker.event.BusProvider.Companion
 import com.shortstack.hackertracker.event.RefreshTimerEvent
 import com.shortstack.hackertracker.getDateDifference
 import com.shortstack.hackertracker.isToday
@@ -41,12 +43,12 @@ class TimeView : LinearLayout {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        App.application.registerBusListener(this)
+        BusProvider.bus.register(this)
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        App.application.unregisterBusListener(this)
+        BusProvider.bus.unregister(this)
     }
 
     @Subscribe
