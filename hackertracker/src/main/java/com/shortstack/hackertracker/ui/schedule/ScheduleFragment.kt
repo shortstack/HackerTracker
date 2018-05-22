@@ -25,6 +25,7 @@ import com.shortstack.hackertracker.event.UpdateListContentsEvent
 import com.shortstack.hackertracker.network.DatabaseService
 import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.network.SyncRepository
+import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.ui.schedule.list.ListViewsInterface
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleInfiniteScrollListener
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleItemAdapter
@@ -83,7 +84,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     override fun onResume() {
         super.onResume()
 
-        val currentDate = App.getCurrentDate()
+        val currentDate = Date().now()
         var time = currentDate.time
 
         if (storage.shouldRefresh(time)) {

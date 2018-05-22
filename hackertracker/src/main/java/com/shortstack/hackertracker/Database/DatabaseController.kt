@@ -5,7 +5,9 @@ import android.content.Context
 import android.database.Cursor
 import android.database.sqlite.SQLiteDatabase
 import android.database.sqlite.SQLiteOpenHelper
+import com.google.gson.FieldNamingPolicy
 import com.google.gson.Gson
+import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
@@ -18,6 +20,8 @@ import java.io.IOException
 
 abstract class DatabaseController(protected val context: Context, name: String, version: Int) : SQLiteOpenHelper(context, name, null, version) {
 
+
+    val gson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
 
     // SQL
     val SELECT_ALL_FROM = "SELECT * from "
@@ -42,7 +46,6 @@ abstract class DatabaseController(protected val context: Context, name: String, 
     }
 
     override fun onCreate(db: SQLiteDatabase) {
-        val gson = App.application.gson
         initDatabase(db, gson)
     }
 
@@ -51,7 +54,6 @@ abstract class DatabaseController(protected val context: Context, name: String, 
     abstract protected fun updateDatabase(gson: Gson, db: SQLiteDatabase)
 
     fun updateDataSet(db: SQLiteDatabase) {
-        val gson = App.application.gson
         updateDatabase(gson, db)
     }
 
@@ -73,7 +75,7 @@ abstract class DatabaseController(protected val context: Context, name: String, 
         database.delete(table, null, null)
         try {
             array.forEach {
-                val values = getContentValues(it, App.application.gson)
+                val values = getContentValues(it, gson)
                 database.insert(table, null, values)
             }
             database.setTransactionSuccessful()
@@ -162,6 +164,18 @@ abstract class DatabaseController(protected val context: Context, name: String, 
         TODO()
     }
 
+    fun <T> fromCursor(t: Class<T>, cursor: Cursor): T {
+        val obj = getJsonObject(cursor)
+
+        if (t == Item::class.java) {
+            val who = obj.getString("who")
+            obj.remove("who")
+            obj.put("who", JSONArray(who))
+        }
+
+        return gson.fromJson(obj.toString(), t)
+    }
+
 
     companion object {
         fun exists(context: Context, database: String): Boolean {
@@ -169,21 +183,7 @@ abstract class DatabaseController(protected val context: Context, name: String, 
             return dbFile.exists()
         }
 
-        fun <T> fromCursor(t: Class<T>, cursor: Cursor): T {
-            val gson = App.application.gson
-            val obj = getJsonObject(cursor)
 
-            if (t == Item::class.java) {
-                val who = obj.getString("who")
-                obj.remove("who")
-                obj.put("who", JSONArray(who))
-            }
-
-
-
-
-            return gson.fromJson(obj.toString(), t)
-        }
 
         private fun getJsonObject(cursor: Cursor): JSONObject {
             val obj = JSONObject()

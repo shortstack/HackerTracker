@@ -8,6 +8,7 @@ import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.models.Time
+import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -96,7 +97,7 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
     }
 
     private fun findCurrentPositionByTime(): Int {
-        val currentDate = App.getCurrentDate()
+        val currentDate = Date().now()
 
         val first = collection.filterIsInstance<Item>()
                 .firstOrNull { it.beginDateObject.after(currentDate) } ?: return -1

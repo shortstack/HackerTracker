@@ -76,7 +76,6 @@ open class DEFCONDatabaseController : DatabaseController {
         App.application.storage.lastSyncVersion = BuildConfig.VERSION_CODE
 
         val schedule = response.schedule
-        val gson = App.application.gson
 
         database.beginTransaction()
 
@@ -165,7 +164,7 @@ open class DEFCONDatabaseController : DatabaseController {
         val filter = "$KEY_INDEX=?"
         val args = arrayOf(item.index.toString())
 
-        val values = item.getContentValues(App.application.gson)
+        val values = item.getContentValues(gson)
 
 
         values.put(KEY_INDEX, values.getAsInteger("index"))
@@ -276,7 +275,7 @@ open class DEFCONDatabaseController : DatabaseController {
 
         // Date
         if (App.application.storage.showActiveEventsOnly()) {
-            val currentDate = App.getCurrentCalendar()
+            val currentDate = Calendar.getInstance().now()
 
             if (selection.isNotEmpty())
                 selection += "AND "

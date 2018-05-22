@@ -7,11 +7,7 @@ import com.firebase.jobdispatcher.GooglePlayDriver
 import com.firebase.jobdispatcher.Lifetime
 import com.firebase.jobdispatcher.Trigger
 import com.github.stkent.amplify.tracking.Amplify
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.di.DaggerMyComponent
 import com.shortstack.hackertracker.di.MyComponent
@@ -19,7 +15,7 @@ import com.shortstack.hackertracker.di.modules.*
 import com.shortstack.hackertracker.network.task.SyncJob
 import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
-import com.shortstack.hackertracker.utils.TimeHelper
+import com.shortstack.hackertracker.utils.TimeUtil
 import io.fabric.sdk.android.Fabric
 import java.util.*
 
@@ -37,12 +33,6 @@ class App : Application() {
     // Notifications
     @Deprecated("use DI")
     val notificationHelper: NotificationHelper by lazy { NotificationHelper(applicationContext) }
-    // Time
-    @Deprecated("use DI")
-    val timeHelper: TimeHelper by lazy { TimeHelper(applicationContext) }
-
-    @Deprecated("use DI")
-    val gson: Gson by lazy { GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create() }
 
     @Deprecated("use DI")
     val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(applicationContext)) }
@@ -153,16 +143,6 @@ class App : Application() {
     }
 
     companion object {
-
         lateinit var application: App
-
-        @Deprecated(message = "Use DI to get a handle to TimeHelper instead.")
-        fun getCurrentCalendar(): Calendar = application.timeHelper.currentCalendar
-
-        @Deprecated(message = "Use DI to get a handle to TimeHelper instead.")
-        fun getCurrentDate(): Date = application.timeHelper.currentDate
-
-        @Deprecated(message = "Use DI to get a handle to TimeHelper instead.")
-        fun getRelativeDateStamp(date: Date): String = application.timeHelper.getRelativeDateStamp(date)
     }
 }

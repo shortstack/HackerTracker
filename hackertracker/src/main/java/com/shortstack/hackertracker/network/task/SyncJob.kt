@@ -10,6 +10,7 @@ import com.shortstack.hackertracker.event.BusProvider
 import com.shortstack.hackertracker.event.SyncResponseEvent
 import com.shortstack.hackertracker.network.DatabaseService
 import com.shortstack.hackertracker.network.SyncResponse
+import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import retrofit2.Call
@@ -17,6 +18,7 @@ import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
 import javax.inject.Inject
 
 class SyncJob : JobService(), Callback<SyncResponse> {
@@ -62,7 +64,7 @@ class SyncJob : JobService(), Callback<SyncResponse> {
 
         Logger.d("Tag: $tag")
 
-        storage.lastRefresh = App.getCurrentDate().time
+        storage.lastRefresh = Date().now().time
 
         if (storage.lastUpdated != body.updatedDate) {
             storage.lastUpdated = body.updatedDate

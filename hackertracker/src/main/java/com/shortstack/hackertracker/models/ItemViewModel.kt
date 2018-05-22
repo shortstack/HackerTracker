@@ -5,6 +5,8 @@ import android.text.TextUtils
 import android.view.View
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.now
+import com.shortstack.hackertracker.utils.TimeUtil
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
@@ -73,7 +75,7 @@ class ItemViewModel(val item : Item) {
 
             val beginDateObject = item.beginDateObject
             val endDateObject = item.endDateObject
-            val currentDate = App.getCurrentDate()
+            val currentDate = Date().now()
 
             val length = ((endDateObject.time - beginDateObject.time) / 1000 / 60).toFloat()
             val p = ((endDateObject.time - currentDate.time) / 1000 / 60).toFloat()
@@ -90,7 +92,9 @@ class ItemViewModel(val item : Item) {
         val begin = item.beginDateObject
         val end = item.endDateObject
 
-        return String.format(context.getString(R.string.timestamp_full), item.dateStamp, getTimeStamp(context, begin), getTimeStamp(context, end))
+        val timestamp = TimeUtil.getRelativeDateStamp(context, item.beginDateObject)
+
+        return String.format(context.getString(R.string.timestamp_full),timestamp, getTimeStamp(context, begin), getTimeStamp(context, end))
     }
 
 
