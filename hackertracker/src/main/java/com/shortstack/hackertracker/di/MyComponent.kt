@@ -8,6 +8,7 @@ import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
+import com.shortstack.hackertracker.ui.schedule.list.ScheduleItemAdapter
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import dagger.Component
 
@@ -29,5 +30,7 @@ interface MyComponent {
     fun inject(mapsFragment: MapsFragment)
 
     fun inject(pagerAdapter: MapsFragment.PagerAdapter)
+
+    fun inject(scheduleItemAdapter: ScheduleItemAdapter)
 
 }

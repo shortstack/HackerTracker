@@ -4,126 +4,111 @@ import android.support.v7.widget.RecyclerView
 import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.models.Time
+import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
+import javax.inject.Inject
 
-class ScheduleItemAdapter(private val listViews : ListViewsInterface,
-                          private val layout : RecyclerView.LayoutManager,
-                          val list : RecyclerView) : RendererAdapter<Any>(ScheduleItemBuilder()) {
+class ScheduleItemAdapter(private val listViews: ListViewsInterface,
+                          private val layout: RecyclerView.LayoutManager,
+                          val list: RecyclerView) : RendererAdapter<Any>(ScheduleItemBuilder()) {
+
+    @Inject
+    lateinit var database: DEFCONDatabaseController
+
+    @Inject
+    lateinit var storage: SharedPreferencesUtil
+
+    init {
+        App.application.myComponent.inject(this)
+    }
 
     fun initContents() {
         listViews.hideViews()
         load()
     }
 
-    fun load(page : Int = 0) {
-        val app = App.application
-        val filter = app.storage.filter
+    fun load(page: Int = 0) {
+        val filter = storage.filter
 
-        app.databaseController.getItems(*filter.typesArray, page = page)
+        database.getItems(*filter.typesArray, page = page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {
                             addAllAndNotify(it)
-                            if (app.storage.showExpiredEvents()) {
-                                scrollToCurrentTime()
-                            }
-                            if(collection.isEmpty()) {
+
+                            // TODO: This solution does not work with pagination.
+//                            if (storage.showExpiredEvents()) {
+//                                scrollToCurrentTime()
+//                            }
+                            if (collection.isEmpty()) {
                                 listViews.showEmptyView()
                             }
-                        }, {
-                    e ->
+                        }, { e ->
                     Logger.e(e, "Not success.")
                     listViews.showErrorView()
                 }
                 )
     }
 
-    private fun addAllAndNotify(elements : List<Item>) {
-
+    private fun addAllAndNotify(elements: List<Item>) {
         if (elements.isEmpty())
             return
 
         val size = collection.size
 
-        val first = elements.first()
-        if (size == 0) {
-            addDay(first)
-            addTime(first)
-        } else {
-            val item = collection.last() as Item
+        val previous = collection.filterIsInstance<Item>().lastOrNull()
+        val prevDay = previous?.date
+        val prevTime = previous?.begin
 
-            if (first.date != item.date) {
-                addDay(first)
-            }
-            if (first.begin != item.begin) {
-                addTime(first)
+        elements.groupBy { it.date }.forEach {
+            if (prevDay != it.value.first().date) addDay(it.value.first())
+
+            it.value.groupBy { it.begin }.forEach {
+                if (prevTime != it.value.first().begin) addTime(it.value.first())
+                addAll(it.value)
             }
         }
-
-        for (i in 0..elements.size - 1 - 1) {
-            val current = elements[i]
-
-            add(current)
-
-            val next = elements[i + 1]
-            if (current.date != next.date) {
-                addDay(next)
-            }
-
-            if (current.begin != next.begin) {
-                addTime(next)
-            }
-        }
-
-        add(elements[elements.size - 1])
 
         notifyItemRangeInserted(size, collection.size - size)
     }
 
-    private fun addDay(item : Item) {
+    private fun addDay(item: Item) {
         add(Day(item.beginDateObject))
     }
 
-    private fun addTime(item : Item) {
+    private fun addTime(item: Item) {
         add(Time(item.beginDateObject))
     }
 
     private fun scrollToCurrentTime() {
-        layout.scrollToPosition(findCurrentPositionByTime())
+        val position = findCurrentPositionByTime()
+
+        if (position != -1) {
+            layout.scrollToPosition(position)
+        }
     }
 
-    private fun findCurrentPositionByTime() : Int {
+    private fun findCurrentPositionByTime(): Int {
         val currentDate = App.getCurrentDate()
 
-        for (i in collection.indices) {
-            val obj = collection[i]
+        val first = collection.filterIsInstance<Item>()
+                .firstOrNull { it.beginDateObject.after(currentDate) } ?: return -1
 
-            if (obj is Item) {
+        val indexOf = collection.indexOf(first)
 
-                val beginDateObject = obj.beginDateObject
-                if (beginDateObject.after(currentDate)) {
-                    for (i1 in i - 1 downTo 0) {
-                        if (obj !is String) {
-                            return i1
-                        }
-                    }
-                    return i
-                }
-            }
-        }
-
-        return 0
+        return indexOf - 1
     }
 
     fun notifyTimeChanged() {
 
-        if (App.application.storage.showExpiredEvents())
+        if (storage.showExpiredEvents())
             return
 
         val collection = collection
