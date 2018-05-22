@@ -6,6 +6,7 @@ import com.shortstack.hackertracker.di.modules.SharedPreferencesModule
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
+import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import dagger.Component
 
@@ -23,5 +24,9 @@ interface MyComponent {
     fun inject(homeFragment: HomeFragment)
 
     fun inject(informationFragment: InformationFragment)
+
+    fun inject(mapsFragment: MapsFragment)
+
+    fun inject(pagerAdapter: MapsFragment.PagerAdapter)
 
 }
