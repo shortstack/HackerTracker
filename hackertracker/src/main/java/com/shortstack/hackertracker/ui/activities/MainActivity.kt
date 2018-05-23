@@ -53,18 +53,18 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         super.onCreate(savedInstanceState)
 
         if (!App.application.database.db.initialized) {
-            Logger.e("Database not initialized.")
+//            Logger.e("Database not initialized.")
 //            startActivity(Intent(this, SplashActivity::class.java))
 //            finish()
 //            return
         } else {
-            Logger.e("Database IS setup!")
+//            Logger.e("Database IS setup!")
         }
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        Logger.d("onCreate")
+//        Logger.d("onCreate")
         App.application.registerBusListener(this)
 
         initViewPager()
@@ -74,7 +74,13 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         close.setOnClickListener { onFilterClick() }
 
         if (savedInstanceState == null) {
-            mFragmentIndex = App.application.storage.viewPagerPosition
+
+            // TODO: Remove, this is only for debugging.
+            mFragmentIndex = if(BuildConfig.DEBUG ) {
+                DEFAULT_FRAGMENT_INDEX
+            } else {
+                App.application.storage.viewPagerPosition
+            }
             forceMenuHighlighted()
             loadFragment()
 
@@ -89,9 +95,12 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         setNavHeaderMargin()
 
-
         if (App.application.database.db.initialized)
             addConferenceMenuItems()
+
+        // TODO: Remove, this is only for debugging.
+        Logger.d("Created MainActivity " + (System.currentTimeMillis() - App.application.timeToLaunch))
+
     }
 
     override fun onDestroy() {
@@ -155,7 +164,11 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 }, {
 
                 })
+
     }
+
+
+
 
     private fun setNavHeaderMargin() {
         val params = nav_view.getHeaderView(0).imageView.layoutParams as ViewGroup.MarginLayoutParams

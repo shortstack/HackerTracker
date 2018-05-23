@@ -68,11 +68,11 @@ class FilterView : LinearLayout {
 
     private fun init() {
         var time = System.currentTimeMillis()
-        Logger.d("Starting init")
+//        Logger.d("Starting init")
 
         View.inflate(context, R.layout.alert_filter, this)
 
-        Logger.d("Inflated.")
+//        Logger.d("Inflated.")
 
         App.application.database.getTypes()
                         .subscribeOn(Schedulers.io())

@@ -46,12 +46,15 @@ class App : Application() {
 
     val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(appContext)) }
 
+    // TODO: Remove, this is just for measuring launch time.
+    var timeToLaunch : Long = System.currentTimeMillis()
 
     lateinit var database: DatabaseManager
 
 
     override fun onCreate() {
         super.onCreate()
+
 
         init()
         initFabric()
@@ -60,6 +63,10 @@ class App : Application() {
 
         database = DatabaseManager(this)
         updateTheme(database.getCurrentCon())
+
+
+        // TODO: Remove, this is only for debugging.
+        Logger.d("Time to complete onCreate " + (System.currentTimeMillis() - timeToLaunch))
     }
 
     fun updateTheme(con: Conference?) {

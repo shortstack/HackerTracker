@@ -12,10 +12,10 @@ import java.util.*
 @Dao
 interface EventDao {
 
-    @Query("SELECT * FROM event ORDER BY `begin` ASC")
+    @Query("SELECT * FROM event ORDER BY `begin` ASC LIMIT 20")
     fun getFullSchedule(): Flowable<List<Event>>
 
-    @Query("SELECT * FROM event WHERE con = :con ORDER BY `begin` ASC")
+    @Query("SELECT * FROM event WHERE con = :con ORDER BY `begin` ASC LIMIT 20")
     fun getFullSchedule(con: String): Flowable<List<Event>>
 
     @Query("SELECT * FROM event ORDER BY `begin` ASC")

@@ -55,7 +55,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
         conferences.conferences.forEach {
             val database = it.directory
 
-            Logger.d("Opening database $database")
+//            Logger.d("Opening database $database")
 
             // Types
             gson.fromJsonFile(TYPES_FILE, Types::class.java, root = database).let {
@@ -102,13 +102,13 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     .addCallback(object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
-                            Logger.d("Database onCreate!")
+//                            Logger.d("Database onCreate!")
                             getInstance(context).initialized = false
 
                             Single.fromCallable {
                                 getInstance(context).init()
 
-                                Logger.e("Database now initialized -- firing event.")
+//                                Logger.e("Database now initialized -- firing event.")
 
                                 getInstance(context).initialized = true
                                 App.application.postBusEvent(SetupDatabaseEvent())
@@ -119,9 +119,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
                         override fun onOpen(db: SupportSQLiteDatabase) {
                             super.onOpen(db)
-                            Logger.d("Database onOpen!")
-
-                            Logger.e("Database already initialized.")
+//                            Logger.d("Database onOpen!")
+//                            Logger.e("Database already initialized.")
                         }
                     }).build()
 

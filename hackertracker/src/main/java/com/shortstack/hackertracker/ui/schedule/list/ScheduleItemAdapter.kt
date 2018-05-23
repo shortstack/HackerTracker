@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.ui.schedule.list
 
 import android.support.v7.widget.RecyclerView
+import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.isSameDay
@@ -25,22 +26,32 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
 
 
 
-        App.application.database.getEventTypes()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    addAllAndNotify(it.map { it.event })
-                }, {
-                    listViews.showErrorView()
-                })
-
-//        App.application.database.getSchedule().subscribeOn(Schedulers.io())
+//        App.application.database.getEventTypes()
+//                .subscribeOn(Schedulers.io())
 //                .observeOn(AndroidSchedulers.mainThread())
 //                .subscribe({
-//                    addAllAndNotify(it)
+//                    addAllAndNotify(it.map { it.event })
+//
+//                    // TODO: Remove, this is only for debugging.
+//                    if (page == 0) {
+//                        Logger.d("Loaded first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
+//                    }
 //                }, {
 //                    listViews.showErrorView()
 //                })
+
+        App.application.database.getSchedule().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    addAllAndNotify(it)
+
+                    // TODO: Remove, this is only for debugging.
+                    if (page == 0) {
+                        Logger.d("Loaded first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
+                    }
+                }, {
+                    listViews.showErrorView()
+                })
     }
 
     private fun addAllAndNotify(elements: List<Event>) {

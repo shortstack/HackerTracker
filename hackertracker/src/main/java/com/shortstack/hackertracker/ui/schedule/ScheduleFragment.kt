@@ -128,6 +128,9 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         refreshContents()
+        // TODO: Remove, this is only for debugging.
+        Logger.d("Created ScheduleFragment " + (System.currentTimeMillis() - App.application.timeToLaunch))
+
     }
 
     private fun hasScheduleItems(): Boolean {

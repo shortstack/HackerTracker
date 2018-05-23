@@ -44,11 +44,11 @@ class SplashActivity : AppCompatActivity() {
 
         startService(Intent(this@SplashActivity, UpdateDatabaseService::class.java))
 
-        Timer().schedule(object : TimerTask() {
-            override fun run() {
-                startHomeActivity()
-            }
-        }, SPLASH_DELAY)
+//        Timer().schedule(object : TimerTask() {
+//            override fun run() {
+//                startHomeActivity()
+//            }
+//        }, SPLASH_DELAY)
 
     }
 
@@ -71,7 +71,7 @@ class SplashActivity : AppCompatActivity() {
 
     @Subscribe
     public fun handleDatabaseSetup(event: SetupDatabaseEvent) {
-        Logger.e("Setup database event!")
+        Logger.d("Database initialized " + (System.currentTimeMillis() - App.application.timeToLaunch))
         startHomeActivity()
     }
 }
