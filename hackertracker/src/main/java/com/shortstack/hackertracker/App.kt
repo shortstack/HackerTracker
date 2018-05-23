@@ -35,6 +35,8 @@ class App : Application() {
     @Deprecated("use DI")
     private val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(applicationContext)) }
 
+    // TODO: Remove, this is just for measuring launch time.
+    var timeToLaunch : Long = System.currentTimeMillis()
 
     override fun onCreate() {
         super.onCreate()
@@ -60,6 +62,9 @@ class App : Application() {
                 .dispatcherModule(DispatcherModule())
                 .contextModule(ContextModule(this))
                 .build()
+
+        // TODO: Remove, this is only for debugging.
+        Logger.d("Time to complete onCreate " + (System.currentTimeMillis() - timeToLaunch))
     }
 
     fun updateDatabaseController() {

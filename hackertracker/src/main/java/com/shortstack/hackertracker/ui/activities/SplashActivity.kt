@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.ui.activities
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
+import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.R
@@ -45,11 +46,11 @@ class SplashActivity : AppCompatActivity() {
 
         startService(Intent(this@SplashActivity, UpdateDatabaseService::class.java))
 
-        Timer().schedule(object : TimerTask() {
-            override fun run() {
-                startHomeActivity()
-            }
-        }, SPLASH_DELAY)
+//        Timer().schedule(object : TimerTask() {
+//            override fun run() {
+//                startHomeActivity()
+//            }
+//        }, SPLASH_DELAY)
 
     }
 
@@ -60,10 +61,10 @@ class SplashActivity : AppCompatActivity() {
 
 
     private fun startHomeActivity() {
-        if (!isComplete) {
-            isComplete = true
-            return
-        }
+//        if( !isComplete ) {
+//            isComplete = true
+//            return
+//        }
 
         startActivity(Intent(this@SplashActivity, MainActivity::class.java))
         finish()
@@ -72,6 +73,7 @@ class SplashActivity : AppCompatActivity() {
 
     @Subscribe
     public fun handleDatabaseSetup(event: SetupDatabaseEvent) {
+        Logger.d("Database initialized " + (System.currentTimeMillis() - App.application.timeToLaunch))
         startHomeActivity()
     }
 }

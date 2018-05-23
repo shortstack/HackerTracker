@@ -17,14 +17,12 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import com.github.stkent.amplify.tracking.Amplify
-import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.Constants
-import com.shortstack.hackertracker.R
+import com.orhanobut.logger.Logger
+import com.shortstack.hackertracker.*
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.database.DatabaseController
 import com.shortstack.hackertracker.models.Filter
-import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.ReviewBottomSheet
 import com.shortstack.hackertracker.ui.SearchFragment
 import com.shortstack.hackertracker.ui.SettingsFragment
@@ -75,7 +73,13 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         filter.setOnClickListener { onFilterClick() }
 
         if (savedInstanceState == null) {
-            mFragmentIndex = storage.viewPagerPosition
+
+            // TODO: Remove, this is only for debugging.
+            mFragmentIndex = if(BuildConfig.DEBUG ) {
+                DEFAULT_FRAGMENT_INDEX
+            } else {
+                storage.viewPagerPosition
+            }
             forceMenuHighlighted()
             loadFragment()
 
@@ -89,7 +93,14 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
 
         setNavHeaderMargin()
+
+        // TODO: Remove, this is only for debugging.
+        Logger.d("Created MainActivity " + (System.currentTimeMillis() - App.application.timeToLaunch))
+
     }
+
+
+
 
     private fun setNavHeaderMargin() {
         val params = nav_view.getHeaderView(0).imageView.layoutParams as ViewGroup.MarginLayoutParams
