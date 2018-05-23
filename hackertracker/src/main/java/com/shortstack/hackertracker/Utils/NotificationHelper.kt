@@ -9,17 +9,29 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.NotificationManagerCompat
+import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.firebase.jobdispatcher.Trigger
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.network.task.ReminderJob
 import javax.inject.Inject
 
 class NotificationHelper @Inject constructor(private val context: Context) {
 
+
+    @Inject
+    lateinit var dispatcher: FirebaseJobDispatcher
+
+    @Inject
+    lateinit var database: DEFCONDatabaseController
+
+    init {
+        App.application.myComponent.inject(this)
+    }
 
     fun getItemNotification(item: Item): Notification {
         val builder = notificationBuilder
@@ -69,8 +81,6 @@ class NotificationHelper @Inject constructor(private val context: Context) {
         }
 
     fun scheduleItemNotification(item: Item) {
-        val dispatcher = App.application.dispatcher
-
         val window = item.notificationTime - 1200
 
         Logger.d("Scheduling item notification. In $window seconds, " + (window / 60) + " mins, " + (window/3600) + " hrs."  )
@@ -124,13 +134,12 @@ class NotificationHelper @Inject constructor(private val context: Context) {
     }
 
     fun cancelNotification(id: Int) {
-        val dispatcher = App.application.dispatcher
         dispatcher.cancel(ReminderJob.getTag(id))
     }
 
 
     fun postNotification(id: Int) {
-        val item = App.application.databaseController.findItem(id = id) ?: return
+        val item = database.findItem(id = id) ?: return
 
         val managerCompat = NotificationManagerCompat.from(context)
         managerCompat.notify(id, getItemNotification(item))

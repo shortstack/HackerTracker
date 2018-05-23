@@ -13,12 +13,13 @@ import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.joinSQLOr
+import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
 import java.io.IOException
 
-abstract class DatabaseController(protected val context: Context, name: String, version: Int) : SQLiteOpenHelper(context, name, null, version) {
+abstract class DatabaseController(protected val context: Context, protected val storage: SharedPreferencesUtil, name: String, version: Int) : SQLiteOpenHelper(context, name, null, version) {
 
 
     val gson = GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
@@ -39,7 +40,7 @@ abstract class DatabaseController(protected val context: Context, name: String, 
 
     fun exists() = DatabaseController.exists(context, databaseName)
 
-    private fun isScheduleOutOfDate() = App.application.storage.lastSyncVersion != BuildConfig.VERSION_CODE/* || BuildConfig.DEBUG*/
+    private fun isScheduleOutOfDate() = storage.lastSyncVersion != BuildConfig.VERSION_CODE/* || BuildConfig.DEBUG*/
 
     protected fun finalize() {
         close()

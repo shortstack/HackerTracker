@@ -9,13 +9,22 @@ import android.view.View
 import android.widget.LinearLayout
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.models.Filter
+import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import kotlinx.android.synthetic.main.alert_filter.view.*
 import java.util.*
+import javax.inject.Inject
 
 class FilterView : LinearLayout {
 
     lateinit var checkboxes : Array<AppCompatCheckBox>
+
+    @Inject
+    lateinit var storage: SharedPreferencesUtil
+
+    @Inject
+    lateinit var database: DEFCONDatabaseController
 
     constructor(context : Context) : super(context) {
         init()
@@ -29,7 +38,7 @@ class FilterView : LinearLayout {
     private fun setFilter(filter : Filter) {
         val typesArray = filter.typesArray
 
-        if (typesArray.size == 0) {
+        if (typesArray.isEmpty()) {
             for (type in checkboxes) {
                 type.isChecked = true
             }
@@ -53,10 +62,11 @@ class FilterView : LinearLayout {
     }
 
     private fun init() {
+        App.application.myComponent.inject(this)
+
         View.inflate(context, R.layout.alert_filter, this)
 
-        val controller = App.application.databaseController
-        val types = controller.types
+        val types = database.types
 
         val stringArray = context.resources.getIntArray(R.array.colors)
 
@@ -92,7 +102,7 @@ class FilterView : LinearLayout {
 
         val filter = Filter(strings)
 
-        App.application.storage.saveFilter(filter)
+        storage.saveFilter(filter)
 
         return filter
     }

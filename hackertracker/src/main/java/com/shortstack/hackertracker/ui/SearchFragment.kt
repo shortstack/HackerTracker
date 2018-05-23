@@ -12,58 +12,61 @@ import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.ui.schedule.renderers.ItemRenderer
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import javax.inject.Inject
 
 class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
     var adapter: RendererAdapter<Item>? = null
 
-    override fun onQueryTextSubmit(query: String?): Boolean {
-        return true
-    }
+    @Inject
+    lateinit var database: DEFCONDatabaseController
+
+
+    override fun onQueryTextSubmit(query: String?) = true
 
     override fun onQueryTextChange(newText: String): Boolean {
         search(newText)
         return false
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_recyclerview, container, false)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_recyclerview, container, false)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val layout = LinearLayoutManager(context)
-        list.layoutManager = layout
-        loading_progress.visibility = View.GONE;
+        App.application.myComponent.inject(this)
 
-        val rendererBuilder = RendererBuilder<Any>()
-                .bind(Item::class.java, ItemRenderer())
+        list.layoutManager = LinearLayoutManager(context)
+        loading_progress.visibility = View.GONE
 
-
-        adapter = RendererAdapter<Item>(rendererBuilder)
+        adapter = RendererAdapter(RendererBuilder<Any>()
+                .bind(Item::class.java, ItemRenderer()))
         list.adapter = adapter
     }
 
     fun search(text: String) {
+        val adapter = adapter ?: return
+
         Logger.d("Searching $text")
 
-        if (adapter == null)
-            return
-
-        adapter!!.collection.clear()
+        adapter.collection.clear()
 
         if (text.isEmpty()) {
-            adapter!!.notifyDataSetChanged()
+            adapter.notifyDataSetChanged()
             return
         }
 
         val timeMillis = System.currentTimeMillis()
-        adapter!!.addAll(App.application.databaseController.findByText(text))
-        Logger.d("Time to search: ${System.currentTimeMillis() - timeMillis}ms" )
-        adapter!!.notifyDataSetChanged()
+
+        adapter.addAll(database.findByText(text))
+        adapter.notifyDataSetChanged()
+
+        Logger.d("Time to search: ${System.currentTimeMillis() - timeMillis}ms")
     }
 
     companion object {

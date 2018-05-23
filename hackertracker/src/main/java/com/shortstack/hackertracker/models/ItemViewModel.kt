@@ -5,15 +5,27 @@ import android.text.TextUtils
 import android.view.View
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.now
+import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.utils.TimeUtil
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.regex.Pattern
+import javax.inject.Inject
 
 class ItemViewModel(val item : Item) {
 
+    @Inject
+    lateinit var storage: SharedPreferencesUtil
+    
+    @Inject
+    lateinit var database: DEFCONDatabaseController
+
+    init {
+        App.application.myComponent.inject(this)
+    }
 
     val title : String
         get() {
@@ -36,7 +48,7 @@ class ItemViewModel(val item : Item) {
             if (TextUtils.isEmpty(item.type))
                 return EMPTY_CATEGORY
 
-            val types = App.application.databaseController.types
+            val types = database.types
 
             for (i in types.indices) {
                 if (item.type == types[i].type)
@@ -54,7 +66,7 @@ class ItemViewModel(val item : Item) {
 
         var time = ""
 
-        if (App.application.storage.shouldShowMilitaryTime()) {
+        if (storage.shouldShowMilitaryTime()) {
             time = item.begin!!
         } else {
             val date = item.beginDateObject
@@ -191,11 +203,11 @@ class ItemViewModel(val item : Item) {
             val time : String
             val writeFormat : DateFormat
 
-            if (App.application.storage.shouldShowMilitaryTime()) {
-                writeFormat = SimpleDateFormat("HH:mm")
-            } else {
+//            if (storage.shouldShowMilitaryTime()) {
+//                writeFormat = SimpleDateFormat("HH:mm")
+//            } else {
                 writeFormat = SimpleDateFormat("h:mm aa")
-            }
+//            }
 
             time = writeFormat.format(date)
 

@@ -5,10 +5,11 @@ import com.crashlytics.android.answers.CustomEvent
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.models.Filter
 import com.shortstack.hackertracker.models.Item
+import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import javax.inject.Inject
 
 
-class AnalyticsController @Inject constructor() {
+class AnalyticsController @Inject constructor(private val storage: SharedPreferencesUtil) {
 
     enum class Analytics(private val tag: String) {
 
@@ -60,7 +61,7 @@ class AnalyticsController @Inject constructor() {
 
     private fun logCustom(event: CustomEvent) {
         // Bypass to track if they're turning analytics off
-        if (!App.application.storage.isTrackingAnalytics && !event.toString().contains(Analytics.SETTINGS_ANALYTICS.toString())) {
+        if (!storage.isTrackingAnalytics && !event.toString().contains(Analytics.SETTINGS_ANALYTICS.toString())) {
             return
         }
 

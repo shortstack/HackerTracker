@@ -60,16 +60,12 @@ class SyncJob : JobService(), Callback<SyncResponse> {
     }
 
     private fun updateDatabase(body: SyncResponse) {
-        val storage = App.application.storage
-
         Logger.d("Tag: $tag")
 
         storage.lastRefresh = Date().now().time
 
         if (storage.lastUpdated != body.updatedDate) {
             storage.lastUpdated = body.updatedDate
-
-            val database = App.application.databaseController
 
             val rowsUpdated = database.updateSchedule(response = body)
 

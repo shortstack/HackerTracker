@@ -20,10 +20,7 @@ import javax.inject.Inject
 open class DEFCONDatabaseController : DatabaseController {
 
     @Inject
-    lateinit var storage: SharedPreferencesUtil
-
-    @Inject
-    constructor(context: Context, name: String = Constants.DEFCON_DATABASE_NAME, version: Int = 1) : super(context, name, version)
+    constructor(context: Context, storage: SharedPreferencesUtil, name: String = Constants.DEFCON_DATABASE_NAME, version: Int = 1) : super(context, storage, name, version)
 
     // Files
     private val PATCH_FILE = "patches.json"
@@ -72,8 +69,8 @@ open class DEFCONDatabaseController : DatabaseController {
 
     fun initSchedule(database: SQLiteDatabase = writableDatabase, response: SyncResponse) {
 
-        App.application.storage.lastUpdated = response.updatedDate
-        App.application.storage.lastSyncVersion = BuildConfig.VERSION_CODE
+        storage.lastUpdated = response.updatedDate
+        storage.lastSyncVersion = BuildConfig.VERSION_CODE
 
         val schedule = response.schedule
 
@@ -122,8 +119,8 @@ open class DEFCONDatabaseController : DatabaseController {
     }
 
     fun updateSchedule(database: SQLiteDatabase = writableDatabase, response: SyncResponse): Int {
-        App.application.storage.lastUpdated = response.updatedDate
-        App.application.storage.lastSyncVersion = BuildConfig.VERSION_CODE
+        storage.lastUpdated = response.updatedDate
+        storage.lastSyncVersion = BuildConfig.VERSION_CODE
 
         val schedule = response.schedule
         var count = 0
@@ -189,15 +186,15 @@ open class DEFCONDatabaseController : DatabaseController {
 
             if (item1.isBookmarked()) {
 
-                val notificationHelper = App.application.notificationHelper
-                // Cancel the notification, in case the time changes.
-                notificationHelper.cancelNotification(item.index)
-
-                // Set a new one.
-                notificationHelper.scheduleItemNotification(item)
-
-                // If bookmarked, throw up a notification.
-                notificationHelper.postNotification(notificationHelper.getUpdatedItemNotification(item), item.index)
+//                val notificationHelper = App.application.notificationHelper
+//                // Cancel the notification, in case the time changes.
+//                notificationHelper.cancelNotification(item.index)
+//
+//                // Set a new one.
+//                notificationHelper.scheduleItemNotification(item)
+//
+//                // If bookmarked, throw up a notification.
+//                notificationHelper.postNotification(notificationHelper.getUpdatedItemNotification(item), item.index)
             }
         }
 
@@ -220,7 +217,7 @@ open class DEFCONDatabaseController : DatabaseController {
         BusProvider.bus.post(FavoriteEvent(item.index))
 
         if (item.isBookmarked()) {
-            App.application.notificationHelper.scheduleItemNotification(item)
+//            App.application.notificationHelper.scheduleItemNotification(item)
         }
     }
 
@@ -274,7 +271,7 @@ open class DEFCONDatabaseController : DatabaseController {
         }
 
         // Date
-        if (App.application.storage.showActiveEventsOnly()) {
+        if (storage.showActiveEventsOnly()) {
             val currentDate = Calendar.getInstance().now()
 
             if (selection.isNotEmpty())

@@ -12,6 +12,7 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.event.BusProvider
 import com.shortstack.hackertracker.event.FavoriteEvent
 import com.shortstack.hackertracker.event.RefreshTimerEvent
@@ -19,9 +20,12 @@ import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.models.ItemViewModel
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.row_item.view.*
+import javax.inject.Inject
 
 class ItemView : CardView {
 
+    @Inject
+    lateinit var database: DEFCONDatabaseController
 
     private var mDisplayMode = DISPLAY_MODE_FULL
     private var mRoundCorners = true
@@ -36,6 +40,8 @@ class ItemView : CardView {
     }
 
     private fun init() {
+        App.application.myComponent.inject(this)
+
         setCardBackgroundColor(resources.getColor(R.color.card_background))
 
         if (mRoundCorners) {
@@ -185,7 +191,7 @@ class ItemView : CardView {
         progress!!.progressDrawable.setColorFilter(allColors[position], PorterDuff.Mode.SRC_IN)
 
         if (mDisplayMode == DISPLAY_MODE_FULL) {
-            val types = App.application.databaseController.types
+            val types = database.types
             category_text!!.text = types[position].type
         }
     }
@@ -213,8 +219,7 @@ class ItemView : CardView {
     }
 
     fun onBookmarkClick() {
-        val databaseController = App.application.databaseController
-        databaseController.toggleBookmark(databaseController.writableDatabase, content!!.item)
+        database.toggleBookmark(database.writableDatabase, content!!.item)
     }
 
     companion object {

@@ -2,8 +2,11 @@ package com.shortstack.hackertracker.di
 
 import com.shortstack.hackertracker.database.DEFCONDatabaseController
 import com.shortstack.hackertracker.di.modules.*
+import com.shortstack.hackertracker.models.ItemViewModel
+import com.shortstack.hackertracker.network.service.UpdateDatabaseService
 import com.shortstack.hackertracker.network.task.ReminderJob
 import com.shortstack.hackertracker.network.task.SyncJob
+import com.shortstack.hackertracker.ui.SearchFragment
 import com.shortstack.hackertracker.ui.SettingsFragment
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.activities.SplashActivity
@@ -14,12 +17,15 @@ import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleItemBottomSheet
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleItemAdapter
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
+import com.shortstack.hackertracker.utils.NotificationHelper
+import com.shortstack.hackertracker.view.FilterView
+import com.shortstack.hackertracker.view.ItemView
 import dagger.Component
 
 /**
  * Created by Chris on 5/21/2018.
  */
-@Component(modules = [(ContextModule::class), (DatabaseModule::class), (SharedPreferencesModule::class), (AnalyticsModule::class), (NotificationsModule::class)])
+@Component(modules = [(ContextModule::class), (DatabaseModule::class), (SharedPreferencesModule::class), (AnalyticsModule::class), (NotificationsModule::class), (DispatcherModule::class)])
 @MyApplicationScope
 interface MyComponent {
 
@@ -50,5 +56,17 @@ interface MyComponent {
     fun inject(defconDatabaseController: DEFCONDatabaseController)
 
     fun inject(splashActivity: SplashActivity)
+
+    fun inject(filterView: FilterView)
+
+    fun inject(itemViewModel: ItemViewModel)
+
+    fun inject(notificationHelper: NotificationHelper)
+
+    fun inject(searchFragment: SearchFragment)
+
+    fun inject(updateDatabaseService: UpdateDatabaseService)
+
+    fun inject(itemView: ItemView)
 
 }

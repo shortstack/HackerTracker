@@ -2,6 +2,7 @@ package com.shortstack.hackertracker.di.modules
 
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.di.MyApplicationScope
+import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import dagger.Module
 import dagger.Provides
 import javax.inject.Inject
@@ -16,5 +17,5 @@ class AnalyticsModule {
     @Provides
     @MyApplicationScope
     @Inject
-    fun provideAnalyticsContorller() = AnalyticsController()
+    fun provideAnalyticsController(storage: SharedPreferencesUtil) = AnalyticsController(storage)
 }

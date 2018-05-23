@@ -29,13 +29,11 @@ class App : Application() {
     val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil(applicationContext) }
     // Database
     @Deprecated("use DI")
+    private
     lateinit var databaseController: DEFCONDatabaseController
-    // Notifications
-    @Deprecated("use DI")
-    val notificationHelper: NotificationHelper by lazy { NotificationHelper(applicationContext) }
 
     @Deprecated("use DI")
-    val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(applicationContext)) }
+    private val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(applicationContext)) }
 
 
     override fun onCreate() {
@@ -59,38 +57,16 @@ class App : Application() {
                 .databaseModule(DatabaseModule())
                 .analyticsModule(AnalyticsModule())
                 .notificationsModule(NotificationsModule())
+                .dispatcherModule(DispatcherModule())
                 .contextModule(ContextModule(this))
                 .build()
     }
 
     fun updateDatabaseController() {
-        val name = if (storage.databaseSelected == 0) Constants.DEFCON_DATABASE_NAME
-        else if (storage.databaseSelected == 1)
-            Constants.TOORCON_DATABASE_NAME
-        else if (storage.databaseSelected == 2)
-            Constants.SHMOOCON_DATABASE_NAME
-        else if (storage.databaseSelected == 3)
-            Constants.HACKWEST_DATABASE_NAME
-        else if (storage.databaseSelected == 4)
-            Constants.LAYERONE_DATABASE_NAME
-        else
-            Constants.BSIDESORL_DATABASE_NAME
-
-        setTheme(if (storage.databaseSelected == 0)
-            R.style.AppTheme
-        else if (storage.databaseSelected == 1)
-            R.style.AppTheme_Toorcon
-        else if (storage.databaseSelected == 2)
-            R.style.AppTheme_Shmoocon
-        else if (storage.databaseSelected == 3)
-            R.style.AppTheme_Hackwest
-        else if (storage.databaseSelected == 4)
-            R.style.AppTheme_LayerOne
-        else
-            R.style.AppTheme_BsidesOrl)
+        val name = Constants.DEFCON_DATABASE_NAME
 
         Logger.d("Creating database controller with database: $name")
-        databaseController = DEFCONDatabaseController(applicationContext, name = name)
+        databaseController = DEFCONDatabaseController(applicationContext, SharedPreferencesUtil(this), name = name)
 
         if (databaseController.exists()) {
             databaseController.checkDatabase()
