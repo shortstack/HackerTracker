@@ -36,6 +36,11 @@ class ScheduleItemAdapter(private val listViews : ListViewsInterface,
                             if(collection.isEmpty()) {
                                 listViews.showEmptyView()
                             }
+
+                            // TODO: Remove, this is only for debugging.
+                            if( page == 0 ) {
+                                Logger.d("Loaded first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
+                            }
                         }, {
                     e ->
                     Logger.e(e, "Not success.")
