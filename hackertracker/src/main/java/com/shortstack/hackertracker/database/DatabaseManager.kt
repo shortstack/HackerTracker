@@ -41,16 +41,19 @@ class DatabaseManager(context: Context) {
         return db.conferenceDao().getAll()
     }
 
-    fun getRecentUpdates(): Flowable<List<Event>> {
-        return db.eventDao().getRecentlyUpdated(db.currentConference?.directory
-                ?: return db.eventDao().getRecentlyUpdated())
-    }
+//    fun getRecentUpdates(): Flowable<List<Event>> {
+//        return db.eventDao().getRecentlyUpdated(db.currentConference?.directory
+//                ?: return db.eventDao().getRecentlyUpdated())
+//    }
 
-    fun getSchedule(): Flowable<List<Event>> {
-        return db.eventDao().getFullSchedule(db.currentConference?.directory
-                ?: return db.eventDao().getFullSchedule())
-
-    }
+//    fun getSchedule(): Flowable<List<Event>> {
+////        return db.eventDao().getFullSchedule(db.currentConference?.directory
+//
+////        ?:
+//        return db.eventDao().getFullSchedule()
+////        )
+//
+//    }
 
     fun getTypes(): Single<List<Type>> {
         return db.typeDao().getTypes(db.currentConference?.directory

@@ -97,10 +97,12 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
 
         fun buildDatabase(context: Context): MyRoomDatabase {
+            Logger.d("Creating database! " + (System.currentTimeMillis() - App.application.timeToLaunch))
             val database = Room.databaseBuilder(context, MyRoomDatabase::class.java, DATABASE_NAME)
                     .allowMainThreadQueries()
                     .addCallback(object : RoomDatabase.Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
+                            Logger.d("Database onCreate! " + (System.currentTimeMillis() - App.application.timeToLaunch))
                             super.onCreate(db)
 //                            Logger.d("Database onCreate!")
                             getInstance(context).initialized = false
@@ -119,6 +121,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
                         override fun onOpen(db: SupportSQLiteDatabase) {
                             super.onOpen(db)
+                            Logger.d("Database onOpen! " + (System.currentTimeMillis() - App.application.timeToLaunch))
 //                            Logger.d("Database onOpen!")
 //                            Logger.e("Database already initialized.")
                         }

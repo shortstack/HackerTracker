@@ -62,7 +62,7 @@ class App : Application() {
         initFeedback()
 
         database = DatabaseManager(this)
-        updateTheme(database.getCurrentCon())
+//        updateTheme(database.getCurrentCon())
 
 
         // TODO: Remove, this is only for debugging.

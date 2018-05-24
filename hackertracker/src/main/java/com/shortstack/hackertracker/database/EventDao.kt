@@ -4,6 +4,8 @@ import android.arch.persistence.room.*
 import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Event
 import io.reactivex.Flowable
+import io.reactivex.Observable
+import io.reactivex.Single
 import java.util.*
 
 /**
@@ -12,13 +14,17 @@ import java.util.*
 @Dao
 interface EventDao {
 
-    @Query("SELECT * FROM event ORDER BY `begin` ASC LIMIT 20")
-    fun getFullSchedule(): Flowable<List<Event>>
+    companion object {
+        private const val LIMIT = 20
+    }
 
-    @Query("SELECT * FROM event WHERE con = :con ORDER BY `begin` ASC LIMIT 20")
+    @Query("SELECT * FROM event ORDER BY `begin` ASC LIMIT $LIMIT")
+    fun getFullSchedule(): Single<List<Event>>
+
+    @Query("SELECT * FROM event WHERE con = :con ORDER BY `begin` ASC LIMIT $LIMIT")
     fun getFullSchedule(con: String): Flowable<List<Event>>
 
-    @Query("SELECT * FROM event ORDER BY `begin` ASC")
+    @Query("SELECT * FROM event ORDER BY `begin` ASC LIMIT $LIMIT")
     fun getUIThreadSchedule(): List<Event>
 
 
@@ -44,12 +50,14 @@ interface EventDao {
     @Query("SELECT * FROM event WHERE title LIKE :text")
     fun findByText(text: String): Flowable<List<Event>>
 
-    @Query("SELECT * FROM event ORDER BY updatedAt DESC LIMIT 20")
-    fun getRecentlyUpdated(): Flowable<List<Event>>
+    @Query("SELECT * FROM event ORDER BY updatedAt DESC LIMIT $LIMIT")
+    fun getRecentlyUpdated(): Single<List<Event>>
 
-    @Query("SELECT * FROM event WHERE con = :con ORDER BY updatedAt DESC LIMIT 20")
+    @Query("SELECT * FROM event ORDER BY updatedAt DESC LIMIT $LIMIT")
+    fun getUIThreadRecentlyUpdated(): List<Event>
+
+    @Query("SELECT * FROM event WHERE con = :con ORDER BY updatedAt DESC LIMIT $LIMIT")
     fun getRecentlyUpdated(con: String): Flowable<List<Event>>
-
 
     @Query("SELECT * FROM event WHERE con = :con AND `end` > :end  ORDER BY `begin` ASC")
     fun getEventTypes(con: String, end: Date): Flowable<List<DatabaseEvent>>

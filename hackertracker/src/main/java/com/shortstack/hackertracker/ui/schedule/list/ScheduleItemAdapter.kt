@@ -1,11 +1,13 @@
 package com.shortstack.hackertracker.ui.schedule.list
 
+import android.os.Debug
 import android.support.v7.widget.RecyclerView
 import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.isSameDay
 import com.shortstack.hackertracker.models.*
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
@@ -21,9 +23,10 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
     }
 
     fun load(page: Int = 0) {
+        Logger.e("Loading $page")
+
         val app = App.application
         val filter = app.storage.filter
-
 
 
 //        App.application.database.getEventTypes()
@@ -40,15 +43,41 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
 //                    listViews.showErrorView()
 //                })
 
-        App.application.database.getSchedule().subscribeOn(Schedulers.io())
+        val database = App.application.database
+//        val queryTime = System.currentTimeMillis()
+
+//
+//        val events = database.db.eventDao().getUIThreadSchedule()
+//
+//        if (page == 0) {
+//            Logger.d("First chunk loaded " + (System.currentTimeMillis() - App.application.timeToLaunch))
+//            Logger.d("Time to query " + (System.currentTimeMillis() - queryTime))
+//        }
+
+//        addAllAndNotify(events)
+
+        Debug.startMethodTracing("init.trace")
+
+
+        val querySecondTime = System.currentTimeMillis()
+
+        Logger.d("Loading first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
+
+
+        database.db.eventDao().getFullSchedule()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
-                    addAllAndNotify(it)
-
                     // TODO: Remove, this is only for debugging.
                     if (page == 0) {
                         Logger.d("Loaded first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
+                        Logger.d("Time to query " + (System.currentTimeMillis() - querySecondTime))
                     }
+
+//                    addAllAndNotify(it)
+
+                    Debug.stopMethodTracing()
+
                 }, {
                     listViews.showErrorView()
                 })

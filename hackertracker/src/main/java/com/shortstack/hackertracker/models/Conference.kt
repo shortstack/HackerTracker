@@ -18,4 +18,6 @@ data class Conference(
         val updated: Date,
         val synced: Date?,
         var isSelected: Boolean
-)
+) {
+    override fun toString() = title
+}

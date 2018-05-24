@@ -8,6 +8,7 @@ import android.content.Intent
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
+import android.os.Debug
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -16,6 +17,7 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.*
+import android.widget.Toast
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
@@ -52,51 +54,51 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (!App.application.database.db.initialized) {
-//            Logger.e("Database not initialized.")
-//            startActivity(Intent(this, SplashActivity::class.java))
-//            finish()
-//            return
-        } else {
-//            Logger.e("Database IS setup!")
-        }
+//        if (!App.application.database.db.initialized) {
+////            Logger.e("Database not initialized.")
+////            startActivity(Intent(this, SplashActivity::class.java))
+////            finish()
+////            return
+//        } else {
+////            Logger.e("Database IS setup!")
+//        }
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
 //        Logger.d("onCreate")
-        App.application.registerBusListener(this)
+//        App.application.registerBusListener(this)
 
-        initViewPager()
-
-        filter.setOnClickListener { onFilterClick() }
-
-        close.setOnClickListener { onFilterClick() }
+//        initViewPager()
+//
+//        filter.setOnClickListener { onFilterClick() }
+//
+//        close.setOnClickListener { onFilterClick() }
 
         if (savedInstanceState == null) {
 
-            // TODO: Remove, this is only for debugging.
-            mFragmentIndex = if(BuildConfig.DEBUG ) {
-                DEFAULT_FRAGMENT_INDEX
-            } else {
-                App.application.storage.viewPagerPosition
-            }
-            forceMenuHighlighted()
-            loadFragment()
+//            // TODO: Remove, this is only for debugging.
+//            mFragmentIndex = if(BuildConfig.DEBUG ) {
+//                DEFAULT_FRAGMENT_INDEX
+//            } else {
+//                App.application.storage.viewPagerPosition
+//            }
+//            forceMenuHighlighted()
+//            loadFragment()
 
-            if (Amplify.getSharedInstance().shouldPrompt() && !BuildConfig.DEBUG) {
-                val review = ReviewBottomSheet.newInstance()
-                review.show(this.supportFragmentManager, review.tag)
-            }
+//            if (Amplify.getSharedInstance().shouldPrompt() && !BuildConfig.DEBUG) {
+//                val review = ReviewBottomSheet.newInstance()
+//                review.show(this.supportFragmentManager, review.tag)
+//            }
         }
 
-        handleIntent(intent)
+//        handleIntent(intent)
 
 
-        setNavHeaderMargin()
+//        setNavHeaderMargin()
 
-        if (App.application.database.db.initialized)
-            addConferenceMenuItems()
+//        if (App.application.database.db.initialized)
+//            addConferenceMenuItems()
 
         // TODO: Remove, this is only for debugging.
         Logger.d("Created MainActivity " + (System.currentTimeMillis() - App.application.timeToLaunch))
@@ -105,9 +107,12 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     override fun onDestroy() {
         Logger.d("onDestroy")
-        App.application.unregisterBusListener(this)
+//        App.application.unregisterBusListener(this)
+
         super.onDestroy()
     }
+
+
 
 //    @Subscribe
 //    fun onDatabaseSetupEvent(event: SetupDatabaseEvent) {
@@ -176,16 +181,16 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
 
-    override fun getTheme(): Resources.Theme {
-        val theme = super.getTheme()
-        theme.applyStyle(App.application.storage.databaseTheme, true)
-        return theme
-    }
+//    override fun getTheme(): Resources.Theme {
+//        val theme = super.getTheme()
+//        theme.applyStyle(App.application.storage.databaseTheme, true)
+//        return theme
+//    }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        handleIntent(intent)
-    }
+//    override fun onNewIntent(intent: Intent?) {
+//        super.onNewIntent(intent)
+//        handleIntent(intent)
+//    }
 
     private fun handleIntent(intent: Intent?) {
         if (intent == null || intent.extras == null)
@@ -212,11 +217,15 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun loadFragment() {
+        val timeToLoad = System.currentTimeMillis()
+
 //        if (supportFragmentManager.contains(fragmentTag)) {
 //            drawer_layout!!.closeDrawers()
 //            return
 //        }
 
+
+        // TODO: Rewrite, currentFragment will create a new Fragment!
         replaceFragment(currentFragment, fragmentTitle, fragmentTag, R.id.frame)
 
         val app = App.application
@@ -228,6 +237,10 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         //Closing drawer on item click
         drawer_layout!!.closeDrawers()
+
+        forceMenuHighlighted()
+
+        Logger.d("Time to load Fragment " + (System.currentTimeMillis() - timeToLoad))
     }
 
     private val fragmentEvent: AnalyticsController.Analytics
@@ -369,8 +382,8 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     override fun onBackPressed() {
-        if (drawer_layout!!.isDrawerOpen(GravityCompat.START)) {
-            drawer_layout!!.closeDrawers()
+        if (drawer_layout.isDrawerOpen(GravityCompat.START)) {
+            drawer_layout.closeDrawers()
             return
         }
 
@@ -382,18 +395,18 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         super.onBackPressed()
     }
 
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.search_menu, menu)
-
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchMenuItem = menu.findItem(R.id.search)
-        val searchView = searchMenuItem.actionView as SearchView
-
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-
-        return true
-    }
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        val inflater = menuInflater
+//        inflater.inflate(R.menu.search_menu, menu)
+//
+//        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+//        val searchMenuItem = menu.findItem(R.id.search)
+//        val searchView = searchMenuItem.actionView as SearchView
+//
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+//
+//        return true
+//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {

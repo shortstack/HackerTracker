@@ -21,6 +21,7 @@ import com.shortstack.hackertracker.models.Navigation
 import com.shortstack.hackertracker.ui.home.renderers.HomeHeaderRenderer
 import com.shortstack.hackertracker.ui.home.renderers.SubHeaderRenderer
 import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
@@ -56,28 +57,72 @@ class HomeFragment : Fragment() {
     }
 
     private fun fetchRecentUpdates() {
-        setProgressIndicator(true)
 
-        App.application.database.getRecentUpdates()
-                .subscribeOn(Schedulers.io())
+        val eventDao = App.application.database.db.eventDao()
+
+//        setProgressIndicator(true)
+//        val events = App.application.database.db.eventDao().getUIThreadRecentlyUpdated()
+//        showRecentUpdates(events)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                    setProgressIndicator(false)
+//
+//                    // TODO: This could be a lot clearer.
+//                    addAdapterItem(getHeader())
+//                    addAdapterItem(getInformationNav())
+//                    addAdapterItem(getChangeConCard())
+//
+////                    showLastSyncTimestamp(getLastSyncTimestamp())
+//
+//                    showRecentUpdates(it)
+//                }, {
+//                    if (isAdded) {
+//                        setProgressIndicator(false)
+//                        showLoadingRecentUpdatesError()
+//                    }
+//                })
+
+        Single.fromCallable {
+            Thread.sleep(5000)
+            val events = eventDao.getUIThreadRecentlyUpdated()
+
+        }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     setProgressIndicator(false)
 
-                    // TODO: This could be a lot clearer.
                     addAdapterItem(getHeader())
                     addAdapterItem(getInformationNav())
                     addAdapterItem(getChangeConCard())
-
-//                    showLastSyncTimestamp(getLastSyncTimestamp())
-
-                    showRecentUpdates(it)
                 }, {
-                    if (isAdded) {
-                        setProgressIndicator(false)
-                        showLoadingRecentUpdatesError()
-                    }
+
                 })
+
+
+
+
+//        eventDao.getRecentlyUpdated()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                    Thread.sleep(5000)
+//                    setProgressIndicator(false)
+//
+//                    // TODO: This could be a lot clearer.
+//                    addAdapterItem(getHeader())
+//                    addAdapterItem(getInformationNav())
+//                    addAdapterItem(getChangeConCard())
+//
+////                    showLastSyncTimestamp(getLastSyncTimestamp())
+//
+////                    showRecentUpdates(it)
+//                }, {
+//                    if (isAdded) {
+//                        setProgressIndicator(false)
+//                        showLoadingRecentUpdatesError()
+//                    }
+//                })
     }
 
 
