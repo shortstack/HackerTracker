@@ -62,9 +62,9 @@ class VendorsFragment : Fragment() {
                 .subscribe({
                     setProgressIndicator(false)
                     if (it.isEmpty()) {
-                        empty_view.visibility = View.VISIBLE
+//                        empty_view.visibility = View.VISIBLE
                     } else {
-                        empty_view.visibility = View.GONE
+//                        empty_view.visibility = View.GONE
                         showVendors(it)
                     }
                 }, {

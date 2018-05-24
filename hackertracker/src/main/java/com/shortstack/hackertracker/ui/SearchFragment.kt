@@ -58,8 +58,8 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
         if (text.isEmpty()) {
             adapter?.clearAndNotify()
-            empty_view.visibility = View.VISIBLE
-            empty_view.showDefault()
+//            empty_view.visibility = View.VISIBLE
+//            empty_view.showDefault()
             return
         }
 
@@ -73,10 +73,10 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
 
                     if (it.isEmpty()) {
-                        empty_view.visibility = View.VISIBLE
-                        empty_view.showNoResults(text)
+//                        empty_view.visibility = View.VISIBLE
+//                        empty_view.showNoResults(text)
                     } else {
-                        empty_view.visibility = View.GONE
+//                        empty_view.visibility = View.GONE
                     }
 
                     val timeMillis = System.currentTimeMillis()

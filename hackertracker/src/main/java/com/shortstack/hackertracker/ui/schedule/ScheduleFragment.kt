@@ -150,10 +150,6 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     }
 
     private fun refreshContents() {
-        val size = adapter?.collection?.size ?: 0
-        adapter?.clear()
-        adapter?.notifyItemRangeRemoved(0, size)
-
         adapter?.initContents()
     }
 

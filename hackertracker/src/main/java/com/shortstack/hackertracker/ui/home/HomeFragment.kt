@@ -82,7 +82,7 @@ class HomeFragment : Fragment() {
 
 
     private fun setProgressIndicator(active: Boolean) {
-        loading_progress.visibility = if (active) View.VISIBLE else View.GONE
+        loading_progress?.visibility = if (active) View.VISIBLE else View.GONE
     }
 
     private fun showRecentUpdates(items: List<Event>) {

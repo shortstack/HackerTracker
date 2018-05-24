@@ -17,14 +17,14 @@
         android:paddingTop="10dp" />
 
 
-    <com.shortstack.hackertracker.View.EmptyView
-        android:id="@+id/empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:visibility="gone"
-        app:evMessage="@string/nothing_to_show"
-        app:evTitle="@string/nothing_here"
-        tools:visibility="visible" />
+    <!--<com.shortstack.hackertracker.View.EmptyView-->
+        <!--android:id="@+id/empty_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:visibility="gone"-->
+        <!--app:evMessage="@string/nothing_to_show"-->
+        <!--app:evTitle="@string/nothing_here"-->
+        <!--tools:visibility="visible" />-->
 
     <ProgressBar
         android:id="@+id/loading_progress"
