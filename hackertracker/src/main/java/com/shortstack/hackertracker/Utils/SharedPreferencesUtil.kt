@@ -111,7 +111,7 @@ class SharedPreferencesUtil {
     var viewPagerPosition : Int
         get() = mPreferences.getInt(Key.APP_VIEW_PAGER_POSITION.toString(), 0)
         set(index) {
-            editor.putInt(Key.APP_VIEW_PAGER_POSITION.toString(), index).commit()
+            editor.putInt(Key.APP_VIEW_PAGER_POSITION.toString(), index).apply()
         }
 
     val isTrackingAnalytics : Boolean
