@@ -31,33 +31,54 @@ class App : Application() {
         private set
 
     // Eventbus
-    val bus: Bus by lazy { MainThreadBus() }
+    val bus: Bus by lazy {
+        Logger.d("Creating SharedPreferencesUtil")
+        MainThreadBus()
+    }
     // Storage
-    val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil() }
+    val storage: SharedPreferencesUtil by lazy {
+        Logger.d("Creating SharedPreferencesUtil")
+        SharedPreferencesUtil()
+    }
     // Database
     lateinit var databaseController: DEFCONDatabaseController
     // Notifications
-    val notificationHelper: NotificationHelper by lazy { NotificationHelper(appContext) }
+    val notificationHelper: NotificationHelper by lazy {
+        Logger.d("Creating NotificationHelper")
+        NotificationHelper(appContext)
+    }
     // Analytics
-    val analyticsController: AnalyticsController by lazy { AnalyticsController() }
+    val analyticsController: AnalyticsController by lazy {
+        Logger.d("Creating AnalyticsController")
+        AnalyticsController()
+    }
     // Time
-    val timeHelper: TimeHelper by lazy { TimeHelper(appContext) }
+    val timeHelper: TimeHelper by lazy {
+        Logger.d("Creating TimeHelper " + (System.currentTimeMillis() - timeToLaunch))
+        TimeHelper(appContext)
+    }
 
-    val gson: Gson by lazy { GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create() }
+    val gson: Gson by lazy {
+        Logger.d("Creating Gson "  + (System.currentTimeMillis() - timeToLaunch))
+        GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
+    }
 
-    val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(appContext)) }
+    val dispatcher: FirebaseJobDispatcher by lazy {
+        Logger.d("Creating FirebaseJobDispatcher")
+        FirebaseJobDispatcher(GooglePlayDriver(appContext))
+    }
 
     // TODO: Remove, this is just for measuring launch time.
-    var timeToLaunch : Long = System.currentTimeMillis()
+    var timeToLaunch: Long = System.currentTimeMillis()
 
     override fun onCreate() {
         super.onCreate()
 
 
         init()
-        initFabric()
+//        initFabric()
         initLogger()
-        initFeedback()
+//        initFeedback()
 
         updateDatabaseController()
 
@@ -83,7 +104,7 @@ class App : Application() {
         else
             Constants.BSIDESORL_DATABASE_NAME
 
-        setTheme( if (storage.databaseSelected == 0)
+        setTheme(if (storage.databaseSelected == 0)
             R.style.AppTheme
         else if (storage.databaseSelected == 1)
             R.style.AppTheme_Toorcon
@@ -99,7 +120,7 @@ class App : Application() {
         Logger.d("Creating database controller with database: $name")
         databaseController = DEFCONDatabaseController(appContext, name = name)
 
-        if(databaseController.exists()) {
+        if (databaseController.exists()) {
             databaseController.checkDatabase()
         }
     }
@@ -138,12 +159,12 @@ class App : Application() {
         dispatcher.cancel(SyncJob.TAG)
     }
 
-    private fun initFeedback() {
-        Amplify.initSharedInstance(this)
-                .setFeedbackEmailAddress(Constants.FEEDBACK_EMAIL)
-                .applyAllDefaultRules()
-                .setLastUpdateTimeCooldownDays(1)
-    }
+//    private fun initFeedback() {
+//        Amplify.initSharedInstance(this)
+//                .setFeedbackEmailAddress(Constants.FEEDBACK_EMAIL)
+//                .applyAllDefaultRules()
+//                .setLastUpdateTimeCooldownDays(1)
+//    }
 
     private fun init() {
         application = this
@@ -153,11 +174,11 @@ class App : Application() {
     private fun initLogger() {
         Logger.init().methodCount(1).hideThreadInfo()
     }
-
-    private fun initFabric() {
-        if (!BuildConfig.DEBUG)
-            Fabric.with(this, Crashlytics())
-    }
+//
+//    private fun initFabric() {
+//        if (!BuildConfig.DEBUG)
+//            Fabric.with(this, Crashlytics())
+//    }
 
 
     fun postBusEvent(event: Any) {

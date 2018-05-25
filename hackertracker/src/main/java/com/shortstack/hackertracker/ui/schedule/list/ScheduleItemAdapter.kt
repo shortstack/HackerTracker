@@ -24,23 +24,28 @@ class ScheduleItemAdapter(private val listViews : ListViewsInterface,
         val app = App.application
         val filter = app.storage.filter
 
+        Logger.e("Starting loading page - $page --> " + (System.currentTimeMillis() - App.application.timeToLaunch))
+
         app.databaseController.getItems(*filter.typesArray, page = page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {
-                            addAllAndNotify(it)
-                            if (app.storage.showExpiredEvents()) {
-                                scrollToCurrentTime()
-                            }
-                            if(collection.isEmpty()) {
-                                listViews.showEmptyView()
-                            }
-
                             // TODO: Remove, this is only for debugging.
                             if( page == 0 ) {
                                 Logger.d("Loaded first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
                             }
+
+
+                            addAllAndNotify(it)
+//                            if (app.storage.showExpiredEvents()) {
+//                                scrollToCurrentTime()
+//                            }
+//                            if(collection.isEmpty()) {
+//                                listViews.showEmptyView()
+//                            }
+
+
                         }, {
                     e ->
                     Logger.e(e, "Not success.")

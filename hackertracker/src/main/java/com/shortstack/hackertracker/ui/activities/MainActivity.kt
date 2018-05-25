@@ -32,6 +32,9 @@ import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleItemBottomSheet
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import com.shortstack.hackertracker.utils.MaterialAlert
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
@@ -42,9 +45,9 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     private var mFragmentIndex = DEFAULT_FRAGMENT_INDEX
 
-    private val titles : Array<String> by lazy { resources.getStringArray(R.array.nav_item_activity_titles) }
+    private val titles: Array<String> by lazy { resources.getStringArray(R.array.nav_item_activity_titles) }
 
-    override fun onCreate(savedInstanceState : Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         if (!DatabaseController.exists(this, App.application.databaseController.databaseName)) {
@@ -63,7 +66,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         if (savedInstanceState == null) {
 
             // TODO: Remove, this is only for debugging.
-            mFragmentIndex = if(BuildConfig.DEBUG ) {
+            mFragmentIndex = if (BuildConfig.DEBUG) {
                 DEFAULT_FRAGMENT_INDEX
             } else {
                 App.application.storage.viewPagerPosition
@@ -71,10 +74,10 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             forceMenuHighlighted()
             loadFragment()
 
-            if (Amplify.getSharedInstance().shouldPrompt()) {
-                val review = ReviewBottomSheet.newInstance()
-                review.show(this.supportFragmentManager, review.tag)
-            }
+//            if (Amplify.getSharedInstance().shouldPrompt()) {
+//                val review = ReviewBottomSheet.newInstance()
+//                review.show(this.supportFragmentManager, review.tag)
+//            }
         }
 
         handleIntent(intent)
@@ -88,26 +91,24 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
 
-
-
     private fun setNavHeaderMargin() {
-        val params = nav_view.getHeaderView(0).imageView.layoutParams as ViewGroup.MarginLayoutParams
-        params.topMargin = getStatusBarHeight()
+//        val params = nav_view.getHeaderView(0).imageView.layoutParams as ViewGroup.MarginLayoutParams
+//        params.topMargin = getStatusBarHeight()
     }
 
 
-    override fun getTheme() : Resources.Theme {
+    override fun getTheme(): Resources.Theme {
         val theme = super.getTheme()
         theme.applyStyle(App.application.storage.databaseTheme, true)
         return theme
     }
 
-    override fun onNewIntent(intent : Intent?) {
+    override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         handleIntent(intent)
     }
 
-    private fun handleIntent(intent : Intent?) {
+    private fun handleIntent(intent: Intent?) {
         if (intent == null || intent.extras == null)
             return
 
@@ -124,9 +125,9 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun forceMenuHighlighted() {
-        val menu = nav_view!!.menu
-        if( menu.size() > mFragmentIndex )
-            menu.getItem(mFragmentIndex).isChecked = true
+//        val menu = nav_view!!.menu
+//        if( menu.size() > mFragmentIndex )
+//            menu.getItem(mFragmentIndex).isChecked = true
     }
 
     private fun loadFragment() {
@@ -148,7 +149,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         drawer_layout!!.closeDrawers()
     }
 
-    private val fragmentEvent : AnalyticsController.Analytics
+    private val fragmentEvent: AnalyticsController.Analytics
         get() {
             return when (mFragmentIndex) {
                 NAV_HOME -> AnalyticsController.Analytics.FRAGMENT_HOME
@@ -171,7 +172,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         filter!!.visibility = if (mFragmentIndex == NAV_SCHEDULE) View.VISIBLE else View.GONE
     }
 
-    private val currentFragment : Fragment
+    private val currentFragment: Fragment
         get() {
             return when (mFragmentIndex) {
                 NAV_HOME -> HomeFragment.newInstance()
@@ -208,20 +209,20 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         super.onBackPressed()
     }
 
-    override fun onCreateOptionsMenu(menu : Menu) : Boolean {
-        val inflater = menuInflater
-        inflater.inflate(R.menu.search_menu, menu)
+//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+//        val inflater = menuInflater
+//        inflater.inflate(R.menu.search_menu, menu)
+//
+//        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
+//        val searchMenuItem = menu.findItem(R.id.search)
+//        val searchView = searchMenuItem.actionView as SearchView
+//
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
+//
+//        return true
+//    }
 
-        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-        val searchMenuItem = menu.findItem(R.id.search)
-        val searchView = searchMenuItem.actionView as SearchView
-
-        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-
-        return true
-    }
-
-    override fun onOptionsItemSelected(item : MenuItem) : Boolean {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.search -> {
                 val fragment = SearchFragment.newInstance()
@@ -232,11 +233,11 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
                 replaceFragment(fragment, fragmentTitle, fragmentTag, R.id.frame)
 
                 item.setOnActionExpandListener(object : MenuItem.OnActionExpandListener {
-                    override fun onMenuItemActionExpand(p0 : MenuItem?) : Boolean {
+                    override fun onMenuItemActionExpand(p0: MenuItem?): Boolean {
                         return true
                     }
 
-                    override fun onMenuItemActionCollapse(p0 : MenuItem?) : Boolean {
+                    override fun onMenuItemActionCollapse(p0: MenuItem?): Boolean {
                         loadFragment()
                         return true
                     }
@@ -247,24 +248,24 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
 
-    private fun initViewPager() {
+    private fun initViewPager(nav_view: NavigationView) {
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer_layout!!.setDrawerListener(toggle)
+        drawer_layout.setDrawerListener(toggle)
         toggle.syncState()
 
-        nav_view!!.setNavigationItemSelectedListener(this)
-        if( App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME  ) {
-            nav_view.menu.getItem(2).setTitle(R.string.map)
-        }
-
-        if( App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME ) {
-            nav_view.menu.removeItem(R.id.nav_information)
-        }
+        nav_view.setNavigationItemSelectedListener(this)
+//        if( App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME  ) {
+//            nav_view.menu.getItem(2).setTitle(R.string.map)
+//        }
+//
+//        if( App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME ) {
+//            nav_view.menu.removeItem(R.id.nav_information)
+//        }
     }
 
-    override fun onNavigationItemSelected(item : MenuItem) : Boolean {
+    override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.itemId == R.id.nav_change_con) {
             onChangeCon()
             return true
@@ -297,11 +298,11 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         forceMenuHighlighted()
     }
 
-    private fun setFragmentIndex(item : MenuItem) {
+    private fun setFragmentIndex(item: MenuItem) {
         mFragmentIndex = getFragmentIndex(item)
     }
 
-    private fun getFragmentIndex(item : MenuItem) : Int {
+    private fun getFragmentIndex(item: MenuItem): Int {
         when (item.itemId) {
             R.id.nav_home -> return NAV_HOME
             R.id.nav_schedule -> return NAV_SCHEDULE
@@ -315,13 +316,13 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         throw IllegalStateException("Could not find fragment with id: ${item.itemId}.")
     }
 
-    private val fragmentTag : String
+    private val fragmentTag: String
         get() = "home_fragment_" + mFragmentIndex
 
-    private val fragmentTitle : String
+    private val fragmentTitle: String
         get() = titles[mFragmentIndex]
 
-    fun loadFragment(fragment : Int) {
+    fun loadFragment(fragment: Int) {
         mFragmentIndex = fragment
         forceMenuHighlighted()
         loadFragment()
