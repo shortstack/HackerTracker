@@ -8,6 +8,7 @@ import android.content.res.Resources
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
+import android.support.v4.view.AsyncLayoutInflater
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -59,7 +60,25 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        initViewPager()
+        Single.fromCallable {
+            Thread.sleep(250)
+
+        }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Logger.d("Done!")
+
+                    AsyncLayoutInflater(this@MainActivity).inflate(R.layout.row_nav_view, drawer_layout) { view, resid, parent ->
+                        parent?.addView(view)
+                        initViewPager(view as NavigationView)
+                    }
+                }, {
+                    Logger.e("Error!"  + it.message)
+
+                })
+
+
+
 
         filter.setOnClickListener { onFilterClick() }
 
