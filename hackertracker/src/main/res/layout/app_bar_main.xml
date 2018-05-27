@@ -52,12 +52,12 @@
         app:pressedTranslationZ="12dp" />
 
 
-    <com.shortstack.hackertracker.view.FilterView
-        android:id="@+id/filters"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:elevation="30dp"
-        android:visibility="invisible"
-        tools:visibility="visible" />
+    <!--<com.shortstack.hackertracker.view.FilterView-->
+        <!--android:id="@+id/filters"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:elevation="30dp"-->
+        <!--android:visibility="invisible"-->
+        <!--tools:visibility="visible" />-->
 
 </RelativeLayout>
