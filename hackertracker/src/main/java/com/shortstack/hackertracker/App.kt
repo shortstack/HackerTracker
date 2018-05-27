@@ -8,7 +8,6 @@ import com.firebase.jobdispatcher.Lifetime
 import com.firebase.jobdispatcher.Trigger
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.di.DaggerMyComponent
 import com.shortstack.hackertracker.di.MyComponent
 import com.shortstack.hackertracker.di.modules.*
@@ -29,8 +28,9 @@ class App : Application() {
     @Deprecated("use DI")
     private val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(applicationContext)) }
 
+
     // TODO: Remove, this is just for measuring launch time.
-    var timeToLaunch : Long = System.currentTimeMillis()
+    var timeToLaunch: Long = System.currentTimeMillis()
 
     override fun onCreate() {
         super.onCreate()

@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.ui.activities
 
+
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
 import android.content.Intent
@@ -9,6 +10,7 @@ import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
+import android.support.v4.view.AsyncLayoutInflater
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
@@ -40,6 +42,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.alert_filter.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
+import kotlinx.android.synthetic.main.row_nav_view.*
 import javax.inject.Inject
 
 
@@ -64,8 +67,10 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-
-        initViewPager()
+        AsyncLayoutInflater(this@MainActivity).inflate(R.layout.row_nav_view, drawer_layout) { view, resid, parent ->
+            parent?.addView(view)
+            initViewPager(view as NavigationView)
+        }
 
         filter.setOnClickListener { onFilterClick() }
 
@@ -73,7 +78,8 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         if (savedInstanceState == null) {
 
-//            // TODO: Remove, this is only for debugging.
+
+            // TODO: Remove, this is only for debugging.
             mFragmentIndex = if (BuildConfig.DEBUG) {
                 DEFAULT_FRAGMENT_INDEX
             } else {
@@ -182,7 +188,8 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun forceMenuHighlighted() {
-        val menu = nav_view!!.menu
+        val menu = nav_view?.menu ?: return
+
         if (menu.size() > mFragmentIndex)
             menu.getItem(mFragmentIndex).isChecked = true
     }
@@ -367,7 +374,6 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         super.onBackPressed()
     }
 
-
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.search -> {
@@ -394,7 +400,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
 
-    private fun initViewPager() {
+    private fun initViewPager(nav_view: NavigationView) {
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
@@ -409,63 +415,63 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         if (item.itemId in 400..500) {
             database.changeConference(item.itemId - 400)
             drawer_layout.closeDrawers()
+            }
+
+            setFragmentIndex(item)
+            loadFragment()
+
+            return true
         }
 
-        setFragmentIndex(item)
-        loadFragment()
-
-        return true
-    }
-
-    private fun setFragmentIndex(item: MenuItem) {
-        mFragmentIndex = getFragmentIndex(item)
-    }
-
-    private fun getFragmentIndex(item: MenuItem): Int {
-        when (item.itemId) {
-            R.id.nav_home -> return NAV_HOME
-            R.id.nav_schedule -> return NAV_SCHEDULE
-            R.id.nav_map -> return NAV_MAP
-            R.id.nav_information -> return NAV_INFORMATION
-
-            R.id.nav_companies -> return NAV_VENDORS
-            R.id.nav_settings -> return NAV_SETTINGS
+        private fun setFragmentIndex(item: MenuItem) {
+            mFragmentIndex = getFragmentIndex(item)
         }
 
-        throw IllegalStateException("Could not find fragment with id: ${item.itemId}.")
-    }
+        private fun getFragmentIndex(item: MenuItem): Int {
+            when (item.itemId) {
+                R.id.nav_home -> return NAV_HOME
+                R.id.nav_schedule -> return NAV_SCHEDULE
+                R.id.nav_map -> return NAV_MAP
+                R.id.nav_information -> return NAV_INFORMATION
 
-    private val fragmentTag: String
+                R.id.nav_companies -> return NAV_VENDORS
+                R.id.nav_settings -> return NAV_SETTINGS
+            }
+
+            throw IllegalStateException("Could not find fragment with id: ${item.itemId}.")
+        }
+
+        private val fragmentTag: String
         get() = "home_fragment_" + mFragmentIndex
 
-    private val fragmentTitle: String
+        private val fragmentTitle: String
         get() {
             return resources.getStringArray(R.array.nav_item_activity_titles)[mFragmentIndex]
         }
 
-    fun loadFragment(fragment: Int) {
-        mFragmentIndex = fragment
-        forceMenuHighlighted()
-        loadFragment()
-    }
-
-    protected fun getStatusBarHeight(): Int {
-        var result = 0
-        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            result = resources.getDimensionPixelSize(resourceId)
+        fun loadFragment(fragment: Int) {
+            mFragmentIndex = fragment
+            forceMenuHighlighted()
+            loadFragment()
         }
-        return result
-    }
 
-    companion object {
+        protected fun getStatusBarHeight(): Int {
+            var result = 0
+            val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+            if (resourceId > 0) {
+                result = resources.getDimensionPixelSize(resourceId)
+            }
+            return result
+        }
 
-        val DEFAULT_FRAGMENT_INDEX = 1
-        val NAV_HOME = 0
-        val NAV_SCHEDULE = 1
-        val NAV_MAP = 2
-        val NAV_INFORMATION = 3
-        val NAV_VENDORS = 4
-        val NAV_SETTINGS = 5
+        companion object {
+
+            val DEFAULT_FRAGMENT_INDEX = 1
+            val NAV_HOME = 0
+            val NAV_SCHEDULE = 1
+            val NAV_MAP = 2
+            val NAV_INFORMATION = 3
+            val NAV_VENDORS = 4
+            val NAV_SETTINGS = 5
+        }
     }
-}
