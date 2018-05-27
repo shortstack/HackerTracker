@@ -63,11 +63,6 @@ class SplashActivity : AppCompatActivity() {
 
 
     private fun startHomeActivity() {
-        if (!database.db.initialized) {
-            Logger.e("Database still not initialized.")
-            return
-        }
-
         startActivity(Intent(this@SplashActivity, MainActivity::class.java))
         finish()
     }

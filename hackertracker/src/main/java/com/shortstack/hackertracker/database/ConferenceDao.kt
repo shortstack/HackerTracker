@@ -29,6 +29,9 @@ interface ConferenceDao {
     @Update
     fun update(conference: Conference)
 
+    @Update
+    fun update(list: List<Conference>)
+
     @Query("SELECT * FROM conference where `index` = :id")
     fun getCon(id: Int): Single<Conference>
 

@@ -116,7 +116,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     @Subscribe
     fun onChangeConEvent(event: ChangeConEvent) {
-        database.db.conferenceDao().getAll()
+        database.getCons()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -144,29 +144,6 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
                 })
     }
-
-    private fun addConferenceMenuItems() {
-        database.db.conferenceDao().getAll()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-
-                    val current = it.first { it.isSelected }
-
-                    nav_view.getHeaderView(0).nav_title.text = current.title
-
-                    val menu = nav_view.menu
-                    it.filter { !it.isSelected }.forEach {
-                        val item = menu.add(Menu.NONE, 400 + it.index, 3, it.title)
-                        item.icon = ContextCompat.getDrawable(this, R.drawable.ic_chevron_right_white_24dp)
-                    }
-
-                }, {
-
-                })
-
-    }
-
 
     private fun setNavHeaderMargin() {
         val params = nav_view.getHeaderView(0).imageView.layoutParams as ViewGroup.MarginLayoutParams

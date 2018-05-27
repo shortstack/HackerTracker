@@ -39,8 +39,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
     abstract fun vendorDao(): VendorDao
 
-    var currentConference: Conference? = null
-
     var initialized: Boolean = true
 
     @Inject
@@ -54,7 +52,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
         conferences.let {
             it.conferences.first().isSelected = true
             conferenceDao().insertAll(it.conferences)
-            currentConference = it.conferences.first()
         }
 
         conferences.conferences.forEach {

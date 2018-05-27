@@ -63,7 +63,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
             return
         }
 
-        database.db.eventDao().findByText("%$text%")
+        database.findItem("%$text%")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
 //                .debounce(300, TimeUnit.MILLISECONDS)

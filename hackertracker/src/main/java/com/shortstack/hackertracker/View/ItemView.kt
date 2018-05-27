@@ -191,7 +191,7 @@ class ItemView : CardView {
     private fun renderCategoryColour() {
         val event = content?.type ?: return
 
-        database.db.typeDao().getTypeForEvent(event)
+        database.getTypeForEvent(event)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -234,7 +234,7 @@ class ItemView : CardView {
         event.isBookmarked = !event.isBookmarked
 
         Single.fromCallable {
-            database.db.eventDao().update(event)
+            database.updateEvent(event)
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()
