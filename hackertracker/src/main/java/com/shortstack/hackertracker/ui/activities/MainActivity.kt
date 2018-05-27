@@ -69,27 +69,27 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 //        Logger.d("onCreate")
 //        App.application.registerBusListener(this)
 
-//        initViewPager()
-//
-//        filter.setOnClickListener { onFilterClick() }
-//
-//        close.setOnClickListener { onFilterClick() }
+        initViewPager()
+
+        filter.setOnClickListener { onFilterClick() }
+
+        close.setOnClickListener { onFilterClick() }
 
         if (savedInstanceState == null) {
 
 //            // TODO: Remove, this is only for debugging.
-//            mFragmentIndex = if(BuildConfig.DEBUG ) {
-//                DEFAULT_FRAGMENT_INDEX
-//            } else {
-//                App.application.storage.viewPagerPosition
-//            }
-//            forceMenuHighlighted()
-//            loadFragment()
+            mFragmentIndex = if(BuildConfig.DEBUG ) {
+                DEFAULT_FRAGMENT_INDEX
+            } else {
+                App.application.storage.viewPagerPosition
+            }
+            forceMenuHighlighted()
+            loadFragment()
 
-//            if (Amplify.getSharedInstance().shouldPrompt() && !BuildConfig.DEBUG) {
-//                val review = ReviewBottomSheet.newInstance()
-//                review.show(this.supportFragmentManager, review.tag)
-//            }
+            if (Amplify.getSharedInstance().shouldPrompt() && !BuildConfig.DEBUG) {
+                val review = ReviewBottomSheet.newInstance()
+                review.show(this.supportFragmentManager, review.tag)
+            }
         }
 
 //        handleIntent(intent)

@@ -74,7 +74,7 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
                         Logger.d("Time to query " + (System.currentTimeMillis() - querySecondTime))
                     }
 
-//                    addAllAndNotify(it)
+                    addAllAndNotify(it)
 
                     Debug.stopMethodTracing()
 
