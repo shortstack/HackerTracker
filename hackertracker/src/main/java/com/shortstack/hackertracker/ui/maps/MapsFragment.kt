@@ -11,8 +11,6 @@ import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.utils.MaterialAlert
-import com.shortstack.hackertracker.view.UberView
 import kotlinx.android.synthetic.main.fragment_maps.*
 import javax.inject.Inject
 
@@ -25,7 +23,6 @@ class MapsFragment : Fragment() {
     lateinit var database: DatabaseManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        setHasOptionsMenu(true)
         return inflater.inflate(R.layout.fragment_maps, container, false)
     }
 
@@ -47,30 +44,9 @@ class MapsFragment : Fragment() {
         }
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
-            R.id.action_uber -> {
-                val context = context ?: return true
-
-                analytics.tagCustomEvent(AnalyticsController.Analytics.UBER)
-                MaterialAlert.create(context).setTitle(com.shortstack.hackertracker.R.string.uber).setView(UberView(context)).show()
-                return true
-            }
-        }
-
-        return false
-    }
-
     override fun onDestroyView() {
         (pager.adapter as PagerAdapter).destroy()
         super.onDestroyView()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater?.inflate(R.menu.maps, menu)
-        if (database.databaseName != Constants.DEFCON_DATABASE_NAME) {
-            menu?.removeItem(R.id.action_uber)
-        }
     }
 
     class PagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {

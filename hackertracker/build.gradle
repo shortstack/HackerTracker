@@ -89,11 +89,6 @@ dependencies {
         transitive = true
     }
 
-    // Uber
-    implementation('com.uber.sdk:rides-android:0.6.1') {
-        exclude group: 'org.apache.httpcomponents'
-    }
-
     // Generic Renders for Lists
     implementation 'com.github.Shyish:GenericRenderers:1.0.2'
     // Pretty Logger
