@@ -2,7 +2,6 @@ package com.shortstack.hackertracker.network
 
 import com.google.gson.annotations.SerializedName
 import com.shortstack.hackertracker.models.Event
-import com.shortstack.hackertracker.models.Item
 
 data class SyncResponse(
 

@@ -16,7 +16,6 @@ import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.Event
-import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.network.task.ReminderJob
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -82,7 +81,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
             return builder
         }
 
-    fun scheduleItemNotification(item: Item) {
+    fun scheduleItemNotification(item: Event) {
         val window = item.notificationTime - 1200
 
         Logger.d("Scheduling item notification. In $window seconds, " + (window / 60) + " mins, " + (window / 3600) + " hrs.")

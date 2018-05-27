@@ -36,6 +36,7 @@ import com.shortstack.hackertracker.ui.schedule.ScheduleItemBottomSheet
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.squareup.otto.Subscribe
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
@@ -72,9 +73,10 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             initViewPager(view as NavigationView)
         }
 
+
         filter.setOnClickListener { onFilterClick() }
 
-        close.setOnClickListener { onFilterClick() }
+//        close.setOnClickListener { onFilterClick() }
 
         if (savedInstanceState == null) {
 
@@ -267,47 +269,47 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
 //        val cx = filters.width / 2
 //        val cy = filters.height / 2
-
-        val position = IntArray(2)
-
-        filter.getLocationOnScreen(position)
-
-        val (cx, cy) = position
-
-        val radius = Math.hypot(cx.toDouble(), cy.toDouble())
-
-        if (filters.visibility == View.INVISIBLE) {
-
-
-            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ViewAnimationUtils.createCircularReveal(filters, cx, cy, 0f, radius.toFloat())
-            } else {
-                null
-            }
-
-            filters.visibility = View.VISIBLE
-
-            anim?.start()
-        } else {
-
-            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ViewAnimationUtils.createCircularReveal(filters, cx, cy, radius.toFloat(), 0f)
-            } else {
-
-                filters.visibility = View.INVISIBLE
-                null
-            }
-
-            anim?.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator?) {
-                    super.onAnimationEnd(animation)
-                    filters.visibility = View.INVISIBLE
-                    toggleFAB(onClick = false)
-                }
-            })
-
-            anim?.start()
-        }
+//
+//        val position = IntArray(2)
+//
+//        filter.getLocationOnScreen(position)
+//
+//        val (cx, cy) = position
+//
+//        val radius = Math.hypot(cx.toDouble(), cy.toDouble())
+//
+//        if (filters.visibility == View.INVISIBLE) {
+//
+//
+//            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                ViewAnimationUtils.createCircularReveal(filters, cx, cy, 0f, radius.toFloat())
+//            } else {
+//                null
+//            }
+//
+//            filters.visibility = View.VISIBLE
+//
+//            anim?.start()
+//        } else {
+//
+//            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                ViewAnimationUtils.createCircularReveal(filters, cx, cy, radius.toFloat(), 0f)
+//            } else {
+//
+//                filters.visibility = View.INVISIBLE
+//                null
+//            }
+//
+//            anim?.addListener(object : AnimatorListenerAdapter() {
+//                override fun onAnimationEnd(animation: Animator?) {
+//                    super.onAnimationEnd(animation)
+//                    filters.visibility = View.INVISIBLE
+//                    toggleFAB(onClick = false)
+//                }
+//            })
+//
+//            anim?.start()
+//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -319,8 +321,8 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     private fun toggleFAB(onClick: Boolean = false) {
 
 
-        val cx = filter.width / 2 - filters.width / 2
-        val cy = filter.height / 2 - filters.height / 2
+        val cx = filter.width / 2
+        val cy = filter.height / 2
 
 
         val radius = Math.hypot(cx.toDouble(), cy.toDouble())
@@ -366,10 +368,10 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
             return
         }
 
-        if (filters.visibility == View.VISIBLE) {
-            onFilterClick()
-            return
-        }
+//        if (filters.visibility == View.VISIBLE) {
+//            onFilterClick()
+//            return
+//        }
 
         super.onBackPressed()
     }
@@ -415,63 +417,63 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         if (item.itemId in 400..500) {
             database.changeConference(item.itemId - 400)
             drawer_layout.closeDrawers()
-            }
-
-            setFragmentIndex(item)
-            loadFragment()
-
-            return true
         }
 
-        private fun setFragmentIndex(item: MenuItem) {
-            mFragmentIndex = getFragmentIndex(item)
+        setFragmentIndex(item)
+        loadFragment()
+
+        return true
+    }
+
+    private fun setFragmentIndex(item: MenuItem) {
+        mFragmentIndex = getFragmentIndex(item)
+    }
+
+    private fun getFragmentIndex(item: MenuItem): Int {
+        when (item.itemId) {
+            R.id.nav_home -> return NAV_HOME
+            R.id.nav_schedule -> return NAV_SCHEDULE
+            R.id.nav_map -> return NAV_MAP
+            R.id.nav_information -> return NAV_INFORMATION
+
+            R.id.nav_companies -> return NAV_VENDORS
+            R.id.nav_settings -> return NAV_SETTINGS
         }
 
-        private fun getFragmentIndex(item: MenuItem): Int {
-            when (item.itemId) {
-                R.id.nav_home -> return NAV_HOME
-                R.id.nav_schedule -> return NAV_SCHEDULE
-                R.id.nav_map -> return NAV_MAP
-                R.id.nav_information -> return NAV_INFORMATION
+        throw IllegalStateException("Could not find fragment with id: ${item.itemId}.")
+    }
 
-                R.id.nav_companies -> return NAV_VENDORS
-                R.id.nav_settings -> return NAV_SETTINGS
-            }
-
-            throw IllegalStateException("Could not find fragment with id: ${item.itemId}.")
-        }
-
-        private val fragmentTag: String
+    private val fragmentTag: String
         get() = "home_fragment_" + mFragmentIndex
 
-        private val fragmentTitle: String
+    private val fragmentTitle: String
         get() {
             return resources.getStringArray(R.array.nav_item_activity_titles)[mFragmentIndex]
         }
 
-        fun loadFragment(fragment: Int) {
-            mFragmentIndex = fragment
-            forceMenuHighlighted()
-            loadFragment()
-        }
-
-        protected fun getStatusBarHeight(): Int {
-            var result = 0
-            val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-            if (resourceId > 0) {
-                result = resources.getDimensionPixelSize(resourceId)
-            }
-            return result
-        }
-
-        companion object {
-
-            val DEFAULT_FRAGMENT_INDEX = 1
-            val NAV_HOME = 0
-            val NAV_SCHEDULE = 1
-            val NAV_MAP = 2
-            val NAV_INFORMATION = 3
-            val NAV_VENDORS = 4
-            val NAV_SETTINGS = 5
-        }
+    fun loadFragment(fragment: Int) {
+        mFragmentIndex = fragment
+        forceMenuHighlighted()
+        loadFragment()
     }
+
+    protected fun getStatusBarHeight(): Int {
+        var result = 0
+        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+        if (resourceId > 0) {
+            result = resources.getDimensionPixelSize(resourceId)
+        }
+        return result
+    }
+
+    companion object {
+
+        val DEFAULT_FRAGMENT_INDEX = 1
+        val NAV_HOME = 0
+        val NAV_SCHEDULE = 1
+        val NAV_MAP = 2
+        val NAV_INFORMATION = 3
+        val NAV_VENDORS = 4
+        val NAV_SETTINGS = 5
+    }
+}

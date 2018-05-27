@@ -7,7 +7,6 @@ import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Event
-import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
@@ -45,6 +44,11 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {
+                            // TODO: Remove, this is only for debugging.
+                            if( page == 0 ) {
+                                Logger.d("Loaded first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
+                            }
+
                             addAllAndNotify(it)
 
                             // TODO: This solution does not work with pagination.
@@ -55,10 +59,7 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
                                 listViews.showEmptyView()
                             }
 
-                            // TODO: Remove, this is only for debugging.
-                            if( page == 0 ) {
-                                Logger.d("Loaded first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
-                            }
+
 
 
                             addAllAndNotify(it)
@@ -119,8 +120,8 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
     private fun findCurrentPositionByTime(): Int {
         val currentDate = Date().now()
 
-        val first = collection.filterIsInstance<Item>()
-                .firstOrNull { it.beginDateObject.after(currentDate) } ?: return -1
+        val first = collection.filterIsInstance<Event>()
+                .firstOrNull { it.begin.after(currentDate) } ?: return -1
 
         val indexOf = collection.indexOf(first)
 
@@ -136,10 +137,10 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
         var hasRemovedEvent = false
 
         for (i in collection.indices.reversed()) {
-            if (collection[i] is Item) {
-                val def = collection[i] as Item
+            if (collection[i] is Event) {
+                val def = collection[i] as Event
 
-                if (def.hasExpired()) {
+                if (def.hasFinished) {
                     collection.removeAt(i)
                     notifyItemRemoved(i)
 

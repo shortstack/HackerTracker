@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.util.DisplayMetrics
@@ -46,7 +47,7 @@ class ItemView : CardView {
     private fun init() {
         App.application.myComponent.inject(this)
 
-        setCardBackgroundColor(resources.getColor(R.color.card_background))
+        setCardBackgroundColor(ContextCompat.getColor(context, R.color.card_background))
 
         if (mRoundCorners) {
             val radius = convertDpToPixel(2f, context)
@@ -167,12 +168,14 @@ class ItemView : CardView {
 
         finishAnimation()
 
-        val duration = PROGRESS_UPDATE_DURATION_PER_PERCENT * (progress - this.progress!!.progress)
+        val duration = PROGRESS_UPDATE_DURATION_PER_PERCENT * (progress - this.progress.progress)
 
         mAnimation = ObjectAnimator.ofInt(this.progress, "progress", progress)
-        mAnimation!!.duration = duration.toLong()
-        mAnimation!!.interpolator = DecelerateInterpolator()
-        mAnimation!!.start()
+                .also {
+                    it.duration = duration.toLong()
+                    it.interpolator = DecelerateInterpolator()
+                    it.start()
+                }
     }
 
     private fun getProgress(): Int {

@@ -50,4 +50,17 @@ data class Event(
     val hasStarted: Boolean
         get() = begin.after(Date().now())
 
+    val hasFinished : Boolean
+        get() = end.after(Date().now())
+
+    val notificationTime: Int
+        get() {
+            val current = Calendar.getInstance()
+
+            val calendar = Calendar.getInstance()
+            calendar.time = begin
+
+            return ((calendar.timeInMillis - current.timeInMillis) / 1000).toInt()
+        }
+
 }
