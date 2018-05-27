@@ -15,12 +15,15 @@ import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.network.task.ReminderJob
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 
 class NotificationHelper(private val mContext: Context) {
 
 
-    fun getItemNotification(item: Item): Notification {
+    fun getItemNotification(item: Event): Notification {
         val builder = notificationBuilder
 
         builder.setContentTitle(item.title)
@@ -35,7 +38,7 @@ class NotificationHelper(private val mContext: Context) {
         return builder.build()
     }
 
-    fun getUpdatedItemNotification(item: Item): Notification {
+    fun getUpdatedItemNotification(item: Event): Notification {
         val builder = notificationBuilder
 
         builder.setContentTitle(item.title)
@@ -72,9 +75,9 @@ class NotificationHelper(private val mContext: Context) {
 
         val window = item.notificationTime - 1200
 
-        Logger.d("Scheduling item notification. In $window seconds, " + (window / 60) + " mins, " + (window/3600) + " hrs."  )
+        Logger.d("Scheduling item notification. In $window seconds, " + (window / 60) + " mins, " + (window / 3600) + " hrs.")
 
-        if( window <= 0 ) {
+        if (window <= 0) {
             return
         }
 
@@ -102,10 +105,10 @@ class NotificationHelper(private val mContext: Context) {
         postNotification(builder.build(), NOTIFICATION_SCHEDULE_UPDATE)
     }
 
-    private fun setItemPendingIntent(builder: Notification.Builder, item: Item? = null) {
+    private fun setItemPendingIntent(builder: Notification.Builder, item: Event? = null) {
         val intent = Intent(mContext, MainActivity::class.java)
 
-        if( item != null ) {
+        if (item != null) {
             val bundle = Bundle()
             bundle.putInt("target", item.index)
             intent.putExtras(bundle)
@@ -129,10 +132,13 @@ class NotificationHelper(private val mContext: Context) {
 
 
     fun postNotification(id: Int) {
-        val item = App.application.databaseController.findItem(id = id) ?: return
-
-        val managerCompat = NotificationManagerCompat.from(mContext)
-        managerCompat.notify(id, getItemNotification(item))
+        App.application.database.db.eventDao().getEventById(id = id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    val managerCompat = NotificationManagerCompat.from(mContext)
+                    managerCompat.notify(id, getItemNotification(it))
+                }
     }
 
     companion object {

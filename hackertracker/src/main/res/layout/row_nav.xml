@@ -14,9 +14,11 @@
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
-        app:cardBackgroundColor="@color/white">
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="4dp">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
@@ -39,7 +41,7 @@
 
             <TextView
                 android:id="@+id/header"
-                style="@style/TextAppearance.AppCompat.Body2"
+                style="@style/TextAppearance.AppCompat.Subhead"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="false"
@@ -71,6 +73,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/header"
                 tools:text="@string/badges" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </FrameLayout>

@@ -12,13 +12,20 @@ import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.models.Item
-import com.shortstack.hackertracker.ui.schedule.renderers.ItemRenderer
+import com.shortstack.hackertracker.models.Event
+import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
+import com.shortstack.hackertracker.view.ItemView
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
 class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
-    var adapter: RendererAdapter<Item>? = null
+    private var adapter: RendererAdapter<Event>? = null
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        return inflater.inflate(R.layout.fragment_recyclerview, container, false)
+    }
 
     override fun onQueryTextSubmit(query: String?): Boolean {
         return true
@@ -29,21 +36,17 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         return false
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater!!.inflate(R.layout.fragment_recyclerview, container, false)
-    }
-
-    override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val layout = LinearLayoutManager(context)
         list.layoutManager = layout
-        loading_progress.visibility = View.GONE;
+        loading_progress.visibility = View.GONE
 
         val rendererBuilder = RendererBuilder<Any>()
-                .bind(Item::class.java, ItemRenderer())
+                .bind(Event::class.java, EventRenderer(ItemView.DISPLAY_MODE_FULL))
 
 
-        adapter = RendererAdapter<Item>(rendererBuilder)
+        adapter = RendererAdapter(rendererBuilder)
         list.adapter = adapter
     }
 
@@ -53,17 +56,32 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         if (adapter == null)
             return
 
-        adapter!!.collection.clear()
-
         if (text.isEmpty()) {
-            adapter!!.notifyDataSetChanged()
+            adapter?.clearAndNotify()
+//            empty_view.visibility = View.VISIBLE
+//            empty_view.showDefault()
             return
         }
 
-        val timeMillis = System.currentTimeMillis()
-        adapter!!.addAll(App.application.databaseController.findByText(text))
-        Logger.d("Time to search: ${System.currentTimeMillis() - timeMillis}ms" )
-        adapter!!.notifyDataSetChanged()
+        App.application.database.db.eventDao().findByText("%$text%")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+//                .debounce(300, TimeUnit.MILLISECONDS)
+                .subscribe({
+                    adapter?.clearAndNotify()
+                    adapter?.addAllAndNotify(it)
+
+
+                    if (it.isEmpty()) {
+//                        empty_view.visibility = View.VISIBLE
+//                        empty_view.showNoResults(text)
+                    } else {
+//                        empty_view.visibility = View.GONE
+                    }
+
+                    val timeMillis = System.currentTimeMillis()
+                    Logger.d("Time to search: ${System.currentTimeMillis() - timeMillis}ms")
+                }, {})
     }
 
     companion object {

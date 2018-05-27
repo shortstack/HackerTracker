@@ -13,11 +13,11 @@ class InformationBottomSheet : GenericBottomSheet() {
     }
 
     override fun getTitle(): String {
-        return arguments.getString(ARG_TITLE)
+        return arguments?.getString(ARG_TITLE) ?: ""
     }
 
     override fun getDescription(): String {
-        return arguments.getString(ARG_DESC)
+        return arguments?.getString(ARG_DESC) ?: ""
     }
 
     override fun hasLink(): Boolean {

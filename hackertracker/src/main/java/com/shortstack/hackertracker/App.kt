@@ -14,8 +14,9 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.analytics.AnalyticsController
-import com.shortstack.hackertracker.database.DEFCONDatabaseController
+import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.event.MainThreadBus
+import com.shortstack.hackertracker.models.Conference
 import com.shortstack.hackertracker.network.task.SyncJob
 import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
@@ -34,8 +35,6 @@ class App : Application() {
     val bus: Bus by lazy { MainThreadBus() }
     // Storage
     val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil() }
-    // Database
-    lateinit var databaseController: DEFCONDatabaseController
     // Notifications
     val notificationHelper: NotificationHelper by lazy { NotificationHelper(appContext) }
     // Analytics
@@ -50,6 +49,9 @@ class App : Application() {
     // TODO: Remove, this is just for measuring launch time.
     var timeToLaunch : Long = System.currentTimeMillis()
 
+    lateinit var database: DatabaseManager
+
+
     override fun onCreate() {
         super.onCreate()
 
@@ -59,51 +61,23 @@ class App : Application() {
         initLogger()
         initFeedback()
 
-        updateDatabaseController()
+        database = DatabaseManager(this)
+//        updateTheme(database.getCurrentCon())
 
-        if (!storage.isSyncScheduled) {
-            storage.setSyncScheduled()
-            scheduleSync()
-        }
 
         // TODO: Remove, this is only for debugging.
         Logger.d("Time to complete onCreate " + (System.currentTimeMillis() - timeToLaunch))
     }
 
-    fun updateDatabaseController() {
-        val name = if (storage.databaseSelected == 0) Constants.DEFCON_DATABASE_NAME
-        else if (storage.databaseSelected == 1)
-            Constants.TOORCON_DATABASE_NAME
-        else if (storage.databaseSelected == 2)
-            Constants.SHMOOCON_DATABASE_NAME
-        else if (storage.databaseSelected == 3)
-            Constants.HACKWEST_DATABASE_NAME
-        else if (storage.databaseSelected == 4)
-            Constants.LAYERONE_DATABASE_NAME
-        else
-            Constants.BSIDESORL_DATABASE_NAME
-
-        setTheme( if (storage.databaseSelected == 0)
-            R.style.AppTheme
-        else if (storage.databaseSelected == 1)
-            R.style.AppTheme_Toorcon
-        else if (storage.databaseSelected == 2)
-            R.style.AppTheme_Shmoocon
-        else if (storage.databaseSelected == 3)
-            R.style.AppTheme_Hackwest
-        else if (storage.databaseSelected == 4)
-            R.style.AppTheme_LayerOne
-        else
-            R.style.AppTheme_BsidesOrl)
-
-        Logger.d("Creating database controller with database: $name")
-        databaseController = DEFCONDatabaseController(appContext, name = name)
-
-        if(databaseController.exists()) {
-            databaseController.checkDatabase()
+    fun updateTheme(con: Conference?) {
+        val theme = when (con?.index) {
+            1 -> R.style.AppTheme_Hackwest
+            2 -> R.style.AppTheme_Toorcon
+            3 -> R.style.AppTheme_BsidesOrl
+            else -> R.style.AppTheme
         }
+        setTheme(theme)
     }
-
 
     fun scheduleSync() {
 

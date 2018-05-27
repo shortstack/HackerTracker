@@ -1,55 +1,89 @@
 package com.shortstack.hackertracker.ui.schedule.list
 
+import android.os.Debug
 import android.support.v7.widget.RecyclerView
 import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.models.Day
-import com.shortstack.hackertracker.models.Item
-import com.shortstack.hackertracker.models.Time
+import com.shortstack.hackertracker.isSameDay
+import com.shortstack.hackertracker.models.*
+import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
 
-class ScheduleItemAdapter(private val listViews : ListViewsInterface,
-                          private val layout : RecyclerView.LayoutManager,
-                          val list : RecyclerView) : RendererAdapter<Any>(ScheduleItemBuilder()) {
+class ScheduleItemAdapter(private val listViews: ListViewsInterface,
+                          private val layout: RecyclerView.LayoutManager,
+                          val list: RecyclerView) : RendererAdapter<Any>(ScheduleItemBuilder()) {
 
     fun initContents() {
+        clearAndNotify()
         listViews.hideViews()
         load()
     }
 
-    fun load(page : Int = 0) {
+    fun load(page: Int = 0) {
+        Logger.e("Loading $page")
+
         val app = App.application
         val filter = app.storage.filter
 
-        app.databaseController.getItems(*filter.typesArray, page = page)
+
+//        App.application.database.getEventTypes()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                    addAllAndNotify(it.map { it.event })
+//
+//                    // TODO: Remove, this is only for debugging.
+//                    if (page == 0) {
+//                        Logger.d("Loaded first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
+//                    }
+//                }, {
+//                    listViews.showErrorView()
+//                })
+
+        val database = App.application.database
+//        val queryTime = System.currentTimeMillis()
+
+//
+//        val events = database.db.eventDao().getUIThreadSchedule()
+//
+//        if (page == 0) {
+//            Logger.d("First chunk loaded " + (System.currentTimeMillis() - App.application.timeToLaunch))
+//            Logger.d("Time to query " + (System.currentTimeMillis() - queryTime))
+//        }
+
+//        addAllAndNotify(events)
+
+        Debug.startMethodTracing("init.trace")
+
+
+        val querySecondTime = System.currentTimeMillis()
+
+        Logger.d("Loading first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
+
+
+        database.db.eventDao().getFullSchedule()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        {
-                            addAllAndNotify(it)
-                            if (app.storage.showExpiredEvents()) {
-                                scrollToCurrentTime()
-                            }
-                            if(collection.isEmpty()) {
-                                listViews.showEmptyView()
-                            }
+                .subscribe({
+                    // TODO: Remove, this is only for debugging.
+                    if (page == 0) {
+                        Logger.d("Loaded first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
+                        Logger.d("Time to query " + (System.currentTimeMillis() - querySecondTime))
+                    }
 
-                            // TODO: Remove, this is only for debugging.
-                            if( page == 0 ) {
-                                Logger.d("Loaded first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
-                            }
-                        }, {
-                    e ->
-                    Logger.e(e, "Not success.")
+                    addAllAndNotify(it)
+
+                    Debug.stopMethodTracing()
+
+                }, {
                     listViews.showErrorView()
-                }
-                )
+                })
     }
 
-    private fun addAllAndNotify(elements : List<Item>) {
+    private fun addAllAndNotify(elements: List<Event>) {
 
         if (elements.isEmpty())
             return
@@ -61,9 +95,9 @@ class ScheduleItemAdapter(private val listViews : ListViewsInterface,
             addDay(first)
             addTime(first)
         } else {
-            val item = collection.last() as Item
+            val item = collection.last() as Event
 
-            if (first.date != item.date) {
+            if (!first.begin.isSameDay(item.begin)) {
                 addDay(first)
             }
             if (first.begin != item.begin) {
@@ -71,13 +105,15 @@ class ScheduleItemAdapter(private val listViews : ListViewsInterface,
             }
         }
 
-        for (i in 0..elements.size - 1 - 1) {
+        for (i in 0 until elements.size - 1) {
             val current = elements[i]
 
             add(current)
 
             val next = elements[i + 1]
-            if (current.date != next.date) {
+
+
+            if (!current.begin.isSameDay(next.begin)) {
                 addDay(next)
             }
 
@@ -91,19 +127,19 @@ class ScheduleItemAdapter(private val listViews : ListViewsInterface,
         notifyItemRangeInserted(size, collection.size - size)
     }
 
-    private fun addDay(item : Item) {
-        add(Day(item.beginDateObject))
+    private fun addDay(item: Event) {
+        add(Day(item.begin))
     }
 
-    private fun addTime(item : Item) {
-        add(Time(item.beginDateObject))
+    private fun addTime(item: Event) {
+        add(Time(item.begin))
     }
 
     private fun scrollToCurrentTime() {
         layout.scrollToPosition(findCurrentPositionByTime())
     }
 
-    private fun findCurrentPositionByTime() : Int {
+    private fun findCurrentPositionByTime(): Int {
         val currentDate = App.getCurrentDate()
 
         for (i in collection.indices) {

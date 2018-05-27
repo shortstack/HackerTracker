@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -44,10 +45,19 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="20dp"
         android:src="@drawable/ic_filter_list_white_24dp"
-        android:visibility="gone"
+        android:visibility="visible"
 
         app:elevation="4dp"
         app:layout_behavior="com.shortstack.hackertracker.View.ScrollingFABBehavior"
         app:pressedTranslationZ="12dp" />
+
+
+    <com.shortstack.hackertracker.view.FilterView
+        android:id="@+id/filters"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="30dp"
+        android:visibility="invisible"
+        tools:visibility="visible" />
 
 </RelativeLayout>

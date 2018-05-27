@@ -39,6 +39,8 @@ abstract class GenericBottomSheet : BottomSheetDialogFragment() {
     protected abstract fun hasLink() : Boolean
 
     fun onLinkClick() {
+        val context = context ?: return
+
         MaterialAlert.create(context)
                 .setTitle(R.string.link_warning)
                 .setMessage(String.format(context.getString(R.string.link_message), getLink()?.toLowerCase()))

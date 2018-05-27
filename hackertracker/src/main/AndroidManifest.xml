@@ -45,8 +45,6 @@
 
         <activity android:name=".ui.activities.SplashActivity" />
 
-        <activity android:name=".ui.item.ItemActivity" />
-
         <activity
             android:name="com.shortstack.hackertracker.ui.activities.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
@@ -66,7 +64,7 @@
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="3439e34f4fcc9d7eabf24f7ce529cd7415acc49d" />
-        <service android:name="com.shortstack.hackertracker.network.service.SyncService" />
+
     </application>
 
 </manifest>

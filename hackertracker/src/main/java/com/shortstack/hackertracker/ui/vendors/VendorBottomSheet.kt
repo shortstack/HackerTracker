@@ -39,12 +39,14 @@ class VendorBottomSheet : BottomSheetDialogFragment() {
     }
 
     private val content : Vendor?
-        get() = arguments.getSerializable(ARG_VENDOR) as Vendor
+        get() = arguments?.getSerializable(ARG_VENDOR) as Vendor
 
     fun onLinkClick() {
+        val context = context ?: return
+
         MaterialAlert.create(context)
                 .setTitle(R.string.link_warning)
-                .setMessage(String.format(context.getString(R.string.link_message), content!!.link!!.toLowerCase()))
+                .setMessage(String.format(context.getString(R.string.link_message), content!!.link.toLowerCase()))
                 .setPositiveButton(R.string.open_link, DialogInterface.OnClickListener { _, _ ->
                     val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(content!!.link))
                     context.startActivity(intent)
