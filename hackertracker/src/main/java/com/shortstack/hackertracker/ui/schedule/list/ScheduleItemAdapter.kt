@@ -40,7 +40,7 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
         val filter = storage.filter
 
         // TODO: Add in the filter.
-        database.getSchedule(/**filter.typesArray, page = page*/)
+        database.getSchedule(/**filter.typesArray, page = page*/ page = page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(

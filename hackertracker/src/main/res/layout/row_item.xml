@@ -13,10 +13,10 @@
         android:id="@+id/category"
         android:layout_width="10dp"
         android:layout_height="0dp"
-        android:background="@color/category_speaker"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/category_speaker" />
 
 
     <ProgressBar
@@ -26,12 +26,12 @@
         android:layout_height="0dp"
         android:alpha=".8"
         android:max="100"
-        android:progressDrawable="@drawable/progress_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:progress="24" />
+        tools:progress="67"
+        tools:progressDrawable="@drawable/progress_bar" />
 
 
     <TextView

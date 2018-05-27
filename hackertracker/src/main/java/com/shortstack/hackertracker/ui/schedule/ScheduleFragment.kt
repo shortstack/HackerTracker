@@ -131,7 +131,6 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
             override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
                 adapter.load(page)
             }
-
         })
 
         return rootView

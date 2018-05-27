@@ -49,11 +49,11 @@ class DatabaseManager(context: Context) {
 //                ?: return db.eventDao().getRecentlyUpdated())
 //    }
 
-    fun getSchedule(): Flowable<List<Event>> {
+    fun getSchedule(page: Int = 0): Flowable<List<Event>> {
 //        return db.eventDao().getFullSchedule(db.currentConference?.directory
 
 //        ?:
-        return db.eventDao().getFullSchedule()
+        return db.eventDao().getFullSchedule(page)
 //        )
 
     }
