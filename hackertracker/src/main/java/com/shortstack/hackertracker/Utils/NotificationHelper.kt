@@ -9,28 +9,40 @@ import android.media.RingtoneManager
 import android.os.Build
 import android.os.Bundle
 import android.support.v4.app.NotificationManagerCompat
+import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.firebase.jobdispatcher.Trigger
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.Event
+import com.shortstack.hackertracker.models.Item
 import com.shortstack.hackertracker.network.task.ReminderJob
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
-class NotificationHelper(private val mContext: Context) {
+class NotificationHelper @Inject constructor(private val context: Context) {
 
+    @Inject
+    lateinit var dispatcher: FirebaseJobDispatcher
 
-    fun getItemNotification(item: Event): Notification {
+    @Inject
+    lateinit var database: DatabaseManager
+
+    init {
+        App.application.myComponent.inject(this)
+    }
+
+    private fun getItemNotification(item: Event): Notification {
         val builder = notificationBuilder
 
         builder.setContentTitle(item.title)
         if (item.location != null) {
-            builder.setContentText(String.format(mContext.getString(R.string.notification_text), item.location))
+            builder.setContentText(String.format(context.getString(R.string.notification_text), item.location))
         } else {
-            builder.setContentText(mContext.getString(R.string.notification_text_blank))
+            builder.setContentText(context.getString(R.string.notification_text_blank))
         }
 
         setItemPendingIntent(builder, item)
@@ -42,7 +54,7 @@ class NotificationHelper(private val mContext: Context) {
         val builder = notificationBuilder
 
         builder.setContentTitle(item.title)
-        builder.setContentText(mContext.getString(R.string.notification_updated))
+        builder.setContentText(context.getString(R.string.notification_updated))
 
         setItemPendingIntent(builder, item)
 
@@ -52,9 +64,9 @@ class NotificationHelper(private val mContext: Context) {
     private val notificationBuilder: Notification.Builder
         get() {
             val soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
-            val color = mContext.resources.getColor(R.color.colorPrimary)
+            val color = context.resources.getColor(R.color.colorPrimary)
 
-            val builder = Notification.Builder(mContext)
+            val builder = Notification.Builder(context)
             builder.setPriority(Notification.PRIORITY_MAX)
             builder.setSound(soundUri)
             builder.setVibrate(longArrayOf(0, 250, 500, 250))
@@ -71,8 +83,6 @@ class NotificationHelper(private val mContext: Context) {
         }
 
     fun scheduleItemNotification(item: Item) {
-        val dispatcher = App.application.dispatcher
-
         val window = item.notificationTime - 1200
 
         Logger.d("Scheduling item notification. In $window seconds, " + (window / 60) + " mins, " + (window / 3600) + " hrs.")
@@ -106,7 +116,7 @@ class NotificationHelper(private val mContext: Context) {
     }
 
     private fun setItemPendingIntent(builder: Notification.Builder, item: Event? = null) {
-        val intent = Intent(mContext, MainActivity::class.java)
+        val intent = Intent(context, MainActivity::class.java)
 
         if (item != null) {
             val bundle = Bundle()
@@ -114,29 +124,28 @@ class NotificationHelper(private val mContext: Context) {
             intent.putExtras(bundle)
         }
 
-        val pendingIntent = PendingIntent.getActivity(mContext, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         builder.setContentIntent(pendingIntent)
     }
 
 
     fun postNotification(notification: Notification, id: Int) {
-        val managerCompat = NotificationManagerCompat.from(mContext)
+        val managerCompat = NotificationManagerCompat.from(context)
         managerCompat.notify(id, notification)
     }
 
     fun cancelNotification(id: Int) {
-        val dispatcher = App.application.dispatcher
         dispatcher.cancel(ReminderJob.getTag(id))
     }
 
 
     fun postNotification(id: Int) {
-        App.application.database.db.eventDao().getEventById(id = id)
+        database.findItem(id =id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    val managerCompat = NotificationManagerCompat.from(mContext)
+                    val managerCompat = NotificationManagerCompat.from(context)
                     managerCompat.notify(id, getItemNotification(it))
                 }
     }

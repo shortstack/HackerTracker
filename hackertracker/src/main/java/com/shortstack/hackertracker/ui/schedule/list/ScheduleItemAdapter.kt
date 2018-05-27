@@ -1,20 +1,34 @@
 package com.shortstack.hackertracker.ui.schedule.list
 
-import android.os.Debug
 import android.support.v7.widget.RecyclerView
 import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.isSameDay
-import com.shortstack.hackertracker.models.*
-import io.reactivex.Single
+import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.models.Day
+import com.shortstack.hackertracker.models.Event
+import com.shortstack.hackertracker.models.Item
+import com.shortstack.hackertracker.models.Time
+import com.shortstack.hackertracker.now
+import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import java.util.*
+import javax.inject.Inject
 
 class ScheduleItemAdapter(private val listViews: ListViewsInterface,
                           private val layout: RecyclerView.LayoutManager,
                           val list: RecyclerView) : RendererAdapter<Any>(ScheduleItemBuilder()) {
+
+    @Inject
+    lateinit var database: DatabaseManager
+
+    @Inject
+    lateinit var storage: SharedPreferencesUtil
+
+    init {
+        App.application.myComponent.inject(this)
+    }
 
     fun initContents() {
         clearAndNotify()
@@ -23,106 +37,54 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
     }
 
     fun load(page: Int = 0) {
-        Logger.e("Loading $page")
+        val filter = storage.filter
 
-        val app = App.application
-        val filter = app.storage.filter
-
-
-//        App.application.database.getEventTypes()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({
-//                    addAllAndNotify(it.map { it.event })
-//
-//                    // TODO: Remove, this is only for debugging.
-//                    if (page == 0) {
-//                        Logger.d("Loaded first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
-//                    }
-//                }, {
-//                    listViews.showErrorView()
-//                })
-
-        val database = App.application.database
-//        val queryTime = System.currentTimeMillis()
-
-//
-//        val events = database.db.eventDao().getUIThreadSchedule()
-//
-//        if (page == 0) {
-//            Logger.d("First chunk loaded " + (System.currentTimeMillis() - App.application.timeToLaunch))
-//            Logger.d("Time to query " + (System.currentTimeMillis() - queryTime))
-//        }
-
-//        addAllAndNotify(events)
-
-        Debug.startMethodTracing("init.trace")
-
-
-        val querySecondTime = System.currentTimeMillis()
-
-        Logger.d("Loading first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
-
-
-        database.db.eventDao().getFullSchedule()
+        // TODO: Add in the filter.
+        database.getSchedule(/**filter.typesArray, page = page*/)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    // TODO: Remove, this is only for debugging.
-                    if (page == 0) {
-                        Logger.d("Loaded first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
-                        Logger.d("Time to query " + (System.currentTimeMillis() - querySecondTime))
-                    }
+                .subscribe(
+                        {
+                            addAllAndNotify(it)
 
-                    addAllAndNotify(it)
-
-                    Debug.stopMethodTracing()
-
-                }, {
+                            // TODO: This solution does not work with pagination.
+//                            if (storage.showExpiredEvents()) {
+//                                scrollToCurrentTime()
+//                            }
+                            if (collection.isEmpty()) {
+                                listViews.showEmptyView()
+                            }
+                            
+                            // TODO: Remove, this is only for debugging.
+                            if( page == 0 ) {
+                                Logger.d("Loaded first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
+                            }
+                        }, {
+                    e ->
+                    Logger.e(e, "Not success.")
                     listViews.showErrorView()
                 })
     }
 
-    private fun addAllAndNotify(elements: List<Event>) {
 
+    private fun addAllAndNotify(elements: List<Event>) {
         if (elements.isEmpty())
             return
 
         val size = collection.size
 
-        val first = elements.first()
-        if (size == 0) {
-            addDay(first)
-            addTime(first)
-        } else {
-            val item = collection.last() as Event
+        val previous = collection.filterIsInstance<Event>().lastOrNull()
+        val prevDay = previous?.date
+        val prevTime = previous?.begin
 
-            if (!first.begin.isSameDay(item.begin)) {
-                addDay(first)
-            }
-            if (first.begin != item.begin) {
-                addTime(first)
+        elements.groupBy { it.date }.forEach {
+            if (prevDay != it.value.first().date) addDay(it.value.first())
+
+            it.value.groupBy { it.begin }.forEach {
+                if (prevTime != it.value.first().begin) addTime(it.value.first())
+                addAll(it.value)
             }
         }
-
-        for (i in 0 until elements.size - 1) {
-            val current = elements[i]
-
-            add(current)
-
-            val next = elements[i + 1]
-
-
-            if (!current.begin.isSameDay(next.begin)) {
-                addDay(next)
-            }
-
-            if (current.begin != next.begin) {
-                addTime(next)
-            }
-        }
-
-        add(elements[elements.size - 1])
 
         notifyItemRangeInserted(size, collection.size - size)
     }
@@ -136,35 +98,27 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
     }
 
     private fun scrollToCurrentTime() {
-        layout.scrollToPosition(findCurrentPositionByTime())
+        val position = findCurrentPositionByTime()
+
+        if (position != -1) {
+            layout.scrollToPosition(position)
+        }
     }
 
     private fun findCurrentPositionByTime(): Int {
-        val currentDate = App.getCurrentDate()
+        val currentDate = Date().now()
 
-        for (i in collection.indices) {
-            val obj = collection[i]
+        val first = collection.filterIsInstance<Item>()
+                .firstOrNull { it.beginDateObject.after(currentDate) } ?: return -1
 
-            if (obj is Item) {
+        val indexOf = collection.indexOf(first)
 
-                val beginDateObject = obj.beginDateObject
-                if (beginDateObject.after(currentDate)) {
-                    for (i1 in i - 1 downTo 0) {
-                        if (obj !is String) {
-                            return i1
-                        }
-                    }
-                    return i
-                }
-            }
-        }
-
-        return 0
+        return indexOf - 1
     }
 
     fun notifyTimeChanged() {
 
-        if (App.application.storage.showExpiredEvents())
+        if (storage.showExpiredEvents())
             return
 
         val collection = collection

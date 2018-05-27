@@ -41,7 +41,7 @@ fun Date.isSameDay(date2: Date): Boolean {
 }
 
 fun Date.isToday(): Boolean {
-    val current = App.getCurrentCalendar()
+    val current = Calendar.getInstance().now()
 
     val cal = Calendar.getInstance()
     cal.time = this
@@ -51,7 +51,7 @@ fun Date.isToday(): Boolean {
 }
 
 fun Date.isTomorrow(): Boolean {
-    val cal1 = App.getCurrentCalendar()
+    val cal1 = Calendar.getInstance().now()
     cal1.roll(Calendar.DAY_OF_YEAR, true)
 
     val cal2 = Calendar.getInstance()
@@ -61,7 +61,7 @@ fun Date.isTomorrow(): Boolean {
 }
 
 fun Date.isSoonish(SOON_DAYS_AMOUNT: Int): Boolean {
-    val cal1 = App.getCurrentCalendar()
+    val cal1 = Calendar.getInstance().now()
 
     val cal2 = Calendar.getInstance()
     cal2.time = this
@@ -105,4 +105,16 @@ fun <T> Gson.fromJsonFile(filename: String, type: Class<T>, root: String = Const
         Logger.e(e, "Could not create the database.")
         throw e
     }
+}
+
+fun Date.now(): Date {
+    if (BuildConfig.DEBUG)
+        time = Constants.DEBUG_FORCE_TIME_DATE
+
+    return this
+}
+
+fun Calendar.now(): Calendar {
+    this.time = Date().now()
+    return this
 }

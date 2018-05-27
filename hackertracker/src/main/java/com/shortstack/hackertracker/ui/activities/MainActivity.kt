@@ -2,13 +2,10 @@ package com.shortstack.hackertracker.ui.activities
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
-import android.app.SearchManager
-import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
-import android.os.Debug
 import android.support.design.widget.NavigationView
 import android.support.v4.app.Fragment
 import android.support.v4.content.ContextCompat
@@ -17,7 +14,6 @@ import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.SearchView
 import android.view.*
-import android.widget.Toast
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
@@ -25,6 +21,7 @@ import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.Event.ChangeConEvent
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
+import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.ReviewBottomSheet
 import com.shortstack.hackertracker.ui.SearchFragment
@@ -32,9 +29,10 @@ import com.shortstack.hackertracker.ui.SettingsFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
-import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
+import com.shortstack.hackertracker.ui.schedule.ScheduleItemBottomSheet
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
+import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.squareup.otto.Subscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -42,32 +40,30 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.alert_filter.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
+import javax.inject.Inject
 
 
 open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
 
-
     private var mFragmentIndex = DEFAULT_FRAGMENT_INDEX
 
-    private val titles: Array<String> by lazy { resources.getStringArray(R.array.nav_item_activity_titles) }
+    @Inject
+    lateinit var storage: SharedPreferencesUtil
+
+    @Inject
+    lateinit var database: DatabaseManager
+
+    @Inject
+    lateinit var analytics: AnalyticsController
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+        App.application.myComponent.inject(this)
 
-//        if (!App.application.database.db.initialized) {
-////            Logger.e("Database not initialized.")
-////            startActivity(Intent(this, SplashActivity::class.java))
-////            finish()
-////            return
-//        } else {
-////            Logger.e("Database IS setup!")
-//        }
+        super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-//        Logger.d("onCreate")
-//        App.application.registerBusListener(this)
 
         initViewPager()
 
@@ -78,10 +74,10 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         if (savedInstanceState == null) {
 
 //            // TODO: Remove, this is only for debugging.
-            mFragmentIndex = if(BuildConfig.DEBUG ) {
+            mFragmentIndex = if (BuildConfig.DEBUG) {
                 DEFAULT_FRAGMENT_INDEX
             } else {
-                App.application.storage.viewPagerPosition
+                storage.viewPagerPosition
             }
             forceMenuHighlighted()
             loadFragment()
@@ -113,7 +109,6 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
 
-
 //    @Subscribe
 //    fun onDatabaseSetupEvent(event: SetupDatabaseEvent) {
 //        addConferenceMenuItems()
@@ -121,7 +116,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
     @Subscribe
     fun onChangeConEvent(event: ChangeConEvent) {
-        App.application.database.db.conferenceDao().getAll()
+        database.db.conferenceDao().getAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -151,7 +146,7 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
     private fun addConferenceMenuItems() {
-        App.application.database.db.conferenceDao().getAll()
+        database.db.conferenceDao().getAll()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -173,24 +168,22 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
     }
 
 
-
-
     private fun setNavHeaderMargin() {
         val params = nav_view.getHeaderView(0).imageView.layoutParams as ViewGroup.MarginLayoutParams
         params.topMargin = getStatusBarHeight()
     }
 
 
-//    override fun getTheme(): Resources.Theme {
-//        val theme = super.getTheme()
-//        theme.applyStyle(App.application.storage.databaseTheme, true)
-//        return theme
-//    }
+    override fun getTheme(): Resources.Theme {
+        val theme = super.getTheme()
+        theme.applyStyle(storage.databaseTheme, true)
+        return theme
+    }
 
-//    override fun onNewIntent(intent: Intent?) {
-//        super.onNewIntent(intent)
-//        handleIntent(intent)
-//    }
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        handleIntent(intent)
+    }
 
     private fun handleIntent(intent: Intent?) {
         if (intent == null || intent.extras == null)
@@ -201,13 +194,14 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         if (target == 0)
             return
 
-        App.application.database.db.eventDao().getEventById(id = target)
+        database.findItem(id = target)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    val fragment = EventBottomSheet.newInstance(it)
+                .subscribe({ item ->
+                    val fragment = ScheduleItemBottomSheet.newInstance(item)
                     fragment.show(supportFragmentManager, fragment.tag)
-                }
+                }, {})
+
     }
 
     private fun forceMenuHighlighted() {
@@ -228,19 +222,13 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         // TODO: Rewrite, currentFragment will create a new Fragment!
         replaceFragment(currentFragment, fragmentTitle, fragmentTag, R.id.frame)
 
-        val app = App.application
-
-        app.storage.viewPagerPosition = mFragmentIndex
-        app.analyticsController.tagCustomEvent(fragmentEvent)
+        storage.viewPagerPosition = mFragmentIndex
+        analytics.tagCustomEvent(fragmentEvent)
 
         //updateFABVisibility()
 
         //Closing drawer on item click
-        drawer_layout!!.closeDrawers()
-
-        forceMenuHighlighted()
-
-        Logger.d("Time to load Fragment " + (System.currentTimeMillis() - timeToLoad))
+        drawer_layout.closeDrawers()
     }
 
     private val fragmentEvent: AnalyticsController.Analytics
@@ -338,11 +326,18 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         }
     }
 
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.search_menu, menu)
+        return true
+    }
+
     private fun toggleFAB(onClick: Boolean = false) {
 
 
         val cx = filter.width / 2 - filters.width / 2
         val cy = filter.height / 2 - filters.height / 2
+
 
         val radius = Math.hypot(cx.toDouble(), cy.toDouble())
 
@@ -395,18 +390,6 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         super.onBackPressed()
     }
 
-//    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-//        val inflater = menuInflater
-//        inflater.inflate(R.menu.search_menu, menu)
-//
-//        val searchManager = getSystemService(Context.SEARCH_SERVICE) as SearchManager
-//        val searchMenuItem = menu.findItem(R.id.search)
-//        val searchView = searchMenuItem.actionView as SearchView
-//
-//        searchView.setSearchableInfo(searchManager.getSearchableInfo(componentName))
-//
-//        return true
-//    }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -438,24 +421,17 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
 
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer_layout!!.setDrawerListener(toggle)
+        drawer_layout.setDrawerListener(toggle)
         toggle.syncState()
 
-        nav_view!!.setNavigationItemSelectedListener(this)
-//        if (App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME) {
-//            nav_view.menu.getItem(2).setTitle(R.string.map)
-//        }
-//
-//        if (App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME) {
-//            nav_view.menu.removeItem(R.id.nav_information)
-//        }
+        nav_view.setNavigationItemSelectedListener(this)
     }
+
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.itemId in 400..500) {
-            App.application.database.changeConference(item.itemId - 400)
+            database.changeConference(item.itemId - 400)
             drawer_layout.closeDrawers()
-            return true
         }
 
         setFragmentIndex(item)
@@ -486,7 +462,9 @@ open class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSe
         get() = "home_fragment_" + mFragmentIndex
 
     private val fragmentTitle: String
-        get() = titles[mFragmentIndex]
+        get() {
+            return resources.getStringArray(R.array.nav_item_activity_titles)[mFragmentIndex]
+        }
 
     fun loadFragment(fragment: Int) {
         mFragmentIndex = fragment

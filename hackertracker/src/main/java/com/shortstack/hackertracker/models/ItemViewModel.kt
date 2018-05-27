@@ -5,13 +5,26 @@ import android.text.TextUtils
 import android.view.View
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.now
+import com.shortstack.hackertracker.utils.SharedPreferencesUtil
+import com.shortstack.hackertracker.utils.TimeUtil
 import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
-import java.util.regex.Pattern
+import javax.inject.Inject
 
 class ItemViewModel(val item: Event) {
 
+    @Inject
+    lateinit var storage: SharedPreferencesUtil
+
+    @Inject
+    lateinit var database: DatabaseManager
+
+    init {
+        App.application.myComponent.inject(this)
+    }
 
     val title: String
         get() {
@@ -29,33 +42,29 @@ class ItemViewModel(val item: Event) {
             return description
         }
 
-
     fun getTimeStamp(context: Context): String {
         // No start time, return TBA.
         if (item.begin == null)
             return context.resources.getString(R.string.tba)
 
-        var time = ""
-
-//        if (App.application.storage.shouldShowMilitaryTime()) {
-//            time = item.begin!!
-//        } else {
-//            val date = item.beginDateObject
-//            if (date != null) {
-//                val writeFormat = SimpleDateFormat("h:mm aa")
-//                time = writeFormat.format(date)
-//            }
-//        }
-
-        return time
+        return if (storage.shouldShowMilitaryTime()) {
+            item.begin.toString()
+        } else {
+            val date = item.begin
+            val writeFormat = SimpleDateFormat("h:mm aa")
+            writeFormat.format(date)
+        }
     }
 
 
     val progress: Float
         get() {
+            if (!item.hasStarted)
+                return 0f
+
             val beginDateObject = item.begin
             val endDateObject = item.end
-            val currentDate = App.getCurrentDate()
+            val currentDate = Date().now()
 
             val length = ((endDateObject.time - beginDateObject.time) / 1000 / 60).toFloat()
             val p = ((endDateObject.time - currentDate.time) / 1000 / 60).toFloat()
@@ -68,11 +77,14 @@ class ItemViewModel(val item: Event) {
             return Math.min(1.0f, 1 - l)
         }
 
+
     fun getFullTimeStamp(context: Context): String {
-//        val begin = item.beginDateObject
-//        val end = item.endDateObject
-//
-        return String.format(context.getString(R.string.timestamp_full), App.getRelativeDateStamp(item.begin), getTimeStamp(context, item.begin), getTimeStamp(context, item.end))
+        val begin = item.begin
+        val end = item.end
+
+        val timestamp = TimeUtil.getRelativeDateStamp(context, begin)
+
+        return String.format(context.getString(R.string.timestamp_full), timestamp, getTimeStamp(context, begin), getTimeStamp(context, end))
     }
 
 
@@ -138,11 +150,11 @@ class ItemViewModel(val item: Event) {
             val time: String
             val writeFormat: DateFormat
 
-            if (App.application.storage.shouldShowMilitaryTime()) {
-                writeFormat = SimpleDateFormat("HH:mm")
-            } else {
-                writeFormat = SimpleDateFormat("h:mm aa")
-            }
+//            if (storage.shouldShowMilitaryTime()) {
+//                writeFormat = SimpleDateFormat("HH:mm")
+//            } else {
+            writeFormat = SimpleDateFormat("h:mm aa")
+//            }
 
             time = writeFormat.format(date)
 

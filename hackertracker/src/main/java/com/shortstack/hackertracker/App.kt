@@ -1,69 +1,55 @@
 package com.shortstack.hackertracker
 
 import android.app.Application
-import android.content.Context
-import android.preference.PreferenceManager
 import com.crashlytics.android.Crashlytics
 import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.firebase.jobdispatcher.GooglePlayDriver
 import com.firebase.jobdispatcher.Lifetime
 import com.firebase.jobdispatcher.Trigger
 import com.github.stkent.amplify.tracking.Amplify
-import com.google.gson.FieldNamingPolicy
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.event.MainThreadBus
+import com.shortstack.hackertracker.di.DaggerMyComponent
+import com.shortstack.hackertracker.di.MyComponent
+import com.shortstack.hackertracker.di.modules.*
 import com.shortstack.hackertracker.models.Conference
 import com.shortstack.hackertracker.network.task.SyncJob
-import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
-import com.shortstack.hackertracker.utils.TimeHelper
-import com.squareup.otto.Bus
 import io.fabric.sdk.android.Fabric
 import java.util.*
 
 
 class App : Application() {
 
-    lateinit var appContext: Context
-        private set
+    lateinit var myComponent: MyComponent
 
-    // Eventbus
-    val bus: Bus by lazy { MainThreadBus() }
     // Storage
-    val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil() }
-    // Notifications
-    val notificationHelper: NotificationHelper by lazy { NotificationHelper(appContext) }
-    // Analytics
-    val analyticsController: AnalyticsController by lazy { AnalyticsController() }
-    // Time
-    val timeHelper: TimeHelper by lazy { TimeHelper(appContext) }
-
-    val gson: Gson by lazy { GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create() }
-
-    val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(appContext)) }
+    @Deprecated(message = "Use DI")
+    val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil(applicationContext) }
+    @Deprecated("use DI")
+    private val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(applicationContext)) }
 
     // TODO: Remove, this is just for measuring launch time.
     var timeToLaunch : Long = System.currentTimeMillis()
 
-    lateinit var database: DatabaseManager
-
-
     override fun onCreate() {
         super.onCreate()
 
+        application = this
 
-        init()
         initFabric()
         initLogger()
         initFeedback()
 
-        database = DatabaseManager(this)
-//        updateTheme(database.getCurrentCon())
-
+        myComponent = DaggerMyComponent.builder()
+                .sharedPreferencesModule(SharedPreferencesModule())
+                .databaseModule(DatabaseModule())
+                .gsonModule(GsonModule())
+                .analyticsModule(AnalyticsModule())
+                .notificationsModule(NotificationsModule())
+                .dispatcherModule(DispatcherModule())
+                .contextModule(ContextModule(this))
+                .build()
 
         // TODO: Remove, this is only for debugging.
         Logger.d("Time to complete onCreate " + (System.currentTimeMillis() - timeToLaunch))
@@ -83,12 +69,7 @@ class App : Application() {
 
         cancelSync()
 
-        val hours = PreferenceManager.getDefaultSharedPreferences(this).getString("sync_interval", "6")
-
-        var value = hours.toIntOrNull()
-
-        if (value == null)
-            value = 6
+        var value = storage.syncInterval
 
         if (value == 0) {
             cancelSync()
@@ -108,7 +89,7 @@ class App : Application() {
         dispatcher.mustSchedule(job)
     }
 
-    fun cancelSync() {
+    private fun cancelSync() {
         dispatcher.cancel(SyncJob.TAG)
     }
 
@@ -117,11 +98,6 @@ class App : Application() {
                 .setFeedbackEmailAddress(Constants.FEEDBACK_EMAIL)
                 .applyAllDefaultRules()
                 .setLastUpdateTimeCooldownDays(1)
-    }
-
-    private fun init() {
-        application = this
-        appContext = applicationContext
     }
 
     private fun initLogger() {
@@ -133,38 +109,28 @@ class App : Application() {
             Fabric.with(this, Crashlytics())
     }
 
-
-    fun postBusEvent(event: Any) {
-        bus.post(event)
+    @Deprecated("", replaceWith = ReplaceWith("BusProvider.bus.register(any)"))
+    fun registerBusListener(any: Any) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    fun unregisterBusListener(itemView: Any) {
-        bus.unregister(itemView)
+    @Deprecated("", replaceWith = ReplaceWith("BusProvider.bus.unregister(any)"))
+    fun unregisterBusListener(any: Any) {
+        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
-    fun registerBusListener(itemView: Any) {
-        bus.register(itemView)
-    }
 
+    @Deprecated("", replaceWith = ReplaceWith("BusProvider.bus.post(any)"))
+    fun postBusEvent(any: Any) {
+
+    }
 
     companion object {
+        @Deprecated("Do not use", replaceWith = ReplaceWith("Date().now()"))
+        fun getCurrentDate(): Date {
+            return Date().now()
+        }
 
         lateinit var application: App
-
-        fun getCurrentCalendar(): Calendar = application.timeHelper.currentCalendar
-
-        fun getCurrentDate(): Date = application.timeHelper.currentDate
-
-        fun getRelativeDateStamp(date: Date): String = application.timeHelper.getRelativeDateStamp(date)
-
-
     }
-
-
-    object Storage {
-        fun getStorage(): SharedPreferencesUtil {
-            return SharedPreferencesUtil()
-        }
-    }
-
 }

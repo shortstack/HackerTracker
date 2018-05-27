@@ -4,12 +4,24 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
+import android.view.View
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.analytics.AnalyticsController.Analytics
+import com.shortstack.hackertracker.event.BusProvider
 import com.shortstack.hackertracker.event.UpdateListContentsEvent
+import javax.inject.Inject
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
+
+    @Inject
+    lateinit var analytics: AnalyticsController
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        App.application.myComponent.inject(this)
+    }
 
     inline fun Preference.setOnClick(crossinline func: Preference.() -> Unit) {
         this.onPreferenceClickListener = Preference.OnPreferenceClickListener {
@@ -34,12 +46,12 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
             "user_use_military_time" -> {
                 event = Analytics.SETTINGS_MILITARY_TIME
-                App.application.postBusEvent(UpdateListContentsEvent())
+                BusProvider.bus.post(UpdateListContentsEvent())
             }
 
             "user_show_expired_events" -> {
                 event = Analytics.SETTINGS_EXPIRED_EVENT
-                App.application.postBusEvent(UpdateListContentsEvent())
+                BusProvider.bus.post(UpdateListContentsEvent())
             }
 
             "sync_interval" -> {
@@ -53,7 +65,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         }
 
         val value = sharedPreferences.getBoolean(key, false)
-        App.application.analyticsController.tagSettingsEvent(event, value)
+        analytics.tagSettingsEvent(event, value)
     }
 
     override fun onResume() {

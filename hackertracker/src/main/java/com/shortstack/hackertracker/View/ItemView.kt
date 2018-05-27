@@ -13,6 +13,8 @@ import android.view.View
 import android.view.animation.DecelerateInterpolator
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.event.BusProvider
 import com.shortstack.hackertracker.event.FavoriteEvent
 import com.shortstack.hackertracker.event.RefreshTimerEvent
 import com.shortstack.hackertracker.models.Event
@@ -22,9 +24,12 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.row_item.view.*
+import javax.inject.Inject
 
 class ItemView : CardView {
 
+    @Inject
+    lateinit var database: DatabaseManager
 
     private var mDisplayMode = DISPLAY_MODE_FULL
     private var mRoundCorners = true
@@ -39,6 +44,8 @@ class ItemView : CardView {
     }
 
     private fun init() {
+        App.application.myComponent.inject(this)
+
         setCardBackgroundColor(resources.getColor(R.color.card_background))
 
         if (mRoundCorners) {
@@ -87,13 +94,13 @@ class ItemView : CardView {
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         if (!isInEditMode)
-            App.application.registerBusListener(this)
+            BusProvider.bus.register(this)
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
         if (!isInEditMode)
-            App.application.unregisterBusListener(this)
+            BusProvider.bus.unregister(this)
 
         finishAnimation()
         setProgressBar()
@@ -184,7 +191,7 @@ class ItemView : CardView {
     private fun renderCategoryColour() {
         val event = content?.type ?: return
 
-        App.application.database.db.typeDao().getTypeForEvent(event)
+        database.db.typeDao().getTypeForEvent(event)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
@@ -193,7 +200,10 @@ class ItemView : CardView {
 
                     category.setBackgroundColor(color)
                     progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-                }, {})
+                }, {
+
+                })
+
     }
 
     private fun renderBookmark() {
@@ -224,7 +234,7 @@ class ItemView : CardView {
         event.isBookmarked = !event.isBookmarked
 
         Single.fromCallable {
-            App.application.database.db.eventDao().update(event)
+            database.db.eventDao().update(event)
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()

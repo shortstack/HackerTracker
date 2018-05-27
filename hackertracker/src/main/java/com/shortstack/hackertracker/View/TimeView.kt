@@ -5,11 +5,10 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
-import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.*
+import com.shortstack.hackertracker.event.BusProvider
+import com.shortstack.hackertracker.event.BusProvider.Companion
 import com.shortstack.hackertracker.event.RefreshTimerEvent
-import com.shortstack.hackertracker.getDateDifference
-import com.shortstack.hackertracker.isToday
 import com.shortstack.hackertracker.models.ItemViewModel
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.row_header_time.view.*
@@ -41,12 +40,12 @@ class TimeView : LinearLayout {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        App.application.registerBusListener(this)
+        BusProvider.bus.register(this)
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        App.application.unregisterBusListener(this)
+        BusProvider.bus.unregister(this)
     }
 
     @Subscribe
@@ -65,7 +64,7 @@ class TimeView : LinearLayout {
     }
 
     private fun updateSubheader() {
-        val currentDate = App.getCurrentDate()
+        val currentDate = Date().now()
 
         if (date!!.isToday() && date!!.after(currentDate) ) {
             subheader.visibility = View.VISIBLE

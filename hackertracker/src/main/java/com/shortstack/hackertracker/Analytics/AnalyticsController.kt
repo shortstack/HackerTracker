@@ -2,14 +2,15 @@ package com.shortstack.hackertracker.analytics
 
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
-import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.Filter
-import com.shortstack.hackertracker.models.Item
+import com.shortstack.hackertracker.utils.SharedPreferencesUtil
+import javax.inject.Inject
 
 
-class AnalyticsController {
+class AnalyticsController @Inject constructor(private val storage: SharedPreferencesUtil) {
 
-    enum class Analytics(private val tag : String) {
+    enum class Analytics(private val tag: String) {
 
         EVENT_VIEW("Event - View"),
         EVENT_BOOKMARK("Event - Bookmark"),
@@ -35,37 +36,37 @@ class AnalyticsController {
 
         SCHEDULE_FILTERS("Schedule - Filters");
 
-        override fun toString() : String {
+        override fun toString(): String {
             return tag
         }
     }
 
 
-    fun tagItemEvent(event : Analytics, item : Item) {
-        logCustom(ItemEvent(event, item))
+    fun tagItemEvent(analytics: Analytics, event: Event) {
+        logCustom(EventCustomEvent(analytics, event))
     }
 
-    fun tagSettingsEvent(event : Analytics, enabled : Boolean) {
+    fun tagSettingsEvent(event: Analytics, enabled: Boolean) {
         logCustom(SettingsEvent(event, enabled))
     }
 
-    fun tagCustomEvent(event : Analytics) {
+    fun tagCustomEvent(event: Analytics) {
         logCustom(CustomEvent(event.toString()))
     }
 
-    fun tagFiltersEvent(filter : Filter) {
+    fun tagFiltersEvent(filter: Filter) {
         logCustom(FilterEvent(filter))
     }
 
-    private fun logCustom(event : CustomEvent) {
+    private fun logCustom(event: CustomEvent) {
         // Bypass to track if they're turning analytics off
-        if (!App.application.storage.isTrackingAnalytics && !event.toString().contains(Analytics.SETTINGS_ANALYTICS.toString())) {
+        if (!storage.isTrackingAnalytics && !event.toString().contains(Analytics.SETTINGS_ANALYTICS.toString())) {
             return
         }
 
         try {
             Answers.getInstance().logCustom(event)
-        } catch (ex : IllegalStateException) {
+        } catch (ex: IllegalStateException) {
             // Fabric is not initialized - debug build.
         }
 

@@ -3,9 +3,12 @@ package com.shortstack.hackertracker.database
 import android.arch.persistence.room.*
 import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Event
+import com.shortstack.hackertracker.network.FullResponse
+import com.shortstack.hackertracker.network.SyncResponse
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.Single
+import org.intellij.lang.annotations.Flow
 import java.util.*
 
 /**
@@ -19,7 +22,7 @@ interface EventDao {
     }
 
     @Query("SELECT * FROM event ORDER BY `begin` ASC LIMIT $LIMIT")
-    fun getFullSchedule(): Single<List<Event>>
+    fun getFullSchedule(): Flowable<List<Event>>
 
     @Query("SELECT * FROM event WHERE con = :con ORDER BY `begin` ASC LIMIT $LIMIT")
     fun getFullSchedule(con: String): Flowable<List<Event>>

@@ -5,22 +5,41 @@ import com.firebase.jobdispatcher.JobService
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
+import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.event.BusProvider
 import com.shortstack.hackertracker.event.SyncResponseEvent
 import com.shortstack.hackertracker.network.DatabaseService
 import com.shortstack.hackertracker.network.SyncResponse
+import com.shortstack.hackertracker.now
+import com.shortstack.hackertracker.utils.NotificationHelper
+import com.shortstack.hackertracker.utils.SharedPreferencesUtil
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.*
+import javax.inject.Inject
 
 class SyncJob : JobService(), Callback<SyncResponse> {
 
-    companion object {
-        val TAG = "sync_job"
-    }
 
-    var tag : String? = null
+    @Inject
+    lateinit var notifications: NotificationHelper
+
+    @Inject
+    lateinit var storage: SharedPreferencesUtil
+
+    @Inject
+    lateinit var database: DatabaseManager
+
+    var tag: String? = null
+
+    init {
+        App.application.myComponent.inject(this)
+    }
 
 
     override fun onFailure(call: Call<SyncResponse>?, t: Throwable?) {
@@ -29,31 +48,38 @@ class SyncJob : JobService(), Callback<SyncResponse> {
 
     override fun onResponse(call: Call<SyncResponse>?, response: Response<SyncResponse>?) {
         if (response == null || !response.isSuccessful) {
-            Logger.d("Syncing was not successful.")
+            Logger.e("Syncing was not successful.")
             return
         }
 
-        updateDatabase(response.body()!!)
+        val body = response.body()
+        if (body == null) {
+            Logger.e("Syncing response body was null.")
+            return
+        }
+
+        updateDatabase(body)
     }
 
-    fun updateDatabase(body: SyncResponse) {
-        val storage = App.application.storage
+    private fun updateDatabase(body: SyncResponse) {
+        Logger.d("Tag: $tag")
 
-        Logger.d("Tag: " + tag)
-
-        storage.lastRefresh = App.getCurrentDate().time
+        storage.lastRefresh = Date().now().time
 
         if (storage.lastUpdated != body.updatedDate) {
             storage.lastUpdated = body.updatedDate
 
-//            val database = App.application.databaseController
-
-//            val rowsUpdated = database.updateSchedule(response = body)
-
-//            if (rowsUpdated > 0) {
-//                App.application.postBusEvent(SyncResponseEvent(rowsUpdated))
-//                App.application.notificationHelper.scheduleUpdateNotification(rowsUpdated)
-//            }
+            database.updateConference(body = body)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ rowsUpdated ->
+                        if (rowsUpdated > 0) {
+                            BusProvider.bus.post(SyncResponseEvent(rowsUpdated))
+                            notifications.scheduleUpdateNotification(rowsUpdated)
+                        }
+                    }, {
+                        Logger.e("Failed to update database,  ${it.message}")
+                    })
 
         } else {
             Logger.d("Already up to date!")
@@ -63,8 +89,8 @@ class SyncJob : JobService(), Callback<SyncResponse> {
     override fun onStartJob(job: JobParameters): Boolean {
         Logger.d("Start!")
 
-//        if( App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME)
-//            return false
+        if (database.databaseName != Constants.DEFCON_DATABASE_NAME)
+            return false
 
         val retrofit = Retrofit.Builder().baseUrl(Constants.API_URL_BASE).addConverterFactory(GsonConverterFactory.create()).build()
         val service = retrofit.create(DatabaseService::class.java)
@@ -78,4 +104,10 @@ class SyncJob : JobService(), Callback<SyncResponse> {
     override fun onStopJob(job: JobParameters): Boolean {
         return false // Answers the question: "Should this job be retried?"
     }
+
+    companion object {
+        const val TAG = "sync_job"
+    }
+
+
 }

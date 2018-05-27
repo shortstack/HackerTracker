@@ -1,6 +1,5 @@
 package com.shortstack.hackertracker.view
 
-import android.arch.persistence.room.Room
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
@@ -9,21 +8,27 @@ import android.support.v7.widget.AppCompatCheckBox
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.database.MyRoomDatabase
+import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.Filter
 import com.shortstack.hackertracker.models.Type
-import io.reactivex.Scheduler
+import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.alert_filter.view.*
 import java.util.*
+import javax.inject.Inject
 
 class FilterView : LinearLayout {
 
-    lateinit var checkboxes: Array<AppCompatCheckBox>
+    private lateinit var checkboxes: Array<AppCompatCheckBox>
+
+    @Inject
+    lateinit var storage: SharedPreferencesUtil
+
+    @Inject
+    lateinit var database: DatabaseManager
 
     constructor(context: Context) : super(context) {
         init()
@@ -37,7 +42,7 @@ class FilterView : LinearLayout {
     private fun setFilter(filter: Filter) {
         val typesArray = filter.typesArray
 
-        if (typesArray.size == 0) {
+        if (typesArray.isEmpty()) {
             for (type in checkboxes) {
                 type.isChecked = true
             }
@@ -60,37 +65,19 @@ class FilterView : LinearLayout {
         init()
     }
 
-    override fun onAttachedToWindow() {
-        super.onAttachedToWindow()
-
-
-    }
-
     private fun init() {
-        var time = System.currentTimeMillis()
-//        Logger.d("Starting init")
+        App.application.myComponent.inject(this)
 
         View.inflate(context, R.layout.alert_filter, this)
 
-//        Logger.d("Inflated.")
-
-        App.application.database.getTypes()
-                        .subscribeOn(Schedulers.io())
+        database.getTypes()
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ types ->
                     setCheckboxes(types)
                 }, {
 
                 })
-
-//        Logger.d("Fetched types." + types.size)
-//
-//        setCheckboxes(types)
-//
-//        Logger.d("Set checkboxes.")
-
-//        App.application.database.db.typeDao().getTypes()
-
     }
 
     private fun setCheckboxes(types: List<Type>) {
@@ -105,7 +92,7 @@ class FilterView : LinearLayout {
 
             box.isChecked = type.isSelected
 
-            if ((it+1) <= types.size / 2)
+            if ((it + 1) <= types.size / 2)
                 filter_left.addView(box)
             else
                 filter_right.addView(box)
@@ -128,7 +115,7 @@ class FilterView : LinearLayout {
 
         val filter = Filter(strings)
 
-        App.application.storage.saveFilter(filter)
+        storage.saveFilter(filter)
 
         return filter
     }

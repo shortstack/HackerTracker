@@ -11,6 +11,7 @@ import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.FAQ
 import com.shortstack.hackertracker.models.Information
 import com.shortstack.hackertracker.ui.GenericHeaderRenderer
@@ -20,10 +21,14 @@ import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import javax.inject.Inject
 
 class InformationFragment : Fragment() {
 
     lateinit var adapter: RendererAdapter<Any>
+
+    @Inject
+    lateinit var database: DatabaseManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_recyclerview, container, false)
@@ -31,32 +36,30 @@ class InformationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        App.application.myComponent.inject(this)
 
-        val layout = LinearLayoutManager(context)
-        list!!.layoutManager = layout
+        list.layoutManager = LinearLayoutManager(context)
 
-        val rendererBuilder = RendererBuilder<Any>()
+        loading_progress.visibility = View.VISIBLE
+
+        adapter = RendererAdapter(RendererBuilder<Any>()
                 .bind(FAQ::class.java, FAQRenderer())
                 .bind(String::class.java, GenericHeaderRenderer())
-                .bind(Information::class.java, InformationRenderer())
-        loading_progress.visibility = View.GONE;
+                .bind(Information::class.java, InformationRenderer()))
 
-        adapter = RendererAdapter<Any>(rendererBuilder)
-        list!!.adapter = adapter
-
-//        if (App.application.databaseController.databaseName != Constants.SHMOOCON_DATABASE_NAME
-//                && App.application.databaseController.databaseName != Constants.HACKWEST_DATABASE_NAME
-//                && App.application.databaseController.databaseName != Constants.LAYERONE_DATABASE_NAME
-//                && App.application.databaseController.databaseName != Constants.BSIDESORL_DATABASE_NAME) {
-//            addInformationButtons()
-//        }
+        list.adapter = adapter
 
         getFAQ().subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
+                    loading_progress.visibility = View.GONE
+
+                    if (database.getCurrentCon().title == Constants.DEFCON_DATABASE_NAME) {
+                        addInformationButtons()
+                    }
+
                     adapter.addAllAndNotify(it)
                 }
-
     }
 
     private fun addInformationButtons() {
@@ -71,28 +74,18 @@ class InformationFragment : Fragment() {
     }
 
     private fun getFAQ(): Observable<List<FAQ>> {
-        var myItems = resources.getStringArray(R.array.faq_questions);
+        val title = database.getCurrentCon().title
 
-//        if (App.application.databaseController.databaseName == Constants.SHMOOCON_DATABASE_NAME) {
-//            myItems = resources.getStringArray(R.array.faq_questions_shmoo);
-//        } else if (App.application.databaseController.databaseName == Constants.HACKWEST_DATABASE_NAME) {
-//            myItems = resources.getStringArray(R.array.faq_questions_hw);
-//        } else if (App.application.databaseController.databaseName == Constants.LAYERONE_DATABASE_NAME) {
-//            myItems = resources.getStringArray(R.array.faq_questions_l1);
-//        } else if (App.application.databaseController.databaseName == Constants.BSIDESORL_DATABASE_NAME) {
-//            myItems = resources.getStringArray(R.array.faq_questions_bsidesorl);
-//        }
-
-        val result = ArrayList<FAQ>()
-
-        var i = 0
-        while (i < myItems.size - 1) {
-            result.add(FAQ(myItems[i], myItems[i + 1]))
-            i += 2
+        val items = when(title) {
+            Constants.SHMOOCON_DATABASE_NAME -> resources.getStringArray(R.array.faq_questions_shmoo)
+            Constants.HACKWEST_DATABASE_NAME -> resources.getStringArray(R.array.faq_questions_hw)
+            Constants.LAYERONE_DATABASE_NAME -> resources.getStringArray(R.array.faq_questions_l1)
+            Constants.BSIDESORL_DATABASE_NAME -> resources.getStringArray(R.array.faq_questions_bsidesorl)
+            else -> resources.getStringArray(R.array.faq_questions)
         }
 
         return Observable.create { subscriber ->
-            subscriber.onNext(result)
+            subscriber.onNext(items.toList().windowed(size = 2, step = 2).map { FAQ(it[0], it[1]) })
             subscriber.onComplete()
         }
     }

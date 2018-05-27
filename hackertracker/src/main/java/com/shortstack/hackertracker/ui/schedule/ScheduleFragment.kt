@@ -1,6 +1,5 @@
 package com.shortstack.hackertracker.ui.schedule
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
@@ -13,69 +12,85 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.utils.MaterialAlert
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.Event.ChangeConEvent
+import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.analytics.AnalyticsController
+import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.event.BusProvider
 import com.shortstack.hackertracker.event.RefreshTimerEvent
 import com.shortstack.hackertracker.event.SyncResponseEvent
 import com.shortstack.hackertracker.event.UpdateListContentsEvent
 import com.shortstack.hackertracker.network.DatabaseService
 import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.network.SyncRepository
-import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.ui.schedule.list.ListViewsInterface
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleInfiniteScrollListener
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleItemAdapter
-import com.shortstack.hackertracker.view.FilterView
+import com.shortstack.hackertracker.utils.NotificationHelper
+import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.squareup.otto.Subscribe
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import java.util.*
+import javax.inject.Inject
 
 
 class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListViewsInterface {
 
+    lateinit var adapter: ScheduleItemAdapter
 
-    private var adapter: ScheduleItemAdapter? = null
+    @Inject
+    lateinit var database: DatabaseManager
 
+    @Inject
+    lateinit var storage: SharedPreferencesUtil
+
+    @Inject
+    lateinit var analytics: AnalyticsController
+
+    @Inject
+    lateinit var notifications: NotificationHelper
 
     var mHandler: Handler = object : Handler() {
         override fun handleMessage(msg: Message) {
-            App.application.postBusEvent(RefreshTimerEvent())
+            BusProvider.bus.post(RefreshTimerEvent())
             adapter?.notifyTimeChanged()
         }
     }
-    private var mTimer: Timer? = null
+    private var timer: Timer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        App.application.registerBusListener(this)
+        App.application.myComponent.inject(this)
+        BusProvider.bus.register(this)
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        App.application.unregisterBusListener(this)
+        BusProvider.bus.unregister(this)
     }
 
 
     override fun onResume() {
         super.onResume()
 
-        val currentDate = App.getCurrentDate()
+        val currentDate = Date().now()
         var time = currentDate.time
 
-        if (App.application.storage.shouldRefresh(time)) {
+        if (storage.shouldRefresh(time)) {
             mHandler.obtainMessage(1).sendToTarget()
         }
 
         time %= Constants.TIMER_INTERVAL
 
 
-        mTimer = Timer().also {
+        timer = Timer().also {
             it.scheduleAtFixedRate(object : TimerTask() {
                 override fun run() {
                     mHandler.obtainMessage(1).sendToTarget()
@@ -86,9 +101,8 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
     override fun onPause() {
         super.onPause()
-        mTimer?.cancel()
-        mTimer = null
-
+        timer?.cancel()
+        timer = null
     }
 
     @Subscribe
@@ -98,12 +112,12 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
     @Subscribe
     fun onChangeConEvent(event: ChangeConEvent) {
-        adapter?.initContents()
+        adapter.initContents()
     }
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(contentView, container, false) as ViewGroup
+        val rootView = inflater.inflate(R.layout.fragment_schedule, container, false) as ViewGroup
 
         val layout = LinearLayoutManager(context)
         rootView.list.layoutManager = layout
@@ -111,16 +125,14 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         rootView.swipe_refresh.setOnRefreshListener(this)
         rootView.swipe_refresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark)
         adapter = ScheduleItemAdapter(this, layout, rootView.list)
-
-
-//        rootView.list.addOnScrollListener(object : ScheduleInfiniteScrollListener(layout) {
-//            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-//                adapter.load(page)
-//            }
-//
-//        })
         rootView.list.adapter = adapter
 
+        rootView.list.addOnScrollListener(object : ScheduleInfiniteScrollListener(layout) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                adapter.load(page)
+            }
+
+        })
 
         return rootView
     }
@@ -130,11 +142,10 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         refreshContents()
         // TODO: Remove, this is only for debugging.
         Logger.d("Created ScheduleFragment " + (System.currentTimeMillis() - App.application.timeToLaunch))
-
     }
 
     private fun hasScheduleItems(): Boolean {
-        return adapter?.collection?.isEmpty() == false
+        return !adapter.collection.isEmpty()
     }
 
     override fun hideViews() {
@@ -150,32 +161,11 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     }
 
     private fun refreshContents() {
-        adapter?.initContents()
+        adapter.initContents()
     }
-
-    private val contentView: Int
-        get() = R.layout.fragment_schedule
-
-    fun showFilters() {
-        val context = context ?: return
-
-        val filter = App.application.storage.filter
-
-        val view = FilterView(context, filter)
-        MaterialAlert.create(context)
-                .setTitle(getString(R.string.alert_filter_title)).setView(view)
-                .setBasicNegativeButton()
-                .setPositiveButton(R.string.save, DialogInterface.OnClickListener { _, _ ->
-                    val filter = view.save()
-                    App.application.analyticsController.tagFiltersEvent(filter)
-                    refreshContents()
-                }).show()
-    }
-
 
     override fun onRefresh() {
-        // TODO: Get the database name.
-        val service = DatabaseService.create(Constants.DEFCON_DATABASE_NAME)
+        val service = DatabaseService.create(database.databaseName)
 
         val syncRepository = SyncRepository(service)
         syncRepository.getSchedule()
@@ -199,23 +189,20 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     }
 
     private fun onRefreshUpdate(it: FullResponse) {
-        Single.fromCallable {
-            App.application.database.db.eventDao().update(it.syncResponse.events)
-        }.subscribeOn(Schedulers.io())
+        database.updateConference(response = it)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
+                .subscribe { rowsUpdated ->
                     swipe_refresh?.isRefreshing = false
 
-//                    if (it == 0)
-//                        Toast.makeText(context, context?.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
-//                    else if (it > 0) {
-//                        App.application.postBusEvent(SyncResponseEvent(it))
-//                        App.application.notificationHelper.scheduleUpdateNotification(it)
-//                        refreshContents()
-//                    }
-                }, {
-
-                })
+                    if (rowsUpdated == 0)
+                        Toast.makeText(context, context?.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
+                    else if (rowsUpdated > 0) {
+                        BusProvider.bus.post(SyncResponseEvent(rowsUpdated))
+                        notifications.scheduleUpdateNotification(rowsUpdated)
+                        refreshContents()
+                    }
+                }
     }
 
 

@@ -6,6 +6,7 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.arch.persistence.room.TypeConverters
 import android.content.Context
+import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
@@ -19,6 +20,7 @@ import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import javax.inject.Inject
 
 /**
  * Created by Chris on 3/31/2018.
@@ -41,8 +43,11 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
     var initialized: Boolean = true
 
+    @Inject
+    lateinit var gson : Gson
+
     fun init() {
-        val gson = App.application.gson
+        App.application.myComponent.inject(this)
 
         val conferences = gson.fromJsonFile(CONFERENCES_FILE, Conferences::class.java, root = "conferences")
 

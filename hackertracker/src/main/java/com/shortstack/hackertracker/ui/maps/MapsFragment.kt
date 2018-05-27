@@ -6,54 +6,53 @@ import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.view.*
-import com.shortstack.hackertracker.utils.MaterialAlert
-import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.analytics.AnalyticsController
+import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.utils.MaterialAlert
 import com.shortstack.hackertracker.view.UberView
 import kotlinx.android.synthetic.main.fragment_maps.*
+import javax.inject.Inject
 
 class MapsFragment : Fragment() {
 
+    @Inject
+    lateinit var analytics: AnalyticsController
+
+    @Inject
+    lateinit var database: DatabaseManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_maps, container, false)
         setHasOptionsMenu(true)
-        return view
+        return inflater.inflate(R.layout.fragment_maps, container, false)
     }
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val adapter = PagerAdapter(activity?.supportFragmentManager ?: return)
+        App.application.myComponent.inject(this)
+
+        val adapter = PagerAdapter(activity!!.supportFragmentManager)
         pager.adapter = adapter
 
-//        if (App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME) {
-//            tab_layout.visibility = View.GONE
-//        }
-        tab_layout.addTab(tab_layout.newTab().setText(getString(R.string.map_day_title)))
-        tab_layout.addTab(tab_layout.newTab().setText(getString(R.string.map_night_title)))
-        tab_layout.tabGravity = TabLayout.GRAVITY_FILL
-
-        tab_layout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabSelected(tab: TabLayout.Tab?) {
-                pager.currentItem = tab!!.position
+        if (database.databaseName == Constants.DEFCON_DATABASE_NAME) {
+            tab_layout.apply {
+                tabGravity = TabLayout.GRAVITY_FILL
+                setupWithViewPager(pager)
             }
-
-        })
+        } else {
+            tab_layout.visibility = View.GONE
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item!!.itemId) {
+        when (item?.itemId) {
             R.id.action_uber -> {
                 val context = context ?: return true
 
-                App.Companion.application.analyticsController.tagCustomEvent(AnalyticsController.Analytics.UBER)
-
+                analytics.tagCustomEvent(AnalyticsController.Analytics.UBER)
                 MaterialAlert.create(context).setTitle(com.shortstack.hackertracker.R.string.uber).setView(UberView(context)).show()
                 return true
             }
@@ -68,37 +67,47 @@ class MapsFragment : Fragment() {
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        inflater!!.inflate(R.menu.maps, menu)
-//        if (App.application.databaseController.databaseName != Constants.DEFCON_DATABASE_NAME) {
-//            menu?.removeItem(R.id.action_uber)
-//        }
+        inflater?.inflate(R.menu.maps, menu)
+        if (database.databaseName != Constants.DEFCON_DATABASE_NAME) {
+            menu?.removeItem(R.id.action_uber)
+        }
     }
 
     class PagerAdapter(fm: FragmentManager) : FragmentStatePagerAdapter(fm) {
 
         var maps: Array<Fragment>
 
+        @Inject
+        lateinit var database: DatabaseManager
+
         init {
-//            if (App.application.databaseController.databaseName == Constants.DEFCON_DATABASE_NAME) {
-            maps = arrayOf(MapFragment.newInstance(MAP_DAY),
-                    MapFragment.newInstance(MAP_NIGHT))
-//            } else if (App.application.databaseController.databaseName == Constants.TOORCON_DATABASE_NAME) {
-//                maps = arrayOf(MapFragment.newInstance(TOORCON))
-//            } else if (App.application.databaseController.databaseName == Constants.HACKWEST_DATABASE_NAME) {
-//                maps = arrayOf(MapFragment.newInstance(HACKWEST))
-//            } else if (App.application.databaseController.databaseName == Constants.LAYERONE_DATABASE_NAME) {
-//                maps = arrayOf(MapFragment.newInstance(LAYERONE))
-//            } else if (App.application.databaseController.databaseName == Constants.BSIDESORL_DATABASE_NAME) {
-//                maps = arrayOf(MapFragment.newInstance(BSIDESORL))
-//            } else {
-//                maps = arrayOf(MapFragment.newInstance(SHMOOCON))
-//            }
+            App.application.myComponent.inject(this)
+
+            val name = database.databaseName
+
+            maps = when (name) {
+                Constants.SHMOOCON_DATABASE_NAME -> arrayOf(MapFragment.newInstance(SHMOOCON))
+                Constants.TOORCON_DATABASE_NAME -> arrayOf(MapFragment.newInstance(TOORCON))
+                Constants.HACKWEST_DATABASE_NAME -> arrayOf(MapFragment.newInstance(HACKWEST))
+                Constants.LAYERONE_DATABASE_NAME -> arrayOf(MapFragment.newInstance(LAYERONE))
+                Constants.BSIDESORL_DATABASE_NAME -> arrayOf(MapFragment.newInstance(BSIDESORL))
+                else -> arrayOf(MapFragment.newInstance(MAP_DAY),
+                        MapFragment.newInstance(MAP_NIGHT))
+            }
         }
+
 
         override fun getItem(position: Int): Fragment {
             return maps[position]
         }
 
+        override fun getPageTitle(position: Int): CharSequence {
+            return if (position == 0) {
+                "DAY"
+            } else {
+                "NIGHT"
+            }
+        }
 
         override fun getCount(): Int {
             return maps.size
@@ -112,13 +121,13 @@ class MapsFragment : Fragment() {
 
     companion object {
 
-        val MAP_DAY = "dc-25-floorplan-v8-final-public.pdf"
-        val MAP_NIGHT = "dc-25-floorplan-v7.6-night.pdf"
-        val TOORCON = "toorcon-19-map.pdf"
-        val SHMOOCON = "shmoocon-2018-map.pdf"
-        val HACKWEST = "hackwest-map-small.pdf"
-        val LAYERONE = "layerone_map.pdf"
-        val BSIDESORL = "bsidesorl_map.pdf"
+        private const val MAP_DAY = "dc-25-floorplan-v8-final-public.pdf"
+        private const val MAP_NIGHT = "dc-25-floorplan-v7.6-night.pdf"
+        private const val TOORCON = "toorcon-19-map.pdf"
+        private const val SHMOOCON = "shmoocon-2018-map.pdf"
+        private const val HACKWEST = "hackwest-map-small.pdf"
+        private const val LAYERONE = "layerone_map.pdf"
+        private const val BSIDESORL = "bsidesorl_map.pdf"
 
         fun newInstance(): Fragment {
             return MapsFragment()

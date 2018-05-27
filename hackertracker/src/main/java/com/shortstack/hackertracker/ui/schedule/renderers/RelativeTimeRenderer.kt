@@ -5,10 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.pedrogomez.renderers.Renderer
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Time
+import com.shortstack.hackertracker.utils.TimeUtil
 import kotlinx.android.synthetic.main.row_time_container.view.*
 
 class RelativeTimeRenderer : Renderer<Time>() {
@@ -29,6 +29,7 @@ class RelativeDayRender : Renderer<Day>() {
     }
 
     override fun render(payloads: MutableList<Any>?) {
-        (rootView as TextView).text = App.getRelativeDateStamp(content)
+        val context = context ?: return
+        (rootView as TextView).text = TimeUtil.getRelativeDateStamp(context, content)
     }
 }
