@@ -9,8 +9,8 @@ import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.analytics.AnalyticsController.Analytics
-import com.shortstack.hackertracker.event.BusProvider
-import com.shortstack.hackertracker.event.UpdateListContentsEvent
+import com.shortstack.hackertracker.events.BusProvider
+import com.shortstack.hackertracker.events.UpdateListContentsEvent
 import javax.inject.Inject
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {

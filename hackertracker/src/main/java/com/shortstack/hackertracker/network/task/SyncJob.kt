@@ -6,8 +6,8 @@ import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.event.BusProvider
-import com.shortstack.hackertracker.event.SyncResponseEvent
+import com.shortstack.hackertracker.events.BusProvider
+import com.shortstack.hackertracker.events.SyncResponseEvent
 import com.shortstack.hackertracker.network.DatabaseService
 import com.shortstack.hackertracker.network.SyncResponse
 import com.shortstack.hackertracker.now

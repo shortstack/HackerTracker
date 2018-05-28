@@ -4,8 +4,8 @@ import android.content.Context
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
-import com.shortstack.hackertracker.Event.ChangeConEvent
-import com.shortstack.hackertracker.event.BusProvider
+import com.shortstack.hackertracker.events.ChangeConEvent
+import com.shortstack.hackertracker.events.BusProvider
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.network.SyncResponse
@@ -31,7 +31,7 @@ class DatabaseManager(context: Context) {
 
     }
 
-    fun changeConference(con: Conference) {
+    private fun changeConference(con: Conference) {
         val current = db.conferenceDao().getCurrentCon()
 
         current.isSelected = false
@@ -68,7 +68,7 @@ class DatabaseManager(context: Context) {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     changeConference(it)
-                    BusProvider.bus.post(ChangeConEvent())
+                    BusProvider.bus.post(ChangeConEvent(getCurrentCon()))
                 }, {
 
                 })

@@ -20,8 +20,8 @@ import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
-import com.shortstack.hackertracker.Event.ChangeConEvent
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.events.ChangeConEvent
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.replaceFragment

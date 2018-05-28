@@ -9,14 +9,12 @@ import android.content.Context
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.Constants
-import com.shortstack.hackertracker.event.SetupDatabaseEvent
+import com.shortstack.hackertracker.events.SetupDatabaseEvent
 import com.shortstack.hackertracker.fromJsonFile
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.models.response.Speakers
 import com.shortstack.hackertracker.models.response.Types
 import com.shortstack.hackertracker.models.response.Vendors
-import io.reactivex.Flowable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

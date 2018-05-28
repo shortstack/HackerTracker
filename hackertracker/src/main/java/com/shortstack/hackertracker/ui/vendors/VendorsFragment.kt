@@ -10,10 +10,10 @@ import android.widget.Toast
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.Event.ChangeConEvent
+import com.shortstack.hackertracker.events.ChangeConEvent
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.event.BusProvider
+import com.shortstack.hackertracker.events.BusProvider
 import com.shortstack.hackertracker.models.Vendor
 import com.squareup.otto.Subscribe
 import io.reactivex.android.schedulers.AndroidSchedulers

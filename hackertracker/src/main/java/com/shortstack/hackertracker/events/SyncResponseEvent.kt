@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.event
+package com.shortstack.hackertracker.events
 
 import com.shortstack.hackertracker.Constants
 

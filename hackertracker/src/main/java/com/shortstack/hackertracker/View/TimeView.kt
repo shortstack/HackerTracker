@@ -6,9 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import com.shortstack.hackertracker.*
-import com.shortstack.hackertracker.event.BusProvider
-import com.shortstack.hackertracker.event.BusProvider.Companion
-import com.shortstack.hackertracker.event.RefreshTimerEvent
+import com.shortstack.hackertracker.events.BusProvider
+import com.shortstack.hackertracker.events.RefreshTimerEvent
 import com.shortstack.hackertracker.models.ItemViewModel
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.row_header_time.view.*

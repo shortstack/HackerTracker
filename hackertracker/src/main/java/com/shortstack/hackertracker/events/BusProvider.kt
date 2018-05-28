@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.event
+package com.shortstack.hackertracker.events
 
 import android.os.Handler
 import android.os.Looper

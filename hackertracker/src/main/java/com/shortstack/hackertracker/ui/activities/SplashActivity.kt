@@ -8,8 +8,8 @@ import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.event.BusProvider
-import com.shortstack.hackertracker.event.SetupDatabaseEvent
+import com.shortstack.hackertracker.events.BusProvider
+import com.shortstack.hackertracker.events.SetupDatabaseEvent
 import com.shortstack.hackertracker.network.service.UpdateDatabaseService
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.splash_activity.*
