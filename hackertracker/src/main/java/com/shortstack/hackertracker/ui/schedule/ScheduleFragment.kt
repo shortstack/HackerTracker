@@ -68,14 +68,34 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         super.onCreate(savedInstanceState)
         App.application.myComponent.inject(this)
         BusProvider.bus.register(this)
-
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        BusProvider.bus.unregister(this)
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val rootView = inflater.inflate(R.layout.fragment_schedule, container, false) as ViewGroup
+
+        val layout = LinearLayoutManager(context)
+        rootView.list.layoutManager = layout
+
+        rootView.swipe_refresh.setOnRefreshListener(this)
+        rootView.swipe_refresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark)
+        adapter = ScheduleItemAdapter(this, layout, rootView.list)
+        rootView.list.adapter = adapter
+
+        rootView.list.addOnScrollListener(object : ScheduleInfiniteScrollListener(layout) {
+            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+                adapter.load(page)
+            }
+        })
+
+        return rootView
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        refreshContents()
+        // TODO: Remove, this is only for debugging.
+        Logger.d("Created ScheduleFragment " + (System.currentTimeMillis() - App.application.timeToLaunch))
+    }
 
     override fun onResume() {
         super.onResume()
@@ -105,6 +125,11 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         timer = null
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        BusProvider.bus.unregister(this)
+    }
+
     @Subscribe
     fun handleUpdateListContentsEvent(event: UpdateListContentsEvent) {
         refreshContents()
@@ -113,34 +138,6 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     @Subscribe
     fun onChangeConEvent(event: ChangeConEvent) {
         adapter.initContents()
-    }
-
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_schedule, container, false) as ViewGroup
-
-        val layout = LinearLayoutManager(context)
-        rootView.list.layoutManager = layout
-
-        rootView.swipe_refresh.setOnRefreshListener(this)
-        rootView.swipe_refresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark)
-        adapter = ScheduleItemAdapter(this, layout, rootView.list)
-        rootView.list.adapter = adapter
-
-        rootView.list.addOnScrollListener(object : ScheduleInfiniteScrollListener(layout) {
-            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-                adapter.load(page)
-            }
-        })
-
-        return rootView
-    }
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        refreshContents()
-        // TODO: Remove, this is only for debugging.
-        Logger.d("Created ScheduleFragment " + (System.currentTimeMillis() - App.application.timeToLaunch))
     }
 
     private fun hasScheduleItems(): Boolean {
