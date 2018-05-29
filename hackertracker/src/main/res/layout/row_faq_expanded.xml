@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/frameLayout2"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingBottom="16dp">
 
 
     <android.support.v7.widget.CardView
@@ -46,15 +47,13 @@
                 style="@style/Paragraph"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/question"
                 app:layout_constraintTop_toBottomOf="@+id/question"
                 tools:ellipsize="end"
                 tools:maxLines="3"
-                tools:text="@tools:sample/lorem/random"
-                tools:visibility="visible" />
+                tools:text="@tools:sample/lorem/random" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
