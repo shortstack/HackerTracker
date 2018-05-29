@@ -30,16 +30,15 @@ class SplashActivity : AppCompatActivity() {
 
         App.application.myComponent.inject(this)
 
-        val background = when (database.databaseName) {
-            Constants.TOORCON_DATABASE_NAME -> R.drawable.tc_19_wallpaper
-            Constants.SHMOOCON_DATABASE_NAME -> R.drawable.shmoocon_14_wallpaper
-            Constants.HACKWEST_DATABASE_NAME -> R.drawable.hackwest_wallpaper
-            Constants.LAYERONE_DATABASE_NAME -> R.drawable.layerone_wallpaper
-            Constants.BSIDESORL_DATABASE_NAME -> R.drawable.bsidesorl_wallpaper
-            else -> R.drawable.dc_25_wallpaper
-        }
-
-        splash_image.setBackgroundResource(background)
+//        val background = when (database.databaseName) {
+//            Constants.TOORCON_DATABASE_NAME -> R.drawable.tc_19_wallpaper
+//            Constants.SHMOOCON_DATABASE_NAME -> R.drawable.shmoocon_14_wallpaper
+//            Constants.HACKWEST_DATABASE_NAME -> R.drawable.hackwest_wallpaper
+//            Constants.LAYERONE_DATABASE_NAME -> R.drawable.layerone_wallpaper
+//            Constants.BSIDESORL_DATABASE_NAME -> R.drawable.bsidesorl_wallpaper
+//            else -> R.drawable.dc_25_wallpaper
+//        }
+//        splash_image.setBackgroundResource(background)
 
         BusProvider.bus.register(this)
 
