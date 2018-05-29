@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.View
+package com.shortstack.hackertracker.views
 
 import android.content.Context
 import android.util.AttributeSet
