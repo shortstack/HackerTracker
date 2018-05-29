@@ -23,22 +23,33 @@
 # Retrofit 2.X
 ## https://square.github.io/retrofit/ ##
 
--dontwarn retrofit2.**
--keep class retrofit2.** { *; }
+# Preserve annotations, line numbers, and source file names
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+-keep public class * extends java.lang.Exception
+-keep class com.crashlytics.** { *; }
+-dontwarn com.crashlytics.**
+
+# Retrofit
+-dontwarn retrofit.**
+-keep class retrofit.** { *; }
+-keep class package.with.model.classes.** { *; }
+-keepclassmembernames interface * {
+    @retrofit.http.* <methods>;
+}
+-keep class com.squareup.okhttp3.** {
+*;
+}
+
+-dontwarn org.codehaus.mojo.**
+-keep class org.codehaus.mojo.** { *; }
+
+
 -keepattributes Signature
 -keepattributes Exceptions
--renamesourcefileattribute ProGuard
--keepattributes SourceFile,LineNumberTable
 
--keepclasseswithmembers class * {
-    @retrofit2.http.* <methods>;
-}
--dontwarn okio.**
-
-
--keep class org.apache.log4j.** { *; }
--dontwarn org.apache.**
-
+-keep class com.shortstack.hackertracker.network.** { *; }
+-keep class com.shortstack.hackertracker.models.** { *; }
 
 # Parceler configuration
 -keep interface org.parceler.Parcel
