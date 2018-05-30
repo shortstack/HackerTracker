@@ -118,3 +118,11 @@ fun Calendar.now(): Calendar {
     this.time = Date().now()
     return this
 }
+
+fun AppCompatActivity.getStatusBarHeight(): Int {
+    val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
+    if (resourceId > 0) {
+        return resources.getDimensionPixelSize(resourceId)
+    }
+    return 0
+}

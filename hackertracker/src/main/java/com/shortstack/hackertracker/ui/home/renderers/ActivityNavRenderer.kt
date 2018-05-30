@@ -27,6 +27,6 @@ class ActivityNavRenderer : Renderer<Navigation>(), View.OnClickListener {
 
 
     override fun onClick(view: View) {
-        (context as MainActivity).loadFragment(MainActivity.NAV_INFORMATION)
+//        (context as MainActivity).loadFragment(MainActivity.NAV_INFORMATION)
     }
 }

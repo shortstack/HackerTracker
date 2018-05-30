@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    app:startDestination="@id/nav_schedule">
+
+    <fragment
+        android:id="@+id/nav_home"
+        android:name="com.shortstack.hackertracker.ui.home.HomeFragment"
+        android:label="HomeFragment"
+        tools:layout="@layout/fragment_list" >
+        <action
+            android:id="@+id/action_nav_home_to_nav_search"
+            app:destination="@id/nav_search" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_schedule"
+        android:name="com.shortstack.hackertracker.ui.schedule.ScheduleFragment"
+        android:label="@string/schedule"
+        tools:layout="@layout/fragment_schedule" >
+        <action
+            android:id="@+id/action_nav_schedule_to_nav_search"
+            app:destination="@id/nav_search" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_map"
+        android:name="com.shortstack.hackertracker.ui.maps.MapsFragment"
+        android:label="MapsFragment"
+        tools:layout="@layout/fragment_maps" >
+        <action
+            android:id="@+id/action_nav_map_to_nav_search"
+            app:destination="@id/nav_search" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_information"
+        android:name="com.shortstack.hackertracker.ui.information.InformationFragment"
+        android:label="InformationFragment"
+        tools:layout="@layout/fragment_list" >
+        <action
+            android:id="@+id/action_nav_information_to_nav_search"
+            app:destination="@id/nav_search" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_companies"
+        android:name="com.shortstack.hackertracker.ui.vendors.VendorsFragment"
+        android:label="@string/partners_vendors"
+        tools:layout="@layout/fragment_list" >
+        <action
+            android:id="@+id/action_nav_companies_to_nav_search"
+            app:destination="@id/nav_search" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_settings"
+        android:name="com.shortstack.hackertracker.ui.SettingsFragment"
+        android:label="SettingsFragment"
+        tools:layout="@layout/activity_settings" >
+        <action
+            android:id="@+id/action_nav_settings_to_nav_search"
+            app:destination="@id/nav_search" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/nav_search"
+        android:name="com.shortstack.hackertracker.ui.SearchFragment"
+        android:label="SearchFragment"
+        tools:layout="@layout/fragment_list" />
+
+</navigation>
