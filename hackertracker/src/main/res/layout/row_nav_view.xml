@@ -8,6 +8,7 @@
     android:layout_gravity="start"
     android:fitsSystemWindows="true"
     app:headerLayout="@layout/nav_header_main"
+    app:itemTextColor="@color/white_alpha"
     app:menu="@menu/activity_main_drawer"
     tools:showIn="@layout/activity_main" />
 
