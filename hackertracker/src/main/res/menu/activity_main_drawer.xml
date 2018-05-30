@@ -4,7 +4,7 @@
         android:id="@+id/nav_home"
         android:icon="@drawable/ic_home_white_24dp"
         android:orderInCategory="0"
-        android:title="@string/nav_home" />
+        android:title="@string/home" />
     <item
         android:id="@+id/nav_schedule"
         android:icon="@drawable/ic_schedule_white_24dp"

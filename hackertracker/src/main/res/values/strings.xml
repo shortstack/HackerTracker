@@ -218,7 +218,7 @@ Any news and info will likely be posted there.</item>
     <string name="empty_text">No further information available.\nYou\'ll have to look somewhere else.</string>
     <string name="details">Details</string>
     <string name="information">Information</string>
-    <string name="nav_home">Home</string>
+    <string name="home">Home</string>
 
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
@@ -266,7 +266,7 @@ Any news and info will likely be posted there.</item>
     <string name="nothing_here">Nothing here</string>
 
     <string-array name="nav_item_activity_titles">
-        <item>@string/nav_home</item>
+        <item>@string/home</item>
         <item>@string/schedule</item>
         <item>@string/map</item>
         <item>@string/information</item>

@@ -292,9 +292,10 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        if (navController.currentDestination.id != item.itemId) {
-            nav_view.menu.findItem(navController.currentDestination.id).isChecked = false
-            nav_view.menu.findItem(item.itemId).isChecked = true
+        val current = navController.currentDestination.id
+        if (item.itemId != current) {
+//            nav_view.menu.findItem(current).isChecked = false
+//            nav_view.menu.findItem(item.itemId).isChecked = true
 
             navController.navigate(item.itemId)
         }
