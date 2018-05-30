@@ -19,8 +19,8 @@ android {
     }
     buildTypes {
         debug {
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            minifyEnabled true
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+//            minifyEnabled true
         }
 
         release {
@@ -79,6 +79,10 @@ dependencies {
     implementation 'android.arch.persistence.room:rxjava2:1.1.0'
     implementation "android.arch.persistence.room:runtime:1.1.0"
     kapt "android.arch.persistence.room:compiler:1.1.0"
+
+    // Navigation
+    implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha01'
+    implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0-alpha01'
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.1.0'
