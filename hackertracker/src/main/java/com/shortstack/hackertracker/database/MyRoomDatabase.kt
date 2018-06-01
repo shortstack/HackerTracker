@@ -10,7 +10,7 @@ import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.events.SetupDatabaseEvent
-import com.shortstack.hackertracker.fromJsonFile
+import com.shortstack.hackertracker.fromFile
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.models.response.Speakers
 import com.shortstack.hackertracker.models.response.Types
@@ -42,12 +42,12 @@ abstract class MyRoomDatabase : RoomDatabase() {
     var initialized: Boolean = true
 
     @Inject
-    lateinit var gson : Gson
+    lateinit var gson: Gson
 
     fun init() {
         App.application.myComponent.inject(this)
 
-        val conferences = gson.fromJsonFile(CONFERENCES_FILE, Conferences::class.java, root = "conferences")
+        val conferences = gson.fromFile<Conferences>(CONFERENCES_FILE, root = "conferences")
 
         conferences.let {
             it.conferences.first().isSelected = true
@@ -57,33 +57,31 @@ abstract class MyRoomDatabase : RoomDatabase() {
         conferences.conferences.forEach {
             val database = it.directory
 
-//            Logger.d("Opening database $database")
-
             // Types
-            gson.fromJsonFile(TYPES_FILE, Types::class.java, root = database).let {
+            gson.fromFile<Types>(TYPES_FILE, root = database).let {
                 it.types.forEach { it.con = database }
                 typeDao().insertAll(it.types)
             }
 
             // Schedule
-            gson.fromJsonFile(SCHEDULE_FILE, Events::class.java, root = database).let {
+            gson.fromFile<Events>(SCHEDULE_FILE, root = database).let {
                 it.events.forEach { it.con = database }
                 eventDao().insertAll(it.events)
             }
 
             // Vendors
-            gson.fromJsonFile(VENDORS_FILE, Vendors::class.java, root = database).let {
+            gson.fromFile<Vendors>(VENDORS_FILE, root = database).let {
                 it.vendors.forEach { it.con = database }
                 vendorDao().insertAll(it.vendors)
             }
 
             // Speakers
-            gson.fromJsonFile(SPEAKERS_FILE, Speakers::class.java, root = database).let {
+            gson.fromFile<Speakers>(SPEAKERS_FILE, root = database).let {
                 it.speakers.forEach { it.con = database }
                 speakerDao().insertAll(it.speakers)
             }
 
-            gson.fromJsonFile(FAQ_FILE, FAQs::class.java, root = database).let {
+            gson.fromFile<FAQs>(FAQ_FILE, root = database).let {
                 faqDao().insertAll(it.faqs)
             }
         }

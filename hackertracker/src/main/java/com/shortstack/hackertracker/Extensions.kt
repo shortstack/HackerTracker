@@ -87,7 +87,7 @@ fun String.concat(text: String): String {
     return this + text
 }
 
-fun <T> Gson.fromJsonFile(filename: String, type: Class<T>, root: String = Constants.BSIDESORL_DATABASE_NAME): T {
+inline fun <reified T> Gson.fromFile(filename: String, root: String = Constants.BSIDESORL_DATABASE_NAME): T {
     try {
         val s = "database/$root/$filename"
         val stream = App.application.assets.open(s)
@@ -99,7 +99,7 @@ fun <T> Gson.fromJsonFile(filename: String, type: Class<T>, root: String = Const
         stream.read(buffer)
         stream.close()
 
-        return fromJson(String(buffer), type)
+        return fromJson(String(buffer), T::class.java)
 
     } catch (e: IOException) {
         Logger.e(e, "Could not create the database.")
