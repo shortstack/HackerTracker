@@ -81,11 +81,11 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         adapter = ScheduleItemAdapter(this, layout, rootView.list)
         rootView.list.adapter = adapter
 
-        rootView.list.addOnScrollListener(object : ScheduleInfiniteScrollListener(layout) {
-            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-                adapter.load(page)
-            }
-        })
+//        rootView.list.addOnScrollListener(object : ScheduleInfiniteScrollListener(layout) {
+//            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
+//                adapter.load(page)
+//            }
+//        })
 
         return rootView
     }

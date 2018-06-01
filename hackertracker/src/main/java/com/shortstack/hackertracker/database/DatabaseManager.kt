@@ -53,7 +53,7 @@ class DatabaseManager(context: Context) {
 //        return db.eventDao().getFullSchedule(db.currentConference?.directory
 
 //        ?:
-        return db.eventDao().getFullSchedule(page)
+        return db.eventDao().getFullSchedule()
 //        )
 
     }

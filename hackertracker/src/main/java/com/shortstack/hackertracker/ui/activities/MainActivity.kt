@@ -35,8 +35,7 @@ import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-
-
+    
     @Inject
     lateinit var storage: SharedPreferencesUtil
 
@@ -78,10 +77,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         navController = findNavController(R.id.mainNavigationFragment)
         setupActionBarWithNavController(navController, drawerLayout = drawer_layout)
 
-        navController.addOnNavigatedListener { controller, destination ->
-            val id = destination.id
-            val nav_schedule = R.id.nav_schedule
-            val visibility = if (id == nav_schedule) View.VISIBLE else View.INVISIBLE
+        navController.addOnNavigatedListener { _, destination ->
+            val visibility = if (destination.id == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
             setFABVisibility(visibility)
         }
 

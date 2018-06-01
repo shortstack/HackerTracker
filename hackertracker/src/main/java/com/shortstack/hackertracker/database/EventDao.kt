@@ -21,8 +21,8 @@ interface EventDao {
         private const val LIMIT = 20
     }
 
-    @Query("SELECT * FROM event ORDER BY `begin` ASC LIMIT $LIMIT OFFSET :page")
-    fun getFullSchedule(page: Int): Flowable<List<Event>>
+    @Query("SELECT * FROM event ORDER BY `begin` ASC")
+    fun getFullSchedule(): Flowable<List<Event>>
 
     @Query("SELECT * FROM event WHERE con = :con ORDER BY `begin` ASC LIMIT $LIMIT OFFSET :page")
     fun getFullSchedule(con: String, page: Int): Flowable<List<Event>>

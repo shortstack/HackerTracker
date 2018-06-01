@@ -39,13 +39,14 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
         val filter = storage.filter
 
         // TODO: Add in the filter.
-        database.getSchedule(/**filter.typesArray, page = page*/ page = page)
+        database.getSchedule(/**filter.typesArray, page = page*/
+                page = page)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         {
                             // TODO: Remove, this is only for debugging.
-                            if( page == 0 ) {
+                            if (page == 0) {
                                 Logger.d("Loaded first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
                             }
 
@@ -58,21 +59,15 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
                             if (collection.isEmpty()) {
                                 listViews.showEmptyView()
                             }
-
-
-
-
-                            addAllAndNotify(it)
-//                            if (app.storage.showExpiredEvents()) {
-//                                scrollToCurrentTime()
-//                            }
+                            if (storage.showExpiredEvents()) {
+                                scrollToCurrentTime()
+                            }
 //                            if(collection.isEmpty()) {
 //                                listViews.showEmptyView()
 //                            }
 
 
-                        }, {
-                    e ->
+                        }, { e ->
                     Logger.e(e, "Not success.")
                     listViews.showErrorView()
                 })
@@ -90,10 +85,14 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
         val prevTime = previous?.begin
 
         elements.groupBy { it.date }.forEach {
-            if (prevDay != it.value.first().date) addDay(it.value.first())
+            if (prevDay != it.key) {
+                addDay(it.key)
+            }
 
             it.value.groupBy { it.begin }.forEach {
-                if (prevTime != it.value.first().begin) addTime(it.value.first())
+                if (prevTime != it.key) {
+                    addTime(it.key)
+                }
                 addAll(it.value)
             }
         }
@@ -101,12 +100,12 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
         notifyItemRangeInserted(size, collection.size - size)
     }
 
-    private fun addDay(item: Event) {
-        add(Day(item.begin))
+    private fun addDay(day: Date) {
+        add(Day(day))
     }
 
-    private fun addTime(item: Event) {
-        add(Time(item.begin))
+    private fun addTime(time: Date) {
+        add(Time(time))
     }
 
     private fun scrollToCurrentTime() {
