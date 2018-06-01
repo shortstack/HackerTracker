@@ -58,14 +58,12 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
 //                            }
                             if (collection.isEmpty()) {
                                 listViews.showEmptyView()
+                            } else {
+                                listViews.hideViews()
                             }
                             if (storage.showExpiredEvents()) {
                                 scrollToCurrentTime()
                             }
-//                            if(collection.isEmpty()) {
-//                                listViews.showEmptyView()
-//                            }
-
 
                         }, { e ->
                     Logger.e(e, "Not success.")
