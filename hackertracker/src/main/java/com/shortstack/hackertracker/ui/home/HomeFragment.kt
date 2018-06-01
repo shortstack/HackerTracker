@@ -66,13 +66,8 @@ class HomeFragment : Fragment() {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({
                     setProgressIndicator(false)
-
                     adapter.addAndNotify(getHeader())
-                    adapter.addAndNotify(getInformationNav())
-                    adapter.addAndNotify(getChangeConCard())
-
                     showRecentUpdates(it)
-
                 }, {
 
                 })

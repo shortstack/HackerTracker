@@ -28,7 +28,7 @@ class ItemViewModel(val item: Event) {
 
     val title: String
         get() {
-            val title = item.con + ", " + item.title
+            val title = "[" + item.con + "] " + item.title
             if (!TextUtils.isEmpty(title) && title!!.endsWith("\n"))
                 return title.substring(0, title.indexOf("\n"))
             return title!!
@@ -88,8 +88,9 @@ class ItemViewModel(val item: Event) {
     }
 
 
-    /*(BuildConfig.DEBUG ? mItem.getIndex() + " " : "") +*/ val displayTitle: String
-        get() = item.con + ", " + item.title!!
+    val displayTitle: String
+        get() = "[${item.con}] ${item.title}"
+
 
     fun hasDescription(): Boolean {
         return !TextUtils.isEmpty(item.description)
@@ -115,7 +116,7 @@ class ItemViewModel(val item: Event) {
     }
 
     val location: String
-        get() = item.location ?: ""
+        get() = item.location ?: "???"
 
     val id: Int
         get() = item.index
@@ -147,18 +148,11 @@ class ItemViewModel(val item: Event) {
             if (date == null)
                 return context.resources.getString(R.string.tba)
 
-            val time: String
-            val writeFormat: DateFormat
-
-//            if (storage.shouldShowMilitaryTime()) {
-//                writeFormat = SimpleDateFormat("HH:mm")
-//            } else {
-            writeFormat = SimpleDateFormat("h:mm aa")
-//            }
-
-            time = writeFormat.format(date)
-
-            return time
+            return if (android.text.format.DateFormat.is24HourFormat(context)) {
+                SimpleDateFormat("HH:mm").format(date)
+            } else {
+                SimpleDateFormat("h:mm aa").format(date)
+            }
         }
     }
 

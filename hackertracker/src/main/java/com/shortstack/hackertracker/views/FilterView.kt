@@ -16,7 +16,7 @@ import com.shortstack.hackertracker.models.Type
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.alert_filter.view.*
+import kotlinx.android.synthetic.main.view_filter.view.*
 import java.util.*
 import javax.inject.Inject
 
@@ -68,7 +68,7 @@ class FilterView : LinearLayout {
     private fun init() {
         App.application.myComponent.inject(this)
 
-        View.inflate(context, R.layout.alert_filter, this)
+        View.inflate(context, R.layout.view_filter, this)
 
         database.getTypes()
                 .subscribeOn(Schedulers.io())

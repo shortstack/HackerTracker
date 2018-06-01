@@ -16,12 +16,14 @@ class MapFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewer.fromAsset(arguments?.getString(ARG_PDF)).onLoad { progress_container.visibility = View.GONE }.load()
+        viewer.fromAsset(arguments?.getString(ARG_PDF)).onLoad {
+            //            progress_container.visibility = View.GONE
+        }.load()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        if( viewer != null )
+        if (viewer != null)
             viewer.recycle()
     }
 

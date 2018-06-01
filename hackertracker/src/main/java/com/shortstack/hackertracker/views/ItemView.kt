@@ -183,7 +183,7 @@ class ItemView : CardView {
     }
 
     private fun renderText() {
-        title!!.text = content!!.displayTitle
+        title.text = content?.displayTitle
         location!!.text = content!!.location
 
         if (mDisplayMode == DISPLAY_MODE_FULL) {
