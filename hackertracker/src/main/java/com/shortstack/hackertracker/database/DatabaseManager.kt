@@ -74,6 +74,10 @@ class DatabaseManager(context: Context) {
                 })
     }
 
+    fun getFAQ(): Flowable<List<FAQ>> {
+        return db.faqDao().getAll()
+    }
+
     fun getVendors(): Flowable<List<Vendor>> {
         return db.vendorDao().getAll(getCurrentCon().directory
                 ?: return db.vendorDao().getAll())

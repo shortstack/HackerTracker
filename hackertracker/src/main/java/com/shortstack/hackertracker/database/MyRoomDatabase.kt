@@ -23,7 +23,7 @@ import javax.inject.Inject
 /**
  * Created by Chris on 3/31/2018.
  */
-@Database(entities = [(Conference::class), (Event::class), (Type::class), (Vendor::class), (Speaker::class)], version = 1)
+@Database(entities = [(Conference::class), (Event::class), (Type::class), (Vendor::class), (Speaker::class), (FAQ::class)], version = 1)
 @TypeConverters(value = [(Converters::class)])
 abstract class MyRoomDatabase : RoomDatabase() {
 
@@ -36,6 +36,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
     abstract fun speakerDao(): SpeakerDao
 
     abstract fun vendorDao(): VendorDao
+
+    abstract fun faqDao(): FAQDao
 
     var initialized: Boolean = true
 
@@ -80,9 +82,11 @@ abstract class MyRoomDatabase : RoomDatabase() {
                 it.speakers.forEach { it.con = database }
                 speakerDao().insertAll(it.speakers)
             }
+
+            gson.fromJsonFile(FAQ_FILE, FAQs::class.java, root = database).let {
+                faqDao().insertAll(it.faqs)
+            }
         }
-
-
     }
 
     companion object {
@@ -141,5 +145,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
         private const val TYPES_FILE = "event_type.json"
         private const val SPEAKERS_FILE = "speakers.json"
         private const val VENDORS_FILE = "vendors.json"
+        private const val FAQ_FILE = "faq.json"
     }
 }

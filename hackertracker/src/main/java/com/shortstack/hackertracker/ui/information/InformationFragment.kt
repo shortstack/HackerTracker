@@ -6,6 +6,9 @@ import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
+import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.App
@@ -17,7 +20,7 @@ import com.shortstack.hackertracker.models.Information
 import com.shortstack.hackertracker.ui.GenericHeaderRenderer
 import com.shortstack.hackertracker.ui.information.renderers.FAQRenderer
 import com.shortstack.hackertracker.ui.information.renderers.InformationRenderer
-import io.reactivex.Observable
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
@@ -73,10 +76,14 @@ class InformationFragment : Fragment() {
         adapter.notifyItemRangeInserted(0, adapter.collection.size)
     }
 
-    private fun getFAQ(): Observable<List<FAQ>> {
-        val title = database.getCurrentCon().title
+    private fun getFAQ(): Flowable<List<FAQ>> {
+        return database.getFAQ()
+    }
 
-        val items = when(title) {
+    @Deprecated("Do not use, use Database. This is strictly for converting old data into json.")
+    private fun getJsonFAQ(title: String): JsonArray {
+
+        val items = when (title) {
             Constants.SHMOOCON_DATABASE_NAME -> resources.getStringArray(R.array.faq_questions_shmoo)
             Constants.HACKWEST_DATABASE_NAME -> resources.getStringArray(R.array.faq_questions_hw)
             Constants.LAYERONE_DATABASE_NAME -> resources.getStringArray(R.array.faq_questions_l1)
@@ -84,10 +91,20 @@ class InformationFragment : Fragment() {
             else -> resources.getStringArray(R.array.faq_questions)
         }
 
-        return Observable.create { subscriber ->
-            subscriber.onNext(items.toList().windowed(size = 2, step = 2).map { FAQ(it[0], it[1]) })
-            subscriber.onComplete()
+        val faqs = items.toList().windowed(size = 2, step = 2).map { FAQ(0, it[0], it[1]) }
+        val json = JsonArray()
+
+        faqs.forEach {
+            val obj = JsonObject()
+            obj.addProperty("question", it.question)
+            obj.addProperty("answer", it.answer)
+
+            json.add(obj)
         }
+
+        Logger.d(json.toString())
+
+        return json
     }
 
     companion object {
