@@ -9,8 +9,6 @@ import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.analytics.AnalyticsController.Analytics
-import com.shortstack.hackertracker.events.BusProvider
-import com.shortstack.hackertracker.events.UpdateListContentsEvent
 import javax.inject.Inject
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -46,12 +44,10 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
             "user_use_military_time" -> {
                 event = Analytics.SETTINGS_MILITARY_TIME
-                BusProvider.bus.post(UpdateListContentsEvent())
             }
 
             "user_show_expired_events" -> {
                 event = Analytics.SETTINGS_EXPIRED_EVENT
-                BusProvider.bus.post(UpdateListContentsEvent())
             }
 
             "sync_interval" -> {

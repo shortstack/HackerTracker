@@ -21,7 +21,6 @@ import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.events.BusProvider
 import com.shortstack.hackertracker.events.RefreshTimerEvent
 import com.shortstack.hackertracker.events.SyncResponseEvent
-import com.shortstack.hackertracker.events.UpdateListContentsEvent
 import com.shortstack.hackertracker.network.DatabaseService
 import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.network.SyncRepository
@@ -128,11 +127,6 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     override fun onDestroy() {
         super.onDestroy()
         BusProvider.bus.unregister(this)
-    }
-
-    @Subscribe
-    fun handleUpdateListContentsEvent(event: UpdateListContentsEvent) {
-        refreshContents()
     }
 
     @Subscribe
