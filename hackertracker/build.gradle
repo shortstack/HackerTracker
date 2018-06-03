@@ -67,6 +67,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:1.1.0'
 
 
+
     // RxJava
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
     implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
@@ -74,6 +75,10 @@ dependencies {
     // Dagger
     implementation 'com.google.dagger:dagger:2.15'
     kapt 'com.google.dagger:dagger-compiler:2.15'
+
+    // Arch
+    implementation "android.arch.lifecycle:extensions:1.1.1"
+    implementation "android.arch.lifecycle:viewmodel:1.1.1"
 
     // Room
     implementation 'android.arch.persistence.room:rxjava2:1.1.0'
