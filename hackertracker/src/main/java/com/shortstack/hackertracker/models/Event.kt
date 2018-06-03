@@ -48,10 +48,10 @@ data class Event(
         }
 
     val hasStarted: Boolean
-        get() = begin.after(Date().now())
+        get() = Date().now().after(begin)
 
-    val hasFinished : Boolean
-        get() = end.after(Date().now())
+    val hasFinished: Boolean
+        get() = Date().now().after(end)
 
     val notificationTime: Int
         get() {
