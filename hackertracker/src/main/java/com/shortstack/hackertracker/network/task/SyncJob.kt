@@ -89,9 +89,6 @@ class SyncJob : JobService(), Callback<SyncResponse> {
     override fun onStartJob(job: JobParameters): Boolean {
         Logger.d("Start!")
 
-        if (database.databaseName != Constants.DEFCON_DATABASE_NAME)
-            return false
-
         val retrofit = Retrofit.Builder().baseUrl(Constants.API_URL_BASE).addConverterFactory(GsonConverterFactory.create()).build()
         val service = retrofit.create(DatabaseService::class.java)
         service.getScheduleJob.enqueue(this)

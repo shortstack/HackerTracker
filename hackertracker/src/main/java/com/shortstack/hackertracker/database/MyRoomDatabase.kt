@@ -164,7 +164,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                             Single.fromCallable {
                                 val instance = getInstance(context, conferenceLiveData)
                                 val currentCon = instance.conferenceDao().getCurrentCon()
-                                Logger.d("Setting current con " + currentCon)
+                                Logger.d("Setting current con $currentCon")
                                 conferenceLiveData.postValue(currentCon)
                             }.subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
@@ -178,7 +178,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
         }
 
-        const val DATABASE_NAME = "database"
+        private const val DATABASE_NAME = "database"
 
         private const val CONFERENCES_FILE = "conferences.json"
 
