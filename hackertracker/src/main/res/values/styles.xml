@@ -50,6 +50,10 @@
 
     </style>
 
+    <style name="AppTheme.Splash">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
     <style name="AppTheme.Toorcon" parent="AppTheme">
         <item name="logo_main">@drawable/toorcon_logo</item>
         <item name="logo_secondary">@drawable/toorcon_logo</item>
@@ -140,7 +144,6 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
     </style>
-
 
 
     <!-- Individual element styles. -->

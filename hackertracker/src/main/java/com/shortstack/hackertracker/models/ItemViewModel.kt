@@ -17,9 +17,6 @@ import javax.inject.Inject
 class ItemViewModel(val item: Event) {
 
     @Inject
-    lateinit var storage: SharedPreferencesUtil
-
-    @Inject
     lateinit var database: DatabaseManager
 
     init {
@@ -47,7 +44,7 @@ class ItemViewModel(val item: Event) {
         if (item.begin == null)
             return context.resources.getString(R.string.tba)
 
-        return if (storage.shouldShowMilitaryTime()) {
+        return if (/*storage.shouldShowMilitaryTime()*/false) {
             item.begin.toString()
         } else {
             val date = item.begin

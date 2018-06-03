@@ -43,12 +43,11 @@
 
         <service android:name="com.shortstack.hackertracker.network.service.UpdateDatabaseService" />
 
-        <activity android:name=".ui.activities.SplashActivity" />
-
         <activity
             android:name="com.shortstack.hackertracker.ui.activities.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Splash">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -60,7 +59,7 @@
                 android:resource="@xml/searchable" />
 
         </activity>
-        
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="3439e34f4fcc9d7eabf24f7ce529cd7415acc49d" />
