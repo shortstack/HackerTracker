@@ -6,17 +6,21 @@ import com.shortstack.hackertracker.models.ItemViewModel
 import com.shortstack.hackertracker.network.service.UpdateDatabaseService
 import com.shortstack.hackertracker.network.task.ReminderJob
 import com.shortstack.hackertracker.network.task.SyncJob
+import com.shortstack.hackertracker.ui.MainActivityViewModel
 import com.shortstack.hackertracker.ui.SearchFragment
 import com.shortstack.hackertracker.ui.SettingsFragment
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.activities.SplashActivity
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
+import com.shortstack.hackertracker.ui.information.InformationViewModel
 import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleItemBottomSheet
+import com.shortstack.hackertracker.ui.schedule.ScheduleViewModel
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleItemAdapter
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
+import com.shortstack.hackertracker.ui.vendors.VendorsViewModel
 import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.view.FilterView
 import com.shortstack.hackertracker.view.ItemView
@@ -70,6 +74,14 @@ interface MyComponent {
 
     fun inject(myRoomDatabase: MyRoomDatabase)
 
+    // ViewModels
+    fun inject(mainActivityViewModel: MainActivityViewModel)
+
+    fun inject(vendorsViewModel: VendorsViewModel)
+
+    fun inject(scheduleViewModel: ScheduleViewModel)
+
     fun inject(informationViewModel: InformationViewModel)
+
 
 }

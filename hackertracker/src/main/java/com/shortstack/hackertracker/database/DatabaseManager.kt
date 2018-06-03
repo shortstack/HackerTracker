@@ -29,6 +29,7 @@ class DatabaseManager(context: Context) {
 
     init {
         db = MyRoomDatabase.buildDatabase(context, conferenceLiveData)
+        conferenceLiveData.postValue(getCurrentCon())
     }
 
     fun changeConference(con: Conference) {

@@ -68,6 +68,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     typeDao().insertAll(it.types)
                 }
             } catch (ex: JsonSyntaxException) {
+                Logger.e("Could not open $TYPES_FILE. ${ex.message}")
                 incorrectDateStamps.add(ex.message!!)
             }
 
@@ -78,6 +79,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     eventDao().insertAll(it.events)
                 }
             } catch (ex: JsonSyntaxException) {
+                Logger.e("Could not open $SCHEDULE_FILE. ${ex.message}")
                 incorrectDateStamps.add(ex.message!!)
             }
 
@@ -88,6 +90,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     vendorDao().insertAll(it.vendors)
                 }
             } catch (ex: JsonSyntaxException) {
+                Logger.e("Could not open $VENDORS_FILE. ${ex.message}")
                 incorrectDateStamps.add(ex.message!!)
             }
 
@@ -98,6 +101,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     speakerDao().insertAll(it.speakers)
                 }
             } catch (ex: JsonSyntaxException) {
+                Logger.e("Could not open $SPEAKERS_FILE. ${ex.message}")
                 incorrectDateStamps.add(ex.message!!)
             }
 
@@ -107,19 +111,21 @@ abstract class MyRoomDatabase : RoomDatabase() {
                     faqDao().insertAll(it.faqs)
                 }
             } catch (ex: JsonSyntaxException) {
+                Logger.e("Could not open $FAQ_FILE. ${ex.message}")
                 incorrectDateStamps.add(ex.message!!)
             }
-        }
 
-        if (incorrectDateStamps.isNotEmpty()) {
-            val array = JSONArray()
-            incorrectDateStamps.forEach {
-                array.put(it)
+            if (incorrectDateStamps.isNotEmpty()) {
+                val array = JSONArray()
+                incorrectDateStamps.forEach {
+                    array.put(it)
+                }
+
+                Logger.e(array.toString())
+
+                incorrectDateStamps.clear()
             }
-
-            Logger.e(array.toString())
         }
-
     }
 
     companion object {
@@ -157,7 +163,9 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
                             Single.fromCallable {
                                 val instance = getInstance(context, conferenceLiveData)
-                                conferenceLiveData.postValue(instance.conferenceDao().getCurrentCon())
+                                val currentCon = instance.conferenceDao().getCurrentCon()
+                                Logger.d("Setting current con " + currentCon)
+                                conferenceLiveData.postValue(currentCon)
                             }.subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe()
