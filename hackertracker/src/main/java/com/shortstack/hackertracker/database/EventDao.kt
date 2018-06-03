@@ -60,7 +60,7 @@ interface EventDao {
     fun getUIThreadRecentlyUpdated(): List<Event>
 
     @Query("SELECT * FROM event WHERE con = :con ORDER BY updatedAt DESC LIMIT $LIMIT")
-    fun getRecentlyUpdated(con: String): Flowable<List<Event>>
+    fun getRecentlyUpdated(con: String): LiveData<List<Event>>
 
     @Query("SELECT * FROM event WHERE con = :con AND `end` > :end  ORDER BY `begin` ASC")
     fun getEventTypes(con: String, end: Date): Flowable<List<DatabaseEvent>>

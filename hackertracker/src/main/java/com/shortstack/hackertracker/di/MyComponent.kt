@@ -12,6 +12,7 @@ import com.shortstack.hackertracker.ui.SettingsFragment
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.activities.SplashActivity
 import com.shortstack.hackertracker.ui.home.HomeFragment
+import com.shortstack.hackertracker.ui.home.HomeViewModel
 import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.information.InformationViewModel
 import com.shortstack.hackertracker.ui.maps.MapsFragment
@@ -37,15 +38,7 @@ interface MyComponent {
 
     fun inject(mainActivity: MainActivity)
 
-    fun inject(vendorsFragment: VendorsFragment)
-
     fun inject(homeFragment: HomeFragment)
-
-    fun inject(informationFragment: InformationFragment)
-
-    fun inject(mapsFragment: MapsFragment)
-
-    fun inject(pagerAdapter: MapsFragment.PagerAdapter)
 
     fun inject(scheduleItemAdapter: ScheduleItemAdapter)
 
@@ -78,13 +71,14 @@ interface MyComponent {
     // ViewModels
     fun inject(mainActivityViewModel: MainActivityViewModel)
 
-    fun inject(vendorsViewModel: VendorsViewModel)
+    fun inject(homeViewModel: HomeViewModel)
 
     fun inject(scheduleViewModel: ScheduleViewModel)
 
-    fun inject(informationViewModel: InformationViewModel)
-
     fun inject(mapsViewModel: MapsViewModel)
 
+    fun inject(informationViewModel: InformationViewModel)
+
+    fun inject(vendorsViewModel: VendorsViewModel)
 
 }

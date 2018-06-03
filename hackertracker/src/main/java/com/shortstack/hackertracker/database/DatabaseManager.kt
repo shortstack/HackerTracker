@@ -93,8 +93,8 @@ class DatabaseManager(context: Context) {
         return db.eventDao().getEventTypes(getCurrentCon().directory, App.getCurrentDate())
     }
 
-    fun getRecent(): Flowable<List<Event>> {
-        return db.eventDao().getRecentlyUpdated(getCurrentCon().directory)
+    fun getRecent(con: Conference): LiveData<List<Event>> {
+        return db.eventDao().getRecentlyUpdated(con.directory)
     }
 
     fun updateConference(body: SyncResponse): Single<Int> {

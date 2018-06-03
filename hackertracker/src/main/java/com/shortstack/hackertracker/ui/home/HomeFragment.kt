@@ -1,6 +1,8 @@
 package com.shortstack.hackertracker.ui.home
 
 import android.annotation.SuppressLint
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -32,47 +34,38 @@ class HomeFragment : Fragment() {
 
     private lateinit var adapter: RendererAdapter<Any>
 
-    @Inject
-    lateinit var dataabase: DatabaseManager
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_recyclerview, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        App.application.myComponent.inject(this)
+        setProgressIndicator(true)
 
-        val rendererBuilder = RendererBuilder<Any>()
+        list.layoutManager = LinearLayoutManager(context)
+
+        adapter = RendererAdapter(RendererBuilder<Any>()
                 .bind(TYPE_HEADER, HomeHeaderRenderer())
                 .bind(String::class.java, SubHeaderRenderer())
                 .bind(Event::class.java, EventRenderer())
                 .bind(Navigation::class.java, ActivityNavRenderer())
-                .bind(TYPE_CHANGE_CON, ChangeConRenderer())
+                .bind(TYPE_CHANGE_CON, ChangeConRenderer()))
 
-        val layout = LinearLayoutManager(context)
-        list.layoutManager = layout
-
-        adapter = RendererAdapter(rendererBuilder)
         list.adapter = adapter
 
 
-        fetchRecentUpdates()
+        val homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        homeViewModel.recent.observe(this, Observer {
+            setProgressIndicator(false)
+            if (it != null) {
+                adapter.clearAndNotify()
+                adapter.addAndNotify(getHeader())
+                adapter.addAndNotify(getInformationNav())
+                adapter.addAndNotify(getChangeConCard())
+                showRecentUpdates(it)
+            }
+        })
     }
-
-    private fun fetchRecentUpdates() {
-        dataabase.getRecent()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    setProgressIndicator(false)
-                    adapter.addAndNotify(getHeader())
-                    showRecentUpdates(it)
-                }, {
-
-                })
-    }
-
 
     private fun setProgressIndicator(active: Boolean) {
         loading_progress?.visibility = if (active) View.VISIBLE else View.GONE
@@ -110,8 +103,7 @@ class HomeFragment : Fragment() {
         const val TYPE_HEADER = 0
         const val TYPE_CHANGE_CON = 1
 
-        fun newInstance(): HomeFragment {
-            return HomeFragment()
-        }
+        fun newInstance() = HomeFragment()
+
     }
 }
