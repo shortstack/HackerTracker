@@ -103,6 +103,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
             try {
                 gson.fromFile<FAQs>(FAQ_FILE, root = database).let {
+                    it.faqs.forEach { it.con = database }
                     faqDao().insertAll(it.faqs)
                 }
             } catch (ex: JsonSyntaxException) {

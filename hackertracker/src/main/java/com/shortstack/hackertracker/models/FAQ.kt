@@ -7,5 +7,6 @@ import android.arch.persistence.room.PrimaryKey
 data class FAQ(
         @PrimaryKey(autoGenerate = true)
         val index: Int,
+        var con: String,
         val question: String,
         val answer: String)

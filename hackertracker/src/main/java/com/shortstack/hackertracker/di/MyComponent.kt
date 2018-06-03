@@ -70,4 +70,6 @@ interface MyComponent {
 
     fun inject(myRoomDatabase: MyRoomDatabase)
 
+    fun inject(informationViewModel: InformationViewModel)
+
 }

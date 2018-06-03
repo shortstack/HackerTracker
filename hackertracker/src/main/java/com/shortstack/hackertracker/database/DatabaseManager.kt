@@ -76,8 +76,8 @@ class DatabaseManager(context: Context) {
                 })
     }
 
-    fun getFAQ(): Flowable<List<FAQ>> {
-        return db.faqDao().getAll()
+    fun getFAQ(con: Conference): LiveData<List<FAQ>> {
+        return db.faqDao().getAll(con.directory)
     }
 
     fun getVendors(con: Conference): LiveData<List<Vendor>> {

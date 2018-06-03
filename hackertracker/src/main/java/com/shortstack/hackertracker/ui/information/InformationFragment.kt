@@ -1,5 +1,7 @@
 package com.shortstack.hackertracker.ui.information
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.LinearLayoutManager
@@ -30,8 +32,6 @@ class InformationFragment : Fragment() {
 
     lateinit var adapter: RendererAdapter<Any>
 
-    @Inject
-    lateinit var database: DatabaseManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_recyclerview, container, false)
@@ -39,11 +39,10 @@ class InformationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        App.application.myComponent.inject(this)
-
-        list.layoutManager = LinearLayoutManager(context)
 
         loading_progress.visibility = View.VISIBLE
+
+        list.layoutManager = LinearLayoutManager(context)
 
         adapter = RendererAdapter(RendererBuilder<Any>()
                 .bind(FAQ::class.java, FAQRenderer())
@@ -52,17 +51,21 @@ class InformationFragment : Fragment() {
 
         list.adapter = adapter
 
-        getFAQ().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    loading_progress.visibility = View.GONE
+        val informationViewModel = ViewModelProviders.of(this).get(InformationViewModel::class.java)
+        informationViewModel.faq.observe(this, Observer {
+            loading_progress.visibility = View.GONE
 
-                    if (database.getCurrentCon().title == Constants.DEFCON_DATABASE_NAME) {
-                        addInformationButtons()
-                    }
+            adapter.clearAndNotify()
 
-                    adapter.addAllAndNotify(it)
-                }
+            if (it != null) {
+
+//                if (database.getCurrentCon().title == Constants.DEFCON_DATABASE_NAME) {
+//                    addInformationButtons()
+//                }
+
+                adapter.addAllAndNotify(it)
+            }
+        })
     }
 
     private fun addInformationButtons() {
@@ -76,40 +79,9 @@ class InformationFragment : Fragment() {
         adapter.notifyItemRangeInserted(0, adapter.collection.size)
     }
 
-    private fun getFAQ(): Flowable<List<FAQ>> {
-        return database.getFAQ()
-    }
-
-    @Deprecated("Do not use, use Database. This is strictly for converting old data into json.")
-    private fun getJsonFAQ(title: String): JsonArray {
-
-        val items = when (title) {
-            Constants.SHMOOCON_DATABASE_NAME -> resources.getStringArray(R.array.faq_questions_shmoo)
-            Constants.HACKWEST_DATABASE_NAME -> resources.getStringArray(R.array.faq_questions_hw)
-            Constants.LAYERONE_DATABASE_NAME -> resources.getStringArray(R.array.faq_questions_l1)
-            Constants.BSIDESORL_DATABASE_NAME -> resources.getStringArray(R.array.faq_questions_bsidesorl)
-            else -> resources.getStringArray(R.array.faq_questions)
-        }
-
-        val faqs = items.toList().windowed(size = 2, step = 2).map { FAQ(0, it[0], it[1]) }
-        val json = JsonArray()
-
-        faqs.forEach {
-            val obj = JsonObject()
-            obj.addProperty("question", it.question)
-            obj.addProperty("answer", it.answer)
-
-            json.add(obj)
-        }
-
-        Logger.d(json.toString())
-
-        return json
-    }
-
     companion object {
-        fun newInstance(): InformationFragment {
-            return InformationFragment()
-        }
+
+        fun newInstance() = InformationFragment()
+
     }
 }
