@@ -15,6 +15,7 @@ import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.information.InformationViewModel
 import com.shortstack.hackertracker.ui.maps.MapsFragment
+import com.shortstack.hackertracker.ui.maps.MapsViewModel
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleItemBottomSheet
 import com.shortstack.hackertracker.ui.schedule.ScheduleViewModel
@@ -82,6 +83,8 @@ interface MyComponent {
     fun inject(scheduleViewModel: ScheduleViewModel)
 
     fun inject(informationViewModel: InformationViewModel)
+
+    fun inject(mapsViewModel: MapsViewModel)
 
 
 }
