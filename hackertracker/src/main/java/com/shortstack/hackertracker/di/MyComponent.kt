@@ -20,7 +20,7 @@ import com.shortstack.hackertracker.ui.schedule.ScheduleViewModel
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleItemAdapter
 import com.shortstack.hackertracker.ui.vendors.VendorsViewModel
 import com.shortstack.hackertracker.utils.NotificationHelper
-import com.shortstack.hackertracker.view.FilterView
+import com.shortstack.hackertracker.views.FilterView
 import com.shortstack.hackertracker.views.EventView
 import dagger.Component
 

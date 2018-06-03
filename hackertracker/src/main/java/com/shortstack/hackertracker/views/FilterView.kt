@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.view
+package com.shortstack.hackertracker.views
 
 import android.content.Context
 import android.content.res.ColorStateList
