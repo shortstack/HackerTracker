@@ -2,7 +2,7 @@ package com.shortstack.hackertracker.di
 
 import com.shortstack.hackertracker.database.MyRoomDatabase
 import com.shortstack.hackertracker.di.modules.*
-import com.shortstack.hackertracker.models.ItemViewModel
+import com.shortstack.hackertracker.models.EventViewModel
 import com.shortstack.hackertracker.network.service.UpdateDatabaseService
 import com.shortstack.hackertracker.network.task.ReminderJob
 import com.shortstack.hackertracker.network.task.SyncJob
@@ -15,13 +15,13 @@ import com.shortstack.hackertracker.ui.home.HomeViewModel
 import com.shortstack.hackertracker.ui.information.InformationViewModel
 import com.shortstack.hackertracker.ui.maps.MapsViewModel
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
-import com.shortstack.hackertracker.ui.schedule.ScheduleItemBottomSheet
+import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
 import com.shortstack.hackertracker.ui.schedule.ScheduleViewModel
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleItemAdapter
 import com.shortstack.hackertracker.ui.vendors.VendorsViewModel
 import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.view.FilterView
-import com.shortstack.hackertracker.view.ItemView
+import com.shortstack.hackertracker.views.EventView
 import dagger.Component
 
 /**
@@ -44,13 +44,13 @@ interface MyComponent {
 
     fun inject(scheduleFragment: ScheduleFragment)
 
-    fun inject(scheduleItemBottomSheet: ScheduleItemBottomSheet)
+    fun inject(scheduleItemBottomSheet: EventBottomSheet)
 
     fun inject(settingsFragment: SettingsFragment)
 
     fun inject(filterView: FilterView)
 
-    fun inject(itemViewModel: ItemViewModel)
+    fun inject(itemViewModel: EventViewModel)
 
     fun inject(notificationHelper: NotificationHelper)
 
@@ -58,7 +58,7 @@ interface MyComponent {
 
     fun inject(updateDatabaseService: UpdateDatabaseService)
 
-    fun inject(itemView: ItemView)
+    fun inject(itemView: EventView)
 
     fun inject(myRoomDatabase: MyRoomDatabase)
 

@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     tools:background="@color/background">
 
-    <com.shortstack.hackertracker.view.ItemView
-        android:id="@+id/item"
+    <com.shortstack.hackertracker.views.EventView
+        android:id="@+id/event"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"

@@ -4,7 +4,7 @@
     <string name="app_name">Hacker Tracker</string>
     <string name="action_share">Share</string>
 
-    <!-- navigation drawer item labels  -->
+    <!-- navigation drawer event labels  -->
 
     <string-array name="filter_types">
         <item>@string/official</item>

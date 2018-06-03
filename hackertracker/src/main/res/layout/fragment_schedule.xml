@@ -19,7 +19,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:paddingBottom="30dp"
-            tools:listitem="@layout/row_item" />
+            tools:listitem="@layout/row_event" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

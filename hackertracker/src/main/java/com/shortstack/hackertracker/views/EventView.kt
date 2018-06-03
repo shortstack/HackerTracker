@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.view
+package com.shortstack.hackertracker.views
 
 import android.animation.ObjectAnimator
 import android.content.Context
@@ -19,22 +19,22 @@ import com.shortstack.hackertracker.events.BusProvider
 import com.shortstack.hackertracker.events.FavoriteEvent
 import com.shortstack.hackertracker.events.RefreshTimerEvent
 import com.shortstack.hackertracker.models.Event
-import com.shortstack.hackertracker.models.ItemViewModel
+import com.shortstack.hackertracker.models.EventViewModel
 import com.squareup.otto.Subscribe
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.row_item.view.*
+import kotlinx.android.synthetic.main.row_event.view.*
 import javax.inject.Inject
 
-class ItemView : CardView {
+class EventView : CardView {
 
     @Inject
     lateinit var database: DatabaseManager
 
     private var mDisplayMode = DISPLAY_MODE_FULL
     private var mRoundCorners = true
-    var content: ItemViewModel? = null
+    var content: EventViewModel? = null
         private set
 
     private var mAnimation: ObjectAnimator? = null
@@ -68,11 +68,11 @@ class ItemView : CardView {
     private fun getStyle(context: Context, attrs: AttributeSet) {
         val a = context.theme.obtainStyledAttributes(
                 attrs,
-                R.styleable.ItemView,
+                R.styleable.EventView,
                 0, 0)
         try {
-            mDisplayMode = a.getInteger(R.styleable.ItemView_displayMode, DISPLAY_MODE_FULL)
-            mRoundCorners = a.getBoolean(R.styleable.ItemView_roundCorners, true)
+            mDisplayMode = a.getInteger(R.styleable.EventView_displayMode, DISPLAY_MODE_FULL)
+            mRoundCorners = a.getBoolean(R.styleable.EventView_roundCorners, true)
         } finally {
             a.recycle()
         }
@@ -81,13 +81,13 @@ class ItemView : CardView {
     private fun inflate() {
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
-        val view = inflater.inflate(R.layout.row_item, null)
+        val view = inflater.inflate(R.layout.row_event, null)
 
         addView(view)
     }
 
-    fun setItem(item: Event) {
-        content = ItemViewModel(item)
+    fun setEvent(event: Event) {
+        content = EventViewModel(event)
         renderItem()
     }
 
@@ -134,8 +134,8 @@ class ItemView : CardView {
             }
 
             DISPLAY_MODE_MIN -> {
-                time!!.visibility = View.GONE
-                category_text!!.visibility = View.GONE
+                time.visibility = View.GONE
+                category_text.visibility = View.GONE
             }
         }
     }
@@ -155,13 +155,13 @@ class ItemView : CardView {
     }
 
     private fun setProgressBar() {
-        progress!!.progress = getProgress()
+        progress.progress = getProgress()
     }
 
-    fun updateProgressBar() {
+    private fun updateProgressBar() {
         val progress = getProgress()
 
-        if (progress < this.progress!!.progress) {
+        if (progress < this.progress.progress) {
             setProgressBar()
             return
         }
@@ -183,11 +183,11 @@ class ItemView : CardView {
     }
 
     private fun renderText() {
-        title.text = content?.displayTitle
-        location!!.text = content!!.location
+        title.text = content?.title
+        location.text = content?.location
 
         if (mDisplayMode == DISPLAY_MODE_FULL) {
-            time!!.text = content!!.getFullTimeStamp(context)
+            time.text = content?.getFullTimeStamp(context)
         }
     }
 
@@ -210,10 +210,10 @@ class ItemView : CardView {
     }
 
     private fun renderBookmark() {
-        star_bar!!.visibility = content!!.bookmarkVisibility
+        star_bar.visibility = content?.bookmarkVisibility ?: View.INVISIBLE
     }
 
-    fun updateBookmark() {
+    private fun updateBookmark() {
         renderBookmark()
     }
 
@@ -232,7 +232,7 @@ class ItemView : CardView {
     }
 
     fun onBookmarkClick() {
-        val event = content?.item ?: return
+        val event = content?.event ?: return
 
         event.isBookmarked = !event.isBookmarked
 
@@ -246,8 +246,9 @@ class ItemView : CardView {
 
     companion object {
 
-        val DISPLAY_MODE_MIN = 0
-        val DISPLAY_MODE_FULL = 1
-        val PROGRESS_UPDATE_DURATION_PER_PERCENT = 50
+        const val DISPLAY_MODE_MIN = 0
+        const val DISPLAY_MODE_FULL = 1
+        const val PROGRESS_UPDATE_DURATION_PER_PERCENT = 50
+
     }
 }

@@ -84,7 +84,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
     fun scheduleItemNotification(item: Event) {
         val window = item.notificationTime - 1200
 
-        Logger.d("Scheduling item notification. In $window seconds, " + (window / 60) + " mins, " + (window / 3600) + " hrs.")
+        Logger.d("Scheduling event notification. In $window seconds, " + (window / 60) + " mins, " + (window / 3600) + " hrs.")
 
         if (window <= 0) {
             return

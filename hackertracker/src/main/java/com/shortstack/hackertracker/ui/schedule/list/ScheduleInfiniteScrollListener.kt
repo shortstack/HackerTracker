@@ -46,7 +46,7 @@ abstract class ScheduleInfiniteScrollListener(private val layoutManager: LinearL
             lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
         }
 
-        // If the total item count is zero and the previous isn't, assume the
+        // If the total event count is zero and the previous isn't, assume the
         // list is invalidated and should be reset back to initial state
         if (totalItemCount < previousTotalItemCount) {
             this.currentPage = this.startingPageIndex
@@ -57,7 +57,7 @@ abstract class ScheduleInfiniteScrollListener(private val layoutManager: LinearL
         }
         // If it’s still loading, we check to see if the dataset count has
         // changed, if so we conclude it has finished loading and update the current page
-        // number and total item count.
+        // number and total event count.
         if (isLoading && totalItemCount > previousTotalItemCount) {
             isLoading = false
             previousTotalItemCount = totalItemCount

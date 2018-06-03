@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.models
 
+import android.arch.lifecycle.ViewModel
 import android.content.Context
 import android.text.TextUtils
 import android.view.View
@@ -7,14 +8,12 @@ import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.now
-import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.utils.TimeUtil
-import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
-class ItemViewModel(val item: Event) {
+class EventViewModel(val event: Event) : ViewModel() {
 
     @Inject
     lateinit var database: DatabaseManager
@@ -24,47 +23,20 @@ class ItemViewModel(val item: Event) {
     }
 
     val title: String
-        get() {
-            val title = "[" + item.con + "] " + item.title
-            if (!TextUtils.isEmpty(title) && title!!.endsWith("\n"))
-                return title.substring(0, title.indexOf("\n"))
-            return title!!
-        }
+        get() = "[${event.con}] ${event.title}"
 
     val description: String
-        get() {
-            var description: String = item.description!!
-            description = description.replace("[.]. {2}".toRegex(), ".\n\n")
-            description = description.replace("\n ".toRegex(), "\n")
-            return description
-        }
-
-    fun getTimeStamp(context: Context): String {
-        // No start time, return TBA.
-        if (item.begin == null)
-            return context.resources.getString(R.string.tba)
-
-        return if (/*storage.shouldShowMilitaryTime()*/false) {
-            item.begin.toString()
-        } else {
-            val date = item.begin
-            val writeFormat = SimpleDateFormat("h:mm aa")
-            writeFormat.format(date)
-        }
-    }
-
+        get() = event.description
 
     val progress: Float
         get() {
-            if (!item.hasStarted)
+            if (!event.hasStarted)
                 return 0f
 
-            val beginDateObject = item.begin
-            val endDateObject = item.end
             val currentDate = Date().now()
 
-            val length = ((endDateObject.time - beginDateObject.time) / 1000 / 60).toFloat()
-            val p = ((endDateObject.time - currentDate.time) / 1000 / 60).toFloat()
+            val length = ((event.end.time - event.begin.time) / 1000 / 60).toFloat()
+            val p = ((event.end.time - currentDate.time) / 1000 / 60).toFloat()
 
             if (p == 0f)
                 return 1f
@@ -76,36 +48,27 @@ class ItemViewModel(val item: Event) {
 
 
     fun getFullTimeStamp(context: Context): String {
-        val begin = item.begin
-        val end = item.end
+        val begin = event.begin
+        val end = event.end
 
         val timestamp = TimeUtil.getRelativeDateStamp(context, begin)
 
         return String.format(context.getString(R.string.timestamp_full), timestamp, getTimeStamp(context, begin), getTimeStamp(context, end))
     }
 
+    fun hasDescription() = !TextUtils.isEmpty(event.description)
 
-    val displayTitle: String
-        get() = "[${item.con}] ${item.title}"
-
-
-    fun hasDescription(): Boolean {
-        return !TextUtils.isEmpty(item.description)
-    }
-
-    fun hasUrl(): Boolean {
-        return !TextUtils.isEmpty(item.url)
-    }
+    fun hasUrl() = !TextUtils.isEmpty(event.url)
 
 
     fun getDetailsDescription(context: Context): String {
         var result = ""
 
-        result += (item.title!! + "\n")
+        result += (event.title + "\n")
 
         result += (getFullTimeStamp(context) + "\n")
-        if (item.location != null)
-            result += (item.location + "\n")
+        if (event.location != null)
+            result += (event.location + "\n")
         //result = result.concat(getType());
 
 
@@ -113,10 +76,10 @@ class ItemViewModel(val item: Event) {
     }
 
     val location: String
-        get() = item.location ?: "???"
+        get() = event.location ?: "[Unknown]"
 
     val id: Int
-        get() = item.index
+        get() = event.index
 
     val toolsVisibility: Int
         get() = View.GONE
@@ -132,13 +95,12 @@ class ItemViewModel(val item: Event) {
 
     val speakers: Array<Speaker>?
         get() = null
+
     val type: String
-        get() = item.type
+        get() = event.type
 
 
     companion object {
-
-        private val EMPTY_CATEGORY = 0
 
         fun getTimeStamp(context: Context, date: Date?): String {
             // No start time, return TBA.
