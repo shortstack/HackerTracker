@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.database
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Event
@@ -21,11 +22,11 @@ interface EventDao {
         private const val LIMIT = 20
     }
 
-    @Query("SELECT * FROM event ORDER BY `begin` ASC")
-    fun getFullSchedule(): Flowable<List<Event>>
+    @Query("SELECT * FROM event WHERE con = :con ORDER BY `begin` ASC")
+    fun getSchedule(con: String): LiveData<List<Event>>
 
     @Query("SELECT * FROM event WHERE con = :con ORDER BY `begin` ASC LIMIT $LIMIT OFFSET :page")
-    fun getFullSchedule(con: String, page: Int): Flowable<List<Event>>
+    fun getSchedule(con: String, page: Int): LiveData<List<Event>>
 
     @Query("SELECT * FROM event ORDER BY `begin` ASC LIMIT $LIMIT")
     fun getUIThreadSchedule(): List<Event>

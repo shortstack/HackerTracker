@@ -1,7 +1,6 @@
 package com.shortstack.hackertracker.ui.schedule.list
 
 import android.support.v7.widget.RecyclerView
-import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
@@ -10,13 +9,10 @@ import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
 
-class ScheduleItemAdapter(private val listViews: ListViewsInterface,
-                          private val layout: RecyclerView.LayoutManager,
+class ScheduleItemAdapter(private val layout: RecyclerView.LayoutManager,
                           val list: RecyclerView) : RendererAdapter<Any>(ScheduleItemBuilder()) {
 
     @Inject
@@ -29,50 +25,7 @@ class ScheduleItemAdapter(private val listViews: ListViewsInterface,
         App.application.myComponent.inject(this)
     }
 
-    fun initContents() {
-        clearAndNotify()
-        listViews.hideViews()
-        load()
-    }
-
-    fun load(page: Int = 0) {
-        val filter = storage.filter
-
-        // TODO: Add in the filter.
-        database.getSchedule(/**filter.typesArray, page = page*/
-                page = page)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        {
-                            // TODO: Remove, this is only for debugging.
-                            if (page == 0) {
-                                Logger.d("Loaded first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
-                            }
-
-                            addAllAndNotify(it)
-
-                            // TODO: This solution does not work with pagination.
-//                            if (storage.showExpiredEvents()) {
-//                                scrollToCurrentTime()
-//                            }
-                            if (collection.isEmpty()) {
-                                listViews.showEmptyView()
-                            } else {
-                                listViews.hideViews()
-                            }
-                            if (storage.showExpiredEvents()) {
-                                scrollToCurrentTime()
-                            }
-
-                        }, { e ->
-                    Logger.e(e, "Not success.")
-                    listViews.showErrorView()
-                })
-    }
-
-
-    private fun addAllAndNotify(elements: List<Event>) {
+    fun addAllAndNotify(elements: List<Event>) {
         if (elements.isEmpty())
             return
 

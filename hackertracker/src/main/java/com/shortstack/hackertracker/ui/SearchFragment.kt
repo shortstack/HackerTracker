@@ -2,7 +2,6 @@ package com.shortstack.hackertracker.ui
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
@@ -35,7 +34,6 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         super.onViewCreated(view, savedInstanceState)
         App.application.myComponent.inject(this)
 
-        list.layoutManager = LinearLayoutManager(context)
         loading_progress.visibility = View.GONE
 
         adapter = RendererAdapter(RendererBuilder<Any>()

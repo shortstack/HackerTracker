@@ -3,6 +3,8 @@ package com.shortstack.hackertracker.ui.activities
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
 import android.content.res.Resources
 import android.os.Build
@@ -11,6 +13,7 @@ import android.support.design.widget.NavigationView
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.*
+import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -24,7 +27,7 @@ import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.getStatusBarHeight
 import com.shortstack.hackertracker.ui.MainActivityViewModel
 import com.shortstack.hackertracker.ui.ReviewBottomSheet
-import com.shortstack.hackertracker.ui.schedule.ScheduleItemBottomSheet
+import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -32,11 +35,12 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.row_nav_view.*
+import java.util.*
 import javax.inject.Inject
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    
+
     @Inject
     lateinit var storage: SharedPreferencesUtil
 
@@ -59,6 +63,13 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setupNavigation()
         setNavHeaderMargin()
 
+        val mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+        mainActivityViewModel.conference.observe(this, Observer {
+            if (it != null) {
+                nav_view.getHeaderView(0).nav_title.text = it.title
+            }
+        })
+
         filter.setOnClickListener { onFilterClick() }
 //        close.setOnClickListener { onFilterClick() }
 
@@ -79,14 +90,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setupActionBarWithNavController(navController, drawerLayout = drawer_layout)
 
         navController.addOnNavigatedListener { _, destination ->
-            val visibility = if (destination.id == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
-            setFABVisibility(visibility)
+            //            val visibility = if (destination.id == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
+//            setFABVisibility(visibility)
         }
 
-        initViewPager()
+        initNavDrawer()
     }
 
-    private fun initViewPager() {
+    private fun initNavDrawer() {
         val toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
@@ -127,14 +138,31 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe({ item ->
-                    val fragment = ScheduleItemBottomSheet.newInstance(item)
+                    val fragment = EventBottomSheet.newInstance(item)
                     fragment.show(supportFragmentManager, fragment.tag)
                 }, {})
 
     }
 
     private fun onFilterClick() {
-        toggleFAB(onClick = true)
+//        toggleFAB(onClick = true)
+
+        database.getCons().subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+
+                    val cons = it.filter { !it.isSelected }
+                    val con = cons[Random().nextInt(cons.size)]
+
+                    Toast.makeText(this@MainActivity, "Changed to ${con.title}", Toast.LENGTH_SHORT).show()
+
+                    database.changeConference(con)
+
+                }, {
+
+                })
+
+
     }
 
     private fun toggleFilters() {

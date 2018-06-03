@@ -45,8 +45,6 @@ class VendorsFragment : Fragment() {
     private fun initAdapter() {
         adapter = RendererAdapter(RendererBuilder<Vendor>()
                 .bind(Vendor::class.java, VendorRenderer()))
-
-        list.layoutManager = LinearLayoutManager(context)
         list.adapter = adapter
     }
 
