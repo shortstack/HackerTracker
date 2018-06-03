@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentTransaction
 import android.support.v7.app.AppCompatActivity
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
+import java.io.FileNotFoundException
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -104,6 +105,9 @@ inline fun <reified T> Gson.fromFile(filename: String, root: String = Constants.
     } catch (e: IOException) {
         Logger.e(e, "Could not create the database.")
         throw e
+    } catch (e: FileNotFoundException) {
+        Logger.e("Could not find the file. $root.$filename")
+        return fromJson("", T::class.java)
     }
 }
 

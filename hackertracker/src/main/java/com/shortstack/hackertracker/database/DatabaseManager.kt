@@ -1,11 +1,12 @@
 package com.shortstack.hackertracker.database
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.content.Context
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
-import com.shortstack.hackertracker.events.ChangeConEvent
 import com.shortstack.hackertracker.events.BusProvider
+import com.shortstack.hackertracker.events.ChangeConEvent
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.network.SyncResponse
@@ -19,25 +20,26 @@ import io.reactivex.schedulers.Schedulers
  */
 class DatabaseManager(context: Context) {
 
-    private val db: MyRoomDatabase = MyRoomDatabase.buildDatabase(context)
+    private val db: MyRoomDatabase
 
-    var con: Conference? = null
-        private set
+    val conferenceLiveData = MutableLiveData<Conference>()
 
     @Deprecated("Do not use, use the conferences actual title.")
     val databaseName: String = Constants.DEFCON_DATABASE_NAME
 
     init {
-
+        db = MyRoomDatabase.buildDatabase(context, conferenceLiveData)
     }
 
-    private fun changeConference(con: Conference) {
+    fun changeConference(con: Conference) {
         val current = db.conferenceDao().getCurrentCon()
 
         current.isSelected = false
         con.isSelected = true
 
         db.conferenceDao().update(listOf(current, con))
+
+        conferenceLiveData.postValue(con)
     }
 
     fun getCons(): Single<List<Conference>> {
@@ -78,9 +80,8 @@ class DatabaseManager(context: Context) {
         return db.faqDao().getAll()
     }
 
-    fun getVendors(): Flowable<List<Vendor>> {
-        return db.vendorDao().getAll(getCurrentCon().directory
-                ?: return db.vendorDao().getAll())
+    fun getVendors(con: Conference): LiveData<List<Vendor>> {
+        return db.vendorDao().getAll(con.directory)
     }
 
     fun getCurrentCon(): Conference {
