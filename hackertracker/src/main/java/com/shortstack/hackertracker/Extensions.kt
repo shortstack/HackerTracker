@@ -90,7 +90,7 @@ fun String.concat(text: String): String {
 
 inline fun <reified T> Gson.fromFile(filename: String, root: String = Constants.BSIDESORL_DATABASE_NAME): T {
     try {
-        val s = "database/$root/$filename"
+        val s = "database/conferences/$root/$filename"
         val stream = App.application.assets.open(s)
 
         val size = stream.available()
