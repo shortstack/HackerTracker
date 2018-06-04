@@ -12,8 +12,8 @@ import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import java.util.*
 import javax.inject.Inject
 
-class ScheduleItemAdapter(private val layout: RecyclerView.LayoutManager,
-                          val list: RecyclerView) : RendererAdapter<Any>(ScheduleItemBuilder()) {
+class ScheduleAdapter(private val layout: RecyclerView.LayoutManager,
+                      val list: RecyclerView) : RendererAdapter<Any>(ScheduleBuilder()) {
 
     @Inject
     lateinit var database: DatabaseManager
@@ -83,39 +83,33 @@ class ScheduleItemAdapter(private val layout: RecyclerView.LayoutManager,
         if (storage.showExpiredEvents())
             return
 
-        val collection = collection
-        var hasRemovedEvent = false
+        if (collection.isEmpty())
+            return
 
-        for (i in collection.indices.reversed()) {
-            if (collection[i] is Event) {
-                val def = collection[i] as Event
+        val collection = collection.toList()
 
-                if (def.hasFinished) {
-                    collection.removeAt(i)
-                    notifyItemRemoved(i)
-
-                    hasRemovedEvent = true
-                }
+        collection.forEach {
+            if (it is Event && it.hasFinished) {
+                removeAndNotify(it)
             }
         }
 
 
-        if (hasRemovedEvent) {
-            for (i in collection.size - 1 downTo 1) {
-                if (collection[i] is Date && collection[i - 1] is Date
-                        || collection[i] is String && collection[i - 1] is String
-                        || collection[i] is String && collection[i - 1] is Date) {
-                    collection.removeAt(i - 1)
-                    notifyItemRemoved(i - 1)
+        if (collection.size != this.collection.size) {
+
+            for (i in this.collection.size - 1 downTo 1) {
+                val any = this.collection[i]
+                val any1 = this.collection[i - 1]
+                if ((any is Day && any1 is Day)
+                        || (any is Time && any1 is Time)
+                        || (any is Day && any1 is Time)) {
+                    removeAndNotify(any1)
                 }
             }
 
             // If no events and only headers remain.
-            if (collection.size == 2) {
-                if (collection[0] is String && collection[1] is Date) {
-                    collection.clear()
-                    notifyItemRangeRemoved(0, 2)
-                }
+            if (this.collection.size == 2) {
+                clearAndNotify()
             }
         }
     }

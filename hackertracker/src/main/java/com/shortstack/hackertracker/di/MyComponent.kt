@@ -17,7 +17,7 @@ import com.shortstack.hackertracker.ui.maps.MapsViewModel
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
 import com.shortstack.hackertracker.ui.schedule.ScheduleViewModel
-import com.shortstack.hackertracker.ui.schedule.list.ScheduleItemAdapter
+import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.ui.vendors.VendorsViewModel
 import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.views.FilterView
@@ -36,7 +36,7 @@ interface MyComponent {
 
     fun inject(homeFragment: HomeFragment)
 
-    fun inject(scheduleItemAdapter: ScheduleItemAdapter)
+    fun inject(scheduleItemAdapter: ScheduleAdapter)
 
     fun inject(reminderJob: ReminderJob)
 

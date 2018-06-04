@@ -9,7 +9,7 @@ import com.shortstack.hackertracker.ui.schedule.renderers.RelativeDayRender
 import com.shortstack.hackertracker.ui.schedule.renderers.RelativeTimeRenderer
 
 
-class ScheduleItemBuilder : RendererBuilder<Any>() {
+class ScheduleBuilder : RendererBuilder<Any>() {
     init {
 
         bind(Event::class.java, EventRenderer())

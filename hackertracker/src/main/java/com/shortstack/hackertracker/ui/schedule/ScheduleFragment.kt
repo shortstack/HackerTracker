@@ -5,6 +5,7 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.os.Handler
 import android.os.Message
+import android.os.health.TimerStat
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
@@ -21,24 +22,23 @@ import com.shortstack.hackertracker.events.RefreshTimerEvent
 import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.ui.schedule.list.ListViewsInterface
-import com.shortstack.hackertracker.ui.schedule.list.ScheduleItemAdapter
+import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
+import kotlin.concurrent.schedule
 
 
 class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListViewsInterface {
 
-    lateinit var adapter: ScheduleItemAdapter
+    lateinit var adapter: ScheduleAdapter
 
-    var mHandler: Handler = object : Handler() {
-        override fun handleMessage(msg: Message) {
-            BusProvider.bus.post(RefreshTimerEvent())
-            adapter?.notifyTimeChanged()
-        }
-    }
-    private var timer: Timer? = null
+    private var subscription: Disposable? = null
 
     @Inject
     lateinit var database: DatabaseManager
@@ -48,7 +48,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
         rootView.swipe_refresh.setOnRefreshListener(this)
         rootView.swipe_refresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark)
-        adapter = ScheduleItemAdapter(rootView.list.layoutManager, rootView.list)
+        adapter = ScheduleAdapter(rootView.list.layoutManager, rootView.list)
         rootView.list.adapter = adapter
 
 //        rootView.list.addOnScrollListener(object : ScheduleInfiniteScrollListener(layout) {
@@ -96,28 +96,24 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         super.onResume()
 
         val currentDate = Date().now()
-        var time = currentDate.time
+        val time = currentDate.time
 
-//        if (storage.shouldRefresh(time)) {
-        mHandler.obtainMessage(1).sendToTarget()
-//        }
+        subscription = Observable.interval(time % Constants.TIMER_INTERVAL, Constants.TIMER_INTERVAL, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    onTimeEvent()
+                })
+    }
 
-        time %= Constants.TIMER_INTERVAL
-
-
-        timer = Timer().also {
-            it.scheduleAtFixedRate(object : TimerTask() {
-                override fun run() {
-                    mHandler.obtainMessage(1).sendToTarget()
-                }
-            }, time, Constants.TIMER_INTERVAL)
-        }
+    private fun onTimeEvent() {
+        BusProvider.bus.post(RefreshTimerEvent())
+        adapter.notifyTimeChanged()
     }
 
     override fun onPause() {
         super.onPause()
-        timer?.cancel()
-        timer = null
+        subscription?.dispose()
+        subscription = null
     }
 
     override fun hideViews() {
