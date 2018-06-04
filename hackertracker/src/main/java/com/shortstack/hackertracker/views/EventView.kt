@@ -16,7 +16,6 @@ import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.events.BusProvider
-import com.shortstack.hackertracker.events.FavoriteEvent
 import com.shortstack.hackertracker.events.RefreshTimerEvent
 import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.EventViewModel
@@ -119,13 +118,6 @@ class EventView : CardView {
         //        long time = System.currentTimeMillis();
         updateProgressBar()
         //        Logger.d("Refreshed in " + ( System.currentTimeMillis() - time));
-    }
-
-    @Subscribe
-    fun onFavoriteEvent(event: FavoriteEvent) {
-        if (event.item == content!!.id) {
-            updateBookmark()
-        }
     }
 
     private fun setDisplayMode() {
