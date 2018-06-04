@@ -80,7 +80,7 @@ class ScheduleAdapter(private val layout: RecyclerView.LayoutManager,
 
     fun notifyTimeChanged() {
 
-        if (storage.showExpiredEvents())
+        if (storage.showExpiredEvents)
             return
 
         if (collection.isEmpty())

@@ -108,7 +108,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun getTheme(): Resources.Theme {
         val theme = super.getTheme()
-        theme.applyStyle(storage.databaseTheme, true)
+        theme.applyStyle(R.style.AppTheme, true)
         return theme
     }
 

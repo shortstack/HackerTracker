@@ -60,7 +60,7 @@ class AnalyticsController @Inject constructor(private val storage: SharedPrefere
 
     private fun logCustom(event: CustomEvent) {
         // Bypass to track if they're turning analytics off
-        if (!storage.isTrackingAnalytics && !event.toString().contains(Analytics.SETTINGS_ANALYTICS.toString())) {
+        if (!storage.allowAnalytics && !event.toString().contains(Analytics.SETTINGS_ANALYTICS.toString())) {
             return
         }
 

@@ -115,7 +115,6 @@ class FilterView : LinearLayout {
 
         val filter = Filter(strings)
 
-        storage.saveFilter(filter)
 
         return filter
     }
