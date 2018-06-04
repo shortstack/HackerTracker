@@ -54,6 +54,11 @@
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 
+    <style name="AppTheme.Dev">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+    </style>
+
     <style name="AppTheme.Toorcon" parent="AppTheme">
         <item name="logo_main">@drawable/toorcon_logo</item>
         <item name="logo_secondary">@drawable/toorcon_logo</item>
@@ -154,8 +159,8 @@
     </style>
 
     <style name="Paragraph" parent="TextAppearance.AppCompat.Body1">
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingRight">12dp</item>
+        <!--<item name="android:paddingLeft">12dp</item>-->
+        <!--<item name="android:paddingRight">12dp</item>-->
         <item name="android:lineSpacingExtra">8sp</item>
         <!-- TODO: This is a very expensive attribute, do we need it? -->
         <!--<item name="android:autoLink">all</item>-->
