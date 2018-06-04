@@ -12,29 +12,23 @@ import retrofit2.http.GET
 interface DatabaseService {
 
     @get:GET("schedule-full.json")
-    val getScheduleJob : retrofit2.Call<SyncResponse>
+    val getScheduleJob: retrofit2.Call<SyncResponse>
 
     @get:GET("schedule-full.json")
-    val getSchedule : Single<SyncResponse>
+    val getSchedule: Single<SyncResponse>
 
     @get:GET("event_type.json")
-    val getEventTypes : Single<Types>
+    val getEventTypes: Single<Types>
 
     companion object Factory {
-        fun create() : DatabaseService {
-            val retrofit = Retrofit.Builder().baseUrl(Constants.API_URL_BASE)
-                    .addConverterFactory(GsonConverterFactory.create())
-                    .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                    .build()
-            return retrofit.create(DatabaseService::class.java)
-        }
 
-        fun create(database : String) : DatabaseService {
+        fun create(database: String): DatabaseService {
             val retrofit = Retrofit.Builder().baseUrl(Constants.API_GITHUB_BASE + database + "/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build()
             return retrofit.create(DatabaseService::class.java)
         }
+
     }
 }

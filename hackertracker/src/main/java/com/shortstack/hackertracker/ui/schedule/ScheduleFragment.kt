@@ -3,9 +3,6 @@ package com.shortstack.hackertracker.ui.schedule
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.os.Handler
-import android.os.Message
-import android.os.health.TimerStat
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
@@ -19,19 +16,23 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.events.BusProvider
 import com.shortstack.hackertracker.events.RefreshTimerEvent
+import com.shortstack.hackertracker.events.SyncResponseEvent
+import com.shortstack.hackertracker.models.Conference
+import com.shortstack.hackertracker.network.DatabaseService
 import com.shortstack.hackertracker.network.FullResponse
+import com.shortstack.hackertracker.network.SyncRepository
 import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.ui.schedule.list.ListViewsInterface
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import kotlin.concurrent.schedule
 
 
 class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListViewsInterface {
@@ -129,17 +130,19 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     }
 
     override fun onRefresh() {
-//        val service = DatabaseService.create(database.databaseName)
-//
-//        val syncRepository = SyncRepository(service)
-//        syncRepository.getSchedule()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({
-//                    onRefreshUpdate(it)
-//                }, {
-//                    onRefreshError(it)
-//                })
+        val conference = database.conferenceLiveData.value ?: return
+
+        val service = DatabaseService.create(conference.directory)
+
+        val syncRepository = SyncRepository(service)
+        syncRepository.getSchedule()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    onRefreshUpdate(conference, it)
+                }, {
+                    onRefreshError(it)
+                })
 
     }
 
@@ -152,21 +155,23 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         Logger.e(it, "Could not refresh sync.")
     }
 
-    private fun onRefreshUpdate(it: FullResponse) {
-//        database.updateConference(response = it)
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe { rowsUpdated ->
-//                    swipe_refresh?.isRefreshing = false
-//
-//                    if (rowsUpdated == 0)
-//                        Toast.makeText(context, context?.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
-//                    else if (rowsUpdated > 0) {
-//                        BusProvider.bus.post(SyncResponseEvent(rowsUpdated))
+    private fun onRefreshUpdate(conference: Conference, it: FullResponse) {
+
+
+        database.updateConference(conference, response = it)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { rowsUpdated ->
+                    swipe_refresh?.isRefreshing = false
+
+                    if (rowsUpdated == 0)
+                        Toast.makeText(context, context?.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
+                    else if (rowsUpdated > 0) {
+                        BusProvider.bus.post(SyncResponseEvent(rowsUpdated))
 //                        notifications.scheduleUpdateNotification(rowsUpdated)
 //                        refreshContents()
-//                    }
-//                }
+                    }
+                }
     }
 
 

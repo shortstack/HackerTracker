@@ -86,13 +86,17 @@ class DatabaseManager(context: Context) {
         return db.eventDao().update(event)
     }
 
-    fun updateConference(body: SyncResponse): Single<Int> {
+    fun updateConference(conference: Conference, body: SyncResponse): Single<Int> {
+        body.events.forEach {
+            it.con = conference.directory
+        }
+
         db.eventDao().update(body.events)
         return Single.fromCallable { 0 }
     }
 
-    fun updateConference(response: FullResponse): Single<Int> {
-        return updateConference(response.syncResponse)
+    fun updateConference(conference: Conference, response: FullResponse): Single<Int> {
+        return updateConference(conference, response.syncResponse)
     }
 
 }

@@ -30,9 +30,6 @@ class SyncJob : JobService(), Callback<SyncResponse> {
     lateinit var notifications: NotificationHelper
 
     @Inject
-    lateinit var storage: SharedPreferencesUtil
-
-    @Inject
     lateinit var database: DatabaseManager
 
     var tag: String? = null
@@ -64,26 +61,24 @@ class SyncJob : JobService(), Callback<SyncResponse> {
     private fun updateDatabase(body: SyncResponse) {
         Logger.d("Tag: $tag")
 
-        storage.lastRefresh = Date().now().time
-
-        if (storage.lastUpdated != body.updatedDate) {
-            storage.lastUpdated = body.updatedDate
-
-            database.updateConference(body = body)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe({ rowsUpdated ->
-                        if (rowsUpdated > 0) {
-                            BusProvider.bus.post(SyncResponseEvent(rowsUpdated))
-                            notifications.scheduleUpdateNotification(rowsUpdated)
-                        }
-                    }, {
-                        Logger.e("Failed to update database,  ${it.message}")
-                    })
-
-        } else {
-            Logger.d("Already up to date!")
-        }
+//        if (storage.lastUpdated != body.updatedDate) {
+//            storage.lastUpdated = body.updatedDate
+//
+//            database.updateConference(body = body)
+//                    .subscribeOn(Schedulers.io())
+//                    .observeOn(AndroidSchedulers.mainThread())
+//                    .subscribe({ rowsUpdated ->
+//                        if (rowsUpdated > 0) {
+//                            BusProvider.bus.post(SyncResponseEvent(rowsUpdated))
+//                            notifications.scheduleUpdateNotification(rowsUpdated)
+//                        }
+//                    }, {
+//                        Logger.e("Failed to update database,  ${it.message}")
+//                    })
+//
+//        } else {
+//            Logger.d("Already up to date!")
+//        }
     }
 
     override fun onStartJob(job: JobParameters): Boolean {

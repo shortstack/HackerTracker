@@ -1,5 +1,3 @@
 package com.shortstack.hackertracker.events
 
-import com.shortstack.hackertracker.Constants
-
-class SyncResponseEvent(val rowsUpdated: Int = 0, val mode: Int = Constants.SYNC_MODE_AUTO)
+class SyncResponseEvent(val rowsUpdated: Int = 0)
