@@ -24,7 +24,6 @@ import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.getStatusBarHeight
 import com.shortstack.hackertracker.ui.MainActivityViewModel
 import com.shortstack.hackertracker.ui.ReviewBottomSheet
 import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
@@ -61,7 +60,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         setSupportActionBar(toolbar)
 
         setupNavigation()
-        setNavHeaderMargin()
 
         val mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
         mainActivityViewModel.conference.observe(this, Observer {
@@ -107,12 +105,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onSupportNavigateUp() = findNavController(R.id.mainNavigationFragment).navigateUp()
-
-    private fun setNavHeaderMargin() {
-        val params = nav_view.getHeaderView(0).imageView.layoutParams as ViewGroup.MarginLayoutParams
-        params.topMargin = getStatusBarHeight()
-    }
-
 
     override fun getTheme(): Resources.Theme {
         val theme = super.getTheme()
