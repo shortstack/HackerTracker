@@ -16,7 +16,6 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.events.BusProvider
 import com.shortstack.hackertracker.events.RefreshTimerEvent
-import com.shortstack.hackertracker.events.SyncResponseEvent
 import com.shortstack.hackertracker.models.Conference
 import com.shortstack.hackertracker.network.DatabaseService
 import com.shortstack.hackertracker.network.FullResponse
@@ -167,7 +166,6 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
                     if (rowsUpdated == 0)
                         Toast.makeText(context, context?.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
                     else if (rowsUpdated > 0) {
-                        BusProvider.bus.post(SyncResponseEvent(rowsUpdated))
 //                        notifications.scheduleUpdateNotification(rowsUpdated)
 //                        refreshContents()
                     }
