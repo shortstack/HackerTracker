@@ -20,6 +20,7 @@ import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import org.json.JSONArray
+import java.io.FileNotFoundException
 import javax.inject.Inject
 
 /**
@@ -49,8 +50,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
         val conferences = gson.fromFile<Conferences>(CONFERENCES_FILE, root = "conferences")
 
-        val incorrectDateStamps = mutableListOf<String>()
-
         conferences.let {
             it.conferences.first().isSelected = true
             conferenceDao().insertAll(it.conferences)
@@ -59,7 +58,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
         conferences.conferences.forEach {
             val database = it.directory
 
-            Logger.e("Loading $database")
+            Logger.d("Loading $database")
 
             try {
                 // Types
@@ -69,7 +68,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
                 }
             } catch (ex: JsonSyntaxException) {
                 Logger.e("Could not open $TYPES_FILE. ${ex.message}")
-                incorrectDateStamps.add(ex.message!!)
+            } catch (ex: FileNotFoundException) {
+                Logger.e("Could not find file $TYPES_FILE.")
             }
 
             try {
@@ -80,7 +80,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
                 }
             } catch (ex: JsonSyntaxException) {
                 Logger.e("Could not open $SCHEDULE_FILE. ${ex.message}")
-                incorrectDateStamps.add(ex.message!!)
+            } catch (ex: FileNotFoundException) {
+                Logger.e("Could not find file $SCHEDULE_FILE.")
             }
 
             try {
@@ -91,7 +92,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
                 }
             } catch (ex: JsonSyntaxException) {
                 Logger.e("Could not open $VENDORS_FILE. ${ex.message}")
-                incorrectDateStamps.add(ex.message!!)
+            } catch (ex: FileNotFoundException) {
+                Logger.e("Could not find file $VENDORS_FILE.")
             }
 
             try {
@@ -102,7 +104,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
                 }
             } catch (ex: JsonSyntaxException) {
                 Logger.e("Could not open $SPEAKERS_FILE. ${ex.message}")
-                incorrectDateStamps.add(ex.message!!)
+            } catch (ex: FileNotFoundException) {
+                Logger.e("Could not find file $SPEAKERS_FILE.")
             }
 
             try {
@@ -112,18 +115,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
                 }
             } catch (ex: JsonSyntaxException) {
                 Logger.e("Could not open $FAQ_FILE. ${ex.message}")
-                incorrectDateStamps.add(ex.message!!)
-            }
-
-            if (incorrectDateStamps.isNotEmpty()) {
-                val array = JSONArray()
-                incorrectDateStamps.forEach {
-                    array.put(it)
-                }
-
-                Logger.e(array.toString())
-
-                incorrectDateStamps.clear()
+            } catch (ex: FileNotFoundException) {
+                Logger.e("Could not find file $FAQ_FILE.")
             }
         }
     }
