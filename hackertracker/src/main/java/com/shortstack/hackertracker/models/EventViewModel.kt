@@ -82,16 +82,16 @@ class EventViewModel(val event: Event) : ViewModel() {
         get() = event.index
 
     val toolsVisibility: Int
-        get() = View.GONE
+        get() = if (event.includes?.contains("tool") == true) View.VISIBLE else View.GONE
 
     val exploitVisibility: Int
-        get() = View.GONE
+        get() = if (event.includes?.contains("exploit") == true) View.VISIBLE else View.GONE
 
     val demoVisibility: Int
-        get() = View.GONE
+        get() = if (event.includes?.contains("demo") == true) View.VISIBLE else View.GONE
 
     val bookmarkVisibility: Int
-        get() = View.INVISIBLE
+        get() = if (event.isBookmarked) View.VISIBLE else View.INVISIBLE
 
     val speakers: Array<Speaker>?
         get() = null
