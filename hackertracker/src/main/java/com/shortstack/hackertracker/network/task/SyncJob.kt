@@ -6,21 +6,14 @@ import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.events.BusProvider
-import com.shortstack.hackertracker.events.SyncResponseEvent
 import com.shortstack.hackertracker.network.DatabaseService
 import com.shortstack.hackertracker.network.SyncResponse
-import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.utils.NotificationHelper
-import com.shortstack.hackertracker.utils.SharedPreferencesUtil
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import java.util.*
 import javax.inject.Inject
 
 class SyncJob : JobService(), Callback<SyncResponse> {
