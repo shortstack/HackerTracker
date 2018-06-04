@@ -18,6 +18,7 @@ import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
 import com.shortstack.hackertracker.ui.schedule.ScheduleViewModel
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
+import com.shortstack.hackertracker.ui.search.SearchViewModel
 import com.shortstack.hackertracker.ui.vendors.VendorsViewModel
 import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.views.FilterView
@@ -74,5 +75,7 @@ interface MyComponent {
     fun inject(informationViewModel: InformationViewModel)
 
     fun inject(vendorsViewModel: VendorsViewModel)
+
+    fun inject(searchViewModel: SearchViewModel)
 
 }

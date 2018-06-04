@@ -74,7 +74,7 @@ class DatabaseManager(context: Context) {
         return db.eventDao().getEventById(id)
     }
 
-    fun findItem(id: String): Flowable<List<Event>> {
+    fun findItem(id: String): LiveData<List<Event>> {
         return db.eventDao().findByText(id)
     }
 

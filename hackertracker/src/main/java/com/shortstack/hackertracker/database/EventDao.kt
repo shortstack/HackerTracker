@@ -52,7 +52,7 @@ interface EventDao {
     fun getEventById(id: Int): Flowable<Event>
 
     @Query("SELECT * FROM event WHERE title LIKE :text")
-    fun findByText(text: String): Flowable<List<Event>>
+    fun findByText(text: String): LiveData<List<Event>>
 
     @Query("SELECT * FROM event ORDER BY updatedAt DESC LIMIT $LIMIT")
     fun getRecentlyUpdated(): Single<List<Event>>
