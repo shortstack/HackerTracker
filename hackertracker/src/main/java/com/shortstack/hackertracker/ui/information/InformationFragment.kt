@@ -44,13 +44,15 @@ class InformationFragment : Fragment() {
 
             adapter.clearAndNotify()
 
-            if (it != null) {
-
-//                if (database.getCurrentCon().title == Constants.DEFCON_DATABASE_NAME) {
-//                    addInformationButtons()
-//                }
-
-                adapter.addAllAndNotify(it)
+            when {
+                it?.isNotEmpty() == true -> {
+                    addInformationButtons()
+                    adapter.addAllAndNotify(it)
+                    empty_view.visibility = View.GONE
+                }
+                else -> {
+                    empty_view.visibility = View.VISIBLE
+                }
             }
         })
     }
