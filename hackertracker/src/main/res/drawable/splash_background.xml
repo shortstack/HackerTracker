@@ -6,7 +6,7 @@
     <item>
         <bitmap
             android:gravity="center"
-            android:src="@drawable/skull_lg" />
+            android:src="@drawable/icon_shadow" />
     </item>
 
 </layer-list>
