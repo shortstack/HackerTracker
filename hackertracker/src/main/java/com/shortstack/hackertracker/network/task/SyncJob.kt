@@ -62,6 +62,7 @@ class SyncJob : JobService() {
                                 rowsUpdated ->
 
                                 notificationHelper.notifyUpdates(it, item == null, rowsUpdated)
+                                Logger.e("Updated $rowsUpdated ows.")
                             }, {
                                 Logger.e("Error ${it.message}")
                             })

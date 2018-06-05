@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.database
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import com.shortstack.hackertracker.models.Conference
 import io.reactivex.Flowable
@@ -15,13 +16,17 @@ interface ConferenceDao {
     fun deleteAll()
 
     @Query("SELECT * FROM conference")
-    fun getAll(): Single<List<Conference>>
+    fun getAll(): LiveData<List<Conference>>
 
     @Query("SELECT * FROM conference")
     fun get(): List<Conference>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insert(conference: Conference)
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(conferences: List<Conference>)
+
 
     @Query("SELECT * FROM conference WHERE isSelected = 1")
     fun getCurrentCon(): Conference

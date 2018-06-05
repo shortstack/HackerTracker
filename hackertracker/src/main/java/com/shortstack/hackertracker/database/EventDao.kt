@@ -37,7 +37,7 @@ interface EventDao {
     @Update
     fun update(event: Event)
 
-    @Update
+    @Update(onConflict = OnConflictStrategy.REPLACE)
     fun update(events: List<Event>): Int
 
     @Query("SELECT * FROM event WHERE `index` = :id")

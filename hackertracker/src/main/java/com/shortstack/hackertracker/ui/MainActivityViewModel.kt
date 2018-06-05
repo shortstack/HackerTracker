@@ -29,4 +29,7 @@ class MainActivityViewModel : ViewModel() {
 
     val conference: LiveData<Conference>
         get() = database.conferenceLiveData
+
+    val conferences: LiveData<List<Conference>>
+        get() = database.getCons()
 }

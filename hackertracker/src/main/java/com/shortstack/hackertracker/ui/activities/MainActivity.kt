@@ -10,6 +10,7 @@ import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
 import android.support.design.widget.NavigationView
+import android.support.v4.content.ContextCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.*
@@ -65,6 +66,17 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         mainActivityViewModel.conference.observe(this, Observer {
             if (it != null) {
                 nav_view.getHeaderView(0).nav_title.text = it.title
+            }
+        })
+        mainActivityViewModel.conferences.observe(this, Observer {
+
+            nav_view.menu.removeGroup(R.id.nav_cons)
+
+            it?.forEach {
+                nav_view.menu.add(R.id.nav_cons, it.index, 0, it.title).apply {
+                    isChecked = it.isSelected
+                    icon = ContextCompat.getDrawable(this, R.drawable.ic_chevron_right_white_24dp)
+                }
             }
         })
 
@@ -139,22 +151,22 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     private fun onFilterClick() {
 //        toggleFAB(onClick = true)
 
-        database.getCons().subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
+        val it = database.getConsBackground()
 
-                    val cons = it.filter { !it.isSelected }
-                    val con = cons[Random().nextInt(cons.size)]
+//        database.getCons().subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
 
-                    Toast.makeText(this@MainActivity, "Changed to ${con.title}", Toast.LENGTH_SHORT).show()
+        val cons = it.filter { !it.isSelected }
+        val con = cons[Random().nextInt(cons.size)]
 
-                    database.changeConference(con)
+        Toast.makeText(this@MainActivity, "Changed to ${con.title}", Toast.LENGTH_SHORT).show()
 
-                }, {
+        database.changeConference(con)
 
-                })
-
-
+//                }, {
+//
+//                })
     }
 
     private fun toggleFilters() {
@@ -318,9 +330,14 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        val current = navController.currentDestination.id
-        if (item.itemId != current) {
-            navController.navigate(item.itemId)
+        if (item.groupId == R.id.nav_cons) {
+            val con = database.getConsBackground().firstOrNull { it.index == item.itemId }
+            if (con != null) database.changeConference(con)
+        } else {
+            val current = navController.currentDestination.id
+            if (item.itemId != current) {
+                navController.navigate(item.itemId)
+            }
         }
 
         drawer_layout.closeDrawers()

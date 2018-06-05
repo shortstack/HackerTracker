@@ -38,7 +38,7 @@ class DatabaseManager(context: Context) {
         db.conferenceDao().update(listOf(current, con))
     }
 
-    fun getCons(): Single<List<Conference>> {
+    fun getCons(): LiveData<List<Conference>> {
         return db.conferenceDao().getAll()
     }
 
@@ -88,14 +88,14 @@ class DatabaseManager(context: Context) {
     }
 
 
-
     fun updateConference(conference: Conference, body: SyncResponse): Single<Int> {
         return Single.fromCallable {
             body.events.forEach {
                 it.con = conference.directory
             }
-            db.conferenceDao().update(conference)
-            return@fromCallable db.eventDao().update(body.events)
+            db.conferenceDao().insert(conference)
+            db.eventDao().insertAll(body.events)
+            return@fromCallable body.events.size
         }
     }
 

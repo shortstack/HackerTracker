@@ -137,7 +137,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
 
         setItemPendingIntent(builder)
 
-        notify(NOTIFICATION_SCHEDULE_UPDATE, builder.build())
+        notify(conference.index, builder.build())
     }
 
     private fun setItemPendingIntent(builder: NotificationCompat.Builder, item: Event? = null) {
