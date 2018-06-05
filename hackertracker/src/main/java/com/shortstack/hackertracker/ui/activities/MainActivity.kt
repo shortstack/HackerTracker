@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             it?.forEach {
                 nav_view.menu.add(R.id.nav_cons, it.index, 0, it.title).apply {
                     isChecked = it.isSelected
-                    icon = ContextCompat.getDrawable(this, R.drawable.ic_chevron_right_white_24dp)
+                    icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_chevron_right_white_24dp)
                 }
             }
         })
