@@ -27,10 +27,10 @@ interface ConferenceDao {
     fun getCurrentCon(): Conference
 
     @Update
-    fun update(conference: Conference)
+    fun update(conference: Conference): Int
 
     @Update
-    fun update(list: List<Conference>)
+    fun update(list: List<Conference>): Int
 
     @Query("SELECT * FROM conference where `index` = :id")
     fun getCon(id: Int): Single<Conference>

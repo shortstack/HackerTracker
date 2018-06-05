@@ -3,8 +3,6 @@ package com.shortstack.hackertracker.database
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
 import android.content.Context
-import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.network.SyncResponse
@@ -44,6 +42,10 @@ class DatabaseManager(context: Context) {
         return db.conferenceDao().getAll()
     }
 
+    fun getConsBackground(): List<Conference> {
+        return db.conferenceDao().get()
+    }
+
     fun getRecent(conference: Conference): LiveData<List<Event>> {
         return db.eventDao().getRecentlyUpdated(conference.directory)
     }
@@ -65,11 +67,6 @@ class DatabaseManager(context: Context) {
         return db.typeDao().getTypes(getCurrentCon().directory)
     }
 
-    // TODO: Use DatabaseEvent to also fetch Type at same time.
-    fun getEventTypes(): Flowable<List<DatabaseEvent>> {
-        return db.eventDao().getEventTypes(getCurrentCon().directory, App.getCurrentDate())
-    }
-
     fun findItem(id: Int): Flowable<Event> {
         return db.eventDao().getEventById(id)
     }
@@ -86,13 +83,20 @@ class DatabaseManager(context: Context) {
         return db.eventDao().update(event)
     }
 
-    fun updateConference(conference: Conference, body: SyncResponse): Single<Int> {
-        body.events.forEach {
-            it.con = conference.directory
-        }
+    fun updateConference(conference: Conference) {
+        db.conferenceDao().update(conference)
+    }
 
-        db.eventDao().update(body.events)
-        return Single.fromCallable { 0 }
+
+
+    fun updateConference(conference: Conference, body: SyncResponse): Single<Int> {
+        return Single.fromCallable {
+            body.events.forEach {
+                it.con = conference.directory
+            }
+            db.conferenceDao().update(conference)
+            return@fromCallable db.eventDao().update(body.events)
+        }
     }
 
     fun updateConference(conference: Conference, response: FullResponse): Single<Int> {

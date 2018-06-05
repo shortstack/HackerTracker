@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.utils
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.R
 import javax.inject.Inject
 
@@ -27,7 +28,10 @@ class SharedPreferencesUtil @Inject constructor(context: Context) {
     val allowAnalytics: Boolean
         get() = preferences.getBoolean(USER_ANALYTICS, true)
 
-    var syncInterval: Int
-        get() = preferences.getInt(SYNC_INTERVAL, 6)
-        set(value) = preferences.edit().putInt(SYNC_INTERVAL, value).apply()
+    val syncInterval: Int
+        get() = preferences.getString(SYNC_INTERVAL, "6").toInt()
+
+    val syncingDisabled: Boolean
+        get() = syncInterval == 0
+
 }

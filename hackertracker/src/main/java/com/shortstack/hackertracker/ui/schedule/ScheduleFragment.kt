@@ -9,6 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import com.firebase.jobdispatcher.FirebaseJobDispatcher
+import com.firebase.jobdispatcher.GooglePlayDriver
+import com.firebase.jobdispatcher.Trigger
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
@@ -20,6 +23,7 @@ import com.shortstack.hackertracker.models.Conference
 import com.shortstack.hackertracker.network.DatabaseService
 import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.network.SyncRepository
+import com.shortstack.hackertracker.network.task.SyncJob
 import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.ui.schedule.list.ListViewsInterface
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
@@ -42,6 +46,8 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
     @Inject
     lateinit var database: DatabaseManager
+
+    private val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(context)) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_schedule, container, false) as ViewGroup
@@ -129,19 +135,32 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     }
 
     override fun onRefresh() {
-        val conference = database.conferenceLiveData.value ?: return
 
-        val service = DatabaseService.create(conference.directory)
 
-        val syncRepository = SyncRepository(service)
-        syncRepository.getSchedule()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    onRefreshUpdate(conference, it)
-                }, {
-                    onRefreshError(it)
-                })
+        val job = dispatcher.newJobBuilder()
+                .setService(SyncJob::class.java)
+                .setTag(SyncJob.TAG)
+//                .setRecurring(true)
+//                .setLifetime(Lifetime.FOREVER)
+//                .setTrigger(Trigger.executionWindow(value, value + hourInSeconds))
+                .setTrigger(Trigger.executionWindow(0, 0))
+                .build()
+
+        dispatcher.mustSchedule(job)
+
+//        val conference = database.conferenceLiveData.value ?: return
+//
+//        val service = DatabaseService.create(conference.directory)
+//
+//        val syncRepository = SyncRepository(service)
+//        syncRepository.getSchedule()
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe({
+//                    onRefreshUpdate(conference, it)
+//                }, {
+//                    onRefreshError(it)
+//                })
 
     }
 
@@ -166,7 +185,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
                     if (rowsUpdated == 0)
                         Toast.makeText(context, context?.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
                     else if (rowsUpdated > 0) {
-//                        notifications.scheduleUpdateNotification(rowsUpdated)
+//                        notifications.notifyUpdates(rowsUpdated)
 //                        refreshContents()
                     }
                 }

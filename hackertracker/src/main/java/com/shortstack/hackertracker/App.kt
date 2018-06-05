@@ -8,8 +8,8 @@ import com.firebase.jobdispatcher.Lifetime
 import com.firebase.jobdispatcher.Trigger
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.di.DaggerMyComponent
 import com.shortstack.hackertracker.di.AppComponent
+import com.shortstack.hackertracker.di.DaggerAppComponent
 import com.shortstack.hackertracker.di.modules.*
 import com.shortstack.hackertracker.network.task.SyncJob
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
@@ -21,9 +21,8 @@ class App : Application() {
     lateinit var component: AppComponent
 
     // Storage
-    @Deprecated(message = "Use DI")
-    val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil(applicationContext) }
-    @Deprecated("use DI")
+    private val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil(applicationContext) }
+
     private val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(applicationContext)) }
 
 
@@ -39,7 +38,7 @@ class App : Application() {
         initLogger()
         initFeedback()
 
-        component = DaggerMyComponent.builder()
+        component = DaggerAppComponent.builder()
                 .sharedPreferencesModule(SharedPreferencesModule())
                 .databaseModule(DatabaseModule())
                 .gsonModule(GsonModule())
@@ -53,31 +52,31 @@ class App : Application() {
         Logger.d("Time to complete onCreate " + (System.currentTimeMillis() - timeToLaunch))
     }
 
-    fun scheduleSync() {
+    fun scheduleSyncTask() {
+        cancelPreviousSyncTask()
 
-        cancelSync()
-
-        var value = storage.syncInterval
-
-        if (value == 0) {
-            cancelSync()
+        if (storage.syncingDisabled)
             return
-        }
 
-        value *= Constants.TIME_SECONDS_IN_HOUR
+//        val hourInSeconds = Constants.HOUR_IN_SECONDS
+//        val value = storage.syncInterval * hourInSeconds
+
+        val value = 60
+        val hourInSeconds = 60
 
         val job = dispatcher.newJobBuilder()
                 .setService(SyncJob::class.java)
                 .setTag(SyncJob.TAG)
-                .setRecurring(true)
-                .setLifetime(Lifetime.FOREVER)
-                .setTrigger(Trigger.executionWindow(value, value + Constants.TIME_SECONDS_IN_HOUR))
+//                .setRecurring(true)
+//                .setLifetime(Lifetime.FOREVER)
+//                .setTrigger(Trigger.executionWindow(value, value + hourInSeconds))
+                .setTrigger(Trigger.NOW)
                 .build()
 
         dispatcher.mustSchedule(job)
     }
 
-    private fun cancelSync() {
+    private fun cancelPreviousSyncTask() {
         dispatcher.cancel(SyncJob.TAG)
     }
 

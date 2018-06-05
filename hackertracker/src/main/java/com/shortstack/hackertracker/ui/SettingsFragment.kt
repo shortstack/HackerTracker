@@ -31,13 +31,12 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             "user_show_expired_events" -> AnalyticsController.SETTINGS_EXPIRED_EVENTS
 
             "sync_interval" -> {
-                App.application.scheduleSync()
+                App.application.scheduleSyncTask()
                 return
             }
 
-            else ->
-                // We're not tracking these events, ignore.
-                return
+        // We're not tracking these events, ignore.
+            else -> return
         }
 
         val value = sharedPreferences.getBoolean(key, false)

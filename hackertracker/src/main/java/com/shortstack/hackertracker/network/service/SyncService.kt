@@ -39,7 +39,7 @@ class SyncService : IntentService("DEFCONSyncService") {
 //            rowsUpdated = database.updateSchedule(response = body)
 //
 //            if (rowsUpdated > 0) {
-//                App.application.notificationHelper.scheduleUpdateNotification(rowsUpdated)
+//                App.application.notificationHelper.notifyUpdates(rowsUpdated)
 //            }
 //
 //        } else {

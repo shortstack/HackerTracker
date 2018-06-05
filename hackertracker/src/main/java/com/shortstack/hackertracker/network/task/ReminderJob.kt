@@ -25,7 +25,7 @@ class ReminderJob : JobService() {
         val id = extras?.getInt(NOTIFICATION_ID)
 
         if (id != null)
-            notifications.postNotification(id)
+            notifications.notify(id)
 
         return false
     }
