@@ -39,7 +39,7 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
 
         val obj = EventViewModel(content)
 
-        analytics.tagItemEvent(AnalyticsController.Analytics.EVENT_VIEW, content)
+        analytics.onEventAction(AnalyticsController.EVENT_VIEW, content)
 
         view.event.setEvent(obj.event)
 
@@ -87,23 +87,23 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
 
     fun onStarClick(item: EventView, star: ImageView) {
         if (content.isBookmarked) {
-            analytics.tagItemEvent(AnalyticsController.Analytics.EVENT_UNBOOKMARK, content)
+            analytics.onEventAction(AnalyticsController.EVENT_UNBOOKMARK, content)
         } else {
-            analytics.tagItemEvent(AnalyticsController.Analytics.EVENT_BOOKMARK, content)
+            analytics.onEventAction(AnalyticsController.EVENT_BOOKMARK, content)
         }
         item.onBookmarkClick()
         updateStarIcon(star)
     }
 
     private fun onShareClick(item: EventView) {
-        analytics.tagItemEvent(AnalyticsController.Analytics.EVENT_SHARE, content)
+        analytics.onEventAction(AnalyticsController.EVENT_SHARE, content)
         item.onShareClick()
     }
 
     private fun onLinkClick() {
         val context = context ?: return
 
-        analytics.tagItemEvent(AnalyticsController.Analytics.EVENT_LINK, content)
+        analytics.onEventAction(AnalyticsController.EVENT_OPEN_URL, content)
 
         MaterialAlert.create(context)
                 .setTitle(R.string.link_warning)

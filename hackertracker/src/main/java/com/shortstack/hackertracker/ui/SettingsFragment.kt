@@ -8,7 +8,6 @@ import android.view.View
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
-import com.shortstack.hackertracker.analytics.AnalyticsController.Analytics
 import javax.inject.Inject
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -35,20 +34,10 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
 
-        val event: Analytics
-
-        when (key) {
-            "user_analytics" -> event = Analytics.SETTINGS_ANALYTICS
-
-            "user_allow_push_notifications" -> event = Analytics.SETTINGS_NOTIFICATIONS
-
-            "user_use_military_time" -> {
-                event = Analytics.SETTINGS_MILITARY_TIME
-            }
-
-            "user_show_expired_events" -> {
-                event = Analytics.SETTINGS_EXPIRED_EVENT
-            }
+        val event = when (key) {
+            "user_analytics" -> AnalyticsController.SETTINGS_ANALYTICS
+            "user_allow_push_notifications" -> AnalyticsController.SETTINGS_NOTIFICATIONS
+            "user_show_expired_events" -> AnalyticsController.SETTINGS_EXPIRED_EVENTS
 
             "sync_interval" -> {
                 App.application.scheduleSync()
@@ -61,7 +50,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         }
 
         val value = sharedPreferences.getBoolean(key, false)
-        analytics.tagSettingsEvent(event, value)
+        analytics.onSettingsChanged(event, value)
     }
 
     override fun onResume() {
