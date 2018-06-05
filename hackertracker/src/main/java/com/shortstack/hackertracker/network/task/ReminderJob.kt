@@ -17,7 +17,7 @@ class ReminderJob : JobService() {
 
 
     override fun onStartJob(jobParameters: JobParameters): Boolean {
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
 
         if (!storage.allowPushNotification) return false
 

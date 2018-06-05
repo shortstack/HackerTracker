@@ -31,7 +31,7 @@ import dagger.Component
 @Component(modules = [(ContextModule::class), (DatabaseModule::class), (SharedPreferencesModule::class),
     (GsonModule::class), (AnalyticsModule::class), (NotificationsModule::class), (DispatcherModule::class)])
 @MyApplicationScope
-interface MyComponent {
+interface AppComponent {
 
     fun inject(mainActivity: MainActivity)
 

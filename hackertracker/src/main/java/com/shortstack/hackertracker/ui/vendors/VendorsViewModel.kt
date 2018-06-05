@@ -17,7 +17,7 @@ class VendorsViewModel : ViewModel() {
     lateinit var database: DatabaseManager
 
     init {
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
     }
 
     val vendors: LiveData<List<Vendor>>

@@ -22,7 +22,7 @@ class ScheduleAdapter(private val layout: RecyclerView.LayoutManager,
     lateinit var storage: SharedPreferencesUtil
 
     init {
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
     }
 
     fun addAllAndNotify(elements: List<Event>) {

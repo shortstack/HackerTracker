@@ -12,7 +12,7 @@ class UpdateDatabaseService : IntentService("DEFCONUpdateDatabaseService") {
     lateinit var database: DatabaseManager
 
     init {
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
     }
 
     override fun onHandleIntent(intent: Intent?) {

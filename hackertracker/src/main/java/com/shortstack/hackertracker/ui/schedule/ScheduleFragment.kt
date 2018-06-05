@@ -64,7 +64,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         super.onViewCreated(view, savedInstanceState)
 
 
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
 
 
         val scheduleViewModel = ViewModelProviders.of(this).get(ScheduleViewModel::class.java)

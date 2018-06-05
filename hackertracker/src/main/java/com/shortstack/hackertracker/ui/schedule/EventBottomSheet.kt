@@ -32,7 +32,7 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
     override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)
 
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
 
         val view = View.inflate(context, R.layout.bottom_sheet_schedule_event, null)
         dialog.setContentView(view)

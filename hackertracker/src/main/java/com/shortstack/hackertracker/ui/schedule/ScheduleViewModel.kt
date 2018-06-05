@@ -18,7 +18,7 @@ class ScheduleViewModel : ViewModel() {
     lateinit var database: DatabaseManager
 
     init {
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
     }
 
     val schedule: LiveData<List<Event>>

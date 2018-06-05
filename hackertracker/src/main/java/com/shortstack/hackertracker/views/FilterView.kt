@@ -66,7 +66,7 @@ class FilterView : LinearLayout {
     }
 
     private fun init() {
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
 
         View.inflate(context, R.layout.view_filter, this)
 

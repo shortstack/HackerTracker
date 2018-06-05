@@ -24,7 +24,7 @@ class MainActivityViewModel : ViewModel() {
     lateinit var analytics: AnalyticsController
 
     init {
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
     }
 
     val conference: LiveData<Conference>

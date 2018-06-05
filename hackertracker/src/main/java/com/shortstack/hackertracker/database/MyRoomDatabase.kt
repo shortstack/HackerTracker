@@ -19,7 +19,6 @@ import com.shortstack.hackertracker.models.response.Vendors
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import org.json.JSONArray
 import java.io.FileNotFoundException
 import javax.inject.Inject
 
@@ -46,7 +45,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
     lateinit var gson: Gson
 
     fun init() {
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
 
         val conferences = gson.fromFile<Conferences>(CONFERENCES_FILE, root = "conferences")
 

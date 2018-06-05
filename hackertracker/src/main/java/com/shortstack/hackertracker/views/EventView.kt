@@ -44,7 +44,7 @@ class EventView : CardView {
     }
 
     private fun init() {
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
 
         setCardBackgroundColor(ContextCompat.getColor(context, R.color.card_background))
 

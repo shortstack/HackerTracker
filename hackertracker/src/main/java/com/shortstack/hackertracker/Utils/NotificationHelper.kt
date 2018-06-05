@@ -31,7 +31,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
     lateinit var database: DatabaseManager
 
     init {
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
     }
 
     private fun getItemNotification(item: Event): Notification {

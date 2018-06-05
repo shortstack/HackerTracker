@@ -9,18 +9,16 @@ import com.firebase.jobdispatcher.Trigger
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.di.DaggerMyComponent
-import com.shortstack.hackertracker.di.MyComponent
+import com.shortstack.hackertracker.di.AppComponent
 import com.shortstack.hackertracker.di.modules.*
-import com.shortstack.hackertracker.models.Conference
 import com.shortstack.hackertracker.network.task.SyncJob
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import io.fabric.sdk.android.Fabric
-import java.util.*
 
 
 class App : Application() {
 
-    lateinit var myComponent: MyComponent
+    lateinit var component: AppComponent
 
     // Storage
     @Deprecated(message = "Use DI")
@@ -41,7 +39,7 @@ class App : Application() {
         initLogger()
         initFeedback()
 
-        myComponent = DaggerMyComponent.builder()
+        component = DaggerMyComponent.builder()
                 .sharedPreferencesModule(SharedPreferencesModule())
                 .databaseModule(DatabaseModule())
                 .gsonModule(GsonModule())
@@ -53,16 +51,6 @@ class App : Application() {
 
         // TODO: Remove, this is only for debugging.
         Logger.d("Time to complete onCreate " + (System.currentTimeMillis() - timeToLaunch))
-    }
-
-    fun updateTheme(con: Conference?) {
-        val theme = when (con?.index) {
-            1 -> R.style.AppTheme_Hackwest
-            2 -> R.style.AppTheme_Toorcon
-            3 -> R.style.AppTheme_BsidesOrl
-            else -> R.style.AppTheme
-        }
-        setTheme(theme)
     }
 
     fun scheduleSync() {
@@ -109,28 +97,9 @@ class App : Application() {
             Fabric.with(this, Crashlytics())
     }
 
-    @Deprecated("", replaceWith = ReplaceWith("BusProvider.bus.register(any)"))
-    fun registerBusListener(any: Any) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    @Deprecated("", replaceWith = ReplaceWith("BusProvider.bus.unregister(any)"))
-    fun unregisterBusListener(any: Any) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-
-    @Deprecated("", replaceWith = ReplaceWith("BusProvider.bus.post(any)"))
-    fun postBusEvent(any: Any) {
-
-    }
-
     companion object {
-        @Deprecated("Do not use", replaceWith = ReplaceWith("Date().now()"))
-        fun getCurrentDate(): Date {
-            return Date().now()
-        }
 
         lateinit var application: App
+
     }
 }

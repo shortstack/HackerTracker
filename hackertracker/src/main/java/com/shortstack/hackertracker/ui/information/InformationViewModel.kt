@@ -17,7 +17,7 @@ class InformationViewModel : ViewModel() {
     lateinit var database: DatabaseManager
 
     init {
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
     }
 
     val faq: LiveData<List<FAQ>>

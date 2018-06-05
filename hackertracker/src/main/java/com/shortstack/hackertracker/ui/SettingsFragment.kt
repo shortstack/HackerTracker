@@ -2,7 +2,6 @@ package com.shortstack.hackertracker.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
 import android.view.View
 import com.shortstack.hackertracker.App
@@ -17,19 +16,11 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        App.application.myComponent.inject(this)
-    }
-
-    inline fun Preference.setOnClick(crossinline func: Preference.() -> Unit) {
-        this.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            func()
-            false
-        }
+        App.application.component.inject(this)
     }
 
     override fun onCreatePreferences(bundle: Bundle?, s: String?) {
         addPreferencesFromResource(R.xml.settings)
-
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
@@ -59,15 +50,13 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     override fun onPause() {
-        super.onPause()
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        super.onPause()
     }
 
     companion object {
 
-        fun newInstance(): SettingsFragment {
-            return SettingsFragment()
-        }
-    }
+        fun newInstance() = SettingsFragment()
 
+    }
 }

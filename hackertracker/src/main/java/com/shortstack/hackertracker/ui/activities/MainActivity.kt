@@ -52,7 +52,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
 
         super.onCreate(savedInstanceState)
 

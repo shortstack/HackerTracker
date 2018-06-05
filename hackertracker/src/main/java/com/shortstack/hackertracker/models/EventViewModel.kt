@@ -19,7 +19,7 @@ class EventViewModel(val event: Event) : ViewModel() {
     lateinit var database: DatabaseManager
 
     init {
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
     }
 
     val title: String

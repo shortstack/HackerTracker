@@ -18,7 +18,7 @@ class SearchViewModel : ViewModel() {
     lateinit var database: DatabaseManager
 
     init {
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
     }
 
     fun getResult(text: String): LiveData<List<Event>> {

@@ -28,7 +28,7 @@ class SyncJob : JobService(), Callback<SyncResponse> {
     var tag: String? = null
 
     init {
-        App.application.myComponent.inject(this)
+        App.application.component.inject(this)
     }
 
 
