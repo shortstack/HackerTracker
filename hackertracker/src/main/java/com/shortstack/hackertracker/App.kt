@@ -1,19 +1,19 @@
 package com.shortstack.hackertracker
 
 import android.app.Application
+import androidx.work.*
 import com.crashlytics.android.Crashlytics
 import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.firebase.jobdispatcher.GooglePlayDriver
-import com.firebase.jobdispatcher.Lifetime
-import com.firebase.jobdispatcher.Trigger
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.di.AppComponent
 import com.shortstack.hackertracker.di.DaggerAppComponent
 import com.shortstack.hackertracker.di.modules.*
-import com.shortstack.hackertracker.network.task.SyncJob
+import com.shortstack.hackertracker.network.task.SyncWorker
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import io.fabric.sdk.android.Fabric
+import java.util.concurrent.TimeUnit
 
 
 class App : Application() {
@@ -53,31 +53,22 @@ class App : Application() {
     }
 
     fun scheduleSyncTask() {
-        cancelPreviousSyncTask()
+        WorkManager.getInstance().cancelAllWorkByTag(SyncWorker.TAG_SYNC)
 
         if (storage.syncingDisabled)
             return
 
-//        val hourInSeconds = Constants.HOUR_IN_SECONDS
-//        val value = storage.syncInterval * hourInSeconds
-
-        val value = 60
-        val hourInSeconds = 60
-
-        val job = dispatcher.newJobBuilder()
-                .setService(SyncJob::class.java)
-                .setTag(SyncJob.TAG)
-//                .setRecurring(true)
-//                .setLifetime(Lifetime.FOREVER)
-//                .setTrigger(Trigger.executionWindow(value, value + hourInSeconds))
-                .setTrigger(Trigger.NOW)
+        val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
-        dispatcher.mustSchedule(job)
-    }
+        val request =
+                PeriodicWorkRequestBuilder<SyncWorker>(7, TimeUnit.DAYS)
+                        .addTag(SyncWorker.TAG_SYNC)
+                        .setConstraints(constraints)
+                        .build()
 
-    private fun cancelPreviousSyncTask() {
-        dispatcher.cancel(SyncJob.TAG)
+        WorkManager.getInstance().enqueue(request)
     }
 
     private fun initFeedback() {

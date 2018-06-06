@@ -13,17 +13,11 @@ import retrofit2.http.GET
 
 interface DatabaseService {
 
-    @get:GET("conferences/conferences.json")
-    val getSyncConferencesJob: Call<Conferences>
+    @GET("conferences/conferences.json")
+    fun getConferences(): Call<Conferences>
 
-    @get:GET("schedule-full.json")
-    val getScheduleBackground: Call<SyncResponse>
-
-    @get:GET("schedule-full.json")
-    val getSchedule: Single<SyncResponse>
-
-    @get:GET("event_type.json")
-    val getEventTypes: Single<Types>
+    @GET("schedule-full.json")
+    fun getSchedule(): Call<SyncResponse>
 
     companion object Factory {
 
@@ -34,6 +28,5 @@ interface DatabaseService {
                     .build()
             return retrofit.create(DatabaseService::class.java)
         }
-
     }
 }

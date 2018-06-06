@@ -5,14 +5,16 @@ import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.widget.SwipeRefreshLayout
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.work.OneTimeWorkRequest
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.State
+import androidx.work.WorkManager
 import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.firebase.jobdispatcher.GooglePlayDriver
-import com.firebase.jobdispatcher.Trigger
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
@@ -20,18 +22,13 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.events.BusProvider
 import com.shortstack.hackertracker.events.RefreshTimerEvent
-import com.shortstack.hackertracker.models.Conference
-import com.shortstack.hackertracker.network.DatabaseService
-import com.shortstack.hackertracker.network.FullResponse
-import com.shortstack.hackertracker.network.SyncRepository
-import com.shortstack.hackertracker.network.task.SyncJob
+import com.shortstack.hackertracker.network.task.SyncWorker
 import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.ui.schedule.list.ListViewsInterface
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import java.util.*
@@ -136,62 +133,27 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     }
 
     override fun onRefresh() {
-
-
-        val job = dispatcher.newJobBuilder()
-                .setService(SyncJob::class.java)
-                .setTag(SyncJob.TAG)
-//                .setRecurring(true)
-//                .setLifetime(Lifetime.FOREVER)
-//                .setTrigger(Trigger.executionWindow(value, value + hourInSeconds))
-                .setTrigger(Trigger.executionWindow(0, 0))
+        val refresh = OneTimeWorkRequestBuilder<SyncWorker>()
                 .build()
 
-        dispatcher.mustSchedule(job)
-
-//        val conference = database.conferenceLiveData.value ?: return
-//
-//        val service = DatabaseService.create(conference.directory)
-//
-//        val syncRepository = SyncRepository(service)
-//        syncRepository.getSchedule()
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({
-//                    onRefreshUpdate(conference, it)
-//                }, {
-//                    onRefreshError(it)
-//                })
-
-    }
-
-    private fun onRefreshError(it: Throwable) {
-        swipe_refresh?.isRefreshing = false
-        val context = context ?: return
-
-        Toast.makeText(context, context.getString(R.string.error_unable_to_sync), Toast.LENGTH_SHORT).show()
-
-        Logger.e(it, "Could not refresh sync.")
-    }
-
-    private fun onRefreshUpdate(conference: Conference, it: FullResponse) {
-
-
-        database.updateConference(conference, response = it)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { rowsUpdated ->
-                    swipe_refresh?.isRefreshing = false
-
-                    if (rowsUpdated == 0)
+        val instance = WorkManager.getInstance()
+        instance.enqueue(refresh)
+        instance.getStatusById(refresh.id).observe(this, Observer {
+            when (it?.state) {
+                State.SUCCEEDED -> {
+                    val rowsUpdated = it.outputData.getInt(SyncWorker.KEY_ROWS_UPDATED, 0)
+                    if (rowsUpdated == 0) {
                         Toast.makeText(context, context?.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
-                    else if (rowsUpdated > 0) {
-//                        notifications.notifyUpdates(rowsUpdated)
-//                        refreshContents()
                     }
+                    swipe_refresh.isRefreshing = false
                 }
+                State.FAILED -> {
+                    swipe_refresh.isRefreshing = false
+                    Toast.makeText(context, context?.getString(R.string.error_unable_to_sync), Toast.LENGTH_SHORT).show()
+                }
+            }
+        })
     }
-
 
     companion object {
 

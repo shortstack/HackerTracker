@@ -127,30 +127,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return theme
     }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-        handleIntent(intent)
-    }
-
-    private fun handleIntent(intent: Intent?) {
-        if (intent == null || intent.extras == null)
-            return
-
-        val target = intent.extras.getInt("target")
-
-        if (target == 0)
-            return
-
-        database.findItem(id = target)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({ item ->
-                    val fragment = EventBottomSheet.newInstance(item)
-                    fragment.show(supportFragmentManager, fragment.tag)
-                }, {})
-
-    }
-
     private fun onFilterClick() {
         toggleFAB(onClick = true)
     }
@@ -313,7 +289,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.groupId == R.id.nav_cons) {
-            val con = database.getConsBackground().firstOrNull { it.index == item.itemId }
+            val con = database.getConferences().firstOrNull { it.index == item.itemId }
             if (con != null) database.changeConference(con)
         } else {
             val current = navController.currentDestination.id

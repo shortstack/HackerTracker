@@ -54,7 +54,7 @@ class DatabaseManager(context: Context) {
         return db.conferenceDao().getAll()
     }
 
-    fun getConsBackground(): List<Conference> {
+    fun getConferences(): List<Conference> {
         return db.conferenceDao().get()
     }
 
@@ -79,7 +79,7 @@ class DatabaseManager(context: Context) {
         return db.typeDao().getTypes(conference.directory)
     }
 
-    fun findItem(id: Int): Flowable<Event> {
+    fun findItem(id: Int): Event? {
         return db.eventDao().getEventById(id)
     }
 
@@ -100,20 +100,18 @@ class DatabaseManager(context: Context) {
     }
 
 
-    fun updateConference(conference: Conference, body: SyncResponse): Single<Int> {
-        return Single.fromCallable {
-            body.events.forEach {
-                it.con = conference.directory
-            }
-            db.conferenceDao().insert(conference)
-            db.eventDao().insertAll(body.events)
-            return@fromCallable body.events.size
+    fun updateConference(conference: Conference, body: SyncResponse): Int {
+        body.events.forEach {
+            it.con = conference.directory
         }
+        db.conferenceDao().insert(conference)
+        db.eventDao().insertAll(body.events)
+        return body.events.size
     }
 
-    fun updateConference(conference: Conference, response: FullResponse): Single<Int> {
-        return updateConference(conference, response.syncResponse)
-    }
+//    fun updateConference(conference: Conference, response: FullResponse): Single<Int> {
+//        return updateConference(conference, response.syncResponse)
+//    }
 
     fun updateType(type: Type): Int {
         return db.typeDao().update(type)

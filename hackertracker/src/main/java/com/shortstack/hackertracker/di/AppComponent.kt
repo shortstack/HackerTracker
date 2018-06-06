@@ -3,9 +3,8 @@ package com.shortstack.hackertracker.di
 import com.shortstack.hackertracker.database.MyRoomDatabase
 import com.shortstack.hackertracker.di.modules.*
 import com.shortstack.hackertracker.models.EventViewModel
-import com.shortstack.hackertracker.network.service.UpdateDatabaseService
-import com.shortstack.hackertracker.network.task.ReminderJob
-import com.shortstack.hackertracker.network.task.SyncJob
+import com.shortstack.hackertracker.network.task.SyncWorker
+import com.shortstack.hackertracker.network.task.ReminderWorker
 import com.shortstack.hackertracker.ui.MainActivityViewModel
 import com.shortstack.hackertracker.ui.SearchFragment
 import com.shortstack.hackertracker.ui.SettingsFragment
@@ -33,49 +32,40 @@ import dagger.Component
 @MyApplicationScope
 interface AppComponent {
 
-    fun inject(mainActivity: MainActivity)
-
-    fun inject(homeFragment: HomeFragment)
-
-    fun inject(scheduleItemAdapter: ScheduleAdapter)
-
-    fun inject(reminderJob: ReminderJob)
-
-    fun inject(syncJob: SyncJob)
-
-    fun inject(scheduleFragment: ScheduleFragment)
-
-    fun inject(scheduleItemBottomSheet: EventBottomSheet)
-
-    fun inject(settingsFragment: SettingsFragment)
-
-    fun inject(filterView: FilterView)
-
-    fun inject(itemViewModel: EventViewModel)
+    // Components
 
     fun inject(notificationHelper: NotificationHelper)
-
-    fun inject(searchFragment: SearchFragment)
-
-    fun inject(updateDatabaseService: UpdateDatabaseService)
-
-    fun inject(itemView: EventView)
-
     fun inject(myRoomDatabase: MyRoomDatabase)
 
+    // Activities + Fragments
+
+    fun inject(mainActivity: MainActivity)
+    fun inject(homeFragment: HomeFragment)
+    fun inject(scheduleFragment: ScheduleFragment)
+    fun inject(settingsFragment: SettingsFragment)
+    fun inject(searchFragment: SearchFragment)
+
+    // Views
+
+    fun inject(scheduleItemAdapter: ScheduleAdapter)
+    fun inject(scheduleItemBottomSheet: EventBottomSheet)
+    fun inject(filterView: FilterView)
+    fun inject(itemView: EventView)
+
     // ViewModels
+
     fun inject(mainActivityViewModel: MainActivityViewModel)
-
     fun inject(homeViewModel: HomeViewModel)
-
     fun inject(scheduleViewModel: ScheduleViewModel)
-
     fun inject(mapsViewModel: MapsViewModel)
-
     fun inject(informationViewModel: InformationViewModel)
-
     fun inject(vendorsViewModel: VendorsViewModel)
-
     fun inject(searchViewModel: SearchViewModel)
+    fun inject(itemViewModel: EventViewModel)
+
+    // Background Workers
+
+    fun inject(syncWorker: SyncWorker)
+    fun inject(reminderWorker: ReminderWorker)
 
 }

@@ -50,6 +50,8 @@ configurations {
 }
 
 dependencies {
+    def work_version = "1.0.0-alpha02"
+
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // Kotlin
@@ -79,6 +81,8 @@ dependencies {
     // Arch
     implementation "android.arch.lifecycle:extensions:1.1.1"
     implementation "android.arch.lifecycle:viewmodel:1.1.1"
+    implementation "android.arch.work:work-runtime-ktx:$work_version"
+    implementation "android.arch.work:work-firebase:$work_version"
 
     // Room
     implementation 'android.arch.persistence.room:rxjava2:1.1.0'

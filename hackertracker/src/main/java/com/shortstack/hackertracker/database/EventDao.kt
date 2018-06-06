@@ -41,7 +41,7 @@ interface EventDao {
     fun update(events: List<Event>): Int
 
     @Query("SELECT * FROM event WHERE `index` = :id")
-    fun getEventById(id: Int): Flowable<Event>
+    fun getEventById(id: Int): Event?
 
     @Query("SELECT * FROM event WHERE title LIKE :text")
     fun findByText(text: String): LiveData<List<Event>>

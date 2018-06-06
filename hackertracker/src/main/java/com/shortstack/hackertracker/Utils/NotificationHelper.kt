@@ -13,18 +13,19 @@ import android.os.Bundle
 import android.support.v4.app.NotificationCompat
 import android.support.v4.app.NotificationManagerCompat
 import android.support.v4.content.ContextCompat
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequest
+import androidx.work.WorkManager
 import com.firebase.jobdispatcher.FirebaseJobDispatcher
-import com.firebase.jobdispatcher.Trigger
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.Conference
 import com.shortstack.hackertracker.models.Event
-import com.shortstack.hackertracker.network.task.ReminderJob
+import com.shortstack.hackertracker.network.task.ReminderWorker
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class NotificationHelper @Inject constructor(private val context: Context) {
@@ -102,7 +103,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
         }
 
     fun scheduleItemNotification(item: Event) {
-        val window = item.notificationTime - 1200
+        val window: Long = (item.notificationTime - 1200).toLong()
 
         Logger.d("Scheduling event notification. In $window seconds, " + (window / 60) + " mins, " + (window / 3600) + " hrs.")
 
@@ -110,18 +111,15 @@ class NotificationHelper @Inject constructor(private val context: Context) {
             return
         }
 
-        val bundle = Bundle()
-        bundle.putInt(ReminderJob.NOTIFICATION_ID, item.index)
+        val data = Data.Builder()
+                .putInt(ReminderWorker.NOTIFICATION_ID, item.index).build()
 
-        val job = dispatcher.newJobBuilder()
-                .setService(ReminderJob::class.java)
-                .setTag(ReminderJob.getTag(item.index))
-                .setTrigger(Trigger.executionWindow(window, window))
-                .setExtras(bundle)
+        val request = OneTimeWorkRequest.Builder(ReminderWorker::class.java)
+                .setInitialDelay(window, TimeUnit.SECONDS)
+                .setInputData(data)
                 .build()
 
-        dispatcher.mustSchedule(job)
-
+        WorkManager.getInstance().enqueue(request)
     }
 
     fun notifyUpdates(conference: Conference, newCon: Boolean, rowsUpdated: Int) {
@@ -159,18 +157,8 @@ class NotificationHelper @Inject constructor(private val context: Context) {
         manager.notify(id, notification)
     }
 
-    fun cancelNotification(id: Int) {
-        dispatcher.cancel(ReminderJob.getTag(id))
-    }
-
-
-    fun notify(id: Int) {
-        database.findItem(id = id)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    manager.notify(id, getItemNotification(it))
-                }
+    fun notifyStartingSoon(event: Event) {
+        manager.notify(event.index, getItemNotification(event))
     }
 
     companion object {
