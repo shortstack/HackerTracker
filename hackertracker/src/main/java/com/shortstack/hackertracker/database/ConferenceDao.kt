@@ -41,4 +41,11 @@ interface ConferenceDao {
     fun getCon(id: Int): Single<Conference>
 
 
+    @Transaction
+    fun upsert(conference: Conference) {
+        val updated = update(conference)
+        if (updated == 0) {
+            insert(conference)
+        }
+    }
 }

@@ -104,7 +104,7 @@ class DatabaseManager(context: Context) {
         body.events.forEach {
             it.con = conference.directory
         }
-        db.conferenceDao().insert(conference)
+        db.conferenceDao().upsert(conference)
         db.eventDao().insertAll(body.events)
         return body.events.size
     }
