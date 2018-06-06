@@ -41,5 +41,6 @@ class ReminderWorker : Worker() {
 
     companion object {
         const val NOTIFICATION_ID = "NOTIFICATION_ID"
+        const val TAG = "TAG_REMINDER_"
     }
 }

@@ -25,6 +25,7 @@ import com.shortstack.hackertracker.models.Conference
 import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.network.task.ReminderWorker
 import com.shortstack.hackertracker.ui.activities.MainActivity
+import java.time.Duration
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -103,6 +104,9 @@ class NotificationHelper @Inject constructor(private val context: Context) {
         }
 
     fun scheduleItemNotification(item: Event) {
+
+        WorkManager.getInstance().cancelAllWorkByTag(ReminderWorker.TAG + item.index)
+
         val window: Long = (item.notificationTime - 1200).toLong()
 
         Logger.d("Scheduling event notification. In $window seconds, " + (window / 60) + " mins, " + (window / 3600) + " hrs.")
@@ -116,6 +120,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
 
         val request = OneTimeWorkRequest.Builder(ReminderWorker::class.java)
                 .setInitialDelay(window, TimeUnit.SECONDS)
+                .addTag(ReminderWorker.TAG + item.index)
                 .setInputData(data)
                 .build()
 
