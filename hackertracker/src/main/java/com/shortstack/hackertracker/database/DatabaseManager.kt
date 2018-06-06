@@ -2,6 +2,7 @@ package com.shortstack.hackertracker.database
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Transformations
 import android.content.Context
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.FullResponse
@@ -18,9 +19,20 @@ class DatabaseManager(context: Context) {
 
     val conferenceLiveData = MutableLiveData<Conference>()
 
+    val typesLiveData: LiveData<List<Type>>
+        get() {
+            return Transformations.switchMap(conferenceLiveData) { id ->
+                if (id == null) {
+                    return@switchMap MutableLiveData<List<Type>>()
+                }
+                return@switchMap getTypes(id)
+            }
+        }
+
     init {
         db = MyRoomDatabase.buildDatabase(context, conferenceLiveData)
-        conferenceLiveData.postValue(getCurrentCon())
+        val currentCon = getCurrentCon()
+        conferenceLiveData.postValue(currentCon)
     }
 
     private fun getCurrentCon(): Conference {
@@ -63,8 +75,8 @@ class DatabaseManager(context: Context) {
         return db.vendorDao().getAll(conference.directory)
     }
 
-    fun getTypes(): Single<List<Type>> {
-        return db.typeDao().getTypes(getCurrentCon().directory)
+    fun getTypes(conference: Conference): LiveData<List<Type>> {
+        return db.typeDao().getTypes(conference.directory)
     }
 
     fun findItem(id: Int): Flowable<Event> {
@@ -101,6 +113,10 @@ class DatabaseManager(context: Context) {
 
     fun updateConference(conference: Conference, response: FullResponse): Single<Int> {
         return updateConference(conference, response.syncResponse)
+    }
+
+    fun updateType(type: Type): Int {
+        return db.typeDao().update(type)
     }
 
 }

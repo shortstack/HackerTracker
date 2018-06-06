@@ -50,7 +50,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
         val conferences = gson.fromFile<Conferences>(CONFERENCES_FILE, root = "conferences")
 
         conferences.let {
-            it.conferences.first().isSelected = true
+            val first = it.conferences.first()
+            first.isSelected = true
             conferenceDao().insertAll(it.conferences)
         }
 
@@ -62,7 +63,10 @@ abstract class MyRoomDatabase : RoomDatabase() {
             try {
                 // Types
                 gson.fromFile<Types>(TYPES_FILE, root = database).let {
-                    it.types.forEach { it.con = database }
+                    it.types.forEach {
+                        it.con = database
+                        it.isSelected = true
+                    }
                     typeDao().insertAll(it.types)
                 }
             } catch (ex: JsonSyntaxException) {

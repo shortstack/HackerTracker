@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.views
 
 import android.animation.ObjectAnimator
+import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -12,6 +13,7 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
@@ -26,7 +28,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.row_event.view.*
 import javax.inject.Inject
 
-class EventView : CardView {
+class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs) {
 
     @Inject
     lateinit var database: DatabaseManager
@@ -38,43 +40,29 @@ class EventView : CardView {
 
     private var mAnimation: ObjectAnimator? = null
 
-    constructor(context: Context) : super(context) {
-        init()
-        inflate()
-    }
-
-    private fun init() {
+    init {
         App.application.component.inject(this)
+
+        getStyle(context, attrs)
 
         setCardBackgroundColor(ContextCompat.getColor(context, R.color.card_background))
 
-        if (mRoundCorners) {
-            val radius = convertDpToPixel(2f, context)
-            setRadius(radius)
-        } else {
-            radius = 0f
-        }
-    }
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        getStyle(context, attrs)
-        init()
         inflate()
         setDisplayMode()
     }
 
 
     private fun getStyle(context: Context, attrs: AttributeSet) {
-        val a = context.theme.obtainStyledAttributes(
-                attrs,
-                R.styleable.EventView,
-                0, 0)
+        val a = context.theme.obtainStyledAttributes(attrs,
+                R.styleable.EventView, 0, 0)
         try {
             mDisplayMode = a.getInteger(R.styleable.EventView_displayMode, DISPLAY_MODE_FULL)
             mRoundCorners = a.getBoolean(R.styleable.EventView_roundCorners, true)
         } finally {
             a.recycle()
         }
+
+        radius = if (mRoundCorners) convertDpToPixel(2f, context) else 0f
     }
 
     private fun inflate() {
@@ -113,11 +101,9 @@ class EventView : CardView {
         }
     }
 
-    @Subscribe
-    fun onRefreshTimeEvent(event: RefreshTimerEvent) {
-        //        long time = System.currentTimeMillis();
+    fun onRefreshTimeEvent() {
+        Logger.d("Updated ${content?.title}")
         updateProgressBar()
-        //        Logger.d("Refreshed in " + ( System.currentTimeMillis() - time));
     }
 
     private fun setDisplayMode() {
@@ -138,8 +124,6 @@ class EventView : CardView {
     }
 
     private fun renderItem() {
-        //updated.setVisibility( new Random().nextBoolean() ? VISIBLE : GONE);
-
         renderText()
         renderCategoryColour()
         renderBookmark()
@@ -186,6 +170,9 @@ class EventView : CardView {
     private fun renderCategoryColour() {
         val event = content?.type ?: return
 
+//        val value = database.typesLiveData.value
+//
+//        val type = value?.first { it.type == event } ?: return
         database.getTypeForEvent(event)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -196,8 +183,9 @@ class EventView : CardView {
                     category.setBackgroundColor(color)
                     progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
                 }, {
-
+                    
                 })
+
 
     }
 
@@ -243,4 +231,6 @@ class EventView : CardView {
         const val PROGRESS_UPDATE_DURATION_PER_PERCENT = 50
 
     }
+
+
 }

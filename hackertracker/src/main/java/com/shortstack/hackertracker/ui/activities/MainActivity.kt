@@ -14,7 +14,6 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.app.AppCompatActivity
 import android.view.*
-import android.widget.Toast
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.setupActionBarWithNavController
@@ -35,7 +34,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.row_nav_view.*
-import java.util.*
+import kotlinx.android.synthetic.main.view_filter.*
 import javax.inject.Inject
 
 
@@ -80,8 +79,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
             }
         })
 
+        database.typesLiveData.observe(this, Observer {
+            filters.setTypes(it)
+        })
+
         filter.setOnClickListener { onFilterClick() }
-//        close.setOnClickListener { onFilterClick() }
+        close.setOnClickListener { onFilterClick() }
 
         if (savedInstanceState == null) {
             if (Amplify.getSharedInstance().shouldPrompt() && !BuildConfig.DEBUG) {
@@ -149,72 +152,51 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun onFilterClick() {
-//        toggleFAB(onClick = true)
-
-        val it = database.getConsBackground()
-
-//        database.getCons().subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe({
-
-        val cons = it.filter { !it.isSelected }
-        val con = cons[Random().nextInt(cons.size)]
-
-        Toast.makeText(this@MainActivity, "Changed to ${con.title}", Toast.LENGTH_SHORT).show()
-
-        database.changeConference(con)
-
-//                }, {
-//
-//                })
+        toggleFAB(onClick = true)
     }
 
     private fun toggleFilters() {
 
+        val position = IntArray(2)
 
-//        val cx = filters.width / 2
-//        val cy = filters.height / 2
-//
-//        val position = IntArray(2)
-//
-//        filter.getLocationOnScreen(position)
-//
-//        val (cx, cy) = position
-//
-//        val radius = Math.hypot(cx.toDouble(), cy.toDouble())
-//
-//        if (filters.visibility == View.INVISIBLE) {
-//
-//
-//            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                ViewAnimationUtils.createCircularReveal(filters, cx, cy, 0f, radius.toFloat())
-//            } else {
-//                null
-//            }
-//
-//            filters.visibility = View.VISIBLE
-//
-//            anim?.start()
-//        } else {
-//
-//            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//                ViewAnimationUtils.createCircularReveal(filters, cx, cy, radius.toFloat(), 0f)
-//            } else {
-//
-//                filters.visibility = View.INVISIBLE
-//                null
-//            }
-//
-//            anim?.addListener(object : AnimatorListenerAdapter() {
-//                override fun onAnimationEnd(animation: Animator?) {
-//                    super.onAnimationEnd(animation)
-//                    filters.visibility = View.INVISIBLE
-//                    toggleFAB(onClick = false)
-//                }
-//            })
-//
-//            anim?.start()
-//        }
+        filter.getLocationOnScreen(position)
+
+        val (cx, cy) = position
+
+        val radius = Math.hypot(cx.toDouble(), cy.toDouble())
+
+        if (filters.visibility == View.INVISIBLE) {
+
+
+            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ViewAnimationUtils.createCircularReveal(filters, cx, cy, 0f, radius.toFloat())
+            } else {
+                null
+            }
+
+            filters.visibility = View.VISIBLE
+
+            anim?.start()
+        } else {
+
+            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                ViewAnimationUtils.createCircularReveal(filters, cx, cy, radius.toFloat(), 0f)
+            } else {
+
+                filters.visibility = View.INVISIBLE
+                null
+            }
+
+            anim?.addListener(object : AnimatorListenerAdapter() {
+                override fun onAnimationEnd(animation: Animator?) {
+                    super.onAnimationEnd(animation)
+                    filters.visibility = View.INVISIBLE
+                    toggleFAB(onClick = false)
+                }
+            })
+
+            anim?.start()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

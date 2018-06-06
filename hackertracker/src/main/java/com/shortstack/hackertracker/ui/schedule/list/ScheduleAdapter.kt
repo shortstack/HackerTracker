@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.ui.schedule.list
 
+import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.App
@@ -9,17 +10,19 @@ import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
+import kotlinx.android.synthetic.main.row.view.*
 import java.util.*
 import javax.inject.Inject
 
-class ScheduleAdapter(private val layout: RecyclerView.LayoutManager,
-                      val list: RecyclerView) : RendererAdapter<Any>(ScheduleBuilder()) {
+class ScheduleAdapter(val list: RecyclerView) : RendererAdapter<Any>(ScheduleBuilder()) {
 
     @Inject
     lateinit var database: DatabaseManager
 
     @Inject
     lateinit var storage: SharedPreferencesUtil
+
+    private val layout: LinearLayoutManager = list.layoutManager as LinearLayoutManager
 
     init {
         App.application.component.inject(this)
@@ -79,7 +82,6 @@ class ScheduleAdapter(private val layout: RecyclerView.LayoutManager,
     }
 
     fun notifyTimeChanged() {
-
         if (storage.showExpiredEvents)
             return
 
