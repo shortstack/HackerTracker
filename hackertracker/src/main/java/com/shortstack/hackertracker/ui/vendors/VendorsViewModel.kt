@@ -1,10 +1,12 @@
 package com.shortstack.hackertracker.ui.vendors
 
 import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.Vendor
 import javax.inject.Inject
 
@@ -24,7 +26,10 @@ class VendorsViewModel : ViewModel() {
         get() {
             val conference = database.conferenceLiveData
             return Transformations.switchMap(conference) { id ->
-                database.getVendors(id)
+                if (id == null) {
+                    return@switchMap MutableLiveData<List<Vendor>>()
+                }
+                return@switchMap database.getVendors(id)
             }
         }
 }
