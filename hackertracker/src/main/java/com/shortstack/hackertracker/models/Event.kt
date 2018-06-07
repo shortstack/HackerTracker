@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.models
 
 import android.arch.persistence.room.Entity
+import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 import com.shortstack.hackertracker.now
@@ -10,7 +11,7 @@ import java.util.*
 /**
  * Created by Chris on 3/31/2018.
  */
-@Entity
+@Entity(foreignKeys = [(ForeignKey(entity = (Conference::class), parentColumns = [("directory")], childColumns = [("con")], onDelete = ForeignKey.CASCADE))])
 data class Event(
         @PrimaryKey(autoGenerate = false)
         val index: Int,
