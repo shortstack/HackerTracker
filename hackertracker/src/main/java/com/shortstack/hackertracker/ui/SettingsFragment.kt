@@ -2,58 +2,45 @@ package com.shortstack.hackertracker.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.v7.preference.Preference
 import android.support.v7.preference.PreferenceFragmentCompat
+import android.view.View
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.analytics.AnalyticsController.Analytics
-import com.shortstack.hackertracker.event.UpdateListContentsEvent
+import com.shortstack.hackertracker.analytics.AnalyticsController
+import javax.inject.Inject
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    inline fun Preference.setOnClick(crossinline func: Preference.() -> Unit) {
-        this.onPreferenceClickListener = Preference.OnPreferenceClickListener {
-            func()
-            false
-        }
+    @Inject
+    lateinit var analytics: AnalyticsController
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        App.application.component.inject(this)
     }
 
     override fun onCreatePreferences(bundle: Bundle?, s: String?) {
         addPreferencesFromResource(R.xml.settings)
-
     }
 
     override fun onSharedPreferenceChanged(sharedPreferences: SharedPreferences, key: String) {
 
-        val event: Analytics
-
-        when (key) {
-            "user_analytics" -> event = Analytics.SETTINGS_ANALYTICS
-
-            "user_allow_push_notifications" -> event = Analytics.SETTINGS_NOTIFICATIONS
-
-            "user_use_military_time" -> {
-                event = Analytics.SETTINGS_MILITARY_TIME
-                App.application.postBusEvent(UpdateListContentsEvent())
-            }
-
-            "user_show_expired_events" -> {
-                event = Analytics.SETTINGS_EXPIRED_EVENT
-                App.application.postBusEvent(UpdateListContentsEvent())
-            }
+        val event = when (key) {
+            "user_analytics" -> AnalyticsController.SETTINGS_ANALYTICS
+            "user_allow_push_notifications" -> AnalyticsController.SETTINGS_NOTIFICATIONS
+            "user_show_expired_events" -> AnalyticsController.SETTINGS_EXPIRED_EVENTS
 
             "sync_interval" -> {
-                App.application.scheduleSync()
+                App.application.scheduleSyncTask()
                 return
             }
 
-            else ->
-                // We're not tracking these events, ignore.
-                return
+        // We're not tracking these events, ignore.
+            else -> return
         }
 
         val value = sharedPreferences.getBoolean(key, false)
-        App.application.analyticsController.tagSettingsEvent(event, value)
+        analytics.onSettingsChanged(event, value)
     }
 
     override fun onResume() {
@@ -62,15 +49,13 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     }
 
     override fun onPause() {
-        super.onPause()
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
+        super.onPause()
     }
 
     companion object {
 
-        fun newInstance(): SettingsFragment {
-            return SettingsFragment()
-        }
-    }
+        fun newInstance() = SettingsFragment()
 
+    }
 }

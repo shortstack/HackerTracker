@@ -2,72 +2,42 @@ package com.shortstack.hackertracker.analytics
 
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
-import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.models.Filter
-import com.shortstack.hackertracker.models.Item
+import com.shortstack.hackertracker.BuildConfig
+import com.shortstack.hackertracker.models.Event
+import com.shortstack.hackertracker.utils.SharedPreferencesUtil
+import javax.inject.Inject
 
 
-class AnalyticsController {
+class AnalyticsController @Inject constructor(private val storage: SharedPreferencesUtil) {
 
-    enum class Analytics(private val tag : String) {
+    companion object {
+        const val EVENT_VIEW = "Event - View"
+        const val EVENT_OPEN_URL = "Event - Open URL"
+        const val EVENT_BOOKMARK = "Event - Bookmark"
+        const val EVENT_UNBOOKMARK = "Event - Unbookmark"
+        const val EVENT_SHARE = "Event - Share"
 
-        EVENT_VIEW("Event - View"),
-        EVENT_BOOKMARK("Event - Bookmark"),
-        EVENT_UNBOOKMARK("Event - Unbookmark"),
-        EVENT_SHARE("Event - Share"),
-        EVENT_LINK("Event - Link"),
-
-        SETTINGS_ANALYTICS("Settings - Analytics"),
-        SETTINGS_NOTIFICATIONS("Settings - Notifications"),
-        SETTINGS_EXPIRED_EVENT("Settings - Expired Events"),
-        SETTINGS_MILITARY_TIME("Settings - 24 Time Mode"),
-        SETTINGS_SYNC_AUTO("Settings - Sync Auto"),
-
-        UBER("Uber"),
-
-        FRAGMENT_HOME("View Home"),
-        FRAGMENT_SCHEDULE("View Schedule"),
-        FRAGMENT_MAP("View Map"),
-        FRAGMENT_INFO("View Information"),
-        FRAGMENT_COMPANIES("View Companies"),
-        FRAGMENT_SETTINGS("View Settings"),
-        FRAGMENT_CHANGE_CON("View Change Con"),
-
-        SCHEDULE_FILTERS("Schedule - Filters");
-
-        override fun toString() : String {
-            return tag
-        }
+        const val SETTINGS_ANALYTICS = "Settings - Analytics"
+        const val SETTINGS_NOTIFICATIONS = "Settings - Notifications"
+        const val SETTINGS_EXPIRED_EVENTS = "Settings - Expired Events"
     }
 
-
-    fun tagItemEvent(event : Analytics, item : Item) {
-        logCustom(ItemEvent(event, item))
+    fun onEventAction(action: String, event: Event) {
+        logCustom(EventCustomEvent(action, event))
     }
 
-    fun tagSettingsEvent(event : Analytics, enabled : Boolean) {
-        logCustom(SettingsEvent(event, enabled))
+    fun onSettingsChanged(setting: String, enabled: Boolean) {
+        logCustom(SettingsEvent(setting, enabled))
     }
 
-    fun tagCustomEvent(event : Analytics) {
-        logCustom(CustomEvent(event.toString()))
-    }
+    private fun logCustom(event: CustomEvent) {
+        if (BuildConfig.DEBUG) return
 
-    fun tagFiltersEvent(filter : Filter) {
-        logCustom(FilterEvent(filter))
-    }
-
-    private fun logCustom(event : CustomEvent) {
         // Bypass to track if they're turning analytics off
-        if (!App.application.storage.isTrackingAnalytics && !event.toString().contains(Analytics.SETTINGS_ANALYTICS.toString())) {
+        if (!storage.allowAnalytics && !event.toString().contains(SETTINGS_ANALYTICS)) {
             return
         }
 
-        try {
-            Answers.getInstance().logCustom(event)
-        } catch (ex : IllegalStateException) {
-            // Fabric is not initialized - debug build.
-        }
-
+        Answers.getInstance().logCustom(event)
     }
 }

@@ -37,9 +37,7 @@ captures/
 
 # Intellij
 *.iml
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/libraries
+.idea
 
 # Keystore files
 *.jks
@@ -56,3 +54,4 @@ gradle.properties
 hackertracker/fabric.properties
 projectFilesBackup/.idea/workspace.xml
 .idea/dictionaries/Admin.xml
+*.db

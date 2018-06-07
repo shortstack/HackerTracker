@@ -1,45 +1,37 @@
 <android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:key="preferenceTheme"
     tools:background="@color/background">
 
-    <android.support.v7.preference.CheckBoxPreference
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:defaultValue="True"
-        android:key="user_analytics"
-        android:summary="Allow us track anonymous usage and report crashes."
-        android:title="Analytics" />
+    <android.support.v7.preference.PreferenceCategory android:title="Preferences">
 
-    <android.support.v7.preference.CheckBoxPreference
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:defaultValue="True"
-        android:key="user_allow_push_notifications"
-        android:summary="Allow notifications for upcoming starred events."
-        android:title="Notifications" />
+        <android.support.v7.preference.CheckBoxPreference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:defaultValue="True"
+            android:key="user_analytics"
+            android:summary="Allow us track anonymous usage and report crashes."
+            android:title="Allow Analytics" />
 
-    <android.support.v7.preference.CheckBoxPreference
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:defaultValue="False"
-        android:key="user_show_expired_events"
-        android:summary="Show events that have already happened."
-        android:title="Expired Events" />
+        <android.support.v7.preference.CheckBoxPreference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:defaultValue="True"
+            android:key="user_allow_push_notifications"
+            android:summary="Allow notifications for upcoming bookmarked events."
+            android:title="Allow Notifications" />
 
-    <android.support.v7.preference.CheckBoxPreference
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:defaultValue="False"
-        android:key="user_use_military_time"
-        android:summary="Show 14:00 instead of 2:00 PM"
-        android:title="24 hour time"
-        app:summaryOff="Show 2:00 PM."
-        app:summaryOn="Show 14:00." />
+        <android.support.v7.preference.CheckBoxPreference
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:defaultValue="False"
+            android:key="user_show_expired_events"
+            android:summary="Show events that have already happened."
+            android:title="Show Expired Events" />
 
+    </android.support.v7.preference.PreferenceCategory>
 
     <android.support.v7.preference.PreferenceCategory android:title="Syncing">
 

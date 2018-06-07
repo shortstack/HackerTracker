@@ -16,7 +16,7 @@
 
     <style name="ThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
 
-        <item name="logo_main">@drawable/skull_25</item>
+        <item name="logo_main">@drawable/skull</item>
         <item name="logo_secondary">@drawable/skull</item>
 
 
@@ -50,6 +50,15 @@
 
     </style>
 
+    <style name="AppTheme.Splash">
+        <item name="android:windowBackground">@drawable/splash_background</item>
+    </style>
+
+    <style name="AppTheme.Dev">
+        <item name="windowActionBar">true</item>
+        <item name="windowNoTitle">false</item>
+    </style>
+
     <style name="AppTheme.Toorcon" parent="AppTheme">
         <item name="logo_main">@drawable/toorcon_logo</item>
         <item name="logo_secondary">@drawable/toorcon_logo</item>
@@ -58,6 +67,21 @@
     <style name="AppTheme.Shmoocon" parent="AppTheme">
         <item name="logo_main">@drawable/shmoocon_logo</item>
         <item name="logo_secondary">@drawable/shmoocon_logo</item>
+    </style>
+
+    <style name="AppTheme.Hackwest" parent="AppTheme">
+        <item name="logo_main">@drawable/hackwest_logo</item>
+        <item name="logo_secondary">@drawable/hackwest_logo</item>
+    </style>
+
+    <style name="AppTheme.BsidesOrl" parent="AppTheme">
+        <item name="logo_main">@drawable/bsidesorl_logo</item>
+        <item name="logo_secondary">@drawable/bsidesorl_logo</item>
+    </style>
+
+    <style name="AppTheme.LayerOne" parent="AppTheme">
+        <item name="logo_main">@drawable/layerone_logo</item>
+        <item name="logo_secondary">@drawable/layerone_logo</item>
     </style>
 
     <style name="AppCheckBoxStyle" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
@@ -127,7 +151,6 @@
     </style>
 
 
-
     <!-- Individual element styles. -->
 
     <style name="Label" parent="TextAppearance.AppCompat.Body2">
@@ -136,10 +159,11 @@
     </style>
 
     <style name="Paragraph" parent="TextAppearance.AppCompat.Body1">
-        <item name="android:paddingLeft">12dp</item>
-        <item name="android:paddingRight">12dp</item>
+        <!--<item name="android:paddingLeft">12dp</item>-->
+        <!--<item name="android:paddingRight">12dp</item>-->
         <item name="android:lineSpacingExtra">8sp</item>
-        <item name="android:autoLink">all</item>
+        <!-- TODO: This is a very expensive attribute, do we need it? -->
+        <!--<item name="android:autoLink">all</item>-->
     </style>
 
     <style name="buttonStyle" parent="@android:style/Widget.Holo.Button">

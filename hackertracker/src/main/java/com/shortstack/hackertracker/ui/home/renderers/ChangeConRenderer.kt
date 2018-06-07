@@ -16,7 +16,7 @@ class ChangeConRenderer : Renderer<Void>() {
 
     override fun hookListeners(rootView : View?) {
         rootView?.switch_con_button?.setOnClickListener {
-            (context as MainActivity).changeCon()
+
         }
     }
 

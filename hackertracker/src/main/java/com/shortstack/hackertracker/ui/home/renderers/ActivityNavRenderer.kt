@@ -17,7 +17,7 @@ class ActivityNavRenderer : Renderer<Navigation>(), View.OnClickListener {
     }
 
     override fun hookListeners(rootView: View?) {
-        rootView!!.setOnClickListener(this)
+        rootView?.setOnClickListener(this)
     }
 
     override fun render(payloads: List<Any>) {
@@ -27,6 +27,6 @@ class ActivityNavRenderer : Renderer<Navigation>(), View.OnClickListener {
 
 
     override fun onClick(view: View) {
-        (context as MainActivity).loadFragment(MainActivity.NAV_INFORMATION)
+//        (context as MainActivity).loadFragment(MainActivity.NAV_INFORMATION)
     }
 }

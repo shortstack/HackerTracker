@@ -1,15 +1,19 @@
 package com.shortstack.hackertracker.models
 
-import java.io.Serializable
+import android.arch.persistence.room.Entity
+import android.arch.persistence.room.PrimaryKey
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 
-data class Vendors(
-        var vendors : Array<Vendor>
-)
-
+@Parcelize
+@Entity
 data class Vendor(
-        var title : String,
-        var description : String,
-        var link : String,
-        var partner : Int = 0
-) : Serializable
+        @PrimaryKey(autoGenerate = true)
+        val index: Int,
+        val title: String,
+        val description: String,
+        val link: String,
+        val partner: Int = 0,
+        var con: String
+) : Parcelable
 

@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
-
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_white_24dp"
-            android:title="@string/nav_home" />
+            android:title="@string/home" />
         <item
             android:id="@+id/nav_schedule"
+            android:checked="true"
             android:icon="@drawable/ic_schedule_white_24dp"
             android:title="@string/schedule" />
+
         <item
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_map_white_24dp"
-            android:title="@string/map_uber" />
+            android:title="@string/map" />
 
         <item
             android:id="@+id/nav_information"
@@ -29,11 +30,10 @@
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings_white_24dp"
             android:title="@string/settings" />
-
-        <item
-            android:id="@+id/nav_change_con"
-            android:icon="@drawable/ic_filter_list_white_24dp"
-            android:title="@string/change_con" />
-
     </group>
+
+    <group
+        android:id="@+id/nav_cons"
+        android:checkableBehavior="single" />
+
 </menu>

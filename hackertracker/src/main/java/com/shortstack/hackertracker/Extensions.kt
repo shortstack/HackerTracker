@@ -1,36 +1,14 @@
 package com.shortstack.hackertracker
 
-import android.annotation.SuppressLint
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentTransaction
-import android.support.v7.app.AppCompatActivity
-import java.text.SimpleDateFormat
+import com.google.gson.Gson
+import com.orhanobut.logger.Logger
+import java.io.FileNotFoundException
+import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
 
-inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> Unit) {
-    val fragmentTransaction = beginTransaction()
-    fragmentTransaction.func()
-    fragmentTransaction.commit()
-}
-
-fun FragmentManager.contains(tag: String) = findFragmentByTag(tag) != null
-
-fun AppCompatActivity.addFragment(fragment: Fragment, title: String, tag: String, frameId: Int) {
-    supportActionBar?.title = title
-    supportFragmentManager.inTransaction { add(frameId, fragment, tag) }
-    //invalidateOptionsMenu()
-}
-
-fun AppCompatActivity.replaceFragment(fragment: Fragment, title: String, tag: String, frameId: Int) {
-    supportActionBar?.title = title
-    supportFragmentManager.inTransaction { replace(frameId, fragment, tag) }
-    //invalidateOptionsMenu()
-}
-
 fun Date.isToday(): Boolean {
-    val current = App.getCurrentCalendar()
+    val current = Calendar.getInstance().now()
 
     val cal = Calendar.getInstance()
     cal.time = this
@@ -40,7 +18,7 @@ fun Date.isToday(): Boolean {
 }
 
 fun Date.isTomorrow(): Boolean {
-    val cal1 = App.getCurrentCalendar()
+    val cal1 = Calendar.getInstance().now()
     cal1.roll(Calendar.DAY_OF_YEAR, true)
 
     val cal2 = Calendar.getInstance()
@@ -50,7 +28,7 @@ fun Date.isTomorrow(): Boolean {
 }
 
 fun Date.isSoonish(SOON_DAYS_AMOUNT: Int): Boolean {
-    val cal1 = App.getCurrentCalendar()
+    val cal1 = Calendar.getInstance().now()
 
     val cal2 = Calendar.getInstance()
     cal2.time = this
@@ -63,15 +41,38 @@ fun Date.getDateDifference(date: Date, timeUnit: TimeUnit): Long {
     return timeUnit.convert(date.time - this.time, TimeUnit.MILLISECONDS);
 }
 
-@SuppressLint("SimpleDateFormat")
-fun Calendar.format8601(): String = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").format(this.time)
 
-fun <T> kotlin.Array<out T>.joinSQLOr(): String {
-    return joinToString(prefix = " (", separator = " OR ", postfix = ") ")
+inline fun <reified T> Gson.fromFile(filename: String, root: String): T {
+    try {
+        val s = "database/conferences/$root/$filename"
+        val stream = App.application.assets.open(s)
+
+        val size = stream.available()
+
+        val buffer = ByteArray(size)
+
+        stream.read(buffer)
+        stream.close()
+
+        return fromJson(String(buffer), T::class.java)
+
+    } catch (e: IOException) {
+        Logger.e(e, "Could not create the database.")
+        throw e
+    } catch (e: FileNotFoundException) {
+        Logger.e("Could not find the file. $root.$filename")
+        return fromJson("", T::class.java)
+    }
 }
 
-fun String.concat(text: String): String {
-    if (this.isNullOrEmpty())
-        return text
-    return this + text
+fun Date.now(): Date {
+    if (BuildConfig.DEBUG)
+        time = Constants.DEBUG_FORCE_TIME_DATE
+
+    return this
+}
+
+fun Calendar.now(): Calendar {
+    this.time = Date().now()
+    return this
 }

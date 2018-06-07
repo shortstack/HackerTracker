@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.fragment_schedule.view.*
 
 class VendorBottomSheet : BottomSheetDialogFragment() {
 
-    override fun setupDialog(dialog : Dialog, style : Int) {
+    override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)
         val view = View.inflate(context, R.layout.bottom_sheet_generic, null)
         dialog.setContentView(view)
@@ -38,13 +38,15 @@ class VendorBottomSheet : BottomSheetDialogFragment() {
         view.link.setOnClickListener { onLinkClick() }
     }
 
-    private val content : Vendor?
-        get() = arguments.getSerializable(ARG_VENDOR) as Vendor
+    private val content: Vendor?
+        get() = arguments?.getParcelable(ARG_VENDOR)
 
     fun onLinkClick() {
+        val context = context ?: return
+
         MaterialAlert.create(context)
                 .setTitle(R.string.link_warning)
-                .setMessage(String.format(context.getString(R.string.link_message), content!!.link!!.toLowerCase()))
+                .setMessage(String.format(context.getString(R.string.link_message), content!!.link.toLowerCase()))
                 .setPositiveButton(R.string.open_link, DialogInterface.OnClickListener { _, _ ->
                     val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(content!!.link))
                     context.startActivity(intent)
@@ -54,14 +56,13 @@ class VendorBottomSheet : BottomSheetDialogFragment() {
 
     companion object {
 
-        val ARG_VENDOR = "VENDOR"
+        private const val ARG_VENDOR = "VENDOR"
 
-
-        fun newInstance(vendor : Vendor) : VendorBottomSheet {
+        fun newInstance(vendor: Vendor): VendorBottomSheet {
             val fragment = VendorBottomSheet()
 
             val bundle = Bundle()
-            bundle.putSerializable(ARG_VENDOR, vendor)
+            bundle.putParcelable(ARG_VENDOR, vendor)
             fragment.arguments = bundle
 
             return fragment

@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -7,22 +6,16 @@
     android:layout_height="wrap_content"
     tools:background="@color/background">
 
-    <com.shortstack.hackertracker.view.ItemView
-        android:id="@+id/item"
+    <com.shortstack.hackertracker.views.EventView
+        android:id="@+id/event"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="2dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-
         android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
         app:cardElevation="2dp"
         app:displayMode="min"
         app:roundCorners="true"
-
         tools:layout_marginBottom="20dp"
-        tools:layout_marginTop="20dp"
-
-        />
+        tools:layout_marginTop="20dp" />
 
 </FrameLayout>

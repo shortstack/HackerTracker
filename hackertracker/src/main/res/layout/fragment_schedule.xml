@@ -1,23 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
     app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-
-    <!--<android.support.design.widget.FloatingActionButton-->
-    <!--android:id="@+id/filter"-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="bottom|end"-->
-    <!--android:layout_margin="30dp"-->
-
-    <!--android:src="@drawable/ic_filter_list_white_24dp"-->
-    <!--app:elevation="4dp"-->
-    <!--app:layout_behavior="com.shortstack.hackertracker.View.ScrollingFABBehavior"-->
-    <!--app:pressedTranslationZ="12dp" />-->
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipe_refresh"
@@ -30,9 +17,10 @@
             android:layout_height="match_parent"
             android:clipToPadding="false"
             android:paddingBottom="30dp"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"
-            tools:listitem="@layout/row_item"/>
+            android:paddingLeft="16dp"
+            android:paddingRight="16dp"
+            app:layoutManager="android.support.v7.widget.LinearLayoutManager"
+            tools:listitem="@layout/row_event" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
@@ -44,15 +32,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:visibility="gone" />
-
-    <include
-        android:id="@+id/tutorial"
-        layout="@layout/tutorial_feed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone" />
-
 
 </android.support.design.widget.CoordinatorLayout>
 

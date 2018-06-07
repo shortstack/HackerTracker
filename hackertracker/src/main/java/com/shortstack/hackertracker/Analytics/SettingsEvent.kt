@@ -2,7 +2,7 @@ package com.shortstack.hackertracker.analytics
 
 import com.crashlytics.android.answers.CustomEvent
 
-class SettingsEvent(event : AnalyticsController.Analytics, enabled : Boolean) : CustomEvent(event.toString()) {
+class SettingsEvent(setting : String, enabled : Boolean) : CustomEvent(setting) {
 
     init {
         putCustomAttribute("Enabled", enabled.toString())

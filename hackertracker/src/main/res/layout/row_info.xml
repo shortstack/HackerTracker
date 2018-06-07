@@ -14,7 +14,7 @@
         android:layout_margin="8dp"
         app:cardBackgroundColor="@color/white">
 
-        <android.support.constraint.ConstraintLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:animateLayoutChanges="true"
@@ -54,6 +54,6 @@
                 tools:layout_editor_absoluteY="13dp"
                 tools:text="@string/badges" />
 
-        </android.support.constraint.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </android.support.v7.widget.CardView>
 </FrameLayout>
