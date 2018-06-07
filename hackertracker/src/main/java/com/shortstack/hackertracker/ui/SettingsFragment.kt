@@ -5,8 +5,10 @@ import android.os.Bundle
 import android.support.v7.preference.PreferenceFragmentCompat
 import android.view.View
 import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
+import com.shortstack.hackertracker.database.DatabaseManager
 import javax.inject.Inject
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
@@ -14,12 +16,21 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     @Inject
     lateinit var analytics: AnalyticsController
 
+    @Inject
+    lateinit var database: DatabaseManager
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         App.application.component.inject(this)
+
+        findPreference("dev_clear").setOnPreferenceClickListener {
+            database.clear()
+            return@setOnPreferenceClickListener true
+        }
     }
 
     override fun onCreatePreferences(bundle: Bundle?, s: String?) {
+        if (BuildConfig.DEBUG) addPreferencesFromResource(R.xml.dev_settings)
         addPreferencesFromResource(R.xml.settings)
     }
 

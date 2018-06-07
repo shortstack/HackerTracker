@@ -117,4 +117,8 @@ class DatabaseManager(context: Context) {
         return db.typeDao().update(type)
     }
 
+    fun clear() {
+        return db.conferenceDao().deleteAll()
+    }
+
 }
