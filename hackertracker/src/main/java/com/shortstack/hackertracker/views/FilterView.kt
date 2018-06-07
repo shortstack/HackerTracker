@@ -18,32 +18,19 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.view_filter.view.*
 import javax.inject.Inject
 
-class FilterView : LinearLayout {
+class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
     private lateinit var checkboxes: Array<AppCompatCheckBox>
 
     @Inject
     lateinit var database: DatabaseManager
 
-    constructor(context: Context) : super(context) {
-        init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        init()
-    }
-
-    private fun init() {
+    init {
         App.application.component.inject(this)
         View.inflate(context, R.layout.view_filter, this)
     }
 
     private fun setCheckboxes(types: List<Type>) {
-        val states = arrayOf(intArrayOf(android.R.attr.state_checked), intArrayOf())
 
         checkboxes = Array(types.size, {
             val type = types[it]
