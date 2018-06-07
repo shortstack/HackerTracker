@@ -34,7 +34,7 @@ interface ConferenceDao {
     fun deleteAll()
 
     @Query("SELECT * FROM conference WHERE isSelected = 1")
-    fun getCurrentCon(): Conference
+    fun getCurrentCon(): Conference?
 
     @Query("SELECT * FROM conference where `index` = :id")
     fun getCon(id: Int): Single<Conference>

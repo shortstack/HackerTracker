@@ -35,19 +35,22 @@ class DatabaseManager(context: Context) {
         conferenceLiveData.postValue(currentCon)
     }
 
-    private fun getCurrentCon(): Conference {
+    private fun getCurrentCon(): Conference? {
         return db.conferenceDao().getCurrentCon()
     }
 
     fun changeConference(con: Conference) {
+        con.isSelected = true
+
         conferenceLiveData.postValue(con)
 
         val current = db.conferenceDao().getCurrentCon()
-
-        current.isSelected = false
-        con.isSelected = true
-
-        db.conferenceDao().update(listOf(current, con))
+        if( current != null ) {
+            current.isSelected = false
+            db.conferenceDao().update(listOf(current, con))
+        } else {
+            db.conferenceDao().update(con)
+        }
     }
 
     fun getCons(): LiveData<List<Conference>> {
