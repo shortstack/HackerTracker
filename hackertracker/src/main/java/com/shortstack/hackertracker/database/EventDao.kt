@@ -22,8 +22,9 @@ interface EventDao {
         private const val LIMIT = 20
     }
 
-    @Query("SELECT * FROM event WHERE con = :con ORDER BY `begin` ASC")
-    fun getSchedule(con: String): LiveData<List<Event>>
+    //    @Query("SELECT Event.*, Type.* FROM event INNER JOIN type ON Event.type = type.type  ORDER BY `begin` ASC")
+    @Query("SELECT * FROM event where con = :con ORDER BY `begin` ASC")
+    fun getSchedule(con: String): LiveData<List<DatabaseEvent>>
 
     @Query("SELECT * FROM event WHERE con = :con ORDER BY `begin` ASC LIMIT $LIMIT OFFSET :page")
     fun getSchedule(con: String, page: Int): LiveData<List<Event>>
@@ -47,5 +48,5 @@ interface EventDao {
     fun findByText(text: String): LiveData<List<Event>>
 
     @Query("SELECT * FROM event WHERE con = :con ORDER BY updatedAt DESC LIMIT $LIMIT")
-    fun getRecentlyUpdated(con: String): LiveData<List<Event>>
+    fun getRecentlyUpdated(con: String): LiveData<List<DatabaseEvent>>
 }

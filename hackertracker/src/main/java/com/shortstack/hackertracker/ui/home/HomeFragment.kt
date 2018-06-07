@@ -13,6 +13,7 @@ import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.pedrogomez.renderers.RendererContent
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.Navigation
 import com.shortstack.hackertracker.ui.home.renderers.ActivityNavRenderer
@@ -39,7 +40,7 @@ class HomeFragment : Fragment() {
         adapter = RendererAdapter(RendererBuilder<Any>()
                 .bind(TYPE_HEADER, HomeHeaderRenderer())
                 .bind(String::class.java, SubHeaderRenderer())
-                .bind(Event::class.java, EventRenderer())
+                .bind(DatabaseEvent::class.java, EventRenderer())
                 .bind(Navigation::class.java, ActivityNavRenderer())
                 .bind(TYPE_CHANGE_CON, ChangeConRenderer()))
 
@@ -64,10 +65,10 @@ class HomeFragment : Fragment() {
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun showRecentUpdates(items: List<Event>) {
+    private fun showRecentUpdates(items: List<DatabaseEvent>) {
         val size = adapter.collection.size
 
-        items.groupBy { it.updatedAt }.forEach {
+        items.groupBy { it.event.updatedAt }.forEach {
             adapter.add("Updated " + SimpleDateFormat("MMMM dd h:mm aa").format(it.key))
             adapter.addAll(it.value)
         }

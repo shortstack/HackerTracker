@@ -19,6 +19,7 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.events.BusProvider
 import com.shortstack.hackertracker.events.RefreshTimerEvent
+import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.EventViewModel
 import com.squareup.otto.Subscribe
@@ -73,7 +74,7 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
         addView(view)
     }
 
-    fun setEvent(event: Event) {
+    fun setEvent(event: DatabaseEvent) {
         content = EventViewModel(event)
         renderItem()
     }
@@ -91,12 +92,11 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
             BusProvider.bus.unregister(this)
 
         finishAnimation()
-        setProgressBar()
     }
 
     private fun finishAnimation() {
         if (mAnimation != null) {
-            mAnimation!!.cancel()
+            mAnimation?.cancel()
             mAnimation = null
         }
     }
@@ -168,23 +168,14 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
     }
 
     private fun renderCategoryColour() {
-        val event = content?.type ?: return
+        val type = content?.event?.type?.firstOrNull() ?: return
 
-//        val value = database.typesLiveData.value
-//
-//        val type = value?.first { it.type == event } ?: return
-        database.getTypeForEvent(event)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    category_text.text = it.type
-                    val color = Color.parseColor(it.colour)
 
-                    category.setBackgroundColor(color)
-                    progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-                }, {
-                    
-                })
+        category_text.text = type.type
+        val color = Color.parseColor(type.colour)
+
+        category.setBackgroundColor(color)
+        progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
 
     }
@@ -212,7 +203,7 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
     }
 
     fun onBookmarkClick() {
-        val event = content?.event ?: return
+        val event = content?.event?.event ?: return
 
         event.isBookmarked = !event.isBookmarked
 

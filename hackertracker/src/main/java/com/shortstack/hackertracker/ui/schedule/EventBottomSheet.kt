@@ -37,23 +37,23 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
         val view = View.inflate(context, R.layout.bottom_sheet_schedule_event, null)
         dialog.setContentView(view)
 
-        val obj = EventViewModel(content)
-
-        analytics.onEventAction(AnalyticsController.EVENT_VIEW, content)
-
-        view.event.setEvent(obj.event)
-
-        displaySpeakers(obj, view.speakers)
-
-        displayDescription(obj, view.description, view.empty, view.link, view.star)
-
-        view.star.setOnClickListener { onStarClick(view.event, view.star) }
-        view.share.setOnClickListener { onShareClick(view.event) }
-        view.link.setOnClickListener { onLinkClick() }
-
-        view.tool.visibility = obj.toolsVisibility
-        view.exploit.visibility = obj.exploitVisibility
-        view.demo.visibility = obj.demoVisibility
+//        val obj = EventViewModel(content)
+//
+//        analytics.onEventAction(AnalyticsController.EVENT_VIEW, content)
+//
+//        view.event.setEvent(obj.event)
+//
+//        displaySpeakers(obj, view.speakers)
+//
+//        displayDescription(obj, view.description, view.empty, view.link, view.star)
+//
+//        view.star.setOnClickListener { onStarClick(view.event, view.star) }
+//        view.share.setOnClickListener { onShareClick(view.event) }
+//        view.link.setOnClickListener { onLinkClick() }
+//
+//        view.tool.visibility = obj.toolsVisibility
+//        view.exploit.visibility = obj.exploitVisibility
+//        view.demo.visibility = obj.demoVisibility
 
     }
 

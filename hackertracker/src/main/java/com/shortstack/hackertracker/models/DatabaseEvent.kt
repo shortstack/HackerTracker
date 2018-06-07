@@ -9,8 +9,8 @@ import android.arch.persistence.room.Relation
 data class DatabaseEvent(
         @Embedded
         val event: Event
-//        ,
-//        @Relation(parentColumn = "type", entityColumn = "type", entity = Type::class)
-//        var type: List<Type>
-)
+) {
+    @Relation(parentColumn = "type", entityColumn = "type")
+    var type: List<Type> = emptyList()
+}
 

@@ -61,12 +61,12 @@ class DatabaseManager(context: Context) {
         return db.conferenceDao().get()
     }
 
-    fun getRecent(conference: Conference): LiveData<List<Event>> {
+    fun getRecent(conference: Conference): LiveData<List<DatabaseEvent>> {
         return db.eventDao().getRecentlyUpdated(conference.directory)
     }
 
     // TODO: Implement paging.
-    fun getSchedule(conference: Conference, page: Int = 0): LiveData<List<Event>> {
+    fun getSchedule(conference: Conference, page: Int = 0): LiveData<List<DatabaseEvent>> {
         return db.eventDao().getSchedule(conference.directory)
     }
 

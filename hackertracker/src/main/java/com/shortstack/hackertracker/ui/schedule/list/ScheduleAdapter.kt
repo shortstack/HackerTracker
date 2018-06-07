@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.Time
@@ -28,7 +29,7 @@ class ScheduleAdapter(val list: RecyclerView) : RendererAdapter<Any>(ScheduleBui
         App.application.component.inject(this)
     }
 
-    fun addAllAndNotify(elements: List<Event>) {
+    fun addAllAndNotify(elements: List<DatabaseEvent>) {
         if (elements.isEmpty())
             return
 
@@ -38,12 +39,12 @@ class ScheduleAdapter(val list: RecyclerView) : RendererAdapter<Any>(ScheduleBui
         val prevDay = previous?.date
         val prevTime = previous?.begin
 
-        elements.groupBy { it.date }.forEach {
+        elements.groupBy { it.event.date }.forEach {
             if (prevDay != it.key) {
                 addDay(it.key)
             }
 
-            it.value.groupBy { it.begin }.forEach {
+            it.value.groupBy { it.event.begin }.forEach {
                 if (prevTime != it.key) {
                     addTime(it.key)
                 }
