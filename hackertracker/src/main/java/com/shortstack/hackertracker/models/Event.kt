@@ -2,14 +2,16 @@ package com.shortstack.hackertracker.models
 
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.shortstack.hackertracker.now
-import java.io.Serializable
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 /**
  * Created by Chris on 3/31/2018.
  */
+@Parcelize
 @Entity
 data class Event(
         @PrimaryKey(autoGenerate = false)
@@ -31,7 +33,7 @@ data class Event(
 
         var isBookmarked: Boolean,
         var con: String
-) : Serializable {
+) : Parcelable {
 
     val date: Date
         get() {

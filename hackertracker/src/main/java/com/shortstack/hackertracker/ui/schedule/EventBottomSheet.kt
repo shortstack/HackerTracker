@@ -67,7 +67,7 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
     }
 
     private val content: Event
-        get() = arguments!!.getSerializable(ARG_EVENT) as Event
+        get() = arguments!!.getParcelable(ARG_EVENT)
 
     private fun displayDescription(obj: EventViewModel, description: TextView, empty: View, link: View, star: ImageView) {
         val hasDescription = obj.hasDescription()
@@ -123,7 +123,7 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
             val fragment = EventBottomSheet()
 
             val bundle = Bundle()
-            bundle.putSerializable(ARG_EVENT, obj)
+            bundle.putParcelable(ARG_EVENT, obj)
             fragment.arguments = bundle
 
             return fragment

@@ -45,6 +45,10 @@ android {
     }
 }
 
+androidExtensions {
+    experimental = true
+}
+
 configurations {
    // compile.exclude group: "org.apache.httpcomponents", module: "httpclient"
 }
