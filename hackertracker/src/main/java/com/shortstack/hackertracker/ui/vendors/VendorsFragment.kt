@@ -36,8 +36,9 @@ class VendorsFragment : Fragment() {
 
             if (it != null) {
                 showVendors(it)
+                empty_view.visibility = View.GONE
             } else {
-                showLoadingVendorsError()
+                empty_view.visibility = View.VISIBLE
             }
         })
     }
@@ -55,10 +56,6 @@ class VendorsFragment : Fragment() {
     private fun showVendors(vendors: List<Vendor>) {
         adapter?.clearAndNotify()
         adapter?.addAllAndNotify(vendors)
-    }
-
-    private fun showLoadingVendorsError() {
-        Toast.makeText(context, "Could not load vendors.", Toast.LENGTH_SHORT).show()
     }
 
     companion object {
