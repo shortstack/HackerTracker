@@ -1,8 +1,9 @@
 package com.shortstack.hackertracker.ui
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.LayoutInflater
 import android.view.View
@@ -15,6 +16,7 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
+import com.shortstack.hackertracker.ui.search.SearchViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
@@ -24,8 +26,6 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
     private var adapter: RendererAdapter<Event>? = null
 
-    @Inject
-    lateinit var database: DatabaseManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_recyclerview, container, false)
@@ -33,9 +33,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        App.application.myComponent.inject(this)
 
-        list.layoutManager = LinearLayoutManager(context)
         loading_progress.visibility = View.GONE
 
         adapter = RendererAdapter(RendererBuilder<Any>()
@@ -63,25 +61,27 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
             return
         }
 
-        database.findItem("%$text%")
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-//                .debounce(300, TimeUnit.MILLISECONDS)
-                .subscribe({
+        val searchViewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
+        searchViewModel.getResult(text).observe(this, Observer {
+            adapter.clearAndNotify()
+            adapter.addAllAndNotify(it)
+
+            when {
+                it?.isNotEmpty() == true -> {
                     adapter.clearAndNotify()
                     adapter.addAllAndNotify(it)
-
-
-                    if (it.isEmpty()) {
-//                        empty_view.visibility = View.VISIBLE
-//                        empty_view.showNoResults(text)
-                    } else {
-//                        empty_view.visibility = View.GONE
-                    }
-
-                    val timeMillis = System.currentTimeMillis()
-                    Logger.d("Time to search: ${System.currentTimeMillis() - timeMillis}ms")
-                }, {})
+                }
+                it?.isEmpty() == true -> {
+                    //                        empty_view.visibility = View.VISIBLE
+                    //                        empty_view.showNoResults(text)
+                    adapter.clearAndNotify()
+                }
+                else -> {
+                    //                        empty_view.visibility = View.GONE
+                    adapter.clearAndNotify()
+                }
+            }
+        })
     }
 
     companion object {

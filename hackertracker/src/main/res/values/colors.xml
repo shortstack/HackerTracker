@@ -30,6 +30,8 @@
     <color name="category_party">#0277BD</color>
     <color name="category_demo">#00838F</color>
     <color name="category_workshop">#00695C</color>
+
+
     <color name="dark_background">#161616</color>
     <color name="text_primary_dark">#282727</color>
     <color name="colorPrimary_goon">#f44336</color>

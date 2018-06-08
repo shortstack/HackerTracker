@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.database
 
+import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Event
@@ -21,19 +22,14 @@ interface EventDao {
         private const val LIMIT = 20
     }
 
-    @Query("SELECT * FROM event ORDER BY `begin` ASC")
-    fun getFullSchedule(): Flowable<List<Event>>
+    @Query("SELECT * FROM event where con = :con AND type IN (:types) ORDER BY `begin` ASC")
+    fun getSchedule(con: String, types: List<String>): LiveData<List<DatabaseEvent>>
+
+    @Query("SELECT * FROM event where con = :con ORDER BY `begin` ASC")
+    fun getSchedule(con: String): LiveData<List<DatabaseEvent>>
 
     @Query("SELECT * FROM event WHERE con = :con ORDER BY `begin` ASC LIMIT $LIMIT OFFSET :page")
-    fun getFullSchedule(con: String, page: Int): Flowable<List<Event>>
-
-    @Query("SELECT * FROM event ORDER BY `begin` ASC LIMIT $LIMIT")
-    fun getUIThreadSchedule(): List<Event>
-
-
-    @Query("SELECT * FROM event WHERE type LIKE :type ")
-    fun getFilteredSchedule(type: String): Flowable<List<Event>>
-
+    fun getSchedule(con: String, page: Int): LiveData<List<Event>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item: Event)
@@ -44,24 +40,15 @@ interface EventDao {
     @Update
     fun update(event: Event)
 
-    @Update
-    fun update(events: List<Event>)
+    @Update(onConflict = OnConflictStrategy.REPLACE)
+    fun update(events: List<Event>): Int
 
     @Query("SELECT * FROM event WHERE `index` = :id")
-    fun getEventById(id: Int): Flowable<Event>
+    fun getEventById(id: Int): Event?
 
     @Query("SELECT * FROM event WHERE title LIKE :text")
-    fun findByText(text: String): Flowable<List<Event>>
-
-    @Query("SELECT * FROM event ORDER BY updatedAt DESC LIMIT $LIMIT")
-    fun getRecentlyUpdated(): Single<List<Event>>
-
-    @Query("SELECT * FROM event ORDER BY updatedAt DESC LIMIT $LIMIT")
-    fun getUIThreadRecentlyUpdated(): List<Event>
+    fun findByText(text: String): LiveData<List<Event>>
 
     @Query("SELECT * FROM event WHERE con = :con ORDER BY updatedAt DESC LIMIT $LIMIT")
-    fun getRecentlyUpdated(con: String): Flowable<List<Event>>
-
-    @Query("SELECT * FROM event WHERE con = :con AND `end` > :end  ORDER BY `begin` ASC")
-    fun getEventTypes(con: String, end: Date): Flowable<List<DatabaseEvent>>
+    fun getRecentlyUpdated(con: String): LiveData<List<DatabaseEvent>>
 }

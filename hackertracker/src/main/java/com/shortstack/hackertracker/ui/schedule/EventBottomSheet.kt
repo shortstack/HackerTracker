@@ -1,65 +1,76 @@
 package com.shortstack.hackertracker.ui.schedule
 
 import android.app.Dialog
+import android.content.DialogInterface
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.app.FragmentManager
-import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v7.widget.LinearLayoutCompat
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.analytics.AnalyticsController
+import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Event
-import com.shortstack.hackertracker.models.ItemViewModel
-import com.shortstack.hackertracker.ui.information.InformationFragment
-import com.shortstack.hackertracker.view.ItemView
-import kotlinx.android.synthetic.main.bottom_sheet_schedule_item.view.*
+import com.shortstack.hackertracker.models.EventViewModel
+import com.shortstack.hackertracker.utils.MaterialAlert
+import com.shortstack.hackertracker.views.EventView
+import kotlinx.android.synthetic.main.bottom_sheet_schedule_event.view.*
 import kotlinx.android.synthetic.main.empty_text.view.*
+import javax.inject.Inject
 
 class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment() {
 
-    override fun setupDialog(dialog : Dialog, style : Int) {
+    @Inject
+    lateinit var analytics: AnalyticsController
+
+    @Inject
+    lateinit var database: DatabaseManager
+
+    override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)
-        val view = View.inflate(context, R.layout.bottom_sheet_schedule_item, null)
+
+        App.application.component.inject(this)
+
+        val view = View.inflate(context, R.layout.bottom_sheet_schedule_event, null)
         dialog.setContentView(view)
 
-        val obj = ItemViewModel(content)
+        val obj = EventViewModel(content)
 
-//        App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_VIEW, content)
+        analytics.onEventAction(AnalyticsController.EVENT_VIEW, content.event)
 
-        view.item!!.setItem(obj.item)
-//
-//        displaySpeakers(obj, view.speakers)
+        view.event.setEvent(obj.event)
+
+        displaySpeakers(obj, view.speakers)
 
         displayDescription(obj, view.description, view.empty, view.link, view.star)
-//
-        view.star.setOnClickListener { onStarClick(view.item, view.star) }
-//        view.share.setOnClickListener { onShareClick(view.item) }
-//        view.link.setOnClickListener { onLinkClick() }
-//
-//        view.tool.visibility = obj.toolsVisibility
-//        view.exploit.visibility = obj.exploitVisibility
-//        view.demo.visibility = obj.demoVisibility
 
+        view.star.setOnClickListener { onStarClick(view.event, view.star) }
+        view.share.setOnClickListener { onShareClick(view.event) }
+        view.link.setOnClickListener { onLinkClick() }
 
-//        initViewPager(obj, view)
+        view.tool.visibility = obj.toolsVisibility
+        view.exploit.visibility = obj.exploitVisibility
+        view.demo.visibility = obj.demoVisibility
 
     }
 
 
-    private fun displaySpeakers(obj : ItemViewModel, speakers : LinearLayoutCompat) {
-        val context = context ?: return
-
-//        obj.speakers.iterator().forEach {
-//            speakers.addView(SpeakerView(context, App.application.databaseController.getSpeaker(it)))
+    private fun displaySpeakers(obj: EventViewModel, speakers: LinearLayoutCompat) {
+//        val context = context ?: return
+//
+//        obj.speakers?.iterator()?.forEach {
+//            speakers.addView(SpeakerView(context, database.getSpeaker(it)))
 //        }
     }
 
-    private val content : Event
-        get() = arguments?.getSerializable(ARG_OBJ) as Event
+    private val content: DatabaseEvent
+        get() = arguments!!.getParcelable(ARG_EVENT)
 
-    private fun displayDescription(obj : ItemViewModel, description : TextView, empty : View, link : View, star : ImageView) {
+    private fun displayDescription(obj: EventViewModel, description: TextView, empty: View, link: View, star: ImageView) {
         val hasDescription = obj.hasDescription()
 
         if (hasDescription)
@@ -71,67 +82,52 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
         updateStarIcon(star)
     }
 
-    private fun updateStarIcon(star : ImageView) {
-//        star.setImageDrawable(resources.getDrawable(if (content.isBookmarked()) R.drawable.ic_star_white_24dp else R.drawable.ic_star_border_white_24dp))
+    private fun updateStarIcon(star: ImageView) {
+        star.setImageDrawable(resources.getDrawable(if (content.event.isBookmarked) R.drawable.ic_star_white_24dp else R.drawable.ic_star_border_white_24dp))
     }
 
-    fun onStarClick(item : ItemView, star : ImageView) {
-        val isBookmarking = !content.isBookmarked
-
-        if (isBookmarking) {
-            //            App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_BOOKMARK, content)
+    fun onStarClick(item: EventView, star: ImageView) {
+        if (content.event.isBookmarked) {
+            analytics.onEventAction(AnalyticsController.EVENT_UNBOOKMARK, content.event)
         } else {
-            //            App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_UNBOOKMARK, content)
+            analytics.onEventAction(AnalyticsController.EVENT_BOOKMARK, content.event)
         }
         item.onBookmarkClick()
         updateStarIcon(star)
     }
 
-    fun onShareClick(item : ItemView) {
-//        App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_SHARE, content)
+    private fun onShareClick(item: EventView) {
+        analytics.onEventAction(AnalyticsController.EVENT_SHARE, content.event)
         item.onShareClick()
     }
 
-    fun onLinkClick() {
+    private fun onLinkClick() {
         val context = context ?: return
 
-//        App.application.analyticsController.tagItemEvent(AnalyticsController.Analytics.EVENT_LINK, content)
+        analytics.onEventAction(AnalyticsController.EVENT_OPEN_URL, content.event)
 
-//        MaterialAlert.create(context)
-//                .setTitle(R.string.link_warning)
-//                .setMessage(String.format(context.getString(R.string.link_message), content.link?.toLowerCase()))
-//                .setPositiveButton(R.string.open_link, DialogInterface.OnClickListener { dialogInterface, i ->
-//                    val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(content.link))
-//                    context.startActivity(intent)
-//                }).setBasicNegativeButton()
-//                .show()
+        MaterialAlert.create(context)
+                .setTitle(R.string.link_warning)
+                .setMessage(String.format(context.getString(R.string.link_message), content.event.url?.toLowerCase()))
+                .setPositiveButton(R.string.open_link, DialogInterface.OnClickListener { _, _ ->
+                    val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(content.event.url))
+                    context.startActivity(intent)
+                }).setBasicNegativeButton()
+                .show()
     }
 
     companion object {
 
+        private const val ARG_EVENT = "ARG_EVENT"
 
-        val ARG_OBJ = "ARG_EVENT"
-
-
-        fun newInstance(obj : Event) : EventBottomSheet {
+        fun newInstance(obj: DatabaseEvent): EventBottomSheet {
             val fragment = EventBottomSheet()
 
             val bundle = Bundle()
-            bundle.putSerializable(ARG_OBJ, obj)
+            bundle.putParcelable(ARG_EVENT, obj)
             fragment.arguments = bundle
 
             return fragment
         }
-    }
-
-    class PagerAdapter(fm : FragmentManager) : FragmentStatePagerAdapter(fm) {
-        override fun getItem(position : Int) : Fragment {
-            return InformationFragment.newInstance()
-        }
-
-        override fun getCount() : Int {
-            return 2
-        }
-
     }
 }

@@ -1,6 +1,8 @@
 package com.shortstack.hackertracker.models
 
+import android.arch.persistence.room.Embedded
 import android.arch.persistence.room.Entity
+import android.arch.persistence.room.Ignore
 import android.arch.persistence.room.PrimaryKey
 import java.util.Date
 
@@ -9,15 +11,19 @@ import java.util.Date
  */
 @Entity
 data class Conference(
-        @PrimaryKey(autoGenerate = true)
-        val index: Int,
         val title: String,
+        @PrimaryKey(autoGenerate = false)
         val directory: String,
         val start: Date,
         val end: Date,
         val updated: Date,
         val synced: Date?,
+        @Embedded
+        val maps: ConferenceMap,
         var isSelected: Boolean
 ) {
     override fun toString() = title
+
+    val index
+        get() = directory.hashCode()
 }

@@ -18,40 +18,16 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
 
-
-        <service
-            android:name="com.shortstack.hackertracker.network.task.SyncJob"
-            android:exported="false"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
-            </intent-filter>
-        </service>
-
-        <service
-            android:name="com.shortstack.hackertracker.network.task.ReminderJob"
-            android:exported="false"
-            android:permission="android.permission.RECEIVE_BOOT_COMPLETED">
-            <intent-filter>
-                <action android:name="com.firebase.jobdispatcher.ACTION_EXECUTE" />
-            </intent-filter>
-
-        </service>
-
-
-        <service android:name="com.shortstack.hackertracker.network.service.SyncService" />
-
-        <service android:name="com.shortstack.hackertracker.network.service.UpdateDatabaseService" />
-
-        <activity android:name=".ui.activities.SplashActivity" />
-
         <activity
             android:name="com.shortstack.hackertracker.ui.activities.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop">
+            android:launchMode="singleTop"
+            android:theme="@style/AppTheme.Splash">
 
             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
@@ -60,7 +36,7 @@
                 android:resource="@xml/searchable" />
 
         </activity>
-        
+
         <meta-data
             android:name="io.fabric.ApiKey"
             android:value="3439e34f4fcc9d7eabf24f7ce529cd7415acc49d" />

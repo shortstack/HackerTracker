@@ -1,114 +1,94 @@
 package com.shortstack.hackertracker.database
 
+import android.arch.lifecycle.LiveData
+import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.Transformations
 import android.content.Context
-import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.Constants
-import com.shortstack.hackertracker.events.ChangeConEvent
-import com.shortstack.hackertracker.events.BusProvider
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.network.SyncResponse
 import io.reactivex.Flowable
 import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 
 /**
  * Created by Chris on 3/31/2018.
  */
 class DatabaseManager(context: Context) {
 
-    private val db: MyRoomDatabase = MyRoomDatabase.buildDatabase(context)
+    private val db: MyRoomDatabase
 
-    var con: Conference? = null
-        private set
+    val conferenceLiveData = MutableLiveData<DatabaseConference>()
 
-    @Deprecated("Do not use, use the conferences actual title.")
-    val databaseName: String = Constants.DEFCON_DATABASE_NAME
+    val typesLiveData: LiveData<List<Type>>
+        get() {
+            return Transformations.switchMap(conferenceLiveData) { id ->
+                if (id == null) {
+                    return@switchMap MutableLiveData<List<Type>>()
+                }
+                return@switchMap getTypes(id.conference)
+            }
+        }
 
     init {
-
+        db = MyRoomDatabase.buildDatabase(context, conferenceLiveData)
+        val currentCon = getCurrentCon()
+        conferenceLiveData.postValue(currentCon)
     }
 
-    private fun changeConference(con: Conference) {
-        val current = db.conferenceDao().getCurrentCon()
-
-        current.isSelected = false
-        con.isSelected = true
-
-        db.conferenceDao().update(listOf(current, con))
-    }
-
-    fun getCons(): Single<List<Conference>> {
-        return db.conferenceDao().getAll()
-    }
-
-//    fun getRecentUpdates(): Flowable<List<Event>> {
-//        return db.eventDao().getRecentlyUpdated(db.currentConference?.directory
-//                ?: return db.eventDao().getRecentlyUpdated())
-//    }
-
-    fun getSchedule(page: Int = 0): Flowable<List<Event>> {
-//        return db.eventDao().getFullSchedule(db.currentConference?.directory
-
-//        ?:
-        return db.eventDao().getFullSchedule()
-//        )
-
-    }
-
-    fun getTypes(): Single<List<Type>> {
-        return db.typeDao().getTypes(getCurrentCon().directory
-                ?: return db.typeDao().getTypes())
-    }
-
-    fun changeConference(con: Int) {
-        db.conferenceDao().getCon(con).subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    changeConference(it)
-                    BusProvider.bus.post(ChangeConEvent(getCurrentCon()))
-                }, {
-
-                })
-    }
-
-    fun getFAQ(): Flowable<List<FAQ>> {
-        return db.faqDao().getAll()
-    }
-
-    fun getVendors(): Flowable<List<Vendor>> {
-        return db.vendorDao().getAll(getCurrentCon().directory
-                ?: return db.vendorDao().getAll())
-    }
-
-    fun getCurrentCon(): Conference {
+    private fun getCurrentCon(): DatabaseConference? {
         return db.conferenceDao().getCurrentCon()
     }
 
-    fun getEventTypes(): Flowable<List<DatabaseEvent>> {
-        return db.eventDao().getEventTypes(getCurrentCon().directory, App.getCurrentDate())
+    fun changeConference(con: DatabaseConference) {
+        con.conference.isSelected = true
+
+        conferenceLiveData.postValue(con)
+
+        val current = db.conferenceDao().getCurrentCon()
+        if (current != null) {
+            current.conference.isSelected = false
+            db.conferenceDao().update(listOf(current.conference, con.conference))
+        } else {
+            db.conferenceDao().update(con.conference)
+        }
     }
 
-    fun getRecent(): Flowable<List<Event>> {
-        return db.eventDao().getRecentlyUpdated(getCurrentCon().directory)
+    fun getCons(): LiveData<List<Conference>> {
+        return db.conferenceDao().getAll()
     }
 
-    fun updateConference(body: SyncResponse): Single<Int> {
-        db.eventDao().update(body.events)
-        return Single.fromCallable { 0 }
+    fun getConferences(): List<DatabaseConference> {
+        return db.conferenceDao().get()
     }
 
-    fun updateConference(response: FullResponse): Single<Int> {
-        return updateConference(response.syncResponse)
+    fun getRecent(conference: Conference): LiveData<List<DatabaseEvent>> {
+        return db.eventDao().getRecentlyUpdated(conference.directory)
     }
 
-    fun findItem(id: Int): Flowable<Event> {
+    // TODO: Implement paging.
+    fun getSchedule(conference: DatabaseConference, page: Int = 0): LiveData<List<DatabaseEvent>> {
+        val selected = conference.types.filter { it.isSelected }.map { it.type }
+        if (selected.isEmpty()) return db.eventDao().getSchedule(conference.conference.directory)
+        return db.eventDao().getSchedule(conference.conference.directory, selected)
+    }
+
+    fun getFAQ(conference: Conference): LiveData<List<FAQ>> {
+        return db.faqDao().getAll(conference.directory)
+    }
+
+    fun getVendors(conference: Conference): LiveData<List<Vendor>> {
+        return db.vendorDao().getAll(conference.directory)
+    }
+
+    fun getTypes(conference: Conference): LiveData<List<Type>> {
+        return db.typeDao().getTypes(conference.directory)
+    }
+
+    fun findItem(id: Int): Event? {
         return db.eventDao().getEventById(id)
     }
 
-    fun findItem(id: String): Flowable<List<Event>> {
+    fun findItem(id: String): LiveData<List<Event>> {
         return db.eventDao().findByText(id)
     }
 
@@ -120,5 +100,48 @@ class DatabaseManager(context: Context) {
         return db.eventDao().update(event)
     }
 
+    fun updateConference(conference: Conference) {
+        db.conferenceDao().update(conference)
+    }
+
+
+    fun updateConference(conference: Conference, body: FullResponse): Int {
+        body.syncResponse.events.forEach {
+            it.con = conference.directory
+        }
+        body.types.types.forEach {
+            it.con = conference.directory
+        }
+        body.speakers.speakers.forEach {
+            it.con = conference.directory
+        }
+        body.vendors.vendors.forEach {
+            it.con = conference.directory
+        }
+        body.faqs.faqs.forEach {
+            it.con = conference.directory
+        }
+
+        db.conferenceDao().upsert(conference)
+        db.eventDao().insertAll(body.syncResponse.events)
+        db.typeDao().insertAll(body.types.types)
+        db.speakerDao().insertAll(body.speakers.speakers)
+        db.vendorDao().insertAll(body.vendors.vendors)
+        db.faqDao().insertAll(body.faqs.faqs)
+
+        return body.syncResponse.events.size
+    }
+
+//    fun updateConference(conference: Conference, response: FullResponse): Single<Int> {
+//        return updateConference(conference, response.syncResponse)
+//    }
+
+    fun updateType(type: Type): Int {
+        return db.typeDao().update(type)
+    }
+
+    fun clear() {
+        return db.conferenceDao().deleteAll()
+    }
 
 }

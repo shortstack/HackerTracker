@@ -1,9 +1,10 @@
 package com.shortstack.hackertracker.ui.home
 
 import android.annotation.SuppressLint
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v4.app.Fragment
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,9 +12,8 @@ import android.widget.Toast
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.pedrogomez.renderers.RendererContent
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.Navigation
 import com.shortstack.hackertracker.ui.home.renderers.ActivityNavRenderer
@@ -22,18 +22,12 @@ import com.shortstack.hackertracker.ui.home.renderers.HomeHeaderRenderer
 import com.shortstack.hackertracker.ui.home.renderers.SubHeaderRenderer
 import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import java.text.SimpleDateFormat
-import javax.inject.Inject
 
 class HomeFragment : Fragment() {
 
     private lateinit var adapter: RendererAdapter<Any>
-
-    @Inject
-    lateinit var dataabase: DatabaseManager
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_recyclerview, container, false)
@@ -41,48 +35,40 @@ class HomeFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        App.application.myComponent.inject(this)
+        setProgressIndicator(true)
 
-        val rendererBuilder = RendererBuilder<Any>()
+        adapter = RendererAdapter(RendererBuilder<Any>()
                 .bind(TYPE_HEADER, HomeHeaderRenderer())
                 .bind(String::class.java, SubHeaderRenderer())
-                .bind(Event::class.java, EventRenderer())
+                .bind(DatabaseEvent::class.java, EventRenderer())
                 .bind(Navigation::class.java, ActivityNavRenderer())
-                .bind(TYPE_CHANGE_CON, ChangeConRenderer())
+                .bind(TYPE_CHANGE_CON, ChangeConRenderer()))
 
-        val layout = LinearLayoutManager(context)
-        list.layoutManager = layout
-
-        adapter = RendererAdapter(rendererBuilder)
         list.adapter = adapter
 
 
-        fetchRecentUpdates()
+        val homeViewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
+        homeViewModel.recent.observe(this, Observer {
+            setProgressIndicator(false)
+            if (it != null) {
+                adapter.clearAndNotify()
+                adapter.addAndNotify(getHeader())
+                adapter.addAndNotify(getInformationNav())
+                adapter.addAndNotify(getChangeConCard())
+                showRecentUpdates(it)
+            }
+        })
     }
-
-    private fun fetchRecentUpdates() {
-        dataabase.getRecent()
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    setProgressIndicator(false)
-                    adapter.addAndNotify(getHeader())
-                    showRecentUpdates(it)
-                }, {
-
-                })
-    }
-
 
     private fun setProgressIndicator(active: Boolean) {
         loading_progress?.visibility = if (active) View.VISIBLE else View.GONE
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun showRecentUpdates(items: List<Event>) {
+    private fun showRecentUpdates(items: List<DatabaseEvent>) {
         val size = adapter.collection.size
 
-        items.groupBy { it.updatedAt }.forEach {
+        items.groupBy { it.event.updatedAt }.forEach {
             adapter.add("Updated " + SimpleDateFormat("MMMM dd h:mm aa").format(it.key))
             adapter.addAll(it.value)
         }
@@ -110,8 +96,7 @@ class HomeFragment : Fragment() {
         const val TYPE_HEADER = 0
         const val TYPE_CHANGE_CON = 1
 
-        fun newInstance(): HomeFragment {
-            return HomeFragment()
-        }
+        fun newInstance() = HomeFragment()
+
     }
 }

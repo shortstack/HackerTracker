@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.view
+package com.shortstack.hackertracker.views
 
 import android.content.Context
 import android.util.AttributeSet
@@ -8,7 +8,7 @@ import android.widget.LinearLayout
 import com.shortstack.hackertracker.*
 import com.shortstack.hackertracker.events.BusProvider
 import com.shortstack.hackertracker.events.RefreshTimerEvent
-import com.shortstack.hackertracker.models.ItemViewModel
+import com.shortstack.hackertracker.models.EventViewModel
 import com.squareup.otto.Subscribe
 import kotlinx.android.synthetic.main.row_header_time.view.*
 import java.util.*
@@ -58,7 +58,7 @@ class TimeView : LinearLayout {
     }
 
     fun render() {
-        header.text = ItemViewModel.getTimeStamp(context, date)
+        header.text = EventViewModel.getTimeStamp(context, date)
         updateSubheader()
     }
 

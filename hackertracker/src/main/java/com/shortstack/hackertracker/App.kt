@@ -1,31 +1,28 @@
 package com.shortstack.hackertracker
 
 import android.app.Application
+import androidx.work.*
 import com.crashlytics.android.Crashlytics
 import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.firebase.jobdispatcher.GooglePlayDriver
-import com.firebase.jobdispatcher.Lifetime
-import com.firebase.jobdispatcher.Trigger
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.di.DaggerMyComponent
-import com.shortstack.hackertracker.di.MyComponent
+import com.shortstack.hackertracker.di.AppComponent
+import com.shortstack.hackertracker.di.DaggerAppComponent
 import com.shortstack.hackertracker.di.modules.*
-import com.shortstack.hackertracker.models.Conference
-import com.shortstack.hackertracker.network.task.SyncJob
+import com.shortstack.hackertracker.network.task.SyncWorker
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import io.fabric.sdk.android.Fabric
-import java.util.*
+import java.util.concurrent.TimeUnit
 
 
 class App : Application() {
 
-    lateinit var myComponent: MyComponent
+    lateinit var component: AppComponent
 
     // Storage
-    @Deprecated(message = "Use DI")
-    val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil(applicationContext) }
-    @Deprecated("use DI")
+    private val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil(applicationContext) }
+
     private val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(applicationContext)) }
 
 
@@ -41,7 +38,7 @@ class App : Application() {
         initLogger()
         initFeedback()
 
-        myComponent = DaggerMyComponent.builder()
+        component = DaggerAppComponent.builder()
                 .sharedPreferencesModule(SharedPreferencesModule())
                 .databaseModule(DatabaseModule())
                 .gsonModule(GsonModule())
@@ -55,42 +52,23 @@ class App : Application() {
         Logger.d("Time to complete onCreate " + (System.currentTimeMillis() - timeToLaunch))
     }
 
-    fun updateTheme(con: Conference?) {
-        val theme = when (con?.index) {
-            1 -> R.style.AppTheme_Hackwest
-            2 -> R.style.AppTheme_Toorcon
-            3 -> R.style.AppTheme_BsidesOrl
-            else -> R.style.AppTheme
-        }
-        setTheme(theme)
-    }
+    fun scheduleSyncTask() {
+        WorkManager.getInstance().cancelAllWorkByTag(SyncWorker.TAG_SYNC)
 
-    fun scheduleSync() {
-
-        cancelSync()
-
-        var value = storage.syncInterval
-
-        if (value == 0) {
-            cancelSync()
+        if (storage.syncingDisabled)
             return
-        }
 
-        value *= Constants.TIME_SECONDS_IN_HOUR
-
-        val job = dispatcher.newJobBuilder()
-                .setService(SyncJob::class.java)
-                .setTag(SyncJob.TAG)
-                .setRecurring(true)
-                .setLifetime(Lifetime.FOREVER)
-                .setTrigger(Trigger.executionWindow(value, value + Constants.TIME_SECONDS_IN_HOUR))
+        val constraints = Constraints.Builder()
+                .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()
 
-        dispatcher.mustSchedule(job)
-    }
+        val request =
+                PeriodicWorkRequestBuilder<SyncWorker>(7, TimeUnit.DAYS)
+                        .addTag(SyncWorker.TAG_SYNC)
+                        .setConstraints(constraints)
+                        .build()
 
-    private fun cancelSync() {
-        dispatcher.cancel(SyncJob.TAG)
+        WorkManager.getInstance().enqueue(request)
     }
 
     private fun initFeedback() {
@@ -109,28 +87,9 @@ class App : Application() {
             Fabric.with(this, Crashlytics())
     }
 
-    @Deprecated("", replaceWith = ReplaceWith("BusProvider.bus.register(any)"))
-    fun registerBusListener(any: Any) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-    @Deprecated("", replaceWith = ReplaceWith("BusProvider.bus.unregister(any)"))
-    fun unregisterBusListener(any: Any) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
-
-    @Deprecated("", replaceWith = ReplaceWith("BusProvider.bus.post(any)"))
-    fun postBusEvent(any: Any) {
-
-    }
-
     companion object {
-        @Deprecated("Do not use", replaceWith = ReplaceWith("Date().now()"))
-        fun getCurrentDate(): Date {
-            return Date().now()
-        }
 
         lateinit var application: App
+
     }
 }

@@ -1,16 +1,19 @@
 package com.shortstack.hackertracker.models
 
 import android.arch.persistence.room.Entity
+import android.arch.persistence.room.ForeignKey
 import android.arch.persistence.room.PrimaryKey
+import android.os.Parcelable
 import com.google.gson.annotations.SerializedName
 import com.shortstack.hackertracker.now
-import java.io.Serializable
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 
 /**
  * Created by Chris on 3/31/2018.
  */
-@Entity
+@Parcelize
+@Entity(foreignKeys = [(ForeignKey(entity = (Conference::class), parentColumns = [("directory")], childColumns = [("con")], onDelete = ForeignKey.CASCADE))])
 data class Event(
         @PrimaryKey(autoGenerate = false)
         val index: Int,
@@ -31,7 +34,7 @@ data class Event(
 
         var isBookmarked: Boolean,
         var con: String
-) : Serializable {
+) : Parcelable {
 
     val date: Date
         get() {
@@ -48,10 +51,10 @@ data class Event(
         }
 
     val hasStarted: Boolean
-        get() = begin.after(Date().now())
+        get() = Date().now().after(begin)
 
-    val hasFinished : Boolean
-        get() = end.after(Date().now())
+    val hasFinished: Boolean
+        get() = Date().now().after(end)
 
     val notificationTime: Int
         get() {

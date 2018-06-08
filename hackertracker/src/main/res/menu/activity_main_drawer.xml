@@ -4,38 +4,36 @@
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_white_24dp"
-            android:orderInCategory="0"
             android:title="@string/home" />
         <item
             android:id="@+id/nav_schedule"
             android:checked="true"
             android:icon="@drawable/ic_schedule_white_24dp"
-            android:orderInCategory="0"
             android:title="@string/schedule" />
 
         <item
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_map_white_24dp"
-            android:orderInCategory="9"
             android:title="@string/map" />
 
         <item
             android:id="@+id/nav_information"
             android:icon="@drawable/ic_info_outline_white_24dp"
-            android:orderInCategory="9"
             android:title="@string/information" />
 
         <item
             android:id="@+id/nav_companies"
             android:icon="@drawable/ic_people_white_24dp"
-            android:orderInCategory="9"
             android:title="@string/partners_vendors" />
 
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings_white_24dp"
-            android:orderInCategory="9"
             android:title="@string/settings" />
     </group>
+
+    <group
+        android:id="@+id/nav_cons"
+        android:checkableBehavior="single" />
 
 </menu>

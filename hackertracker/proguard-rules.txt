@@ -51,6 +51,20 @@
 -keep class com.shortstack.hackertracker.network.** { *; }
 -keep class com.shortstack.hackertracker.models.** { *; }
 
+-dontwarn com.shortstack.hackertracker.views.**
+
+-keep class com.shortstack.hackertracker.ui.home.HomeFragment { *; }
+-keep class com.shortstack.hackertracker.ui.schedule.ScheduleFragment { *; }
+-keep class com.shortstack.hackertracker.ui.maps.MapsFragment { *; }
+-keep class com.shortstack.hackertracker.ui.information.InformationFragment { *; }
+-keep class com.shortstack.hackertracker.ui.vendors.VendorsFragment { *; }
+-keep class com.shortstack.hackertracker.ui.SearchFragment { *; }
+-keep class com.shortstack.hackertracker.ui.SettingsFragment { *; }
+
+-keep class android.support.v7.widget.SearchView { *; }
+
+
+
 # Parceler configuration
 -keep interface org.parceler.Parcel
 -keep @org.parceler.Parcel class * { *; }

@@ -4,7 +4,7 @@
     <attr name="logo_main" format="reference" />
     <attr name="logo_secondary" format="reference" />
 
-    <declare-styleable name="ItemView">
+    <declare-styleable name="EventView">
         <attr name="displayMode" format="enum">
             <enum name="min" value="0" />
             <enum name="full" value="1" />

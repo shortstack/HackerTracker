@@ -11,14 +11,14 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.shortstack.hackertracker.view.ItemView
-            android:id="@+id/item"
+        <com.shortstack.hackertracker.views.EventView
+            android:id="@+id/event"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:cardElevation="0dp"
             app:roundCorners="false">
 
-        </com.shortstack.hackertracker.view.ItemView>
+        </com.shortstack.hackertracker.views.EventView>
 
         <android.support.design.widget.TabLayout
             android:id="@+id/tab_layout"

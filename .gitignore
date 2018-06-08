@@ -54,3 +54,4 @@ gradle.properties
 hackertracker/fabric.properties
 projectFilesBackup/.idea/workspace.xml
 .idea/dictionaries/Admin.xml
+*.db
