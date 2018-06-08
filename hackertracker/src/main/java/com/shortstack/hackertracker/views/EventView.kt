@@ -101,7 +101,8 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
         }
     }
 
-    fun onRefreshTimeEvent() {
+    @Subscribe
+    fun onRefreshTimeEvent(event: RefreshTimerEvent) {
         Logger.d("Updated ${content?.title}")
         updateProgressBar()
     }

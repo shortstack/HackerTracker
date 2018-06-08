@@ -92,7 +92,7 @@ class ScheduleAdapter(val list: RecyclerView) : RendererAdapter<Any>(ScheduleBui
         val collection = collection.toList()
 
         collection.forEach {
-            if (it is Event && it.hasFinished) {
+            if (it is DatabaseEvent && it.event.hasFinished) {
                 removeAndNotify(it)
             }
         }
