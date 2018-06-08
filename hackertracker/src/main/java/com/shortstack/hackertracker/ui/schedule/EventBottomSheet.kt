@@ -13,6 +13,7 @@ import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.EventViewModel
 import com.shortstack.hackertracker.utils.MaterialAlert
@@ -37,23 +38,23 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
         val view = View.inflate(context, R.layout.bottom_sheet_schedule_event, null)
         dialog.setContentView(view)
 
-//        val obj = EventViewModel(content)
-//
-//        analytics.onEventAction(AnalyticsController.EVENT_VIEW, content)
-//
-//        view.event.setEvent(obj.event)
-//
-//        displaySpeakers(obj, view.speakers)
-//
-//        displayDescription(obj, view.description, view.empty, view.link, view.star)
-//
-//        view.star.setOnClickListener { onStarClick(view.event, view.star) }
-//        view.share.setOnClickListener { onShareClick(view.event) }
-//        view.link.setOnClickListener { onLinkClick() }
-//
-//        view.tool.visibility = obj.toolsVisibility
-//        view.exploit.visibility = obj.exploitVisibility
-//        view.demo.visibility = obj.demoVisibility
+        val obj = EventViewModel(content)
+
+        analytics.onEventAction(AnalyticsController.EVENT_VIEW, content.event)
+
+        view.event.setEvent(obj.event)
+
+        displaySpeakers(obj, view.speakers)
+
+        displayDescription(obj, view.description, view.empty, view.link, view.star)
+
+        view.star.setOnClickListener { onStarClick(view.event, view.star) }
+        view.share.setOnClickListener { onShareClick(view.event) }
+        view.link.setOnClickListener { onLinkClick() }
+
+        view.tool.visibility = obj.toolsVisibility
+        view.exploit.visibility = obj.exploitVisibility
+        view.demo.visibility = obj.demoVisibility
 
     }
 
@@ -66,7 +67,7 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
 //        }
     }
 
-    private val content: Event
+    private val content: DatabaseEvent
         get() = arguments!!.getParcelable(ARG_EVENT)
 
     private fun displayDescription(obj: EventViewModel, description: TextView, empty: View, link: View, star: ImageView) {
@@ -82,34 +83,34 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
     }
 
     private fun updateStarIcon(star: ImageView) {
-        star.setImageDrawable(resources.getDrawable(if (content.isBookmarked) R.drawable.ic_star_white_24dp else R.drawable.ic_star_border_white_24dp))
+        star.setImageDrawable(resources.getDrawable(if (content.event.isBookmarked) R.drawable.ic_star_white_24dp else R.drawable.ic_star_border_white_24dp))
     }
 
     fun onStarClick(item: EventView, star: ImageView) {
-        if (content.isBookmarked) {
-            analytics.onEventAction(AnalyticsController.EVENT_UNBOOKMARK, content)
+        if (content.event.isBookmarked) {
+            analytics.onEventAction(AnalyticsController.EVENT_UNBOOKMARK, content.event)
         } else {
-            analytics.onEventAction(AnalyticsController.EVENT_BOOKMARK, content)
+            analytics.onEventAction(AnalyticsController.EVENT_BOOKMARK, content.event)
         }
         item.onBookmarkClick()
         updateStarIcon(star)
     }
 
     private fun onShareClick(item: EventView) {
-        analytics.onEventAction(AnalyticsController.EVENT_SHARE, content)
+        analytics.onEventAction(AnalyticsController.EVENT_SHARE, content.event)
         item.onShareClick()
     }
 
     private fun onLinkClick() {
         val context = context ?: return
 
-        analytics.onEventAction(AnalyticsController.EVENT_OPEN_URL, content)
+        analytics.onEventAction(AnalyticsController.EVENT_OPEN_URL, content.event)
 
         MaterialAlert.create(context)
                 .setTitle(R.string.link_warning)
-                .setMessage(String.format(context.getString(R.string.link_message), content.url?.toLowerCase()))
+                .setMessage(String.format(context.getString(R.string.link_message), content.event.url?.toLowerCase()))
                 .setPositiveButton(R.string.open_link, DialogInterface.OnClickListener { _, _ ->
-                    val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(content.url))
+                    val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(content.event.url))
                     context.startActivity(intent)
                 }).setBasicNegativeButton()
                 .show()
@@ -119,7 +120,7 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
 
         private const val ARG_EVENT = "ARG_EVENT"
 
-        fun newInstance(obj: Event): EventBottomSheet {
+        fun newInstance(obj: DatabaseEvent): EventBottomSheet {
             val fragment = EventBottomSheet()
 
             val bundle = Bundle()

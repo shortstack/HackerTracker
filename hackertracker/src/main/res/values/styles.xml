@@ -159,8 +159,8 @@
     </style>
 
     <style name="Paragraph" parent="TextAppearance.AppCompat.Body1">
-        <!--<item name="android:paddingLeft">12dp</item>-->
-        <!--<item name="android:paddingRight">12dp</item>-->
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
         <item name="android:lineSpacingExtra">8sp</item>
         <!-- TODO: This is a very expensive attribute, do we need it? -->
         <!--<item name="android:autoLink">all</item>-->

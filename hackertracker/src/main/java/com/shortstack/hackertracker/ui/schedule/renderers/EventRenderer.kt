@@ -33,7 +33,7 @@ class EventRenderer(private val displayMode: Int = EventView.DISPLAY_MODE_MIN) :
     }
 
     private fun showEventBottomSheet() {
-        val fragment = EventBottomSheet.newInstance(content.event)
+        val fragment = EventBottomSheet.newInstance(content)
         fragment.show((context as AppCompatActivity).supportFragmentManager, fragment.tag)
     }
 }
