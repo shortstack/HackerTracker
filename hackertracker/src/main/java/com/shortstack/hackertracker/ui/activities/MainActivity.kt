@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         val mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
         mainActivityViewModel.conference.observe(this, Observer {
             if (it != null) {
-                nav_view.getHeaderView(0).nav_title.text = it.title
+                nav_view.getHeaderView(0).nav_title.text = it.conference.title
             }
         })
         mainActivityViewModel.conferences.observe(this, Observer {
@@ -128,7 +128,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     }
 
     private fun onFilterClick() {
-        toggleFAB(onClick = true)
+//        toggleFAB(onClick = true)
+        toggleFilters()
     }
 
     private fun toggleFilters() {
@@ -167,7 +168,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 override fun onAnimationEnd(animation: Animator?) {
                     super.onAnimationEnd(animation)
                     filters.visibility = View.INVISIBLE
-                    toggleFAB(onClick = false)
+//                    toggleFAB(onClick = false)
                 }
             })
 
@@ -273,6 +274,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     override fun onBackPressed() {
         if (drawer_layout.isDrawerOpen(Gravity.START)) {
             drawer_layout.closeDrawers()
+        } else if (filters.visibility == View.VISIBLE) {
+            toggleFilters()
         } else {
             super.onBackPressed()
         }
@@ -289,7 +292,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.groupId == R.id.nav_cons) {
-            val con = database.getConferences().firstOrNull { it.index == item.itemId }
+            val con = database.getConferences().firstOrNull { it.conference.index == item.itemId }
             if (con != null) database.changeConference(con)
         } else {
             val current = navController.currentDestination.id

@@ -17,7 +17,7 @@ data class Speaker(
         val title: String?,
         @SerializedName("who")
         val name: String,
-        val lastUpdate: String,
+        val lastUpdate: String?,
         val media: String?,
         val bio: String?,
         var con: String

@@ -17,7 +17,7 @@ class DatabaseManager(context: Context) {
 
     private val db: MyRoomDatabase
 
-    val conferenceLiveData = MutableLiveData<Conference>()
+    val conferenceLiveData = MutableLiveData<DatabaseConference>()
 
     val typesLiveData: LiveData<List<Type>>
         get() {
@@ -25,7 +25,7 @@ class DatabaseManager(context: Context) {
                 if (id == null) {
                     return@switchMap MutableLiveData<List<Type>>()
                 }
-                return@switchMap getTypes(id)
+                return@switchMap getTypes(id.conference)
             }
         }
 
@@ -35,21 +35,21 @@ class DatabaseManager(context: Context) {
         conferenceLiveData.postValue(currentCon)
     }
 
-    private fun getCurrentCon(): Conference? {
+    private fun getCurrentCon(): DatabaseConference? {
         return db.conferenceDao().getCurrentCon()
     }
 
-    fun changeConference(con: Conference) {
-        con.isSelected = true
+    fun changeConference(con: DatabaseConference) {
+        con.conference.isSelected = true
 
         conferenceLiveData.postValue(con)
 
         val current = db.conferenceDao().getCurrentCon()
-        if( current != null ) {
-            current.isSelected = false
-            db.conferenceDao().update(listOf(current, con))
+        if (current != null) {
+            current.conference.isSelected = false
+            db.conferenceDao().update(listOf(current.conference, con.conference))
         } else {
-            db.conferenceDao().update(con)
+            db.conferenceDao().update(con.conference)
         }
     }
 
@@ -57,7 +57,7 @@ class DatabaseManager(context: Context) {
         return db.conferenceDao().getAll()
     }
 
-    fun getConferences(): List<Conference> {
+    fun getConferences(): List<DatabaseConference> {
         return db.conferenceDao().get()
     }
 
@@ -66,8 +66,10 @@ class DatabaseManager(context: Context) {
     }
 
     // TODO: Implement paging.
-    fun getSchedule(conference: Conference, page: Int = 0): LiveData<List<DatabaseEvent>> {
-        return db.eventDao().getSchedule(conference.directory)
+    fun getSchedule(conference: DatabaseConference, page: Int = 0): LiveData<List<DatabaseEvent>> {
+        val selected = conference.types.filter { it.isSelected }.map { it.type }
+        if (selected.isEmpty()) return db.eventDao().getSchedule(conference.conference.directory)
+        return db.eventDao().getSchedule(conference.conference.directory, selected)
     }
 
     fun getFAQ(conference: Conference): LiveData<List<FAQ>> {
@@ -103,13 +105,31 @@ class DatabaseManager(context: Context) {
     }
 
 
-    fun updateConference(conference: Conference, body: SyncResponse): Int {
-        body.events.forEach {
+    fun updateConference(conference: Conference, body: FullResponse): Int {
+        body.syncResponse.events.forEach {
             it.con = conference.directory
         }
+        body.types.types.forEach {
+            it.con = conference.directory
+        }
+        body.speakers.speakers.forEach {
+            it.con = conference.directory
+        }
+        body.vendors.vendors.forEach {
+            it.con = conference.directory
+        }
+        body.faqs.faqs.forEach {
+            it.con = conference.directory
+        }
+
         db.conferenceDao().upsert(conference)
-        db.eventDao().insertAll(body.events)
-        return body.events.size
+        db.eventDao().insertAll(body.syncResponse.events)
+        db.typeDao().insertAll(body.types.types)
+        db.speakerDao().insertAll(body.speakers.speakers)
+        db.vendorDao().insertAll(body.vendors.vendors)
+        db.faqDao().insertAll(body.faqs.faqs)
+
+        return body.syncResponse.events.size
     }
 
 //    fun updateConference(conference: Conference, response: FullResponse): Single<Int> {

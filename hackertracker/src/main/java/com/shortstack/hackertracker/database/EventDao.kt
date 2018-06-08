@@ -22,7 +22,9 @@ interface EventDao {
         private const val LIMIT = 20
     }
 
-    //    @Query("SELECT Event.*, Type.* FROM event INNER JOIN type ON Event.type = type.type  ORDER BY `begin` ASC")
+    @Query("SELECT * FROM event where con = :con AND type IN (:types) ORDER BY `begin` ASC")
+    fun getSchedule(con: String, types: List<String>): LiveData<List<DatabaseEvent>>
+
     @Query("SELECT * FROM event where con = :con ORDER BY `begin` ASC")
     fun getSchedule(con: String): LiveData<List<DatabaseEvent>>
 

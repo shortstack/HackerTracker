@@ -31,5 +31,7 @@ class ScheduleViewModel : ViewModel() {
                 }
                 return@switchMap database.getSchedule(id)
             }
+
+
         }
 }

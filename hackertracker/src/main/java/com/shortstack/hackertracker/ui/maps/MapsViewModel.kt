@@ -28,7 +28,7 @@ class MapsViewModel : ViewModel() {
                 val mutableLiveData = MutableLiveData<List<ConferenceMap>>()
 
                 if (id != null) {
-                    mutableLiveData.postValue(listOf(id.maps))
+                    mutableLiveData.postValue(listOf(id.conference.maps))
                 }
 
                 return@switchMap mutableLiveData

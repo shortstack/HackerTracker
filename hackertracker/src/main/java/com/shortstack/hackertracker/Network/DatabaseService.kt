@@ -2,7 +2,10 @@ package com.shortstack.hackertracker.network
 
 import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.models.Conferences
+import com.shortstack.hackertracker.models.FAQs
+import com.shortstack.hackertracker.models.response.Speakers
 import com.shortstack.hackertracker.models.response.Types
+import com.shortstack.hackertracker.models.response.Vendors
 import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.Retrofit
@@ -18,6 +21,21 @@ interface DatabaseService {
 
     @GET("schedule-full.json")
     fun getSchedule(): Call<SyncResponse>
+
+    @GET("event_type.json")
+    fun getTypes(): Call<Types>
+
+    @GET("vendors.json")
+    fun getVendors(): Call<Vendors>
+
+    @GET("speakers.json")
+    fun getSpeakers(): Call<Speakers>
+
+    @GET("faq.json")
+    fun getFAQs(): Call<FAQs>
+
+//    @GET("locations.json")
+//    fun getLocations(): Call<Locations>
 
     companion object Factory {
 

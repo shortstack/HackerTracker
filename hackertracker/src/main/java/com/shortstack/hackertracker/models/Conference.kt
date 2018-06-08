@@ -24,6 +24,6 @@ data class Conference(
 ) {
     override fun toString() = title
 
-    @Ignore
-    val index = directory.hashCode()
+    val index
+        get() = directory.hashCode()
 }

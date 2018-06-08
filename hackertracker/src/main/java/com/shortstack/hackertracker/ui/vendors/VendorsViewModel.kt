@@ -29,7 +29,7 @@ class VendorsViewModel : ViewModel() {
                 if (id == null) {
                     return@switchMap MutableLiveData<List<Vendor>>()
                 }
-                return@switchMap database.getVendors(id)
+                return@switchMap database.getVendors(id.conference)
             }
         }
 }

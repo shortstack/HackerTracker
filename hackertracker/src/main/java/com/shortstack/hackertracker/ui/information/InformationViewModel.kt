@@ -29,7 +29,7 @@ class InformationViewModel : ViewModel() {
                 if (id == null) {
                     return@switchMap MutableLiveData<List<FAQ>>()
                 }
-                return@switchMap database.getFAQ(id)
+                return@switchMap database.getFAQ(id.conference)
             }
         }
 }

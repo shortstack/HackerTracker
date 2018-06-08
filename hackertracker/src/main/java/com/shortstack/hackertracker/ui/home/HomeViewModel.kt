@@ -29,7 +29,7 @@ class HomeViewModel : ViewModel() {
                 if (id == null) {
                     return@switchMap MutableLiveData<List<DatabaseEvent>>()
                 }
-                return@switchMap database.getRecent(id)
+                return@switchMap database.getRecent(id.conference)
             }
         }
 }

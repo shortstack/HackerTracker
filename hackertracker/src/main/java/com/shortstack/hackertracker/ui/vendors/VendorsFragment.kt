@@ -34,7 +34,7 @@ class VendorsFragment : Fragment() {
         vendorsViewModel.vendors.observe(this, Observer {
             setProgressIndicator(false)
 
-            if (it != null) {
+            if (it?.isNotEmpty() == true) {
                 showVendors(it)
                 empty_view.visibility = View.GONE
             } else {

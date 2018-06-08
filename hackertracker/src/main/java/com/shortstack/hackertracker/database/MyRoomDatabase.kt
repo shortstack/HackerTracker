@@ -129,13 +129,13 @@ abstract class MyRoomDatabase : RoomDatabase() {
         @Volatile
         private var INSTANCE: MyRoomDatabase? = null
 
-        fun getInstance(context: Context, conferenceLiveData: MutableLiveData<Conference>): MyRoomDatabase =
+        fun getInstance(context: Context, conferenceLiveData: MutableLiveData<DatabaseConference>): MyRoomDatabase =
                 INSTANCE ?: synchronized(this) {
                     INSTANCE ?: buildDatabase(context, conferenceLiveData).also { INSTANCE = it }
                 }
 
 
-        fun buildDatabase(context: Context, conferenceLiveData: MutableLiveData<Conference>): MyRoomDatabase {
+        fun buildDatabase(context: Context, conferenceLiveData: MutableLiveData<DatabaseConference>): MyRoomDatabase {
             Logger.d("Creating database! " + (System.currentTimeMillis() - App.application.timeToLaunch))
             val database = Room.databaseBuilder(context, MyRoomDatabase::class.java, DATABASE_NAME)
                     .allowMainThreadQueries()
