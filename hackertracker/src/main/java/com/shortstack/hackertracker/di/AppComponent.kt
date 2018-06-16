@@ -28,7 +28,7 @@ import dagger.Component
  * Created by Chris on 5/21/2018.
  */
 @Component(modules = [(ContextModule::class), (DatabaseModule::class), (SharedPreferencesModule::class),
-    (GsonModule::class), (AnalyticsModule::class), (NotificationsModule::class), (DispatcherModule::class)])
+    (GsonModule::class), (AnalyticsModule::class), (NotificationsModule::class), (DispatcherModule::class), (TimerModule::class)])
 @MyApplicationScope
 interface AppComponent {
 

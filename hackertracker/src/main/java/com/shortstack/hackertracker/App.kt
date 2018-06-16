@@ -45,6 +45,7 @@ class App : Application() {
                 .analyticsModule(AnalyticsModule())
                 .notificationsModule(NotificationsModule())
                 .dispatcherModule(DispatcherModule())
+                .timerModule(TimerModule())
                 .contextModule(ContextModule(this))
                 .build()
 
