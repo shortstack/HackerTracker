@@ -1,7 +1,6 @@
 package com.shortstack.hackertracker.views
 
 import android.animation.ObjectAnimator
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
@@ -13,18 +12,15 @@ import android.util.DisplayMetrics
 import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.DecelerateInterpolator
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.events.BusProvider
-import com.shortstack.hackertracker.events.RefreshTimerEvent
 import com.shortstack.hackertracker.models.DatabaseEvent
-import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.EventViewModel
-import com.squareup.otto.Subscribe
+import com.shortstack.hackertracker.utils.TickTimer
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.row_event.view.*
 import javax.inject.Inject
@@ -34,12 +30,17 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
     @Inject
     lateinit var database: DatabaseManager
 
+    @Inject
+    lateinit var timer: TickTimer
+
+    private var disposable: Disposable? = null
+
     private var mDisplayMode = DISPLAY_MODE_FULL
     private var mRoundCorners = true
     var content: EventViewModel? = null
         private set
 
-    private var mAnimation: ObjectAnimator? = null
+    private var animation: ObjectAnimator? = null
 
     init {
         App.application.component.inject(this)
@@ -82,29 +83,20 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        if (!isInEditMode)
-            BusProvider.bus.register(this)
+        disposable = timer.observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribe { updateProgressBar() }
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        if (!isInEditMode)
-            BusProvider.bus.unregister(this)
-
+        disposable?.dispose()
+        disposable = null
         finishAnimation()
     }
 
     private fun finishAnimation() {
-        if (mAnimation != null) {
-            mAnimation?.cancel()
-            mAnimation = null
-        }
-    }
-
-    @Subscribe
-    fun onRefreshTimeEvent(event: RefreshTimerEvent) {
-        Logger.d("Updated ${content?.title}")
-        updateProgressBar()
+        animation?.cancel()
+        animation = null
     }
 
     private fun setDisplayMode() {
@@ -147,7 +139,7 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
 
         val duration = PROGRESS_UPDATE_DURATION_PER_PERCENT * (progress - this.progress.progress)
 
-        mAnimation = ObjectAnimator.ofInt(this.progress, "progress", progress)
+        animation = ObjectAnimator.ofInt(this.progress, "progress", progress)
                 .also {
                     it.duration = duration.toLong()
                     it.interpolator = DecelerateInterpolator()

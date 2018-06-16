@@ -13,26 +13,18 @@ import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.State
 import androidx.work.WorkManager
-import com.firebase.jobdispatcher.FirebaseJobDispatcher
-import com.firebase.jobdispatcher.GooglePlayDriver
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.events.BusProvider
-import com.shortstack.hackertracker.events.RefreshTimerEvent
 import com.shortstack.hackertracker.network.task.SyncWorker
-import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.ui.schedule.list.ListViewsInterface
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
-import io.reactivex.Observable
+import com.shortstack.hackertracker.utils.TickTimer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.fragment_schedule.view.*
-import java.util.*
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 
@@ -40,11 +32,14 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
     lateinit var adapter: ScheduleAdapter
 
-    private var subscription: Disposable? = null
-
     @Inject
     lateinit var database: DatabaseManager
-    
+
+    @Inject
+    lateinit var timer: TickTimer
+
+    private var disposable: Disposable? = null
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val rootView = inflater.inflate(R.layout.fragment_schedule, container, false) as ViewGroup
 
@@ -94,28 +89,21 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         Logger.d("Created ScheduleFragment " + (System.currentTimeMillis() - App.application.timeToLaunch))
     }
 
+
     override fun onResume() {
         super.onResume()
 
-        val currentDate = Date().now()
-        val time = currentDate.time
-
-        subscription = Observable.interval(time % Constants.TIMER_INTERVAL, Constants.TIMER_INTERVAL, TimeUnit.MILLISECONDS)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    onTimeEvent()
-                })
-    }
-
-    private fun onTimeEvent() {
-        BusProvider.bus.post(RefreshTimerEvent())
-        adapter.notifyTimeChanged()
+        disposable = timer.observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    Logger.d("Notifying time changed.")
+                    adapter.notifyTimeChanged()
+                }
     }
 
     override fun onPause() {
+        disposable?.dispose()
+        disposable = null
         super.onPause()
-        subscription?.dispose()
-        subscription = null
     }
 
     override fun hideViews() {

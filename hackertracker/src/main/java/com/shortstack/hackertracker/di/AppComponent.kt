@@ -22,6 +22,7 @@ import com.shortstack.hackertracker.ui.vendors.VendorsViewModel
 import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.views.FilterView
 import com.shortstack.hackertracker.views.EventView
+import com.shortstack.hackertracker.views.TimeView
 import dagger.Component
 
 /**
@@ -51,6 +52,7 @@ interface AppComponent {
     fun inject(scheduleItemBottomSheet: EventBottomSheet)
     fun inject(filterView: FilterView)
     fun inject(itemView: EventView)
+    fun inject(timeView: TimeView)
 
     // ViewModels
 
@@ -67,5 +69,6 @@ interface AppComponent {
 
     fun inject(syncWorker: SyncWorker)
     fun inject(reminderWorker: ReminderWorker)
+
 
 }

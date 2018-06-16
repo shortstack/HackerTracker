@@ -6,17 +6,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import com.shortstack.hackertracker.*
-import com.shortstack.hackertracker.events.BusProvider
-import com.shortstack.hackertracker.events.RefreshTimerEvent
 import com.shortstack.hackertracker.models.EventViewModel
-import com.squareup.otto.Subscribe
-import kotlinx.android.synthetic.main.row_header_time.view.*
+import com.shortstack.hackertracker.utils.TickTimer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import java.util.*
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 
 class TimeView : LinearLayout {
 
     private var date: Date? = null
+
+    @Inject
+    lateinit var timer: TickTimer
+
+    private var disposable: Disposable? = null
+
+
+    init {
+        App.application.component.inject(this)
+    }
+
 
     constructor(context: Context) : super(context) {
         init()
@@ -39,17 +50,16 @@ class TimeView : LinearLayout {
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        BusProvider.bus.register(this)
+        disposable = timer.observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    updateSubheader()
+                }
     }
 
     override fun onDetachedFromWindow() {
         super.onDetachedFromWindow()
-        BusProvider.bus.unregister(this)
-    }
-
-    @Subscribe
-    fun onRefreshTimeEvent(event: RefreshTimerEvent) {
-        updateSubheader()
+        disposable?.dispose()
+        disposable = null
     }
 
     fun setDate(date: Date) {
@@ -65,15 +75,15 @@ class TimeView : LinearLayout {
     private fun updateSubheader() {
         val currentDate = Date().now()
 
-        if (date!!.isToday() && date!!.after(currentDate) ) {
+        if (date!!.isToday() && date!!.after(currentDate)) {
             subheader.visibility = View.VISIBLE
 
             val hourDiff = currentDate.getDateDifference(date!!, TimeUnit.HOURS)
             if (hourDiff >= 1) {
-                subheader.text = String.format(context.getString(R.string.msg_in_hours), hourDiff )
+                subheader.text = String.format(context.getString(R.string.msg_in_hours), hourDiff)
             } else {
                 val dateDiff = currentDate.getDateDifference(date!!, TimeUnit.MINUTES)
-                subheader.text = String.format(context.getString(R.string.msg_in_mins), dateDiff )
+                subheader.text = String.format(context.getString(R.string.msg_in_mins), dateDiff)
             }
 
         } else {
