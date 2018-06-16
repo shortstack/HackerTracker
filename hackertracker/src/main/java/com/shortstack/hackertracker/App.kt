@@ -1,10 +1,11 @@
 package com.shortstack.hackertracker
 
 import android.app.Application
-import androidx.work.*
+import androidx.work.Constraints
+import androidx.work.NetworkType
+import androidx.work.PeriodicWorkRequestBuilder
+import androidx.work.WorkManager
 import com.crashlytics.android.Crashlytics
-import com.firebase.jobdispatcher.FirebaseJobDispatcher
-import com.firebase.jobdispatcher.GooglePlayDriver
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.di.AppComponent
@@ -22,8 +23,6 @@ class App : Application() {
 
     // Storage
     private val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil(applicationContext) }
-
-    private val dispatcher: FirebaseJobDispatcher by lazy { FirebaseJobDispatcher(GooglePlayDriver(applicationContext)) }
 
 
     // TODO: Remove, this is just for measuring launch time.
