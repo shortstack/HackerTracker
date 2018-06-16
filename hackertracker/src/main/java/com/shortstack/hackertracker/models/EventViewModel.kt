@@ -48,12 +48,13 @@ class EventViewModel(val event: DatabaseEvent) : ViewModel() {
 
 
     fun getFullTimeStamp(context: Context): String {
-        val begin = event.event.begin
-        val end = event.event.end
+        val begin = TimeUtil.getTimeStamp(context, event.event.begin)
+        val end = TimeUtil.getTimeStamp(context, event.event.end)
 
-        val timestamp = TimeUtil.getRelativeDateStamp(context, begin)
 
-        return String.format(context.getString(R.string.timestamp_full), timestamp, getTimeStamp(context, begin), getTimeStamp(context, end))
+        val timestamp = TimeUtil.getRelativeDateStamp(context, event.event.begin)
+
+        return String.format(context.getString(R.string.timestamp_full), timestamp, begin, end)
     }
 
     fun hasDescription() = !TextUtils.isEmpty(event.event.description)
@@ -95,24 +96,4 @@ class EventViewModel(val event: DatabaseEvent) : ViewModel() {
 
     val speakers: Array<Speaker>?
         get() = null
-
-    val type: String
-        get() = type
-
-
-    companion object {
-
-        fun getTimeStamp(context: Context, date: Date?): String {
-            // No start time, return TBA.
-            if (date == null)
-                return context.resources.getString(R.string.tba)
-
-            return if (android.text.format.DateFormat.is24HourFormat(context)) {
-                SimpleDateFormat("HH:mm").format(date)
-            } else {
-                SimpleDateFormat("h:mm aa").format(date)
-            }
-        }
-    }
-
 }

@@ -2,58 +2,39 @@ package com.shortstack.hackertracker.views
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.LayoutInflater
 import android.view.View
 import android.widget.LinearLayout
 import com.shortstack.hackertracker.*
-import com.shortstack.hackertracker.models.EventViewModel
 import com.shortstack.hackertracker.utils.TickTimer
+import com.shortstack.hackertracker.utils.TimeUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.row_header_time.view.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
-class TimeView : LinearLayout {
+class TimeView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
-    private var date: Date? = null
+    private lateinit var date: Date
 
     @Inject
     lateinit var timer: TickTimer
 
     private var disposable: Disposable? = null
 
-
     init {
+        inflate(context, R.layout.row_header_time, this)
         App.application.component.inject(this)
-    }
 
-
-    constructor(context: Context) : super(context) {
-        init()
-    }
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init()
-    }
-
-    private fun init() {
         orientation = LinearLayout.VERTICAL
-        inflate()
     }
 
-    private fun inflate() {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflater.inflate(R.layout.row_header_time, null)
-        addView(view)
-    }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
         disposable = timer.observable.observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    updateSubheader()
-                }
+                .subscribe { render() }
     }
 
     override fun onDetachedFromWindow() {
@@ -62,32 +43,33 @@ class TimeView : LinearLayout {
         disposable = null
     }
 
-    fun setDate(date: Date) {
-        this.date = date
+    fun setContent(content: Date) {
+        date = content
         render()
     }
 
     fun render() {
-        header.text = EventViewModel.getTimeStamp(context, date)
-        updateSubheader()
+        header.text = TimeUtil.getTimeStamp(context, date)
+        renderSubHeader()
     }
 
-    private fun updateSubheader() {
+    private fun renderSubHeader() {
         val currentDate = Date().now()
 
-        if (date!!.isToday() && date!!.after(currentDate)) {
-            subheader.visibility = View.VISIBLE
+        // Not today, or already started.
+        if (!date.isToday() || !date.after(currentDate)) {
+            subheader.visibility = View.GONE
+            return
+        }
 
-            val hourDiff = currentDate.getDateDifference(date!!, TimeUnit.HOURS)
-            if (hourDiff >= 1) {
-                subheader.text = String.format(context.getString(R.string.msg_in_hours), hourDiff)
-            } else {
-                val dateDiff = currentDate.getDateDifference(date!!, TimeUnit.MINUTES)
-                subheader.text = String.format(context.getString(R.string.msg_in_mins), dateDiff)
-            }
+        subheader.visibility = View.VISIBLE
 
+        val inHours = currentDate.getDateDifference(date, TimeUnit.HOURS)
+        if (inHours >= 1) {
+            subheader.text = context.getString(R.string.msg_in_hours, inHours)
         } else {
-            subheader!!.visibility = View.GONE
+            val inMinutes = currentDate.getDateDifference(date, TimeUnit.MINUTES)
+            subheader.text = context.getString(R.string.msg_in_mins, inMinutes)
         }
     }
 }

@@ -1,30 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <TextView
-        style="@style/TextAppearance.AppCompat.Title"
         android:id="@+id/header"
+        style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingBottom="10dp"
         android:paddingTop="30dp"
-        tools:text="10:00 AM"
-        tools:background="@color/background" />
+        tools:background="@color/background"
+        tools:text="10:00 AM" />
 
     <TextView
-        style="@style/TextAppearance.AppCompat.Caption"
         android:id="@+id/subheader"
+        style="@style/TextAppearance.AppCompat.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingBottom="10dp"
-        tools:text="in 15 min"
-        tools:background="@color/background" />
+        tools:background="@color/background"
+        tools:text="in 15 min" />
 
-</LinearLayout>
+</merge>

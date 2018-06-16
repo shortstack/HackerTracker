@@ -22,4 +22,18 @@ object TimeUtil {
 
         return format.format(date)
     }
+
+
+    @SuppressLint("SimpleDateFormat")
+    fun getTimeStamp(context: Context, date: Date?): String {
+        // No start time, return TBA.
+        if (date == null)
+            return context.resources.getString(R.string.tba)
+
+        return if (android.text.format.DateFormat.is24HourFormat(context)) {
+            SimpleDateFormat("HH:mm").format(date)
+        } else {
+            SimpleDateFormat("h:mm aa").format(date)
+        }
+    }
 }
