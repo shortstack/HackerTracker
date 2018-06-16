@@ -66,13 +66,27 @@ inline fun <reified T> Gson.fromFile(filename: String, root: String): T {
 }
 
 fun Date.now(): Date {
-    if (BuildConfig.DEBUG)
-        time = Constants.DEBUG_FORCE_TIME_DATE
+    if (BuildConfig.DEBUG) {
+        return Calendar.getInstance().now().time
+    }
 
     return this
 }
 
 fun Calendar.now(): Calendar {
-    this.time = Date().now()
+    if (BuildConfig.DEBUG) {
+        val today = Date()
+        today.time = Constants.DEBUG_FORCE_TIME_DATE
+
+        val calendar = Calendar.getInstance()
+        calendar.time = today
+
+        this.set(Calendar.YEAR, calendar.get(Calendar.YEAR))
+        this.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR))
+
+    } else {
+        this.time = Date()
+    }
+
     return this
 }
