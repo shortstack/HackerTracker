@@ -5,12 +5,12 @@
     <color name="colorAccent">#6464b7</color>
     <color name="colorLightAccent">#A0A0EF</color>
 
-    <color name="white_alpha">#8cffffff</color>
+    <color name="white_alpha">#B3ffffff</color>
     <color name="light_gray">#dddddd</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
 
-    <color name="background">#2e3542</color>
+    <color name="background">#2a2b35</color>
     <color name="card_background">#57000000</color>
     <color name="card_background_light">#57ffffff</color>
 
@@ -18,21 +18,8 @@
 
 
     <!-- Category colours -->
-    <color name="category_official">#c77228</color>
-    <color name="category_speaker">#C62828</color>
-    <color name="category_skytalk">#AD1457</color>
-    <color name="category_event">#6A1B9A</color>
-    <color name="category_village">#4527A0</color>
-    <color name="category_kids">#283593</color>
-    <color name="category_contest">#1565C0</color>
-    <color name="category_lab">#fa36e7</color>
-    <color name="category_break">#0ed297</color>
-    <color name="category_party">#0277BD</color>
-    <color name="category_demo">#00838F</color>
-    <color name="category_workshop">#00695C</color>
 
-
-    <color name="dark_background">#161616</color>
+    <color name="dark_background">#22232b</color>
     <color name="text_primary_dark">#282727</color>
     <color name="colorPrimary_goon">#f44336</color>
     <color name="colorPrimaryDark_goon">#760000</color>
@@ -40,5 +27,39 @@
     <color name="textColorSecondary_Goon">#bfc52761</color>
     <color name="colorAccent_Goon">#ff6e40</color>
 
+    <color name="blue_dark">#2896ff</color>
+    <color name="purple_light">#5c74ff</color>
+    <color name="purple_dark">#653fff</color>
+    <color name="green">#42d2bc</color>
+    <color name="red_dark">#9a3290</color>
+    <color name="red_light">#e4376a</color>
+    <color name="orange">#fc853f</color>
+    <color name="blue_light">#50d7e8</color>
+    
+
+
+    <!--
+        100% — FF
+        95% — F2
+        90% — E6
+        85% — D9
+        80% — CC
+        75% — BF
+        70% — B3
+        65% — A6
+        60% — 99
+        55% — 8C
+        50% — 80
+        45% — 73
+        40% — 66
+        35% — 59
+        30% — 4D
+        25% — 40
+        20% — 33
+        15% — 26
+        10% — 1A
+        5% — 0D
+        0% — 00
+        -->
 
 </resources>

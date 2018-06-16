@@ -2,26 +2,14 @@
 <resources>
 
     <string-array name="colors">
-        <item>@color/category_official</item>
-        <item>@color/category_lab</item>
-        <item>@color/category_break</item>
-        <item>@color/category_speaker</item>
-        <item>@color/category_skytalk</item>
-        <item>@color/category_event</item>
-        <item>@color/category_village</item>
-        <item>@color/category_kids</item>
-        <item>@color/category_demo</item>
-        <item>@color/category_contest</item>
-        <item>@color/category_party</item>
-        <item>@color/category_workshop</item>
-        <item>@color/category_official</item>
-        <item>@color/category_kids</item>
-        <item>@color/category_event</item>
-        <item>@color/category_village</item>
-        <item>@color/category_skytalk</item>
-        <item>@color/category_event</item>
-        <item>@color/category_official</item>
-        <item>@color/category_workshop</item>
+        <item>#2896ff</item>
+        <item>#5c74ff</item>
+        <item>#653fff</item>
+        <item>#42d2bc</item>
+        <item>#9a3290</item>
+        <item>#e4376a</item>
+        <item>#fc853f</item>
+        <item>#50d7e8</item>
     </string-array>
 
     <string-array name="sync_intervals">
