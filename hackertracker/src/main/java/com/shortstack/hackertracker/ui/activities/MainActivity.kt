@@ -28,6 +28,7 @@ import com.shortstack.hackertracker.ui.MainActivityViewModel
 import com.shortstack.hackertracker.ui.ReviewBottomSheet
 import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
+import com.shortstack.hackertracker.utils.TickTimer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
@@ -48,6 +49,9 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
     @Inject
     lateinit var analytics: AnalyticsController
+
+    @Inject
+    lateinit var timer: TickTimer
 
     lateinit var navController: NavController
 
@@ -96,6 +100,16 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         // TODO: Remove, this is only for debugging.
         Logger.d("Created MainActivity " + (System.currentTimeMillis() - App.application.timeToLaunch))
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        timer.start()
+    }
+
+    override fun onPause() {
+        timer.stop()
+        super.onPause()
     }
 
     private fun setupNavigation() {
