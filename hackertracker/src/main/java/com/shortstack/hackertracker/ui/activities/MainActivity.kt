@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.ui.activities
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
+import android.animation.ArgbEvaluator
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
 import android.content.Intent
@@ -35,8 +36,14 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.row_nav_view.*
+import kotlinx.android.synthetic.main.row_nav_view.view.*
 import kotlinx.android.synthetic.main.view_filter.*
 import javax.inject.Inject
+import com.shortstack.hackertracker.R.id.textView
+import android.animation.ValueAnimator
+import android.animation.ValueAnimator.AnimatorUpdateListener
+import android.graphics.Color
+import java.util.*
 
 
 class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -54,6 +61,8 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var timer: TickTimer
 
     lateinit var navController: NavController
+
+    private var previousColour = Color.WHITE
 
     override fun onCreate(savedInstanceState: Bundle?) {
         App.application.component.inject(this)
@@ -82,6 +91,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
         })
+
+        timer.observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    val image = nav_view.getHeaderView(0).imageView
+
+                    val colorFrom = previousColour
+
+                    val colours = resources.getStringArray(R.array.colors)
+                    val colorTo = Color.parseColor(colours[Random().nextInt(colours.size)])
+
+                    previousColour = colorTo
+
+                    val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
+                    colorAnimation.duration = 2000 // milliseconds
+                    colorAnimation.addUpdateListener { animator ->
+                        image.setColorFilter(animator.animatedValue as Int)
+                    }
+                    colorAnimation.start()
+
+                }
 
         database.typesLiveData.observe(this, Observer {
             filters.setTypes(it)

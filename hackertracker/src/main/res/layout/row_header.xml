@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:gravity="center"
+    android:paddingTop="30dp"
+    android:textColor="@color/white"
     tools:background="@color/background"
-    tools:text="Wednesday"
-    android:paddingTop="30dp" />
+    tools:text="Wednesday" />

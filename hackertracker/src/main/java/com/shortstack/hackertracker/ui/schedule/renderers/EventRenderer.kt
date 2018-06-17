@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import com.pedrogomez.renderers.Renderer
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.DatabaseEvent
-import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
 import com.shortstack.hackertracker.views.EventView
 import kotlinx.android.synthetic.main.row.view.*
@@ -29,7 +28,7 @@ class EventRenderer(private val displayMode: Int = EventView.DISPLAY_MODE_MIN) :
     }
 
     override fun render(payloads: List<Any>) {
-        rootView.event.setEvent(content)
+        rootView.event.setContent(content)
     }
 
     private fun showEventBottomSheet() {

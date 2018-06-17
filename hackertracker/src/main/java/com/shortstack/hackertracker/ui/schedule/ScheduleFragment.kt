@@ -9,11 +9,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.work.OneTimeWorkRequest
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.State
 import androidx.work.WorkManager
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
@@ -24,13 +22,12 @@ import com.shortstack.hackertracker.utils.TickTimer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_schedule.*
-import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import javax.inject.Inject
 
 
 class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListViewsInterface {
 
-    lateinit var adapter: ScheduleAdapter
+    private val adapter: ScheduleAdapter = ScheduleAdapter()
 
     @Inject
     lateinit var database: DatabaseManager
@@ -41,28 +38,17 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
     private var disposable: Disposable? = null
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val rootView = inflater.inflate(R.layout.fragment_schedule, container, false) as ViewGroup
-
-        rootView.swipe_refresh.setOnRefreshListener(this)
-        rootView.swipe_refresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark)
-        adapter = ScheduleAdapter(rootView.list)
-        rootView.list.adapter = adapter
-
-//        rootView.list.addOnScrollListener(object : ScheduleInfiniteScrollListener(layout) {
-//            override fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView) {
-//                adapter.load(page)
-//            }
-//        })
-
-        return rootView
+        return inflater.inflate(R.layout.fragment_schedule, container, false) as ViewGroup
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         App.application.component.inject(this)
 
+        swipe_refresh.setOnRefreshListener(this)
+        swipe_refresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark)
+        list.adapter = adapter
 
         val scheduleViewModel = ViewModelProviders.of(this).get(ScheduleViewModel::class.java)
         scheduleViewModel.schedule.observe(this, Observer {
@@ -72,10 +58,8 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
                     showEmptyView()
                 }
                 it?.isNotEmpty() == true -> {
-                    Logger.d("Loaded first chunk " + (System.currentTimeMillis() - App.application.timeToLaunch))
                     adapter.clearAndNotify()
                     adapter.addAllAndNotify(it)
-                    // TODO: Scroll to current time.
                     hideViews()
                 }
                 else -> {
@@ -84,9 +68,6 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
                 }
             }
         })
-
-        // TODO: Remove, this is only for debugging.
-        Logger.d("Created ScheduleFragment " + (System.currentTimeMillis() - App.application.timeToLaunch))
     }
 
 
@@ -94,10 +75,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         super.onResume()
 
         disposable = timer.observable.observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    Logger.d("Notifying time changed.")
-                    adapter.notifyTimeChanged()
-                }
+                .subscribe { adapter.notifyTimeChanged() }
     }
 
     override fun onPause() {

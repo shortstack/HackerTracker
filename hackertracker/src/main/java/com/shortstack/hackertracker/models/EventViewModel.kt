@@ -23,7 +23,7 @@ class EventViewModel(val event: DatabaseEvent) : ViewModel() {
     }
 
     val title: String
-        get() = "[${event.event.con}] ${event.event.title}"
+        get() = event.event.title
 
     val description: String
         get() = event.event.description
@@ -45,6 +45,8 @@ class EventViewModel(val event: DatabaseEvent) : ViewModel() {
 
             return Math.min(1.0f, 1 - l)
         }
+
+    var hasAnimatedProgress : Boolean = false
 
 
     fun getFullTimeStamp(context: Context): String {
@@ -77,7 +79,7 @@ class EventViewModel(val event: DatabaseEvent) : ViewModel() {
     }
 
     val location: String
-        get() = event.event.location ?: "[Unknown]"
+        get() = event.event.location ?: "Unknown"
 
     val id: Int
         get() = event.event.index

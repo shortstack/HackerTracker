@@ -1,7 +1,5 @@
 package com.shortstack.hackertracker.ui.schedule.list
 
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
@@ -9,21 +7,17 @@ import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.Time
-import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
-import kotlinx.android.synthetic.main.row.view.*
 import java.util.*
 import javax.inject.Inject
 
-class ScheduleAdapter(val list: RecyclerView) : RendererAdapter<Any>(ScheduleBuilder()) {
+class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder()) {
 
     @Inject
     lateinit var database: DatabaseManager
 
     @Inject
     lateinit var storage: SharedPreferencesUtil
-
-    private val layout: LinearLayoutManager = list.layoutManager as LinearLayoutManager
 
     init {
         App.application.component.inject(this)
@@ -61,25 +55,6 @@ class ScheduleAdapter(val list: RecyclerView) : RendererAdapter<Any>(ScheduleBui
 
     private fun addTime(time: Date) {
         add(Time(time))
-    }
-
-    private fun scrollToCurrentTime() {
-        val position = findCurrentPositionByTime()
-
-        if (position != -1) {
-            layout.scrollToPosition(position)
-        }
-    }
-
-    private fun findCurrentPositionByTime(): Int {
-        val currentDate = Date().now()
-
-        val first = collection.filterIsInstance<Event>()
-                .firstOrNull { it.begin.after(currentDate) } ?: return -1
-
-        val indexOf = collection.indexOf(first)
-
-        return indexOf - 1
     }
 
     fun notifyTimeChanged() {

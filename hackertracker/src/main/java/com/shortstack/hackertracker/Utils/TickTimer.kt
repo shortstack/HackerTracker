@@ -10,7 +10,7 @@ import java.util.concurrent.TimeUnit
  */
 class TickTimer {
 
-    private val interval: Observable<Long> = Observable.interval(0, 1, TimeUnit.MINUTES)
+    private val interval: Observable<Long> = Observable.interval(0, 15, TimeUnit.SECONDS)
     private val subject = BehaviorSubject.create<Long>()
     private var disposable: Disposable? = null
 

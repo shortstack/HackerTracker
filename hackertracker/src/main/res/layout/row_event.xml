@@ -5,33 +5,47 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
-    tools:background="@color/background"
-    tools:layout_marginTop="30dp">
+    tools:background="@color/background">
 
 
     <View
         android:id="@+id/category"
-        android:layout_width="10dp"
+        android:layout_width="8dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:background="@color/category_speaker" />
+        tools:background="@color/orange" />
 
 
     <ProgressBar
         android:id="@+id/progress"
         style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_height="8dp"
         android:alpha=".8"
         android:max="100"
         android:progressDrawable="@drawable/progress_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         tools:progress="67" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/dark_background"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/dark_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent" />
 
 
     <TextView
@@ -39,11 +53,9 @@
         style="@style/TextAppearance.AppCompat.Body2"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
         app:layout_constraintEnd_toStartOf="@+id/star_bar"
         app:layout_constraintStart_toEndOf="@+id/category"
         app:layout_constraintTop_toTopOf="parent"
@@ -55,11 +67,11 @@
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:paddingBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/white_alpha"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/category"
         app:layout_constraintTop_toBottomOf="@+id/title"
@@ -70,10 +82,12 @@
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/white_alpha"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/category"
         app:layout_constraintTop_toBottomOf="@+id/location"
@@ -84,11 +98,12 @@
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="16dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        android:textColor="@color/white_alpha"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/category"
@@ -98,16 +113,15 @@
 
     <ImageView
         android:id="@+id/star_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginRight="8dp"
+        android:layout_marginTop="8dp"
         android:focusableInTouchMode="false"
-        android:paddingStart="3dp"
-        android:paddingLeft="3dp"
-        android:paddingTop="3dp"
         android:paddingEnd="3dp"
-        android:paddingRight="3dp"
-        android:scaleType="fitStart"
-        android:src="@drawable/ic_star_white_24dp"
+        android:paddingStart="3dp"
+        android:scaleType="center"
+        android:src="@drawable/ic_star_accent_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

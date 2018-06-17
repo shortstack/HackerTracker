@@ -53,8 +53,6 @@ class HomeFragment : Fragment() {
             if (it != null) {
                 adapter.clearAndNotify()
                 adapter.addAndNotify(getHeader())
-                adapter.addAndNotify(getInformationNav())
-                adapter.addAndNotify(getChangeConCard())
                 showRecentUpdates(it)
             }
         })
@@ -82,14 +80,6 @@ class HomeFragment : Fragment() {
     }
 
     private fun getHeader() = RendererContent<Void>(null, TYPE_HEADER)
-
-    private fun getChangeConCard() = RendererContent<Void>(null, TYPE_CHANGE_CON)
-
-    private fun getInformationNav(): Navigation? {
-        val context = context ?: return null
-        return Navigation(context.getString(R.string.nav_help_title), context.getString(R.string.nav_help_body), InformationFragment::class.java)
-    }
-
 
     companion object {
 

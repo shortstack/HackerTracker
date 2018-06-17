@@ -16,11 +16,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:clipToPadding="false"
-            android:paddingBottom="30dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
+            android:paddingBottom="@dimen/recycler_view_padding_bottom"
+            android:paddingTop="@dimen/recycler_view_padding_top"
             app:layoutManager="android.support.v7.widget.LinearLayoutManager"
-            tools:listitem="@layout/row_event" />
+            tools:listitem="@layout/row" />
 
     </android.support.v4.widget.SwipeRefreshLayout>
 

@@ -14,7 +14,6 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.DatabaseEvent
-import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.EventViewModel
 import com.shortstack.hackertracker.utils.MaterialAlert
 import com.shortstack.hackertracker.views.EventView
@@ -42,7 +41,7 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
 
         analytics.onEventAction(AnalyticsController.EVENT_VIEW, content.event)
 
-        view.event.setEvent(obj.event)
+        view.event.setContent(obj.event)
 
         displaySpeakers(obj, view.speakers)
 
@@ -83,7 +82,7 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
     }
 
     private fun updateStarIcon(star: ImageView) {
-        star.setImageDrawable(resources.getDrawable(if (content.event.isBookmarked) R.drawable.ic_star_white_24dp else R.drawable.ic_star_border_white_24dp))
+        star.setImageDrawable(resources.getDrawable(if (content.event.isBookmarked) R.drawable.ic_star_accent_24dp else R.drawable.ic_star_border_white_24dp))
     }
 
     fun onStarClick(item: EventView, star: ImageView) {

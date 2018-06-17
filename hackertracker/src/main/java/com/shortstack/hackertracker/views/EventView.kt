@@ -5,14 +5,15 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
+import android.os.Build
 import android.support.v4.content.ContextCompat
 import android.support.v7.widget.CardView
 import android.util.AttributeSet
 import android.util.DisplayMetrics
-import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.DatabaseEvent
@@ -23,6 +24,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.row_event.view.*
+import java.util.*
 import javax.inject.Inject
 
 class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs) {
@@ -35,7 +37,7 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
 
     private var disposable: Disposable? = null
 
-    private var mDisplayMode = DISPLAY_MODE_FULL
+    private var displayMode = DISPLAY_MODE_FULL
     private var mRoundCorners = true
     var content: EventViewModel? = null
         private set
@@ -43,13 +45,15 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
     private var animation: ObjectAnimator? = null
 
     init {
+        inflate(context, R.layout.row_event, this)
+
         App.application.component.inject(this)
 
         getStyle(context, attrs)
 
-        setCardBackgroundColor(ContextCompat.getColor(context, R.color.card_background))
+        setCardBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
 
-        inflate()
+
         setDisplayMode()
     }
 
@@ -58,8 +62,8 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
         val a = context.theme.obtainStyledAttributes(attrs,
                 R.styleable.EventView, 0, 0)
         try {
-            mDisplayMode = a.getInteger(R.styleable.EventView_displayMode, DISPLAY_MODE_FULL)
-            mRoundCorners = a.getBoolean(R.styleable.EventView_roundCorners, true)
+            displayMode = a.getInteger(R.styleable.EventView_displayMode, DISPLAY_MODE_FULL)
+//            mRoundCorners = a.getBoolean(R.styleable.EventView_roundCorners, true)
         } finally {
             a.recycle()
         }
@@ -67,17 +71,9 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
         radius = if (mRoundCorners) convertDpToPixel(2f, context) else 0f
     }
 
-    private fun inflate() {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
-        val view = inflater.inflate(R.layout.row_event, null)
-
-        addView(view)
-    }
-
-    fun setEvent(event: DatabaseEvent) {
+    fun setContent(event: DatabaseEvent) {
         content = EventViewModel(event)
-        renderItem()
+        render()
     }
 
 
@@ -88,10 +84,11 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
     }
 
     override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
         disposable?.dispose()
         disposable = null
         finishAnimation()
+        super.onDetachedFromWindow()
+
     }
 
     private fun finishAnimation() {
@@ -100,27 +97,28 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
     }
 
     private fun setDisplayMode() {
-        when (mDisplayMode) {
-            DISPLAY_MODE_FULL -> {
-            }
-
-            DISPLAY_MODE_MIN -> {
-                time.visibility = View.GONE
-                category_text.visibility = View.GONE
-            }
-        }
+//        val visibility = if (displayMode == DISPLAY_MODE_FULL) View.VISIBLE else View.GONE
+//        time.visibility = visibility
+//        category_text.visibility = visibility
     }
 
     fun setDisplayMode(mode: Int) {
-        mDisplayMode = mode
+        displayMode = mode
         setDisplayMode()
     }
 
-    private fun renderItem() {
+    private fun render() {
         renderText()
         renderCategoryColour()
-        renderBookmark()
-        setProgressBar()
+//        renderBookmark(color)
+        if (content?.hasAnimatedProgress == false) {
+            content?.hasAnimatedProgress = true
+            progress.progress = 0
+            updateProgressBar()
+        } else {
+
+            setProgressBar()
+        }
     }
 
     private fun setProgressBar() {
@@ -148,37 +146,53 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
     }
 
     private fun getProgress(): Int {
+        if (BuildConfig.DEBUG)
+            return Random().nextInt(100)
+
         return (content!!.progress * 100).toInt()
     }
 
     private fun renderText() {
         title.text = content?.title
         location.text = content?.location
-
-        if (mDisplayMode == DISPLAY_MODE_FULL) {
-            time.text = content?.getFullTimeStamp(context)
-        }
+        time.text = content?.getFullTimeStamp(context)
     }
 
     private fun renderCategoryColour() {
         val type = content?.event?.type?.firstOrNull() ?: return
 
-
         category_text.text = type.type
-        val color = Color.parseColor(type.colour)
+        val color = if (BuildConfig.DEBUG) {
+            val colours = context.resources.getStringArray(R.array.colors)
+            Color.parseColor(colours[Random().nextInt(colours.size)])
+        } else {
+            Color.parseColor(type.colour)
+        }
 
         category.setBackgroundColor(color)
         progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
 
+        renderBookmark(color)
     }
 
-    private fun renderBookmark() {
-        star_bar.visibility = content?.bookmarkVisibility ?: View.INVISIBLE
-    }
+    private fun renderBookmark(color: Int) {
+        star_bar.visibility = View.VISIBLE
 
-    private fun updateBookmark() {
-        renderBookmark()
+        val isBookmarked = content?.event?.event?.isBookmarked == true
+        val drawable = if (isBookmarked) {
+            R.drawable.ic_star_accent_24dp
+        } else {
+            R.drawable.ic_star_border_white_24dp
+        }
+
+        val image = ContextCompat.getDrawable(context, drawable)?.mutate()
+
+        if (isBookmarked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            image?.setTint(color)
+        }
+
+        star_bar.setImageDrawable(image)
     }
 
     private fun convertDpToPixel(dp: Float, context: Context): Float {
