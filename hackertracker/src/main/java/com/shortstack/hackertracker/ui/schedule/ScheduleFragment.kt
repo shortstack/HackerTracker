@@ -14,6 +14,7 @@ import androidx.work.State
 import androidx.work.WorkManager
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.network.task.SyncWorker
 import com.shortstack.hackertracker.ui.schedule.list.ListViewsInterface
@@ -22,6 +23,7 @@ import com.shortstack.hackertracker.utils.TickTimer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_schedule.*
+import kotlinx.android.synthetic.main.view_empty.view.*
 import javax.inject.Inject
 
 
@@ -52,19 +54,27 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
 
         val scheduleViewModel = ViewModelProviders.of(this).get(ScheduleViewModel::class.java)
         scheduleViewModel.schedule.observe(this, Observer {
-            when {
-                it?.isEmpty() == true -> {
-                    adapter.clearAndNotify()
-                    showEmptyView()
+            val resource = it
+
+            hideViews()
+
+            when (resource?.status) {
+                Status.SUCCESS -> {
+                    if (resource.data!!.isEmpty()) {
+                        adapter.clearAndNotify()
+                        showEmptyView()
+                    } else {
+                        adapter.clearAndNotify()
+                        adapter.addAllAndNotify(resource.data)
+                        hideViews()
+                    }
                 }
-                it?.isNotEmpty() == true -> {
-                    adapter.clearAndNotify()
-                    adapter.addAllAndNotify(it)
-                    hideViews()
+                Status.ERROR -> {
+                    showErrorView(resource.message)
                 }
-                else -> {
+                Status.LOADING -> {
                     adapter.clearAndNotify()
-                    showErrorView()
+                    showProgress()
                 }
             }
         })
@@ -84,15 +94,21 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         super.onPause()
     }
 
+    private fun showProgress() {
+        loading_progress.visibility = View.VISIBLE
+    }
+
     override fun hideViews() {
         empty.visibility = View.GONE
+        loading_progress.visibility = View.GONE
     }
 
     override fun showEmptyView() {
         empty.visibility = View.VISIBLE
     }
 
-    override fun showErrorView() {
+    override fun showErrorView(message: String?) {
+        empty.title.text = message
         empty.visibility = View.VISIBLE
     }
 

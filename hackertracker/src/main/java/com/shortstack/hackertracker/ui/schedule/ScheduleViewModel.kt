@@ -1,13 +1,13 @@
 package com.shortstack.hackertracker.ui.schedule
 
 import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.MediatorLiveData
 import android.arch.lifecycle.Transformations
 import android.arch.lifecycle.ViewModel
 import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.DatabaseEvent
-import com.shortstack.hackertracker.models.Event
 import javax.inject.Inject
 
 /**
@@ -18,20 +18,26 @@ class ScheduleViewModel : ViewModel() {
     @Inject
     lateinit var database: DatabaseManager
 
+    private val result = MediatorLiveData<Resource<List<DatabaseEvent>>>()
+
     init {
         App.application.component.inject(this)
     }
 
-    val schedule: LiveData<List<DatabaseEvent>>
+    val schedule: LiveData<Resource<List<DatabaseEvent>>>
         get() {
             val conference = database.conferenceLiveData
             return Transformations.switchMap(conference) { id ->
-                if (id == null) {
-                    return@switchMap MutableLiveData<List<DatabaseEvent>>()
+                result.value = Resource.loading(null)
+
+                if (id != null) {
+                    result.addSource(database.getSchedule(id), {
+                        result.value = Resource.success(it)
+                    })
+                } else {
+                    result.value = Resource.error("No Conference!", null)
                 }
-                return@switchMap database.getSchedule(id)
+                return@switchMap result
             }
-
-
         }
 }

@@ -23,14 +23,19 @@
 
     </android.support.v4.widget.SwipeRefreshLayout>
 
-
-    <include
+    <com.shortstack.hackertracker.views.EmptyView
         android:id="@+id/empty"
-        layout="@layout/empty_feed"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:evMessage="@string/nothing_to_show"
+        app:evTitle="@string/nothing_here"
+        android:visibility="gone"/>
+
+    <ProgressBar
+        android:id="@+id/loading_progress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:visibility="gone" />
+        android:layout_gravity="center" />
 
 </android.support.design.widget.CoordinatorLayout>
 

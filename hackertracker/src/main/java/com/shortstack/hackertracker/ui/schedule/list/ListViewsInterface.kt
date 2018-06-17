@@ -6,6 +6,6 @@ interface ListViewsInterface {
     fun hideViews()
 
     fun showEmptyView()
-    fun showErrorView()
+    fun showErrorView(message: String?)
 
 }
