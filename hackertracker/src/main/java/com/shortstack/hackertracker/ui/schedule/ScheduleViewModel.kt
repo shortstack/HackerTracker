@@ -31,11 +31,17 @@ class ScheduleViewModel : ViewModel() {
                 result.value = Resource.loading(null)
 
                 if (id != null) {
-                    result.addSource(database.getSchedule(id), {
+                    result.addSource(database.getSchedule(id)) {
                         result.value = Resource.success(it)
-                    })
+                    }
+                    result.addSource(database.typesLiveData) {
+                        if (it != null)
+                            result.addSource(database.getSchedule(id, it)) {
+                                result.value = Resource.success(it)
+                            }
+                    }
                 } else {
-                    result.value = Resource.error("No Conference!", null)
+                    result.value = Resource.init(null)
                 }
                 return@switchMap result
             }

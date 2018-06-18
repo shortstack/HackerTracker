@@ -13,7 +13,7 @@ import com.shortstack.hackertracker.models.Vendor
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.utils.MaterialAlert
 import kotlinx.android.synthetic.main.bottom_sheet_generic.view.*
-import kotlinx.android.synthetic.main.fragment_schedule.view.*
+import kotlinx.android.synthetic.main.empty_text.view.*
 
 class VendorBottomSheet : BottomSheetDialogFragment() {
 
@@ -29,11 +29,11 @@ class VendorBottomSheet : BottomSheetDialogFragment() {
             return
         }
 
-        view.title!!.text = vendor.title
+        view.title.text = vendor.title
 
         val isDescriptionEmpty = TextUtils.isEmpty(vendor.description)
-        view.empty!!.visibility = if (isDescriptionEmpty) View.VISIBLE else View.GONE
-        view.description!!.text = vendor.description
+        view.empty.visibility = if (isDescriptionEmpty) View.VISIBLE else View.GONE
+        view.description.text = vendor.description
 
         view.link.setOnClickListener { onLinkClick() }
     }

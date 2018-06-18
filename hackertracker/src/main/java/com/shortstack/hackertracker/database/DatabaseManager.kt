@@ -6,8 +6,6 @@ import android.arch.lifecycle.Transformations
 import android.content.Context
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.FullResponse
-import com.shortstack.hackertracker.network.SyncResponse
-import io.reactivex.Flowable
 import io.reactivex.Single
 
 /**
@@ -65,9 +63,12 @@ class DatabaseManager(context: Context) {
         return db.eventDao().getRecentlyUpdated(conference.directory)
     }
 
-    // TODO: Implement paging.
-    fun getSchedule(conference: DatabaseConference, page: Int = 0): LiveData<List<DatabaseEvent>> {
-        val selected = conference.types.filter { it.isSelected }.map { it.type }
+    fun getSchedule(conference: DatabaseConference): LiveData<List<DatabaseEvent>> {
+        return getSchedule(conference, conference.types)
+    }
+
+    fun getSchedule(conference: DatabaseConference, list: List<Type>) : LiveData<List<DatabaseEvent>> {
+        val selected = list.filter { it.isSelected }.map { it.type }
         if (selected.isEmpty()) return db.eventDao().getSchedule(conference.conference.directory)
         return db.eventDao().getSchedule(conference.conference.directory, selected)
     }

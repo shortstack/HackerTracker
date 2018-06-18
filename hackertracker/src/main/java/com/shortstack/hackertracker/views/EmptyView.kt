@@ -42,9 +42,19 @@ class EmptyView(context: Context?, attrs: AttributeSet?) : FrameLayout(context, 
         message.text = null
     }
 
-    fun showNoResults(query: String) {
-        title.text = context.getString(R.string.no_results_for, query)
-        message.text = context.getString(R.string.no_results_message)
+    fun showNoResults(query: String? = null) {
+        if (query != null) {
+            title.text = context.getString(R.string.no_results_for, query)
+            message.text = context.getString(R.string.no_results_message)
+        } else {
+            title.text = null
+            message.text = null
+        }
+    }
+
+    fun showError(msg: String?) {
+        title.text = context.getString(R.string.error_title)
+        message.text = msg
     }
 
 

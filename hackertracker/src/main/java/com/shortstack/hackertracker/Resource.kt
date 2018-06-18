@@ -11,11 +11,14 @@ data class Resource<out T>(val status: Status, val data: T?, val message: String
         fun <T> error(msg: String, data: T?) = Resource(Status.ERROR, data, msg)
 
         fun <T> loading(data: T?) = Resource(Status.LOADING, data, null)
+
+        fun <T> init(data: T?) = Resource(Status.NOT_INITIALIZED, data, null)
     }
 }
 
 enum class Status {
     SUCCESS,
     ERROR,
-    LOADING
+    LOADING,
+    NOT_INITIALIZED
 }

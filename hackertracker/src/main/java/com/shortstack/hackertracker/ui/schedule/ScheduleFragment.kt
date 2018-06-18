@@ -76,6 +76,9 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
                     adapter.clearAndNotify()
                     showProgress()
                 }
+                Status.NOT_INITIALIZED -> {
+                    showEmptyView()
+                }
             }
         })
     }

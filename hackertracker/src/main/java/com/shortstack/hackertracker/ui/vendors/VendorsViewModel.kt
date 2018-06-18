@@ -1,12 +1,9 @@
 package com.shortstack.hackertracker.ui.vendors
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Transformations
-import android.arch.lifecycle.ViewModel
+import android.arch.lifecycle.*
 import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.Vendor
 import javax.inject.Inject
 
@@ -18,18 +15,26 @@ class VendorsViewModel : ViewModel() {
     @Inject
     lateinit var database: DatabaseManager
 
+    private val result = MediatorLiveData<Resource<List<Vendor>>>()
+
     init {
         App.application.component.inject(this)
     }
 
-    val vendors: LiveData<List<Vendor>>
+    val vendors: LiveData<Resource<List<Vendor>>>
         get() {
             val conference = database.conferenceLiveData
             return Transformations.switchMap(conference) { id ->
-                if (id == null) {
-                    return@switchMap MutableLiveData<List<Vendor>>()
+                result.value = Resource.loading(null)
+
+                if (id != null) {
+                    result.addSource(database.getVendors(id.conference), {
+                        result.value = Resource.success(it)
+                    })
+                } else {
+                    result.value = Resource.init(null)
                 }
-                return@switchMap database.getVendors(id.conference)
+                return@switchMap result
             }
         }
 }

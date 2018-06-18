@@ -144,6 +144,7 @@
     <string name="no_results_message">Try expanding your search terms.</string>
     <string name="nothing_to_show">Sorry, nothing to show</string>
     <string name="nothing_here">Nothing here</string>
+    <string name="error_title">Error</string>
 
     <string-array name="nav_item_activity_titles">
         <item>@string/home</item>
