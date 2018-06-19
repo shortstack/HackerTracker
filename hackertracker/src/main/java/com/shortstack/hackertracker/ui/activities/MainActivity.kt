@@ -6,7 +6,6 @@ import android.animation.AnimatorListenerAdapter
 import android.animation.ArgbEvaluator
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
@@ -25,23 +24,16 @@ import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.ui.MainActivityViewModel
-import com.shortstack.hackertracker.ui.ReviewBottomSheet
-import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.utils.TickTimer
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.row_nav_view.*
-import kotlinx.android.synthetic.main.row_nav_view.view.*
 import kotlinx.android.synthetic.main.view_filter.*
 import javax.inject.Inject
-import com.shortstack.hackertracker.R.id.textView
 import android.animation.ValueAnimator
-import android.animation.ValueAnimator.AnimatorUpdateListener
 import android.graphics.Color
 import java.util.*
 

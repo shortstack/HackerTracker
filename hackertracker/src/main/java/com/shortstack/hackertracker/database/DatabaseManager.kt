@@ -89,7 +89,7 @@ class DatabaseManager(context: Context) {
         return db.eventDao().getEventById(id)
     }
 
-    fun findItem(id: String): LiveData<List<Event>> {
+    fun findItem(id: String): LiveData<List<DatabaseEvent>> {
         return db.eventDao().findByText(id)
     }
 

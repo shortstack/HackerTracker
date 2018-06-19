@@ -47,7 +47,7 @@ interface EventDao {
     fun getEventById(id: Int): Event?
 
     @Query("SELECT * FROM event WHERE title LIKE :text")
-    fun findByText(text: String): LiveData<List<Event>>
+    fun findByText(text: String): LiveData<List<DatabaseEvent>>
 
     @Query("SELECT * FROM event WHERE con = :con ORDER BY updatedAt DESC LIMIT $LIMIT")
     fun getRecentlyUpdated(con: String): LiveData<List<DatabaseEvent>>
