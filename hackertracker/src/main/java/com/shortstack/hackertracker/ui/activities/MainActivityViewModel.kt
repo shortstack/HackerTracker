@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui
+package com.shortstack.hackertracker.ui.activities
 
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.ViewModel

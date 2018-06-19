@@ -5,7 +5,7 @@ import com.shortstack.hackertracker.di.modules.*
 import com.shortstack.hackertracker.models.EventViewModel
 import com.shortstack.hackertracker.network.task.SyncWorker
 import com.shortstack.hackertracker.network.task.ReminderWorker
-import com.shortstack.hackertracker.ui.MainActivityViewModel
+import com.shortstack.hackertracker.ui.activities.MainActivityViewModel
 import com.shortstack.hackertracker.ui.SearchFragment
 import com.shortstack.hackertracker.ui.SettingsFragment
 import com.shortstack.hackertracker.ui.activities.MainActivity
