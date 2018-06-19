@@ -53,9 +53,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var timer: TickTimer
 
     lateinit var navController: NavController
-
-    private var previousColour = Color.WHITE
-
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         App.application.component.inject(this)
 
@@ -83,26 +81,6 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 }
             }
         })
-
-        timer.observable.observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    val image = nav_view.getHeaderView(0).imageView
-
-                    val colorFrom = previousColour
-
-                    val colours = resources.getStringArray(R.array.colors)
-                    val colorTo = Color.parseColor(colours[Random().nextInt(colours.size)])
-
-                    previousColour = colorTo
-
-                    val colorAnimation = ValueAnimator.ofObject(ArgbEvaluator(), colorFrom, colorTo)
-                    colorAnimation.duration = 2000 // milliseconds
-                    colorAnimation.addUpdateListener { animator ->
-                        image.setColorFilter(animator.animatedValue as Int)
-                    }
-                    colorAnimation.start()
-
-                }
 
         database.typesLiveData.observe(this, Observer {
             filters.setTypes(it)
