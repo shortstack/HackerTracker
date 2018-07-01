@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import android.content.Context
+import androidx.lifecycle.MediatorLiveData
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.FullResponse
 import io.reactivex.Single
@@ -23,7 +24,20 @@ class DatabaseManager(context: Context) {
                 if (id == null) {
                     return@switchMap MutableLiveData<List<Type>>()
                 }
-                return@switchMap getTypes(id.conference)
+
+                return@switchMap Transformations.switchMap(getTypes(id.conference)) {
+                    val liveData = MediatorLiveData<List<Type>>()
+
+
+                    val conference = conferenceLiveData.value
+                    if (conference?.types != it) {
+                        conference?.types = it
+                        conferenceLiveData.postValue(conference)
+                    }
+                    liveData.postValue(it)
+
+                    return@switchMap liveData
+                }
             }
         }
 

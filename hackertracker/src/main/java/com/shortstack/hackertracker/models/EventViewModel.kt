@@ -46,7 +46,7 @@ class EventViewModel(val event: DatabaseEvent) : ViewModel() {
             return Math.min(1.0f, 1 - l)
         }
 
-    var hasAnimatedProgress : Boolean = false
+    var hasAnimatedProgress : Boolean = true
 
 
     fun getFullTimeStamp(context: Context): String {
