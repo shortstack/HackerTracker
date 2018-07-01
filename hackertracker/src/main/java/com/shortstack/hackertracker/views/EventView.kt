@@ -110,15 +110,18 @@ class EventView(context: Context, attrs: AttributeSet) : androidx.cardview.widge
     private fun render() {
         renderText()
         renderCategoryColour()
-//        renderBookmark(color)
         if (content?.hasAnimatedProgress == false) {
             content?.hasAnimatedProgress = true
             progress.progress = 0
             updateProgressBar()
         } else {
-
             setProgressBar()
         }
+
+        star_bar.setOnClickListener {
+            onBookmarkClick()
+        }
+
     }
 
     private fun setProgressBar() {
@@ -155,7 +158,7 @@ class EventView(context: Context, attrs: AttributeSet) : androidx.cardview.widge
     private fun renderText() {
         title.text = content?.title
         val pair = content?.getTimeStamp(context)
-        location.text = content?.location +  " | " + pair?.first + " - " + pair?.second
+        location.text = content?.location + " | " + pair?.first + " - " + pair?.second
     }
 
     private fun renderCategoryColour() {
@@ -167,7 +170,7 @@ class EventView(context: Context, attrs: AttributeSet) : androidx.cardview.widge
 //            val colours = context.resources.getStringArray(R.array.colors)
 //            Color.parseColor(colours[Random().nextInt(colours.size)])
 //        } else {
-            Color.parseColor(type.colour)
+                Color.parseColor(type.colour)
 //        }
 
         category.setBackgroundColor(color)
