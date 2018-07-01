@@ -1,9 +1,6 @@
 package com.shortstack.hackertracker.ui.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.DatabaseEvent
@@ -18,17 +15,19 @@ class SearchViewModel : ViewModel() {
     @Inject
     lateinit var database: DatabaseManager
 
+    private val query = MediatorLiveData<String>()
+
+    val results: LiveData<List<DatabaseEvent>>
+
     init {
         App.application.component.inject(this)
+
+        results = Transformations.switchMap(query) {
+            return@switchMap database.findItem("%$it%")
+        }
     }
 
-    fun getResult(text: String): LiveData<List<DatabaseEvent>> {
-        val conference = database.conferenceLiveData
-        return Transformations.switchMap(conference) { id ->
-            if (id == null) {
-                return@switchMap MutableLiveData<List<DatabaseEvent>>()
-            }
-            return@switchMap database.findItem("%$text%")
-        }
+    fun search(text: String) {
+        query.postValue(text)
     }
 }

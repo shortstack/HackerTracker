@@ -24,7 +24,8 @@ import javax.inject.Inject
 
 class SearchFragment : androidx.fragment.app.Fragment(), SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
 
-    private var adapter: RendererAdapter<Event>? = null
+    private lateinit var adapter: RendererAdapter<Event>
+    private lateinit var viewModel: SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,6 +44,27 @@ class SearchFragment : androidx.fragment.app.Fragment(), SearchView.OnQueryTextL
         adapter = RendererAdapter(RendererBuilder<Any>()
                 .bind(Event::class.java, EventRenderer()))
         list.adapter = adapter
+
+        viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
+        viewModel.results.observe(this, Observer {
+
+            when {
+                it?.isNotEmpty() == true -> {
+                    empty_view.visibility = View.GONE
+                    adapter.clearAndNotify()
+                    adapter.addAllAndNotify(it)
+                }
+                it?.isEmpty() == true -> {
+                    empty_view.visibility = View.VISIBLE
+                    empty_view.showNoResults()
+                    adapter.clearAndNotify()
+                }
+                else -> {
+                    empty_view.visibility = View.GONE
+                    adapter.clearAndNotify()
+                }
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
@@ -77,26 +99,7 @@ class SearchFragment : androidx.fragment.app.Fragment(), SearchView.OnQueryTextL
             return
         }
 
-        val searchViewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
-        searchViewModel.getResult(text).observe(this, Observer {
-
-            when {
-                it?.isNotEmpty() == true -> {
-                    empty_view.visibility = View.GONE
-                    adapter.clearAndNotify()
-                    adapter.addAllAndNotify(it)
-                }
-                it?.isEmpty() == true -> {
-                    empty_view.visibility = View.VISIBLE
-                    empty_view.showNoResults(text)
-                    adapter.clearAndNotify()
-                }
-                else -> {
-                    empty_view.visibility = View.GONE
-                    adapter.clearAndNotify()
-                }
-            }
-        })
+        viewModel.search(text)
     }
 
     override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
