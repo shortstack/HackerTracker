@@ -146,31 +146,37 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
     }
 
     private fun getProgress(): Int {
-        if (BuildConfig.DEBUG)
-            return Random().nextInt(100)
+//        if (BuildConfig.DEBUG)
+//            return Random().nextInt(100)
 
         return (content!!.progress * 100).toInt()
     }
 
     private fun renderText() {
         title.text = content?.title
-        location.text = content?.location
-        time.text = content?.getFullTimeStamp(context)
+        val pair = content?.getTimeStamp(context)
+        location.text = content?.location +  " | " + pair?.first + " - " + pair?.second
     }
 
     private fun renderCategoryColour() {
         val type = content?.event?.type?.firstOrNull() ?: return
 
         category_text.text = type.type
-        val color = if (BuildConfig.DEBUG) {
-            val colours = context.resources.getStringArray(R.array.colors)
-            Color.parseColor(colours[Random().nextInt(colours.size)])
-        } else {
+        val color =
+//                if (BuildConfig.DEBUG) {
+//            val colours = context.resources.getStringArray(R.array.colors)
+//            Color.parseColor(colours[Random().nextInt(colours.size)])
+//        } else {
             Color.parseColor(type.colour)
-        }
+//        }
 
         category.setBackgroundColor(color)
         progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+
+        val drawable = context.getDrawable(R.drawable.chip_background).mutate()
+        drawable.setTint(color)
+
+        category_text.setBackgroundDrawable(drawable)
 
 
         renderBookmark(color)

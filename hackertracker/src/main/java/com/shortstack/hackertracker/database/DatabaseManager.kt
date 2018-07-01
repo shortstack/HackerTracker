@@ -38,6 +38,8 @@ class DatabaseManager(context: Context) {
     }
 
     fun changeConference(con: DatabaseConference) {
+        if (con == conferenceLiveData.value) return
+
         con.conference.isSelected = true
 
         conferenceLiveData.postValue(con)
@@ -67,7 +69,7 @@ class DatabaseManager(context: Context) {
         return getSchedule(conference, conference.types)
     }
 
-    fun getSchedule(conference: DatabaseConference, list: List<Type>) : LiveData<List<DatabaseEvent>> {
+    fun getSchedule(conference: DatabaseConference, list: List<Type>): LiveData<List<DatabaseEvent>> {
         val selected = list.filter { it.isSelected }.map { it.type }
         if (selected.isEmpty()) return db.eventDao().getSchedule(conference.conference.directory)
         return db.eventDao().getSchedule(conference.conference.directory, selected)

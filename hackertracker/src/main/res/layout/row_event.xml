@@ -8,28 +8,29 @@
     tools:background="@color/background">
 
 
-    <View
-        android:id="@+id/category"
-        android:layout_width="8dp"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:background="@color/orange" />
-
-
     <ProgressBar
         android:id="@+id/progress"
         style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="0dp"
         android:layout_height="8dp"
         android:alpha=".8"
+        android:background="@color/dark_background"
         android:max="100"
         android:progressDrawable="@drawable/progress_bar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         tools:progress="67" />
+
+    <View
+        android:id="@+id/category"
+        android:layout_width="8dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/progress"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:background="@color/orange" />
+
 
     <View
         android:layout_width="0dp"
@@ -96,16 +97,17 @@
     <TextView
         android:id="@+id/category_text"
         style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_marginBottom="12dp"
         android:layout_marginEnd="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/chip_background"
         android:textColor="@color/white_alpha"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/category"
         app:layout_constraintTop_toBottomOf="@+id/time"
         tools:text="Event" />
@@ -115,7 +117,6 @@
         android:id="@+id/star_bar"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginRight="8dp"
         android:layout_marginTop="8dp"
         android:focusableInTouchMode="false"
         android:paddingEnd="3dp"

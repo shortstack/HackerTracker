@@ -88,7 +88,14 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         super.onResume()
 
         disposable = timer.observable.observeOn(AndroidSchedulers.mainThread())
-                .subscribe { adapter.notifyTimeChanged() }
+                .subscribe {
+                    adapter.notifyTimeChanged()
+                    if (adapter.collection.isEmpty()) {
+                        showEmptyView()
+                    } else {
+                        hideViews()
+                    }
+                }
     }
 
     override fun onPause() {

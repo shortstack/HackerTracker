@@ -7,24 +7,13 @@
     android:layout_height="wrap_content">
 
 
-    <!--<android.support.v7.widget.CardView-->
-        <!--android:id="@+id/cardView"-->
-        <!--android:layout_width="0dp"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_marginBottom="8dp"-->
-        <!--android:layout_marginTop="8dp"-->
-        <!--app:cardBackgroundColor="@color/colorPrimaryDark"-->
-        <!--app:layout_constraintEnd_toEndOf="parent"-->
-        <!--app:layout_constraintStart_toStartOf="parent"-->
-        <!--app:layout_constraintTop_toTopOf="parent">-->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:paddingTop="16dp"
         android:paddingBottom="16dp"
+        android:paddingTop="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -32,7 +21,7 @@
 
         <TextView
             android:id="@+id/question"
-            style="@style/TextAppearance.AppCompat.Title"
+            style="@style/TextAppearance.AppCompat.Body2"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingLeft="16dp"
@@ -70,8 +59,5 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-    <!--</android.support.v7.widget.CardView>-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>

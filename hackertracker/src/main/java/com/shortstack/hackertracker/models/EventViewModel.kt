@@ -50,13 +50,18 @@ class EventViewModel(val event: DatabaseEvent) : ViewModel() {
 
 
     fun getFullTimeStamp(context: Context): String {
-        val begin = TimeUtil.getTimeStamp(context, event.event.begin)
-        val end = TimeUtil.getTimeStamp(context, event.event.end)
+        val (begin, end) = getTimeStamp(context)
 
 
         val timestamp = TimeUtil.getRelativeDateStamp(context, event.event.begin)
 
         return String.format(context.getString(R.string.timestamp_full), timestamp, begin, end)
+    }
+
+    fun getTimeStamp(context: Context): Pair<String, String> {
+        val begin = TimeUtil.getTimeStamp(context, event.event.begin)
+        val end = TimeUtil.getTimeStamp(context, event.event.end)
+        return Pair(begin, end)
     }
 
     fun hasDescription() = !TextUtils.isEmpty(event.event.description)
