@@ -17,7 +17,7 @@ class InformationRenderer : Renderer<Information>(), View.OnClickListener {
     }
 
     override fun hookListeners(rootView: View?) {
-        rootView!!.setOnClickListener(this)
+        rootView?.setOnClickListener(this)
     }
 
     override fun render(payloads: List<Any>) {

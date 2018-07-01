@@ -22,6 +22,7 @@ import com.shortstack.hackertracker.ui.home.renderers.HomeHeaderRenderer
 import com.shortstack.hackertracker.ui.home.renderers.SubHeaderRenderer
 import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
+import com.shortstack.hackertracker.views.WifiHelperRenderer
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import java.text.SimpleDateFormat
 
@@ -42,7 +43,9 @@ class HomeFragment : Fragment() {
                 .bind(String::class.java, SubHeaderRenderer())
                 .bind(DatabaseEvent::class.java, EventRenderer())
                 .bind(Navigation::class.java, ActivityNavRenderer())
+                .bind(TYPE_WIFI, WifiHelperRenderer())
                 .bind(TYPE_CHANGE_CON, ChangeConRenderer()))
+
 
         list.adapter = adapter
 
@@ -53,10 +56,12 @@ class HomeFragment : Fragment() {
             if (it != null) {
                 adapter.clearAndNotify()
                 adapter.addAndNotify(getHeader())
+                adapter.addAndNotify(getWifiHelper())
                 showRecentUpdates(it)
             }
         })
     }
+
 
     private fun setProgressIndicator(active: Boolean) {
         loading_progress?.visibility = if (active) View.VISIBLE else View.GONE
@@ -81,10 +86,13 @@ class HomeFragment : Fragment() {
 
     private fun getHeader() = RendererContent<Void>(null, TYPE_HEADER)
 
+    private fun getWifiHelper() = RendererContent<Void>(null, TYPE_WIFI)
+
     companion object {
 
         const val TYPE_HEADER = 0
         const val TYPE_CHANGE_CON = 1
+        const val TYPE_WIFI = 2
 
         fun newInstance() = HomeFragment()
 

@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     lateinit var timer: TickTimer
 
     lateinit var navController: NavController
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         App.application.component.inject(this)
 
