@@ -10,9 +10,9 @@ import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
 import android.os.Bundle
-import android.support.v4.app.NotificationCompat
-import android.support.v4.app.NotificationManagerCompat
-import android.support.v4.content.ContextCompat
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.work.Data
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
@@ -105,7 +105,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
 
     fun scheduleItemNotification(item: Event) {
 
-        WorkManager.getInstance().cancelAllWorkByTag(ReminderWorker.TAG + item.index)
+        WorkManager.getInstance()?.cancelAllWorkByTag(ReminderWorker.TAG + item.index)
 
         val window: Long = (item.notificationTime - 1200).toLong()
 
@@ -124,7 +124,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
                 .setInputData(data)
                 .build()
 
-        WorkManager.getInstance().enqueue(request)
+        WorkManager.getInstance()?.enqueue(request)
     }
 
     fun notifyUpdates(conference: Conference, newCon: Boolean, rowsUpdated: Int) {

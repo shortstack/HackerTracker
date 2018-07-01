@@ -1,8 +1,8 @@
 package com.shortstack.hackertracker.database
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Transformations
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import android.content.Context
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.FullResponse
@@ -109,35 +109,52 @@ class DatabaseManager(context: Context) {
 
 
     fun updateConference(conference: Conference, body: FullResponse): Int {
-        body.syncResponse.events.forEach {
-            it.con = conference.directory
-        }
-        body.types.types.forEach {
-            it.con = conference.directory
-        }
-        body.speakers.speakers.forEach {
-            it.con = conference.directory
-        }
-        body.vendors.vendors.forEach {
-            it.con = conference.directory
-        }
-        body.faqs.faqs.forEach {
-            it.con = conference.directory
+        body.apply {
+            types?.let {
+                it.types.forEach {
+                    it.con = conference.directory
+                }
+
+                db.typeDao().insertAll(it.types)
+            }
+
+            speakers?.let {
+                it.speakers.forEach {
+                    it.con = conference.directory
+                }
+
+                db.speakerDao().insertAll(it.speakers)
+            }
+
+            syncResponse?.let {
+                it.events.forEach {
+                    it.con = conference.directory
+                }
+
+                db.eventDao().insertAll(it.events)
+            }
+
+            vendors?.let {
+                it.vendors.forEach {
+                    it.con = conference.directory
+                }
+
+                db.vendorDao().insertAll(it.vendors)
+            }
+
+            faqs?.let {
+                it.faqs.forEach {
+                    it.con = conference.directory
+                }
+
+                db.faqDao().insertAll(it.faqs)
+            }
+
+            db.conferenceDao().upsert(conference)
         }
 
-        db.conferenceDao().upsert(conference)
-        db.eventDao().insertAll(body.syncResponse.events)
-        db.typeDao().insertAll(body.types.types)
-        db.speakerDao().insertAll(body.speakers.speakers)
-        db.vendorDao().insertAll(body.vendors.vendors)
-        db.faqDao().insertAll(body.faqs.faqs)
-
-        return body.syncResponse.events.size
+        return body.syncResponse?.events?.size ?: 0
     }
-
-//    fun updateConference(conference: Conference, response: FullResponse): Single<Int> {
-//        return updateConference(conference, response.syncResponse)
-//    }
 
     fun updateType(type: Type): Int {
         return db.typeDao().update(type)

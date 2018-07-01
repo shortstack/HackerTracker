@@ -1,6 +1,6 @@
 package com.shortstack.hackertracker.models
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import android.content.Context
 import android.text.TextUtils
 import android.view.View

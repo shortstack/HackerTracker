@@ -1,11 +1,11 @@
 package com.shortstack.hackertracker.ui
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.app.AppCompatActivity
-import android.support.v7.widget.SearchView
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import android.view.*
 import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
@@ -22,7 +22,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
 
-class SearchFragment : Fragment(), SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
+class SearchFragment : androidx.fragment.app.Fragment(), SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
 
     private var adapter: RendererAdapter<Event>? = null
 

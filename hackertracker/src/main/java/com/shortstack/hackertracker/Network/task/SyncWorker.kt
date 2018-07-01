@@ -34,7 +34,7 @@ class SyncWorker : Worker() {
         App.application.component.inject(this)
     }
 
-    override fun doWork(): WorkerResult {
+    override fun doWork(): Result {
         val call = getService().getConferences()
         val conferences = call.execute().body()
 
@@ -42,7 +42,7 @@ class SyncWorker : Worker() {
 
         var rowsUpdated = 0
 
-        conferences.conferences.forEach {
+        conferences?.conferences?.forEach {
 
             val item = list.find { new -> new.conference.directory == it.directory }
             val isNewCon = item == null
@@ -54,7 +54,7 @@ class SyncWorker : Worker() {
 
         outputData = mapOf(KEY_ROWS_UPDATED to rowsUpdated).toWorkData()
 
-        return WorkerResult.SUCCESS
+        return Result.SUCCESS
     }
 
     private fun updateConference(it: Conference, isNewCon: Boolean): Int {
@@ -100,31 +100,31 @@ class SyncWorker : Worker() {
 //                })
 //    }
 
-    private fun getSchedule(directory: String): SyncResponse {
+    private fun getSchedule(directory: String): SyncResponse? {
         val service = getService(directory)
         val call = service.getSchedule()
         return call.execute().body()
     }
 
-    private fun getTypes(directory: String): Types {
+    private fun getTypes(directory: String): Types? {
         val service = getService(directory)
         val call = service.getTypes()
         return call.execute().body()
     }
 
-    private fun getVendors(directory: String): Vendors {
+    private fun getVendors(directory: String): Vendors? {
         val service = getService(directory)
         val call = service.getVendors()
         return call.execute().body()
     }
 
-    private fun getSpeakers(directory: String): Speakers {
+    private fun getSpeakers(directory: String): Speakers? {
         val service = getService(directory)
         val call = service.getSpeakers()
         return call.execute().body()
     }
 
-    private fun getFAQs(directory: String): FAQs {
+    private fun getFAQs(directory: String): FAQs? {
         val service = getService(directory)
         val call = service.getFAQs()
         return call.execute().body()

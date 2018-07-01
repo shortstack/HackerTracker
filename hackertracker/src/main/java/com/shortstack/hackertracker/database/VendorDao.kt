@@ -1,7 +1,7 @@
 package com.shortstack.hackertracker.database
 
-import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.*
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import com.shortstack.hackertracker.models.Vendor
 import io.reactivex.Flowable
 

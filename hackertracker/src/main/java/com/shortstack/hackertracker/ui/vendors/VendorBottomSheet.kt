@@ -5,7 +5,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.design.widget.BottomSheetDialogFragment
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.text.TextUtils
 import android.view.View
 import com.orhanobut.logger.Logger
@@ -15,7 +15,7 @@ import com.shortstack.hackertracker.utils.MaterialAlert
 import kotlinx.android.synthetic.main.bottom_sheet_generic.view.*
 import kotlinx.android.synthetic.main.empty_text.view.*
 
-class VendorBottomSheet : BottomSheetDialogFragment() {
+class VendorBottomSheet : com.google.android.material.bottomsheet.BottomSheetDialogFragment() {
 
     override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)

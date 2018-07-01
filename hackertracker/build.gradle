@@ -7,13 +7,13 @@ apply plugin: 'io.fabric'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 27
+    compileSdkVersion 28
     buildToolsVersion '27.0.3'
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.shortstack.hackertracker"
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 94
         versionName "4.1"
     }
@@ -55,7 +55,7 @@ configurations {
 }
 
 dependencies {
-    def work_version = "1.0.0-alpha02"
+    def work_version = "1.0.0-alpha04"
 
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
@@ -64,46 +64,45 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     // Support Libraries
-    implementation 'com.android.support:support-v4:27.1.1'
-    implementation 'com.android.support:design:27.1.1'
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support:recyclerview-v7:27.1.1'
-    implementation 'com.android.support:cardview-v7:27.1.1'
-    implementation 'com.android.support:preference-v7:27.1.1'
+    implementation 'com.google.android.material:material:1.0.0-alpha3'
+    implementation 'androidx.appcompat:appcompat:1.0.0-alpha3'
+    implementation 'androidx.recyclerview:recyclerview:1.0.0-alpha3'
+    implementation 'androidx.cardview:cardview:1.0.0-alpha3'
+    implementation 'androidx.preference:preference:1.0.0-alpha3'
 
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.0'
+    implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
 
 
 
     // RxJava
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    implementation 'io.reactivex.rxjava2:rxjava:2.1.0'
+    implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
 
     // Dagger
-    implementation 'com.google.dagger:dagger:2.15'
+    implementation 'com.google.dagger:dagger:2.16'
     kapt 'com.google.dagger:dagger-compiler:2.15'
 
     // Arch
-    implementation "android.arch.lifecycle:extensions:1.1.1"
-    implementation "android.arch.lifecycle:viewmodel:1.1.1"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0-alpha1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.0.0-alpha1"
     implementation "android.arch.work:work-runtime-ktx:$work_version"
     implementation "android.arch.work:work-firebase:$work_version"
 
     // Room
-    implementation 'android.arch.persistence.room:rxjava2:1.1.0'
-    implementation "android.arch.persistence.room:runtime:1.1.0"
-    kapt "android.arch.persistence.room:compiler:1.1.0"
+    implementation 'androidx.room:room-rxjava2:2.0.0-alpha1'
+    implementation "androidx.room:room-runtime:2.0.0-alpha1"
+    kapt "androidx.room:room-compiler:2.0.0-alpha1"
 
     // Navigation
-    implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha01'
-    implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0-alpha01'
+    implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha02'
+    implementation 'android.arch.navigation:navigation-ui-ktx:1.0.0-alpha02'
 
     // Retrofit
-    implementation 'com.squareup.retrofit2:retrofit:2.1.0'
-    implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+    implementation 'com.squareup.retrofit2:retrofit:2.3.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.3.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
-    implementation 'com.squareup.okhttp3:okhttp:3.6.0'
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.6.0'
+    implementation 'com.squareup.okhttp3:okhttp:3.10.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
 
     // Crash
     implementation('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
@@ -117,9 +116,9 @@ dependencies {
     // PDF Viewer
     implementation 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
     // Reviews
-    implementation 'com.github.stkent:amplify:1.4.0'
+    implementation 'com.github.stkent:amplify:2.2.0'
     // Firebase Job Dispatcher
-    implementation 'com.firebase:firebase-jobdispatcher:0.7.0'
+    implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
 }
 
 repositories {

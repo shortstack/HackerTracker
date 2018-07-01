@@ -3,8 +3,8 @@ package com.shortstack.hackertracker.views
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Color
-import android.support.v4.widget.CompoundButtonCompat
-import android.support.v7.widget.AppCompatCheckBox
+import androidx.core.widget.CompoundButtonCompat
+import androidx.appcompat.widget.AppCompatCheckBox
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout

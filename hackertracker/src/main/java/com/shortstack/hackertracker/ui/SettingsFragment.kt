@@ -2,7 +2,7 @@ package com.shortstack.hackertracker.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.v7.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceFragmentCompat
 import android.view.View
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig

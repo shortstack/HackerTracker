@@ -1,6 +1,6 @@
 package com.shortstack.hackertracker.database
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import com.shortstack.hackertracker.models.Speaker
 import io.reactivex.Flowable
 

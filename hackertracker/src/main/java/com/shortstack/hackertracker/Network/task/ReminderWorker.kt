@@ -26,9 +26,9 @@ class ReminderWorker : Worker() {
         App.application.component.inject(this)
     }
 
-    override fun doWork(): WorkerResult {
+    override fun doWork(): Result {
         if (!storage.allowPushNotification)
-            return WorkerResult.SUCCESS
+            return Result.SUCCESS
 
         val id = inputData.getInt(NOTIFICATION_ID, -1)
         val event = database.findItem(id = id)
@@ -36,7 +36,7 @@ class ReminderWorker : Worker() {
         if (event != null)
             notifications.notifyStartingSoon(event)
 
-        return WorkerResult.SUCCESS
+        return Result.SUCCESS
     }
 
     companion object {

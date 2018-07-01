@@ -1,6 +1,6 @@
 package com.shortstack.hackertracker.ui.information
 
-import android.arch.lifecycle.*
+import androidx.lifecycle.*
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager

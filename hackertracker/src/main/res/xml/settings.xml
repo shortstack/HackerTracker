@@ -1,13 +1,13 @@
-<android.support.v7.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:key="preferenceTheme"
     tools:background="@color/background">
 
-    <android.support.v7.preference.PreferenceCategory android:title="Preferences">
+    <androidx.preference.PreferenceCategory android:title="Preferences">
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:defaultValue="True"
@@ -15,7 +15,7 @@
             android:summary="Allow us track anonymous usage and report crashes."
             android:title="Allow Analytics" />
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:defaultValue="True"
@@ -23,7 +23,7 @@
             android:summary="Allow notifications for upcoming bookmarked events."
             android:title="Allow Notifications" />
 
-        <android.support.v7.preference.CheckBoxPreference
+        <androidx.preference.CheckBoxPreference
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:defaultValue="False"
@@ -31,11 +31,11 @@
             android:summary="Show events that have already happened."
             android:title="Show Expired Events" />
 
-    </android.support.v7.preference.PreferenceCategory>
+    </androidx.preference.PreferenceCategory>
 
-    <android.support.v7.preference.PreferenceCategory android:title="Syncing">
+    <androidx.preference.PreferenceCategory android:title="Syncing">
 
-        <android.support.v7.preference.ListPreference
+        <androidx.preference.ListPreference
             android:defaultValue="6"
             android:entries="@array/sync_intervals_display"
             android:entryValues="@array/sync_intervals"
@@ -43,6 +43,6 @@
             android:summary="%s"
             android:title="Sync Intervals" />
 
-    </android.support.v7.preference.PreferenceCategory>
+    </androidx.preference.PreferenceCategory>
 
-</android.support.v7.preference.PreferenceScreen>
+</androidx.preference.PreferenceScreen>

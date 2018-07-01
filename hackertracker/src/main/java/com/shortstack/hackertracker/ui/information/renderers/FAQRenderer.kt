@@ -1,7 +1,7 @@
 package com.shortstack.hackertracker.ui.information.renderers
 
-import android.support.transition.ChangeBounds
-import android.support.transition.TransitionManager
+import androidx.transition.ChangeBounds
+import androidx.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

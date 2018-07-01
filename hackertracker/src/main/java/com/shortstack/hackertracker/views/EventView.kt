@@ -6,8 +6,8 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.cardview.widget.CardView
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.view.View
@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.row_event.view.*
 import java.util.*
 import javax.inject.Inject
 
-class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs) {
+class EventView(context: Context, attrs: AttributeSet) : androidx.cardview.widget.CardView(context, attrs) {
 
     @Inject
     lateinit var database: DatabaseManager

@@ -6,6 +6,8 @@ import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.crashlytics.android.Crashlytics
+import com.github.stkent.amplify.feedback.DefaultEmailFeedbackCollector
+import com.github.stkent.amplify.feedback.GooglePlayStoreFeedbackCollector
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.di.AppComponent
@@ -53,7 +55,7 @@ class App : Application() {
     }
 
     fun scheduleSyncTask() {
-        WorkManager.getInstance().cancelAllWorkByTag(SyncWorker.TAG_SYNC)
+        WorkManager.getInstance()?.cancelAllWorkByTag(SyncWorker.TAG_SYNC)
 
         if (storage.syncingDisabled)
             return
@@ -68,12 +70,13 @@ class App : Application() {
                         .setConstraints(constraints)
                         .build()
 
-        WorkManager.getInstance().enqueue(request)
+        WorkManager.getInstance()?.enqueue(request)
     }
 
     private fun initFeedback() {
         Amplify.initSharedInstance(this)
-                .setFeedbackEmailAddress(Constants.FEEDBACK_EMAIL)
+                .setPositiveFeedbackCollectors(GooglePlayStoreFeedbackCollector())
+                .setCriticalFeedbackCollectors(DefaultEmailFeedbackCollector(Constants.FEEDBACK_EMAIL))
                 .applyAllDefaultRules()
                 .setLastUpdateTimeCooldownDays(1)
     }
