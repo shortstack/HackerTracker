@@ -11,6 +11,11 @@ import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.Constants.CONFERENCES_FILE
+import com.shortstack.hackertracker.Constants.SCHEDULE_FILE
+import com.shortstack.hackertracker.Constants.SPEAKERS_FILE
+import com.shortstack.hackertracker.Constants.TYPES_FILE
+import com.shortstack.hackertracker.Constants.VENDORS_FILE
 import com.shortstack.hackertracker.fromFile
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.models.response.Speakers
@@ -172,12 +177,5 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
         private const val DATABASE_NAME = "database"
 
-        private const val CONFERENCES_FILE = "conferences.json"
-
-        private const val SCHEDULE_FILE = "events.json"
-        private const val TYPES_FILE = "event_types.json"
-        private const val SPEAKERS_FILE = "speakers.json"
-        private const val VENDORS_FILE = "vendors.json"
-        private const val FAQ_FILE = "faq.json"
     }
 }

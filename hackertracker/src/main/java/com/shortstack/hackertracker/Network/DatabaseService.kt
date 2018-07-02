@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.network
 
 import com.shortstack.hackertracker.Constants
+import com.shortstack.hackertracker.database.MyRoomDatabase
 import com.shortstack.hackertracker.models.Conferences
 import com.shortstack.hackertracker.models.FAQs
 import com.shortstack.hackertracker.models.response.Speakers
@@ -16,22 +17,22 @@ import retrofit2.http.GET
 
 interface DatabaseService {
 
-    @GET("conferences/conferences.json")
+    @GET(Constants.CONFERENCES_FILE)
     fun getConferences(): Call<Conferences>
 
-    @GET("schedule-full.json")
+    @GET(Constants.SCHEDULE_FILE)
     fun getSchedule(): Call<SyncResponse>
 
-    @GET("event_type.json")
+    @GET(Constants.TYPES_FILE)
     fun getTypes(): Call<Types>
 
-    @GET("vendors.json")
+    @GET(Constants.VENDORS_FILE)
     fun getVendors(): Call<Vendors>
 
-    @GET("speakers.json")
+    @GET(Constants.SPEAKERS_FILE)
     fun getSpeakers(): Call<Speakers>
 
-    @GET("faq.json")
+    @GET(Constants.FAQ_FILE)
     fun getFAQs(): Call<FAQs>
 
 //    @GET("locations.json")
