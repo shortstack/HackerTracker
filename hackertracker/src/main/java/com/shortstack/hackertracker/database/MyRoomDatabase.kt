@@ -12,6 +12,7 @@ import com.google.gson.JsonSyntaxException
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants.CONFERENCES_FILE
+import com.shortstack.hackertracker.Constants.LOCATIONS_FILE
 import com.shortstack.hackertracker.Constants.SCHEDULE_FILE
 import com.shortstack.hackertracker.Constants.SPEAKERS_FILE
 import com.shortstack.hackertracker.Constants.TYPES_FILE
@@ -30,7 +31,7 @@ import javax.inject.Inject
 /**
  * Created by Chris on 3/31/2018.
  */
-@Database(entities = [(Conference::class), (Event::class), (Type::class), (Vendor::class), (Speaker::class), (FAQ::class)], version = 1)
+@Database(entities = [(Conference::class), (Event::class), (Type::class), (Vendor::class), (Speaker::class), (FAQ::class), (Location::class)], version = 1)
 @TypeConverters(value = [(Converters::class)])
 abstract class MyRoomDatabase : RoomDatabase() {
 
@@ -45,6 +46,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
     abstract fun vendorDao(): VendorDao
 
     abstract fun faqDao(): FAQDao
+
+    abstract fun locationDao(): LocationDao
 
     @Inject
     lateinit var gson: Gson
@@ -80,6 +83,18 @@ abstract class MyRoomDatabase : RoomDatabase() {
             }
 
             try {
+                // Types
+                gson.fromFile<Locations>(LOCATIONS_FILE, root = database).let {
+                    locationDao().insertAll(it.locations)
+                }
+            } catch (ex: JsonSyntaxException) {
+                Logger.e("Could not open $TYPES_FILE. ${ex.message}")
+            } catch (ex: FileNotFoundException) {
+                Logger.e("Could not find file $TYPES_FILE.")
+            }
+
+
+            try {
                 // Schedule
                 gson.fromFile<Events>(SCHEDULE_FILE, root = database).let {
                     eventDao().insertAll(it.events)
@@ -88,6 +103,17 @@ abstract class MyRoomDatabase : RoomDatabase() {
                 Logger.e("Could not open $SCHEDULE_FILE. ${ex.message}")
             } catch (ex: FileNotFoundException) {
                 Logger.e("Could not find file $SCHEDULE_FILE.")
+            }
+
+            try {
+                // Speakers
+                gson.fromFile<Speakers>(SPEAKERS_FILE, root = database).let {
+                    speakerDao().insertAll(it.speakers)
+                }
+            } catch (ex: JsonSyntaxException) {
+                Logger.e("Could not open $SPEAKERS_FILE. ${ex.message}")
+            } catch (ex: FileNotFoundException) {
+                Logger.e("Could not find file $SPEAKERS_FILE.")
             }
 
             try {
@@ -101,16 +127,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
                 Logger.e("Could not find file $VENDORS_FILE.")
             }
 
-            try {
-                // Speakers
-                gson.fromFile<Speakers>(SPEAKERS_FILE, root = database).let {
-                    speakerDao().insertAll(it.speakers)
-                }
-            } catch (ex: JsonSyntaxException) {
-                Logger.e("Could not open $SPEAKERS_FILE. ${ex.message}")
-            } catch (ex: FileNotFoundException) {
-                Logger.e("Could not find file $SPEAKERS_FILE.")
-            }
 
 //            try {
 //                gson.fromFile<FAQs>(FAQ_FILE, root = database).let {
