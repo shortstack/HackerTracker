@@ -15,8 +15,8 @@ import io.reactivex.Flowable
 @Dao
 interface FAQDao {
 
-    @Query("SELECT * FROM faq WHERE con = :con")
-    fun getAll(con: String): LiveData<List<FAQ>>
+    @Query("SELECT * FROM faq WHERE conference = :conference")
+    fun getAll(conference: String): LiveData<List<FAQ>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(faq: List<FAQ>)

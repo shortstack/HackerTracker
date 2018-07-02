@@ -7,13 +7,11 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
 import androidx.core.content.ContextCompat
-import androidx.cardview.widget.CardView
 import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.DatabaseEvent
@@ -24,7 +22,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.row_event.view.*
-import java.util.*
 import javax.inject.Inject
 
 class EventView(context: Context, attrs: AttributeSet) : androidx.cardview.widget.CardView(context, attrs) {
@@ -170,7 +167,7 @@ class EventView(context: Context, attrs: AttributeSet) : androidx.cardview.widge
 //            val colours = context.resources.getStringArray(R.array.colors)
 //            Color.parseColor(colours[Random().nextInt(colours.size)])
 //        } else {
-                Color.parseColor(type.colour)
+                Color.parseColor(type.color)
 //        }
 
         category.setBackgroundColor(color)

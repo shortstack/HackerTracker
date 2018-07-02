@@ -15,8 +15,8 @@ interface VendorDao {
     @Query("SELECT * FROM vendor")
     fun getAll(): LiveData<List<Vendor>>
 
-    @Query("SELECT * FROM vendor WHERE con = :con")
-    fun getAll(con: String): LiveData<List<Vendor>>
+    @Query("SELECT * FROM vendor WHERE conference = :conference")
+    fun getAll(conference: String): LiveData<List<Vendor>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(users: List<Vendor>)

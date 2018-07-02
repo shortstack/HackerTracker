@@ -44,7 +44,7 @@ class SyncWorker : Worker() {
 
         conferences?.conferences?.forEach {
 
-            val item = list.find { new -> new.conference.directory == it.directory }
+            val item = list.find { new -> new.conference.code == it.code }
             val isNewCon = item == null
 
             if (isNewCon || it.updated > item?.conference?.updated) {
@@ -58,14 +58,14 @@ class SyncWorker : Worker() {
     }
 
     private fun updateConference(it: Conference, isNewCon: Boolean): Int {
-        Logger.d("Fetching content for ${it.title}")
+        Logger.d("Fetching content for ${it.name}")
 
         try {
-            val syncResponse = getSchedule(it.directory)
-            val types = getTypes(it.directory)
-            val vendors = getVendors(it.directory)
-            val speakers = getSpeakers(it.directory)
-            val faqs = getFAQs(it.directory)
+            val syncResponse = getSchedule(it.code)
+            val types = getTypes(it.code)
+            val vendors = getVendors(it.code)
+            val speakers = getSpeakers(it.code)
+            val faqs = getFAQs(it.code)
 
 
             // Updating database

@@ -76,7 +76,7 @@ class DatabaseManager(context: Context) {
     }
 
     fun getRecent(conference: Conference): LiveData<List<DatabaseEvent>> {
-        return db.eventDao().getRecentlyUpdated(conference.directory)
+        return db.eventDao().getRecentlyUpdated(conference.code)
     }
 
     fun getSchedule(conference: DatabaseConference): LiveData<List<DatabaseEvent>> {
@@ -85,20 +85,20 @@ class DatabaseManager(context: Context) {
 
     fun getSchedule(conference: DatabaseConference, list: List<Type>): LiveData<List<DatabaseEvent>> {
         val selected = list.filter { it.isSelected }.map { it.type }
-        if (selected.isEmpty()) return db.eventDao().getSchedule(conference.conference.directory)
-        return db.eventDao().getSchedule(conference.conference.directory, selected)
+        if (selected.isEmpty()) return db.eventDao().getSchedule(conference.conference.code)
+        return db.eventDao().getSchedule(conference.conference.code, selected)
     }
 
     fun getFAQ(conference: Conference): LiveData<List<FAQ>> {
-        return db.faqDao().getAll(conference.directory)
+        return db.faqDao().getAll(conference.code)
     }
 
     fun getVendors(conference: Conference): LiveData<List<Vendor>> {
-        return db.vendorDao().getAll(conference.directory)
+        return db.vendorDao().getAll(conference.code)
     }
 
     fun getTypes(conference: Conference): LiveData<List<Type>> {
-        return db.typeDao().getTypes(conference.directory)
+        return db.typeDao().getTypes(conference.code)
     }
 
     fun findItem(id: Int): Event? {
@@ -125,42 +125,22 @@ class DatabaseManager(context: Context) {
     fun updateConference(conference: Conference, body: FullResponse): Int {
         body.apply {
             types?.let {
-                it.types.forEach {
-                    it.con = conference.directory
-                }
-
                 db.typeDao().insertAll(it.types)
             }
 
             speakers?.let {
-                it.speakers.forEach {
-                    it.con = conference.directory
-                }
-
                 db.speakerDao().insertAll(it.speakers)
             }
 
             syncResponse?.let {
-                it.events.forEach {
-                    it.con = conference.directory
-                }
-
                 db.eventDao().insertAll(it.events)
             }
 
             vendors?.let {
-                it.vendors.forEach {
-                    it.con = conference.directory
-                }
-
                 db.vendorDao().insertAll(it.vendors)
             }
 
             faqs?.let {
-                it.faqs.forEach {
-                    it.con = conference.directory
-                }
-
                 db.faqDao().insertAll(it.faqs)
             }
 

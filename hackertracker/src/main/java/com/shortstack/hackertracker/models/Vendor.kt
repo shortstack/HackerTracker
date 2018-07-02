@@ -7,7 +7,7 @@ import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-@Entity(foreignKeys = [(ForeignKey(entity = (Conference::class), parentColumns = [("directory")], childColumns = [("con")], onDelete = ForeignKey.CASCADE))])
+@Entity(foreignKeys = [(ForeignKey(entity = (Conference::class), parentColumns = [("code")], childColumns = [("conference")], onDelete = ForeignKey.CASCADE))])
 data class Vendor(
         @PrimaryKey(autoGenerate = true)
         val index: Int,
@@ -15,6 +15,6 @@ data class Vendor(
         val description: String,
         val link: String,
         val partner: Int,
-        var con: String
+        val conference: String
 ) : Parcelable
 

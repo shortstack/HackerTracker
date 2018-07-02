@@ -10,6 +10,6 @@ data class DatabaseConference(
         @Embedded
         val conference: Conference
 ) {
-    @Relation(parentColumn = "directory", entityColumn = "con")
+    @Relation(parentColumn = "code", entityColumn = "conference")
     var types: List<Type> = emptyList()
 }

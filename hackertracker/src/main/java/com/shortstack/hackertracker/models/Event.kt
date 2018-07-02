@@ -13,7 +13,7 @@ import java.util.*
  * Created by Chris on 3/31/2018.
  */
 @Parcelize
-@Entity(foreignKeys = [(ForeignKey(entity = (Conference::class), parentColumns = [("directory")], childColumns = [("con")], onDelete = ForeignKey.CASCADE))])
+@Entity(foreignKeys = [(ForeignKey(entity = (Conference::class), parentColumns = [("code")], childColumns = [("conference")], onDelete = ForeignKey.CASCADE))])
 data class Event(
         @PrimaryKey(autoGenerate = false)
         val index: Int,
@@ -33,7 +33,7 @@ data class Event(
         val includes: String?,
 
         var isBookmarked: Boolean,
-        var con: String
+        val conference: String
 ) : Parcelable {
 
     val date: Date

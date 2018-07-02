@@ -25,7 +25,6 @@ import com.shortstack.hackertracker.models.Conference
 import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.network.task.ReminderWorker
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import java.time.Duration
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -131,7 +130,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
         val builder = notificationBuilder
 
         if (newCon) {
-            builder.setContentTitle(conference.title)
+            builder.setContentTitle(conference.name)
             builder.setContentText("A new conference has been added")
         } else {
             builder.setContentTitle("Schedule Updated")
@@ -140,7 +139,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
 
         setItemPendingIntent(builder)
 
-        notify(conference.index, builder.build())
+        notify(conference.id, builder.build())
     }
 
     private fun setItemPendingIntent(builder: NotificationCompat.Builder, item: Event? = null) {

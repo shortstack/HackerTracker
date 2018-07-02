@@ -47,7 +47,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
     fun init() {
         App.application.component.inject(this)
 
-        val conferences = gson.fromFile<Conferences>(CONFERENCES_FILE, root = "conferences")
+        val conferences = gson.fromFile<Conferences>(CONFERENCES_FILE, root = null)
 
         conferences.let {
             val first = it.conferences.first()
@@ -56,7 +56,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
         }
 
         conferences.conferences.forEach {
-            val database = it.directory
+            val database = it.code
 
             Logger.d("Loading $database")
 
@@ -64,7 +64,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
                 // Types
                 gson.fromFile<Types>(TYPES_FILE, root = database).let {
                     it.types.forEach {
-                        it.con = database
                         it.isSelected = true
                     }
                     typeDao().insertAll(it.types)
@@ -78,7 +77,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
             try {
                 // Schedule
                 gson.fromFile<Events>(SCHEDULE_FILE, root = database).let {
-                    it.events.forEach { it.con = database }
                     eventDao().insertAll(it.events)
                 }
             } catch (ex: JsonSyntaxException) {
@@ -90,7 +88,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
             try {
                 // Vendors
                 gson.fromFile<Vendors>(VENDORS_FILE, root = database).let {
-                    it.vendors.forEach { it.con = database }
                     vendorDao().insertAll(it.vendors)
                 }
             } catch (ex: JsonSyntaxException) {
@@ -102,7 +99,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
             try {
                 // Speakers
                 gson.fromFile<Speakers>(SPEAKERS_FILE, root = database).let {
-                    it.speakers.forEach { it.con = database }
                     speakerDao().insertAll(it.speakers)
                 }
             } catch (ex: JsonSyntaxException) {
@@ -111,16 +107,15 @@ abstract class MyRoomDatabase : RoomDatabase() {
                 Logger.e("Could not find file $SPEAKERS_FILE.")
             }
 
-            try {
-                gson.fromFile<FAQs>(FAQ_FILE, root = database).let {
-                    it.faqs.forEach { it.con = database }
-                    faqDao().insertAll(it.faqs)
-                }
-            } catch (ex: JsonSyntaxException) {
-                Logger.e("Could not open $FAQ_FILE. ${ex.message}")
-            } catch (ex: FileNotFoundException) {
-                Logger.e("Could not find file $FAQ_FILE.")
-            }
+//            try {
+//                gson.fromFile<FAQs>(FAQ_FILE, root = database).let {
+//                    faqDao().insertAll(it.faqs)
+//                }
+//            } catch (ex: JsonSyntaxException) {
+//                Logger.e("Could not open $FAQ_FILE. ${ex.message}")
+//            } catch (ex: FileNotFoundException) {
+//                Logger.e("Could not find file $FAQ_FILE.")
+//            }
         }
     }
 
@@ -161,7 +156,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
                             Single.fromCallable {
                                 val instance = getInstance(context, conferenceLiveData)
                                 val currentCon = instance.conferenceDao().getCurrentCon()
-                                Logger.d("Setting current con $currentCon")
+                                Logger.d("Setting current conference $currentCon")
                                 conferenceLiveData.postValue(currentCon)
                             }.subscribeOn(Schedulers.io())
                                     .observeOn(AndroidSchedulers.mainThread())
@@ -179,8 +174,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
         private const val CONFERENCES_FILE = "conferences.json"
 
-        private const val SCHEDULE_FILE = "schedule-full.json"
-        private const val TYPES_FILE = "event_type.json"
+        private const val SCHEDULE_FILE = "events.json"
+        private const val TYPES_FILE = "event_types.json"
         private const val SPEAKERS_FILE = "speakers.json"
         private const val VENDORS_FILE = "vendors.json"
         private const val FAQ_FILE = "faq.json"

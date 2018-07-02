@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
         val mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
         mainActivityViewModel.conference.observe(this, Observer {
             if (it != null) {
-                nav_view.getHeaderView(0).nav_title.text = it.conference.title
+                nav_view.getHeaderView(0).nav_title.text = it.conference.name
             }
         })
         mainActivityViewModel.conferences.observe(this, Observer {
@@ -69,7 +69,7 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
             nav_view.menu.removeGroup(R.id.nav_cons)
 
             it?.forEach {
-                nav_view.menu.add(R.id.nav_cons, it.index, 0, it.title).apply {
+                nav_view.menu.add(R.id.nav_cons, it.id, 0, it.name).apply {
                     isChecked = it.isSelected
                     icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_chevron_right_white_24dp)
                 }
@@ -210,7 +210,7 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.groupId == R.id.nav_cons) {
-            val con = database.getConferences().firstOrNull { it.conference.index == item.itemId }
+            val con = database.getConferences().firstOrNull { it.conference.id == item.itemId }
             if (con != null) database.changeConference(con)
         } else {
             val current = navController.currentDestination.id

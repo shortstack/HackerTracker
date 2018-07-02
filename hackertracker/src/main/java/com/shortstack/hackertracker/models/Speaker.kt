@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-@Entity(foreignKeys = [(ForeignKey(entity = (Conference::class), parentColumns = [("directory")], childColumns = [("con")], onDelete = ForeignKey.CASCADE))])
+@Entity(foreignKeys = [(ForeignKey(entity = (Conference::class), parentColumns = [("code")], childColumns = [("conference")], onDelete = ForeignKey.CASCADE))])
 data class Speaker(
         @PrimaryKey(autoGenerate = false)
         @SerializedName("indexsp")
@@ -20,6 +20,6 @@ data class Speaker(
         val lastUpdate: String?,
         val media: String?,
         val bio: String?,
-        var con: String
+        val conference: String
 ) : Parcelable
 

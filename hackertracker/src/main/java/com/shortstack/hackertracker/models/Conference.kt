@@ -2,8 +2,9 @@ package com.shortstack.hackertracker.models
 
 import androidx.room.Embedded
 import androidx.room.Entity
-import androidx.room.Ignore
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
+import com.shortstack.hackertracker.database.ConferenceFile
 import java.util.Date
 
 /**
@@ -11,19 +12,38 @@ import java.util.Date
  */
 @Entity
 data class Conference(
-        val title: String,
+        val id: Int,
+        val name: String,
+        val description: String,
+        val timezone: String,
         @PrimaryKey(autoGenerate = false)
-        val directory: String,
+        val code: String,
+        @SerializedName("start_date")
         val start: Date,
+        @SerializedName("end_date")
         val end: Date,
+        @SerializedName("updated_at")
         val updated: Date,
+
+//        @Embedded
+//        val maps: ConferenceMap,
+
+        @Embedded(prefix = "locations_")
+        val locations: ConferenceFile,
+        @Embedded(prefix = "types_")
+        @SerializedName("event_types")
+        val types: ConferenceFile,
+        @Embedded(prefix = "events_")
+        val events: ConferenceFile,
+        @Embedded(prefix = "speakers_")
+        val speakers: ConferenceFile,
+        @Embedded(prefix = "vendors_")
+        val vendors: ConferenceFile,
+
         val synced: Date?,
-        @Embedded
-        val maps: ConferenceMap,
+
         var isSelected: Boolean
 ) {
-    override fun toString() = title
+    override fun toString() = name
 
-    val index
-        get() = directory.hashCode()
 }

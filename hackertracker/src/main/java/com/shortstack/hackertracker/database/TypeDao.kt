@@ -17,8 +17,8 @@ interface TypeDao {
     @Query("SELECT * FROM type")
     fun getTypes(): Single<List<Type>>
 
-    @Query("SELECT * FROM type WHERE con = :con")
-    fun getTypes(con: String): LiveData<List<Type>>
+    @Query("SELECT * FROM type WHERE conference = :conference")
+    fun getTypes(conference: String): LiveData<List<Type>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(type: List<Type>)

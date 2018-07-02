@@ -37,7 +37,7 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
 
             val box = AppCompatCheckBox(context)
             box.text = type.type
-            CompoundButtonCompat.setButtonTintList(box, ColorStateList.valueOf(Color.parseColor(type.colour)))
+            CompoundButtonCompat.setButtonTintList(box, ColorStateList.valueOf(Color.parseColor(type.color)))
 
             box.isChecked = type.isSelected
 

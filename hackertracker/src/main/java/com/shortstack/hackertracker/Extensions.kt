@@ -42,9 +42,13 @@ fun Date.getDateDifference(date: Date, timeUnit: TimeUnit): Long {
 }
 
 
-inline fun <reified T> Gson.fromFile(filename: String, root: String): T {
+inline fun <reified T> Gson.fromFile(filename: String, root: String?): T {
     try {
-        val s = "database/conferences/$root/$filename"
+        val s = if (root != null) {
+            "database/conferences/$root/$filename"
+        } else {
+            "database/conferences/$filename"
+        }
         val stream = App.application.assets.open(s)
 
         val size = stream.available()
