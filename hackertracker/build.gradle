@@ -110,7 +110,7 @@ dependencies {
     }
 
     // Generic Renders for Lists
-    implementation 'com.github.Shyish:GenericRenderers:1.0.2'
+    implementation 'com.github.Shyish:GenericRenderers:2.1.4'
     // Pretty Logger
     implementation 'com.orhanobut:logger:1.15'
     // PDF Viewer

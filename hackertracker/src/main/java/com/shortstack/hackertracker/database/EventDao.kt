@@ -22,14 +22,14 @@ interface EventDao {
         private const val LIMIT = 20
     }
 
-    @Query("SELECT * FROM event where conference = :conference AND type IN (:types) ORDER BY `begin` ASC")
-    fun getSchedule(conference: String, types: List<String>): LiveData<List<DatabaseEvent>>
+    @Query("SELECT * FROM event where conference = :conference AND `end` > :date AND type IN (:types) ORDER BY `begin` ASC")
+    fun getSchedule(conference: String, date: Date, types: List<String>): LiveData<List<DatabaseEvent>>
 
-    @Query("SELECT * FROM event where conference = :conference ORDER BY `begin` ASC")
-    fun getSchedule(conference: String): LiveData<List<DatabaseEvent>>
+    @Query("SELECT * FROM event where conference = :conference AND `end` > :date ORDER BY `begin` ASC")
+    fun getSchedule(conference: String, date: Date): LiveData<List<DatabaseEvent>>
 
-    @Query("SELECT * FROM event WHERE conference = :conference ORDER BY `begin` ASC LIMIT $LIMIT OFFSET :page")
-    fun getSchedule(conference: String, page: Int): LiveData<List<Event>>
+//    @Query("SELECT * FROM event WHERE conference = :conference ORDER BY `begin` ASC LIMIT $LIMIT OFFSET :page")
+//    fun getSchedule(conference: String, page: Int): LiveData<List<Event>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item: Event)
@@ -51,4 +51,7 @@ interface EventDao {
 
     @Query("SELECT * FROM event WHERE conference = :conference ORDER BY updatedAt DESC LIMIT $LIMIT")
     fun getRecentlyUpdated(conference: String): LiveData<List<DatabaseEvent>>
+
+    @Query("UPDATE event SET isBookmarked = :isBookmarked WHERE `index` = :id")
+    fun updateBookmark(id: Int, isBookmarked: Boolean)
 }

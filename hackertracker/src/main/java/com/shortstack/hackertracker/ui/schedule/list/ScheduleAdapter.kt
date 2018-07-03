@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.ui.schedule.list
 
+import androidx.recyclerview.widget.DiffUtil
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
@@ -10,8 +11,9 @@ import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
-class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder()) {
+class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) {
 
     @Inject
     lateinit var database: DatabaseManager
@@ -23,11 +25,8 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder()) {
         App.application.component.inject(this)
     }
 
-    fun addAllAndNotify(elements: List<DatabaseEvent>) {
-        if (elements.isEmpty())
-            return
-
-        val size = collection.size
+    private fun getFormattedElements(elements: List<DatabaseEvent>): ArrayList<Any> {
+        val result = ArrayList<Any>()
 
         val previous = collection.filterIsInstance<Event>().lastOrNull()
         val prevDay = previous?.date
@@ -35,26 +34,18 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder()) {
 
         elements.groupBy { it.event.date }.forEach {
             if (prevDay != it.key) {
-                addDay(it.key)
+                result.add(Day(it.key))
             }
 
             it.value.groupBy { it.event.begin }.forEach {
                 if (prevTime != it.key) {
-                    addTime(it.key)
+                    result.add(Time(it.key))
                 }
-                addAll(it.value)
+                result.addAll(it.value)
             }
         }
 
-        notifyItemRangeInserted(size, collection.size - size)
-    }
-
-    private fun addDay(day: Date) {
-        add(Day(day))
-    }
-
-    private fun addTime(time: Date) {
-        add(Time(time))
+        return result
     }
 
     fun notifyTimeChanged() {
@@ -91,4 +82,56 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder()) {
             }
         }
     }
+
+    fun setSchedule(list: List<DatabaseEvent>?) {
+        if (list == null) {
+            clearAndNotify()
+            return
+        }
+
+        val elements = getFormattedElements(list)
+
+
+        val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
+            override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                val left = collection[oldItemPosition]
+                val right = elements[newItemPosition]
+
+                if (left is DatabaseEvent && right is DatabaseEvent) {
+                    return left.event.index == right.event.index
+                } else if (left is Day && right is Day) {
+                    return left.time == right.time
+                } else if (left is Time && right is Time) {
+                    return left.time == right.time
+                }
+                return false
+            }
+
+            override fun getOldListSize() = collection.size
+
+            override fun getNewListSize() = elements.size
+
+            override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
+                val left = collection[oldItemPosition]
+                val right = elements[newItemPosition]
+
+                if (left is DatabaseEvent && right is DatabaseEvent) {
+                    return left.event.updatedAt == right.event.updatedAt
+                } else if (left is Day && right is Day) {
+                    return left.time == right.time
+                } else if (left is Time && right is Time) {
+                    return left.time == right.time
+                }
+                return false
+            }
+
+        })
+
+        result.dispatchUpdatesTo(this)
+
+        collection.clear()
+        collection.addAll(elements)
+    }
+
+    fun isEmpty() = collection.isEmpty()
 }

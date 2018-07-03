@@ -10,11 +10,12 @@ import com.shortstack.hackertracker.ui.schedule.renderers.RelativeDayRender
 import com.shortstack.hackertracker.ui.schedule.renderers.RelativeTimeRenderer
 
 
-class ScheduleBuilder : RendererBuilder<Any>() {
-    init {
-
-        bind(DatabaseEvent::class.java, EventRenderer())
+class ScheduleBuilder : RendererBuilder.BaseRendererBuilder<Any> {
+    override fun getRendererBuilder(): RendererBuilder<Any> {
+        return RendererBuilder.create<Any>()
+                .bind(DatabaseEvent::class.java, EventRenderer())
                 .bind(Day::class.java, RelativeDayRender())
                 .bind(Time::class.java, RelativeTimeRenderer())
+                .rendererBuilder
     }
 }

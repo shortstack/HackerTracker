@@ -13,6 +13,7 @@ import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
@@ -24,7 +25,7 @@ import javax.inject.Inject
 
 class SearchFragment : androidx.fragment.app.Fragment(), SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
 
-    private lateinit var adapter: RendererAdapter<Event>
+    private lateinit var adapter: RendererAdapter<Any>
     private lateinit var viewModel: SearchViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,8 +42,9 @@ class SearchFragment : androidx.fragment.app.Fragment(), SearchView.OnQueryTextL
 
         loading_progress.visibility = View.GONE
 
-        adapter = RendererAdapter(RendererBuilder<Any>()
-                .bind(Event::class.java, EventRenderer()))
+        adapter = RendererBuilder.create<Any>()
+                .bind(DatabaseEvent::class.java, EventRenderer())
+                .build()
         list.adapter = adapter
 
         viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)

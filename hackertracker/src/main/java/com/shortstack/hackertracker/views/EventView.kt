@@ -220,8 +220,11 @@ class EventView(context: Context, attrs: AttributeSet) : androidx.cardview.widge
 
         event.isBookmarked = !event.isBookmarked
 
+
+        renderCategoryColour()
+
         Single.fromCallable {
-            database.updateEvent(event)
+            database.updateBookmark(event)
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()

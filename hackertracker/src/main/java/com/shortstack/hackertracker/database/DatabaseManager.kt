@@ -7,7 +7,9 @@ import android.content.Context
 import androidx.lifecycle.MediatorLiveData
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.FullResponse
+import com.shortstack.hackertracker.now
 import io.reactivex.Single
+import java.util.*
 
 /**
  * Created by Chris on 3/31/2018.
@@ -83,10 +85,12 @@ class DatabaseManager(context: Context) {
         return getSchedule(conference, conference.types)
     }
 
-    fun getSchedule(conference: DatabaseConference, list: List<Type>): LiveData<List<DatabaseEvent>> {
+    private fun getSchedule(conference: DatabaseConference, list: List<Type>): LiveData<List<DatabaseEvent>> {
+        val date = Date().now()
+
         val selected = list.filter { it.isSelected }.map { it.type }
-        if (selected.isEmpty()) return db.eventDao().getSchedule(conference.conference.code)
-        return db.eventDao().getSchedule(conference.conference.code, selected)
+        if (selected.isEmpty()) return db.eventDao().getSchedule(conference.conference.code, date)
+        return db.eventDao().getSchedule(conference.conference.code, date, selected)
     }
 
     fun getFAQ(conference: Conference): LiveData<List<FAQ>> {
@@ -115,6 +119,10 @@ class DatabaseManager(context: Context) {
 
     fun updateEvent(event: Event) {
         return db.eventDao().update(event)
+    }
+
+    fun updateBookmark(event: Event) {
+        return db.eventDao().updateBookmark(event.index, event.isBookmarked)
     }
 
     fun updateConference(conference: Conference) {

@@ -3,8 +3,6 @@ package com.shortstack.hackertracker.ui.schedule
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -54,23 +52,17 @@ class ScheduleFragment : androidx.fragment.app.Fragment(), androidx.swiperefresh
 
         val scheduleViewModel = ViewModelProviders.of(this).get(ScheduleViewModel::class.java)
         scheduleViewModel.schedule.observe(this, Observer {
-            val resource = it
-
             hideViews()
 
-            when (resource?.status) {
+            when (it?.status) {
                 Status.SUCCESS -> {
-                    if (resource.data!!.isEmpty()) {
-                        adapter.clearAndNotify()
+                    adapter.setSchedule(it.data)
+                    if( adapter.isEmpty() ) {
                         showEmptyView()
-                    } else {
-                        adapter.clearAndNotify()
-                        adapter.addAllAndNotify(resource.data)
-                        hideViews()
                     }
                 }
                 Status.ERROR -> {
-                    showErrorView(resource.message)
+                    showErrorView(it.message)
                 }
                 Status.LOADING -> {
                     adapter.clearAndNotify()

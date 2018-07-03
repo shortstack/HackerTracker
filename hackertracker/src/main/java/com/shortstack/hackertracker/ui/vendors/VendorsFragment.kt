@@ -29,8 +29,9 @@ class VendorsFragment : ListFragment<Vendor>() {
     }
 
     override fun initAdapter(): RendererAdapter<Any> {
-        return RendererAdapter(RendererBuilder<Vendor>()
-                .bind(Vendor::class.java, VendorRenderer()))
+        return RendererBuilder.create<Any>()
+                .bind(Vendor::class.java, VendorRenderer())
+                .build()
     }
 
     companion object {

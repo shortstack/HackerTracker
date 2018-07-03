@@ -28,10 +28,11 @@ class InformationFragment : ListFragment<FAQ>() {
     }
 
     override fun initAdapter(): RendererAdapter<Any> {
-        return RendererAdapter(RendererBuilder<Any>()
+        return RendererBuilder.create<Any>()
                 .bind(FAQ::class.java, FAQRenderer())
                 .bind(String::class.java, GenericHeaderRenderer())
-                .bind(Information::class.java, InformationRenderer()))
+                .bind(Information::class.java, InformationRenderer())
+                .build()
     }
 
     companion object {

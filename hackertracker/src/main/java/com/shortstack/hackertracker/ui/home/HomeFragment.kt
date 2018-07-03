@@ -37,12 +37,15 @@ class HomeFragment : androidx.fragment.app.Fragment() {
         super.onViewCreated(view, savedInstanceState)
         setProgressIndicator(true)
 
-        adapter = RendererAdapter(RendererBuilder<Any>()
-                .bind(TYPE_HEADER, HomeHeaderRenderer())
+
+        adapter = RendererBuilder.create<Any>()
+//                .bind(TYPE_HEADER, HomeHeaderRenderer())
                 .bind(String::class.java, SubHeaderRenderer())
                 .bind(DatabaseEvent::class.java, EventRenderer())
                 .bind(Navigation::class.java, ActivityNavRenderer())
-                .bind(TYPE_CHANGE_CON, ChangeConRenderer()))
+                .build()
+//                .bind(TYPE_CHANGE_CON, ChangeConRenderer()))
+
 
         list.adapter = adapter
 
@@ -52,7 +55,7 @@ class HomeFragment : androidx.fragment.app.Fragment() {
             setProgressIndicator(false)
             if (it != null) {
                 adapter.clearAndNotify()
-                adapter.addAndNotify(getHeader())
+//                adapter.addAndNotify(getHeader())
                 showRecentUpdates(it)
             }
         })
