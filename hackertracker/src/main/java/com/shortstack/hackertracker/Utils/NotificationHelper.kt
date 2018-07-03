@@ -104,7 +104,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
 
     fun scheduleItemNotification(item: Event) {
 
-        WorkManager.getInstance()?.cancelAllWorkByTag(ReminderWorker.TAG + item.index)
+        WorkManager.getInstance()?.cancelAllWorkByTag(ReminderWorker.TAG + item.id)
 
         val window: Long = (item.notificationTime - 1200).toLong()
 
@@ -115,11 +115,11 @@ class NotificationHelper @Inject constructor(private val context: Context) {
         }
 
         val data = Data.Builder()
-                .putInt(ReminderWorker.NOTIFICATION_ID, item.index).build()
+                .putInt(ReminderWorker.NOTIFICATION_ID, item.id).build()
 
         val request = OneTimeWorkRequest.Builder(ReminderWorker::class.java)
                 .setInitialDelay(window, TimeUnit.SECONDS)
-                .addTag(ReminderWorker.TAG + item.index)
+                .addTag(ReminderWorker.TAG + item.id)
                 .setInputData(data)
                 .build()
 
@@ -147,7 +147,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
 
         if (item != null) {
             val bundle = Bundle()
-            bundle.putInt("target", item.index)
+            bundle.putInt("target", item.id)
             intent.putExtras(bundle)
         }
 
@@ -162,7 +162,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
     }
 
     fun notifyStartingSoon(event: Event) {
-        manager.notify(event.index, getItemNotification(event))
+        manager.notify(event.id, getItemNotification(event))
     }
 
     companion object {

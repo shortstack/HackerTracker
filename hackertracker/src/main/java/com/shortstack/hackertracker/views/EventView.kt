@@ -161,7 +161,7 @@ class EventView(context: Context, attrs: AttributeSet) : androidx.cardview.widge
     private fun renderCategoryColour() {
         val type = content?.event?.type?.firstOrNull() ?: return
 
-        category_text.text = type.type
+        category_text.text = type.name
         val color =
 //                if (BuildConfig.DEBUG) {
 //            val colours = context.resources.getStringArray(R.array.colors)

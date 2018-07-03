@@ -9,7 +9,6 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.utils.TimeUtil
-import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
@@ -46,7 +45,7 @@ class EventViewModel(val event: DatabaseEvent) : ViewModel() {
             return Math.min(1.0f, 1 - l)
         }
 
-    var hasAnimatedProgress : Boolean = true
+    var hasAnimatedProgress: Boolean = true
 
 
     fun getFullTimeStamp(context: Context): String {
@@ -75,19 +74,18 @@ class EventViewModel(val event: DatabaseEvent) : ViewModel() {
         result += (event.event.title + "\n")
 
         result += (getFullTimeStamp(context) + "\n")
-        if (event.event.location != null)
-            result += (event.event.location + "\n")
-        //result = result.concat(getType());
+//            result += (event.event.location + "\n")
+        //result = result.concat(getName());
 
 
         return result
     }
 
     val location: String
-        get() = event.event.location ?: "Unknown"
+        get() = event.event.location.toString() ?: "Unknown"
 
     val id: Int
-        get() = event.event.index
+        get() = event.event.id
 
     val toolsVisibility: Int
         get() = if (event.event.includes?.contains("tool") == true) View.VISIBLE else View.GONE

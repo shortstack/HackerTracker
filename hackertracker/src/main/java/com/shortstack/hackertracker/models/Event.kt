@@ -15,10 +15,10 @@ import java.util.*
 @Parcelize
 @Entity(foreignKeys = [(ForeignKey(entity = (Conference::class), parentColumns = [("code")], childColumns = [("conference")], onDelete = ForeignKey.CASCADE))])
 data class Event(
-        @PrimaryKey(autoGenerate = false)
-        val index: Int,
+        @PrimaryKey
+        val id: Int,
         @SerializedName("entry_type")
-        val type: String,
+        val type: Int,
         val title: String,
         val description: String,
         @SerializedName("start_date")
@@ -28,12 +28,12 @@ data class Event(
         @SerializedName("updated_at")
         val updatedAt: Date,
 
-        val location: String?,
+        val location: Int,
         val url: String?,
         val includes: String?,
+        val conference: String,
 
-        var isBookmarked: Boolean,
-        val conference: String
+        var isBookmarked: Boolean
 ) : Parcelable {
 
     val date: Date

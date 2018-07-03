@@ -9,7 +9,6 @@ import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
-import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
@@ -98,7 +97,7 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
                 val right = elements[newItemPosition]
 
                 if (left is DatabaseEvent && right is DatabaseEvent) {
-                    return left.event.index == right.event.index
+                    return left.event.id == right.event.id
                 } else if (left is Day && right is Day) {
                     return left.time == right.time
                 } else if (left is Time && right is Time) {

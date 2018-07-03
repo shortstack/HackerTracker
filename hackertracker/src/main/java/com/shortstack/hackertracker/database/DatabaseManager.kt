@@ -88,7 +88,7 @@ class DatabaseManager(context: Context) {
     private fun getSchedule(conference: DatabaseConference, list: List<Type>): LiveData<List<DatabaseEvent>> {
         val date = Date().now()
 
-        val selected = list.filter { it.isSelected }.map { it.type }
+        val selected = list.filter { it.isSelected }.map { it.id }
         if (selected.isEmpty()) return db.eventDao().getSchedule(conference.conference.code, date)
         return db.eventDao().getSchedule(conference.conference.code, date, selected)
     }
@@ -122,7 +122,7 @@ class DatabaseManager(context: Context) {
     }
 
     fun updateBookmark(event: Event) {
-        return db.eventDao().updateBookmark(event.index, event.isBookmarked)
+        return db.eventDao().updateBookmark(event.id, event.isBookmarked)
     }
 
     fun updateConference(conference: Conference) {

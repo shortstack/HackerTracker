@@ -23,7 +23,7 @@ interface TypeDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(type: List<Type>)
 
-    @Query("SELECT * FROM type WHERE type = :event")
+    @Query("SELECT * FROM type WHERE name = :event")
     fun getTypeForEvent(event: String): Single<Type>
 
     @Update

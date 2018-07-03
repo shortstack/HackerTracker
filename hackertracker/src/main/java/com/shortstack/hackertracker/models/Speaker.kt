@@ -10,16 +10,14 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 @Entity(foreignKeys = [(ForeignKey(entity = (Conference::class), parentColumns = [("code")], childColumns = [("conference")], onDelete = ForeignKey.CASCADE))])
 data class Speaker(
-        @PrimaryKey(autoGenerate = false)
-        @SerializedName("indexsp")
+        @PrimaryKey
         val id: Int,
-        @SerializedName("sptitle")
-        val title: String?,
-        @SerializedName("who")
         val name: String,
-        val lastUpdate: String?,
-        val media: String?,
-        val bio: String?,
+        val description: String,
+        val link: String,
+        val twitter: String,
+        @SerializedName("updated_at")
+        val updatedAt: String,
         val conference: String
 ) : Parcelable
 

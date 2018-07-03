@@ -16,7 +16,7 @@ class SpeakerView(context: Context, speaker: Speaker) : LinearLayout(context) {
 
     private fun render(speaker: Speaker) {
         speaker_name.text = speaker.name
-        speaker_description.text = speaker.bio
+        speaker_description.text = speaker.description
     }
 
 

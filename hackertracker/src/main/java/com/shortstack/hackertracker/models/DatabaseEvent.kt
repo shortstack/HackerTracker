@@ -13,7 +13,7 @@ data class DatabaseEvent(
         @Embedded
         val event: Event
 ) : Parcelable {
-    @Relation(parentColumn = "type", entityColumn = "type")
+    @Relation(parentColumn = "type", entityColumn = "id")
     var type: List<Type> = emptyList()
 }
 
