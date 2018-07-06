@@ -7,6 +7,7 @@ import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.Conference
+import com.shortstack.hackertracker.models.DatabaseConference
 import com.shortstack.hackertracker.models.FAQs
 import com.shortstack.hackertracker.models.response.Speakers
 import com.shortstack.hackertracker.models.response.Types
@@ -47,9 +48,11 @@ class SyncWorker : Worker() {
             val item = list.find { new -> new.conference.code == it.code }
             val isNewCon = item == null
 
-            if (isNewCon || it.updated > item?.conference?.updated) {
-                rowsUpdated += updateConference(it, isNewCon)
-            }
+            it.isSelected = item?.conference?.isSelected ?: false
+
+//            if (isNewCon || it.updated > item?.conference?.updated) {
+            rowsUpdated += updateConference(it, item, isNewCon)
+//            }
         }
 
         outputData = mapOf(KEY_ROWS_UPDATED to rowsUpdated).toWorkData()
@@ -57,15 +60,16 @@ class SyncWorker : Worker() {
         return Result.SUCCESS
     }
 
-    private fun updateConference(it: Conference, isNewCon: Boolean): Int {
+    private fun updateConference(it: Conference, item: DatabaseConference?, isNewCon: Boolean): Int {
         Logger.d("Fetching content for ${it.name}")
 
         try {
             val syncResponse = getSchedule(it.code)
-            val types = getTypes(it.code)
+            val types = if (it.types == null || item?.conference?.types == null || it.types.updatedAt < item.conference.types.updatedAt) getTypes(it.code) else null
             val vendors = getVendors(it.code)
             val speakers = getSpeakers(it.code)
-            val faqs = getFAQs(it.code)
+            val faqs = if (it.faqs == null || item?.conference?.faqs == null || it.faqs.updatedAt < item.conference.faqs.updatedAt) getFAQs(it.code) else null
+
 
 
             // Updating database

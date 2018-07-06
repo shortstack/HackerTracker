@@ -19,7 +19,7 @@ interface VendorDao {
     fun getAll(conference: String): LiveData<List<Vendor>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(users: List<Vendor>)
+    fun insertAll(users: List<Vendor>) : List<Long>
 
     @Delete
     fun delete(user: Vendor)

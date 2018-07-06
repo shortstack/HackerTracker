@@ -17,7 +17,7 @@ interface SpeakerDao {
     fun getAll(): Flowable<List<Speaker>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(users: List<Speaker>)
+    fun insertAll(users: List<Speaker>) : List<Long>
 
     @Delete
     fun delete(user: Speaker)

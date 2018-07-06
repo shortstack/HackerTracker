@@ -54,6 +54,8 @@ class ScheduleFragment : androidx.fragment.app.Fragment(), androidx.swiperefresh
         scheduleViewModel.schedule.observe(this, Observer {
             hideViews()
 
+            adapter.state = it?.status!!
+
             when (it?.status) {
                 Status.SUCCESS -> {
                     adapter.setSchedule(it.data)
@@ -82,7 +84,7 @@ class ScheduleFragment : androidx.fragment.app.Fragment(), androidx.swiperefresh
         disposable = timer.observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     adapter.notifyTimeChanged()
-                    if (adapter.collection.isEmpty()) {
+                    if (adapter.isEmpty()) {
                         showEmptyView()
                     } else {
                         hideViews()

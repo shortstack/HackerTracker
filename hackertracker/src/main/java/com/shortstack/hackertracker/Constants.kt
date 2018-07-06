@@ -18,6 +18,6 @@ object Constants {
     const val TYPES_FILE = "event_types.json"
     const val SPEAKERS_FILE = "speakers.json"
     const val VENDORS_FILE = "vendors.json"
-    const val FAQ_FILE = "faq.json"
+    const val FAQ_FILE = "faqs.json"
     const val LOCATIONS_FILE = "locations.json"
 }

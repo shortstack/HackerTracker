@@ -19,5 +19,5 @@ interface FAQDao {
     fun getAll(conference: String): LiveData<List<FAQ>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(faq: List<FAQ>)
+    fun insertAll(faq: List<FAQ>): List<Long>
 }

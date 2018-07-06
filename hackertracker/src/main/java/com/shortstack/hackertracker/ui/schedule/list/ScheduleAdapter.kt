@@ -3,6 +3,8 @@ package com.shortstack.hackertracker.ui.schedule.list
 import androidx.recyclerview.widget.DiffUtil
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.Resource
+import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Day
@@ -19,6 +21,8 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
 
     @Inject
     lateinit var storage: SharedPreferencesUtil
+
+    var state : Status = Status.NOT_INITIALIZED
 
     init {
         App.application.component.inject(this)
@@ -132,5 +136,5 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
         collection.addAll(elements)
     }
 
-    fun isEmpty() = collection.isEmpty()
+    fun isEmpty() = state == Status.SUCCESS && collection.isEmpty()
 }

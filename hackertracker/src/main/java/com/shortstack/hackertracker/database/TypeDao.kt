@@ -21,7 +21,7 @@ interface TypeDao {
     fun getTypes(conference: String): LiveData<List<Type>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(type: List<Type>)
+    fun insertAll(type: List<Type>): List<Long>
 
     @Query("SELECT * FROM type WHERE name = :event")
     fun getTypeForEvent(event: String): Single<Type>

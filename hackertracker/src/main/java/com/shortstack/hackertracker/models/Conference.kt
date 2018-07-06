@@ -29,16 +29,18 @@ data class Conference(
 //        val maps: ConferenceMap,
 
         @Embedded(prefix = "locations_")
-        val locations: ConferenceFile,
+        val locations: ConferenceFile?,
         @Embedded(prefix = "types_")
         @SerializedName("event_types")
-        val types: ConferenceFile,
+        val types: ConferenceFile?,
         @Embedded(prefix = "events_")
-        val events: ConferenceFile,
+        val events: ConferenceFile?,
         @Embedded(prefix = "speakers_")
-        val speakers: ConferenceFile,
+        val speakers: ConferenceFile?,
         @Embedded(prefix = "vendors_")
-        val vendors: ConferenceFile,
+        val vendors: ConferenceFile?,
+        @Embedded(prefix = "faqs_")
+        val faqs: ConferenceFile?,
 
         val synced: Date?,
 

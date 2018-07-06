@@ -5,11 +5,13 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import android.content.Context
 import androidx.lifecycle.MediatorLiveData
+import androidx.room.Transaction
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.now
 import io.reactivex.Single
 import java.util.*
+import kotlin.math.sign
 
 /**
  * Created by Chris on 3/31/2018.
@@ -130,32 +132,35 @@ class DatabaseManager(context: Context) {
     }
 
 
+    @Transaction
     fun updateConference(conference: Conference, body: FullResponse): Int {
+        var count = 0
+
         body.apply {
             types?.let {
-                db.typeDao().insertAll(it.types)
+                count += db.typeDao().insertAll(it.types).size
             }
 
             speakers?.let {
-                db.speakerDao().insertAll(it.speakers)
+                count += db.speakerDao().insertAll(it.speakers).size
             }
 
             syncResponse?.let {
-                db.eventDao().insertAll(it.events)
+                count += db.eventDao().insertAll(it.events).size
             }
 
             vendors?.let {
-                db.vendorDao().insertAll(it.vendors)
+                count += db.vendorDao().insertAll(it.vendors).size
             }
 
             faqs?.let {
-                db.faqDao().insertAll(it.faqs)
+                count += db.faqDao().insertAll(it.faqs).size
             }
 
             db.conferenceDao().upsert(conference)
         }
 
-        return body.syncResponse?.events?.size ?: 0
+        return count
     }
 
     fun updateType(type: Type): Int {
