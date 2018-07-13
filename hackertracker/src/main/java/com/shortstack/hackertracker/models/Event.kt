@@ -4,6 +4,7 @@ import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 import android.os.Parcelable
+import androidx.room.Ignore
 import com.google.gson.annotations.SerializedName
 import com.shortstack.hackertracker.now
 import kotlinx.android.parcel.Parcelize
@@ -30,11 +31,15 @@ data class Event(
 
         val location: Int,
         val url: String?,
-        val includes: String?,
         val conference: String,
+
+        @Ignore
+        val speakers: List<Int>,
 
         var isBookmarked: Boolean
 ) : Parcelable {
+
+    constructor(id: Int, type: Int, title: String, description: String, begin: Date, end: Date, updatedAt: Date, location: Int, url: String?, conference: String) : this(id, type, title, description, begin, end, updatedAt, location, url, conference, emptyList(), false)
 
     val date: Date
         get() {

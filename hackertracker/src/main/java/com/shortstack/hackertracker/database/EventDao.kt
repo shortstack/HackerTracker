@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Event
+import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.network.SyncResponse
 import io.reactivex.Flowable
@@ -30,6 +31,7 @@ interface EventDao {
 
 //    @Query("SELECT * FROM event WHERE conference = :conference ORDER BY `begin` ASC LIMIT $LIMIT OFFSET :page")
 //    fun getSchedule(conference: String, page: Int): LiveData<List<Event>>
+
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(item: Event)

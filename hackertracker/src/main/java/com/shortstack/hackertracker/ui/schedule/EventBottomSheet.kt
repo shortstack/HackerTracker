@@ -17,6 +17,7 @@ import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.EventViewModel
 import com.shortstack.hackertracker.utils.MaterialAlert
 import com.shortstack.hackertracker.views.EventView
+import com.shortstack.hackertracker.views.SpeakerView
 import kotlinx.android.synthetic.main.bottom_sheet_schedule_event.view.*
 import kotlinx.android.synthetic.main.empty_text.view.*
 import javax.inject.Inject
@@ -51,19 +52,19 @@ class EventBottomSheet : com.google.android.material.bottomsheet.BottomSheetDial
         view.share.setOnClickListener { onShareClick(view.event) }
         view.link.setOnClickListener { onLinkClick() }
 
-        view.tool.visibility = obj.toolsVisibility
-        view.exploit.visibility = obj.exploitVisibility
-        view.demo.visibility = obj.demoVisibility
 
     }
 
 
-    private fun displaySpeakers(obj: EventViewModel, speakers: LinearLayoutCompat) {
-//        val context = context ?: return
-//
-//        obj.speakers?.iterator()?.forEach {
-//            speakers.addView(SpeakerView(context, database.getSpeaker(it)))
-//        }
+    private fun displaySpeakers(obj: EventViewModel, layout: LinearLayoutCompat) {
+        val speakers = database.getSpeakers(obj.event.event.id)
+
+
+        val context = context ?: return
+
+        speakers.forEach {
+            layout.addView(SpeakerView(context, it))
+        }
     }
 
     private val content: DatabaseEvent

@@ -32,7 +32,8 @@ import javax.inject.Inject
 /**
  * Created by Chris on 3/31/2018.
  */
-@Database(entities = [(Conference::class), (Event::class), (Type::class), (Vendor::class), (Speaker::class), (FAQ::class), (Location::class)], version = 1)
+@Database(entities = [(Conference::class), (Event::class), (Type::class), (Vendor::class),
+    (Speaker::class), (FAQ::class), (Location::class), (EventSpeakerJoin::class)], version = 1)
 @TypeConverters(value = [(Converters::class)])
 abstract class MyRoomDatabase : RoomDatabase() {
 
@@ -49,6 +50,8 @@ abstract class MyRoomDatabase : RoomDatabase() {
     abstract fun faqDao(): FAQDao
 
     abstract fun locationDao(): LocationDao
+
+    abstract fun eventSpeakerDao(): EventSpeakerDao
 
     @Inject
     lateinit var gson: Gson
@@ -109,6 +112,13 @@ abstract class MyRoomDatabase : RoomDatabase() {
                 // Schedule
                 gson.fromFile<Events>(SCHEDULE_FILE, root = database).let {
                     eventDao().insertAll(it.events)
+
+                    it.events.forEach { event ->
+                        event.speakers.forEach {
+                            val join = EventSpeakerJoin(event.id, it)
+                            eventSpeakerDao().insert(join)
+                        }
+                    }
                 }
             } catch (ex: JsonSyntaxException) {
                 Logger.e("Could not open $SCHEDULE_FILE. ${ex.message}")
@@ -126,7 +136,7 @@ abstract class MyRoomDatabase : RoomDatabase() {
             } catch (ex: FileNotFoundException) {
                 Logger.e("Could not find file $VENDORS_FILE.")
             }
-            
+
             try {
                 gson.fromFile<FAQs>(FAQ_FILE, root = database).let {
                     faqDao().insertAll(it.faqs)
@@ -160,13 +170,13 @@ abstract class MyRoomDatabase : RoomDatabase() {
                             super.onCreate(db)
                             Logger.d("Database onCreate! " + (System.currentTimeMillis() - App.application.timeToLaunch))
 
-                            Single.fromCallable {
-                                val instance = getInstance(context, conferenceLiveData)
-                                instance.init()
-                                conferenceLiveData.postValue(instance.conferenceDao().getCurrentCon())
-                            }.subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe()
+//                            Single.fromCallable {
+//                                val instance = getInstance(context, conferenceLiveData)
+//                                instance.init()
+//                                conferenceLiveData.postValue(instance.conferenceDao().getCurrentCon())
+//                            }.subscribeOn(Schedulers.io())
+//                                    .observeOn(AndroidSchedulers.mainThread())
+//                                    .subscribe()
                         }
 
                         override fun onOpen(db: SupportSQLiteDatabase) {
@@ -175,6 +185,12 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
                             Single.fromCallable {
                                 val instance = getInstance(context, conferenceLiveData)
+
+                                instance.clearAllTables()
+
+                                instance.init()
+
+
                                 val currentCon = instance.conferenceDao().getCurrentCon()
                                 Logger.d("Setting current conference $currentCon")
                                 conferenceLiveData.postValue(currentCon)

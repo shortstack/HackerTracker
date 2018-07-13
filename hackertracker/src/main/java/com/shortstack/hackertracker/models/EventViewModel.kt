@@ -87,18 +87,6 @@ class EventViewModel(val event: DatabaseEvent) : ViewModel() {
     val id: Int
         get() = event.event.id
 
-    val toolsVisibility: Int
-        get() = if (event.event.includes?.contains("tool") == true) View.VISIBLE else View.GONE
-
-    val exploitVisibility: Int
-        get() = if (event.event.includes?.contains("exploit") == true) View.VISIBLE else View.GONE
-
-    val demoVisibility: Int
-        get() = if (event.event.includes?.contains("demo") == true) View.VISIBLE else View.GONE
-
-    val bookmarkVisibility: Int
-        get() = if (event.event.isBookmarked) View.VISIBLE else View.INVISIBLE
-
     val speakers: Array<Speaker>?
         get() = null
 }

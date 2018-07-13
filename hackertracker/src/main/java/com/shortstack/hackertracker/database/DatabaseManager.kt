@@ -147,6 +147,13 @@ class DatabaseManager(context: Context) {
 
             syncResponse?.let {
                 count += db.eventDao().insertAll(it.events).size
+
+                it.events.forEach { event ->
+                    event.speakers.forEach {
+                        val join = EventSpeakerJoin(event.id, it)
+                        db.eventSpeakerDao().insert(join)
+                    }
+                }
             }
 
             vendors?.let {
@@ -169,6 +176,10 @@ class DatabaseManager(context: Context) {
 
     fun clear() {
         return db.conferenceDao().deleteAll()
+    }
+
+    fun getSpeakers(event: Int): List<Speaker> {
+        return db.eventSpeakerDao().getSpeakersForEvent(event)
     }
 
 }
