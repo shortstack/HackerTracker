@@ -1,10 +1,7 @@
 package com.shortstack.hackertracker.ui.activities
 
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
 import android.content.res.Resources
-import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -16,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import com.github.stkent.amplify.tracking.Amplify
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
@@ -48,6 +46,8 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
 
     lateinit var navController: NavController
 
+    private lateinit var bottomSheet: BottomSheetBehavior<View>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         App.application.component.inject(this)
 
@@ -55,6 +55,7 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
+
 
         setupNavigation()
 
@@ -80,8 +81,10 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
             filters.setTypes(it)
         })
 
-        filter.setOnClickListener { onFilterClick() }
-        close.setOnClickListener { onFilterClick() }
+        bottomSheet = BottomSheetBehavior.from(filters)
+
+        filter.setOnClickListener { expandFilters() }
+        close.setOnClickListener { hideFilters() }
 
         if (savedInstanceState == null) {
             if (Amplify.getSharedInstance().shouldPrompt() && !BuildConfig.DEBUG) {
@@ -94,6 +97,7 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
         Logger.d("Created MainActivity " + (System.currentTimeMillis() - App.application.timeToLaunch))
 
     }
+
 
     override fun onResume() {
         super.onResume()
@@ -134,54 +138,14 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
         return theme
     }
 
-    private fun onFilterClick() {
-//        toggleFAB(onClick = true)
-        toggleFilters()
+    private fun expandFilters() {
+        bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
     }
 
-    private fun toggleFilters() {
-
-        val position = IntArray(2)
-
-        filter.getLocationOnScreen(position)
-
-        val (cx, cy) = position
-
-        val radius = Math.hypot(cx.toDouble(), cy.toDouble())
-
-        if (filters.visibility == View.INVISIBLE) {
-
-
-            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ViewAnimationUtils.createCircularReveal(filters, cx, cy, 0f, radius.toFloat())
-            } else {
-                null
-            }
-
-            filters.visibility = View.VISIBLE
-
-            anim?.start()
-        } else {
-
-            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ViewAnimationUtils.createCircularReveal(filters, cx, cy, radius.toFloat(), 0f)
-            } else {
-
-                filters.visibility = View.INVISIBLE
-                null
-            }
-
-            anim?.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator?) {
-                    super.onAnimationEnd(animation)
-                    filters.visibility = View.INVISIBLE
-//                    toggleFAB(onClick = false)
-                }
-            })
-
-            anim?.start()
-        }
+    private fun hideFilters() {
+        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
@@ -190,12 +154,11 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
     }
 
     override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(Gravity.START)) {
-            drawer_layout.closeDrawers()
-        } else if (filters.visibility == View.VISIBLE) {
-            toggleFilters()
-        } else {
-            super.onBackPressed()
+
+        when {
+            drawer_layout.isDrawerOpen(Gravity.START) -> drawer_layout.closeDrawers()
+            bottomSheet.state != BottomSheetBehavior.STATE_HIDDEN -> hideFilters()
+            else -> super.onBackPressed()
         }
     }
 

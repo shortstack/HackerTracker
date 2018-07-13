@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <com.google.android.material.chip.Chip
+        android:id="@+id/chip"
+        style="@style/Widget.MaterialComponents.Chip.Filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:checkedIcon="@drawable/ic_chevron_right_white_24dp"
+        app:chipIcon="@drawable/ic_star_accent_24dp"
+        app:chipIconEnabled="false"
+        app:chipStrokeColor="@color/white"
+        app:chipStrokeWidth="2dp"
+        app:closeIcon="@drawable/ic_close_white_24dp"
+        app:closeIconEnabled="true"
+        tools:chipBackgroundColor="@color/orange"
+        tools:text="Event" />
+</LinearLayout>

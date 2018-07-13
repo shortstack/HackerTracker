@@ -4,10 +4,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.pedrogomez.renderers.Renderer
+import com.pedrogomez.renderers.RendererContent
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.models.DatabaseEvent
 import kotlinx.android.synthetic.main.header_home.view.*
 
-class HomeHeaderRenderer : Renderer<Void>() {
+class HomeHeaderRenderer : Renderer<RendererContent<DatabaseEvent>>() {
 
     override fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
         return inflater.inflate(R.layout.header_home, parent, false)
@@ -19,6 +21,7 @@ class HomeHeaderRenderer : Renderer<Void>() {
 
     override fun render(payloads: List<Any>) {
         // Do nothing.
+
     }
 
     fun onSkullClick() {

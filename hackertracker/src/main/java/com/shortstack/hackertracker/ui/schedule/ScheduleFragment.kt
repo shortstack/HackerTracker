@@ -48,7 +48,10 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         App.application.component.inject(this)
 
         swipe_refresh.setOnRefreshListener(this)
-        swipe_refresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark)
+        swipe_refresh.setColorSchemeResources(
+                R.color.blue_dark, R.color.purple_light, R.color.purple_dark, R.color.green,
+                R.color.red_dark, R.color.red_light, R.color.orange, R.color.blue_light)
+
         list.adapter = adapter
 
         val scheduleViewModel = ViewModelProviders.of(this).get(ScheduleViewModel::class.java)
