@@ -7,6 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.State
 import androidx.work.WorkManager
@@ -15,7 +17,6 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.network.task.SyncWorker
-import com.shortstack.hackertracker.ui.schedule.list.ListViewsInterface
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.utils.TickTimer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -25,7 +26,7 @@ import kotlinx.android.synthetic.main.view_empty.view.*
 import javax.inject.Inject
 
 
-class ScheduleFragment : androidx.fragment.app.Fragment(), androidx.swiperefreshlayout.widget.SwipeRefreshLayout.OnRefreshListener, ListViewsInterface {
+class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private val adapter: ScheduleAdapter = ScheduleAdapter()
 
@@ -59,7 +60,7 @@ class ScheduleFragment : androidx.fragment.app.Fragment(), androidx.swiperefresh
             when (it?.status) {
                 Status.SUCCESS -> {
                     adapter.setSchedule(it.data)
-                    if( adapter.isEmpty() ) {
+                    if (adapter.isEmpty()) {
                         showEmptyView()
                     }
                 }
@@ -102,16 +103,16 @@ class ScheduleFragment : androidx.fragment.app.Fragment(), androidx.swiperefresh
         loading_progress.visibility = View.VISIBLE
     }
 
-    override fun hideViews() {
+    private fun hideViews() {
         empty.visibility = View.GONE
         loading_progress.visibility = View.GONE
     }
 
-    override fun showEmptyView() {
+    private fun showEmptyView() {
         empty.visibility = View.VISIBLE
     }
 
-    override fun showErrorView(message: String?) {
+    private fun showErrorView(message: String?) {
         empty.title.text = message
         empty.visibility = View.VISIBLE
     }
