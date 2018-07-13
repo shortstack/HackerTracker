@@ -12,6 +12,7 @@ import com.google.gson.JsonSyntaxException
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants.CONFERENCES_FILE
+import com.shortstack.hackertracker.Constants.FAQ_FILE
 import com.shortstack.hackertracker.Constants.LOCATIONS_FILE
 import com.shortstack.hackertracker.Constants.SCHEDULE_FILE
 import com.shortstack.hackertracker.Constants.SPEAKERS_FILE
@@ -93,6 +94,16 @@ abstract class MyRoomDatabase : RoomDatabase() {
                 Logger.e("Could not find file $TYPES_FILE.")
             }
 
+            try {
+                // Speakers
+                gson.fromFile<Speakers>(SPEAKERS_FILE, root = database).let {
+                    speakerDao().insertAll(it.speakers)
+                }
+            } catch (ex: JsonSyntaxException) {
+                Logger.e("Could not open $SPEAKERS_FILE. ${ex.message}")
+            } catch (ex: FileNotFoundException) {
+                Logger.e("Could not find file $SPEAKERS_FILE.")
+            }
 
             try {
                 // Schedule
@@ -106,17 +117,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
             }
 
             try {
-                // Speakers
-                gson.fromFile<Speakers>(SPEAKERS_FILE, root = database).let {
-                    speakerDao().insertAll(it.speakers)
-                }
-            } catch (ex: JsonSyntaxException) {
-                Logger.e("Could not open $SPEAKERS_FILE. ${ex.message}")
-            } catch (ex: FileNotFoundException) {
-                Logger.e("Could not find file $SPEAKERS_FILE.")
-            }
-
-            try {
                 // Vendors
                 gson.fromFile<Vendors>(VENDORS_FILE, root = database).let {
                     vendorDao().insertAll(it.vendors)
@@ -126,17 +126,16 @@ abstract class MyRoomDatabase : RoomDatabase() {
             } catch (ex: FileNotFoundException) {
                 Logger.e("Could not find file $VENDORS_FILE.")
             }
-
-
-//            try {
-//                gson.fromFile<FAQs>(FAQ_FILE, root = database).let {
-//                    faqDao().insertAll(it.faqs)
-//                }
-//            } catch (ex: JsonSyntaxException) {
-//                Logger.e("Could not open $FAQ_FILE. ${ex.message}")
-//            } catch (ex: FileNotFoundException) {
-//                Logger.e("Could not find file $FAQ_FILE.")
-//            }
+            
+            try {
+                gson.fromFile<FAQs>(FAQ_FILE, root = database).let {
+                    faqDao().insertAll(it.faqs)
+                }
+            } catch (ex: JsonSyntaxException) {
+                Logger.e("Could not open $FAQ_FILE. ${ex.message}")
+            } catch (ex: FileNotFoundException) {
+                Logger.e("Could not find file $FAQ_FILE.")
+            }
         }
     }
 

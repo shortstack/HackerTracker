@@ -82,7 +82,7 @@ class EventViewModel(val event: DatabaseEvent) : ViewModel() {
     }
 
     val location: String
-        get() = event.event.location.toString() ?: "Unknown"
+        get() = event.location.firstOrNull()?.name ?: "Unknown"
 
     val id: Int
         get() = event.event.id

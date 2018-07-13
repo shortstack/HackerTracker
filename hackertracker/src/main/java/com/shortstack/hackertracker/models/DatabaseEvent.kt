@@ -15,5 +15,8 @@ data class DatabaseEvent(
 ) : Parcelable {
     @Relation(parentColumn = "type", entityColumn = "id")
     var type: List<Type> = emptyList()
+
+    @Relation(parentColumn = "location", entityColumn = "id")
+    var location: List<Location> = emptyList()
 }
 
