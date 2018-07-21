@@ -114,12 +114,13 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
         setupActionBarWithNavController(this, navController, drawer_layout)
 
         navController.addOnNavigatedListener { _, destination ->
-            //            val visibility = if (destination.id == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
-//            setFABVisibility(visibility)
+            val visibility = if (destination.id == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
+            setFABVisibility(visibility)
         }
 
         initNavDrawer()
     }
+
 
     private fun initNavDrawer() {
         val toggle = ActionBarDrawerToggle(
@@ -136,6 +137,10 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
         val theme = super.getTheme()
         theme.applyStyle(R.style.AppTheme, true)
         return theme
+    }
+
+    private fun setFABVisibility(visibility: Int) {
+        filter.visibility = visibility
     }
 
     private fun expandFilters() {
