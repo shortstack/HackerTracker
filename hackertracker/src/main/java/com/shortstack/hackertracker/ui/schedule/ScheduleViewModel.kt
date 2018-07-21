@@ -24,6 +24,7 @@ class ScheduleViewModel : ViewModel() {
         App.application.component.inject(this)
     }
 
+    private var source: LiveData<List<DatabaseEvent>>? = null
     val schedule: LiveData<Resource<List<DatabaseEvent>>>
         get() {
             val conference = database.conferenceLiveData
@@ -31,9 +32,16 @@ class ScheduleViewModel : ViewModel() {
                 result.value = Resource.loading(null)
 
                 if (id != null) {
-                    result.addSource(database.getSchedule(id)) {
-                        result.value = Resource.success(it)
+                    source?.let {
+                        result.removeSource(it)
                     }
+
+                    source = database.getSchedule(id).also {
+                        result.addSource(it) {
+                            result.value = Resource.success(it)
+                        }
+                    }
+
                 } else {
                     result.value = Resource.init(null)
                 }
