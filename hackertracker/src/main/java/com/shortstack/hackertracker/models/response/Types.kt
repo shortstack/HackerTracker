@@ -6,6 +6,6 @@ import com.shortstack.hackertracker.models.Type
 data class Types(
         @SerializedName("event_types")
         val types: List<Type>,
-        @SerializedName("update_date")
+        @SerializedName("updated_at")
         val date: String
 )

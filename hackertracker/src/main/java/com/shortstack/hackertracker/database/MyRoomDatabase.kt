@@ -75,9 +75,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
             try {
                 // Types
                 gson.fromFile<Types>(TYPES_FILE, root = database).let {
-                    it.types.forEach {
-                        it.isSelected = true
-                    }
                     typeDao().insertAll(it.types)
                 }
             } catch (ex: JsonSyntaxException) {

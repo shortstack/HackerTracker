@@ -18,7 +18,7 @@ import java.util.*
 data class Event(
         @PrimaryKey
         val id: Int,
-        @SerializedName("entry_type")
+        @SerializedName("event_type")
         val type: Int,
         val title: String,
         val description: String,
