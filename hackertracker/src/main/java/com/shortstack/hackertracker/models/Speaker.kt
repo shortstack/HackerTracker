@@ -13,8 +13,9 @@ data class Speaker(
         @PrimaryKey
         val id: Int,
         val name: String,
+        val title: String?,
         val description: String,
-        val link: String,
+        val link: String?,
         val twitter: String,
         @SerializedName("updated_at")
         val updatedAt: String,

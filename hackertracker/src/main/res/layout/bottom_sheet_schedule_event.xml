@@ -36,10 +36,10 @@
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginEnd="0dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
             android:visibility="gone" />
 
         <androidx.core.widget.NestedScrollView
@@ -120,10 +120,10 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp">
+                    android:paddingBottom="10dp">
 
                     <TextView
                         android:id="@+id/description"
@@ -135,12 +135,37 @@
                     <include layout="@layout/empty_text" />
                 </FrameLayout>
 
+                <TextView
+                    style="@style/details_section_header"
+                    android:text="@string/speakers" />
+
+
                 <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/speakers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:visibility="visible" />
+
+
+                <TextView
+                    style="@style/details_section_header"
+                    android:text="@string/related_events" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/row_event" />
+
+                    <include layout="@layout/row_event" />
+
+                    <include layout="@layout/row_event" />
+
+
+                </LinearLayout>
 
 
                 <include layout="@layout/row_footer" />
