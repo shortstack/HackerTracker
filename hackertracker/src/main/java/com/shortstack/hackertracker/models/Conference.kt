@@ -25,9 +25,6 @@ data class Conference(
         @SerializedName("updated_at")
         val updated: Date,
 
-//        @Embedded
-//        val maps: ConferenceMap,
-
         @Embedded(prefix = "locations_")
         val locations: ConferenceFile?,
         @Embedded(prefix = "types_")
@@ -47,5 +44,4 @@ data class Conference(
         var isSelected: Boolean
 ) {
     override fun toString() = name
-
 }

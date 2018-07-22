@@ -159,7 +159,6 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
     }
 
     override fun onBackPressed() {
-
         when {
             drawer_layout.isDrawerOpen(Gravity.START) -> drawer_layout.closeDrawers()
             bottomSheet.state != BottomSheetBehavior.STATE_HIDDEN -> hideFilters()

@@ -2,9 +2,17 @@ package com.shortstack.hackertracker.network.task
 
 import androidx.work.Worker
 import androidx.work.toWorkData
+import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
+import com.shortstack.hackertracker.Constants.EVENTS_FILE
+import com.shortstack.hackertracker.Constants.FAQ_FILE
+import com.shortstack.hackertracker.Constants.LOCATIONS_FILE
+import com.shortstack.hackertracker.Constants.SPEAKERS_FILE
+import com.shortstack.hackertracker.Constants.TYPES_FILE
+import com.shortstack.hackertracker.Constants.VENDORS_FILE
+import com.shortstack.hackertracker.database.ConferenceFile
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.models.response.Speakers
@@ -55,30 +63,30 @@ class SyncWorker : Worker() {
         return Result.SUCCESS
     }
 
-    private fun updateConference(it: Conference, item: DatabaseConference?, isNewCon: Boolean): Int {
-        Logger.d("Fetching content for ${it.name}")
+    private fun updateConference(stale: Conference, item: DatabaseConference?, isNewCon: Boolean): Int {
+        Logger.d("Fetching content for ${stale.name}")
 
         try {
-            val updatedAt = it.updated
+            val updatedAt = stale.updated
 
-            val events = getEvents(it.code)
-            val types = if (it.types == null || item?.conference?.types == null || it.types.updatedAt < item.conference.types.updatedAt) getTypes(it.code) else null
-            val locations = getLocations(it.code)
-            val vendors = getVendors(it.code)
-            val speakers = getSpeakers(it.code)
-            val faqs = if (it.faqs == null || item?.conference?.faqs == null || it.faqs.updatedAt < item.conference.faqs.updatedAt) getFAQs(it.code) else null
+            val conference = item?.conference
 
+            val response = FullResponse(
+                    getUpdate<Types>(stale.code, stale.types, conference?.types, TYPES_FILE),
+                    getUpdate<Locations>(stale.code, stale.locations, conference?.locations, LOCATIONS_FILE),
+                    getUpdate<Speakers>(stale.code, stale.speakers, conference?.speakers, SPEAKERS_FILE),
+                    getUpdate<Events>(stale.code, stale.events, conference?.events, EVENTS_FILE),
+                    getUpdate<Vendors>(stale.code, stale.vendors, conference?.vendors, VENDORS_FILE),
+                    getUpdate<FAQs>(stale.code, stale.faqs, conference?.faqs, FAQ_FILE))
 
             // Updating database
-            database.updateConference(it, FullResponse(types, locations, speakers, events, vendors, faqs))
+            database.updateConference(stale, response)
 
             val count = database.getUpdatedEventsCount(updatedAt)
-            val updatedBookmarks = database.getUpdatedBookmarks(it, updatedAt)
+            val updatedBookmarks = database.getUpdatedBookmarks(stale, updatedAt)
 
-
-            notifications.notifyUpdates(it, isNewCon, count)
+            notifications.notifyUpdates(stale, isNewCon, count)
             notifications.updatedBookmarks(updatedBookmarks)
-
 
             Logger.e("Updated $count rows.")
 
@@ -89,6 +97,24 @@ class SyncWorker : Worker() {
         return -1
     }
 
+
+    private inline fun <reified T> getUpdate(directory: String, file: ConferenceFile?, other: ConferenceFile?, url: String): T? {
+        if (isStale(file, other))
+            return getSource<T>(directory, url)
+        return null
+    }
+
+    private fun isStale(file: ConferenceFile?, other: ConferenceFile?): Boolean {
+        return file == null || other == null || file.updatedAt < other.updatedAt
+    }
+
+    private inline fun <reified T> getSource(directory: String, url: String): T? {
+        val service = getService(directory)
+        val call = service.getSource(url)
+        val body = call.execute().body()
+        return Gson().fromJson(body, T::class.java)
+    }
+
     private fun getService(directory: String? = null): DatabaseService {
         val directory = if (directory != null) "$directory/" else ""
         val retrofit = Retrofit.Builder()
@@ -96,42 +122,6 @@ class SyncWorker : Worker() {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         return retrofit.create(DatabaseService::class.java)
-    }
-
-    private fun getTypes(directory: String): Types? {
-        val service = getService(directory)
-        val call = service.getTypes()
-        return call.execute().body()
-    }
-
-    private fun getLocations(directory: String): Locations? {
-        val service = getService(directory)
-        val call = service.getLocations()
-        return call.execute().body()
-    }
-
-    private fun getSpeakers(directory: String): Speakers? {
-        val service = getService(directory)
-        val call = service.getSpeakers()
-        return call.execute().body()
-    }
-
-    private fun getEvents(directory: String): Events? {
-        val service = getService(directory)
-        val call = service.getSchedule()
-        return call.execute().body()
-    }
-
-    private fun getVendors(directory: String): Vendors? {
-        val service = getService(directory)
-        val call = service.getVendors()
-        return call.execute().body()
-    }
-
-    private fun getFAQs(directory: String): FAQs? {
-        val service = getService(directory)
-        val call = service.getFAQs()
-        return call.execute().body()
     }
 
     companion object {

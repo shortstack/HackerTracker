@@ -21,7 +21,7 @@ class FullResponse(val types: Types?, val locations: Locations?, val speakers: S
             return FullResponse(gson.fromFile<Types>(Constants.TYPES_FILE, root = root),
                     gson.fromFile<Locations>(Constants.LOCATIONS_FILE, root = root),
                     gson.fromFile<Speakers>(Constants.SPEAKERS_FILE, root = root),
-                    gson.fromFile<Events>(Constants.SCHEDULE_FILE, root = root),
+                    gson.fromFile<Events>(Constants.EVENTS_FILE, root = root),
                     gson.fromFile<Vendors>(Constants.VENDORS_FILE, root = root),
                     gson.fromFile<FAQs>(Constants.FAQ_FILE, root = root))
         }
