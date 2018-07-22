@@ -22,6 +22,7 @@ import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.Conference
+import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.network.task.ReminderWorker
 import com.shortstack.hackertracker.ui.activities.MainActivity
@@ -71,13 +72,13 @@ class NotificationHelper @Inject constructor(private val context: Context) {
         return builder.build()
     }
 
-    fun getUpdatedItemNotification(item: Event): Notification {
+    private fun getUpdatedItemNotification(item: DatabaseEvent): Notification {
         val builder = notificationBuilder
 
-        builder.setContentTitle(item.title)
+        builder.setContentTitle(item.event.title)
         builder.setContentText(context.getString(R.string.notification_updated))
 
-        setItemPendingIntent(builder, item)
+        setItemPendingIntent(builder, item.event)
 
         return builder.build()
     }
@@ -129,12 +130,16 @@ class NotificationHelper @Inject constructor(private val context: Context) {
     fun notifyUpdates(conference: Conference, newCon: Boolean, rowsUpdated: Int) {
         val builder = notificationBuilder
 
-        if (newCon) {
-            builder.setContentTitle(conference.name)
-            builder.setContentText("A new conference has been added")
-        } else {
-            builder.setContentTitle("Schedule Updated")
-            builder.setContentText(rowsUpdated.toString() + " events have been updated")
+        when {
+            newCon -> {
+                builder.setContentTitle(conference.name)
+                builder.setContentText("A new conference has been added")
+            }
+            rowsUpdated > 0 -> {
+                builder.setContentTitle("Schedule Updated")
+                builder.setContentText(rowsUpdated.toString() + " events have been updated")
+            }
+            else -> return
         }
 
         setItemPendingIntent(builder)
@@ -163,6 +168,12 @@ class NotificationHelper @Inject constructor(private val context: Context) {
 
     fun notifyStartingSoon(event: Event) {
         manager.notify(event.id, getItemNotification(event))
+    }
+
+    fun updatedBookmarks(updatedBookmarks: List<DatabaseEvent>) {
+        updatedBookmarks.forEach {
+            notify(it.event.id, getUpdatedItemNotification(it))
+        }
     }
 
     companion object {

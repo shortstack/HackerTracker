@@ -129,10 +129,6 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         instance?.getStatusById(refresh.id)?.observe(this, Observer {
             when (it?.state) {
                 State.SUCCEEDED -> {
-                    val rowsUpdated = it.outputData.getInt(SyncWorker.KEY_ROWS_UPDATED, 0)
-                    if (rowsUpdated == 0) {
-                        Toast.makeText(context, context?.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
-                    }
                     swipe_refresh.isRefreshing = false
                 }
                 State.FAILED -> {

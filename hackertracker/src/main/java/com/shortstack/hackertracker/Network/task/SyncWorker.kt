@@ -50,9 +50,7 @@ class SyncWorker : Worker() {
 
             it.isSelected = item?.conference?.isSelected ?: false
 
-//            if (isNewCon || it.updated > item?.conference?.updated) {
             rowsUpdated += updateConference(it, item, isNewCon)
-//            }
         }
 
         outputData = mapOf(KEY_ROWS_UPDATED to rowsUpdated).toWorkData()
@@ -64,6 +62,8 @@ class SyncWorker : Worker() {
         Logger.d("Fetching content for ${it.name}")
 
         try {
+            val updatedAt = it.updated
+
             val syncResponse = getSchedule(it.code)
             val types = if (it.types == null || item?.conference?.types == null || it.types.updatedAt < item.conference.types.updatedAt) getTypes(it.code) else null
             val vendors = getVendors(it.code)
@@ -71,14 +71,20 @@ class SyncWorker : Worker() {
             val faqs = if (it.faqs == null || item?.conference?.faqs == null || it.faqs.updatedAt < item.conference.faqs.updatedAt) getFAQs(it.code) else null
 
 
-
             // Updating database
-            val rowsUpdated = database.updateConference(it, FullResponse(syncResponse, types, speakers, vendors, faqs))
+            database.updateConference(it, FullResponse(syncResponse, types, speakers, vendors, faqs))
 
-            notifications.notifyUpdates(it, isNewCon, rowsUpdated)
-            Logger.e("Updated $rowsUpdated ows.")
+            val count = database.getUpdatedEventsCount(updatedAt)
+            val updatedBookmarks = database.getUpdatedBookmarks(it, updatedAt)
 
-            return rowsUpdated
+
+            notifications.notifyUpdates(it, isNewCon, count)
+            notifications.updatedBookmarks(updatedBookmarks)
+
+
+            Logger.e("Updated $count rows.")
+
+            return count
         } catch (ex: Exception) {
             Logger.e("Exception! ${ex.message}")
         }

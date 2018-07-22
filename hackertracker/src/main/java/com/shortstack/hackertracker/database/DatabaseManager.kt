@@ -11,7 +11,6 @@ import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.now
 import io.reactivex.Single
 import java.util.*
-import kotlin.math.sign
 
 /**
  * Created by Chris on 3/31/2018.
@@ -112,15 +111,11 @@ class DatabaseManager(context: Context) {
     }
 
     fun findItem(id: String): LiveData<List<DatabaseEvent>> {
-        return db.eventDao().findByText(id)
+        return db.eventDao().getEventByText(id)
     }
 
     fun getTypeForEvent(event: String): Single<Type> {
         return db.typeDao().getTypeForEvent(event)
-    }
-
-    fun updateEvent(event: Event) {
-        return db.eventDao().update(event)
     }
 
     fun updateBookmark(event: Event) {
@@ -133,20 +128,20 @@ class DatabaseManager(context: Context) {
 
 
     @Transaction
-    fun updateConference(conference: Conference, body: FullResponse): Int {
-        var count = 0
-
-        body.apply {
+    fun updateConference(conference: Conference, body: FullResponse) {
+        body.run {
             types?.let {
-                count += db.typeDao().insertAll(it.types).size
+                db.typeDao().insertAll(it.types)
             }
 
             speakers?.let {
-                count += db.speakerDao().insertAll(it.speakers).size
+                db.speakerDao().insertAll(it.speakers)
             }
 
             syncResponse?.let {
-                count += db.eventDao().insertAll(it.events).size
+                it.events.forEach { event ->
+                    db.eventDao().updateEvent(event.id, event.type, event.title, event.description, event.begin, event.end, event.updatedAt, event.location, event.url, event.conference)
+                }
 
                 it.events.forEach { event ->
                     event.speakers.forEach {
@@ -157,17 +152,15 @@ class DatabaseManager(context: Context) {
             }
 
             vendors?.let {
-                count += db.vendorDao().insertAll(it.vendors).size
+                db.vendorDao().insertAll(it.vendors)
             }
 
             faqs?.let {
-                count += db.faqDao().insertAll(it.faqs).size
+                db.faqDao().insertAll(it.faqs)
             }
 
             db.conferenceDao().upsert(conference)
         }
-
-        return count
     }
 
     fun updateType(type: Type): Int {
@@ -180,6 +173,16 @@ class DatabaseManager(context: Context) {
 
     fun getSpeakers(event: Int): List<Speaker> {
         return db.eventSpeakerDao().getSpeakersForEvent(event)
+    }
+
+    fun getUpdatedEventsCount(updatedAt: Date?): Int {
+        return db.eventDao().getUpdatedCount(updatedAt)
+    }
+
+    fun getUpdatedBookmarks(conference: Conference, updatedAt: Date?): List<DatabaseEvent> {
+        if( updatedAt != null )
+            return db.eventDao().getUpdatedBookmarks(conference.code, updatedAt)
+        return db.eventDao().getUpdatedBookmarks(conference.code)
     }
 
 }
