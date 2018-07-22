@@ -57,22 +57,18 @@ class NotificationHelper @Inject constructor(private val context: Context) {
         }
     }
 
-    private fun getItemNotification(item: Event): Notification {
+    private fun getStartingSoonNotification(item: DatabaseEvent): Notification {
         val builder = notificationBuilder
 
-        builder.setContentTitle(item.title)
-        if (item.location != null) {
-            builder.setContentText(String.format(context.getString(R.string.notification_text), item.location))
-        } else {
-            builder.setContentText(context.getString(R.string.notification_text_blank))
-        }
+        builder.setContentTitle(item.event.title)
+        builder.setContentText(String.format(context.getString(R.string.notification_text), item.location.first().name))
 
-        setItemPendingIntent(builder, item)
+        setItemPendingIntent(builder, item.event)
 
         return builder.build()
     }
 
-    private fun getUpdatedItemNotification(item: DatabaseEvent): Notification {
+    private fun getUpdatedEventNotification(item: DatabaseEvent): Notification {
         val builder = notificationBuilder
 
         builder.setContentTitle(item.event.title)
@@ -166,13 +162,13 @@ class NotificationHelper @Inject constructor(private val context: Context) {
         manager.notify(id, notification)
     }
 
-    fun notifyStartingSoon(event: Event) {
-        manager.notify(event.id, getItemNotification(event))
+    fun notifyStartingSoon(event: DatabaseEvent) {
+        manager.notify(event.event.id, getStartingSoonNotification(event))
     }
 
     fun updatedBookmarks(updatedBookmarks: List<DatabaseEvent>) {
         updatedBookmarks.forEach {
-            notify(it.event.id, getUpdatedItemNotification(it))
+            notify(it.event.id, getUpdatedEventNotification(it))
         }
     }
 

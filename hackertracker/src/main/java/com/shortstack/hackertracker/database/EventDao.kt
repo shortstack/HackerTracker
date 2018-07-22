@@ -17,8 +17,8 @@ interface EventDao {
     }
 
     // Create
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(item: Event)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insert(item: Event): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(events: List<Event>): List<Long>
@@ -31,7 +31,7 @@ interface EventDao {
     fun getSchedule(conference: String, date: Date): LiveData<List<DatabaseEvent>>
 
     @Query("SELECT * FROM event WHERE `id` = :id")
-    fun getEventById(id: Int): Event?
+    fun getEventById(id: Int): DatabaseEvent?
 
     @Query("SELECT * FROM event WHERE title LIKE :text")
     fun getEventByText(text: String): LiveData<List<DatabaseEvent>>
@@ -54,6 +54,14 @@ interface EventDao {
 
     @Query("UPDATE event SET isBookmarked = :isBookmarked WHERE `id` = :id")
     fun updateBookmark(id: Int, isBookmarked: Boolean)
+
+    @Transaction
+    fun upsert(event: Event) {
+        val id = insert(event)
+        if(id == -1L) {
+            updateEvent(event.id, event.type, event.title, event.description, event.begin, event.end, event.updatedAt, event.location, event.url, event.conference)
+        }
+    }
 
     // Delete
 

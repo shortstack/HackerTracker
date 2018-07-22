@@ -106,7 +106,7 @@ class DatabaseManager(context: Context) {
         return db.typeDao().getTypes(conference.code)
     }
 
-    fun findItem(id: Int): Event? {
+    fun findItem(id: Int): DatabaseEvent? {
         return db.eventDao().getEventById(id)
     }
 
@@ -140,7 +140,7 @@ class DatabaseManager(context: Context) {
 
             syncResponse?.let {
                 it.events.forEach { event ->
-                    db.eventDao().updateEvent(event.id, event.type, event.title, event.description, event.begin, event.end, event.updatedAt, event.location, event.url, event.conference)
+                    db.eventDao().upsert(event)
                 }
 
                 it.events.forEach { event ->
