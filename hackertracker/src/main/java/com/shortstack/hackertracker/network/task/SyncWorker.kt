@@ -98,17 +98,6 @@ class SyncWorker : Worker() {
         return retrofit.create(DatabaseService::class.java)
     }
 
-//    fun getEvents(databaseService: DatabaseService): Single<FullResponse> {
-//        return zip(
-//                databaseService.getEvents,
-//                databaseService.getTypes,
-//
-//                BiFunction<SyncResponse, Types, FullResponse> { schedule, types ->
-//                    createModel(schedule, types)
-//                })
-//    }
-
-
     private fun getTypes(directory: String): Types? {
         val service = getService(directory)
         val call = service.getTypes()
@@ -120,7 +109,6 @@ class SyncWorker : Worker() {
         val call = service.getLocations()
         return call.execute().body()
     }
-
 
     private fun getSpeakers(directory: String): Speakers? {
         val service = getService(directory)

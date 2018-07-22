@@ -1,6 +1,6 @@
 package com.shortstack.hackertracker.di
 
-import com.shortstack.hackertracker.database.MyRoomDatabase
+import com.shortstack.hackertracker.database.HTDatabase
 import com.shortstack.hackertracker.di.modules.*
 import com.shortstack.hackertracker.models.EventViewModel
 import com.shortstack.hackertracker.network.task.SyncWorker
@@ -36,7 +36,7 @@ interface AppComponent {
     // Components
 
     fun inject(notificationHelper: NotificationHelper)
-    fun inject(myRoomDatabase: MyRoomDatabase)
+    fun inject(HTDatabase: HTDatabase)
 
     // Activities + Fragments
 

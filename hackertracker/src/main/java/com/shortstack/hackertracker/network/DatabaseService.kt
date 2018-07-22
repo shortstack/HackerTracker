@@ -1,7 +1,6 @@
 package com.shortstack.hackertracker.network
 
 import com.shortstack.hackertracker.Constants
-import com.shortstack.hackertracker.database.MyRoomDatabase
 import com.shortstack.hackertracker.models.Conferences
 import com.shortstack.hackertracker.models.Events
 import com.shortstack.hackertracker.models.FAQs
@@ -9,7 +8,6 @@ import com.shortstack.hackertracker.models.Locations
 import com.shortstack.hackertracker.models.response.Speakers
 import com.shortstack.hackertracker.models.response.Types
 import com.shortstack.hackertracker.models.response.Vendors
-import io.reactivex.Single
 import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory

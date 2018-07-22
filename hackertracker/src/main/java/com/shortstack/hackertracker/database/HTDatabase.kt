@@ -5,27 +5,16 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import android.content.Context
 import androidx.room.*
 import com.google.gson.Gson
-import com.google.gson.JsonSyntaxException
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.Constants.CONFERENCES_FILE
-import com.shortstack.hackertracker.Constants.FAQ_FILE
-import com.shortstack.hackertracker.Constants.LOCATIONS_FILE
-import com.shortstack.hackertracker.Constants.SCHEDULE_FILE
-import com.shortstack.hackertracker.Constants.SPEAKERS_FILE
-import com.shortstack.hackertracker.Constants.TYPES_FILE
-import com.shortstack.hackertracker.Constants.VENDORS_FILE
 import com.shortstack.hackertracker.fromFile
 import com.shortstack.hackertracker.models.*
-import com.shortstack.hackertracker.models.response.Speakers
-import com.shortstack.hackertracker.models.response.Types
-import com.shortstack.hackertracker.models.response.Vendors
 import com.shortstack.hackertracker.network.FullResponse
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import java.io.FileNotFoundException
 import javax.inject.Inject
 
 /**
@@ -34,7 +23,7 @@ import javax.inject.Inject
 @Database(entities = [(Conference::class), (Event::class), (Type::class), (Vendor::class),
     (Speaker::class), (FAQ::class), (Location::class), (EventSpeakerJoin::class)], version = 1)
 @TypeConverters(value = [(Converters::class)])
-abstract class MyRoomDatabase : RoomDatabase() {
+abstract class HTDatabase : RoomDatabase() {
 
     abstract fun conferenceDao(): ConferenceDao
 
@@ -60,21 +49,21 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
         gson.fromFile<Conferences>(CONFERENCES_FILE, root = null)?.let { conferences ->
             conferences.let {
-                val first = it.conferences.first()
-                first.isSelected = true
+                // Select the first one available.
+                it.conferences.first().isSelected = true
                 conferenceDao().insertAll(it.conferences)
             }
 
             conferences.conferences.forEach {
-                Logger.d("Loading ${it.code}")
-                val response = FullResponse.getLocalFullResponse(it)
-                updateDatabase(it, response)
+                updateDatabase(it, FullResponse.getLocalFullResponse(it))
             }
         }
     }
 
     @Transaction
     fun updateDatabase(conference: Conference, response: FullResponse) {
+        Logger.d("Updating conference: ${conference.code}")
+
         response.run {
             types?.let {
                 typeDao().insertAll(it.types)
@@ -108,26 +97,26 @@ abstract class MyRoomDatabase : RoomDatabase() {
             faqs?.let {
                 faqDao().insertAll(it.faqs)
             }
-
-            conferenceDao().upsert(conference)
         }
+
+        conferenceDao().upsert(conference)
     }
 
     companion object {
 
         @Volatile
-        private var INSTANCE: MyRoomDatabase? = null
+        private var INSTANCE: HTDatabase? = null
 
-        fun getInstance(context: Context, conferenceLiveData: MutableLiveData<DatabaseConference>): MyRoomDatabase =
+        private fun getInstance(context: Context, conferenceLiveData: MutableLiveData<DatabaseConference>): HTDatabase =
                 INSTANCE ?: synchronized(this) {
-                    INSTANCE ?: buildDatabase(context, conferenceLiveData).also { INSTANCE = it }
+                    INSTANCE ?: buildDatabase(context, conferenceLiveData)
                 }
 
 
-        fun buildDatabase(context: Context, conferenceLiveData: MutableLiveData<DatabaseConference>): MyRoomDatabase {
+        fun buildDatabase(context: Context, conferenceLiveData: MutableLiveData<DatabaseConference>): HTDatabase {
             Logger.d("Creating database! " + (System.currentTimeMillis() - App.application.timeToLaunch))
 
-            return Room.databaseBuilder(context, MyRoomDatabase::class.java, DATABASE_NAME)
+            return Room.databaseBuilder(context, HTDatabase::class.java, DATABASE_NAME)
                     .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
                     .addCallback(object : Callback() {
@@ -139,7 +128,6 @@ abstract class MyRoomDatabase : RoomDatabase() {
                         override fun onOpen(db: SupportSQLiteDatabase) {
                             super.onOpen(db)
                             Logger.d("Database onOpen! " + (System.currentTimeMillis() - App.application.timeToLaunch))
-
                             updateDatabase(context, conferenceLiveData)
                         }
                     }).build().also {

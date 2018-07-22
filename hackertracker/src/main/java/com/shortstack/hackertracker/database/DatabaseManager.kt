@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import android.content.Context
 import androidx.lifecycle.MediatorLiveData
-import androidx.room.Transaction
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.now
@@ -17,7 +16,7 @@ import java.util.*
  */
 class DatabaseManager(context: Context) {
 
-    private val db: MyRoomDatabase
+    private val db: HTDatabase
 
     val conferenceLiveData = MutableLiveData<DatabaseConference>()
 
@@ -45,7 +44,7 @@ class DatabaseManager(context: Context) {
         }
 
     init {
-        db = MyRoomDatabase.buildDatabase(context, conferenceLiveData)
+        db = HTDatabase.buildDatabase(context, conferenceLiveData)
         val currentCon = getCurrentCon()
         conferenceLiveData.postValue(currentCon)
     }
