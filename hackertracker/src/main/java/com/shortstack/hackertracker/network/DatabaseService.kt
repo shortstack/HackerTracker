@@ -3,7 +3,9 @@ package com.shortstack.hackertracker.network
 import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.database.MyRoomDatabase
 import com.shortstack.hackertracker.models.Conferences
+import com.shortstack.hackertracker.models.Events
 import com.shortstack.hackertracker.models.FAQs
+import com.shortstack.hackertracker.models.Locations
 import com.shortstack.hackertracker.models.response.Speakers
 import com.shortstack.hackertracker.models.response.Types
 import com.shortstack.hackertracker.models.response.Vendors
@@ -20,23 +22,24 @@ interface DatabaseService {
     @GET(Constants.CONFERENCES_FILE)
     fun getConferences(): Call<Conferences>
 
-    @GET(Constants.SCHEDULE_FILE)
-    fun getSchedule(): Call<SyncResponse>
-
     @GET(Constants.TYPES_FILE)
     fun getTypes(): Call<Types>
 
-    @GET(Constants.VENDORS_FILE)
-    fun getVendors(): Call<Vendors>
+    @GET(Constants.LOCATIONS_FILE)
+    fun getLocations(): Call<Locations>
 
     @GET(Constants.SPEAKERS_FILE)
     fun getSpeakers(): Call<Speakers>
 
+    @GET(Constants.SCHEDULE_FILE)
+    fun getSchedule(): Call<Events>
+
+    @GET(Constants.VENDORS_FILE)
+    fun getVendors(): Call<Vendors>
+
     @GET(Constants.FAQ_FILE)
     fun getFAQs(): Call<FAQs>
 
-//    @GET("locations.json")
-//    fun getLocations(): Call<Locations>
 
     companion object Factory {
 

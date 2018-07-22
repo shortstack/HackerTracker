@@ -2,6 +2,7 @@ package com.shortstack.hackertracker
 
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
+import org.json.JSONException
 import java.io.FileNotFoundException
 import java.io.IOException
 import java.util.*
@@ -42,7 +43,7 @@ fun Date.getDateDifference(date: Date, timeUnit: TimeUnit): Long {
 }
 
 
-inline fun <reified T> Gson.fromFile(filename: String, root: String?): T {
+inline fun <reified T> Gson.fromFile(filename: String, root: String?): T? {
     try {
         val s = if (root != null) {
             "database/conferences/$root/$filename"
@@ -60,12 +61,15 @@ inline fun <reified T> Gson.fromFile(filename: String, root: String?): T {
 
         return fromJson(String(buffer), T::class.java)
 
+    } catch (e: FileNotFoundException) {
+        Logger.e("Could not find the file. $root/$filename")
+        return fromJson("", T::class.java)
+    } catch (e: JSONException) {
+        Logger.e("Invalid JSON within the file. $root/$filename")
+        return null
     } catch (e: IOException) {
         Logger.e(e, "Could not create the database.")
-        throw e
-    } catch (e: FileNotFoundException) {
-        Logger.e("Could not find the file. $root.$filename")
-        return fromJson("", T::class.java)
+        return null
     }
 }
 

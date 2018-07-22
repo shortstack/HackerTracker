@@ -127,40 +127,8 @@ class DatabaseManager(context: Context) {
     }
 
 
-    @Transaction
     fun updateConference(conference: Conference, body: FullResponse) {
-        body.run {
-            types?.let {
-                db.typeDao().insertAll(it.types)
-            }
-
-            speakers?.let {
-                db.speakerDao().insertAll(it.speakers)
-            }
-
-            syncResponse?.let {
-                it.events.forEach { event ->
-                    db.eventDao().upsert(event)
-                }
-
-                it.events.forEach { event ->
-                    event.speakers.forEach {
-                        val join = EventSpeakerJoin(event.id, it)
-                        db.eventSpeakerDao().insert(join)
-                    }
-                }
-            }
-
-            vendors?.let {
-                db.vendorDao().insertAll(it.vendors)
-            }
-
-            faqs?.let {
-                db.faqDao().insertAll(it.faqs)
-            }
-
-            db.conferenceDao().upsert(conference)
-        }
+        db.updateDatabase(conference, body)
     }
 
     fun updateType(type: Type): Int {
@@ -180,7 +148,7 @@ class DatabaseManager(context: Context) {
     }
 
     fun getUpdatedBookmarks(conference: Conference, updatedAt: Date?): List<DatabaseEvent> {
-        if( updatedAt != null )
+        if (updatedAt != null)
             return db.eventDao().getUpdatedBookmarks(conference.code, updatedAt)
         return db.eventDao().getUpdatedBookmarks(conference.code)
     }

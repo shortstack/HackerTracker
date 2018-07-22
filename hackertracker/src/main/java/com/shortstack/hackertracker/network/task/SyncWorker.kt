@@ -6,15 +6,12 @@ import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Constants
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.Conference
-import com.shortstack.hackertracker.models.DatabaseConference
-import com.shortstack.hackertracker.models.FAQs
+import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.models.response.Speakers
 import com.shortstack.hackertracker.models.response.Types
 import com.shortstack.hackertracker.models.response.Vendors
 import com.shortstack.hackertracker.network.DatabaseService
 import com.shortstack.hackertracker.network.FullResponse
-import com.shortstack.hackertracker.network.SyncResponse
 import com.shortstack.hackertracker.utils.NotificationHelper
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -64,15 +61,16 @@ class SyncWorker : Worker() {
         try {
             val updatedAt = it.updated
 
-            val syncResponse = getSchedule(it.code)
+            val events = getEvents(it.code)
             val types = if (it.types == null || item?.conference?.types == null || it.types.updatedAt < item.conference.types.updatedAt) getTypes(it.code) else null
+            val locations = getLocations(it.code)
             val vendors = getVendors(it.code)
             val speakers = getSpeakers(it.code)
             val faqs = if (it.faqs == null || item?.conference?.faqs == null || it.faqs.updatedAt < item.conference.faqs.updatedAt) getFAQs(it.code) else null
 
 
             // Updating database
-            database.updateConference(it, FullResponse(syncResponse, types, speakers, vendors, faqs))
+            database.updateConference(it, FullResponse(types, locations, speakers, events, vendors, faqs))
 
             val count = database.getUpdatedEventsCount(updatedAt)
             val updatedBookmarks = database.getUpdatedBookmarks(it, updatedAt)
@@ -100,9 +98,9 @@ class SyncWorker : Worker() {
         return retrofit.create(DatabaseService::class.java)
     }
 
-//    fun getSchedule(databaseService: DatabaseService): Single<FullResponse> {
+//    fun getEvents(databaseService: DatabaseService): Single<FullResponse> {
 //        return zip(
-//                databaseService.getSchedule,
+//                databaseService.getEvents,
 //                databaseService.getTypes,
 //
 //                BiFunction<SyncResponse, Types, FullResponse> { schedule, types ->
@@ -110,11 +108,6 @@ class SyncWorker : Worker() {
 //                })
 //    }
 
-    private fun getSchedule(directory: String): SyncResponse? {
-        val service = getService(directory)
-        val call = service.getSchedule()
-        return call.execute().body()
-    }
 
     private fun getTypes(directory: String): Types? {
         val service = getService(directory)
@@ -122,15 +115,28 @@ class SyncWorker : Worker() {
         return call.execute().body()
     }
 
-    private fun getVendors(directory: String): Vendors? {
+    private fun getLocations(directory: String): Locations? {
         val service = getService(directory)
-        val call = service.getVendors()
+        val call = service.getLocations()
         return call.execute().body()
     }
+
 
     private fun getSpeakers(directory: String): Speakers? {
         val service = getService(directory)
         val call = service.getSpeakers()
+        return call.execute().body()
+    }
+
+    private fun getEvents(directory: String): Events? {
+        val service = getService(directory)
+        val call = service.getSchedule()
+        return call.execute().body()
+    }
+
+    private fun getVendors(directory: String): Vendors? {
+        val service = getService(directory)
+        val call = service.getVendors()
         return call.execute().body()
     }
 

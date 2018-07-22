@@ -2,15 +2,13 @@ package com.shortstack.hackertracker.database
 
 import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SupportSQLiteDatabase
-import androidx.room.Database
-import androidx.room.Room
-import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 import android.content.Context
+import androidx.room.*
 import com.google.gson.Gson
 import com.google.gson.JsonSyntaxException
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.Constants.CONFERENCES_FILE
 import com.shortstack.hackertracker.Constants.FAQ_FILE
 import com.shortstack.hackertracker.Constants.LOCATIONS_FILE
@@ -23,6 +21,7 @@ import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.models.response.Speakers
 import com.shortstack.hackertracker.models.response.Types
 import com.shortstack.hackertracker.models.response.Vendors
+import com.shortstack.hackertracker.network.FullResponse
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -59,90 +58,58 @@ abstract class MyRoomDatabase : RoomDatabase() {
     fun init() {
         App.application.component.inject(this)
 
-        val conferences = gson.fromFile<Conferences>(CONFERENCES_FILE, root = null)
+        gson.fromFile<Conferences>(CONFERENCES_FILE, root = null)?.let { conferences ->
+            conferences.let {
+                val first = it.conferences.first()
+                first.isSelected = true
+                conferenceDao().insertAll(it.conferences)
+            }
 
-        conferences.let {
-            val first = it.conferences.first()
-            first.isSelected = true
-            conferenceDao().insertAll(it.conferences)
+            conferences.conferences.forEach {
+                Logger.d("Loading ${it.code}")
+                val response = FullResponse.getLocalFullResponse(it)
+                updateDatabase(it, response)
+            }
         }
+    }
 
-        conferences.conferences.forEach {
-            val database = it.code
-
-            Logger.d("Loading $database")
-
-            try {
-                // Types
-                gson.fromFile<Types>(TYPES_FILE, root = database).let {
-                    typeDao().insertAll(it.types)
-                }
-            } catch (ex: JsonSyntaxException) {
-                Logger.e("Could not open $TYPES_FILE. ${ex.message}")
-            } catch (ex: FileNotFoundException) {
-                Logger.e("Could not find file $TYPES_FILE.")
+    @Transaction
+    fun updateDatabase(conference: Conference, response: FullResponse) {
+        response.run {
+            types?.let {
+                typeDao().insertAll(it.types)
             }
 
-            try {
-                // Types
-                gson.fromFile<Locations>(LOCATIONS_FILE, root = database).let {
-                    locationDao().insertAll(it.locations)
-                }
-            } catch (ex: JsonSyntaxException) {
-                Logger.e("Could not open $TYPES_FILE. ${ex.message}")
-            } catch (ex: FileNotFoundException) {
-                Logger.e("Could not find file $TYPES_FILE.")
+            speakers?.let {
+                speakerDao().insertAll(it.speakers)
             }
 
-            try {
-                // Speakers
-                gson.fromFile<Speakers>(SPEAKERS_FILE, root = database).let {
-                    speakerDao().insertAll(it.speakers)
-                }
-            } catch (ex: JsonSyntaxException) {
-                Logger.e("Could not open $SPEAKERS_FILE. ${ex.message}")
-            } catch (ex: FileNotFoundException) {
-                Logger.e("Could not find file $SPEAKERS_FILE.")
+            locations?.let {
+                locationDao().insertAll(it.locations)
             }
 
-            try {
-                // Schedule
-                gson.fromFile<Events>(SCHEDULE_FILE, root = database).let {
-                    eventDao().insertAll(it.events)
+            events?.let {
+                it.events.forEach { event ->
+                    eventDao().upsert(event)
+                }
 
-                    it.events.forEach { event ->
-                        event.speakers.forEach {
-                            val join = EventSpeakerJoin(event.id, it)
-                            eventSpeakerDao().insert(join)
-                        }
+                it.events.forEach { event ->
+                    event.speakers.forEach {
+                        val join = EventSpeakerJoin(event.id, it)
+                        eventSpeakerDao().insert(join)
                     }
                 }
-            } catch (ex: JsonSyntaxException) {
-                Logger.e("Could not open $SCHEDULE_FILE. ${ex.message}")
-            } catch (ex: FileNotFoundException) {
-                Logger.e("Could not find file $SCHEDULE_FILE.")
             }
 
-            try {
-                // Vendors
-                gson.fromFile<Vendors>(VENDORS_FILE, root = database).let {
-                    vendorDao().insertAll(it.vendors)
-                }
-            } catch (ex: JsonSyntaxException) {
-                Logger.e("Could not open $VENDORS_FILE. ${ex.message}")
-            } catch (ex: FileNotFoundException) {
-                Logger.e("Could not find file $VENDORS_FILE.")
+            vendors?.let {
+                vendorDao().insertAll(it.vendors)
             }
 
-            try {
-                gson.fromFile<FAQs>(FAQ_FILE, root = database).let {
-                    faqDao().insertAll(it.faqs)
-                }
-            } catch (ex: JsonSyntaxException) {
-                Logger.e("Could not open $FAQ_FILE. ${ex.message}")
-            } catch (ex: FileNotFoundException) {
-                Logger.e("Could not find file $FAQ_FILE.")
+            faqs?.let {
+                faqDao().insertAll(it.faqs)
             }
+
+            conferenceDao().upsert(conference)
         }
     }
 
@@ -159,48 +126,43 @@ abstract class MyRoomDatabase : RoomDatabase() {
 
         fun buildDatabase(context: Context, conferenceLiveData: MutableLiveData<DatabaseConference>): MyRoomDatabase {
             Logger.d("Creating database! " + (System.currentTimeMillis() - App.application.timeToLaunch))
-            val database = Room.databaseBuilder(context, MyRoomDatabase::class.java, DATABASE_NAME)
+
+            return Room.databaseBuilder(context, MyRoomDatabase::class.java, DATABASE_NAME)
                     .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
-                    .addCallback(object : RoomDatabase.Callback() {
+                    .addCallback(object : Callback() {
                         override fun onCreate(db: SupportSQLiteDatabase) {
                             super.onCreate(db)
                             Logger.d("Database onCreate! " + (System.currentTimeMillis() - App.application.timeToLaunch))
-
-//                            Single.fromCallable {
-//                                val instance = getInstance(context, conferenceLiveData)
-//                                instance.init()
-//                                conferenceLiveData.postValue(instance.conferenceDao().getCurrentCon())
-//                            }.subscribeOn(Schedulers.io())
-//                                    .observeOn(AndroidSchedulers.mainThread())
-//                                    .subscribe()
                         }
 
                         override fun onOpen(db: SupportSQLiteDatabase) {
                             super.onOpen(db)
                             Logger.d("Database onOpen! " + (System.currentTimeMillis() - App.application.timeToLaunch))
 
-                            Single.fromCallable {
-                                val instance = getInstance(context, conferenceLiveData)
-
-                                instance.clearAllTables()
-
-                                instance.init()
-
-
-                                val currentCon = instance.conferenceDao().getCurrentCon()
-                                Logger.d("Setting current conference $currentCon")
-                                conferenceLiveData.postValue(currentCon)
-                            }.subscribeOn(Schedulers.io())
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribe()
+                            updateDatabase(context, conferenceLiveData)
                         }
-                    }).build()
+                    }).build().also {
+                        INSTANCE = it
+                    }
+        }
 
-            INSTANCE = database
+        private fun updateDatabase(context: Context, conferenceLiveData: MutableLiveData<DatabaseConference>) {
+            Single.fromCallable {
+                val instance = getInstance(context, conferenceLiveData)
 
-            return database
+                if (BuildConfig.DEBUG) {
+                    instance.clearAllTables()
+                }
 
+                instance.init()
+
+                val currentCon = instance.conferenceDao().getCurrentCon()
+                Logger.d("Setting current conference $currentCon")
+                conferenceLiveData.postValue(currentCon)
+            }.subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe()
         }
 
         private const val DATABASE_NAME = "database"
