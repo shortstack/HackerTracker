@@ -11,8 +11,7 @@ import com.shortstack.hackertracker.models.Speaker
  */
 @Dao
 interface EventSpeakerDao {
-
-
+    
     @Query("SELECT * FROM speaker INNER JOIN event_speaker_join ON speaker.id=event_speaker_join.speaker WHERE :event=event_speaker_join.event")
     fun getSpeakersForEvent(event: Int): List<Speaker>
 

@@ -2,7 +2,7 @@ package com.shortstack.hackertracker
 
 object Constants {
 
-    const val API_GITHUB_BASE = "https://rawgit.com/BeezleLabs/conferences/master/"
+    const val API_GITHUB_BASE = "https://rawgit.com/BeezleLabs/hackertracker.github.io/master/"
 
     private const val AUG_09_2018 = 1533801600000L
     const val DEBUG_FORCE_TIME_DATE = AUG_09_2018

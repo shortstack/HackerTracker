@@ -49,13 +49,8 @@ class SyncWorker : Worker() {
         var rowsUpdated = 0
 
         conferences?.conferences?.forEach {
-
-            val item = list.find { new -> new.conference.code == it.code }
-            val isNewCon = item == null
-
-            it.isSelected = item?.conference?.isSelected ?: false
-
-            rowsUpdated += updateConference(it, item, isNewCon)
+            val localConference = list.find { new -> new.conference.code == it.code }
+            rowsUpdated += updateConference(it, localConference)
         }
 
         outputData = mapOf(KEY_ROWS_UPDATED to rowsUpdated).toWorkData()
@@ -63,38 +58,34 @@ class SyncWorker : Worker() {
         return Result.SUCCESS
     }
 
-    private fun updateConference(stale: Conference, item: DatabaseConference?, isNewCon: Boolean): Int {
-        Logger.d("Fetching content for ${stale.name}")
+    private fun updateConference(conference: Conference, localConference: DatabaseConference?): Int {
+        Logger.d("Fetching content for ${conference.name}")
 
-        try {
-            val updatedAt = stale.updated
+        val local = localConference?.conference
 
-            val conference = item?.conference
+        val response = FullResponse(
+                getUpdate<Types>(conference.code, conference.types, local?.types, TYPES_FILE),
+                getUpdate<Locations>(conference.code, conference.locations, local?.locations, LOCATIONS_FILE),
+                getUpdate<Speakers>(conference.code, conference.speakers, local?.speakers, SPEAKERS_FILE),
+                getUpdate<Events>(conference.code, conference.events, local?.events, EVENTS_FILE),
+                getUpdate<Vendors>(conference.code, conference.vendors, local?.vendors, VENDORS_FILE),
+                getUpdate<FAQs>(conference.code, conference.faqs, local?.faqs, FAQ_FILE))
 
-            val response = FullResponse(
-                    getUpdate<Types>(stale.code, stale.types, conference?.types, TYPES_FILE),
-                    getUpdate<Locations>(stale.code, stale.locations, conference?.locations, LOCATIONS_FILE),
-                    getUpdate<Speakers>(stale.code, stale.speakers, conference?.speakers, SPEAKERS_FILE),
-                    getUpdate<Events>(stale.code, stale.events, conference?.events, EVENTS_FILE),
-                    getUpdate<Vendors>(stale.code, stale.vendors, conference?.vendors, VENDORS_FILE),
-                    getUpdate<FAQs>(stale.code, stale.faqs, conference?.faqs, FAQ_FILE))
+        // Updating database
+        conference.isSelected = local?.isSelected ?: false
+        database.updateConference(conference, response)
 
-            // Updating database
-            database.updateConference(stale, response)
+        val updatedAt = local?.events?.updatedAt
 
-            val count = database.getUpdatedEventsCount(updatedAt)
-            val updatedBookmarks = database.getUpdatedBookmarks(stale, updatedAt)
+        val count = database.getUpdatedEventsCount(updatedAt)
+        val updatedBookmarks = database.getUpdatedBookmarks(conference, updatedAt)
 
-            notifications.notifyUpdates(stale, isNewCon, count)
-            notifications.updatedBookmarks(updatedBookmarks)
+        notifications.notifyUpdates(conference, localConference == null, count)
+        notifications.updatedBookmarks(updatedBookmarks)
 
-            Logger.e("Updated $count rows.")
+        Logger.d("Updated $count rows.")
 
-            return count
-        } catch (ex: Exception) {
-            Logger.e("Exception! ${ex.message}")
-        }
-        return -1
+        return count
     }
 
 
@@ -104,8 +95,8 @@ class SyncWorker : Worker() {
         return null
     }
 
-    private fun isStale(file: ConferenceFile?, other: ConferenceFile?): Boolean {
-        return file == null || other == null || file.updatedAt < other.updatedAt
+    private fun isStale(network: ConferenceFile?, local: ConferenceFile?): Boolean {
+        return network == null || local == null || network.updatedAt > local.updatedAt
     }
 
     private inline fun <reified T> getSource(directory: String, url: String): T? {

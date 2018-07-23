@@ -6,8 +6,8 @@ import androidx.room.PrimaryKey
 
 @Entity(foreignKeys = [(ForeignKey(entity = (Conference::class), parentColumns = [("code")], childColumns = [("conference")], onDelete = ForeignKey.CASCADE))])
 data class FAQ(
-        @PrimaryKey(autoGenerate = true)
-        val index: Int,
+        @PrimaryKey
+        val id: Int,
         val conference: String,
         val question: String,
         val answer: String)
