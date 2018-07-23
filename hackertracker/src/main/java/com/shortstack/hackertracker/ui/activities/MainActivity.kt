@@ -57,6 +57,8 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
         setSupportActionBar(toolbar)
 
 
+
+
         setupNavigation()
 
         val mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
@@ -82,6 +84,7 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
         })
 
         bottomSheet = BottomSheetBehavior.from(filters)
+        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
 
         filter.setOnClickListener { expandFilters() }
         close.setOnClickListener { hideFilters() }

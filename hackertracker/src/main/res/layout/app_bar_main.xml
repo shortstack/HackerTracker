@@ -6,7 +6,7 @@
     android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
-        android:id="@+id/appBarLayout"
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -31,7 +31,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBarLayout"
+        app:layout_constraintTop_toBottomOf="@id/app_bar"
         app:navGraph="@navigation/navigation_graph"
         tools:layout="@layout/fragment_schedule" />
 
@@ -41,22 +41,17 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
-        android:src="@drawable/ic_filter_list_white_24dp"
         android:visibility="visible"
-        app:elevation="4dp"
-        app:pressedTranslationZ="12dp" />
+        app:srcCompat="@drawable/ic_filter_list_white_24dp" />
 
     <com.shortstack.hackertracker.views.FilterView
         android:id="@+id/filters"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:elevation="32dp"
         app:behavior_hideable="true"
-        app:behavior_peekHeight="0dp"
+        app:behavior_peekHeight="240dp"
+        app:behavior_skipCollapsed="true"
         app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         tools:background="@color/dark_background" />
 
 
