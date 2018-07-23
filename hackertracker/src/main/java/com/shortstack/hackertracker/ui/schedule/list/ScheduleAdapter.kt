@@ -11,6 +11,7 @@ import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
+import java.util.Comparator
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
@@ -22,7 +23,7 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
     @Inject
     lateinit var storage: SharedPreferencesUtil
 
-    var state : Status = Status.NOT_INITIALIZED
+    var state: Status = Status.NOT_INITIALIZED
 
     init {
         App.application.component.inject(this)
@@ -44,7 +45,11 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
                 if (prevTime != it.key) {
                     result.add(Time(it.key))
                 }
-                result.addAll(it.value)
+
+                if (it.value.isNotEmpty()) {
+                    val group = it.value.sortedWith(compareBy({ it.type.firstOrNull()?.name }, { it.location.firstOrNull()?.name }))
+                    result.addAll(group)
+                }
             }
         }
 
