@@ -153,16 +153,12 @@
                     android:text="@string/related_events" />
 
                 <LinearLayout
+                    android:id="@+id/related_events"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="8dp"
                     android:orientation="vertical">
 
-                    <include layout="@layout/row_event" />
-
-                    <include layout="@layout/row_event" />
-
-                    <include layout="@layout/row_event" />
 
 
                 </LinearLayout>

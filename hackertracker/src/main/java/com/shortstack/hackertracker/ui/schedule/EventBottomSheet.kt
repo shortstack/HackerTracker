@@ -5,9 +5,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.appcompat.widget.LinearLayoutCompat
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
@@ -20,6 +22,7 @@ import com.shortstack.hackertracker.views.EventView
 import com.shortstack.hackertracker.views.SpeakerView
 import kotlinx.android.synthetic.main.bottom_sheet_schedule_event.view.*
 import kotlinx.android.synthetic.main.empty_text.view.*
+import kotlinx.android.synthetic.main.row_event.view.*
 import javax.inject.Inject
 
 class EventBottomSheet : com.google.android.material.bottomsheet.BottomSheetDialogFragment() {
@@ -44,7 +47,7 @@ class EventBottomSheet : com.google.android.material.bottomsheet.BottomSheetDial
 
         view.event.setContent(obj.event)
 
-        displaySpeakers(obj, view.speakers)
+        displaySpeakers(obj, view.speakers, view.related_events)
 
         displayDescription(obj, view.description, view.empty, view.link, view.star)
 
@@ -56,7 +59,7 @@ class EventBottomSheet : com.google.android.material.bottomsheet.BottomSheetDial
     }
 
 
-    private fun displaySpeakers(obj: EventViewModel, layout: LinearLayoutCompat) {
+    private fun displaySpeakers(obj: EventViewModel, layout: LinearLayoutCompat, related_events: LinearLayout) {
         val speakers = database.getSpeakers(obj.event.event.id)
 
 
@@ -64,6 +67,15 @@ class EventBottomSheet : com.google.android.material.bottomsheet.BottomSheetDial
 
         speakers.forEach {
             layout.addView(SpeakerView(context, it))
+        }
+
+        val events = database.getRelatedEvents(speakers.first())
+
+        events.forEach {
+            val view = LayoutInflater.from(context).inflate(R.layout.row_event, related_events, false)
+            view.title.text = it.event.title
+
+            related_events.addView(view)
         }
     }
 

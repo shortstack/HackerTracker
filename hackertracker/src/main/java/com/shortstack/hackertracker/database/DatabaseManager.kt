@@ -152,4 +152,8 @@ class DatabaseManager(context: Context) {
         return db.eventDao().getUpdatedBookmarks(conference.code)
     }
 
+    fun getRelatedEvents(speaker: Speaker): List<DatabaseEvent> {
+        return db.eventSpeakerDao().getEventsForSpeaker(speaker.id)
+    }
+
 }

@@ -54,7 +54,6 @@ class EventView(context: Context, attrs: AttributeSet) : androidx.cardview.widge
         setDisplayMode()
     }
 
-
     private fun getStyle(context: Context, attrs: AttributeSet) {
         val a = context.theme.obtainStyledAttributes(attrs,
                 R.styleable.EventView, 0, 0)
