@@ -42,12 +42,13 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="16dp"
         android:visibility="visible"
+        app:elevation="0dp"
         app:srcCompat="@drawable/ic_filter_list_white_24dp" />
 
     <com.shortstack.hackertracker.views.FilterView
         android:id="@+id/filters"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="420dp"
         app:behavior_hideable="true"
         app:behavior_peekHeight="240dp"
         app:behavior_skipCollapsed="true"
