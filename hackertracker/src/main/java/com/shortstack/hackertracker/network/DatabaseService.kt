@@ -23,7 +23,7 @@ interface DatabaseService {
     companion object Factory {
 
         fun create(database: String): DatabaseService {
-            val retrofit = Retrofit.Builder().baseUrl(Constants.API_GITHUB_BASE + database + "/")
+            val retrofit = Retrofit.Builder().baseUrl(Constants.API_BASE + database + "/")
                     .addConverterFactory(GsonConverterFactory.create())
                     .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                     .build()

@@ -109,7 +109,7 @@ class SyncWorker : Worker() {
     private fun getService(directory: String? = null): DatabaseService {
         val directory = if (directory != null) "$directory/" else ""
         val retrofit = Retrofit.Builder()
-                .baseUrl(Constants.API_GITHUB_BASE + directory)
+                .baseUrl(Constants.API_BASE + directory)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         return retrofit.create(DatabaseService::class.java)
