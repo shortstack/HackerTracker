@@ -12,7 +12,7 @@ import com.shortstack.hackertracker.Constants.LOCATIONS_FILE
 import com.shortstack.hackertracker.Constants.SPEAKERS_FILE
 import com.shortstack.hackertracker.Constants.TYPES_FILE
 import com.shortstack.hackertracker.Constants.VENDORS_FILE
-import com.shortstack.hackertracker.database.ConferenceFile
+import com.shortstack.hackertracker.models.ConferenceFile
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.models.response.Speakers
@@ -87,7 +87,7 @@ class SyncWorker : Worker() {
             Logger.d("Updated $count rows.")
             return count
         }
-        
+
         return 0
     }
 

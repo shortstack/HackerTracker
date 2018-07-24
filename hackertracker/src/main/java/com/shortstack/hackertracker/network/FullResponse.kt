@@ -2,7 +2,7 @@ package com.shortstack.hackertracker.network
 
 import com.google.gson.Gson
 import com.shortstack.hackertracker.Constants
-import com.shortstack.hackertracker.database.ConferenceFile
+import com.shortstack.hackertracker.models.ConferenceFile
 import com.shortstack.hackertracker.fromFile
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.models.response.Speakers
