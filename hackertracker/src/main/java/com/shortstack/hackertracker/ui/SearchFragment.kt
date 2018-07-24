@@ -70,12 +70,12 @@ class SearchFragment : androidx.fragment.app.Fragment(), SearchView.OnQueryTextL
     }
 
     override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        val item = menu?.findItem(R.id.search)
-        item?.expandActionView()
-        item?.setOnActionExpandListener(this)
-
-        val searchView = item?.actionView as? SearchView
-        searchView?.setOnQueryTextListener(this)
+//        val item = menu?.findItem(R.id.search)
+//        item?.expandActionView()
+//        item?.setOnActionExpandListener(this)
+//
+//        val searchView = item?.actionView as? SearchView
+//        searchView?.setOnQueryTextListener(this)
 
         super.onCreateOptionsMenu(menu, inflater)
     }

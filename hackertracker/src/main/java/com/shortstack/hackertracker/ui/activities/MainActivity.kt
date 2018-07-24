@@ -3,10 +3,12 @@ package com.shortstack.hackertracker.ui.activities
 
 import android.content.res.Resources
 import android.os.Bundle
-import android.view.*
+import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
@@ -16,7 +18,6 @@ import androidx.work.State
 import androidx.work.WorkManager
 import com.github.stkent.amplify.tracking.Amplify
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
@@ -180,11 +181,11 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.search -> {
-                navController.navigate(R.id.nav_search)
-            }
-        }
+//        when (item.itemId) {
+//            R.id.search -> {
+//                navController.navigate(R.id.nav_search)
+//            }
+//        }
         return super.onOptionsItemSelected(item)
     }
 
