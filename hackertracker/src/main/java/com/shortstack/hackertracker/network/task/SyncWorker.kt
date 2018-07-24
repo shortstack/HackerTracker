@@ -71,21 +71,24 @@ class SyncWorker : Worker() {
                 getUpdate<Vendors>(conference.code, conference.vendors, local?.vendors, VENDORS_FILE),
                 getUpdate<FAQs>(conference.code, conference.faqs, local?.faqs, FAQ_FILE))
 
-        // Updating database
-        conference.isSelected = local?.isSelected ?: false
-        database.updateConference(conference, response)
+        if (response.isNotEmpty()) {
+            // Updating database
+            conference.isSelected = local?.isSelected ?: false
+            database.updateConference(conference, response)
 
-        val updatedAt = local?.events?.updatedAt
+            val updatedAt = local?.events?.updatedAt
 
-        val count = database.getUpdatedEventsCount(updatedAt)
-        val updatedBookmarks = database.getUpdatedBookmarks(conference, updatedAt)
+            val count = database.getUpdatedEventsCount(updatedAt)
+            val updatedBookmarks = database.getUpdatedBookmarks(conference, updatedAt)
 
-        notifications.notifyUpdates(conference, localConference == null, count)
-        notifications.updatedBookmarks(updatedBookmarks)
+            notifications.notifyUpdates(conference, localConference == null, count)
+            notifications.updatedBookmarks(updatedBookmarks)
 
-        Logger.d("Updated $count rows.")
-
-        return count
+            Logger.d("Updated $count rows.")
+            return count
+        }
+        
+        return 0
     }
 
 

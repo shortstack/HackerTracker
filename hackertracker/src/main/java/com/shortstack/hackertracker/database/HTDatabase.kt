@@ -55,8 +55,10 @@ abstract class HTDatabase : RoomDatabase() {
                     val local = conferenceDao().get().find { it.conference.id == conference.id }?.conference
                     val response = FullResponse.getLocalFullResponse(conference, local)
 
-                    conferenceDao().upsert(conference)
-                    updateDatabase(conference, response)
+                    if( response.isNotEmpty() ) {
+                        conferenceDao().upsert(conference)
+                        updateDatabase(conference, response)
+                    }
                 }
             }
         }
@@ -115,20 +117,12 @@ abstract class HTDatabase : RoomDatabase() {
 
 
         fun buildDatabase(context: Context, conferenceLiveData: MutableLiveData<DatabaseConference>): HTDatabase {
-            Logger.d("Creating database! " + (System.currentTimeMillis() - App.application.timeToLaunch))
-
             return Room.databaseBuilder(context, HTDatabase::class.java, DATABASE_NAME)
                     .allowMainThreadQueries()
                     .fallbackToDestructiveMigration()
                     .addCallback(object : Callback() {
-                        override fun onCreate(db: SupportSQLiteDatabase) {
-                            super.onCreate(db)
-                            Logger.d("Database onCreate! " + (System.currentTimeMillis() - App.application.timeToLaunch))
-                        }
-
                         override fun onOpen(db: SupportSQLiteDatabase) {
                             super.onOpen(db)
-                            Logger.d("Database onOpen! " + (System.currentTimeMillis() - App.application.timeToLaunch))
                             updateDatabase(context, conferenceLiveData)
                         }
                     }).build().also {
@@ -140,7 +134,6 @@ abstract class HTDatabase : RoomDatabase() {
             Single.fromCallable {
                 val instance = getInstance(context, conferenceLiveData)
 
-                // TODO: Check if it needs to be updated.
                 instance.setup()
 
                 if (conferenceLiveData.value == null) {

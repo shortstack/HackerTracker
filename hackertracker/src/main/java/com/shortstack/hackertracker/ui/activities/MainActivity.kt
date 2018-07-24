@@ -12,6 +12,8 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import androidx.work.State
+import androidx.work.WorkManager
 import com.github.stkent.amplify.tracking.Amplify
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.orhanobut.logger.Logger
@@ -20,6 +22,7 @@ import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.network.task.SyncWorker
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.utils.TickTimer
 import kotlinx.android.synthetic.main.activity_main.*
@@ -55,10 +58,7 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
-
-
-
+        
         setupNavigation()
 
         val mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
@@ -71,13 +71,15 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
 
             nav_view.menu.removeGroup(R.id.nav_cons)
 
-            it?.forEach {
-                nav_view.menu.add(R.id.nav_cons, it.id, 0, it.name).apply {
-                    isChecked = it.isSelected
-                    icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_chevron_right_white_24dp)
-                }
-            }
+//            it?.forEach {
+//                nav_view.menu.add(R.id.nav_cons, it.id, 0, it.name).apply {
+//                    isChecked = it.isSelected
+//                    icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_chevron_right_white_24dp)
+//                }
+//            }
         })
+
+        scheduleSyncTask()
 
         database.typesLiveData.observe(this, Observer {
             filters.setTypes(it)
@@ -95,10 +97,18 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
                 review.show(this.supportFragmentManager, review.tag)
             }
         }
+    }
 
-        // TODO: Remove, this is only for debugging.
-        Logger.d("Created MainActivity " + (System.currentTimeMillis() - App.application.timeToLaunch))
+    private fun scheduleSyncTask() {
+        val scheduled = WorkManager.getInstance()?.getStatusesByTag(SyncWorker.TAG_SYNC)
 
+        scheduled?.observe(this, Observer {
+            if (it == null || !it.any { it.state == State.ENQUEUED || it.state == State.RUNNING }) {
+                if (!storage.syncingDisabled) {
+                    App.application.scheduleSyncTask()
+                }
+            }
+        })
     }
 
 

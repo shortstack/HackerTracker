@@ -11,6 +11,10 @@ import com.shortstack.hackertracker.models.response.Vendors
 
 class FullResponse(val types: Types?, val locations: Locations?, val speakers: Speakers?, val events: Events?, val vendors: Vendors?, val faqs: FAQs?) {
 
+    fun isEmpty() = types == null && locations == null && speakers == null && events == null && vendors == null && faqs == null
+
+    fun isNotEmpty() = !isEmpty()
+
     companion object {
         fun getLocalFullResponse(conference: Conference, localConference: Conference?): FullResponse {
             val gson = Gson()
