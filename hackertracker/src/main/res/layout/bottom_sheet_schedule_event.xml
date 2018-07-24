@@ -68,21 +68,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:src="@drawable/ic_link_white_24dp" />
+                        app:srcCompat="@drawable/ic_link_white_24dp" />
 
                     <ImageView
                         android:id="@+id/share"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:src="@drawable/ic_share_white_24dp" />
-
-                    <ImageView
-                        android:id="@+id/star"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:src="@drawable/ic_star_border_white_24dp" />
+                        app:srcCompat="@drawable/ic_share_white_24dp" />
 
                 </LinearLayout>
 
@@ -136,6 +129,7 @@
                 </FrameLayout>
 
                 <TextView
+                    android:id="@+id/speakers_header"
                     style="@style/details_section_header"
                     android:text="@string/speakers" />
 
@@ -146,26 +140,6 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:visibility="visible" />
-
-
-                <TextView
-                    style="@style/details_section_header"
-                    android:text="@string/related_events" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:orientation="vertical">
-
-                    <include layout="@layout/row_event" />
-
-                    <include layout="@layout/row_event" />
-
-                    <include layout="@layout/row_event" />
-
-
-                </LinearLayout>
 
 
                 <include layout="@layout/row_footer" />

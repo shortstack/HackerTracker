@@ -18,7 +18,4 @@
         android:paddingBottom="10dp"
         android:src="?attr/logo_main" />
 
-
-    <include layout="@layout/item_upcoming" />
-
 </LinearLayout>
