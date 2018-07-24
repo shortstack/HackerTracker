@@ -5,7 +5,6 @@ import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
@@ -51,7 +50,7 @@ class FilterAdapter(private val types: List<Type>, private val database: Databas
 
                 Single.fromCallable {
                     type.isSelected = isChecked
-                    database.updateType(type)
+                    database.updateTypeIsSelected(type)
                 }.subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe({}, {})

@@ -11,6 +11,9 @@ import io.reactivex.Single
 @Dao
 interface TypeDao {
 
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insert(type: Type): Long
+
     @Query("SELECT * FROM type")
     fun get(): List<Type>
 
@@ -26,6 +29,19 @@ interface TypeDao {
     @Query("SELECT * FROM type WHERE name = :event")
     fun getTypeForEvent(event: String): Single<Type>
 
-    @Update
-    fun update(type: Type): Int
+    @Query("UPDATE type SET name = :name, color = :color, conference = :conference WHERE id = :id")
+    fun update(id: Int, name: String, color: String, conference: String): Int
+
+    @Query("UPDATE type SET isSelected = :isSelected WHERE id = :id")
+    fun updateSelected(id: Int, isSelected: Boolean): Int
+
+    @Transaction
+    fun upsert(types: List<Type>) {
+        types.forEach {
+            val id = insert(it)
+            if (id == -1L) {
+                update(it.id, it.name, it.color, it.conference)
+            }
+        }
+    }
 }

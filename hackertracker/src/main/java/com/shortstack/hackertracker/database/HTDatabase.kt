@@ -3,12 +3,10 @@ package com.shortstack.hackertracker.database
 import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SupportSQLiteDatabase
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.Constants.CONFERENCES_FILE
 import com.shortstack.hackertracker.fromFile
 import com.shortstack.hackertracker.models.*
@@ -45,19 +43,20 @@ abstract class HTDatabase : RoomDatabase() {
     @Inject
     lateinit var gson: Gson
 
-    fun setup(conferenceLiveData: MutableLiveData<DatabaseConference>) {
+    fun setup() {
         App.application.component.inject(this)
 
         gson.fromFile<Conferences>(CONFERENCES_FILE, root = null)?.let { conferences ->
             conferences.let {
                 // Select the first one available.
                 it.conferences.first().isSelected = true
-                conferenceDao().insertAll(it.conferences)
 
-//                conferenceLiveData.postValue(conferenceDao().getCurrentCon())
+                it.conferences.forEach { conference ->
+                    val local = conferenceDao().get().find { it.conference.id == conference.id }?.conference
+                    val response = FullResponse.getLocalFullResponse(conference, local)
 
-                it.conferences.forEach {
-                    updateDatabase(it, FullResponse.getLocalFullResponse(it))
+                    conferenceDao().upsert(conference)
+                    updateDatabase(conference, response)
                 }
             }
         }
@@ -69,7 +68,7 @@ abstract class HTDatabase : RoomDatabase() {
 
         response.run {
             types?.let {
-                typeDao().insertAll(it.types)
+                typeDao().upsert(it.types)
             }
 
             speakers?.let {
@@ -87,12 +86,7 @@ abstract class HTDatabase : RoomDatabase() {
 
                 it.events.forEach { event ->
                     event.speakers.forEach {
-                        try {
-                            val join = EventSpeakerJoin(event.id, it)
-                            eventSpeakerDao().insert(join)
-                        } catch (ex: Exception) {
-                            Logger.e("Could not insert ${event.id} + $it. ${ex.message}")
-                        }
+                        eventSpeakerDao().insert(EventSpeakerJoin(event.id, it))
                     }
                 }
             }
@@ -102,11 +96,7 @@ abstract class HTDatabase : RoomDatabase() {
             }
 
             faqs?.let {
-                try {
-                    faqDao().insertAll(it.faqs)
-                } catch (ex: Exception) {
-                    Logger.e("Could not insert $it. ${ex.message}")
-                }
+                faqDao().insertAll(it.faqs)
             }
         }
 
@@ -150,17 +140,14 @@ abstract class HTDatabase : RoomDatabase() {
             Single.fromCallable {
                 val instance = getInstance(context, conferenceLiveData)
 
-
                 // TODO: Check if it needs to be updated.
-//                if (BuildConfig.DEBUG) {
-//                    instance.clearAllTables()
-//                }
-//
-//                instance.setup(conferenceLiveData)
+                instance.setup()
 
-                val currentCon = instance.conferenceDao().getCurrentCon()
-                Logger.d("Setting current conference $currentCon")
-                conferenceLiveData.postValue(currentCon)
+                if (conferenceLiveData.value == null) {
+                    val currentCon = instance.conferenceDao().getCurrentCon()
+                    Logger.d("Setting current conference $currentCon")
+                    conferenceLiveData.postValue(currentCon)
+                }
             }.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe()

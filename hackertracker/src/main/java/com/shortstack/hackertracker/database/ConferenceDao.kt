@@ -44,4 +44,9 @@ interface ConferenceDao {
             update(conference)
         }
     }
+
+    @Transaction
+    fun upsert(conferences: List<Conference>) {
+        conferences.forEach { upsert(it) }
+    }
 }

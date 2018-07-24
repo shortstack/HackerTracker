@@ -130,8 +130,8 @@ class DatabaseManager(context: Context) {
         db.updateDatabase(conference, body)
     }
 
-    fun updateType(type: Type): Int {
-        return db.typeDao().update(type)
+    fun updateTypeIsSelected(type: Type): Int {
+        return db.typeDao().updateSelected(type.id, type.isSelected)
     }
 
     fun clear() {
