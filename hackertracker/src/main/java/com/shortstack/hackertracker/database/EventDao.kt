@@ -27,6 +27,9 @@ interface EventDao {
     @Query("SELECT * FROM event where conference = :conference AND `end` > :date AND type IN (:types) ORDER BY `begin` ASC")
     fun getSchedule(conference: String, date: Date, types: List<Int>): LiveData<List<DatabaseEvent>>
 
+    @Query("SELECT * FROM event where conference = :conference AND `end` > :date AND type IN (:types) AND isBookmarked = :isBookmarked ORDER BY `begin` ASC")
+    fun getSchedule(conference: String, date: Date, types: List<Int>, isBookmarked: Boolean): LiveData<List<DatabaseEvent>>
+
     @Query("SELECT * FROM event where conference = :conference AND `end` > :date ORDER BY `begin` ASC")
     fun getSchedule(conference: String, date: Date): LiveData<List<DatabaseEvent>>
 
