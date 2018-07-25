@@ -4,6 +4,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SupportSQLiteDatabase
 import android.content.Context
 import androidx.room.*
+import androidx.room.migration.Migration
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
@@ -20,7 +21,7 @@ import javax.inject.Inject
  * Created by Chris on 3/31/2018.
  */
 @Database(entities = [(Conference::class), (Event::class), (Type::class), (Vendor::class),
-    (Speaker::class), (FAQ::class), (Location::class), (EventSpeakerJoin::class)], version = 1)
+    (Speaker::class), (FAQ::class), (Location::class), (EventSpeakerJoin::class)], version = 2)
 @TypeConverters(value = [(Converters::class)])
 abstract class HTDatabase : RoomDatabase() {
 
@@ -55,7 +56,7 @@ abstract class HTDatabase : RoomDatabase() {
                     val local = conferenceDao().get().find { it.conference.id == conference.id }?.conference
                     val response = FullResponse.getLocalFullResponse(conference, local)
 
-                    if( response.isNotEmpty() ) {
+                    if (response.isNotEmpty()) {
                         conferenceDao().upsert(conference)
                         updateDatabase(conference, response)
                     }
@@ -119,7 +120,24 @@ abstract class HTDatabase : RoomDatabase() {
         fun buildDatabase(context: Context, conferenceLiveData: MutableLiveData<DatabaseConference>): HTDatabase {
             return Room.databaseBuilder(context, HTDatabase::class.java, DATABASE_NAME)
                     .allowMainThreadQueries()
-                    .fallbackToDestructiveMigration()
+//                    .fallbackToDestructiveMigration()
+                    .addMigrations(object : Migration(1, 2) {
+                        override fun migrate(database: SupportSQLiteDatabase) {
+                            database.execSQL("DROP TABLE Vendor")
+                            database.execSQL("CREATE TABLE Vendor(" +
+                                    "`id` INTEGER NOT NULL," +
+                                    "`name` TEXT NOT NULL," +
+                                    "description TEXT," +
+                                    "link TEXT," +
+                                    "partner INTEGER NOT NULL," +
+                                    "updatedAt TEXT NOT NULL," +
+                                    "conference TEXT NOT NULL," +
+                                    "PRIMARY KEY(`id`)," +
+                                    "FOREIGN KEY(`conference`) REFERENCES Conference(code)" +
+                                    "ON DELETE CASCADE" +
+                                    ")")
+                        }
+                    })
                     .addCallback(object : Callback() {
                         override fun onOpen(db: SupportSQLiteDatabase) {
                             super.onOpen(db)
