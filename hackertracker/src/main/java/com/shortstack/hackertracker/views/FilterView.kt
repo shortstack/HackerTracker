@@ -14,6 +14,10 @@ import javax.inject.Inject
 
 class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
+    companion object {
+        private const val SPAN_COUNT = 2
+    }
+
     @Inject
     lateinit var database: DatabaseManager
 
@@ -26,11 +30,11 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
         if (types != null) {
             val adapter = FilterAdapter(types, database)
 
-            list.layoutManager = GridLayoutManager(context, 2, GridLayoutManager.VERTICAL, false).apply {
+            list.layoutManager = GridLayoutManager(context, SPAN_COUNT, GridLayoutManager.VERTICAL, false).apply {
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
                         return when (adapter.getItemViewType(position)) {
-                            FilterAdapter.TYPE_HEADER -> 2
+                            FilterAdapter.TYPE_HEADER -> SPAN_COUNT
                             else -> 1
                         }
                     }
