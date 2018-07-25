@@ -1,53 +1,56 @@
 package com.shortstack.hackertracker.views
 
 import android.animation.ObjectAnimator
-import android.arch.lifecycle.ViewModelProviders
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
-import android.support.v4.content.ContextCompat
-import android.support.v7.widget.CardView
+import android.os.Build
+import androidx.core.content.ContextCompat
 import android.util.AttributeSet
 import android.util.DisplayMetrics
-import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.DecelerateInterpolator
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.events.BusProvider
-import com.shortstack.hackertracker.events.RefreshTimerEvent
-import com.shortstack.hackertracker.models.Event
+import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.EventViewModel
-import com.squareup.otto.Subscribe
+import com.shortstack.hackertracker.utils.TickTimer
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.row_event.view.*
 import javax.inject.Inject
 
-class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs) {
+class EventView(context: Context, attrs: AttributeSet) : androidx.cardview.widget.CardView(context, attrs) {
 
     @Inject
     lateinit var database: DatabaseManager
 
-    private var mDisplayMode = DISPLAY_MODE_FULL
+    @Inject
+    lateinit var timer: TickTimer
+
+    private var disposable: Disposable? = null
+
+    private var displayMode = DISPLAY_MODE_FULL
     private var mRoundCorners = true
     var content: EventViewModel? = null
         private set
 
-    private var mAnimation: ObjectAnimator? = null
+    private var animation: ObjectAnimator? = null
 
     init {
+        inflate(context, R.layout.row_event, this)
+
         App.application.component.inject(this)
 
         getStyle(context, attrs)
 
-        setCardBackgroundColor(ContextCompat.getColor(context, R.color.card_background))
+        setCardBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
 
-        inflate()
+
         setDisplayMode()
     }
 
@@ -56,8 +59,8 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
         val a = context.theme.obtainStyledAttributes(attrs,
                 R.styleable.EventView, 0, 0)
         try {
-            mDisplayMode = a.getInteger(R.styleable.EventView_displayMode, DISPLAY_MODE_FULL)
-            mRoundCorners = a.getBoolean(R.styleable.EventView_roundCorners, true)
+            displayMode = a.getInteger(R.styleable.EventView_displayMode, DISPLAY_MODE_FULL)
+//            mRoundCorners = a.getBoolean(R.styleable.EventView_roundCorners, true)
         } finally {
             a.recycle()
         }
@@ -65,69 +68,57 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
         radius = if (mRoundCorners) convertDpToPixel(2f, context) else 0f
     }
 
-    private fun inflate() {
-        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-
-        val view = inflater.inflate(R.layout.row_event, null)
-
-        addView(view)
-    }
-
-    fun setEvent(event: Event) {
+    fun setContent(event: DatabaseEvent) {
         content = EventViewModel(event)
-        renderItem()
+        render()
     }
 
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-        if (!isInEditMode)
-            BusProvider.bus.register(this)
+        disposable = timer.observable.observeOn(AndroidSchedulers.mainThread())
+                .subscribe { updateProgressBar() }
     }
 
     override fun onDetachedFromWindow() {
-        super.onDetachedFromWindow()
-        if (!isInEditMode)
-            BusProvider.bus.unregister(this)
-
+        disposable?.dispose()
+        disposable = null
         finishAnimation()
-        setProgressBar()
+        super.onDetachedFromWindow()
+
     }
 
     private fun finishAnimation() {
-        if (mAnimation != null) {
-            mAnimation!!.cancel()
-            mAnimation = null
-        }
-    }
-
-    fun onRefreshTimeEvent() {
-        Logger.d("Updated ${content?.title}")
-        updateProgressBar()
+        animation?.cancel()
+        animation = null
     }
 
     private fun setDisplayMode() {
-        when (mDisplayMode) {
-            DISPLAY_MODE_FULL -> {
-            }
-
-            DISPLAY_MODE_MIN -> {
-                time.visibility = View.GONE
-                category_text.visibility = View.GONE
-            }
-        }
+//        val visibility = if (displayMode == DISPLAY_MODE_FULL) View.VISIBLE else View.GONE
+//        time.visibility = visibility
+//        category_text.visibility = visibility
     }
 
     fun setDisplayMode(mode: Int) {
-        mDisplayMode = mode
+        displayMode = mode
         setDisplayMode()
     }
 
-    private fun renderItem() {
+    private fun render() {
         renderText()
         renderCategoryColour()
-        renderBookmark()
-        setProgressBar()
+        if (content?.hasAnimatedProgress == false) {
+            content?.hasAnimatedProgress = true
+            progress.progress = 0
+            updateProgressBar()
+        } else {
+            setProgressBar()
+        }
+
+        star_bar.setOnClickListener {
+            onBookmarkClick()
+        }
+
     }
 
     private fun setProgressBar() {
@@ -146,7 +137,7 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
 
         val duration = PROGRESS_UPDATE_DURATION_PER_PERCENT * (progress - this.progress.progress)
 
-        mAnimation = ObjectAnimator.ofInt(this.progress, "progress", progress)
+        animation = ObjectAnimator.ofInt(this.progress, "progress", progress)
                 .also {
                     it.duration = duration.toLong()
                     it.interpolator = DecelerateInterpolator()
@@ -155,46 +146,59 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
     }
 
     private fun getProgress(): Int {
+//        if (BuildConfig.DEBUG)
+//            return Random().nextInt(100)
+
         return (content!!.progress * 100).toInt()
     }
 
     private fun renderText() {
         title.text = content?.title
-        location.text = content?.location
-
-        if (mDisplayMode == DISPLAY_MODE_FULL) {
-            time.text = content?.getFullTimeStamp(context)
-        }
+        val pair = content?.getTimeStamp(context)
+        location.text = content?.location + " | " + pair?.first + " - " + pair?.second
     }
 
     private fun renderCategoryColour() {
-        val event = content?.type ?: return
+        val type = content?.event?.type?.firstOrNull() ?: return
 
-//        val value = database.typesLiveData.value
-//
-//        val type = value?.first { it.type == event } ?: return
-        database.getTypeForEvent(event)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    category_text.text = it.type
-                    val color = Color.parseColor(it.colour)
+        category_text.text = type.name
+        val color =
+//                if (BuildConfig.DEBUG) {
+//            val colours = context.resources.getStringArray(R.array.colors)
+//            Color.parseColor(colours[Random().nextInt(colours.size)])
+//        } else {
+                Color.parseColor(type.color)
+//        }
 
-                    category.setBackgroundColor(color)
-                    progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
-                }, {
-                    
-                })
+        category.setBackgroundColor(color)
+        progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+
+        val drawable = context.getDrawable(R.drawable.chip_background).mutate()
+        drawable.setTint(color)
+
+        category_text.setBackgroundDrawable(drawable)
 
 
+        renderBookmark(color)
     }
 
-    private fun renderBookmark() {
-        star_bar.visibility = content?.bookmarkVisibility ?: View.INVISIBLE
-    }
+    private fun renderBookmark(color: Int) {
+        star_bar.visibility = View.VISIBLE
 
-    private fun updateBookmark() {
-        renderBookmark()
+        val isBookmarked = content?.event?.event?.isBookmarked == true
+        val drawable = if (isBookmarked) {
+            R.drawable.ic_star_accent_24dp
+        } else {
+            R.drawable.ic_star_border_white_24dp
+        }
+
+        val image = ContextCompat.getDrawable(context, drawable)?.mutate()
+
+        if (isBookmarked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            image?.setTint(color)
+        }
+
+        star_bar.setImageDrawable(image)
     }
 
     private fun convertDpToPixel(dp: Float, context: Context): Float {
@@ -212,12 +216,15 @@ class EventView(context: Context, attrs: AttributeSet) : CardView(context, attrs
     }
 
     fun onBookmarkClick() {
-        val event = content?.event ?: return
+        val event = content?.event?.event ?: return
 
         event.isBookmarked = !event.isBookmarked
 
+
+        renderCategoryColour()
+
         Single.fromCallable {
-            database.updateEvent(event)
+            database.updateBookmark(event)
         }.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe()

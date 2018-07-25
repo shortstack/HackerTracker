@@ -26,8 +26,9 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlNormal">@color/colorAccent</item>
-        <item name="colorControlHighlight">@color/colorAccent</item>
+        <item name="colorControlActivated">@color/white</item>
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlHighlight">@color/white</item>
         <item name="preferenceTheme">@style/Theme.WtfPreference</item>
 
         <item name="android:checkboxStyle">@style/AppCheckBoxStyle</item>
@@ -57,31 +58,6 @@
     <style name="AppTheme.Dev">
         <item name="windowActionBar">true</item>
         <item name="windowNoTitle">false</item>
-    </style>
-
-    <style name="AppTheme.Toorcon" parent="AppTheme">
-        <item name="logo_main">@drawable/toorcon_logo</item>
-        <item name="logo_secondary">@drawable/toorcon_logo</item>
-    </style>
-
-    <style name="AppTheme.Shmoocon" parent="AppTheme">
-        <item name="logo_main">@drawable/shmoocon_logo</item>
-        <item name="logo_secondary">@drawable/shmoocon_logo</item>
-    </style>
-
-    <style name="AppTheme.Hackwest" parent="AppTheme">
-        <item name="logo_main">@drawable/hackwest_logo</item>
-        <item name="logo_secondary">@drawable/hackwest_logo</item>
-    </style>
-
-    <style name="AppTheme.BsidesOrl" parent="AppTheme">
-        <item name="logo_main">@drawable/bsidesorl_logo</item>
-        <item name="logo_secondary">@drawable/bsidesorl_logo</item>
-    </style>
-
-    <style name="AppTheme.LayerOne" parent="AppTheme">
-        <item name="logo_main">@drawable/layerone_logo</item>
-        <item name="logo_secondary">@drawable/layerone_logo</item>
     </style>
 
     <style name="AppCheckBoxStyle" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
@@ -159,8 +135,8 @@
     </style>
 
     <style name="Paragraph" parent="TextAppearance.AppCompat.Body1">
-        <!--<item name="android:paddingLeft">12dp</item>-->
-        <!--<item name="android:paddingRight">12dp</item>-->
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
         <item name="android:lineSpacingExtra">8sp</item>
         <!-- TODO: This is a very expensive attribute, do we need it? -->
         <!--<item name="android:autoLink">all</item>-->
@@ -170,6 +146,15 @@
         <item name="android:background">@null</item>
         <item name="android:textColor">?colorPrimary</item>
         <item name="android:minWidth">120dp</item>
+    </style>
+
+    <style name="details_section_header" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">60dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:textColor">@color/white_alpha</item>
     </style>
 
 

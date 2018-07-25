@@ -10,11 +10,11 @@
         android:id="@+id/event"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="2dp"
-        android:layout_marginBottom="2dp"
-        app:cardElevation="2dp"
-        app:displayMode="min"
-        app:roundCorners="true"
+
+        android:layout_marginLeft="8dp"
+        app:cardElevation="0dp"
+        app:displayMode="full"
+        app:roundCorners="false"
         tools:layout_marginBottom="20dp"
         tools:layout_marginTop="20dp" />
 

@@ -4,7 +4,7 @@ import android.app.Dialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
-import android.support.design.widget.BottomSheetDialogFragment
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.text.TextUtils
 import android.view.View
 import com.shortstack.hackertracker.R
@@ -13,7 +13,7 @@ import kotlinx.android.synthetic.main.bottom_sheet_generic.view.*
 import kotlinx.android.synthetic.main.empty_text.view.*
 
 
-abstract class GenericBottomSheet : BottomSheetDialogFragment() {
+abstract class GenericBottomSheet : com.google.android.material.bottomsheet.BottomSheetDialogFragment() {
 
     override fun setupDialog(dialog : Dialog, style : Int) {
         super.setupDialog(dialog, style)

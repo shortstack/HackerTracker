@@ -22,7 +22,6 @@
     </string-array>
 
     <string name="official">DEFCON</string>
-    <string name="speakers">Speakers</string>
     <string name="contests">Contests</string>
     <string name="demo_labs">Demo Labs</string>
     <string name="villages">Villages</string>
@@ -33,7 +32,6 @@
     <string name="kids">Kids</string>
     <string name="skytalks">Skytalks</string>
     <string name="workshops">Workshops</string>
-
 
 
     <string name="settings">Settings</string>
@@ -111,7 +109,7 @@
     <string name="sync_error">There was a issue with syncing.\n\nPlease try again later.</string>
     <string name="sync_title">Syncing</string>
     <string name="sync_init">Fetching latest information from server.</string>
-    <string name="alert_filter_title">Filter Categories</string>
+    <string name="alert_filter_title">Filter</string>
     <string name="today">Today</string>
     <string name="tomorrow">Tomorrow</string>
     <string name="nav_help_title">Looking for something?</string>
@@ -133,8 +131,8 @@
     <string name="bsidesorl">BSIDES ORLANDO</string>
     <string name="cons">OH SNAP</string>
     <string name="search">Search</string>
-    <string name="msg_in_hours">in %1$s hr</string>
-    <string name="msg_in_mins">in %1$s min</string>
+    <string name="msg_in_hours">in %1$d hr</string>
+    <string name="msg_in_mins">in %1$d min</string>
     <string name="msg_up_to_date">Up to date!</string>
     <string name="error_unable_to_sync">Unable to sync</string>
     <string name="msg_change_con">Change Con</string>
@@ -144,6 +142,10 @@
     <string name="no_results_message">Try expanding your search terms.</string>
     <string name="nothing_to_show">Sorry, nothing to show</string>
     <string name="nothing_here">Nothing here</string>
+    <string name="error_title">Error</string>
+    <string name="speakers">Speakers</string>
+    <string name="related_events">Related Events</string>
+    <string name="speaker_default_title">Hacker</string>
 
     <string-array name="nav_item_activity_titles">
         <item>@string/home</item>

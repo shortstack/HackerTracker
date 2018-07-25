@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <android.support.v7.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipToPadding="false"
-        android:paddingLeft="16dp"
-        android:paddingTop="10dp"
-        android:paddingRight="16dp"
-        android:paddingBottom="30dp"
-        app:layoutManager="android.support.v7.widget.LinearLayoutManager" />
+        android:paddingTop="@dimen/recycler_view_padding_top"
+        android:paddingBottom="@dimen/recycler_view_padding_bottom"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 
     <com.shortstack.hackertracker.views.EmptyView
@@ -33,5 +31,5 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center" />
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -18,7 +18,7 @@ class RelativeTimeRenderer : Renderer<Time>() {
     }
 
     override fun render(payloads: List<Any>) {
-        rootView.time_item.setDate(content)
+        rootView.time_item.setContent(content)
     }
 }
 

@@ -1,35 +1,31 @@
 package com.shortstack.hackertracker.ui.activities
 
 
-import android.animation.Animator
-import android.animation.AnimatorListenerAdapter
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
-import android.content.Intent
 import android.content.res.Resources
-import android.os.Build
 import android.os.Bundle
-import android.support.design.widget.NavigationView
-import android.support.v4.content.ContextCompat
-import android.support.v7.app.ActionBarDrawerToggle
-import android.support.v7.app.AppCompatActivity
-import android.view.*
+import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
+import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.ui.setupActionBarWithNavController
+import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import androidx.work.State
+import androidx.work.WorkManager
 import com.github.stkent.amplify.tracking.Amplify
-import com.orhanobut.logger.Logger
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.ui.MainActivityViewModel
-import com.shortstack.hackertracker.ui.ReviewBottomSheet
-import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
+import com.shortstack.hackertracker.network.task.SyncWorker
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import com.shortstack.hackertracker.utils.TickTimer
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
@@ -38,7 +34,7 @@ import kotlinx.android.synthetic.main.view_filter.*
 import javax.inject.Inject
 
 
-class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener {
 
     @Inject
     lateinit var storage: SharedPreferencesUtil
@@ -49,7 +45,12 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
     @Inject
     lateinit var analytics: AnalyticsController
 
+    @Inject
+    lateinit var timer: TickTimer
+
     lateinit var navController: NavController
+
+    private lateinit var bottomSheet: BottomSheetBehavior<View>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         App.application.component.inject(this)
@@ -58,33 +59,38 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-
+        
         setupNavigation()
 
         val mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
         mainActivityViewModel.conference.observe(this, Observer {
             if (it != null) {
-                nav_view.getHeaderView(0).nav_title.text = it.title
+                nav_view.getHeaderView(0).nav_title.text = it.conference.name
             }
         })
         mainActivityViewModel.conferences.observe(this, Observer {
 
             nav_view.menu.removeGroup(R.id.nav_cons)
 
-            it?.forEach {
-                nav_view.menu.add(R.id.nav_cons, it.index, 0, it.title).apply {
-                    isChecked = it.isSelected
-                    icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_chevron_right_white_24dp)
-                }
-            }
+//            it?.forEach {
+//                nav_view.menu.add(R.id.nav_cons, it.id, 0, it.name).apply {
+//                    isChecked = it.isSelected
+//                    icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_chevron_right_white_24dp)
+//                }
+//            }
         })
+
+        scheduleSyncTask()
 
         database.typesLiveData.observe(this, Observer {
             filters.setTypes(it)
         })
 
-        filter.setOnClickListener { onFilterClick() }
-        close.setOnClickListener { onFilterClick() }
+        bottomSheet = BottomSheetBehavior.from(filters)
+        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
+
+        filter.setOnClickListener { expandFilters() }
+        close.setOnClickListener { hideFilters() }
 
         if (savedInstanceState == null) {
             if (Amplify.getSharedInstance().shouldPrompt() && !BuildConfig.DEBUG) {
@@ -92,23 +98,43 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
                 review.show(this.supportFragmentManager, review.tag)
             }
         }
+    }
 
-        // TODO: Remove, this is only for debugging.
-        Logger.d("Created MainActivity " + (System.currentTimeMillis() - App.application.timeToLaunch))
+    private fun scheduleSyncTask() {
+        val scheduled = WorkManager.getInstance()?.getStatusesByTag(SyncWorker.TAG_SYNC)
 
+        scheduled?.observe(this, Observer {
+            if (it == null || !it.any { it.state == State.ENQUEUED || it.state == State.RUNNING }) {
+                if (!storage.syncingDisabled) {
+                    App.application.scheduleSyncTask()
+                }
+            }
+        })
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+        timer.start()
+    }
+
+    override fun onPause() {
+        timer.stop()
+        super.onPause()
     }
 
     private fun setupNavigation() {
         navController = findNavController(R.id.mainNavigationFragment)
-        setupActionBarWithNavController(navController, drawerLayout = drawer_layout)
+        setupActionBarWithNavController(this, navController, drawer_layout)
 
         navController.addOnNavigatedListener { _, destination ->
-            //            val visibility = if (destination.id == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
-//            setFABVisibility(visibility)
+            val visibility = if (destination.id == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
+            setFABVisibility(visibility)
         }
 
         initNavDrawer()
     }
+
 
     private fun initNavDrawer() {
         val toggle = ActionBarDrawerToggle(
@@ -127,53 +153,18 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return theme
     }
 
-    private fun onFilterClick() {
-        toggleFAB(onClick = true)
+    private fun setFABVisibility(visibility: Int) {
+        filter.visibility = visibility
     }
 
-    private fun toggleFilters() {
-
-        val position = IntArray(2)
-
-        filter.getLocationOnScreen(position)
-
-        val (cx, cy) = position
-
-        val radius = Math.hypot(cx.toDouble(), cy.toDouble())
-
-        if (filters.visibility == View.INVISIBLE) {
-
-
-            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ViewAnimationUtils.createCircularReveal(filters, cx, cy, 0f, radius.toFloat())
-            } else {
-                null
-            }
-
-            filters.visibility = View.VISIBLE
-
-            anim?.start()
-        } else {
-
-            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ViewAnimationUtils.createCircularReveal(filters, cx, cy, radius.toFloat(), 0f)
-            } else {
-
-                filters.visibility = View.INVISIBLE
-                null
-            }
-
-            anim?.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator?) {
-                    super.onAnimationEnd(animation)
-                    filters.visibility = View.INVISIBLE
-                    toggleFAB(onClick = false)
-                }
-            })
-
-            anim?.start()
-        }
+    private fun expandFilters() {
+        bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
     }
+
+    private fun hideFilters() {
+        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
+    }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
@@ -181,115 +172,26 @@ class MainActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelecte
         return true
     }
 
-    private fun setFABVisibility(visibility: Int, showFilters: Boolean = false) {
-        if (!filter.isAttachedToWindow) {
-            return
-        }
-
-        val cx = filter.width / 2
-        val cy = filter.height / 2
-
-
-        val radius = Math.hypot(cx.toDouble(), cy.toDouble())
-
-        if (visibility == View.VISIBLE) {
-
-            filter.visibility = View.VISIBLE
-
-            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ViewAnimationUtils.createCircularReveal(filter, cx, cy, 0f, radius.toFloat())
-            } else {
-                null
-            }
-
-
-            anim?.start()
-        } else {
-
-            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ViewAnimationUtils.createCircularReveal(filter, cx, cy, radius.toFloat(), 0f)
-            } else {
-
-                filter.visibility = View.INVISIBLE
-                null
-            }
-
-            anim?.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator?) {
-                    super.onAnimationEnd(animation)
-                    filter.visibility = View.INVISIBLE
-                    if (showFilters) toggleFilters()
-                }
-            })
-
-            anim?.start()
-        }
-    }
-
-    private fun toggleFAB(onClick: Boolean = false) {
-
-
-        val cx = filter.width / 2
-        val cy = filter.height / 2
-
-
-        val radius = Math.hypot(cx.toDouble(), cy.toDouble())
-
-        if (filter.visibility == View.INVISIBLE) {
-
-
-            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ViewAnimationUtils.createCircularReveal(filter, cx, cy, 0f, radius.toFloat())
-            } else {
-                null
-            }
-
-            filter.visibility = View.VISIBLE
-
-            anim?.start()
-        } else {
-
-            val anim = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                ViewAnimationUtils.createCircularReveal(filter, cx, cy, radius.toFloat(), 0f)
-            } else {
-
-                filter.visibility = View.INVISIBLE
-                null
-            }
-
-            anim?.addListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator?) {
-                    super.onAnimationEnd(animation)
-                    filter.visibility = View.INVISIBLE
-                    if (onClick) toggleFilters()
-
-                }
-            })
-
-            anim?.start()
-        }
-    }
-
     override fun onBackPressed() {
-        if (drawer_layout.isDrawerOpen(Gravity.START)) {
-            drawer_layout.closeDrawers()
-        } else {
-            super.onBackPressed()
+        when {
+            drawer_layout.isDrawerOpen(Gravity.START) -> drawer_layout.closeDrawers()
+            bottomSheet.state != BottomSheetBehavior.STATE_HIDDEN -> hideFilters()
+            else -> super.onBackPressed()
         }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.search -> {
-                navController.navigate(R.id.nav_search)
-            }
-        }
+//        when (item.itemId) {
+//            R.id.search -> {
+//                navController.navigate(R.id.nav_search)
+//            }
+//        }
         return super.onOptionsItemSelected(item)
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.groupId == R.id.nav_cons) {
-            val con = database.getConferences().firstOrNull { it.index == item.itemId }
+            val con = database.getConferences().firstOrNull { it.conference.id == item.itemId }
             if (con != null) database.changeConference(con)
         } else {
             val current = navController.currentDestination.id

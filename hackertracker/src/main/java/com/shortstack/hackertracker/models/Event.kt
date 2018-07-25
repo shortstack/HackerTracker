@@ -1,8 +1,10 @@
 package com.shortstack.hackertracker.models
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 import android.os.Parcelable
+import androidx.room.Ignore
 import com.google.gson.annotations.SerializedName
 import com.shortstack.hackertracker.now
 import kotlinx.android.parcel.Parcelize
@@ -12,12 +14,12 @@ import java.util.*
  * Created by Chris on 3/31/2018.
  */
 @Parcelize
-@Entity
+@Entity(foreignKeys = [(ForeignKey(entity = (Conference::class), parentColumns = [("code")], childColumns = [("conference")], onDelete = ForeignKey.CASCADE))])
 data class Event(
-        @PrimaryKey(autoGenerate = false)
-        val index: Int,
-        @SerializedName("entry_type")
-        val type: String,
+        @PrimaryKey
+        val id: Int,
+        @SerializedName("event_type")
+        val type: Int,
         val title: String,
         val description: String,
         @SerializedName("start_date")
@@ -27,13 +29,17 @@ data class Event(
         @SerializedName("updated_at")
         val updatedAt: Date,
 
-        val location: String?,
+        val location: Int,
         val url: String?,
-        val includes: String?,
+        val conference: String,
 
-        var isBookmarked: Boolean,
-        var con: String
+        @Ignore
+        val speakers: List<Int>,
+
+        var isBookmarked: Boolean
 ) : Parcelable {
+
+    constructor(id: Int, type: Int, title: String, description: String, begin: Date, end: Date, updatedAt: Date, location: Int, url: String?, conference: String) : this(id, type, title, description, begin, end, updatedAt, location, url, conference, emptyList(), false)
 
     val date: Date
         get() {

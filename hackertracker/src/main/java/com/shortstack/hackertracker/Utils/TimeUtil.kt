@@ -18,8 +18,22 @@ object TimeUtil {
         if (date.isTomorrow())
             return context.getString(R.string.tomorrow)
 
-        val format = SimpleDateFormat(if (date.isSoonish(SOON_DAYS_AMOUNT)) "EEEE" else "MMMM dd")
+        val format = SimpleDateFormat(if (date.isSoonish(SOON_DAYS_AMOUNT)) "EEEE" else "MMMM d")
 
         return format.format(date)
+    }
+
+
+    @SuppressLint("SimpleDateFormat")
+    fun getTimeStamp(context: Context, date: Date?): String {
+        // No start time, return TBA.
+        if (date == null)
+            return context.resources.getString(R.string.tba)
+
+        return if (android.text.format.DateFormat.is24HourFormat(context)) {
+            SimpleDateFormat("HH:mm").format(date)
+        } else {
+            SimpleDateFormat("h:mm aa").format(date)
+        }
     }
 }

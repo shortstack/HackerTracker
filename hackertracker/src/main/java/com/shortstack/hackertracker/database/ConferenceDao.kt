@@ -1,8 +1,9 @@
 package com.shortstack.hackertracker.database
 
-import android.arch.lifecycle.LiveData
-import android.arch.persistence.room.*
+import androidx.lifecycle.LiveData
+import androidx.room.*
 import com.shortstack.hackertracker.models.Conference
+import com.shortstack.hackertracker.models.DatabaseConference
 import io.reactivex.Flowable
 import io.reactivex.Single
 
@@ -12,24 +13,11 @@ import io.reactivex.Single
 @Dao
 interface ConferenceDao {
 
-    @Query("DELETE FROM conference")
-    fun deleteAll()
-
-    @Query("SELECT * FROM conference")
-    fun getAll(): LiveData<List<Conference>>
-
-    @Query("SELECT * FROM conference")
-    fun get(): List<Conference>
-
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(conference: Conference)
+    @Insert(onConflict = OnConflictStrategy.IGNORE)
+    fun insert(conference: Conference): Long
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(conferences: List<Conference>)
-
-
-    @Query("SELECT * FROM conference WHERE isSelected = 1")
-    fun getCurrentCon(): Conference
 
     @Update
     fun update(conference: Conference): Int
@@ -37,8 +25,28 @@ interface ConferenceDao {
     @Update
     fun update(list: List<Conference>): Int
 
-    @Query("SELECT * FROM conference where `index` = :id")
-    fun getCon(id: Int): Single<Conference>
+    @Query("SELECT * FROM conference")
+    fun getAll(): LiveData<List<Conference>>
 
+    @Query("SELECT * FROM conference")
+    fun get(): List<DatabaseConference>
 
+    @Query("DELETE FROM conference")
+    fun deleteAll()
+
+    @Query("SELECT * FROM conference WHERE isSelected = 1")
+    fun getCurrentCon(): DatabaseConference?
+
+    @Transaction
+    fun upsert(conference: Conference) {
+        val id = insert(conference)
+        if (id == -1L) {
+            update(conference)
+        }
+    }
+
+    @Transaction
+    fun upsert(conferences: List<Conference>) {
+        conferences.forEach { upsert(it) }
+    }
 }

@@ -1,9 +1,9 @@
 package com.shortstack.hackertracker.ui.maps
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Transformations
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.ConferenceMap
@@ -28,7 +28,7 @@ class MapsViewModel : ViewModel() {
                 val mutableLiveData = MutableLiveData<List<ConferenceMap>>()
 
                 if (id != null) {
-                    mutableLiveData.postValue(listOf(id.maps))
+//                    mutableLiveData.postValue(listOf(id.conference.maps))
                 }
 
                 return@switchMap mutableLiveData

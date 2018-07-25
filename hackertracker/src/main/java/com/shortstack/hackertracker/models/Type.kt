@@ -1,15 +1,15 @@
 package com.shortstack.hackertracker.models
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
-@Entity
+@Entity(foreignKeys = [(ForeignKey(entity = (Conference::class), parentColumns = [("code")], childColumns = [("conference")], onDelete = ForeignKey.CASCADE))])
 data class Type(
-        @PrimaryKey(autoGenerate = true)
-        val index: Int,
-        @SerializedName("event_type")
-        val type: String,
-        val colour: String,
-        var isSelected: Boolean,
-        var con: String)
+        @PrimaryKey
+        val id: Int,
+        val name: String,
+        val color: String,
+        val conference: String,
+        var isSelected: Boolean)

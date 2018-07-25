@@ -1,8 +1,9 @@
 package com.shortstack.hackertracker.models
 
-import android.arch.persistence.room.Embedded
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.Embedded
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 import java.util.Date
 
 /**
@@ -10,17 +11,36 @@ import java.util.Date
  */
 @Entity
 data class Conference(
-        @PrimaryKey(autoGenerate = true)
-        val index: Int,
-        val title: String,
-        val directory: String,
+        val id: Int,
+        val name: String,
+        val description: String,
+        val timezone: String,
+        @PrimaryKey(autoGenerate = false)
+        val code: String,
+        @SerializedName("start_date")
         val start: Date,
+        @SerializedName("end_date")
         val end: Date,
+        @SerializedName("updated_at")
         val updated: Date,
+
+        @Embedded(prefix = "locations_")
+        val locations: ConferenceFile?,
+        @Embedded(prefix = "types_")
+        @SerializedName("event_types")
+        val types: ConferenceFile?,
+        @Embedded(prefix = "events_")
+        val events: ConferenceFile?,
+        @Embedded(prefix = "speakers_")
+        val speakers: ConferenceFile?,
+        @Embedded(prefix = "vendors_")
+        val vendors: ConferenceFile?,
+        @Embedded(prefix = "faqs_")
+        val faqs: ConferenceFile?,
+
         val synced: Date?,
-        @Embedded
-        val maps: ConferenceMap,
+
         var isSelected: Boolean
 ) {
-    override fun toString() = title
+    override fun toString() = name
 }

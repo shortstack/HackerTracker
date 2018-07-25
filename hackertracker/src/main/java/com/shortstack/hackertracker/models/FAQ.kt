@@ -1,12 +1,13 @@
 package com.shortstack.hackertracker.models
 
-import android.arch.persistence.room.Entity
-import android.arch.persistence.room.PrimaryKey
+import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.PrimaryKey
 
-@Entity
+@Entity(foreignKeys = [(ForeignKey(entity = (Conference::class), parentColumns = [("code")], childColumns = [("conference")], onDelete = ForeignKey.CASCADE))])
 data class FAQ(
-        @PrimaryKey(autoGenerate = true)
-        val index: Int,
-        var con: String,
+        @PrimaryKey
+        val id: Int,
+        val conference: String,
         val question: String,
         val answer: String)

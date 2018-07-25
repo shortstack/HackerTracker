@@ -1,20 +1,21 @@
 package com.shortstack.hackertracker.ui
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v7.widget.SearchView
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
+import android.view.*
 import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Event
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
 import com.shortstack.hackertracker.ui.search.SearchViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -22,10 +23,15 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import javax.inject.Inject
 
-class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
+class SearchFragment : androidx.fragment.app.Fragment(), SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
 
-    private var adapter: RendererAdapter<Event>? = null
+    private lateinit var adapter: RendererAdapter<Any>
+    private lateinit var viewModel: SearchViewModel
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_recyclerview, container, false)
@@ -36,10 +42,44 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
         loading_progress.visibility = View.GONE
 
-        adapter = RendererAdapter(RendererBuilder<Any>()
-                .bind(Event::class.java, EventRenderer()))
+        adapter = RendererBuilder.create<Any>()
+                .bind(DatabaseEvent::class.java, EventRenderer())
+                .build()
         list.adapter = adapter
+
+        viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
+        viewModel.results.observe(this, Observer {
+
+            when {
+                it?.isNotEmpty() == true -> {
+                    empty_view.visibility = View.GONE
+                    adapter.clearAndNotify()
+                    adapter.addAllAndNotify(it)
+                }
+                it?.isEmpty() == true -> {
+                    empty_view.visibility = View.VISIBLE
+                    empty_view.showNoResults()
+                    adapter.clearAndNotify()
+                }
+                else -> {
+                    empty_view.visibility = View.GONE
+                    adapter.clearAndNotify()
+                }
+            }
+        })
     }
+
+    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+//        val item = menu?.findItem(R.id.search)
+//        item?.expandActionView()
+//        item?.setOnActionExpandListener(this)
+//
+//        val searchView = item?.actionView as? SearchView
+//        searchView?.setOnQueryTextListener(this)
+
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
 
     override fun onQueryTextSubmit(query: String?) = true
 
@@ -56,37 +96,27 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
         if (text.isEmpty()) {
             adapter.clearAndNotify()
-//            empty_view.visibility = View.VISIBLE
-//            empty_view.showDefault()
+            empty_view?.visibility = View.VISIBLE
+            empty_view?.showDefault()
             return
         }
 
-        val searchViewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
-        searchViewModel.getResult(text).observe(this, Observer {
-            adapter.clearAndNotify()
-            adapter.addAllAndNotify(it)
-
-            when {
-                it?.isNotEmpty() == true -> {
-                    adapter.clearAndNotify()
-                    adapter.addAllAndNotify(it)
-                }
-                it?.isEmpty() == true -> {
-                    //                        empty_view.visibility = View.VISIBLE
-                    //                        empty_view.showNoResults(text)
-                    adapter.clearAndNotify()
-                }
-                else -> {
-                    //                        empty_view.visibility = View.GONE
-                    adapter.clearAndNotify()
-                }
-            }
-        })
+        viewModel.search(text)
     }
 
+    override fun onMenuItemActionExpand(item: MenuItem?): Boolean {
+        return false
+    }
+
+    override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
+        (context as MainActivity).navController.popBackStack()
+        return true
+    }
+
+
     companion object {
-        fun newInstance(): SearchFragment {
-            return SearchFragment()
-        }
+
+        fun newInstance() = SearchFragment()
+
     }
 }

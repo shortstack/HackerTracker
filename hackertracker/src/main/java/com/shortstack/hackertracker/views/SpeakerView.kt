@@ -15,8 +15,9 @@ class SpeakerView(context: Context, speaker: Speaker) : LinearLayout(context) {
     }
 
     private fun render(speaker: Speaker) {
+        speaker_initials.text = speaker.name.split(" ").joinToString("") { it.first().toString() }
         speaker_name.text = speaker.name
-        speaker_description.text = speaker.bio
+        speaker_description.text = speaker.title ?: context.getString(R.string.speaker_default_title)
     }
 
 

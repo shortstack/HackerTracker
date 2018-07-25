@@ -2,19 +2,22 @@ package com.shortstack.hackertracker
 
 object Constants {
 
-    const val API_URL_BASE = "https://info.defcon.org/json/"
-    const val API_GITHUB_BASE = "https://rawgit.com/BeezleLabs/conferences/feature/restructure/"
+    const val API_BASE = "https://hackertracker.app/"
 
-    const val HOUR_IN_SECONDS = 3600
-
-    private const val AUG_29_2017_8AM = 1501340400000L
-    const val DEBUG_FORCE_TIME_DATE = AUG_29_2017_8AM
-
-    private const val TIMER_INTERVAL_FIVE_MIN: Long = 300000
-    private const val TIMER_INTERVAL_DEBUG: Long = 5000
-
-    val TIMER_INTERVAL = if (BuildConfig.DEBUG) TIMER_INTERVAL_DEBUG else TIMER_INTERVAL_FIVE_MIN
+    private const val AUG_09_2018 = 1533801600000L
+    const val DEBUG_FORCE_TIME_DATE = AUG_09_2018
 
     // TODO: Replace this with a feedback email.
     const val FEEDBACK_EMAIL = "chrisporter0111@gmail.com"
+
+
+    // File names
+    const val CONFERENCES_FILE = "conferences.json"
+
+    const val EVENTS_FILE = "events.json"
+    const val TYPES_FILE = "event_types.json"
+    const val SPEAKERS_FILE = "speakers.json"
+    const val VENDORS_FILE = "vendors.json"
+    const val FAQ_FILE = "faqs.json"
+    const val LOCATIONS_FILE = "locations.json"
 }
