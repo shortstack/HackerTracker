@@ -91,9 +91,9 @@ dependencies {
     implementation "android.arch.work:work-firebase:$work_version"
 
     // Room
-    implementation 'androidx.room:room-rxjava2:2.0.0-alpha1'
-    implementation "androidx.room:room-runtime:2.0.0-alpha1"
-    kapt "androidx.room:room-compiler:2.0.0-alpha1"
+    implementation 'androidx.room:room-rxjava2:2.0.0-beta01'
+    implementation "androidx.room:room-runtime:2.0.0-beta01"
+    kapt "androidx.room:room-compiler:2.0.0-beta01"
 
     // Navigation
     implementation 'android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha02'
