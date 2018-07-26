@@ -71,9 +71,7 @@ abstract class HTDatabase : RoomDatabase() {
 
         response.run {
 
-            val type = Type(-conference.id, "Bookmarked", "#313131", conference.code, false)
-            typeDao().insert(type)
-
+            typeDao().upsert(Type.getBookmarkedType(conference))
             types?.let {
                 typeDao().upsert(it.types)
             }

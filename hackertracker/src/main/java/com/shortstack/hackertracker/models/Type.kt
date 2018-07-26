@@ -15,10 +15,10 @@ data class Type(
         var isSelected: Boolean) {
 
     companion object {
-        private const val BOOKMARK_ID = -1
+        fun getBookmarkedType(conference: Conference) = Type(-conference.id, "Starred Events", "#d9d9d9", conference.code, false)
     }
 
     val isBookmark
-        get() = id == BOOKMARK_ID
+        get() = id < 0
 
 }

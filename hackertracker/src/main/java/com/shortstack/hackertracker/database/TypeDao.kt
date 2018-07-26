@@ -44,4 +44,12 @@ interface TypeDao {
             }
         }
     }
+
+    @Transaction
+    fun upsert(type: Type) {
+        val id = insert(type)
+        if (id == -1L) {
+            update(type.id, type.name, type.color, type.conference)
+        }
+    }
 }
