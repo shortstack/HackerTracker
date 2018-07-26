@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
@@ -28,6 +29,8 @@ class App : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         application = this
 

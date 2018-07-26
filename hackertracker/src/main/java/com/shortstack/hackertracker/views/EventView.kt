@@ -173,10 +173,13 @@ class EventView(context: Context, attrs: AttributeSet) : androidx.cardview.widge
         category.setBackgroundColor(color)
         progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
-        val drawable = context.getDrawable(R.drawable.chip_background).mutate()
-        drawable.setTint(color)
 
-        category_text.setBackgroundDrawable(drawable)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
+            drawable?.setTint(color)
+            category_text.background = drawable
+        }
+
 
 
         renderBookmark(color)
