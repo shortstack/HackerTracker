@@ -120,9 +120,9 @@
         android:paddingStart="3dp"
         android:paddingEnd="3dp"
         android:scaleType="center"
-        android:src="@drawable/ic_star_border_white_24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_star_border_white_24dp"
         tools:src="@drawable/ic_star_accent_24dp" />
 
 
