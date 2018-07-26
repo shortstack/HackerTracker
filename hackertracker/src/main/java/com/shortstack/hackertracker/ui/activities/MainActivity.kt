@@ -9,10 +9,13 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.work.State
 import androidx.work.WorkManager
@@ -59,7 +62,10 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
 
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
-        
+
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
+
         setupNavigation()
 
         val mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
@@ -72,12 +78,14 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
 
             nav_view.menu.removeGroup(R.id.nav_cons)
 
-//            it?.forEach {
-//                nav_view.menu.add(R.id.nav_cons, it.id, 0, it.name).apply {
-//                    isChecked = it.isSelected
-//                    icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_chevron_right_white_24dp)
-//                }
-//            }
+            if (BuildConfig.DEBUG) {
+                it?.forEach {
+                    nav_view.menu.add(R.id.nav_cons, it.id, 0, it.name).apply {
+                        isChecked = it.isSelected
+                        icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_chevron_right_white_24dp)
+                    }
+                }
+            }
         })
 
         scheduleSyncTask()
@@ -124,15 +132,18 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
     }
 
     private fun setupNavigation() {
-        navController = findNavController(R.id.mainNavigationFragment)
-        setupActionBarWithNavController(this, navController, drawer_layout)
+        initNavDrawer()
+
+
+        navController = findNavController(R.id.my_nav_host_fragment)
+//        setupActionBarWithNavController(this, navController, drawer_layout)
+        NavigationUI.setupWithNavController(nav_view, navController)
 
         navController.addOnNavigatedListener { _, destination ->
             val visibility = if (destination.id == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
             setFABVisibility(visibility)
         }
 
-        initNavDrawer()
     }
 
 
@@ -142,10 +153,10 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-        nav_view.setNavigationItemSelectedListener(this)
+//        nav_view.setNavigationItemSelectedListener(this)
     }
 
-    override fun onSupportNavigateUp() = findNavController(R.id.mainNavigationFragment).navigateUp()
+    override fun onSupportNavigateUp() = navController.navigateUp()
 
     override fun getTheme(): Resources.Theme {
         val theme = super.getTheme()

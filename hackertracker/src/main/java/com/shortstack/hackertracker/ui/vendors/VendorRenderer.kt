@@ -21,7 +21,7 @@ class VendorRenderer : Renderer<Vendor>(), View.OnClickListener {
     }
 
     override fun render(payloads: List<Any>) {
-        rootView.title!!.text = content.title
+        rootView.title!!.text = content.name
         rootView.description!!.text = content.description
     }
 
