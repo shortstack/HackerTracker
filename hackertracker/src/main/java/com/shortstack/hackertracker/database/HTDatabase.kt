@@ -55,7 +55,7 @@ abstract class HTDatabase : RoomDatabase() {
                     val local = conferenceDao().get().find { it.conference.id == conference.id }?.conference
                     val response = FullResponse.getLocalFullResponse(conference, local)
 
-                    if( response.isNotEmpty() ) {
+                    if (response.isNotEmpty()) {
                         conferenceDao().upsert(conference)
                         updateDatabase(conference, response)
                     }
@@ -69,6 +69,10 @@ abstract class HTDatabase : RoomDatabase() {
         Logger.d("Updating conference: ${conference.code}")
 
         response.run {
+
+            val type = Type(-conference.id, "Bookmarked", "#313131", conference.code, false)
+            typeDao().insert(type)
+
             types?.let {
                 typeDao().upsert(it.types)
             }
