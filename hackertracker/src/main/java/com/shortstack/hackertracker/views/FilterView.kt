@@ -28,7 +28,17 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
 
     fun setTypes(types: List<Type>?) {
         if (types != null) {
-            val adapter = FilterAdapter(types, database)
+
+            val collection = ArrayList<Any>()
+
+            types.find { it.isBookmark }?.let {
+                collection.add(it)
+                collection.add(context.getString(R.string.types))
+            }
+
+            collection.addAll(types.filter { !it.isBookmark })
+            
+            val adapter = FilterAdapter(collection, database)
 
             list.layoutManager = GridLayoutManager(context, SPAN_COUNT, GridLayoutManager.VERTICAL, false).apply {
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {

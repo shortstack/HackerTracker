@@ -18,7 +18,7 @@ import kotlinx.android.synthetic.main.item_type_header.view.*
 /**
  * Created by Chris on 7/12/2018.
  */
-class FilterAdapter(private val types: List<Type>, private val database: DatabaseManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FilterAdapter(private val collection: ArrayList<Any>, private val database: DatabaseManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         const val TYPE_HEADER = 2
@@ -37,26 +37,24 @@ class FilterAdapter(private val types: List<Type>, private val database: Databas
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (position == 1) {
+        return if (collection[position] is String) {
             TYPE_HEADER
         } else {
             TYPE_ITEM
         }
     }
 
-    override fun getItemCount() = types.size
+    override fun getItemCount() = collection.size
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is HeaderViewHolder -> {
                 holder.view.apply {
-                    // TODO: Use the actual label.
-                    header.text = "Types"
+                    header.text = collection[position] as String
                 }
             }
             is ViewHolder -> {
-                // TODO: This needs to be removed.
-                val type = types[if (position == 0) position else position - 1]
+                val type = collection[position] as Type
 
                 holder.view.apply {
                     val color = Color.parseColor(type.color)
