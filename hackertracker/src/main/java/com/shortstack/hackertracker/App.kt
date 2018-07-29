@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
@@ -26,12 +27,10 @@ class App : Application() {
     // Storage
     private val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil(applicationContext) }
 
-
-    // TODO: Remove, this is just for measuring launch time.
-    var timeToLaunch: Long = System.currentTimeMillis()
-
     override fun onCreate() {
         super.onCreate()
+
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         application = this
 
@@ -49,9 +48,6 @@ class App : Application() {
                 .timerModule(TimerModule())
                 .contextModule(ContextModule(this))
                 .build()
-
-        // TODO: Remove, this is only for debugging.
-        Logger.d("Time to complete onCreate " + (System.currentTimeMillis() - timeToLaunch))
     }
 
     fun scheduleSyncTask() {

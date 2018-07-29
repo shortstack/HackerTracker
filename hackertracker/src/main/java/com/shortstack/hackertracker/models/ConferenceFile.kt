@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.database
+package com.shortstack.hackertracker.models
 
 import com.google.gson.annotations.SerializedName
 import java.util.*

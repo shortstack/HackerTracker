@@ -29,7 +29,7 @@ class VendorBottomSheet : com.google.android.material.bottomsheet.BottomSheetDia
             return
         }
 
-        view.title.text = vendor.title
+        view.title.text = vendor.name
 
         val isDescriptionEmpty = TextUtils.isEmpty(vendor.description)
         view.empty.visibility = if (isDescriptionEmpty) View.VISIBLE else View.GONE
@@ -46,7 +46,7 @@ class VendorBottomSheet : com.google.android.material.bottomsheet.BottomSheetDia
 
         MaterialAlert.create(context)
                 .setTitle(R.string.link_warning)
-                .setMessage(String.format(context.getString(R.string.link_message), content!!.link.toLowerCase()))
+                .setMessage(String.format(context.getString(R.string.link_message), content!!.link?.toLowerCase()))
                 .setPositiveButton(R.string.open_link, DialogInterface.OnClickListener { _, _ ->
                     val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(content!!.link))
                     context.startActivity(intent)

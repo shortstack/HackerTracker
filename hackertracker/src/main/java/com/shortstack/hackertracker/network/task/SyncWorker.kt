@@ -12,7 +12,7 @@ import com.shortstack.hackertracker.Constants.LOCATIONS_FILE
 import com.shortstack.hackertracker.Constants.SPEAKERS_FILE
 import com.shortstack.hackertracker.Constants.TYPES_FILE
 import com.shortstack.hackertracker.Constants.VENDORS_FILE
-import com.shortstack.hackertracker.database.ConferenceFile
+import com.shortstack.hackertracker.models.ConferenceFile
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.models.response.Speakers
@@ -71,21 +71,24 @@ class SyncWorker : Worker() {
                 getUpdate<Vendors>(conference.code, conference.vendors, local?.vendors, VENDORS_FILE),
                 getUpdate<FAQs>(conference.code, conference.faqs, local?.faqs, FAQ_FILE))
 
-        // Updating database
-        conference.isSelected = local?.isSelected ?: false
-        database.updateConference(conference, response)
+        if (response.isNotEmpty()) {
+            // Updating database
+            conference.isSelected = local?.isSelected ?: false
+            database.updateConference(conference, response)
 
-        val updatedAt = local?.events?.updatedAt
+            val updatedAt = local?.events?.updatedAt
 
-        val count = database.getUpdatedEventsCount(updatedAt)
-        val updatedBookmarks = database.getUpdatedBookmarks(conference, updatedAt)
+            val count = database.getUpdatedEventsCount(updatedAt)
+            val updatedBookmarks = database.getUpdatedBookmarks(conference, updatedAt)
 
-        notifications.notifyUpdates(conference, localConference == null, count)
-        notifications.updatedBookmarks(updatedBookmarks)
+            notifications.notifyUpdates(conference, localConference == null, count)
+            notifications.updatedBookmarks(updatedBookmarks)
 
-        Logger.d("Updated $count rows.")
+            Logger.d("Updated $count rows.")
+            return count
+        }
 
-        return count
+        return 0
     }
 
 
@@ -109,7 +112,7 @@ class SyncWorker : Worker() {
     private fun getService(directory: String? = null): DatabaseService {
         val directory = if (directory != null) "$directory/" else ""
         val retrofit = Retrofit.Builder()
-                .baseUrl(Constants.API_GITHUB_BASE + directory)
+                .baseUrl(Constants.API_BASE + directory)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
         return retrofit.create(DatabaseService::class.java)

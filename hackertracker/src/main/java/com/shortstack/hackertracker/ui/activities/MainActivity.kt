@@ -3,23 +3,30 @@ package com.shortstack.hackertracker.ui.activities
 
 import android.content.res.Resources
 import android.os.Bundle
-import android.view.*
+import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.NavController
+import androidx.navigation.NavOptions
 import androidx.navigation.findNavController
+import androidx.navigation.ui.NavigationUI
 import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
+import androidx.work.State
+import androidx.work.WorkManager
 import com.github.stkent.amplify.tracking.Amplify
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.network.task.SyncWorker
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.utils.TickTimer
 import kotlinx.android.synthetic.main.activity_main.*
@@ -56,8 +63,8 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-
-
+        supportActionBar?.setDisplayHomeAsUpEnabled(false)
+        supportActionBar?.setDisplayShowTitleEnabled(false)
 
         setupNavigation()
 
@@ -70,14 +77,18 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
         mainActivityViewModel.conferences.observe(this, Observer {
 
             nav_view.menu.removeGroup(R.id.nav_cons)
-
-            it?.forEach {
-                nav_view.menu.add(R.id.nav_cons, it.id, 0, it.name).apply {
-                    isChecked = it.isSelected
-                    icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_chevron_right_white_24dp)
-                }
-            }
+//
+//            if (BuildConfig.DEBUG) {
+//                it?.forEach {
+//                    nav_view.menu.add(R.id.nav_cons, it.id, 0, it.name).apply {
+//                        isChecked = it.isSelected
+//                        icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_chevron_right_white_24dp)
+//                    }
+//                }
+//            }
         })
+
+        scheduleSyncTask()
 
         database.typesLiveData.observe(this, Observer {
             filters.setTypes(it)
@@ -95,10 +106,18 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
                 review.show(this.supportFragmentManager, review.tag)
             }
         }
+    }
 
-        // TODO: Remove, this is only for debugging.
-        Logger.d("Created MainActivity " + (System.currentTimeMillis() - App.application.timeToLaunch))
+    private fun scheduleSyncTask() {
+        val scheduled = WorkManager.getInstance()?.getStatusesByTag(SyncWorker.TAG_SYNC)
 
+        scheduled?.observe(this, Observer {
+            if (it == null || !it.any { it.state == State.ENQUEUED || it.state == State.RUNNING }) {
+                if (!storage.syncingDisabled) {
+                    App.application.scheduleSyncTask()
+                }
+            }
+        })
     }
 
 
@@ -113,15 +132,18 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
     }
 
     private fun setupNavigation() {
-        navController = findNavController(R.id.mainNavigationFragment)
-        setupActionBarWithNavController(this, navController, drawer_layout)
+        initNavDrawer()
+
+
+        navController = findNavController(R.id.my_nav_host_fragment)
+//        setupActionBarWithNavController(this, navController, drawer_layout)
+        NavigationUI.setupWithNavController(nav_view, navController)
 
         navController.addOnNavigatedListener { _, destination ->
             val visibility = if (destination.id == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
             setFABVisibility(visibility)
         }
 
-        initNavDrawer()
     }
 
 
@@ -131,10 +153,10 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-        nav_view.setNavigationItemSelectedListener(this)
+//        nav_view.setNavigationItemSelectedListener(this)
     }
 
-    override fun onSupportNavigateUp() = findNavController(R.id.mainNavigationFragment).navigateUp()
+    override fun onSupportNavigateUp() = navController.navigateUp()
 
     override fun getTheme(): Resources.Theme {
         val theme = super.getTheme()
@@ -170,11 +192,11 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            R.id.search -> {
-                navController.navigate(R.id.nav_search)
-            }
-        }
+//        when (item.itemId) {
+//            R.id.search -> {
+//                navController.navigate(R.id.nav_search)
+//            }
+//        }
         return super.onOptionsItemSelected(item)
     }
 

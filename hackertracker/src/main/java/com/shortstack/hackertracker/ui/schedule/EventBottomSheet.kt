@@ -47,42 +47,47 @@ class EventBottomSheet : com.google.android.material.bottomsheet.BottomSheetDial
 
         view.event.setContent(obj.event)
 
-        displaySpeakers(obj, view.speakers, view.related_events)
+        displaySpeakers(obj, view.speakers_header, view.speakers)
 
-        displayDescription(obj, view.description, view.empty, view.link, view.star)
+        displayDescription(obj, view.description, view.empty, view.link)
 
-        view.star.setOnClickListener { onStarClick(view.event, view.star) }
         view.share.setOnClickListener { onShareClick(view.event) }
         view.link.setOnClickListener { onLinkClick() }
 
 
     }
 
-
-    private fun displaySpeakers(obj: EventViewModel, layout: LinearLayoutCompat, related_events: LinearLayout) {
+    private fun displaySpeakers(obj: EventViewModel, header: View, layout: LinearLayoutCompat) {
         val speakers = database.getSpeakers(obj.event.event.id)
 
 
         val context = context ?: return
 
-        speakers.forEach {
-            layout.addView(SpeakerView(context, it))
+        if (speakers.isEmpty()) {
+            header.visibility = View.GONE
+            layout.visibility = View.GONE
+        } else {
+            header.visibility = View.VISIBLE
+            layout.visibility = View.VISIBLE
+            speakers.forEach {
+                layout.addView(SpeakerView(context, it))
+            }
         }
 
-        val events = database.getRelatedEvents(speakers.first())
+//        val events = database.getRelatedEvents(speakers.first())
 
-        events.forEach {
-            val view = LayoutInflater.from(context).inflate(R.layout.row_event, related_events, false)
-            view.title.text = it.event.title
-
-            related_events.addView(view)
-        }
+//        events.forEach {
+//            val view = LayoutInflater.from(context).inflate(R.layout.row_event, related_events, false)
+//            view.title.text = it.event.title
+//
+//            related_events.addView(view)
+//        }
     }
 
     private val content: DatabaseEvent
         get() = arguments!!.getParcelable(ARG_EVENT)
 
-    private fun displayDescription(obj: EventViewModel, description: TextView, empty: View, link: View, star: ImageView) {
+    private fun displayDescription(obj: EventViewModel, description: TextView, empty: View, link: View) {
         val hasDescription = obj.hasDescription()
 
         if (hasDescription)
@@ -90,22 +95,6 @@ class EventBottomSheet : com.google.android.material.bottomsheet.BottomSheetDial
         empty.visibility = if (hasDescription) View.GONE else View.VISIBLE
 
         link.visibility = if (obj.hasUrl()) View.VISIBLE else View.GONE
-
-        updateStarIcon(star)
-    }
-
-    private fun updateStarIcon(star: ImageView) {
-        star.setImageDrawable(resources.getDrawable(if (content.event.isBookmarked) R.drawable.ic_star_accent_24dp else R.drawable.ic_star_border_white_24dp))
-    }
-
-    fun onStarClick(item: EventView, star: ImageView) {
-        if (content.event.isBookmarked) {
-            analytics.onEventAction(AnalyticsController.EVENT_UNBOOKMARK, content.event)
-        } else {
-            analytics.onEventAction(AnalyticsController.EVENT_BOOKMARK, content.event)
-        }
-        item.onBookmarkClick()
-        updateStarIcon(star)
     }
 
     private fun onShareClick(item: EventView) {

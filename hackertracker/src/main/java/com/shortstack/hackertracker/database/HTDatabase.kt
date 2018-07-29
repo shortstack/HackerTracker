@@ -3,12 +3,11 @@ package com.shortstack.hackertracker.database
 import androidx.lifecycle.MutableLiveData
 import androidx.sqlite.db.SupportSQLiteDatabase
 import android.content.Context
-import androidx.lifecycle.LiveData
 import androidx.room.*
+import androidx.room.migration.Migration
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.Constants.CONFERENCES_FILE
 import com.shortstack.hackertracker.fromFile
 import com.shortstack.hackertracker.models.*
@@ -22,7 +21,7 @@ import javax.inject.Inject
  * Created by Chris on 3/31/2018.
  */
 @Database(entities = [(Conference::class), (Event::class), (Type::class), (Vendor::class),
-    (Speaker::class), (FAQ::class), (Location::class), (EventSpeakerJoin::class)], version = 1)
+    (Speaker::class), (FAQ::class), (Location::class), (EventSpeakerJoin::class)], version = 2)
 @TypeConverters(value = [(Converters::class)])
 abstract class HTDatabase : RoomDatabase() {
 
@@ -45,19 +44,22 @@ abstract class HTDatabase : RoomDatabase() {
     @Inject
     lateinit var gson: Gson
 
-    fun setup(conferenceLiveData: MutableLiveData<DatabaseConference>) {
+    fun setup() {
         App.application.component.inject(this)
 
         gson.fromFile<Conferences>(CONFERENCES_FILE, root = null)?.let { conferences ->
             conferences.let {
                 // Select the first one available.
                 it.conferences.first().isSelected = true
-                conferenceDao().insertAll(it.conferences)
 
-//                conferenceLiveData.postValue(conferenceDao().getCurrentCon())
+                it.conferences.forEach { conference ->
+                    val local = conferenceDao().get().find { it.conference.id == conference.id }?.conference
+                    val response = FullResponse.getLocalFullResponse(conference, local)
 
-                it.conferences.forEach {
-                    updateDatabase(it, FullResponse.getLocalFullResponse(it))
+                    if (response.isNotEmpty()) {
+                        conferenceDao().upsert(conference)
+                        updateDatabase(conference, response)
+                    }
                 }
             }
         }
@@ -68,8 +70,10 @@ abstract class HTDatabase : RoomDatabase() {
         Logger.d("Updating conference: ${conference.code}")
 
         response.run {
+
+            typeDao().upsert(Type.getBookmarkedType(conference))
             types?.let {
-                typeDao().insertAll(it.types)
+                typeDao().upsert(it.types)
             }
 
             speakers?.let {
@@ -87,12 +91,7 @@ abstract class HTDatabase : RoomDatabase() {
 
                 it.events.forEach { event ->
                     event.speakers.forEach {
-                        try {
-                            val join = EventSpeakerJoin(event.id, it)
-                            eventSpeakerDao().insert(join)
-                        } catch (ex: Exception) {
-                            Logger.e("Could not insert ${event.id} + $it. ${ex.message}")
-                        }
+                        eventSpeakerDao().insert(EventSpeakerJoin(event.id, it))
                     }
                 }
             }
@@ -102,11 +101,7 @@ abstract class HTDatabase : RoomDatabase() {
             }
 
             faqs?.let {
-                try {
-                    faqDao().insertAll(it.faqs)
-                } catch (ex: Exception) {
-                    Logger.e("Could not insert $it. ${ex.message}")
-                }
+                faqDao().insertAll(it.faqs)
             }
         }
 
@@ -125,20 +120,29 @@ abstract class HTDatabase : RoomDatabase() {
 
 
         fun buildDatabase(context: Context, conferenceLiveData: MutableLiveData<DatabaseConference>): HTDatabase {
-            Logger.d("Creating database! " + (System.currentTimeMillis() - App.application.timeToLaunch))
-
             return Room.databaseBuilder(context, HTDatabase::class.java, DATABASE_NAME)
                     .allowMainThreadQueries()
-                    .fallbackToDestructiveMigration()
-                    .addCallback(object : Callback() {
-                        override fun onCreate(db: SupportSQLiteDatabase) {
-                            super.onCreate(db)
-                            Logger.d("Database onCreate! " + (System.currentTimeMillis() - App.application.timeToLaunch))
+//                    .fallbackToDestructiveMigration()
+                    .addMigrations(object : Migration(1, 2) {
+                        override fun migrate(database: SupportSQLiteDatabase) {
+                            database.execSQL("DROP TABLE Vendor")
+                            database.execSQL("CREATE TABLE Vendor(" +
+                                    "`id` INTEGER NOT NULL," +
+                                    "`name` TEXT NOT NULL," +
+                                    "description TEXT," +
+                                    "link TEXT," +
+                                    "partner INTEGER NOT NULL," +
+                                    "updatedAt TEXT NOT NULL," +
+                                    "conference TEXT NOT NULL," +
+                                    "PRIMARY KEY(`id`)," +
+                                    "FOREIGN KEY(`conference`) REFERENCES Conference(code)" +
+                                    "ON DELETE CASCADE" +
+                                    ")")
                         }
-
+                    })
+                    .addCallback(object : Callback() {
                         override fun onOpen(db: SupportSQLiteDatabase) {
                             super.onOpen(db)
-                            Logger.d("Database onOpen! " + (System.currentTimeMillis() - App.application.timeToLaunch))
                             updateDatabase(context, conferenceLiveData)
                         }
                     }).build().also {
@@ -150,17 +154,13 @@ abstract class HTDatabase : RoomDatabase() {
             Single.fromCallable {
                 val instance = getInstance(context, conferenceLiveData)
 
+                instance.setup()
 
-                // TODO: Check if it needs to be updated.
-//                if (BuildConfig.DEBUG) {
-//                    instance.clearAllTables()
-//                }
-//
-//                instance.setup(conferenceLiveData)
-
-                val currentCon = instance.conferenceDao().getCurrentCon()
-                Logger.d("Setting current conference $currentCon")
-                conferenceLiveData.postValue(currentCon)
+                if (conferenceLiveData.value == null) {
+                    val currentCon = instance.conferenceDao().getCurrentCon()
+                    Logger.d("Setting current conference $currentCon")
+                    conferenceLiveData.postValue(currentCon)
+                }
             }.subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe()

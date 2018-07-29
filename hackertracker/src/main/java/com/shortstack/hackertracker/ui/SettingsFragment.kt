@@ -23,9 +23,11 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         super.onViewCreated(view, savedInstanceState)
         App.application.component.inject(this)
 
-        findPreference("dev_clear").setOnPreferenceClickListener {
-            database.clear()
-            return@setOnPreferenceClickListener true
+        if (BuildConfig.DEBUG) {
+            findPreference("dev_clear").setOnPreferenceClickListener {
+                database.clear()
+                return@setOnPreferenceClickListener true
+            }
         }
     }
 

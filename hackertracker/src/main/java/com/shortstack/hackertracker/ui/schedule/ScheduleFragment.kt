@@ -58,24 +58,26 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         scheduleViewModel.schedule.observe(this, Observer {
             hideViews()
 
-            adapter.state = it?.status!!
+            if( it != null ) {
+                adapter.state = it.status
 
-            when (it?.status) {
-                Status.SUCCESS -> {
-                    adapter.setSchedule(it.data)
-                    if (adapter.isEmpty()) {
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        adapter.setSchedule(it.data)
+                        if (adapter.isEmpty()) {
+                            showEmptyView()
+                        }
+                    }
+                    Status.ERROR -> {
+                        showErrorView(it.message)
+                    }
+                    Status.LOADING -> {
+                        adapter.clearAndNotify()
+                        showProgress()
+                    }
+                    Status.NOT_INITIALIZED -> {
                         showEmptyView()
                     }
-                }
-                Status.ERROR -> {
-                    showErrorView(it.message)
-                }
-                Status.LOADING -> {
-                    adapter.clearAndNotify()
-                    showProgress()
-                }
-                Status.NOT_INITIALIZED -> {
-                    showEmptyView()
                 }
             }
         })

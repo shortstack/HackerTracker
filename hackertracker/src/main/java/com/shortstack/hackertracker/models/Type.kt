@@ -12,4 +12,13 @@ data class Type(
         val name: String,
         val color: String,
         val conference: String,
-        var isSelected: Boolean)
+        var isSelected: Boolean) {
+
+    companion object {
+        fun getBookmarkedType(conference: Conference) = Type(-conference.id, "Starred Events", "#d9d9d9", conference.code, false)
+    }
+
+    val isBookmark
+        get() = id < 0
+
+}

@@ -20,6 +20,6 @@ interface EventSpeakerDao {
     fun getEventsForSpeaker(speaker: Int): List<DatabaseEvent>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(join: EventSpeakerJoin)
+    fun insert(join: EventSpeakerJoin): Long
 
 }
