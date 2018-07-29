@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.*
 import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Event
+import com.shortstack.hackertracker.models.Type
 import java.util.*
 
 /**
@@ -39,6 +40,9 @@ interface EventDao {
     @Query("SELECT * FROM event WHERE title LIKE :text")
     fun getEventByText(text: String): LiveData<List<DatabaseEvent>>
 
+    @Query("SELECT * FROM event WHERE type IN (:types) LIMIT 3")
+    fun getEventByType(types: List<Int>): List<DatabaseEvent>
+
     @Query("SELECT * FROM event WHERE conference = :conference ORDER BY updatedAt DESC LIMIT $LIMIT")
     fun getRecentlyUpdated(conference: String): LiveData<List<DatabaseEvent>>
 
@@ -61,10 +65,11 @@ interface EventDao {
     @Transaction
     fun upsert(event: Event) {
         val id = insert(event)
-        if(id == -1L) {
+        if (id == -1L) {
             updateEvent(event.id, event.type, event.title, event.description, event.begin, event.end, event.updatedAt, event.location, event.url, event.conference)
         }
     }
+
 
     // Delete
 

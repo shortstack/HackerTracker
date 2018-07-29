@@ -16,8 +16,11 @@ interface EventSpeakerDao {
     @Query("SELECT * FROM speaker INNER JOIN event_speaker_join ON speaker.id=event_speaker_join.speaker WHERE :event=event_speaker_join.event")
     fun getSpeakersForEvent(event: Int): List<Speaker>
 
-    @Query("SELECT * FROM event INNER JOIN event_speaker_join ON event_speaker_join.speaker=:speaker LIMIT 3")
+    @Query("SELECT * FROM event INNER JOIN event_speaker_join ON event.id = event_speaker_join.event WHERE event_speaker_join.speaker=:speaker LIMIT 3")
     fun getEventsForSpeaker(speaker: Int): List<DatabaseEvent>
+
+    @Query("SELECT * FROM event INNER JOIN event_speaker_join ON event.id = event_speaker_join.event WHERE event_speaker_join.speaker IN (:speakers) LIMIT 3")
+    fun getEventsForSpeakers(speakers: List<Int>): List<DatabaseEvent>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun insert(join: EventSpeakerJoin): Long

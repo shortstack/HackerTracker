@@ -24,7 +24,24 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.row_event.view.*
 import javax.inject.Inject
 
-class EventView(context: Context, attrs: AttributeSet) : androidx.cardview.widget.CardView(context, attrs) {
+class EventView : androidx.cardview.widget.CardView {
+
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        init()
+        getStyle(context, attrs)
+        setCardBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
+        setDisplayMode()
+    }
+
+    constructor(context: Context, event: DatabaseEvent) : super(context) {
+        init()
+        setContent(event)
+    }
+
+    private fun init() {
+        inflate(context, R.layout.row_event, this)
+        App.application.component.inject(this)
+    }
 
     @Inject
     lateinit var database: DatabaseManager
@@ -34,25 +51,13 @@ class EventView(context: Context, attrs: AttributeSet) : androidx.cardview.widge
 
     private var disposable: Disposable? = null
 
-    private var displayMode = DISPLAY_MODE_FULL
+    private var displayMode: Int = DISPLAY_MODE_FULL
     private var mRoundCorners = true
     var content: EventViewModel? = null
         private set
 
     private var animation: ObjectAnimator? = null
 
-    init {
-        inflate(context, R.layout.row_event, this)
-
-        App.application.component.inject(this)
-
-        getStyle(context, attrs)
-
-        setCardBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
-
-
-        setDisplayMode()
-    }
 
     private fun getStyle(context: Context, attrs: AttributeSet) {
         val a = context.theme.obtainStyledAttributes(attrs,

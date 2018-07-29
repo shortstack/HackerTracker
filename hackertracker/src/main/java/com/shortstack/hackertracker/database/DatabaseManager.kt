@@ -10,6 +10,7 @@ import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.now
 import io.reactivex.Single
 import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Chris on 3/31/2018.
@@ -159,8 +160,16 @@ class DatabaseManager(context: Context) {
         return db.eventDao().getUpdatedBookmarks(conference.code)
     }
 
-    fun getRelatedEvents(speaker: Speaker): List<DatabaseEvent> {
-        return db.eventSpeakerDao().getEventsForSpeaker(speaker.id)
-    }
+    fun getRelatedEvents(id: Int, types: List<Type>, speakers: List<Speaker>): List<DatabaseEvent> {
+        val result = ArrayList<DatabaseEvent>()
 
+        val speakerEvents = db.eventSpeakerDao().getEventsForSpeakers(speakers.map { it.id })
+        result.addAll(speakerEvents)
+
+        // TODO: Improve this, maybe use Date + Type. Same time-block?
+        val typeEvents = db.eventDao().getEventByType(types.map { it.id })
+        result.addAll(typeEvents.sortedBy { it.location.first().name })
+
+        return result.filter { it.event.id != id }.distinctBy { it.event.id }.take(3)
+    }
 }

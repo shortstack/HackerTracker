@@ -48,6 +48,7 @@ class EventBottomSheet : com.google.android.material.bottomsheet.BottomSheetDial
         view.event.setContent(obj.event)
 
         displaySpeakers(obj, view.speakers_header, view.speakers)
+        displayRelatedEvents(obj, view.related_events)
 
         displayDescription(obj, view.description, view.empty, view.link)
 
@@ -55,6 +56,18 @@ class EventBottomSheet : com.google.android.material.bottomsheet.BottomSheetDial
         view.link.setOnClickListener { onLinkClick() }
 
 
+    }
+
+    private fun displayRelatedEvents(obj: EventViewModel, related_events: LinearLayout) {
+        val speakers = database.getSpeakers(obj.event.event.id)
+
+        val events = database.getRelatedEvents(obj.id, obj.event.type, speakers)
+
+        val context = context ?: return
+
+        events.forEach {
+            related_events.addView(EventView(context, it))
+        }
     }
 
     private fun displaySpeakers(obj: EventViewModel, header: View, layout: LinearLayoutCompat) {
@@ -73,16 +86,8 @@ class EventBottomSheet : com.google.android.material.bottomsheet.BottomSheetDial
                 layout.addView(SpeakerView(context, it))
             }
         }
-
-//        val events = database.getRelatedEvents(speakers.first())
-
-//        events.forEach {
-//            val view = LayoutInflater.from(context).inflate(R.layout.row_event, related_events, false)
-//            view.title.text = it.event.title
-//
-//            related_events.addView(view)
-//        }
     }
+
 
     private val content: DatabaseEvent
         get() = arguments!!.getParcelable(ARG_EVENT)
