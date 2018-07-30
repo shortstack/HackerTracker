@@ -19,6 +19,8 @@
 
     <!-- Category colours -->
 
+    <color name="black_20">#33000000</color>
+
     <color name="dark_background">#22232b</color>
     <color name="text_primary_dark">#282727</color>
     <color name="colorPrimary_goon">#f44336</color>

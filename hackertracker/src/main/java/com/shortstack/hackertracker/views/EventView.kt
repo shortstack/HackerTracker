@@ -11,6 +11,8 @@ import android.util.AttributeSet
 import android.util.DisplayMetrics
 import android.view.View
 import android.view.animation.DecelerateInterpolator
+import android.widget.FrameLayout
+import androidx.cardview.widget.CardView
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
@@ -24,24 +26,7 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.row_event.view.*
 import javax.inject.Inject
 
-class EventView : androidx.cardview.widget.CardView {
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        init()
-        getStyle(context, attrs)
-        setCardBackgroundColor(ContextCompat.getColor(context, android.R.color.transparent))
-        setDisplayMode()
-    }
-
-    constructor(context: Context, event: DatabaseEvent) : super(context) {
-        init()
-        setContent(event)
-    }
-
-    private fun init() {
-        inflate(context, R.layout.row_event, this)
-        App.application.component.inject(this)
-    }
+class EventView : FrameLayout {
 
     @Inject
     lateinit var database: DatabaseManager
@@ -52,24 +37,25 @@ class EventView : androidx.cardview.widget.CardView {
     private var disposable: Disposable? = null
 
     private var displayMode: Int = DISPLAY_MODE_FULL
-    private var mRoundCorners = true
     var content: EventViewModel? = null
         private set
 
     private var animation: ObjectAnimator? = null
 
+    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+        init()
+    }
 
-    private fun getStyle(context: Context, attrs: AttributeSet) {
-        val a = context.theme.obtainStyledAttributes(attrs,
-                R.styleable.EventView, 0, 0)
-        try {
-            displayMode = a.getInteger(R.styleable.EventView_displayMode, DISPLAY_MODE_FULL)
-//            mRoundCorners = a.getBoolean(R.styleable.EventView_roundCorners, true)
-        } finally {
-            a.recycle()
-        }
+    constructor(context: Context, event: DatabaseEvent, display: Int = DISPLAY_MODE_FULL) : super(context) {
+        displayMode = display
+        init()
+        setContent(event)
+    }
 
-        radius = if (mRoundCorners) convertDpToPixel(2f, context) else 0f
+    private fun init() {
+        inflate(context, R.layout.row_event, this)
+        App.application.component.inject(this)
+        setDisplayMode()
     }
 
     fun setContent(event: DatabaseEvent) {
@@ -98,14 +84,10 @@ class EventView : androidx.cardview.widget.CardView {
     }
 
     private fun setDisplayMode() {
-//        val visibility = if (displayMode == DISPLAY_MODE_FULL) View.VISIBLE else View.GONE
-//        time.visibility = visibility
-//        category_text.visibility = visibility
-    }
-
-    fun setDisplayMode(mode: Int) {
-        displayMode = mode
-        setDisplayMode()
+        val visibility = if (displayMode == DISPLAY_MODE_FULL) View.VISIBLE else View.GONE
+//        star_bar.visibility = visibility
+        category_text.visibility = visibility
+//        progress.visibility = visibility
     }
 
     private fun render() {
@@ -190,8 +172,6 @@ class EventView : androidx.cardview.widget.CardView {
     }
 
     private fun renderBookmark(color: Int) {
-        star_bar.visibility = View.VISIBLE
-
         val isBookmarked = content?.event?.event?.isBookmarked == true
         val drawable = if (isBookmarked) {
             R.drawable.ic_star_accent_24dp

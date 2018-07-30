@@ -14,9 +14,7 @@
         <com.shortstack.hackertracker.views.EventView
             android:id="@+id/event"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="0dp"
-            app:roundCorners="false">
+            android:layout_height="wrap_content">
 
         </com.shortstack.hackertracker.views.EventView>
 
@@ -154,9 +152,7 @@
                     android:orientation="vertical">
 
 
-
                 </LinearLayout>
-
 
 
                 <include layout="@layout/row_footer" />

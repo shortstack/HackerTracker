@@ -66,7 +66,7 @@ class EventBottomSheet : com.google.android.material.bottomsheet.BottomSheetDial
         val context = context ?: return
 
         events.forEach {
-            related_events.addView(EventView(context, it))
+            related_events.addView(EventView(context, it, EventView.DISPLAY_MODE_MIN))
         }
     }
 
