@@ -35,20 +35,28 @@ class VendorBottomSheet : com.google.android.material.bottomsheet.BottomSheetDia
         view.empty.visibility = if (isDescriptionEmpty) View.VISIBLE else View.GONE
         view.description.text = vendor.description
 
-        view.link.setOnClickListener { onLinkClick() }
+        if(vendor.link.isNullOrBlank()) {
+            view.link.visibility = View.GONE
+        } else {
+            view.link.visibility = View.VISIBLE
+            view.link.setOnClickListener { onLinkClick() }
+        }
+
+
     }
 
     private val content: Vendor?
         get() = arguments?.getParcelable(ARG_VENDOR)
 
-    fun onLinkClick() {
+    private fun onLinkClick() {
         val context = context ?: return
-
+        val link = content?.link ?: return
+        
         MaterialAlert.create(context)
                 .setTitle(R.string.link_warning)
-                .setMessage(String.format(context.getString(R.string.link_message), content!!.link?.toLowerCase()))
+                .setMessage(String.format(context.getString(R.string.link_message), link.toLowerCase()))
                 .setPositiveButton(R.string.open_link, DialogInterface.OnClickListener { _, _ ->
-                    val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(content!!.link))
+                    val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(link))
                     context.startActivity(intent)
                 }).setBasicNegativeButton()
                 .show()
