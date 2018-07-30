@@ -58,7 +58,7 @@
         android:id="@+id/nav_settings"
         android:name="com.shortstack.hackertracker.ui.SettingsFragment"
         android:label="@string/settings"
-        tools:layout="@layout/activity_settings">
+        tools:layout="@layout/fragment_list">
         <action
             android:id="@+id/action_nav_settings_to_nav_search"
             app:destination="@id/nav_search" />

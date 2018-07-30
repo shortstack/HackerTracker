@@ -192,11 +192,11 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        when (item.itemId) {
-//            R.id.search -> {
-//                navController.navigate(R.id.nav_search)
-//            }
-//        }
+        when (item.itemId) {
+            R.id.search -> {
+                navController.navigate(R.id.nav_search)
+            }
+        }
         return super.onOptionsItemSelected(item)
     }
 
