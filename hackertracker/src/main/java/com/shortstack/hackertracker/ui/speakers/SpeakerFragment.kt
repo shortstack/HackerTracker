@@ -20,7 +20,7 @@ class SpeakerFragment : Fragment() {
 
     companion object {
 
-        private const val EXTRA_SPEAKER = "EXTRA_SPEAKER"
+        const val EXTRA_SPEAKER = "EXTRA_SPEAKER"
 
         fun newInstance(speaker: Speaker): SpeakerFragment {
             val fragment = SpeakerFragment()
@@ -49,6 +49,7 @@ class SpeakerFragment : Fragment() {
 
         val speaker = arguments?.getParcelable(EXTRA_SPEAKER) as? Speaker
         speaker?.let {
+            name.text = it.name
             description.text = it.description
 
             val eventsForSpeaker = database.getEventsForSpeaker(it.id)
@@ -57,7 +58,5 @@ class SpeakerFragment : Fragment() {
                 events.addView(EventView(context, it))
             }
         }
-
-
     }
 }

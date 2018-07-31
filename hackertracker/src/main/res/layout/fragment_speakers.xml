@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/name"
+        style="@style/FragmentHeader"
+        tools:text="John McAfee" />
 
     <TextView
         android:id="@+id/description"
@@ -11,7 +17,7 @@
         android:layout_height="wrap_content" />
 
     <TextView
-        style="@style/details_section_header"
+        style="@style/SectionHeader"
         android:text="@string/events" />
 
     <androidx.appcompat.widget.LinearLayoutCompat

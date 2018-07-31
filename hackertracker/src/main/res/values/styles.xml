@@ -148,7 +148,29 @@
         <item name="android:minWidth">120dp</item>
     </style>
 
-    <style name="details_section_header" parent="TextAppearance.AppCompat.Subhead">
+
+    <style name="Header" parent="TextAppearance.AppCompat.Title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <style name="Subhead" parent="TextAppearance.AppCompat.Subhead">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/white_alpha</item>
+    </style>
+
+    <style name="FragmentHeader" parent="TextAppearance.AppCompat.Title">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/fragment_header_height</item>
+        <item name="android:gravity">bottom|start</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="SectionHeader" parent="Subhead">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">60dp</item>
         <item name="android:gravity">center_vertical</item>

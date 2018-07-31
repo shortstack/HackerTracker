@@ -6,7 +6,7 @@
 
     <TextView
         android:id="@+id/header"
-        style="@style/details_section_header"
+        style="@style/SectionHeader"
         android:text="@string/speakers" />
 
 </LinearLayout>

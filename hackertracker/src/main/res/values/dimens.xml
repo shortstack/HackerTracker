@@ -6,4 +6,5 @@
     <dimen name="recycler_view_padding_bottom">30dp</dimen>
     <dimen name="bottom_sheet_corner_radius">20dp</dimen>
     <dimen name="bottom_sheet_top_padding">0dp</dimen>
+    <dimen name="fragment_header_height">150dp</dimen>
 </resources>

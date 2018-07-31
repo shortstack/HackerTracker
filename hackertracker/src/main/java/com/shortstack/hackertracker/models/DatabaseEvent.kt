@@ -18,5 +18,8 @@ data class DatabaseEvent(
 
     @Relation(parentColumn = "location", entityColumn = "id")
     var location: List<Location> = emptyList()
+
+    val id: Int
+        get() = event.id
 }
 

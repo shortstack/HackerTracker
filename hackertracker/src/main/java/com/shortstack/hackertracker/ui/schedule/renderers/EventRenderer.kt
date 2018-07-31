@@ -1,14 +1,14 @@
 package com.shortstack.hackertracker.ui.schedule.renderers
 
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.pedrogomez.renderers.Renderer
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.DatabaseEvent
-import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
-import com.shortstack.hackertracker.views.EventView
+import com.shortstack.hackertracker.ui.activities.MainActivity
+import com.shortstack.hackertracker.ui.events.EventFragment
 import kotlinx.android.synthetic.main.row.view.*
 
 class EventRenderer : Renderer<DatabaseEvent>() {
@@ -19,7 +19,7 @@ class EventRenderer : Renderer<DatabaseEvent>() {
 
     override fun hookListeners(rootView: View?) {
         rootView?.setOnClickListener {
-            showEventBottomSheet()
+            showEventFragment()
         }
     }
 
@@ -27,8 +27,10 @@ class EventRenderer : Renderer<DatabaseEvent>() {
         rootView.event.setContent(content)
     }
 
-    private fun showEventBottomSheet() {
-        val fragment = EventBottomSheet.newInstance(content)
-        fragment.show((context as AppCompatActivity).supportFragmentManager, fragment.tag)
+    private fun showEventFragment() {
+        val bundle = Bundle()
+        bundle.putParcelable(EventFragment.EXTRA_EVENT, content)
+
+        (context as? MainActivity)?.navController?.navigate(R.id.nav_event, bundle)
     }
 }
