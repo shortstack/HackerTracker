@@ -1,10 +1,12 @@
 package com.shortstack.hackertracker.views
 
 import android.content.Context
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.row_speaker.view.*
 
 class SpeakerView(context: Context, speaker: Speaker) : LinearLayout(context) {
@@ -12,6 +14,13 @@ class SpeakerView(context: Context, speaker: Speaker) : LinearLayout(context) {
     init {
         inflate()
         render(speaker)
+
+        setOnClickListener {
+            val bundle = Bundle()
+            bundle.putParcelable("EXTRA_SPEAKER", speaker)
+
+            (context as MainActivity).navController.navigate(R.id.nav_speaker, bundle)
+        }
     }
 
     private fun render(speaker: Speaker) {

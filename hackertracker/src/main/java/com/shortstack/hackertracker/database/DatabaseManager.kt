@@ -149,6 +149,11 @@ class DatabaseManager(context: Context) {
         return db.eventSpeakerDao().getSpeakersForEvent(event)
     }
 
+    fun getEventsForSpeaker(speaker: Int) : List<DatabaseEvent> {
+        return db.eventSpeakerDao().getEventsForSpeaker(speaker)
+    }
+
+
     fun getUpdatedEventsCount(updatedAt: Date?): Int {
         return db.eventDao().getUpdatedCount(updatedAt)
     }
@@ -158,5 +163,6 @@ class DatabaseManager(context: Context) {
             return db.eventDao().getUpdatedBookmarks(conference.code, updatedAt)
         return db.eventDao().getUpdatedBookmarks(conference.code)
     }
+
 
 }

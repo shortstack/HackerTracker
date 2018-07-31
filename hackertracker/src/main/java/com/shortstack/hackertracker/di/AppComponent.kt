@@ -18,6 +18,7 @@ import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
 import com.shortstack.hackertracker.ui.schedule.ScheduleViewModel
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.ui.search.SearchViewModel
+import com.shortstack.hackertracker.ui.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.vendors.VendorsViewModel
 import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.views.FilterView
@@ -45,6 +46,7 @@ interface AppComponent {
     fun inject(scheduleFragment: ScheduleFragment)
     fun inject(settingsFragment: SettingsFragment)
     fun inject(searchFragment: SearchFragment)
+    fun inject(speakerFragment: SpeakerFragment)
 
     // Views
 
@@ -69,6 +71,7 @@ interface AppComponent {
 
     fun inject(syncWorker: SyncWorker)
     fun inject(reminderWorker: ReminderWorker)
+
 
 
 }

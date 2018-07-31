@@ -65,6 +65,11 @@
     </fragment>
 
     <fragment
+        android:id="@+id/nav_speaker"
+        android:name="com.shortstack.hackertracker.ui.speakers.SpeakerFragment"
+        tools:layout="@layout/fragment_speakers" />
+
+    <fragment
         android:id="@+id/nav_search"
         android:name="com.shortstack.hackertracker.ui.SearchFragment"
         android:label="@string/search"
