@@ -4,14 +4,6 @@
     <attr name="logo_main" format="reference" />
     <attr name="logo_secondary" format="reference" />
 
-    <declare-styleable name="EventView">
-        <attr name="displayMode" format="enum">
-            <enum name="min" value="0" />
-            <enum name="full" value="1" />
-        </attr>
-        <attr name="roundCorners" format="boolean" />
-    </declare-styleable>
-
     <declare-styleable name="EmptyView">
         <attr name="evIcon" format="reference" />
         <attr name="evTitle" format="reference" />

@@ -5,9 +5,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.LayoutInflater
 import androidx.appcompat.widget.LinearLayoutCompat
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
@@ -20,6 +22,7 @@ import com.shortstack.hackertracker.views.EventView
 import com.shortstack.hackertracker.views.SpeakerView
 import kotlinx.android.synthetic.main.bottom_sheet_schedule_event.view.*
 import kotlinx.android.synthetic.main.empty_text.view.*
+import kotlinx.android.synthetic.main.row_event.view.*
 import javax.inject.Inject
 
 class EventBottomSheet : com.google.android.material.bottomsheet.BottomSheetDialogFragment() {
@@ -45,6 +48,7 @@ class EventBottomSheet : com.google.android.material.bottomsheet.BottomSheetDial
         view.event.setContent(obj.event)
 
         displaySpeakers(obj, view.speakers_header, view.speakers)
+        displayRelatedEvents(obj, view.related_events)
 
         displayDescription(obj, view.description, view.empty, view.link)
 
@@ -54,6 +58,17 @@ class EventBottomSheet : com.google.android.material.bottomsheet.BottomSheetDial
 
     }
 
+    private fun displayRelatedEvents(obj: EventViewModel, related_events: LinearLayout) {
+        val speakers = database.getSpeakers(obj.event.event.id)
+
+        val events = database.getRelatedEvents(obj.id, obj.event.type, speakers)
+
+        val context = context ?: return
+
+        events.forEach {
+            related_events.addView(EventView(context, it, EventView.DISPLAY_MODE_MIN))
+        }
+    }
 
     private fun displaySpeakers(obj: EventViewModel, header: View, layout: LinearLayoutCompat) {
         val speakers = database.getSpeakers(obj.event.event.id)
@@ -72,6 +87,7 @@ class EventBottomSheet : com.google.android.material.bottomsheet.BottomSheetDial
             }
         }
     }
+
 
     private val content: DatabaseEvent
         get() = arguments!!.getParcelable(ARG_EVENT)

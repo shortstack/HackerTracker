@@ -45,6 +45,7 @@ class SpeakerFragment : Fragment() {
 
         App.application.component.inject(this)
 
+        val context = context ?: return
 
         val speaker = arguments?.getParcelable(EXTRA_SPEAKER) as? Speaker
         speaker?.let {

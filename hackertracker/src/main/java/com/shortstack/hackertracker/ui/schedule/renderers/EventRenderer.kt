@@ -11,14 +11,10 @@ import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
 import com.shortstack.hackertracker.views.EventView
 import kotlinx.android.synthetic.main.row.view.*
 
-class EventRenderer(private val displayMode: Int = EventView.DISPLAY_MODE_MIN) : Renderer<DatabaseEvent>() {
+class EventRenderer : Renderer<DatabaseEvent>() {
 
     override fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
         return inflater.inflate(R.layout.row, parent, false)
-    }
-
-    override fun setUpView(rootView: View?) {
-        rootView?.event?.setDisplayMode(displayMode)
     }
 
     override fun hookListeners(rootView: View?) {
