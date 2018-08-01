@@ -80,7 +80,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener, MenuItem.OnAc
     override fun onMenuItemActionExpand(item: MenuItem?) = false
 
     override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-        (context as MainActivity).navController.popBackStack()
+        (context as? MainActivity)?.popBackStack()
         return true
     }
 }

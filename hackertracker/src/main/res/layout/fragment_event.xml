@@ -6,128 +6,134 @@
     android:layout_height="match_parent"
     android:background="?android:colorBackground">
 
-    <LinearLayout
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="192dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
-        <androidx.core.widget.NestedScrollView
+
+        <com.google.android.material.appbar.CollapsingToolbarLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:clipChildren="false"
-            android:clipToPadding="false"
+            android:layout_height="match_parent"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            android:paddingBottom="30dp">
+            <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:layout_collapseMode="pin"
+            app:title="hello world"
+            app:subtitle="12:00 AM | Lounge"
+            app:subtitleTextColor="@color/white"
+            app:layout_scrollFlags="scroll|enterAlways"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/title"
                     style="@style/FragmentHeader"
-                    tools:background="@color/blue_dark"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
                     tools:text="Building the Hacker Tracker" />
 
 
-                <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/pager"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_marginStart="0dp"
-                    android:layout_marginTop="0dp"
-                    android:layout_marginEnd="0dp"
-                    android:layout_marginBottom="0dp"
-                    android:visibility="gone" />
+            </androidx.appcompat.widget.Toolbar>
 
-                <LinearLayout
-                    android:id="@+id/icons"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:visibility="gone">
-
-                    <TextView
-                        android:id="@+id/demo"
-                        style="@style/Label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/demo" />
-
-                    <TextView
-                        android:id="@+id/exploit"
-                        style="@style/Label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/exploit" />
-
-                    <TextView
-                        android:id="@+id/tool"
-                        style="@style/Label"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/tool" />
-
-                </LinearLayout>
+        </com.google.android.material.appbar.CollapsingToolbarLayout>
 
 
-                <FrameLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:paddingLeft="10dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="10dp"
-                    android:paddingBottom="10dp">
-
-                    <TextView
-                        android:id="@+id/description"
-                        style="@style/Paragraph"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        tools:text="My event is so fresh!\nSofresh!" />
-
-                    <include layout="@layout/empty_text" />
-                </FrameLayout>
-
-                <TextView
-                    android:id="@+id/speakers_header"
-                    style="@style/SectionHeader"
-                    android:text="@string/speakers" />
+    </com.google.android.material.appbar.AppBarLayout>
 
 
-                <androidx.appcompat.widget.LinearLayoutCompat
-                    android:id="@+id/speakers"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:visibility="visible" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
 
-                <TextView
-                    android:id="@+id/related_events_header"
-                    style="@style/SectionHeader"
-                    android:text="@string/related_events" />
+        <LinearLayout
+            android:id="@+id/icons"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone">
 
-                <LinearLayout
-                    android:id="@+id/related_events"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="8dp"
-                    android:orientation="vertical">
+            <TextView
+                android:id="@+id/demo"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/demo" />
+
+            <TextView
+                android:id="@+id/exploit"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/exploit" />
+
+            <TextView
+                android:id="@+id/tool"
+                style="@style/Label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tool" />
+
+        </LinearLayout>
 
 
-                </LinearLayout>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp">
+
+            <TextView
+                android:id="@+id/description"
+                style="@style/Paragraph"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="My event is so fresh!\nSofresh!" />
+
+            <include layout="@layout/empty_text" />
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/speakers_header"
+            style="@style/SectionHeader"
+            android:text="@string/speakers" />
 
 
-                <include layout="@layout/row_footer" />
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/speakers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible" />
 
 
-            </LinearLayout>
+        <TextView
+            android:id="@+id/related_events_header"
+            style="@style/SectionHeader"
+            android:text="@string/related_events" />
+
+        <LinearLayout
+            android:id="@+id/related_events"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp"
+            android:orientation="vertical">
 
 
-        </androidx.core.widget.NestedScrollView>
+        </LinearLayout>
+
+
+        <include layout="@layout/row_footer" />
 
 
     </LinearLayout>

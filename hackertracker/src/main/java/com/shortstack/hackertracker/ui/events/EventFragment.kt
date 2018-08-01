@@ -27,8 +27,8 @@ class EventFragment : Fragment() {
 
         const val EXTRA_EVENT = "EXTRA_EVENT"
 
-        fun newInstance(event: DatabaseEvent): SpeakerFragment {
-            val fragment = SpeakerFragment()
+        fun newInstance(event: DatabaseEvent): EventFragment {
+            val fragment = EventFragment()
 
             val bundle = Bundle()
             bundle.putParcelable(EXTRA_EVENT, event)
@@ -87,7 +87,7 @@ class EventFragment : Fragment() {
 
         type?.let {
             val color = Color.parseColor(type.color)
-            title.setBackgroundColor(color)
+//            app_bar.setBackgroundColor(color)
         }
     }
 

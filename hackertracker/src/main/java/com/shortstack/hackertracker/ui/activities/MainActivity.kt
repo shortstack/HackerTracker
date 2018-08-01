@@ -9,14 +9,9 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
+import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.navigation.NavController
-import androidx.navigation.NavOptions
-import androidx.navigation.findNavController
-import androidx.navigation.ui.NavigationUI
-import androidx.navigation.ui.NavigationUI.setupActionBarWithNavController
 import androidx.work.State
 import androidx.work.WorkManager
 import com.github.stkent.amplify.tracking.Amplify
@@ -24,9 +19,16 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.addFragment
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.models.DatabaseEvent
+import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.network.task.SyncWorker
+import com.shortstack.hackertracker.ui.SearchFragment
+import com.shortstack.hackertracker.ui.events.EventFragment
+import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
+import com.shortstack.hackertracker.ui.speakers.SpeakerFragment
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.utils.TickTimer
 import kotlinx.android.synthetic.main.activity_main.*
@@ -51,8 +53,6 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
     @Inject
     lateinit var timer: TickTimer
 
-    lateinit var navController: NavController
-
     private lateinit var bottomSheet: BottomSheetBehavior<View>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,7 +63,7 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
         setContentView(R.layout.activity_main)
         setSupportActionBar(toolbar)
 
-        setupNavigation()
+        initNavDrawer()
 
         val mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
         mainActivityViewModel.conference.observe(this, Observer {
@@ -103,6 +103,9 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
                 review.show(this.supportFragmentManager, review.tag)
             }
         }
+
+
+        addFragment(ScheduleFragment.newInstance(), R.id.container)
     }
 
     private fun scheduleSyncTask() {
@@ -128,32 +131,17 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
         super.onPause()
     }
 
-    private fun setupNavigation() {
-        initNavDrawer()
-
-
-        navController = findNavController(R.id.my_nav_host_fragment)
-        setupActionBarWithNavController(this, navController, drawer_layout)
-//        NavigationUI.setupWithNavController(nav_view, navController)
-
-        navController.addOnNavigatedListener { _, destination ->
-            val visibility = if (destination.id == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
-            setFABVisibility(visibility)
-        }
-
-    }
+    private lateinit var toggle: ActionBarDrawerToggle
 
 
     private fun initNavDrawer() {
-        val toggle = ActionBarDrawerToggle(
+        toggle = ActionBarDrawerToggle(
                 this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
     }
-
-    override fun onSupportNavigateUp() = navController.navigateUp()
 
     override fun getTheme(): Resources.Theme {
         val theme = super.getTheme()
@@ -191,7 +179,7 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.search -> {
-                navController.navigate(R.id.nav_search)
+                addFragment(SearchFragment.newInstance(), R.id.container)
             }
         }
         return super.onOptionsItemSelected(item)
@@ -202,13 +190,29 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
             val con = database.getConferences().firstOrNull { it.conference.id == item.itemId }
             if (con != null) database.changeConference(con)
         } else {
-            val current = navController.currentDestination.id
-            if (item.itemId != current) {
-                navController.navigate(item.itemId)
-            }
+            val visibility = if (item.itemId == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
+            setFABVisibility(visibility)
+
+            supportActionBar?.title = item.title
         }
 
         drawer_layout.closeDrawers()
         return true
+    }
+
+    fun navigate(event: DatabaseEvent?) {
+        if (event == null)
+            return
+
+        addFragment(EventFragment.newInstance(event), R.id.container_above)
+    }
+
+    fun navigate(speaker: Speaker) {
+
+        addFragment(SpeakerFragment.newInstance(speaker), R.id.container_above)
+    }
+
+    fun popBackStack() {
+        supportFragmentManager.popBackStack()
     }
 }
