@@ -136,8 +136,8 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
 
 
         navController = findNavController(R.id.my_nav_host_fragment)
-//        setupActionBarWithNavController(this, navController, drawer_layout)
-        NavigationUI.setupWithNavController(nav_view, navController)
+        setupActionBarWithNavController(this, navController, drawer_layout)
+//        NavigationUI.setupWithNavController(nav_view, navController)
 
         navController.addOnNavigatedListener { _, destination ->
             val visibility = if (destination.id == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
@@ -153,7 +153,7 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
         drawer_layout.addDrawerListener(toggle)
         toggle.syncState()
 
-//        nav_view.setNavigationItemSelectedListener(this)
+        nav_view.setNavigationItemSelectedListener(this)
     }
 
     override fun onSupportNavigateUp() = navController.navigateUp()
