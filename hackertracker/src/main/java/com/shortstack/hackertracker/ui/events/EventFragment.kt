@@ -1,18 +1,16 @@
 package com.shortstack.hackertracker.ui.events
 
 import android.graphics.Color
-import android.os.Build
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.core.content.ContextCompat
+import android.view.*
 import androidx.fragment.app.Fragment
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Speaker
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.speakers.SpeakerFragment
 import com.shortstack.hackertracker.views.EventView
 import com.shortstack.hackertracker.views.SpeakerView
@@ -43,8 +41,18 @@ class EventFragment : Fragment() {
     @Inject
     lateinit var database: DatabaseManager
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_event, container, false)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?) {
+        menu?.clear()
+        super.onPrepareOptionsMenu(menu)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -53,6 +61,7 @@ class EventFragment : Fragment() {
         App.application.component.inject(this)
 
         val event = arguments?.getParcelable(EXTRA_EVENT) as? DatabaseEvent
+
 
         event?.let {
             title.text = it.event.title

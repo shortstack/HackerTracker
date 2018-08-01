@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     app:startDestination="@id/home">
-    
+
     <navigation
         android:id="@+id/home"
         app:startDestination="@id/nav_schedule">
