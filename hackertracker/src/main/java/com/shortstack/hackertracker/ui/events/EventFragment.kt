@@ -133,7 +133,7 @@ class EventFragment : Fragment() {
         if (speakersForEvent.isNotEmpty()) {
             speakers_header.visibility = View.VISIBLE
             speakersForEvent.forEach {
-                speakers.addView(SpeakerView(context, it))
+                speakers.addView(SpeakerView(context, it), ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
             }
         } else {
             speakers_header.visibility = View.GONE

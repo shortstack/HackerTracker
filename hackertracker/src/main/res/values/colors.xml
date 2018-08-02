@@ -15,7 +15,7 @@
 
     <color name="item_background">#1e232b</color>
 
-    <color name="speaker_background">#5c74ff</color>
+    <color name="speaker_background">@color/red_light</color>
 
     <!-- Category colours -->
 
