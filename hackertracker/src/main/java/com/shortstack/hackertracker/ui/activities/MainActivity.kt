@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.ui.activities
 
 import android.content.res.Resources
 import android.os.Bundle
+import android.util.SparseArray
 import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
@@ -10,16 +11,14 @@ import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.work.State
 import androidx.work.WorkManager
 import com.github.stkent.amplify.tracking.Amplify
 import com.google.android.material.bottomsheet.BottomSheetBehavior
-import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.BuildConfig
-import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.addFragment
+import com.shortstack.hackertracker.*
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.DatabaseEvent
@@ -27,6 +26,8 @@ import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.network.task.SyncWorker
 import com.shortstack.hackertracker.ui.SearchFragment
 import com.shortstack.hackertracker.ui.events.EventFragment
+import com.shortstack.hackertracker.ui.home.HomeFragment
+import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.speakers.SpeakerFragment
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
@@ -36,7 +37,9 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.row_nav_view.*
 import kotlinx.android.synthetic.main.view_filter.*
+import java.util.*
 import javax.inject.Inject
+import kotlin.collections.HashMap
 
 
 class MainActivity : AppCompatActivity(), com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener {
@@ -54,6 +57,8 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
     lateinit var timer: TickTimer
 
     private lateinit var bottomSheet: BottomSheetBehavior<View>
+
+    private val map = HashMap<Int, Fragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         App.application.component.inject(this)
@@ -193,11 +198,25 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
             val visibility = if (item.itemId == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
             setFABVisibility(visibility)
 
+            replaceFragment(getFragment(item.itemId), R.id.container)
+
             supportActionBar?.title = item.title
         }
 
         drawer_layout.closeDrawers()
         return true
+    }
+
+    private fun getFragment(itemId: Int): Fragment {
+        if (map[itemId] == null) {
+            map[itemId] = when (itemId) {
+                R.id.nav_schedule -> ScheduleFragment.newInstance()
+                R.id.nav_home -> HomeFragment.newInstance()
+
+                else -> InformationFragment.newInstance()
+            }
+        }
+        return map[itemId]!!
     }
 
     fun navigate(event: DatabaseEvent?) {
