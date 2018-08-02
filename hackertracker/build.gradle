@@ -116,6 +116,9 @@ dependencies {
     implementation 'com.github.stkent:amplify:2.2.0'
     // Firebase Job Dispatcher
     implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
+
+
+    implementation "com.hendraanggrian.material:collapsingtoolbarlayout-subtitle:1.0.0-beta01"
 }
 
 repositories {

@@ -15,7 +15,12 @@ class SpeakerView : LinearLayout {
 
     constructor(context: Context, speaker: Speaker) : super(context) {
         speaker_name.text = speaker.name
-        speaker_description.text = speaker.title ?: context.getString(R.string.speaker_default_title)
+
+        speaker_description.text = if (speaker.title.isNullOrEmpty()) {
+            context.getString(R.string.speaker_default_title)
+        } else {
+            speaker.title
+        }
 
         val colours = context.resources.getStringArray(R.array.colors)
         val color = Color.parseColor(colours[speaker.id % colours.size])

@@ -16,14 +16,13 @@ import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.views.EventView
 import kotlinx.android.synthetic.main.fragment_speakers.*
-import kotlinx.android.synthetic.main.row_speaker.view.*
 import javax.inject.Inject
+
 
 /**
  * Created by Chris on 7/31/2018.
  */
 class SpeakerFragment : Fragment() {
-
     companion object {
 
         const val EXTRA_SPEAKER = "EXTRA_SPEAKER"
@@ -53,6 +52,7 @@ class SpeakerFragment : Fragment() {
 
         val context = context ?: return
 
+
         val drawable = ContextCompat.getDrawable(context
                 ?: return, R.drawable.ic_arrow_back_white_24dp)
         toolbar.navigationIcon = drawable
@@ -64,7 +64,14 @@ class SpeakerFragment : Fragment() {
 
         val speaker = arguments?.getParcelable(EXTRA_SPEAKER) as? Speaker
         speaker?.let {
-            toolbar.title = it.name
+            collapsing_toolbar.title = it.name
+            collapsing_toolbar.subtitle = if (speaker.title.isNullOrEmpty()) {
+                context.getString(R.string.speaker_default_title)
+            } else {
+                speaker.title
+            }
+
+
             description.text = it.description
 
             val colours = context.resources.getStringArray(R.array.colors)

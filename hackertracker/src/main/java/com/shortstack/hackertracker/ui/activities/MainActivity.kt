@@ -2,22 +2,22 @@ package com.shortstack.hackertracker.ui.activities
 
 
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
-import android.util.SparseArray
-import android.view.Gravity
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
+import android.view.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.work.State
 import androidx.work.WorkManager
 import com.github.stkent.amplify.tracking.Amplify
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.*
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
@@ -25,11 +25,14 @@ import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.network.task.SyncWorker
 import com.shortstack.hackertracker.ui.SearchFragment
+import com.shortstack.hackertracker.ui.SettingsFragment
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
+import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.speakers.SpeakerFragment
+import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.utils.TickTimer
 import kotlinx.android.synthetic.main.activity_main.*
@@ -37,12 +40,11 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.row_nav_view.*
 import kotlinx.android.synthetic.main.view_filter.*
-import java.util.*
 import javax.inject.Inject
-import kotlin.collections.HashMap
 
 
-class MainActivity : AppCompatActivity(), com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener {
+class MainActivity : AppCompatActivity(), com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
+
 
     @Inject
     lateinit var storage: SharedPreferencesUtil
@@ -109,7 +111,10 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
             }
         }
 
-        addFragment(ScheduleFragment.newInstance(), R.id.container)
+
+        supportFragmentManager.addOnBackStackChangedListener(this)
+
+        setMainFragment(R.id.nav_schedule, getString(R.string.schedule))
     }
 
     private fun scheduleSyncTask() {
@@ -183,10 +188,19 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.search -> {
-                addFragment(SearchFragment.newInstance(), R.id.container)
+                setMainFragment(item.itemId, item.title.toString())
             }
         }
         return super.onOptionsItemSelected(item)
+    }
+
+    private fun setMainFragment(id: Int, title: String) {
+        val visibility = if (id == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
+        setFABVisibility(visibility)
+
+        replaceFragment(getFragment(id), R.id.container)
+
+        supportActionBar?.title = title
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -194,28 +208,26 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
             val con = database.getConferences().firstOrNull { it.conference.id == item.itemId }
             if (con != null) database.changeConference(con)
         } else {
-            val visibility = if (item.itemId == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
-            setFABVisibility(visibility)
-
-            replaceFragment(getFragment(item.itemId), R.id.container)
-
-            supportActionBar?.title = item.title
+            setMainFragment(item.itemId, item.title.toString())
         }
 
         drawer_layout.closeDrawers()
         return true
     }
 
-    private fun getFragment(itemId: Int): Fragment {
-        if (map[itemId] == null) {
-            map[itemId] = when (itemId) {
-                R.id.nav_schedule -> ScheduleFragment.newInstance()
+    private fun getFragment(id: Int): Fragment {
+        if (map[id] == null) {
+            map[id] = when (id) {
                 R.id.nav_home -> HomeFragment.newInstance()
-
+                R.id.nav_schedule -> ScheduleFragment.newInstance()
+                R.id.nav_map -> MapsFragment.newInstance()
+                R.id.nav_companies -> VendorsFragment.newInstance()
+                R.id.nav_settings -> SettingsFragment.newInstance()
+                R.id.search -> SearchFragment.newInstance()
                 else -> InformationFragment.newInstance()
             }
         }
-        return map[itemId]!!
+        return map[id]!!
     }
 
     fun navigate(event: DatabaseEvent?) {
@@ -232,5 +244,25 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
 
     fun popBackStack() {
         supportFragmentManager.popBackStack()
+    }
+
+
+    override fun onBackStackChanged() {
+        val fragments = supportFragmentManager.fragments
+        val last = fragments.lastOrNull()
+
+        if (last is EventFragment || last is SpeakerFragment) {
+            drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+        } else {
+            drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            window?.apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                    addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+
+                    statusBarColor = ContextCompat.getColor(context, R.color.colorPrimaryDark)
+                }
+            }
+        }
     }
 }

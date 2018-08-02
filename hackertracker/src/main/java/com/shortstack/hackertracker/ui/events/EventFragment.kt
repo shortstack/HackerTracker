@@ -1,7 +1,7 @@
 package com.shortstack.hackertracker.ui.events
 
+import android.content.Context
 import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Build
 import android.os.Bundle
 import android.view.*
@@ -13,7 +13,7 @@ import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.ui.speakers.SpeakerFragment
+import com.shortstack.hackertracker.utils.TimeUtil
 import com.shortstack.hackertracker.views.EventView
 import com.shortstack.hackertracker.views.SpeakerView
 import kotlinx.android.synthetic.main.empty_text.*
@@ -76,9 +76,8 @@ class EventFragment : Fragment() {
 
         event?.let {
 
-            toolbar.title = it.event.title
+            collapsing_toolbar.title = it.event.title
 
-            title.text = it.event.title
             val body = it.event.description
 
             if (body.isNotBlank()) {
@@ -88,6 +87,8 @@ class EventFragment : Fragment() {
                 empty.visibility = View.VISIBLE
             }
 
+            displayDescription(it)
+
             displayTypes(it)
 
             val speakers = displaySpeakers(it)
@@ -96,12 +97,43 @@ class EventFragment : Fragment() {
 
     }
 
+    private fun displayDescription(event: DatabaseEvent) {
+
+        val context = context ?: return
+
+        collapsing_toolbar.subtitle = getFullTimeStamp(context, event)
+        location.text = event.location.first().name
+    }
+
+
+    fun getFullTimeStamp(context: Context, event: DatabaseEvent): String {
+        val (begin, end) = getTimeStamp(context, event)
+        val timestamp = TimeUtil.getRelativeDateStamp(context, event.event.begin)
+
+        return String.format(context.getString(R.string.timestamp_full), timestamp, begin, end)
+    }
+
+    fun getTimeStamp(context: Context, event: DatabaseEvent): Pair<String, String> {
+        val begin = TimeUtil.getTimeStamp(context, event.event.begin)
+        val end = TimeUtil.getTimeStamp(context, event.event.end)
+        return Pair(begin, end)
+    }
+
+
     private fun displayTypes(event: DatabaseEvent) {
         val type = event.type.firstOrNull()
 
         type?.let {
             val color = Color.parseColor(type.color)
-            category.setBackgroundColor(color)
+            app_bar.setBackgroundColor(color)
+
+            val context = context ?: return
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
+                drawable?.setTint(color)
+                category_text.background = drawable
+            }
 
             category_text.text = it.name
 
@@ -112,16 +144,6 @@ class EventFragment : Fragment() {
 
                     statusBarColor = color
                 }
-
-            }
-
-            toolbar.subtitle = it.name
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                val drawable = ContextCompat.getDrawable(context
-                        ?: return, R.drawable.chip_background)?.mutate()
-                drawable?.setTint(color)
-                category_text.background = drawable
             }
         }
     }

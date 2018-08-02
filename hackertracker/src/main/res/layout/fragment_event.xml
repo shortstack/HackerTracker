@@ -13,97 +13,42 @@
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/header_height"
-        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+        tools:background="@color/blue_dark">
 
-
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <com.google.android.material.appbar.SubtitleCollapsingToolbarLayout
+            android:id="@+id/collapsing_toolbar"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-
-                <View
-                    android:id="@+id/category"
-                    android:layout_width="0dp"
-                    android:layout_height="0dp"
-                    android:background="@color/orange"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent" />
+            app:collapsedSubtitleTextAppearance="@style/Subhead"
+            app:collapsedTitleTextAppearance="@style/Header"
+            app:expandedSubtitleTextAppearance="@style/Subhead"
+            app:expandedTitleTextAppearance="@style/FragmentHeader"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            tools:subtitle="Party/Meetup"
+            tools:title="Arcade Party">
 
 
-            </androidx.constraintlayout.widget.ConstraintLayout>
+            <ImageView
+                style="@style/ToolbarBackground"
+                android:src="@drawable/skull_lg"
+                app:layout_collapseMode="parallax"
+                app:layout_collapseParallaxMultiplier="0.85" />
 
 
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="52dp"
+                android:layout_height="?android:attr/actionBarSize"
+                android:background="@android:color/transparent"
                 app:layout_collapseMode="pin"
-                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
-                app:subtitle="hello"
-                app:subtitleTextColor="@color/white"
-
-                app:title="hello world">
-
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone">
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 
-                    <TextView
-                        android:id="@+id/title"
-                        style="@style/FragmentHeader"
-                        android:layout_width="0dp"
-
-
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:layout_marginRight="8dp"
-                        android:lines="2"
-                        app:layout_constraintBottom_toTopOf="@+id/category_text"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/guide"
-                        tools:text="Building the Hacker Tracker" />
-
-
-                    <TextView
-                        android:id="@+id/category_text"
-                        style="@style/TextAppearance.AppCompat.Body1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:layout_marginLeft="8dp"
-                        android:layout_marginBottom="8dp"
-                        android:background="@drawable/chip_background"
-                        android:textColor="@color/white_alpha"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintStart_toStartOf="@+id/guide"
-                        tools:text="Event" />
-
-                    <androidx.constraintlayout.widget.Guideline
-                        android:id="@+id/guide"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        app:layout_constraintGuide_begin="0dp" />
-
-
-                </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            </androidx.appcompat.widget.Toolbar>
-
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </com.google.android.material.appbar.SubtitleCollapsingToolbarLayout>
 
 
     </com.google.android.material.appbar.AppBarLayout>
+
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
@@ -147,9 +92,50 @@
             </LinearLayout>
 
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingLeft="24dp"
+                android:paddingTop="32dp"
+                android:paddingRight="24dp">
+
+                <TextView
+                    android:id="@+id/location"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="bottom"
+                    android:textColor="@color/white_70"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/category_text"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Track 1 - Ceaser's" />
+
+                <TextView
+                    android:id="@+id/category_text"
+                    style="@style/TextAppearance.AppCompat.Body1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/chip_background"
+                    android:gravity="center"
+                    android:textColor="@color/white_70"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Event" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
+
+                <include
+                    layout="@layout/empty_text"
+                    tools:visibility="gone" />
 
                 <TextView
                     android:id="@+id/description"
@@ -158,7 +144,6 @@
                     android:layout_height="wrap_content"
                     tools:text="My event is so fresh!\nSofresh!" />
 
-                <include layout="@layout/empty_text" />
             </FrameLayout>
 
             <TextView
@@ -167,12 +152,9 @@
                 android:text="@string/speakers" />
 
 
-            <androidx.appcompat.widget.LinearLayoutCompat
+            <LinearLayout
                 android:id="@+id/speakers"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:visibility="visible" />
+                style="@style/Section" />
 
 
             <TextView
@@ -182,13 +164,11 @@
 
             <LinearLayout
                 android:id="@+id/related_events"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                style="@style/Section"
+                android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:orientation="vertical">
-
-
-            </LinearLayout>
+                android:paddingEnd="0dp"
+                android:paddingRight="0dp" />
 
 
             <include layout="@layout/row_footer" />
@@ -196,5 +176,4 @@
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:textColor="@color/white_alpha"
+        android:textColor="@color/white_70"
         tools:text="// End of DEFCON 25 //" />
 
     <include layout="@layout/row_footer" />

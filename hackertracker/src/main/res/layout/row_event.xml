@@ -57,10 +57,10 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:text="Compelled Decryption - State of the Art in Doctrinal Perversions"
         app:layout_constraintEnd_toStartOf="@+id/star_bar"
         app:layout_constraintStart_toEndOf="@+id/category"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Compelled Decryption - State of the Art in Doctrinal Perversions" />
 
 
     <TextView
@@ -70,13 +70,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:text="Track 1"
-        android:textColor="@color/white_alpha"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/white_70"
+        app:layout_constraintEnd_toStartOf="@+id/star_bar"
         app:layout_constraintStart_toEndOf="@+id/category"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        tools:text="Track 1" />
 
     <TextView
         android:id="@+id/time"
@@ -87,12 +85,12 @@
         android:layout_marginLeft="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
-        android:text="Friday, 11:00 AM - 3:00 PM"
-        android:textColor="@color/white_alpha"
+        android:textColor="@color/white_70"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/category"
-        app:layout_constraintTop_toBottomOf="@+id/location" />
+        app:layout_constraintTop_toBottomOf="@+id/location"
+        tools:text="Friday, 11:00 AM - 3:00 PM" />
 
     <TextView
         android:id="@+id/category_text"
@@ -105,7 +103,7 @@
         android:layout_marginBottom="16dp"
         android:background="@drawable/chip_background"
         android:text="Event"
-        android:textColor="@color/white_alpha"
+        android:textColor="@color/white_70"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/category"
         app:layout_constraintTop_toBottomOf="@+id/time" />

@@ -37,7 +37,7 @@
 
         <!-- Preferences-->
         <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/white_alpha</item>
+        <item name="android:textColorSecondary">@color/white_70</item>
 
         <!-- AppCompat Dialog Attributes -->
         <item name="dialogTheme">@style/AppCompatDialog</item>
@@ -137,11 +137,12 @@
     <style name="Paragraph" parent="TextAppearance.AppCompat.Body1">
         <item name="android:layout_marginTop">32dp</item>
         <item name="android:layout_marginBottom">32dp</item>
-        <item name="android:layout_marginLeft">16dp</item>
-        <item name="android:layout_marginRight">16dp</item>
+        <item name="android:layout_marginLeft">24dp</item>
+        <item name="android:layout_marginRight">24dp</item>
         <item name="android:lineSpacingExtra">8sp</item>
         <!-- TODO: This is a very expensive attribute, do we need it? -->
         <!--<item name="android:autoLink">all</item>-->
+        <item name="android:textColor">@color/white_90</item>
     </style>
 
     <style name="buttonStyle" parent="@android:style/Widget.Holo.Button">
@@ -161,15 +162,12 @@
     <style name="Subhead" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/white_alpha</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@color/white_70</item>
     </style>
 
-    <style name="FragmentHeader" parent="TextAppearance.AppCompat.Title">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/fragment_header_height</item>
-        <item name="android:gravity">bottom|start</item>
-        <item name="android:padding">16dp</item>
+    <style name="FragmentHeader" parent="Header">
+        <item name="android:textSize">18sp</item>
     </style>
 
     <style name="SectionHeader" parent="Subhead">
@@ -178,7 +176,26 @@
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
-        <item name="android:textColor">@color/white_alpha</item>
+        <item name="android:textColor">@color/white_70</item>
+    </style>
+
+    <style name="Section">
+        <item name="android:orientation">vertical</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+    </style>
+
+    <style name="ToolbarBackground">
+        <item name="android:layout_width">@dimen/image_width</item>
+        <item name="android:layout_height">@dimen/image_width</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:layout_marginEnd">8dp</item>
+        <item name="android:layout_marginRight">8dp</item>
+        <item name="android:alpha">.10</item>
+        <item name="android:tint">@color/black</item>
     </style>
 
 

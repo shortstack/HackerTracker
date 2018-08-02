@@ -16,9 +16,9 @@
         android:layout_marginRight="16dp"
         android:layout_marginBottom="4dp"
         app:cardBackgroundColor="@color/red_light"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="1dp"
-        app:contentPadding="8dp">
+        app:cardCornerRadius="@dimen/speaker_card_radius"
+        app:cardElevation="@dimen/card_elevation"
+        app:contentPadding="@dimen/card_content_padding">
 
         <LinearLayout
             android:layout_width="match_parent"
