@@ -7,4 +7,5 @@
     <dimen name="bottom_sheet_corner_radius">20dp</dimen>
     <dimen name="bottom_sheet_top_padding">0dp</dimen>
     <dimen name="fragment_header_height">150dp</dimen>
+    <dimen name="header_height">192dp</dimen>
 </resources>

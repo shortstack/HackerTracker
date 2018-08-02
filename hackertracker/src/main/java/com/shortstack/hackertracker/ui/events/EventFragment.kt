@@ -2,8 +2,10 @@ package com.shortstack.hackertracker.ui.events
 
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
+import android.os.Build
 import android.os.Bundle
 import android.view.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
@@ -63,7 +65,19 @@ class EventFragment : Fragment() {
         val event = arguments?.getParcelable(EXTRA_EVENT) as? DatabaseEvent
 
 
+        val drawable = ContextCompat.getDrawable(context
+                ?: return, R.drawable.ic_arrow_back_white_24dp)
+        toolbar.navigationIcon = drawable
+
+        toolbar.setNavigationOnClickListener {
+            (activity as? MainActivity)?.popBackStack()
+        }
+
+
         event?.let {
+
+            toolbar.title = it.event.title
+
             title.text = it.event.title
             val body = it.event.description
 
@@ -87,7 +101,28 @@ class EventFragment : Fragment() {
 
         type?.let {
             val color = Color.parseColor(type.color)
-//            app_bar.setBackgroundColor(color)
+            category.setBackgroundColor(color)
+
+            category_text.text = it.name
+
+            activity?.window?.apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                    addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+
+                    statusBarColor = color
+                }
+
+            }
+
+            toolbar.subtitle = it.name
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                val drawable = ContextCompat.getDrawable(context
+                        ?: return, R.drawable.chip_background)?.mutate()
+                drawable?.setTint(color)
+                category_text.background = drawable
+            }
         }
     }
 

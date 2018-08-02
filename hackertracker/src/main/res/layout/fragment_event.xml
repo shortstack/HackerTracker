@@ -4,13 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorBackground">
+    android:background="?android:colorBackground"
+    android:clickable="true"
+    android:focusable="true">
 
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="192dp"
+        android:layout_height="@dimen/header_height"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
 
@@ -19,24 +21,81 @@
             android:layout_height="match_parent"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+
+                <View
+                    android:id="@+id/category"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:background="@color/orange"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+
             <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            app:layout_collapseMode="pin"
-            app:title="hello world"
-            app:subtitle="12:00 AM | Lounge"
-            app:subtitleTextColor="@color/white"
-            app:layout_scrollFlags="scroll|enterAlways"
-            app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+                app:subtitle="hello"
+                app:subtitleTextColor="@color/white"
+
+                app:title="hello world">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="gone">
 
 
-                <TextView
-                    android:id="@+id/title"
-                    style="@style/FragmentHeader"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    tools:text="Building the Hacker Tracker" />
+                    <TextView
+                        android:id="@+id/title"
+                        style="@style/FragmentHeader"
+                        android:layout_width="0dp"
+
+
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="8dp"
+                        android:layout_marginRight="8dp"
+                        android:lines="2"
+                        app:layout_constraintBottom_toTopOf="@+id/category_text"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guide"
+                        tools:text="Building the Hacker Tracker" />
+
+
+                    <TextView
+                        android:id="@+id/category_text"
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_marginLeft="8dp"
+                        android:layout_marginBottom="8dp"
+                        android:background="@drawable/chip_background"
+                        android:textColor="@color/white_alpha"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="@+id/guide"
+                        tools:text="Event" />
+
+                    <androidx.constraintlayout.widget.Guideline
+                        android:id="@+id/guide"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        app:layout_constraintGuide_begin="0dp" />
+
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
 
             </androidx.appcompat.widget.Toolbar>
@@ -46,97 +105,96 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
         <LinearLayout
-            android:id="@+id/icons"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:visibility="gone">
-
-            <TextView
-                android:id="@+id/demo"
-                style="@style/Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/demo" />
-
-            <TextView
-                android:id="@+id/exploit"
-                style="@style/Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/exploit" />
-
-            <TextView
-                android:id="@+id/tool"
-                style="@style/Label"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/tool" />
-
-        </LinearLayout>
-
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingLeft="10dp"
-            android:paddingTop="10dp"
-            android:paddingRight="10dp"
-            android:paddingBottom="10dp">
-
-            <TextView
-                android:id="@+id/description"
-                style="@style/Paragraph"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                tools:text="My event is so fresh!\nSofresh!" />
-
-            <include layout="@layout/empty_text" />
-        </FrameLayout>
-
-        <TextView
-            android:id="@+id/speakers_header"
-            style="@style/SectionHeader"
-            android:text="@string/speakers" />
-
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/speakers"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="visible" />
-
-
-        <TextView
-            android:id="@+id/related_events_header"
-            style="@style/SectionHeader"
-            android:text="@string/related_events" />
-
-        <LinearLayout
-            android:id="@+id/related_events"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
             android:orientation="vertical">
 
 
+            <LinearLayout
+                android:id="@+id/icons"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <TextView
+                    android:id="@+id/demo"
+                    style="@style/Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/demo" />
+
+                <TextView
+                    android:id="@+id/exploit"
+                    style="@style/Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/exploit" />
+
+                <TextView
+                    android:id="@+id/tool"
+                    style="@style/Label"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tool" />
+
+            </LinearLayout>
+
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/description"
+                    style="@style/Paragraph"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="My event is so fresh!\nSofresh!" />
+
+                <include layout="@layout/empty_text" />
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/speakers_header"
+                style="@style/SectionHeader"
+                android:text="@string/speakers" />
+
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/speakers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="visible" />
+
+
+            <TextView
+                android:id="@+id/related_events_header"
+                style="@style/SectionHeader"
+                android:text="@string/related_events" />
+
+            <LinearLayout
+                android:id="@+id/related_events"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:orientation="vertical">
+
+
+            </LinearLayout>
+
+
+            <include layout="@layout/row_footer" />
+
+
         </LinearLayout>
-
-
-        <include layout="@layout/row_footer" />
-
-
-    </LinearLayout>
-
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

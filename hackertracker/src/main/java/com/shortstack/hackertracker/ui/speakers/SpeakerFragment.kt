@@ -1,16 +1,22 @@
 package com.shortstack.hackertracker.ui.speakers
 
+import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.Speaker
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.views.EventView
 import kotlinx.android.synthetic.main.fragment_speakers.*
+import kotlinx.android.synthetic.main.row_speaker.view.*
 import javax.inject.Inject
 
 /**
@@ -47,10 +53,33 @@ class SpeakerFragment : Fragment() {
 
         val context = context ?: return
 
+        val drawable = ContextCompat.getDrawable(context
+                ?: return, R.drawable.ic_arrow_back_white_24dp)
+        toolbar.navigationIcon = drawable
+
+        toolbar.setNavigationOnClickListener {
+            (activity as? MainActivity)?.popBackStack()
+        }
+
+
         val speaker = arguments?.getParcelable(EXTRA_SPEAKER) as? Speaker
         speaker?.let {
-            name.text = it.name
+            toolbar.title = it.name
             description.text = it.description
+
+            val colours = context.resources.getStringArray(R.array.colors)
+            val color = Color.parseColor(colours[speaker.id % colours.size])
+
+            app_bar.setBackgroundColor(color)
+
+            activity?.window?.apply {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+                    addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
+
+                    statusBarColor = color
+                }
+            }
 
             val eventsForSpeaker = database.getEventsForSpeaker(it.id)
 

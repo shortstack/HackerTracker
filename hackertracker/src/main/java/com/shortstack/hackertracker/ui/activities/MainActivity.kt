@@ -109,7 +109,6 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
             }
         }
 
-
         addFragment(ScheduleFragment.newInstance(), R.id.container)
     }
 
@@ -223,12 +222,12 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
         if (event == null)
             return
 
-        addFragment(EventFragment.newInstance(event), R.id.container_above)
+        replaceFragment(EventFragment.newInstance(event), R.id.container_above)
     }
 
     fun navigate(speaker: Speaker) {
 
-        addFragment(SpeakerFragment.newInstance(speaker), R.id.container_above)
+        replaceFragment(SpeakerFragment.newInstance(speaker), R.id.container_above)
     }
 
     fun popBackStack() {

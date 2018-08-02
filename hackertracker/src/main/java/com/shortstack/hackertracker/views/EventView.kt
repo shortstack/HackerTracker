@@ -18,6 +18,7 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.EventViewModel
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utils.TickTimer
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -99,6 +100,10 @@ class EventView : FrameLayout {
             updateProgressBar()
         } else {
             setProgressBar()
+        }
+
+        setOnClickListener {
+            (context as? MainActivity)?.navigate(content?.event)
         }
 
         star_bar.setOnClickListener {
