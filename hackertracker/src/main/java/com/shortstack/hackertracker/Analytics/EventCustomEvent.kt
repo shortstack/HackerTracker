@@ -6,7 +6,6 @@ import com.shortstack.hackertracker.models.Event
 class EventCustomEvent(action: String, event: Event) : CustomEvent(action) {
 
     init {
-        putCustomAttribute("Id", event.id)
         putCustomAttribute("Title", event.title)
     }
 }
