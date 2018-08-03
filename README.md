@@ -1,4 +1,4 @@
-Offical DEF CON Schedule App - Hacker Tracker
+Official DEF CON Schedule App - Hacker Tracker
 =============
 
 You can download it from the <a href="https://play.google.com/store/apps/details?id=com.shortstack.hackertracker">Google Play Store</a>.<br/><br/>
