@@ -94,7 +94,6 @@ class EventFragment : Fragment() {
             val speakers = displaySpeakers(it)
             displayRelatedEvents(it, speakers)
         }
-
     }
 
     private fun displayDescription(event: DatabaseEvent) {
