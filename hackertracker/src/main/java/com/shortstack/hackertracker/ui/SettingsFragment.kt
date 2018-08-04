@@ -42,12 +42,6 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             "user_analytics" -> AnalyticsController.SETTINGS_ANALYTICS
             "user_allow_push_notifications" -> AnalyticsController.SETTINGS_NOTIFICATIONS
             "user_show_expired_events" -> AnalyticsController.SETTINGS_EXPIRED_EVENTS
-
-            "sync_interval" -> {
-                App.application.scheduleSyncTask()
-                return
-            }
-
         // We're not tracking these events, ignore.
             else -> return
         }

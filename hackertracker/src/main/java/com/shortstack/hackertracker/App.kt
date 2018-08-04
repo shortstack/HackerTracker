@@ -53,9 +53,6 @@ class App : Application() {
     fun scheduleSyncTask() {
         WorkManager.getInstance()?.cancelAllWorkByTag(SyncWorker.TAG_SYNC)
 
-        if (storage.syncingDisabled)
-            return
-
         val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
                 .build()

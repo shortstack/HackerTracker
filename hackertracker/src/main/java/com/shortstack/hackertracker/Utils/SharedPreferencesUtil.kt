@@ -14,7 +14,6 @@ class SharedPreferencesUtil @Inject constructor(context: Context) {
         private const val USER_ALLOW_PUSH = "user_allow_push_notifications"
         private const val USER_EXPIRED_EVENTS = "user_show_expired_events"
         private const val USER_ANALYTICS = "user_analytics"
-        private const val SYNC_INTERVAL = "sync_interval"
     }
 
     private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
@@ -27,11 +26,4 @@ class SharedPreferencesUtil @Inject constructor(context: Context) {
 
     val allowAnalytics: Boolean
         get() = preferences.getBoolean(USER_ANALYTICS, true)
-
-    val syncInterval: Int
-        get() = preferences.getString(SYNC_INTERVAL, "6").toInt()
-
-    val syncingDisabled: Boolean
-        get() = syncInterval == 0
-
 }

@@ -122,9 +122,7 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
 
         scheduled?.observe(this, Observer {
             if (it == null || !it.any { it.state == State.ENQUEUED || it.state == State.RUNNING }) {
-                if (!storage.syncingDisabled) {
-                    App.application.scheduleSyncTask()
-                }
+                App.application.scheduleSyncTask()
             }
         })
     }
