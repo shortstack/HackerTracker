@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -14,13 +14,11 @@
         <com.shortstack.hackertracker.views.EventView
             android:id="@+id/event"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cardElevation="0dp"
-            app:roundCorners="false">
+            android:layout_height="wrap_content">
 
         </com.shortstack.hackertracker.views.EventView>
 
-        <android.support.design.widget.TabLayout
+        <com.google.android.material.tabs.TabLayout
             android:id="@+id/tab_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -32,17 +30,17 @@
             android:visibility="gone"
             app:tabIndicatorColor="@color/white" />
 
-        <android.support.v4.view.ViewPager
+        <androidx.viewpager.widget.ViewPager
             android:id="@+id/pager"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginEnd="0dp"
             android:layout_marginStart="0dp"
             android:layout_marginTop="0dp"
+            android:layout_marginEnd="0dp"
+            android:layout_marginBottom="0dp"
             android:visibility="gone" />
 
-        <android.support.v4.widget.NestedScrollView
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:clipChildren="false"
@@ -68,21 +66,14 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:src="@drawable/ic_link_white_24dp" />
+                        app:srcCompat="@drawable/ic_link_white_24dp" />
 
                     <ImageView
                         android:id="@+id/share"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:padding="10dp"
-                        android:src="@drawable/ic_share_white_24dp" />
-
-                    <ImageView
-                        android:id="@+id/star"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:padding="10dp"
-                        android:src="@drawable/ic_star_border_white_24dp" />
+                        app:srcCompat="@drawable/ic_share_white_24dp" />
 
                 </LinearLayout>
 
@@ -120,10 +111,10 @@
                 <FrameLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:paddingBottom="10dp"
                     android:paddingLeft="10dp"
+                    android:paddingTop="10dp"
                     android:paddingRight="10dp"
-                    android:paddingTop="10dp">
+                    android:paddingBottom="10dp">
 
                     <TextView
                         android:id="@+id/description"
@@ -135,12 +126,33 @@
                     <include layout="@layout/empty_text" />
                 </FrameLayout>
 
-                <android.support.v7.widget.LinearLayoutCompat
+                <TextView
+                    android:id="@+id/speakers_header"
+                    style="@style/SectionHeader"
+                    android:text="@string/speakers" />
+
+
+                <androidx.appcompat.widget.LinearLayoutCompat
                     android:id="@+id/speakers"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
                     android:visibility="visible" />
+
+
+                <TextView
+                    style="@style/SectionHeader"
+                    android:text="@string/related_events" />
+
+                <LinearLayout
+                    android:id="@+id/related_events"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:orientation="vertical">
+
+
+                </LinearLayout>
 
 
                 <include layout="@layout/row_footer" />
@@ -149,10 +161,10 @@
             </LinearLayout>
 
 
-        </android.support.v4.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
 
     </LinearLayout>
 
 
-</android.support.design.widget.CoordinatorLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

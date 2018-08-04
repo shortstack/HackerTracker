@@ -1,11 +1,14 @@
 package com.shortstack.hackertracker
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.crashlytics.android.Crashlytics
+import com.github.stkent.amplify.feedback.DefaultEmailFeedbackCollector
+import com.github.stkent.amplify.feedback.GooglePlayStoreFeedbackCollector
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.di.AppComponent
@@ -24,12 +27,10 @@ class App : Application() {
     // Storage
     private val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil(applicationContext) }
 
-
-    // TODO: Remove, this is just for measuring launch time.
-    var timeToLaunch: Long = System.currentTimeMillis()
-
     override fun onCreate() {
         super.onCreate()
+
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
 
         application = this
 
@@ -47,16 +48,10 @@ class App : Application() {
                 .timerModule(TimerModule())
                 .contextModule(ContextModule(this))
                 .build()
-
-        // TODO: Remove, this is only for debugging.
-        Logger.d("Time to complete onCreate " + (System.currentTimeMillis() - timeToLaunch))
     }
 
     fun scheduleSyncTask() {
-        WorkManager.getInstance().cancelAllWorkByTag(SyncWorker.TAG_SYNC)
-
-        if (storage.syncingDisabled)
-            return
+        WorkManager.getInstance()?.cancelAllWorkByTag(SyncWorker.TAG_SYNC)
 
         val constraints = Constraints.Builder()
                 .setRequiredNetworkType(NetworkType.CONNECTED)
@@ -68,12 +63,13 @@ class App : Application() {
                         .setConstraints(constraints)
                         .build()
 
-        WorkManager.getInstance().enqueue(request)
+        WorkManager.getInstance()?.enqueue(request)
     }
 
     private fun initFeedback() {
         Amplify.initSharedInstance(this)
-                .setFeedbackEmailAddress(Constants.FEEDBACK_EMAIL)
+                .setPositiveFeedbackCollectors(GooglePlayStoreFeedbackCollector())
+                .setCriticalFeedbackCollectors(DefaultEmailFeedbackCollector(Constants.FEEDBACK_EMAIL))
                 .applyAllDefaultRules()
                 .setLastUpdateTimeCooldownDays(1)
     }

@@ -1,14 +1,14 @@
 package com.shortstack.hackertracker.ui.schedule
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
-import android.support.v4.app.Fragment
-import android.support.v4.widget.SwipeRefreshLayout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.State
 import androidx.work.WorkManager
@@ -17,7 +17,6 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.network.task.SyncWorker
-import com.shortstack.hackertracker.ui.schedule.list.ListViewsInterface
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.utils.TickTimer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -27,7 +26,7 @@ import kotlinx.android.synthetic.main.view_empty.view.*
 import javax.inject.Inject
 
 
-class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListViewsInterface {
+class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
 
     private val adapter: ScheduleAdapter = ScheduleAdapter()
 
@@ -49,35 +48,36 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         App.application.component.inject(this)
 
         swipe_refresh.setOnRefreshListener(this)
-        swipe_refresh.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark)
+        swipe_refresh.setColorSchemeResources(
+                R.color.blue_dark, R.color.purple_light, R.color.purple_dark, R.color.green,
+                R.color.red_dark, R.color.red_light, R.color.orange, R.color.blue_light)
+
         list.adapter = adapter
 
         val scheduleViewModel = ViewModelProviders.of(this).get(ScheduleViewModel::class.java)
         scheduleViewModel.schedule.observe(this, Observer {
-            val resource = it
-
             hideViews()
 
-            when (resource?.status) {
-                Status.SUCCESS -> {
-                    if (resource.data!!.isEmpty()) {
-                        adapter.clearAndNotify()
-                        showEmptyView()
-                    } else {
-                        adapter.clearAndNotify()
-                        adapter.addAllAndNotify(resource.data)
-                        hideViews()
+            if( it != null ) {
+                adapter.state = it.status
+
+                when (it.status) {
+                    Status.SUCCESS -> {
+                        adapter.setSchedule(it.data)
+                        if (adapter.isEmpty()) {
+                            showEmptyView()
+                        }
                     }
-                }
-                Status.ERROR -> {
-                    showErrorView(resource.message)
-                }
-                Status.LOADING -> {
-                    adapter.clearAndNotify()
-                    showProgress()
-                }
-                Status.NOT_INITIALIZED -> {
-                    showEmptyView()
+                    Status.ERROR -> {
+                        showErrorView(it.message)
+                    }
+                    Status.LOADING -> {
+                        adapter.clearAndNotify()
+                        showProgress()
+                    }
+                    Status.NOT_INITIALIZED -> {
+                        showEmptyView()
+                    }
                 }
             }
         })
@@ -90,7 +90,7 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         disposable = timer.observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
                     adapter.notifyTimeChanged()
-                    if (adapter.collection.isEmpty()) {
+                    if (adapter.isEmpty()) {
                         showEmptyView()
                     } else {
                         hideViews()
@@ -108,16 +108,16 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
         loading_progress.visibility = View.VISIBLE
     }
 
-    override fun hideViews() {
+    private fun hideViews() {
         empty.visibility = View.GONE
         loading_progress.visibility = View.GONE
     }
 
-    override fun showEmptyView() {
+    private fun showEmptyView() {
         empty.visibility = View.VISIBLE
     }
 
-    override fun showErrorView(message: String?) {
+    private fun showErrorView(message: String?) {
         empty.title.text = message
         empty.visibility = View.VISIBLE
     }
@@ -127,14 +127,10 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener, ListV
                 .build()
 
         val instance = WorkManager.getInstance()
-        instance.enqueue(refresh)
-        instance.getStatusById(refresh.id).observe(this, Observer {
+        instance?.enqueue(refresh)
+        instance?.getStatusById(refresh.id)?.observe(this, Observer {
             when (it?.state) {
                 State.SUCCEEDED -> {
-                    val rowsUpdated = it.outputData.getInt(SyncWorker.KEY_ROWS_UPDATED, 0)
-                    if (rowsUpdated == 0) {
-                        Toast.makeText(context, context?.getString(R.string.msg_up_to_date), Toast.LENGTH_SHORT).show()
-                    }
                     swipe_refresh.isRefreshing = false
                 }
                 State.FAILED -> {

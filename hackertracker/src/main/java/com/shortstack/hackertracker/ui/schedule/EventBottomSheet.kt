@@ -5,9 +5,11 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutCompat
+import android.view.LayoutInflater
+import androidx.appcompat.widget.LinearLayoutCompat
 import android.view.View
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
@@ -17,11 +19,13 @@ import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.EventViewModel
 import com.shortstack.hackertracker.utils.MaterialAlert
 import com.shortstack.hackertracker.views.EventView
+import com.shortstack.hackertracker.views.SpeakerView
 import kotlinx.android.synthetic.main.bottom_sheet_schedule_event.view.*
 import kotlinx.android.synthetic.main.empty_text.view.*
+import kotlinx.android.synthetic.main.row_event.view.*
 import javax.inject.Inject
 
-class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment() {
+class EventBottomSheet : com.google.android.material.bottomsheet.BottomSheetDialogFragment() {
 
     @Inject
     lateinit var analytics: AnalyticsController
@@ -43,33 +47,52 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
 
         view.event.setContent(obj.event)
 
-        displaySpeakers(obj, view.speakers)
+        displaySpeakers(obj, view.speakers_header, view.speakers)
+        displayRelatedEvents(obj, view.related_events)
 
-        displayDescription(obj, view.description, view.empty, view.link, view.star)
+        displayDescription(obj, view.description, view.empty, view.link)
 
-        view.star.setOnClickListener { onStarClick(view.event, view.star) }
         view.share.setOnClickListener { onShareClick(view.event) }
         view.link.setOnClickListener { onLinkClick() }
 
-        view.tool.visibility = obj.toolsVisibility
-        view.exploit.visibility = obj.exploitVisibility
-        view.demo.visibility = obj.demoVisibility
 
     }
 
+    private fun displayRelatedEvents(obj: EventViewModel, related_events: LinearLayout) {
+        val speakers = database.getSpeakers(obj.event.event.id)
 
-    private fun displaySpeakers(obj: EventViewModel, speakers: LinearLayoutCompat) {
-//        val context = context ?: return
-//
-//        obj.speakers?.iterator()?.forEach {
-//            speakers.addView(SpeakerView(context, database.getSpeaker(it)))
-//        }
+        val events = database.getRelatedEvents(obj.id, obj.event.type, speakers)
+
+        val context = context ?: return
+
+        events.forEach {
+            related_events.addView(EventView(context, it, EventView.DISPLAY_MODE_MIN))
+        }
     }
+
+    private fun displaySpeakers(obj: EventViewModel, header: View, layout: LinearLayoutCompat) {
+        val speakers = database.getSpeakers(obj.event.event.id)
+
+
+        val context = context ?: return
+
+        if (speakers.isEmpty()) {
+            header.visibility = View.GONE
+            layout.visibility = View.GONE
+        } else {
+            header.visibility = View.VISIBLE
+            layout.visibility = View.VISIBLE
+            speakers.forEach {
+                layout.addView(SpeakerView(context, it))
+            }
+        }
+    }
+
 
     private val content: DatabaseEvent
         get() = arguments!!.getParcelable(ARG_EVENT)
 
-    private fun displayDescription(obj: EventViewModel, description: TextView, empty: View, link: View, star: ImageView) {
+    private fun displayDescription(obj: EventViewModel, description: TextView, empty: View, link: View) {
         val hasDescription = obj.hasDescription()
 
         if (hasDescription)
@@ -77,22 +100,6 @@ class EventBottomSheet : android.support.design.widget.BottomSheetDialogFragment
         empty.visibility = if (hasDescription) View.GONE else View.VISIBLE
 
         link.visibility = if (obj.hasUrl()) View.VISIBLE else View.GONE
-
-        updateStarIcon(star)
-    }
-
-    private fun updateStarIcon(star: ImageView) {
-        star.setImageDrawable(resources.getDrawable(if (content.event.isBookmarked) R.drawable.ic_star_accent_24dp else R.drawable.ic_star_border_white_24dp))
-    }
-
-    fun onStarClick(item: EventView, star: ImageView) {
-        if (content.event.isBookmarked) {
-            analytics.onEventAction(AnalyticsController.EVENT_UNBOOKMARK, content.event)
-        } else {
-            analytics.onEventAction(AnalyticsController.EVENT_BOOKMARK, content.event)
-        }
-        item.onBookmarkClick()
-        updateStarIcon(star)
     }
 
     private fun onShareClick(item: EventView) {

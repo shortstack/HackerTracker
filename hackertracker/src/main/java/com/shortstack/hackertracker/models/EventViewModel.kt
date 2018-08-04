@@ -1,6 +1,6 @@
 package com.shortstack.hackertracker.models
 
-import android.arch.lifecycle.ViewModel
+import androidx.lifecycle.ViewModel
 import android.content.Context
 import android.text.TextUtils
 import android.view.View
@@ -9,7 +9,6 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.utils.TimeUtil
-import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
 
@@ -46,7 +45,7 @@ class EventViewModel(val event: DatabaseEvent) : ViewModel() {
             return Math.min(1.0f, 1 - l)
         }
 
-    var hasAnimatedProgress : Boolean = false
+    var hasAnimatedProgress: Boolean = true
 
 
     fun getFullTimeStamp(context: Context): String {
@@ -75,31 +74,18 @@ class EventViewModel(val event: DatabaseEvent) : ViewModel() {
         result += (event.event.title + "\n")
 
         result += (getFullTimeStamp(context) + "\n")
-        if (event.event.location != null)
-            result += (event.event.location + "\n")
-        //result = result.concat(getType());
+//            result += (event.event.location + "\n")
+        //result = result.concat(getName());
 
 
         return result
     }
 
     val location: String
-        get() = event.event.location ?: "Unknown"
+        get() = event.location.firstOrNull()?.name ?: "Unknown"
 
     val id: Int
-        get() = event.event.index
-
-    val toolsVisibility: Int
-        get() = if (event.event.includes?.contains("tool") == true) View.VISIBLE else View.GONE
-
-    val exploitVisibility: Int
-        get() = if (event.event.includes?.contains("exploit") == true) View.VISIBLE else View.GONE
-
-    val demoVisibility: Int
-        get() = if (event.event.includes?.contains("demo") == true) View.VISIBLE else View.GONE
-
-    val bookmarkVisibility: Int
-        get() = if (event.event.isBookmarked) View.VISIBLE else View.INVISIBLE
+        get() = event.event.id
 
     val speakers: Array<Speaker>?
         get() = null

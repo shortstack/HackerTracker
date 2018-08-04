@@ -1,12 +1,12 @@
 package com.shortstack.hackertracker.ui.schedule.list
 
-import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
-import android.support.v7.widget.StaggeredGridLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 
 
-abstract class ScheduleInfiniteScrollListener(private val layoutManager: LinearLayoutManager) : RecyclerView.OnScrollListener() {
+abstract class ScheduleInfiniteScrollListener(private val layoutManager: androidx.recyclerview.widget.LinearLayoutManager) : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {
 
     val visibleThreshold = 5
     var currentPage: Int
@@ -32,17 +32,17 @@ abstract class ScheduleInfiniteScrollListener(private val layoutManager: LinearL
         return maxSize
     }
 
-    override fun onScrolled(view: RecyclerView, dx: Int, dy: Int) {
+    override fun onScrolled(view: androidx.recyclerview.widget.RecyclerView, dx: Int, dy: Int) {
         var lastVisibleItemPosition = 0
         val totalItemCount = layoutManager.itemCount
 
-        if (layoutManager is StaggeredGridLayoutManager) {
-            val lastVisibleItemPositions = (layoutManager as StaggeredGridLayoutManager).findLastVisibleItemPositions(null)
+        if (layoutManager is androidx.recyclerview.widget.StaggeredGridLayoutManager) {
+            val lastVisibleItemPositions = (layoutManager as androidx.recyclerview.widget.StaggeredGridLayoutManager).findLastVisibleItemPositions(null)
             // get maximum element within the list
             lastVisibleItemPosition = getLastVisibleItem(lastVisibleItemPositions)
-        } else if (layoutManager is GridLayoutManager) {
+        } else if (layoutManager is androidx.recyclerview.widget.GridLayoutManager) {
             lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
-        } else if (layoutManager is LinearLayoutManager) {
+        } else if (layoutManager is androidx.recyclerview.widget.LinearLayoutManager) {
             lastVisibleItemPosition = layoutManager.findLastVisibleItemPosition()
         }
 
@@ -75,6 +75,6 @@ abstract class ScheduleInfiniteScrollListener(private val layoutManager: LinearL
 
     }
 
-    abstract fun onLoadMore(page: Int, totalItemsCount: Int, view: RecyclerView)
+    abstract fun onLoadMore(page: Int, totalItemsCount: Int, view: androidx.recyclerview.widget.RecyclerView)
 
 }

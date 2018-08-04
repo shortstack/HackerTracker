@@ -1,6 +1,6 @@
 package com.shortstack.hackertracker.di
 
-import com.shortstack.hackertracker.database.MyRoomDatabase
+import com.shortstack.hackertracker.database.HTDatabase
 import com.shortstack.hackertracker.di.modules.*
 import com.shortstack.hackertracker.models.EventViewModel
 import com.shortstack.hackertracker.network.task.SyncWorker
@@ -9,6 +9,7 @@ import com.shortstack.hackertracker.ui.activities.MainActivityViewModel
 import com.shortstack.hackertracker.ui.SearchFragment
 import com.shortstack.hackertracker.ui.SettingsFragment
 import com.shortstack.hackertracker.ui.activities.MainActivity
+import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.home.HomeViewModel
 import com.shortstack.hackertracker.ui.information.InformationViewModel
@@ -18,6 +19,7 @@ import com.shortstack.hackertracker.ui.schedule.EventBottomSheet
 import com.shortstack.hackertracker.ui.schedule.ScheduleViewModel
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.ui.search.SearchViewModel
+import com.shortstack.hackertracker.ui.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.vendors.VendorsViewModel
 import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.views.FilterView
@@ -36,7 +38,7 @@ interface AppComponent {
     // Components
 
     fun inject(notificationHelper: NotificationHelper)
-    fun inject(myRoomDatabase: MyRoomDatabase)
+    fun inject(HTDatabase: HTDatabase)
 
     // Activities + Fragments
 
@@ -45,6 +47,8 @@ interface AppComponent {
     fun inject(scheduleFragment: ScheduleFragment)
     fun inject(settingsFragment: SettingsFragment)
     fun inject(searchFragment: SearchFragment)
+    fun inject(speakerFragment: SpeakerFragment)
+    fun inject(eventFragment: EventFragment)
 
     // Views
 
@@ -69,6 +73,7 @@ interface AppComponent {
 
     fun inject(syncWorker: SyncWorker)
     fun inject(reminderWorker: ReminderWorker)
+
 
 
 }

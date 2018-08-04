@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#5050a1</color>
-    <color name="colorPrimaryDark">#404081</color>
-    <color name="colorAccent">#6464b7</color>
-    <color name="colorLightAccent">#A0A0EF</color>
+    <color name="colorPrimary">#22222a</color>
+    <color name="colorPrimaryDark">#191a20</color>
+    <color name="colorAccent">#191a20</color>
 
-    <color name="white_alpha">#B3ffffff</color>
     <color name="light_gray">#dddddd</color>
     <color name="white">#ffffff</color>
     <color name="black">#000000</color>
@@ -16,8 +14,14 @@
 
     <color name="item_background">#1e232b</color>
 
+    <color name="speaker_background">@color/red_light</color>
 
     <!-- Category colours -->
+
+    <color name="black_20">#33000000</color>
+    <color name="white_70">#B3ffffff</color>
+    <color name="white_90">#F2ffffff</color>
+
 
     <color name="dark_background">#22232b</color>
     <color name="text_primary_dark">#282727</color>
@@ -35,7 +39,6 @@
     <color name="red_light">#e4376a</color>
     <color name="orange">#fc853f</color>
     <color name="blue_light">#50d7e8</color>
-    
 
 
     <!--

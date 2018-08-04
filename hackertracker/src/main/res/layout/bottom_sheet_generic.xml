@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -21,7 +22,7 @@
         android:textAllCaps="true" />
 
 
-    <android.support.v4.widget.NestedScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:clipChildren="false"
@@ -39,15 +40,15 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:padding="10dp"
-                android:src="@drawable/ic_link_white_24dp" />
+                app:srcCompat="@drawable/ic_link_white_24dp" />
 
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:paddingBottom="30dp"
                 android:paddingLeft="10dp"
+                android:paddingTop="20dp"
                 android:paddingRight="10dp"
-                android:paddingTop="20dp">
+                android:paddingBottom="30dp">
 
 
                 <TextView
@@ -71,6 +72,6 @@
         </LinearLayout>
 
 
-    </android.support.v4.widget.NestedScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 </LinearLayout>

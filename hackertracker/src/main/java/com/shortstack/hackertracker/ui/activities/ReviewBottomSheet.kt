@@ -2,7 +2,7 @@ package com.shortstack.hackertracker.ui.activities
 
 import android.app.Dialog
 import android.os.Bundle
-import android.support.design.widget.BottomSheetDialogFragment
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.View
 import com.github.stkent.amplify.prompt.interfaces.IPromptPresenter
 import com.github.stkent.amplify.tracking.interfaces.IEvent
@@ -11,7 +11,7 @@ import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.bottom_sheet_review.view.*
 
-class ReviewBottomSheet : BottomSheetDialogFragment() {
+class ReviewBottomSheet : com.google.android.material.bottomsheet.BottomSheetDialogFragment() {
 
     override fun setupDialog(dialog: Dialog, style: Int) {
         super.setupDialog(dialog, style)

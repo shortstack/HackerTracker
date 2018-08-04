@@ -1,6 +1,6 @@
 package com.shortstack.hackertracker.ui.vendors
 
-import android.support.v7.app.AppCompatActivity
+import androidx.appcompat.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,7 +21,7 @@ class VendorRenderer : Renderer<Vendor>(), View.OnClickListener {
     }
 
     override fun render(payloads: List<Any>) {
-        rootView.title!!.text = content.title
+        rootView.title!!.text = content.name
         rootView.description!!.text = content.description
     }
 

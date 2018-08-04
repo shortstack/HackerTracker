@@ -1,14 +1,10 @@
 package com.shortstack.hackertracker.network.task
 
 import androidx.work.Worker
-import com.firebase.jobdispatcher.JobParameters
-import com.firebase.jobdispatcher.JobService
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class ReminderWorker : Worker() {
@@ -26,9 +22,9 @@ class ReminderWorker : Worker() {
         App.application.component.inject(this)
     }
 
-    override fun doWork(): WorkerResult {
+    override fun doWork(): Result {
         if (!storage.allowPushNotification)
-            return WorkerResult.SUCCESS
+            return Result.SUCCESS
 
         val id = inputData.getInt(NOTIFICATION_ID, -1)
         val event = database.findItem(id = id)
@@ -36,7 +32,7 @@ class ReminderWorker : Worker() {
         if (event != null)
             notifications.notifyStartingSoon(event)
 
-        return WorkerResult.SUCCESS
+        return Result.SUCCESS
     }
 
     companion object {

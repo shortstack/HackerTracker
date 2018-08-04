@@ -1,7 +1,7 @@
 package com.shortstack.hackertracker.ui.information
 
-import android.arch.lifecycle.Observer
-import android.arch.lifecycle.ViewModelProviders
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -28,10 +28,11 @@ class InformationFragment : ListFragment<FAQ>() {
     }
 
     override fun initAdapter(): RendererAdapter<Any> {
-        return RendererAdapter(RendererBuilder<Any>()
+        return RendererBuilder.create<Any>()
                 .bind(FAQ::class.java, FAQRenderer())
                 .bind(String::class.java, GenericHeaderRenderer())
-                .bind(Information::class.java, InformationRenderer()))
+                .bind(Information::class.java, InformationRenderer())
+                .build()
     }
 
     companion object {

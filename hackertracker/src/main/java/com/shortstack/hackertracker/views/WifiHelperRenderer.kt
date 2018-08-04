@@ -6,19 +6,19 @@ import android.net.wifi.WifiEnterpriseConfig
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.security.KeyChain
-import android.support.v7.app.AppCompatActivity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatActivity
 import com.pedrogomez.renderers.Renderer
+import com.pedrogomez.renderers.RendererContent
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
-import kotlinx.android.synthetic.main.wifi_item.view.*
 
 /**
  * Created by Chris on 6/29/2018.
  */
-class WifiHelperRenderer : Renderer<Void>() {
+class WifiHelperRenderer : Renderer<RendererContent<Void>>() {
 
     companion object {
         private const val INSTALL_KEYSTORE_CODE = 1001

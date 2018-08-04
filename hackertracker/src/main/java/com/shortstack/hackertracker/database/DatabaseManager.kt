@@ -1,19 +1,23 @@
 package com.shortstack.hackertracker.database
 
-import android.arch.lifecycle.LiveData
-import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.Transformations
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import android.content.Context
+import androidx.lifecycle.MediatorLiveData
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.FullResponse
+import com.shortstack.hackertracker.now
 import io.reactivex.Single
+import java.util.*
+import kotlin.collections.ArrayList
 
 /**
  * Created by Chris on 3/31/2018.
  */
 class DatabaseManager(context: Context) {
 
-    private val db: MyRoomDatabase
+    private val db: HTDatabase
 
     val conferenceLiveData = MutableLiveData<DatabaseConference>()
 
@@ -23,12 +27,25 @@ class DatabaseManager(context: Context) {
                 if (id == null) {
                     return@switchMap MutableLiveData<List<Type>>()
                 }
-                return@switchMap getTypes(id.conference)
+
+                return@switchMap Transformations.switchMap(getTypes(id.conference)) {
+                    val liveData = MediatorLiveData<List<Type>>()
+
+
+                    val conference = conferenceLiveData.value
+                    if (conference?.types != it) {
+                        conference?.types = it
+                        conferenceLiveData.postValue(conference)
+                    }
+                    liveData.postValue(it)
+
+                    return@switchMap liveData
+                }
             }
         }
 
     init {
-        db = MyRoomDatabase.buildDatabase(context, conferenceLiveData)
+        db = HTDatabase.buildDatabase(context, conferenceLiveData)
         val currentCon = getCurrentCon()
         conferenceLiveData.postValue(currentCon)
     }
@@ -62,45 +79,54 @@ class DatabaseManager(context: Context) {
     }
 
     fun getRecent(conference: Conference): LiveData<List<DatabaseEvent>> {
-        return db.eventDao().getRecentlyUpdated(conference.directory)
+        return db.eventDao().getRecentlyUpdated(conference.code)
     }
 
     fun getSchedule(conference: DatabaseConference): LiveData<List<DatabaseEvent>> {
         return getSchedule(conference, conference.types)
     }
 
-    fun getSchedule(conference: DatabaseConference, list: List<Type>): LiveData<List<DatabaseEvent>> {
-        val selected = list.filter { it.isSelected }.map { it.type }
-        if (selected.isEmpty()) return db.eventDao().getSchedule(conference.conference.directory)
-        return db.eventDao().getSchedule(conference.conference.directory, selected)
+    private fun getSchedule(conference: DatabaseConference, list: List<Type>): LiveData<List<DatabaseEvent>> {
+        val date = Date().now()
+
+        var selected = list.filter { !it.isBookmark && it.isSelected }.map { it.id }
+        if (selected.isEmpty())
+            selected = list.map { it.id }
+
+        val isBookmarked = list.find { it.isBookmark }?.isSelected ?: false
+        if (isBookmarked) {
+            return db.eventDao().getSchedule(conference.conference.code, date, selected, isBookmarked)
+        }
+
+        return db.eventDao().getSchedule(conference.conference.code, date, selected)
     }
 
     fun getFAQ(conference: Conference): LiveData<List<FAQ>> {
-        return db.faqDao().getAll(conference.directory)
+        return db.faqDao().getAll(conference.code)
     }
 
     fun getVendors(conference: Conference): LiveData<List<Vendor>> {
-        return db.vendorDao().getAll(conference.directory)
+        return db.vendorDao().getAll(conference.code)
     }
 
     fun getTypes(conference: Conference): LiveData<List<Type>> {
-        return db.typeDao().getTypes(conference.directory)
+        return db.typeDao().getTypes(conference.code)
     }
 
-    fun findItem(id: Int): Event? {
+    fun findItem(id: Int): DatabaseEvent? {
         return db.eventDao().getEventById(id)
     }
 
     fun findItem(id: String): LiveData<List<DatabaseEvent>> {
-        return db.eventDao().findByText(id)
+        return db.eventDao().getEventByText(id)
     }
 
     fun getTypeForEvent(event: String): Single<Type> {
         return db.typeDao().getTypeForEvent(event)
     }
 
-    fun updateEvent(event: Event) {
-        return db.eventDao().update(event)
+    fun updateBookmark(event: Event) {
+        return db.eventDao().updateBookmark(event.id, event.isBookmarked)
     }
 
     fun updateConference(conference: Conference) {
@@ -108,43 +134,47 @@ class DatabaseManager(context: Context) {
     }
 
 
-    fun updateConference(conference: Conference, body: FullResponse): Int {
-        body.syncResponse.events.forEach {
-            it.con = conference.directory
-        }
-        body.types.types.forEach {
-            it.con = conference.directory
-        }
-        body.speakers.speakers.forEach {
-            it.con = conference.directory
-        }
-        body.vendors.vendors.forEach {
-            it.con = conference.directory
-        }
-        body.faqs.faqs.forEach {
-            it.con = conference.directory
-        }
-
-        db.conferenceDao().upsert(conference)
-        db.eventDao().insertAll(body.syncResponse.events)
-        db.typeDao().insertAll(body.types.types)
-        db.speakerDao().insertAll(body.speakers.speakers)
-        db.vendorDao().insertAll(body.vendors.vendors)
-        db.faqDao().insertAll(body.faqs.faqs)
-
-        return body.syncResponse.events.size
+    fun updateConference(conference: Conference, body: FullResponse) {
+        db.updateDatabase(conference, body)
     }
 
-//    fun updateConference(conference: Conference, response: FullResponse): Single<Int> {
-//        return updateConference(conference, response.syncResponse)
-//    }
-
-    fun updateType(type: Type): Int {
-        return db.typeDao().update(type)
+    fun updateTypeIsSelected(type: Type): Int {
+        return db.typeDao().updateSelected(type.id, type.isSelected)
     }
 
     fun clear() {
         return db.conferenceDao().deleteAll()
     }
 
+    fun getSpeakers(event: Int): List<Speaker> {
+        return db.eventSpeakerDao().getSpeakersForEvent(event)
+    }
+
+    fun getEventsForSpeaker(speaker: Int) : List<DatabaseEvent> {
+        return db.eventSpeakerDao().getEventsForSpeaker(speaker)
+    }
+
+
+    fun getUpdatedEventsCount(updatedAt: Date?): Int {
+        return db.eventDao().getUpdatedCount(updatedAt)
+    }
+
+    fun getUpdatedBookmarks(conference: Conference, updatedAt: Date?): List<DatabaseEvent> {
+        if (updatedAt != null)
+            return db.eventDao().getUpdatedBookmarks(conference.code, updatedAt)
+        return db.eventDao().getUpdatedBookmarks(conference.code)
+    }
+
+    fun getRelatedEvents(id: Int, types: List<Type>, speakers: List<Speaker>): List<DatabaseEvent> {
+        val result = ArrayList<DatabaseEvent>()
+
+        val speakerEvents = db.eventSpeakerDao().getEventsForSpeakers(speakers.map { it.id })
+        result.addAll(speakerEvents)
+
+        // TODO: Improve this, maybe use Date + Type. Same time-block?
+        val typeEvents = db.eventDao().getEventByType(types.map { it.id })
+        result.addAll(typeEvents.sortedBy { it.location.first().name })
+
+        return result.filter { it.event.id != id }.distinctBy { it.event.id }.take(3)
+    }
 }

@@ -2,7 +2,7 @@ package com.shortstack.hackertracker.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import android.support.v7.preference.PreferenceFragmentCompat
+import androidx.preference.PreferenceFragmentCompat
 import android.view.View
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
@@ -23,9 +23,11 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         super.onViewCreated(view, savedInstanceState)
         App.application.component.inject(this)
 
-        findPreference("dev_clear").setOnPreferenceClickListener {
-            database.clear()
-            return@setOnPreferenceClickListener true
+        if (BuildConfig.DEBUG) {
+            findPreference("dev_clear").setOnPreferenceClickListener {
+                database.clear()
+                return@setOnPreferenceClickListener true
+            }
         }
     }
 
@@ -40,12 +42,6 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             "user_analytics" -> AnalyticsController.SETTINGS_ANALYTICS
             "user_allow_push_notifications" -> AnalyticsController.SETTINGS_NOTIFICATIONS
             "user_show_expired_events" -> AnalyticsController.SETTINGS_EXPIRED_EVENTS
-
-            "sync_interval" -> {
-                App.application.scheduleSyncTask()
-                return
-            }
-
         // We're not tracking these events, ignore.
             else -> return
         }

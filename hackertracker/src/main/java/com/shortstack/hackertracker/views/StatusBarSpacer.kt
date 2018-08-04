@@ -1,13 +1,13 @@
 package com.shortstack.hackertracker.views
 
 import android.content.Context
-import android.support.v4.widget.Space
+import androidx.legacy.widget.Space
 import android.util.AttributeSet
 
 /**
  * Created by Chris on 6/3/2018.
  */
-class StatusBarSpacer(context: Context, attrs: AttributeSet?) : Space(context, attrs) {
+class StatusBarSpacer(context: Context, attrs: AttributeSet?) : androidx.legacy.widget.Space(context, attrs) {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         setMeasuredDimension(widthMeasureSpec, measureHeight(heightMeasureSpec))

@@ -1,6 +1,6 @@
 package com.shortstack.hackertracker.database
 
-import android.arch.persistence.room.*
+import androidx.room.*
 import com.shortstack.hackertracker.models.Speaker
 import io.reactivex.Flowable
 
@@ -17,7 +17,7 @@ interface SpeakerDao {
     fun getAll(): Flowable<List<Speaker>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(users: List<Speaker>)
+    fun insertAll(users: List<Speaker>) : List<Long>
 
     @Delete
     fun delete(user: Speaker)

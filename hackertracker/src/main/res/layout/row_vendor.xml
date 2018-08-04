@@ -15,9 +15,9 @@
         android:layout_marginLeft="16dp"
         android:layout_marginTop="8dp"
         android:alpha=".30"
-        android:src="@drawable/ic_people_white_24dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_people_white_24dp" />
 
 
     <TextView

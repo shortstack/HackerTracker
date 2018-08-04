@@ -1,7 +1,7 @@
 package com.shortstack.hackertracker.models
 
-import android.arch.persistence.room.Embedded
-import android.arch.persistence.room.Relation
+import androidx.room.Embedded
+import androidx.room.Relation
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
@@ -13,7 +13,13 @@ data class DatabaseEvent(
         @Embedded
         val event: Event
 ) : Parcelable {
-    @Relation(parentColumn = "type", entityColumn = "type")
+    @Relation(parentColumn = "type", entityColumn = "id")
     var type: List<Type> = emptyList()
+
+    @Relation(parentColumn = "location", entityColumn = "id")
+    var location: List<Location> = emptyList()
+
+    val id: Int
+        get() = event.id
 }
 
