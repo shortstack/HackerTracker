@@ -9,11 +9,13 @@ import android.security.KeyChain
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.pedrogomez.renderers.Renderer
 import com.pedrogomez.renderers.RendererContent
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import kotlinx.android.synthetic.main.wifi_item.view.*
 
 /**
  * Created by Chris on 6/29/2018.
@@ -57,6 +59,8 @@ class WifiHelperRenderer : Renderer<RendererContent<Void>>() {
 
             val network = wifi.addNetwork(config)
             wifi.enableNetwork(network, true)
+        } else {
+            Toast.makeText(context, "Android version too low to to connect", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -74,13 +78,10 @@ class WifiHelperRenderer : Renderer<RendererContent<Void>>() {
                 it.putExtra(KeyChain.EXTRA_NAME, "Digicert DefCon CA")
             }
 
-            // TODO: Start the intent.
             (context as? AppCompatActivity)?.startActivityForResult(intent, INSTALL_KEYSTORE_CODE)
         }
     }
 
 
     private fun getWifiManager() = App.application.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
-
-
 }

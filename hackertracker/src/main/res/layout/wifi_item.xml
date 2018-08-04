@@ -1,94 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
     android:paddingLeft="16dp"
     android:paddingTop="8dp"
     android:paddingRight="16dp"
     android:paddingBottom="8dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_margin="16dp"
-        android:text="Wifi"
-        android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
-
-    <TextView
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        android:text="Easily setup the DefCon wifi with a few clicks."
-        android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/cardview_default_radius"
-        app:cardElevation="@dimen/cardview_default_elevation">
+        app:cardBackgroundColor="@color/red_light"
+        app:cardCornerRadius="@dimen/speaker_card_radius"
+        app:cardElevation="@dimen/card_elevation">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingTop="16dp"
+            android:paddingBottom="16dp">
+
+
+            <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/speaker_image"
+                android:padding="4dp"
+                android:src="@drawable/skull_lg" />
 
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="16dp"
+                android:text="Quick Connect to DEF CON WiFi"
+                android:textAppearance="@style/Header" />
+
+
+            <TextView
+                style="@style/Body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="In order to connect to the DefCon wifi you will need to install the certificate. Your device will need to be protected with a PIN to use it. Ensure you select 'Wi-Fi' for credential use."
-                android:textColor="@color/black" />
+                android:gravity="center"
+                android:text="Quickly connect to DEF CON's secure WiFi."
+                android:visibility="gone" />
 
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="16dp" />
+
+            <TextView
+                style="@style/SectionHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Install DEF CON Certificate" />
+
+            <TextView
+                style="@style/Body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="8dp"
+                android:text="Select 'Wi-Fi' for credential use. Your device will need a PIN to install the certificate."
+                android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/install"
-                style="@style/CardButton"
-                android:text="Install Certificate" />
+                style="@style/Card"
+                android:text="Install" />
 
 
-        </LinearLayout>
-
-
-    </android.support.v7.widget.CardView>
-
-    <Space
-        android:layout_width="0dp"
-        android:layout_height="16dp" />
-
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="@dimen/cardview_default_radius"
-        app:cardElevation="@dimen/cardview_default_elevation">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="16dp" />
 
             <TextView
-                style="@style/TextAppearance.AppCompat.Body1"
+                style="@style/SectionHeader"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Connect to WiFi" />
+
+
+            <TextView
+                style="@style/Body"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="16dp"
-                android:text="We can connect to the DefCon wifi and save it for you."
-                android:textColor="@color/black" />
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="8dp"
+                android:text="Save the DEF CON WiFi to your device."
+                android:textColor="@color/white" />
 
 
             <TextView
                 android:id="@+id/connect"
-                style="@style/CardButton"
-                android:text="Connect Wifi" />
+                style="@style/Card"
+                android:text="Connect" />
 
 
         </LinearLayout>
 
 
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
-</LinearLayout>
+</FrameLayout>
