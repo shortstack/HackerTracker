@@ -1,6 +1,8 @@
 package com.shortstack.hackertracker.ui.speakers
 
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -69,6 +71,20 @@ class SpeakerFragment : Fragment() {
                 context.getString(R.string.speaker_default_title)
             } else {
                 speaker.title
+            }
+
+            val url = speaker.twitter
+            if (url.isEmpty()) {
+                twitter.visibility = View.GONE
+            } else {
+                twitter.visibility = View.VISIBLE
+
+                twitter.setOnClickListener {
+                    val url = "https://twitter.com/" + url.replace("@", "")
+
+                    val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(url))
+                    context.startActivity(intent)
+                }
             }
 
 
