@@ -58,7 +58,13 @@ class WifiHelperRenderer : Renderer<RendererContent<Void>>() {
             }
 
             val network = wifi.addNetwork(config)
-            wifi.enableNetwork(network, true)
+
+            if (network == -1) {
+                Toast.makeText(context, "Could not save WiFi", Toast.LENGTH_SHORT).show()
+            } else {
+                wifi.enableNetwork(network, true)
+                Toast.makeText(context, "DEF CON WiFi added", Toast.LENGTH_SHORT).show()
+            }
         } else {
             Toast.makeText(context, "Android version too low to to connect", Toast.LENGTH_SHORT).show()
         }
