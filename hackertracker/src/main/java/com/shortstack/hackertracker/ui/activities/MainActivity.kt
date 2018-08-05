@@ -266,7 +266,11 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             toolbar.visibility = View.VISIBLE
             container.visibility = View.VISIBLE
-            setFABVisibility(View.VISIBLE)
+            if (last is ScheduleFragment) {
+                setFABVisibility(View.VISIBLE)
+            } else {
+                setFABVisibility(View.INVISIBLE)
+            }
         }
     }
 }
