@@ -11,6 +11,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -120,6 +121,8 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
         supportFragmentManager.addOnBackStackChangedListener(this)
 
         setMainFragment(R.id.nav_schedule, getString(R.string.schedule))
+
+        ViewCompat.setTranslationZ(filters, 10f)
     }
 
     private fun scheduleSyncTask() {
