@@ -2,12 +2,9 @@ package com.shortstack.hackertracker.ui.activities
 
 
 import android.content.res.Resources
-import android.os.Build
 import android.os.Bundle
-import android.view.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -255,14 +252,6 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
         } else {
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-            window?.apply {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                    addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-
-                    statusBarColor = ContextCompat.getColor(context, R.color.colorPrimaryDark)
-                }
-            }
         }
     }
 }

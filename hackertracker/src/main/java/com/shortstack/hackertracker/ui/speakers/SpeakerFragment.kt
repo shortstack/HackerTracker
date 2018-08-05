@@ -8,7 +8,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.WindowManager
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.shortstack.hackertracker.App
@@ -17,6 +16,7 @@ import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.views.EventView
+import com.shortstack.hackertracker.views.StatusBarSpacer
 import kotlinx.android.synthetic.main.fragment_speakers.*
 import javax.inject.Inject
 
@@ -63,6 +63,11 @@ class SpeakerFragment : Fragment() {
             (activity as? MainActivity)?.popBackStack()
         }
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            val height = StatusBarSpacer.getStatusBarHeight(context, app_bar)
+            app_bar.setPadding(0, height, 0, 0)
+        }
+
 
         val speaker = arguments?.getParcelable(EXTRA_SPEAKER) as? Speaker
         speaker?.let {
@@ -95,14 +100,6 @@ class SpeakerFragment : Fragment() {
 
             app_bar.setBackgroundColor(color)
 
-            activity?.window?.apply {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                    addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-
-                    statusBarColor = color
-                }
-            }
 
             val eventsForSpeaker = database.getEventsForSpeaker(it.id)
 

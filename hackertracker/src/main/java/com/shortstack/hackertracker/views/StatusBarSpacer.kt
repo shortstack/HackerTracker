@@ -1,8 +1,8 @@
 package com.shortstack.hackertracker.views
 
 import android.content.Context
-import androidx.legacy.widget.Space
 import android.util.AttributeSet
+import android.view.View
 
 /**
  * Created by Chris on 6/3/2018.
@@ -14,7 +14,7 @@ class StatusBarSpacer(context: Context, attrs: AttributeSet?) : androidx.legacy.
     }
 
     private fun measureHeight(measureSpec: Int): Int {
-        return getMeasurement(measureSpec, getStatusBarHeight())
+        return getMeasurement(measureSpec, getStatusBarHeight(context, this))
     }
 
     private fun getMeasurement(measureSpec: Int, preferred: Int): Int {
@@ -28,14 +28,16 @@ class StatusBarSpacer(context: Context, attrs: AttributeSet?) : androidx.legacy.
         }
     }
 
-    private fun getStatusBarHeight(): Int {
-        if (isInEditMode) return 0
+    companion object {
+        fun getStatusBarHeight(context: Context, view: View): Int {
+            if (view.isInEditMode) return 52
 
-        var result = 0
-        val resourceId = resources.getIdentifier("status_bar_height", "dimen", "android")
-        if (resourceId > 0) {
-            result = resources.getDimensionPixelSize(resourceId)
+            var result = 0
+            val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
+            if (resourceId > 0) {
+                result = context.resources.getDimensionPixelSize(resourceId)
+            }
+            return result
         }
-        return result
     }
 }

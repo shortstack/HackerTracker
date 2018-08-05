@@ -4,7 +4,10 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.Menu
+import android.view.View
+import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.shortstack.hackertracker.App
@@ -16,9 +19,11 @@ import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utils.TimeUtil
 import com.shortstack.hackertracker.views.EventView
 import com.shortstack.hackertracker.views.SpeakerView
+import com.shortstack.hackertracker.views.StatusBarSpacer
 import kotlinx.android.synthetic.main.empty_text.*
 import kotlinx.android.synthetic.main.fragment_event.*
 import javax.inject.Inject
+
 
 /**
  * Created by Chris on 7/31/2018.
@@ -71,6 +76,12 @@ class EventFragment : Fragment() {
 
         toolbar.setNavigationOnClickListener {
             (activity as? MainActivity)?.popBackStack()
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            val context = context ?: return
+            val height = StatusBarSpacer.getStatusBarHeight(context, app_bar)
+            app_bar.setPadding(0, height, 0, 0)
         }
 
 
@@ -135,15 +146,6 @@ class EventFragment : Fragment() {
             }
 
             category_text.text = it.name
-
-            activity?.window?.apply {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
-                    addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS)
-
-                    statusBarColor = color
-                }
-            }
         }
     }
 

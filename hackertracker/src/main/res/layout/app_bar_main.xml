@@ -4,71 +4,57 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background">
+    android:background="@color/background"
+    android:fitsSystemWindows="true">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
+
+
+    </com.google.android.material.appbar.AppBarLayout>
+
 
     <FrameLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar"
+        tools:layout="@layout/fragment_schedule" />
 
-        <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:visibility="visible"
+        app:elevation="0dp"
+        app:srcCompat="@drawable/ic_filter_list_white_24dp" />
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:id="@+id/app_bar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
+    <com.shortstack.hackertracker.views.FilterView
+        android:id="@+id/filters"
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="240dp"
+        app:behavior_skipCollapsed="true"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+        tools:background="@color/dark_background" />
 
-                <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbar"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
-
-
-            </com.google.android.material.appbar.AppBarLayout>
-
-
-            <FrameLayout
-                android:id="@+id/container"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/app_bar"
-                tools:layout="@layout/fragment_schedule" />
-
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/filter"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="bottom|end"
-                android:layout_margin="16dp"
-                android:visibility="visible"
-                app:elevation="0dp"
-                app:srcCompat="@drawable/ic_filter_list_white_24dp" />
-
-            <com.shortstack.hackertracker.views.FilterView
-                android:id="@+id/filters"
-                android:layout_width="match_parent"
-                android:layout_height="420dp"
-                app:behavior_hideable="true"
-                app:behavior_peekHeight="240dp"
-                app:behavior_skipCollapsed="true"
-                app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-                tools:background="@color/dark_background" />
-
-
-        </androidx.coordinatorlayout.widget.CoordinatorLayout>
-
-        <FrameLayout
-            android:id="@+id/container_above"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-    </FrameLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
