@@ -1,9 +1,16 @@
 package com.shortstack.hackertracker
 
+import android.view.Gravity
+import android.view.animation.TranslateAnimation
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
+import androidx.transition.Fade
+import androidx.transition.Slide
+import androidx.transition.Transition
+import androidx.transition.TransitionSet
 import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import org.json.JSONException
@@ -47,7 +54,7 @@ fun Date.isSoonish(SOON_DAYS_AMOUNT: Int): Boolean {
 }
 
 fun Date.getDateDifference(date: Date, timeUnit: TimeUnit): Long {
-    return timeUnit.convert(date.time - this.time, TimeUnit.MILLISECONDS);
+    return timeUnit.convert(date.time - this.time, TimeUnit.MILLISECONDS)
 }
 
 
@@ -116,9 +123,27 @@ fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int) {
 }
 
 
-fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int) {
+fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int, hasAnimation: Boolean = false) {
     supportFragmentManager.inTransaction {
-        setCustomAnimations(android.R.anim.fade_in, android.R.anim.fade_out)
+
+        if (hasAnimation) {
+
+            val FADE_DEFAULT_TIME = 300L
+
+
+            fragment.apply {
+                enterTransition = Fade().apply {
+                    duration = FADE_DEFAULT_TIME
+                }
+
+
+                returnTransition = Fade().apply {
+                    duration = FADE_DEFAULT_TIME
+                }
+            }
+        }
+
         replace(frameId, fragment)
-            .addToBackStack(null) }
+                .addToBackStack(null)
+    }
 }

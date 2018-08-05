@@ -179,5 +179,4 @@ class EventFragment : Fragment() {
             related_events_header.visibility = View.GONE
         }
     }
-
 }

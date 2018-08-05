@@ -1,8 +1,14 @@
 package com.shortstack.hackertracker.ui.activities
 
 
+import android.app.Activity
+import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
+import android.view.Gravity
+import android.view.Menu
+import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -56,7 +62,7 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
 
     @Inject
     lateinit var timer: TickTimer
-    
+
     private lateinit var bottomSheet: BottomSheetBehavior<View>
 
     private val map = HashMap<Int, Fragment>()
@@ -231,12 +237,12 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
         if (event == null)
             return
 
-        replaceFragment(EventFragment.newInstance(event), R.id.container_above)
+        replaceFragment(EventFragment.newInstance(event), R.id.container_above, hasAnimation = true)
     }
 
     fun navigate(speaker: Speaker) {
 
-        replaceFragment(SpeakerFragment.newInstance(speaker), R.id.container_above)
+        replaceFragment(SpeakerFragment.newInstance(speaker), R.id.container_above, hasAnimation = true)
     }
 
     fun popBackStack() {
@@ -250,8 +256,14 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
 
         if (last is EventFragment || last is SpeakerFragment) {
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            toolbar.visibility = View.INVISIBLE
+            container.visibility = View.INVISIBLE
+            setFABVisibility(View.INVISIBLE)
         } else {
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            toolbar.visibility = View.VISIBLE
+            container.visibility = View.VISIBLE
+            setFABVisibility(View.VISIBLE)
         }
     }
 }
