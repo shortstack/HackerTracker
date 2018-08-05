@@ -62,15 +62,12 @@
 
             <ImageView
                 android:id="@+id/twitter"
-                android:layout_width="48dp"
-                android:layout_height="48dp"
                 android:layout_gravity="end"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                android:background="?android:attr/selectableItemBackground"
-                android:scaleType="center"
-                app:srcCompat="@drawable/ic_twitter" />
+                app:srcCompat="@drawable/ic_twitter"
+                style="@style/IconButton" />
 
             <TextView
                 android:id="@+id/description"

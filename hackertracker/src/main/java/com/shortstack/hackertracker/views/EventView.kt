@@ -153,13 +153,7 @@ class EventView : FrameLayout {
         val type = content?.event?.type?.firstOrNull() ?: return
 
         category_text.text = type.name
-        val color =
-//                if (BuildConfig.DEBUG) {
-//            val colours = context.resources.getStringArray(R.array.colors)
-//            Color.parseColor(colours[Random().nextInt(colours.size)])
-//        } else {
-                Color.parseColor(type.color)
-//        }
+        val color = Color.parseColor(type.color)
 
         category.setBackgroundColor(color)
         progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
@@ -199,13 +193,6 @@ class EventView : FrameLayout {
         return dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
     }
 
-    fun onShareClick() {
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.putExtra(Intent.EXTRA_TEXT, content?.getDetailsDescription(context))
-        intent.type = "text/plain"
-
-        context.startActivity(intent)
-    }
 
     fun onBookmarkClick() {
         val event = content?.event?.event ?: return

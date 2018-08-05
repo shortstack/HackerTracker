@@ -1,7 +1,9 @@
 package com.shortstack.hackertracker.ui.events
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -20,6 +22,9 @@ import com.shortstack.hackertracker.utils.TimeUtil
 import com.shortstack.hackertracker.views.EventView
 import com.shortstack.hackertracker.views.SpeakerView
 import com.shortstack.hackertracker.views.StatusBarSpacer
+import io.reactivex.Single
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.empty_text.*
 import kotlinx.android.synthetic.main.fragment_event.*
 import javax.inject.Inject
@@ -85,6 +90,8 @@ class EventFragment : Fragment() {
         }
 
 
+
+
         event?.let {
 
             collapsing_toolbar.title = it.event.title
@@ -98,13 +105,90 @@ class EventFragment : Fragment() {
                 empty.visibility = View.VISIBLE
             }
 
+            val url = it.event.url
+            if (url.isNullOrBlank()) {
+                link.visibility = View.GONE
+            } else {
+                link.visibility = View.VISIBLE
+
+                link.setOnClickListener {
+                    onLinkClick(url)
+                }
+            }
+
+            share.setOnClickListener { _ ->
+                onShareClick(it)
+            }
+
+            star.setOnClickListener { _ ->
+                onBookmarkClick(it)
+            }
+
             displayDescription(it)
 
             displayTypes(it)
 
+            displayBookmark(it)
+
+
             val speakers = displaySpeakers(it)
             displayRelatedEvents(it, speakers)
         }
+    }
+
+    private fun onLinkClick(url: String?) {
+        val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(url))
+        context?.startActivity(intent)
+    }
+
+    private fun onShareClick(event: DatabaseEvent) {
+        val intent = Intent(Intent.ACTION_SEND)
+        intent.putExtra(Intent.EXTRA_TEXT, getDetailsDescription(event))
+        intent.type = "text/plain"
+
+        context?.startActivity(intent)
+    }
+
+    private fun onBookmarkClick(event: DatabaseEvent) {
+        event.event.isBookmarked = !event.event.isBookmarked
+
+        displayBookmark(event)
+
+        Single.fromCallable {
+            database.updateBookmark(event.event)
+        }.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe()
+
+    }
+
+    private fun getDetailsDescription(event: DatabaseEvent): String {
+        val context = context ?: return ""
+
+        return "Attending ${event.event.title} at ${getFullTimeStamp(context, event)} in ${event.location.first().name} #hackertracker"
+    }
+
+    private fun displayBookmark(event: DatabaseEvent) {
+
+        val context = context ?: return
+
+        val isBookmarked = event.event.isBookmarked
+        val drawable = if (isBookmarked) {
+            R.drawable.ic_star_accent_24dp
+        } else {
+            R.drawable.ic_star_border_white_24dp
+        }
+
+        val image = ContextCompat.getDrawable(context, drawable)?.mutate()
+
+        if (isBookmarked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val type = event.type.firstOrNull()
+            val color = Color.parseColor(type?.color)
+
+            image?.setTint(color)
+        }
+
+        star.setImageDrawable(image)
     }
 
     private fun displayDescription(event: DatabaseEvent) {

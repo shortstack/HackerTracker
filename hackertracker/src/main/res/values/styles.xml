@@ -218,6 +218,12 @@
         <item name="android:layout_marginRight">8dp</item>
         <item name="android:alpha">.10</item>
         <item name="android:tint">@color/black</item>
+
+    <style name="IconButton">
+        <item name="android:layout_width">48dp</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:scaleType">center</item>
     </style>
 
 </resources>

@@ -55,6 +55,7 @@
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="?android:attr/actionBarSize"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -62,6 +63,33 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="16dp"
+                android:gravity="end"
+                android:orientation="horizontal">
+
+
+                <ImageView
+                    android:id="@+id/link"
+                    style="@style/IconButton"
+                    app:srcCompat="@drawable/ic_link_white_24dp" />
+
+                <ImageView
+                    android:id="@+id/share"
+                    style="@style/IconButton"
+                    app:srcCompat="@drawable/ic_share_white_24dp" />
+
+                <ImageView
+                    android:id="@+id/star"
+                    style="@style/IconButton"
+                    app:srcCompat="@drawable/ic_star_border_white_24dp" />
+
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/icons"
@@ -131,6 +159,7 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+
             <FrameLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
@@ -148,11 +177,11 @@
 
             </FrameLayout>
 
+
             <TextView
                 android:id="@+id/speakers_header"
                 style="@style/SectionHeader"
                 android:text="@string/speakers" />
-
 
             <LinearLayout
                 android:id="@+id/speakers"
