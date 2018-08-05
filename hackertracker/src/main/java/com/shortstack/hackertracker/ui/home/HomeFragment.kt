@@ -54,7 +54,7 @@ class HomeFragment : androidx.fragment.app.Fragment() {
             if (it != null) {
                 adapter.clearAndNotify()
                 adapter.addAndNotify(getHeader(it.first()))
-                adapter.addAndNotify(getWifiHelper())
+//                adapter.addAndNotify(getWifiHelper())
                 showRecentUpdates(it)
             }
         })
