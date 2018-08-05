@@ -204,7 +204,7 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
         val visibility = if (id == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
         setFABVisibility(visibility)
 
-        replaceFragment(getFragment(id), R.id.container)
+        replaceFragment(getFragment(id), R.id.container, backStack = false)
 
         supportActionBar?.title = title
     }

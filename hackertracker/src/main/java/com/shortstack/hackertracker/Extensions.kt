@@ -123,7 +123,7 @@ fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int) {
 }
 
 
-fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int, hasAnimation: Boolean = false) {
+fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int, hasAnimation: Boolean = false, backStack: Boolean = true) {
     supportFragmentManager.inTransaction {
 
         if (hasAnimation) {
@@ -143,7 +143,10 @@ fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int, hasAnima
             }
         }
 
-        replace(frameId, fragment)
-                .addToBackStack(null)
+        val transaction = replace(frameId, fragment)
+        if (backStack) {
+            transaction.addToBackStack(null)
+        }
+        return@inTransaction transaction
     }
 }
