@@ -1,8 +1,6 @@
 package com.shortstack.hackertracker.ui.activities
 
 
-import android.app.Activity
-import android.content.Intent
 import android.content.res.Resources
 import android.os.Bundle
 import android.view.Gravity
@@ -120,7 +118,7 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
 
         supportFragmentManager.addOnBackStackChangedListener(this)
 
-        setMainFragment(R.id.nav_schedule, getString(R.string.schedule))
+        setMainFragment(R.id.nav_schedule, getString(R.string.schedule), false)
 
         ViewCompat.setTranslationZ(filters, 10f)
     }
@@ -194,19 +192,22 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             R.id.search -> {
-                setMainFragment(item.itemId, item.title.toString())
+                setMainFragment(item.itemId, addToBackStack = true)
             }
         }
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setMainFragment(id: Int, title: String) {
+    private fun setMainFragment(id: Int, title: String? = null, addToBackStack: Boolean) {
         val visibility = if (id == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
         setFABVisibility(visibility)
 
-        replaceFragment(getFragment(id), R.id.container, backStack = false)
+        replaceFragment(getFragment(id), R.id.container, backStack = addToBackStack)
 
-        supportActionBar?.title = title
+        title?.let {
+            supportActionBar?.title = it
+        }
+
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
@@ -214,7 +215,7 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
             val con = database.getConferences().firstOrNull { it.conference.id == item.itemId }
             if (con != null) database.changeConference(con)
         } else {
-            setMainFragment(item.itemId, item.title.toString())
+            setMainFragment(item.itemId, item.title.toString(), false)
         }
 
         drawer_layout.closeDrawers()
