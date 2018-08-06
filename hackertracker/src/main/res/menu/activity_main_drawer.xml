@@ -27,6 +27,11 @@
             android:title="@string/partners_vendors" />
 
         <item
+            android:id="@+id/nav_contests"
+            android:icon="@drawable/ic_cake_black_24dp"
+            android:title="@string/contests" />
+
+        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings_white_24dp"
             android:title="@string/settings" />

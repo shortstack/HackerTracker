@@ -150,7 +150,7 @@ class DatabaseManager(context: Context) {
         return db.eventSpeakerDao().getSpeakersForEvent(event)
     }
 
-    fun getEventsForSpeaker(speaker: Int) : List<DatabaseEvent> {
+    fun getEventsForSpeaker(speaker: Int): List<DatabaseEvent> {
         return db.eventSpeakerDao().getEventsForSpeaker(speaker)
     }
 
@@ -176,5 +176,9 @@ class DatabaseManager(context: Context) {
         result.addAll(typeEvents.sortedBy { it.location.first().name })
 
         return result.filter { it.event.id != id }.distinctBy { it.event.id }.take(3)
+    }
+
+    fun getContests(conference: Conference): LiveData<List<DatabaseEvent>> {
+        return db.eventDao().getContests(conference.code)
     }
 }

@@ -9,6 +9,7 @@ import com.shortstack.hackertracker.ui.activities.MainActivityViewModel
 import com.shortstack.hackertracker.ui.SearchFragment
 import com.shortstack.hackertracker.ui.SettingsFragment
 import com.shortstack.hackertracker.ui.activities.MainActivity
+import com.shortstack.hackertracker.ui.contests.ContestsViewModel
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.home.HomeViewModel
@@ -66,12 +67,13 @@ interface AppComponent {
     fun inject(vendorsViewModel: VendorsViewModel)
     fun inject(searchViewModel: SearchViewModel)
     fun inject(itemViewModel: EventViewModel)
+    fun inject(contestsViewModel: ContestsViewModel)
+
 
     // Background Workers
 
     fun inject(syncWorker: SyncWorker)
     fun inject(reminderWorker: ReminderWorker)
-
 
 
 }

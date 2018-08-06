@@ -30,6 +30,7 @@ import com.shortstack.hackertracker.network.task.SyncWorker
 import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.SearchFragment
 import com.shortstack.hackertracker.ui.SettingsFragment
+import com.shortstack.hackertracker.ui.contests.ContestsFragment
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
@@ -229,6 +230,7 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
                 R.id.nav_schedule -> ScheduleFragment.newInstance()
                 R.id.nav_map -> MapsFragment.newInstance()
                 R.id.nav_companies -> VendorsFragment.newInstance()
+                R.id.nav_contests -> ContestsFragment.newInstance()
                 R.id.nav_settings -> SettingsFragment.newInstance()
                 R.id.search -> SearchFragment.newInstance()
                 else -> InformationFragment.newInstance()

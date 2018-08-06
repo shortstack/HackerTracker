@@ -15,6 +15,7 @@ interface EventDao {
 
     companion object {
         private const val LIMIT = 20
+        private const val TYPE_CONTEST = 7
     }
 
     // Create
@@ -54,6 +55,9 @@ interface EventDao {
 
     @Query("SELECT * FROM event where conference = :conference AND isBookmarked = 1")
     fun getUpdatedBookmarks(conference: String): List<DatabaseEvent>
+
+    @Query("SELECT * FROM event where conference = :conference AND type = $TYPE_CONTEST ORDER BY `begin` ASC")
+    fun getContests(conference: String): LiveData<List<DatabaseEvent>>
 
     // Update
     @Query("UPDATE event SET type = :type, title = :title, description = :description, `begin` = :begin, `end` = :end, updatedAt = :updatedAt, location = :location, url = :url, conference = :conference WHERE id = :id")
