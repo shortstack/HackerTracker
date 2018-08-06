@@ -44,13 +44,15 @@ abstract class HTDatabase : RoomDatabase() {
     @Inject
     lateinit var gson: Gson
 
-    fun setup() {
+    fun setup(conferenceLiveData: MutableLiveData<DatabaseConference>) {
         App.application.component.inject(this)
 
         gson.fromFile<Conferences>(CONFERENCES_FILE, root = null)?.let { conferences ->
             conferences.let {
                 // Select the first one available.
                 it.conferences.first().isSelected = true
+
+                conferenceLiveData.postValue(DatabaseConference(it.conferences.first()))
 
                 it.conferences.forEach { conference ->
                     val local = conferenceDao().get().find { it.conference.id == conference.id }?.conference
@@ -85,7 +87,7 @@ abstract class HTDatabase : RoomDatabase() {
             }
 
             events?.let {
-                it.events.forEach { event ->
+                it.events.sortedBy { it.begin }.forEach { event ->
                     eventDao().upsert(event)
                 }
 
@@ -154,7 +156,7 @@ abstract class HTDatabase : RoomDatabase() {
             Single.fromCallable {
                 val instance = getInstance(context, conferenceLiveData)
 
-                instance.setup()
+                instance.setup(conferenceLiveData)
 
                 if (conferenceLiveData.value == null) {
                     val currentCon = instance.conferenceDao().getCurrentCon()
