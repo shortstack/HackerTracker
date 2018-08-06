@@ -144,21 +144,17 @@ class DatabaseManager(context: Context) {
         val tag = "reminder_" + event.id
 
         if (event.isBookmarked) {
-            val date = Date().now()
+            val delay = event.begin.time - Date().now().time - (1000 * 20 * 60)
 
-            val begin = event.begin
+            if (delay > 0) {
+                val notify = OneTimeWorkRequestBuilder<ReminderWorker>()
+                        .setInputData(mapOf(ReminderWorker.NOTIFICATION_ID to event.id).toWorkData())
+                        .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                        .addTag(tag)
+                        .build()
 
-            val delay = begin.time - date.time - (1000 * 20 * 60)
-
-            val data: Data = mapOf(ReminderWorker.NOTIFICATION_ID to event.id).toWorkData()
-            
-            val notify = OneTimeWorkRequestBuilder<ReminderWorker>()
-                    .setInputData(data)
-                    .setInitialDelay(delay, TimeUnit.MILLISECONDS)
-                    .addTag(tag)
-                    .build()
-
-            WorkManager.getInstance()?.enqueue(notify)
+                WorkManager.getInstance()?.enqueue(notify)
+            }
         } else {
             WorkManager.getInstance()?.cancelAllWorkByTag(tag)
 
