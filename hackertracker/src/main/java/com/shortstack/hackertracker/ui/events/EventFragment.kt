@@ -171,7 +171,7 @@ class EventFragment : Fragment() {
     private fun getDetailsDescription(event: DatabaseEvent): String {
         val context = context ?: return ""
 
-        return "Attending ${event.event.title} at ${getFullTimeStamp(context, event)} in ${event.location.first().name} #hackertracker"
+        return "Attending ${event.event.title} at ${getFullTimeStamp(context, event)} in ${event.location.firstOrNull()?.name} #hackertracker"
     }
 
     private fun displayBookmark(event: DatabaseEvent) {
