@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import android.view.*
+import com.crashlytics.android.answers.CustomEvent
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
@@ -50,6 +51,8 @@ class MapsFragment : androidx.fragment.app.Fragment() {
                 }
             }
         })
+
+        AnalyticsController.logCustom(CustomEvent(AnalyticsController.MAP_VIEW))
     }
 
     class PagerAdapter(fm: androidx.fragment.app.FragmentManager, private val maps: List<ConferenceMap>) : androidx.fragment.app.FragmentStatePagerAdapter(fm) {

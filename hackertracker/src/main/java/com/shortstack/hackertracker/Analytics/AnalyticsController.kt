@@ -1,36 +1,52 @@
 package com.shortstack.hackertracker.analytics
 
+import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
+import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.models.Event
+import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
-import javax.inject.Inject
 
 
-class AnalyticsController @Inject constructor(private val storage: SharedPreferencesUtil) {
+object AnalyticsController {
 
-    companion object {
-        const val EVENT_VIEW = "Event - View"
-        const val EVENT_OPEN_URL = "Event - Open URL"
-        const val EVENT_BOOKMARK = "Event - Bookmark"
-        const val EVENT_UNBOOKMARK = "Event - Unbookmark"
-        const val EVENT_SHARE = "Event - Share"
+    private val storage = SharedPreferencesUtil(App.application)
 
-        const val SETTINGS_ANALYTICS = "Settings - Analytics"
-        const val SETTINGS_NOTIFICATIONS = "Settings - Notifications"
-        const val SETTINGS_EXPIRED_EVENTS = "Settings - Expired Events"
-    }
+    const val EVENT_VIEW = "Event - View"
+    const val EVENT_OPEN_URL = "Event - Open URL"
+    const val EVENT_BOOKMARK = "Event - Bookmark"
+    const val EVENT_UNBOOKMARK = "Event - Unbookmark"
+    const val EVENT_SHARE = "Event - Share"
+
+    const val SPEAKER_VIEW = "Speaker - View"
+    const val SPEAKER_TWITTER = "Speaker - Open URL"
+
+    const val FAQ_VIEW = "FAQ - View"
+
+    const val MAP_VIEW = "Map - View"
+
+    const val SCHEDULE_REFRESH = "Schedule - Pull to Refresh"
+
+    const val SETTINGS_ANALYTICS = "Settings - Analytics"
+    const val SETTINGS_NOTIFICATIONS = "Settings - Notifications"
+    const val SETTINGS_EXPIRED_EVENTS = "Settings - Expired Events"
+
 
     fun onEventAction(action: String, event: Event) {
         logCustom(EventCustomEvent(action, event))
+    }
+
+    fun onSpeakerEvent(action: String, speaker: Speaker) {
+        logCustom(SpeakerEvent(action, speaker))
     }
 
     fun onSettingsChanged(setting: String, enabled: Boolean) {
         logCustom(SettingsEvent(setting, enabled))
     }
 
-    private fun logCustom(event: CustomEvent) {
+    fun logCustom(event: CustomEvent) {
         if (BuildConfig.DEBUG) return
 
         // Bypass to track if they're turning analytics off
@@ -40,4 +56,9 @@ class AnalyticsController @Inject constructor(private val storage: SharedPrefere
 
         Answers.getInstance().logCustom(event)
     }
+
+    fun log(message: String) {
+        Crashlytics.getInstance().core.log(message)
+    }
+
 }

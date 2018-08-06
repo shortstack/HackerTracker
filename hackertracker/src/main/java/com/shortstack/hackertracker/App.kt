@@ -15,7 +15,6 @@ import com.shortstack.hackertracker.di.AppComponent
 import com.shortstack.hackertracker.di.DaggerAppComponent
 import com.shortstack.hackertracker.di.modules.*
 import com.shortstack.hackertracker.network.task.SyncWorker
-import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import io.fabric.sdk.android.Fabric
 import java.util.concurrent.TimeUnit
 
@@ -23,9 +22,6 @@ import java.util.concurrent.TimeUnit
 class App : Application() {
 
     lateinit var component: AppComponent
-
-    // Storage
-    private val storage: SharedPreferencesUtil by lazy { SharedPreferencesUtil(applicationContext) }
 
     override fun onCreate() {
         super.onCreate()
@@ -42,7 +38,6 @@ class App : Application() {
                 .sharedPreferencesModule(SharedPreferencesModule())
                 .databaseModule(DatabaseModule())
                 .gsonModule(GsonModule())
-                .analyticsModule(AnalyticsModule())
                 .notificationsModule(NotificationsModule())
                 .dispatcherModule(DispatcherModule())
                 .timerModule(TimerModule())

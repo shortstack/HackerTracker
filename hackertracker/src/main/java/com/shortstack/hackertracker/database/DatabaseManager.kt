@@ -155,8 +155,11 @@ class DatabaseManager(context: Context) {
 
                 WorkManager.getInstance()?.enqueue(notify)
             }
+
+            AnalyticsController.onEventAction(AnalyticsController.EVENT_BOOKMARK, event)
         } else {
             WorkManager.getInstance()?.cancelAllWorkByTag(tag)
+            AnalyticsController.onEventAction(AnalyticsController.EVENT_UNBOOKMARK, event)
 
         }
 

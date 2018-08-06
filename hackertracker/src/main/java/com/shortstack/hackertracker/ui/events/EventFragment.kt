@@ -12,8 +12,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.answers.Answers
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Speaker
@@ -27,6 +30,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.empty_text.*
 import kotlinx.android.synthetic.main.fragment_event.*
+import kotlinx.android.synthetic.main.row.view.*
 import javax.inject.Inject
 
 
@@ -89,10 +93,8 @@ class EventFragment : Fragment() {
             app_bar.setPadding(0, height, 0, 0)
         }
 
-
-
-
         event?.let {
+            AnalyticsController.log("Viewing event ${it.event.title}")
 
             collapsing_toolbar.title = it.event.title
 
@@ -111,13 +113,15 @@ class EventFragment : Fragment() {
             } else {
                 link.visibility = View.VISIBLE
 
-                link.setOnClickListener {
+                link.setOnClickListener {_ ->
                     onLinkClick(url)
+                    AnalyticsController.onEventAction(AnalyticsController.EVENT_OPEN_URL, it.event)
                 }
             }
 
             share.setOnClickListener { _ ->
                 onShareClick(it)
+                AnalyticsController.onEventAction(AnalyticsController.EVENT_SHARE, it.event)
             }
 
             star.setOnClickListener { _ ->
@@ -133,6 +137,8 @@ class EventFragment : Fragment() {
 
             val speakers = displaySpeakers(it)
             displayRelatedEvents(it, speakers)
+
+            AnalyticsController.onEventAction(AnalyticsController.EVENT_VIEW, it.event)
         }
     }
 
@@ -196,7 +202,7 @@ class EventFragment : Fragment() {
         val context = context ?: return
 
         collapsing_toolbar.subtitle = getFullTimeStamp(context, event)
-        location.text = event.location.first().name
+        location.text = event.location.firstOrNull()?.name ?: "Unknown Location"
     }
 
 

@@ -21,9 +21,6 @@ class MainActivityViewModel : ViewModel() {
     @Inject
     lateinit var database: DatabaseManager
 
-    @Inject
-    lateinit var analytics: AnalyticsController
-
     init {
         App.application.component.inject(this)
     }

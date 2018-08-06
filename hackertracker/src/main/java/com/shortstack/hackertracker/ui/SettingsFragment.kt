@@ -2,8 +2,8 @@ package com.shortstack.hackertracker.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.preference.PreferenceFragmentCompat
 import android.view.View
+import androidx.preference.PreferenceFragmentCompat
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
@@ -12,9 +12,6 @@ import com.shortstack.hackertracker.database.DatabaseManager
 import javax.inject.Inject
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
-
-    @Inject
-    lateinit var analytics: AnalyticsController
 
     @Inject
     lateinit var database: DatabaseManager
@@ -47,7 +44,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         }
 
         val value = sharedPreferences.getBoolean(key, false)
-        analytics.onSettingsChanged(event, value)
+        AnalyticsController.onSettingsChanged(event, value)
     }
 
     override fun onResume() {

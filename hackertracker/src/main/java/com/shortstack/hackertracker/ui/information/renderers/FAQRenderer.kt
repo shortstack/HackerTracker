@@ -9,9 +9,11 @@ import android.view.animation.AccelerateDecelerateInterpolator
 import android.view.animation.OvershootInterpolator
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import com.crashlytics.android.answers.CustomEvent
 import com.firebase.jobdispatcher.Constraint
 import com.pedrogomez.renderers.Renderer
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.models.FAQ
 import kotlinx.android.synthetic.main.row_faq.view.*
 
@@ -26,6 +28,13 @@ class FAQRenderer : Renderer<FAQ>() {
             val root = rootView.container
 
             val isExpanded = rootView.answer.visibility == View.VISIBLE
+
+            if( !isExpanded ) {
+                val event = CustomEvent(AnalyticsController.FAQ_VIEW).also {
+                    it.putCustomAttribute("Question", content.question)
+                }
+                AnalyticsController.logCustom(event)
+            }
 
 
             val visibility = if (isExpanded) View.GONE else View.VISIBLE

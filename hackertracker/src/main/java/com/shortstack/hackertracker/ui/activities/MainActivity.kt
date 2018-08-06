@@ -51,15 +51,11 @@ import javax.inject.Inject
 
 class MainActivity() : AppCompatActivity(), com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
 
-
     @Inject
     lateinit var storage: SharedPreferencesUtil
 
     @Inject
     lateinit var database: DatabaseManager
-
-    @Inject
-    lateinit var analytics: AnalyticsController
 
     @Inject
     lateinit var timer: TickTimer
@@ -98,7 +94,6 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
 //            }
         })
 
-        scheduleSyncTask()
 
         database.typesLiveData.observe(this, Observer {
             filters.setTypes(it)
@@ -142,6 +137,8 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
     }
 
     override fun onPause() {
+        scheduleSyncTask()
+
         timer.stop()
         super.onPause()
     }

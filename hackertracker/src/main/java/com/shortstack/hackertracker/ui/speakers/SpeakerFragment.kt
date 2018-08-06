@@ -12,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
@@ -71,6 +72,8 @@ class SpeakerFragment : Fragment() {
 
         val speaker = arguments?.getParcelable(EXTRA_SPEAKER) as? Speaker
         speaker?.let {
+            AnalyticsController.log("Viewing speaker ${it.name}")
+
             collapsing_toolbar.title = it.name
             collapsing_toolbar.subtitle = if (speaker.title.isNullOrEmpty()) {
                 context.getString(R.string.speaker_default_title)
@@ -84,11 +87,13 @@ class SpeakerFragment : Fragment() {
             } else {
                 twitter.visibility = View.VISIBLE
 
-                twitter.setOnClickListener {
+                twitter.setOnClickListener { _ ->
                     val url = "https://twitter.com/" + url.replace("@", "")
 
                     val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(url))
                     context.startActivity(intent)
+
+                    AnalyticsController.onSpeakerEvent(AnalyticsController.SPEAKER_TWITTER, it)
                 }
             }
 
@@ -106,6 +111,8 @@ class SpeakerFragment : Fragment() {
             eventsForSpeaker.forEach {
                 events.addView(EventView(context, it))
             }
+
+            AnalyticsController.onSpeakerEvent(AnalyticsController.SPEAKER_VIEW, it)
         }
     }
 }
