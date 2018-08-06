@@ -187,10 +187,10 @@ class DatabaseManager(context: Context) {
     }
 
     fun getContests(conference: Conference): LiveData<List<DatabaseEvent>> {
-        return db.eventDao().getContests(conference.code)
+        return db.eventDao().getContests(conference.code, Date().now())
     }
 
     fun getWorkshops(conference: Conference): LiveData<List<DatabaseEvent>> {
-        return db.eventDao().getWorkshops(conference.code)
+        return db.eventDao().getWorkshops(conference.code, Date().now())
     }
 }

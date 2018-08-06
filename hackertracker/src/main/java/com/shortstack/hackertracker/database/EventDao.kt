@@ -57,11 +57,11 @@ interface EventDao {
     @Query("SELECT * FROM event where conference = :conference AND isBookmarked = 1")
     fun getUpdatedBookmarks(conference: String): List<DatabaseEvent>
 
-    @Query("SELECT * FROM event where conference = :conference AND type = $TYPE_CONTEST ORDER BY `begin` ASC")
-    fun getContests(conference: String): LiveData<List<DatabaseEvent>>
+    @Query("SELECT * FROM event where conference = :conference AND type = $TYPE_CONTEST AND `end` > :date ORDER BY `begin` ASC")
+    fun getContests(conference: String, date: Date): LiveData<List<DatabaseEvent>>
 
-    @Query("SELECT * FROM event where conference = :conference AND type = $TYPE_WORKSHOP ORDER BY `begin` ASC")
-    fun getWorkshops(conference: String): LiveData<List<DatabaseEvent>>
+    @Query("SELECT * FROM event where conference = :conference AND type = $TYPE_WORKSHOP  AND `end` > :date ORDER BY `begin` ASC")
+    fun getWorkshops(conference: String, date: Date): LiveData<List<DatabaseEvent>>
 
 
     // Update
