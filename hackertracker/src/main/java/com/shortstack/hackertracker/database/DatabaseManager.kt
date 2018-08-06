@@ -5,11 +5,18 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import android.content.Context
 import androidx.lifecycle.MediatorLiveData
+import androidx.work.Data
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.WorkManager
+import androidx.work.toWorkData
+import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.FullResponse
+import com.shortstack.hackertracker.network.task.ReminderWorker
 import com.shortstack.hackertracker.now
 import io.reactivex.Single
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 /**
@@ -134,6 +141,29 @@ class DatabaseManager(context: Context) {
     }
 
     fun updateBookmark(event: Event) {
+        val tag = "reminder_" + event.id
+
+        if (event.isBookmarked) {
+            val date = Date().now()
+
+            val begin = event.begin
+
+            val delay = begin.time - date.time - (1000 * 20 * 60)
+
+            val data: Data = mapOf(ReminderWorker.NOTIFICATION_ID to event.id).toWorkData()
+            
+            val notify = OneTimeWorkRequestBuilder<ReminderWorker>()
+                    .setInputData(data)
+                    .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                    .addTag(tag)
+                    .build()
+
+            WorkManager.getInstance()?.enqueue(notify)
+        } else {
+            WorkManager.getInstance()?.cancelAllWorkByTag(tag)
+
+        }
+
         return db.eventDao().updateBookmark(event.id, event.isBookmarked)
     }
 
