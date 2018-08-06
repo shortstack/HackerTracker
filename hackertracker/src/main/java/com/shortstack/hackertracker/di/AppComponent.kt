@@ -3,12 +3,12 @@ package com.shortstack.hackertracker.di
 import com.shortstack.hackertracker.database.HTDatabase
 import com.shortstack.hackertracker.di.modules.*
 import com.shortstack.hackertracker.models.EventViewModel
-import com.shortstack.hackertracker.network.task.SyncWorker
 import com.shortstack.hackertracker.network.task.ReminderWorker
-import com.shortstack.hackertracker.ui.activities.MainActivityViewModel
+import com.shortstack.hackertracker.network.task.SyncWorker
 import com.shortstack.hackertracker.ui.SearchFragment
 import com.shortstack.hackertracker.ui.SettingsFragment
 import com.shortstack.hackertracker.ui.activities.MainActivity
+import com.shortstack.hackertracker.ui.activities.MainActivityViewModel
 import com.shortstack.hackertracker.ui.contests.ContestsViewModel
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
@@ -21,9 +21,10 @@ import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.ui.search.SearchViewModel
 import com.shortstack.hackertracker.ui.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.vendors.VendorsViewModel
+import com.shortstack.hackertracker.ui.workshops.WorkshopViewModel
 import com.shortstack.hackertracker.utils.NotificationHelper
-import com.shortstack.hackertracker.views.FilterView
 import com.shortstack.hackertracker.views.EventView
+import com.shortstack.hackertracker.views.FilterView
 import com.shortstack.hackertracker.views.TimeView
 import dagger.Component
 
@@ -68,6 +69,7 @@ interface AppComponent {
     fun inject(searchViewModel: SearchViewModel)
     fun inject(itemViewModel: EventViewModel)
     fun inject(contestsViewModel: ContestsViewModel)
+    fun inject(workshopViewModel: WorkshopViewModel)
 
 
     // Background Workers

@@ -38,6 +38,7 @@ import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
+import com.shortstack.hackertracker.ui.workshops.WorkshopFragment
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.utils.TickTimer
 import kotlinx.android.synthetic.main.activity_main.*
@@ -231,6 +232,7 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
                 R.id.nav_map -> MapsFragment.newInstance()
                 R.id.nav_companies -> VendorsFragment.newInstance()
                 R.id.nav_contests -> ContestsFragment.newInstance()
+                R.id.nav_workshops -> WorkshopFragment.newInstance()
                 R.id.nav_settings -> SettingsFragment.newInstance()
                 R.id.search -> SearchFragment.newInstance()
                 else -> InformationFragment.newInstance()

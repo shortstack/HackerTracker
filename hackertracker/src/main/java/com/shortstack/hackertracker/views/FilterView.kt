@@ -16,6 +16,8 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
 
     companion object {
         private const val SPAN_COUNT = 2
+        private const val TYPE_WORKSHOP = 3
+        private const val TYPE_CONTESTS = 7
     }
 
     @Inject
@@ -36,8 +38,8 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
                 collection.add(context.getString(R.string.types))
             }
 
-            collection.addAll(types.filter { !it.isBookmark })
-            
+            collection.addAll(types.filter { !it.isBookmark && it.id != TYPE_CONTESTS && it.id != TYPE_WORKSHOP })
+
             val adapter = FilterAdapter(collection, database)
 
             list.layoutManager = GridLayoutManager(context, SPAN_COUNT, GridLayoutManager.VERTICAL, false).apply {

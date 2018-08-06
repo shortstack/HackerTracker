@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.contests
+package com.shortstack.hackertracker.ui.workshops
 
 import android.os.Bundle
 import android.view.View
@@ -17,16 +17,16 @@ import com.shortstack.hackertracker.ui.schedule.renderers.RelativeTimeRenderer
 /**
  * Created by Chris on 05/08/18.
  */
-class ContestsFragment : ListFragment<Any>() {
+class WorkshopFragment : ListFragment<Any>() {
 
     companion object {
-        fun newInstance() = ContestsFragment()
+        fun newInstance() = WorkshopFragment()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        getViewModel<ContestsViewModel>().contests.observe(this, Observer {
+        getViewModel<WorkshopViewModel>().workshops.observe(this, Observer {
             if (it.data != null) {
                 val elements = getFormattedElements(it.data)
                 onResource(Resource.success(elements))

@@ -17,6 +17,12 @@ import kotlin.collections.ArrayList
  */
 class DatabaseManager(context: Context) {
 
+    companion object {
+        private const val TYPE_CONTEST = 7
+        private const val TYPE_WORKSHOP = 3
+    }
+
+
     private val db: HTDatabase
 
     val conferenceLiveData = MutableLiveData<DatabaseConference>()
@@ -92,6 +98,8 @@ class DatabaseManager(context: Context) {
         var selected = list.filter { !it.isBookmark && it.isSelected }.map { it.id }
         if (selected.isEmpty())
             selected = list.map { it.id }
+
+        selected = selected.filter { it != TYPE_CONTEST && it != TYPE_WORKSHOP }
 
         val isBookmarked = list.find { it.isBookmark }?.isSelected ?: false
         if (isBookmarked) {
@@ -180,5 +188,9 @@ class DatabaseManager(context: Context) {
 
     fun getContests(conference: Conference): LiveData<List<DatabaseEvent>> {
         return db.eventDao().getContests(conference.code)
+    }
+
+    fun getWorkshops(conference: Conference): LiveData<List<DatabaseEvent>> {
+        return db.eventDao().getWorkshops(conference.code)
     }
 }

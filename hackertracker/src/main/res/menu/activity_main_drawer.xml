@@ -28,8 +28,13 @@
 
         <item
             android:id="@+id/nav_contests"
-            android:icon="@drawable/ic_cake_black_24dp"
+            android:icon="@drawable/ic_cake_white_24dp"
             android:title="@string/contests" />
+
+        <item
+            android:id="@+id/nav_workshops"
+            android:icon="@drawable/ic_computer_white_24dp"
+            android:title="@string/workshops" />
 
         <item
             android:id="@+id/nav_settings"
