@@ -147,6 +147,8 @@
     <string name="related_events">Related Events</string>
     <string name="speaker_default_title">Hacker</string>
     <string name="types">Types</string>
+    <string name="about">About</string>
+    <string name="about_hacker_tracker">About Hacker Tracker</string>
 
     <string-array name="nav_item_activity_titles">
         <item>@string/home</item>

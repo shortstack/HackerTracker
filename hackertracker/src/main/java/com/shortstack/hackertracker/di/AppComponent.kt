@@ -8,6 +8,7 @@ import com.shortstack.hackertracker.network.task.ReminderWorker
 import com.shortstack.hackertracker.ui.activities.MainActivityViewModel
 import com.shortstack.hackertracker.ui.SearchFragment
 import com.shortstack.hackertracker.ui.SettingsFragment
+import com.shortstack.hackertracker.ui.about.AboutFragment
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
@@ -48,6 +49,7 @@ interface AppComponent {
     fun inject(searchFragment: SearchFragment)
     fun inject(speakerFragment: SpeakerFragment)
     fun inject(eventFragment: EventFragment)
+    fun inject(aboutFragment: AboutFragment)
 
     // Views
 

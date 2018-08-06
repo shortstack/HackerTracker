@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/TextAppearance.AppCompat.Display1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/about" />
+
+    <TextView
+        style="@style/Paragraph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hacker Tracker is an open source project created and maintained by members of the DEF CON community." />
+
+
+    <FrameLayout
+        android:id="@+id/event_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingStart="8dp"
+        android:paddingLeft="8dp" />
+
+    <LinearLayout
+        android:id="@+id/members_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" />
+
+    <TextView
+        android:id="@+id/version"
+        style="@style/Paragraph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:gravity="center"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        tools:text="Version 5.0.10" />
+
+</LinearLayout>
