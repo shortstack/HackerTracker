@@ -58,6 +58,8 @@ object AnalyticsController {
     }
 
     fun log(message: String) {
+        if (BuildConfig.DEBUG) return
+
         Crashlytics.getInstance().core.log(message)
     }
 
