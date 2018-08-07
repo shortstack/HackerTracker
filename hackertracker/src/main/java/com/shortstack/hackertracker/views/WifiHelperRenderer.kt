@@ -16,6 +16,9 @@ import com.pedrogomez.renderers.RendererContent
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.wifi_item.view.*
+import java.io.ByteArrayInputStream
+import java.security.cert.CertificateFactory
+import java.security.cert.X509Certificate
 
 /**
  * Created by Chris on 6/29/2018.
@@ -44,6 +47,10 @@ class WifiHelperRenderer : Renderer<RendererContent<Void>>() {
         val wifi = getWifiManager()
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+
+            val certificate = getCertificate()
+
+
             val config = WifiConfiguration().apply {
                 SSID = "DefCon"
                 allowedKeyManagement.set(WifiConfiguration.KeyMgmt.WPA_EAP)
@@ -54,10 +61,12 @@ class WifiHelperRenderer : Renderer<RendererContent<Void>>() {
                     password = "defcon"
                     eapMethod = WifiEnterpriseConfig.Eap.PEAP
                     phase2Method = WifiEnterpriseConfig.Phase2.MSCHAPV2
+                    caCertificate = certificate
                 }
             }
 
             val network = wifi.addNetwork(config)
+
 
             if (network == -1) {
                 Toast.makeText(context, "Could not save WiFi", Toast.LENGTH_SHORT).show()
@@ -72,20 +81,42 @@ class WifiHelperRenderer : Renderer<RendererContent<Void>>() {
 
 
     private fun startInstallCert() {
+        val data = getCertificateData()
+
+        if (data == null) {
+            Toast.makeText(context, "Could not open cert.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val intent = KeyChain.createInstallIntent().also {
+            it.putExtra(KeyChain.EXTRA_CERTIFICATE, data)
+            it.putExtra(KeyChain.EXTRA_NAME, "Digicert DefCon CA")
+        }
+
+        (context as? AppCompatActivity)?.startActivityForResult(intent, INSTALL_KEYSTORE_CODE)
+    }
+
+    private fun getCertificate(): X509Certificate? {
+        val cf = CertificateFactory.getInstance("X509")
+
+        getCertificateData()?.let {
+            return cf.generateCertificate(ByteArrayInputStream(it)) as X509Certificate
+        }
+
+        return null
+    }
+
+    private fun getCertificateData(): ByteArray? {
         val stream = context?.assets?.open("digicertca.cer")
         if (stream != null) {
             val size = stream.available()
             val buffer = ByteArray(size)
             stream.read(buffer)
             stream.close()
+            return buffer
 
-            val intent = KeyChain.createInstallIntent().also {
-                it.putExtra(KeyChain.EXTRA_CERTIFICATE, buffer)
-                it.putExtra(KeyChain.EXTRA_NAME, "Digicert DefCon CA")
-            }
-
-            (context as? AppCompatActivity)?.startActivityForResult(intent, INSTALL_KEYSTORE_CODE)
         }
+        return null
     }
 
 
