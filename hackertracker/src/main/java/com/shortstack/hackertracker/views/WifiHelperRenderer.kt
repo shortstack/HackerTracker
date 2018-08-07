@@ -1,6 +1,8 @@
 package com.shortstack.hackertracker.views
 
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.net.wifi.WifiConfiguration
 import android.net.wifi.WifiEnterpriseConfig
 import android.net.wifi.WifiManager
@@ -27,6 +29,7 @@ class WifiHelperRenderer : Renderer<RendererContent<Void>>() {
 
     companion object {
         private const val INSTALL_KEYSTORE_CODE = 1001
+        private const val WIFI_URL = "https://wifireg.defcon.org/android.php"
     }
 
     override fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
@@ -35,12 +38,30 @@ class WifiHelperRenderer : Renderer<RendererContent<Void>>() {
 
     override fun render(payloads: MutableList<Any>?) {
 
-        rootView.connect
+
     }
 
     override fun hookListeners(rootView: View?) {
-        rootView?.connect?.setOnClickListener { connectWifi() }
         rootView?.install?.setOnClickListener { startInstallCert() }
+        rootView?.connect?.setOnClickListener { connectWifi() }
+        rootView?.url?.setOnClickListener { openUrl() }
+    }
+
+
+    private fun startInstallCert() {
+        val data = getCertificateData()
+
+        if (data == null) {
+            Toast.makeText(context, "Could not open cert.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        val intent = KeyChain.createInstallIntent().also {
+            it.putExtra(KeyChain.EXTRA_CERTIFICATE, data)
+            it.putExtra(KeyChain.EXTRA_NAME, "Digicert DefCon CA")
+        }
+
+        (context as? AppCompatActivity)?.startActivityForResult(intent, INSTALL_KEYSTORE_CODE)
     }
 
     private fun connectWifi() {
@@ -79,22 +100,11 @@ class WifiHelperRenderer : Renderer<RendererContent<Void>>() {
         }
     }
 
-
-    private fun startInstallCert() {
-        val data = getCertificateData()
-
-        if (data == null) {
-            Toast.makeText(context, "Could not open cert.", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val intent = KeyChain.createInstallIntent().also {
-            it.putExtra(KeyChain.EXTRA_CERTIFICATE, data)
-            it.putExtra(KeyChain.EXTRA_NAME, "Digicert DefCon CA")
-        }
-
-        (context as? AppCompatActivity)?.startActivityForResult(intent, INSTALL_KEYSTORE_CODE)
+    private fun openUrl() {
+        val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(WIFI_URL))
+        context.startActivity(intent)
     }
+
 
     private fun getCertificate(): X509Certificate? {
         val cf = CertificateFactory.getInstance("X509")

@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="16dp"
-                android:text="Quick Connect to DEF CON WiFi"
+                android:text="@string/wifi_title"
                 android:textAppearance="@style/Header" />
 
 
@@ -46,7 +46,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:text="Quickly connect to DEF CON's secure WiFi."
+                android:text="@string/wifi_subtitle"
                 android:visibility="gone" />
 
             <Space
@@ -57,7 +57,7 @@
                 style="@style/SectionHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Install DEF CON Certificate" />
+                android:text="@string/wifi_cert" />
 
             <TextView
                 style="@style/Body"
@@ -67,13 +67,13 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="24dp"
                 android:layout_marginBottom="8dp"
-                android:text="Select 'Wi-Fi' for credential use. Your device will need a PIN to install the certificate."
+                android:text="@string/wifi_cert_description"
                 android:textColor="@color/white" />
 
             <TextView
                 android:id="@+id/install"
                 style="@style/Card"
-                android:text="Install" />
+                android:text="@string/install" />
 
 
             <Space
@@ -84,7 +84,7 @@
                 style="@style/SectionHeader"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Connect to WiFi" />
+                android:text="@string/wifi_connect" />
 
 
             <TextView
@@ -95,14 +95,30 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginRight="24dp"
                 android:layout_marginBottom="8dp"
-                android:text="Save the DEF CON WiFi to your device."
+                android:text="@string/wifi_connect_description"
                 android:textColor="@color/white" />
 
 
             <TextView
                 android:id="@+id/connect"
                 style="@style/Card"
-                android:text="Connect" />
+                android:text="@string/connect" />
+
+
+            <TextView
+                android:id="@+id/url"
+                style="@style/Body"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="24dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginBottom="8dp"
+                android:background="?android:attr/selectableItemBackground"
+                android:gravity="center"
+                android:minHeight="32dp"
+                android:text="@string/wifi_diy"
+                android:textColor="@color/white" />
 
 
         </LinearLayout>
