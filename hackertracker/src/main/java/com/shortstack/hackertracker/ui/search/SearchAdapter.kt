@@ -7,12 +7,13 @@ import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Location
 import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
+import com.shortstack.hackertracker.views.EventView
 
 /**
  * Created by Chris on 7/29/2018.
  */
 class SearchAdapter : RendererAdapter<Any>(RendererBuilder.create<DatabaseEvent>()
-        .bind(DatabaseEvent::class.java, EventRenderer())
+        .bind(DatabaseEvent::class.java, EventRenderer(EventView.DISPLAY_MODE_FULL))
         .bind(Location::class.java, LocationRenderer())
         .bind(Speaker::class.java, SpeakerRenderer())
         .bind(String::class.java, HeaderRenderer()).rendererBuilder) {
@@ -41,6 +42,9 @@ class SearchAdapter : RendererAdapter<Any>(RendererBuilder.create<DatabaseEvent>
                 if (left is Speaker && right is Speaker) {
                     return left.id == right.id
                 }
+                if (left is String && right is String) {
+                    return left == right
+                }
                 return false
             }
 
@@ -51,7 +55,6 @@ class SearchAdapter : RendererAdapter<Any>(RendererBuilder.create<DatabaseEvent>
             override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                 return true
             }
-
         })
 
         collection.clear()

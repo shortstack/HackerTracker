@@ -48,6 +48,13 @@ class EventViewModel(val event: DatabaseEvent) : ViewModel() {
     var hasAnimatedProgress: Boolean = true
 
 
+    fun getFullTimeStamp(context: Context): String {
+        val (begin, end) = getTimeStamp(context)
+        val timestamp = TimeUtil.getRelativeDateStamp(context, event.event.begin)
+
+        return String.format(context.getString(R.string.timestamp_full), timestamp, begin, end)
+    }
+
 
     fun getTimeStamp(context: Context): Pair<String, String> {
         val begin = TimeUtil.getTimeStamp(context, event.event.begin)

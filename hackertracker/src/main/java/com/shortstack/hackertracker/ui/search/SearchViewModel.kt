@@ -86,7 +86,7 @@ class SearchViewModel : ViewModel() {
             }
         }
 
-        if (events.isNotEmpty()) {
+        if (tempEvents.isNotEmpty()) {
             temp.add("Events")
             temp.addAll(tempEvents)
         }

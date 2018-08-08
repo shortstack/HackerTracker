@@ -6,6 +6,7 @@ import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.RecyclerView
 import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
@@ -49,7 +50,10 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener, MenuItem.OnAc
 
             when (adapter.state) {
                 INIT -> empty_view.showDefault()
-                RESULTS -> empty_view.hide()
+                RESULTS -> {
+                    empty_view.hide()
+                    list.layoutManager?.smoothScrollToPosition(list, RecyclerView.State(), 0)
+                }
                 EMPTY -> empty_view.showNoResults(adapter.query)
             }
         })

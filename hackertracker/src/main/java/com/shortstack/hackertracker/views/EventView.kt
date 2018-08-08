@@ -37,7 +37,7 @@ class EventView : FrameLayout {
 
     private var disposable: Disposable? = null
 
-    private var displayMode: Int = DISPLAY_MODE_FULL
+    private var displayMode: Int = DISPLAY_MODE_MIN
     var content: EventViewModel? = null
         private set
 
@@ -84,11 +84,20 @@ class EventView : FrameLayout {
         animation = null
     }
 
+    fun setDisplayMode(mode: Int) {
+        displayMode = mode
+        setDisplayMode()
+    }
+
     private fun setDisplayMode() {
-        val visibility = if (displayMode == DISPLAY_MODE_FULL) View.VISIBLE else View.GONE
-//        star_bar.visibility = visibility
-        category_text.visibility = visibility
-//        progress.visibility = visibility
+        when (displayMode) {
+            DISPLAY_MODE_MIN -> {
+                time.visibility = View.GONE
+            }
+            DISPLAY_MODE_FULL -> {
+                time.visibility = View.VISIBLE
+            }
+        }
     }
 
     private fun render() {
@@ -146,7 +155,12 @@ class EventView : FrameLayout {
     private fun renderText() {
         title.text = content?.title
         val pair = content?.getTimeStamp(context)
-        location.text = content?.location + " | " + pair?.first + " - " + pair?.second
+        if (displayMode == DISPLAY_MODE_MIN) {
+            location.text = content?.location + " | " + pair?.first + " - " + pair?.second
+        } else {
+            time.text = content?.getFullTimeStamp(context)
+            location.text = content?.location
+        }
     }
 
     private fun renderCategoryColour() {

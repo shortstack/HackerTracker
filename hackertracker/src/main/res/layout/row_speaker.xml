@@ -55,6 +55,7 @@
                     android:id="@+id/speaker_description"
                     style="@style/Subhead"
                     android:lines="1"
+                    android:ellipsize="end"
                     tools:text="Hacker" />
 
             </LinearLayout>
