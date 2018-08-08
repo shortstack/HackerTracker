@@ -24,10 +24,10 @@ class SpeakerRenderer : Renderer<Speaker>() {
 
     override fun render(p0: MutableList<Any>?) {
         rootView.speaker_name.text = content.name
-        rootView.speaker_description.text = if (content.description.isBlank()) {
+        rootView.speaker_description.text = if (content.title.isNullOrBlank()) {
             context.getString(R.string.speaker_default_title)
         } else {
-            content.description
+            content.title
         }
 
         val colours = context.resources.getStringArray(R.array.colors)

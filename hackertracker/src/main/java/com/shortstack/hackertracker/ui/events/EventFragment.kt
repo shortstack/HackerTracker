@@ -57,11 +57,6 @@ class EventFragment : Fragment() {
     @Inject
     lateinit var database: DatabaseManager
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setHasOptionsMenu(true)
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_event, container, false)
     }
@@ -113,7 +108,7 @@ class EventFragment : Fragment() {
             } else {
                 link.visibility = View.VISIBLE
 
-                link.setOnClickListener {_ ->
+                link.setOnClickListener { _ ->
                     onLinkClick(url)
                     AnalyticsController.onEventAction(AnalyticsController.EVENT_OPEN_URL, it.event)
                 }

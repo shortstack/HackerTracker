@@ -254,7 +254,6 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
         supportFragmentManager.popBackStack()
     }
 
-
     override fun onBackStackChanged() {
         val fragments = supportFragmentManager.fragments
         val last = fragments.lastOrNull()
