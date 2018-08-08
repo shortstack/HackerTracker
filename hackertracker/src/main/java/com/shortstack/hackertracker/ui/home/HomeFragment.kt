@@ -18,6 +18,7 @@ import com.shortstack.hackertracker.ui.home.renderers.ActivityNavRenderer
 import com.shortstack.hackertracker.ui.home.renderers.HomeHeaderRenderer
 import com.shortstack.hackertracker.ui.home.renderers.SubHeaderRenderer
 import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
+import com.shortstack.hackertracker.views.EventView
 import com.shortstack.hackertracker.views.WifiHelperRenderer
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 import java.text.SimpleDateFormat
@@ -38,7 +39,7 @@ class HomeFragment : androidx.fragment.app.Fragment() {
         adapter = RendererBuilder.create<Any>()
                 .bind(TYPE_HEADER, HomeHeaderRenderer())
                 .bind(String::class.java, SubHeaderRenderer())
-                .bind(DatabaseEvent::class.java, EventRenderer())
+                .bind(DatabaseEvent::class.java, EventRenderer(EventView.DISPLAY_MODE_FULL))
                 .bind(Navigation::class.java, ActivityNavRenderer())
                 .bind(TYPE_WIFI, WifiHelperRenderer())
                 .build()
