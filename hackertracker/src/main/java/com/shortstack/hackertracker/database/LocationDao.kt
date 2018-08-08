@@ -19,4 +19,7 @@ interface LocationDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertAll(locations: List<Location>)
 
+    @Query("SELECT * FROM location WHERE name LIKE :text ORDER BY name")
+    fun getLocationByText(text: String): LiveData<List<Location>>
+
 }

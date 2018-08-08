@@ -27,7 +27,7 @@ class ReminderWorker : Worker() {
             return Result.SUCCESS
 
         val id = inputData.getInt(NOTIFICATION_ID, -1)
-        val event = database.findItem(id = id)
+        val event = database.getEventById(id = id)
 
         if (event != null)
             notifications.notifyStartingSoon(event)

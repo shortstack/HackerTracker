@@ -128,13 +128,22 @@ class DatabaseManager(context: Context) {
         return db.typeDao().getTypes(conference.code)
     }
 
-    fun findItem(id: Int): DatabaseEvent? {
+    fun getEventById(id: Int): DatabaseEvent? {
         return db.eventDao().getEventById(id)
     }
 
-    fun findItem(id: String): LiveData<List<DatabaseEvent>> {
-        return db.eventDao().getEventByText(id)
+    fun search(text: String): LiveData<List<DatabaseEvent>> {
+        return db.eventDao().getEventByText(text)
     }
+
+    fun searchForLocation(text: String): LiveData<List<Location>> {
+        return db.locationDao().getLocationByText(text)
+    }
+
+    fun searchForSpeaker(text: String): LiveData<List<Speaker>> {
+        return db.speakerDao().findSpeakerByText(text)
+    }
+
 
     fun getTypeForEvent(event: String): Single<Type> {
         return db.typeDao().getTypeForEvent(event)
@@ -222,4 +231,5 @@ class DatabaseManager(context: Context) {
     fun getWorkshops(conference: Conference): LiveData<List<DatabaseEvent>> {
         return db.eventDao().getWorkshops(conference.code, Date().now())
     }
+
 }

@@ -115,7 +115,7 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
 
         supportFragmentManager.addOnBackStackChangedListener(this)
 
-        setMainFragment(R.id.nav_schedule, getString(R.string.schedule), false)
+        setMainFragment(R.id.search, getString(R.string.schedule), false)
 
         ViewCompat.setTranslationZ(filters, 10f)
     }
