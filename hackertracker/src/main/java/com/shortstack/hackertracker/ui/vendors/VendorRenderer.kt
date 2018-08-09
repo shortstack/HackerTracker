@@ -27,7 +27,11 @@ class VendorRenderer : Renderer<Vendor>() {
 
     override fun render(payloads: List<Any>) {
         rootView.title.text = content.name
-        rootView.description.text = content.description
+        rootView.description.text = if (content.description.isNullOrBlank()) {
+            "Nothing to say."
+        } else {
+            content.description
+        }
 
         rootView.link.visibility = if (content.link.isNullOrBlank()) {
             View.GONE
