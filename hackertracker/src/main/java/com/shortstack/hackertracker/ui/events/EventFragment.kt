@@ -12,8 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.answers.Answers
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
@@ -30,7 +28,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.empty_text.*
 import kotlinx.android.synthetic.main.fragment_event.*
-import kotlinx.android.synthetic.main.row.view.*
 import javax.inject.Inject
 
 
@@ -183,10 +180,10 @@ class EventFragment : Fragment() {
         val image = ContextCompat.getDrawable(context, drawable)?.mutate()
 
         if (isBookmarked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val type = event.type.firstOrNull()
-            val color = Color.parseColor(type?.color)
-
-            image?.setTint(color)
+            event.type.firstOrNull()?.let {
+                val color = Color.parseColor(it.color)
+                image?.setTint(color)
+            }
         }
 
         star.setImageDrawable(image)
