@@ -95,6 +95,8 @@
     <string name="connect">Connect</string>
     <!-- DIY -->
     <string name="wifi_diy">Or click here to do it yourself!</string>
+    <string name="link">Link</string>
+    <string name="website">Website</string>
 
 
 </resources>
