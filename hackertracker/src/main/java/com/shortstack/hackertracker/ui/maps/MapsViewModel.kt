@@ -19,6 +19,9 @@ class MapsViewModel : ViewModel() {
         private const val DC_26_FLAMINGO = "dc-26-flamingo-public-1.pdf"
         private const val DC_26_FLAMINGO_NIGHT = "dc-26-flamingo-noct-public.pdf"
         private const val DC_26_LINQ = "dc-26-linq-workshops.pdf"
+
+        private const val TC_20_LEVEL_2 = "tc-20-level-2.pdf"
+        private const val TC_20_LEVEL_3 = "tc-20-level-3.pdf"
     }
 
     @Inject
@@ -44,8 +47,8 @@ class MapsViewModel : ViewModel() {
                                 ConferenceMap("LINQ", DC_26_LINQ))
                     } else {
                         listOf(
-                                ConferenceMap("Caesars", DC_26_CAESARS),
-                                ConferenceMap("Flamingo Day", DC_26_FLAMINGO))
+                                ConferenceMap("Level 2", TC_20_LEVEL_2),
+                                ConferenceMap("Level 3", TC_20_LEVEL_3))
                     }
 
                     mutableLiveData.postValue(list)
