@@ -71,6 +71,8 @@ abstract class HTDatabase : RoomDatabase() {
     fun updateDatabase(conference: Conference, response: FullResponse) {
         Logger.d("Updating conference: ${conference.code}")
 
+        conferenceDao().upsert(conference)
+
         response.run {
 
             typeDao().upsert(Type.getBookmarkedType(conference))
@@ -107,7 +109,7 @@ abstract class HTDatabase : RoomDatabase() {
             }
         }
 
-        conferenceDao().upsert(conference)
+
     }
 
     companion object {
