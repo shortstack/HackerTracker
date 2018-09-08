@@ -14,6 +14,13 @@ import javax.inject.Inject
  */
 class MapsViewModel : ViewModel() {
 
+    companion object {
+        private const val DC_26_CAESARS = "dc-26-caesars-public-1.pdf"
+        private const val DC_26_FLAMINGO = "dc-26-flamingo-public-1.pdf"
+        private const val DC_26_FLAMINGO_NIGHT = "dc-26-flamingo-noct-public.pdf"
+        private const val DC_26_LINQ = "dc-26-linq-workshops.pdf"
+    }
+
     @Inject
     lateinit var database: DatabaseManager
 
@@ -28,7 +35,20 @@ class MapsViewModel : ViewModel() {
                 val mutableLiveData = MutableLiveData<List<ConferenceMap>>()
 
                 if (id != null) {
-//                    mutableLiveData.postValue(listOf(id.conference.maps))
+
+                    val list = if (id.conference.code == "DC26") {
+                        listOf(
+                                ConferenceMap("Caesars", DC_26_CAESARS),
+                                ConferenceMap("Flamingo Day", DC_26_FLAMINGO),
+                                ConferenceMap("Flamingo Night", DC_26_FLAMINGO_NIGHT),
+                                ConferenceMap("LINQ", DC_26_LINQ))
+                    } else {
+                        listOf(
+                                ConferenceMap("Caesars", DC_26_CAESARS),
+                                ConferenceMap("Flamingo Day", DC_26_FLAMINGO))
+                    }
+
+                    mutableLiveData.postValue(list)
                 }
 
                 return@switchMap mutableLiveData

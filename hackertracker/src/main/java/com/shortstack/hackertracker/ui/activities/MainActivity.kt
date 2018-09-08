@@ -84,7 +84,7 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
         mainActivityViewModel.conferences.observe(this, Observer {
 
             nav_view.menu.removeGroup(R.id.nav_cons)
-            it?.forEach {
+            it.filter { !it.isSelected }.forEach {
                 nav_view.menu.add(R.id.nav_cons, it.id, 0, it.name).apply {
                     isChecked = it.isSelected
                     icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_chevron_right_white_24dp)
