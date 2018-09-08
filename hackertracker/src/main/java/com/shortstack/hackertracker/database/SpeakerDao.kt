@@ -23,6 +23,6 @@ interface SpeakerDao {
     @Delete
     fun delete(user: Speaker)
 
-    @Query("SELECT * FROM speaker where name LIKE :text")
-    fun findSpeakerByText(text: String): LiveData<List<Speaker>>
+    @Query("SELECT * FROM speaker WHERE conference = :conference AND name LIKE :text")
+    fun findSpeakerByText(conference: String, text: String): List<Speaker>
 }

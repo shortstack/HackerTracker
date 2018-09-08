@@ -39,8 +39,8 @@ interface EventDao {
     @Query("SELECT * FROM event WHERE `id` = :id")
     fun getEventById(id: Int): DatabaseEvent?
 
-    @Query("SELECT * FROM event INNER JOIN location ON location.id = event.location WHERE title LIKE :text OR location.name LIKE :text")
-    fun getEventByText(text: String): LiveData<List<DatabaseEvent>>
+    @Query("SELECT * FROM event INNER JOIN location ON location.id = event.location WHERE event.conference = :conference AND ( title LIKE :text OR location.name LIKE :text )")
+    fun getEventByText(conference: String, text: String): List<DatabaseEvent>
 
     @Query("SELECT * FROM event WHERE type IN (:types) LIMIT 3")
     fun getEventByType(types: List<Int>): List<DatabaseEvent>

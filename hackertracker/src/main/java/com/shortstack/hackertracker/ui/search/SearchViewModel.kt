@@ -27,41 +27,34 @@ class SearchViewModel : ViewModel() {
     init {
         App.application.component.inject(this)
 
+        val conference = database.getConferences().first { it.conference.isSelected }.conference
+
         results = Transformations.switchMap(query) {
+            val result = MediatorLiveData<List<Any>>()
 
             if (it.isBlank()) {
-                val data = MediatorLiveData<List<Any>>()
-                data.value = emptyList()
-                return@switchMap data
-            }
+                result.value = emptyList()
+            } else {
+                val text = "%$it%"
 
-
-            val text = "%$it%"
-
-            val result = MediatorLiveData<List<Any>>()
-            result.addSource(database.searchForSpeaker(text)) {
-                speakers.clear()
-                speakers.addAll(it)
+                clear()
+                speakers.addAll(database.searchForSpeaker(conference, text))
+                events.addAll(database.searchForEvents(conference, text))
+                locations.addAll(database.searchForLocation(conference, text))
 
                 setValue(result)
             }
 
-            result.addSource(database.search(text)) {
-                events.clear()
-                events.addAll(it)
-
-                setValue(result)
-            }
-
-            result.addSource(database.searchForLocation(text)) {
-                locations.clear()
-                locations.addAll(it)
-
-                setValue(result)
-            }
 
             return@switchMap result
+
         }
+    }
+
+    private fun clear() {
+        speakers.clear()
+        events.clear()
+        locations.clear()
     }
 
     private fun setValue(result: MediatorLiveData<List<Any>>) {
@@ -79,7 +72,7 @@ class SearchViewModel : ViewModel() {
             locations.forEach { loc ->
                 temp.add(loc)
 
-                val events = tempEvents.filter { it.event.location == loc.id }
+                val events = tempEvents.filter { it.event.location == loc.id }.sortedBy { it.event.begin }
                 tempEvents.removeAll(events)
 
                 temp.addAll(events)

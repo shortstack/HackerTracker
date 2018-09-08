@@ -136,16 +136,16 @@ class DatabaseManager(context: Context) {
         return db.eventDao().getEventById(id)
     }
 
-    fun search(text: String): LiveData<List<DatabaseEvent>> {
-        return db.eventDao().getEventByText(text)
+    fun searchForEvents(conference: Conference, text: String): List<DatabaseEvent> {
+        return db.eventDao().getEventByText(conference.code, text)
     }
 
-    fun searchForLocation(text: String): LiveData<List<Location>> {
-        return db.locationDao().getLocationByText(text)
+    fun searchForLocation(conference: Conference, text: String): List<Location> {
+        return db.locationDao().getLocationByText(conference.code, text)
     }
 
-    fun searchForSpeaker(text: String): LiveData<List<Speaker>> {
-        return db.speakerDao().findSpeakerByText(text)
+    fun searchForSpeaker(conference: Conference, text: String): List<Speaker> {
+        return db.speakerDao().findSpeakerByText(conference.code, text)
     }
 
 
