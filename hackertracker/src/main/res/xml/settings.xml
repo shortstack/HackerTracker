@@ -23,14 +23,6 @@
             android:summary="Allow notifications for upcoming bookmarked events."
             android:title="Allow Notifications" />
 
-        <androidx.preference.CheckBoxPreference
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:defaultValue="False"
-            android:key="user_show_expired_events"
-            android:summary="Show events that have already happened."
-            android:title="Show Expired Events" />
-
     </androidx.preference.PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>

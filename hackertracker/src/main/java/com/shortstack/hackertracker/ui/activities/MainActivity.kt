@@ -9,6 +9,7 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -83,15 +84,12 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
         mainActivityViewModel.conferences.observe(this, Observer {
 
             nav_view.menu.removeGroup(R.id.nav_cons)
-//
-//            if (BuildConfig.DEBUG) {
-//                it?.forEach {
-//                    nav_view.menu.add(R.id.nav_cons, it.id, 0, it.name).apply {
-//                        isChecked = it.isSelected
-//                        icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_chevron_right_white_24dp)
-//                    }
-//                }
-//            }
+            it?.forEach {
+                nav_view.menu.add(R.id.nav_cons, it.id, 0, it.name).apply {
+                    isChecked = it.isSelected
+                    icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_chevron_right_white_24dp)
+                }
+            }
         })
 
 

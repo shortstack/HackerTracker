@@ -38,10 +38,7 @@ interface TypeDao {
     @Transaction
     fun upsert(types: List<Type>) {
         types.forEach {
-            val id = insert(it)
-            if (id == -1L) {
-                update(it.id, it.name, it.color, it.conference)
-            }
+            upsert(it)
         }
     }
 

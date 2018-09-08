@@ -57,7 +57,7 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
     }
 
     fun notifyTimeChanged() {
-        if (storage.showExpiredEvents)
+        if(database.conferenceLiveData.value?.isExpired == true)
             return
 
         if (collection.isEmpty())
@@ -124,7 +124,7 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
                 val right = elements[newItemPosition]
 
                 if (left is DatabaseEvent && right is DatabaseEvent) {
-                    return left.event.updatedAt == right.event.updatedAt
+                    return left.event.updatedAt == right.event.updatedAt && left.event.isBookmarked == right.event.isBookmarked
                 } else if (left is Day && right is Day) {
                     return left.time == right.time
                 } else if (left is Time && right is Time) {

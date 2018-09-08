@@ -100,7 +100,11 @@ class DatabaseManager(context: Context) {
     }
 
     private fun getSchedule(conference: DatabaseConference, list: List<Type>): LiveData<List<DatabaseEvent>> {
-        val date = Date().now()
+        val date = if(conference.isExpired) {
+            conference.conference.start
+        } else {
+            Date().now()
+        }
 
         var selected = list.filter { !it.isBookmark && it.isSelected }.map { it.id }
         if (selected.isEmpty())
