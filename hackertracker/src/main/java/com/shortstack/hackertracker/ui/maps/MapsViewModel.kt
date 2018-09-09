@@ -39,16 +39,18 @@ class MapsViewModel : ViewModel() {
 
                 if (id != null) {
 
-                    val list = if (id.conference.code == "DC26") {
-                        listOf(
+                    val list = when (id.conference.code) {
+                        "DC26" -> listOf(
                                 ConferenceMap("Caesars", DC_26_CAESARS),
                                 ConferenceMap("Flamingo Day", DC_26_FLAMINGO),
                                 ConferenceMap("Flamingo Night", DC_26_FLAMINGO_NIGHT),
                                 ConferenceMap("LINQ", DC_26_LINQ))
-                    } else {
-                        listOf(
+
+                        "TC20" -> listOf(
                                 ConferenceMap("Level 2", TC_20_LEVEL_2),
                                 ConferenceMap("Level 3", TC_20_LEVEL_3))
+
+                        else -> emptyList()
                     }
 
                     mutableLiveData.postValue(list)
