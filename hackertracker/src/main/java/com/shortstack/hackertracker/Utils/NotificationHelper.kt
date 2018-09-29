@@ -61,7 +61,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
         val builder = notificationBuilder
 
         builder.setContentTitle(item.event.title)
-        builder.setContentText(String.format(context.getString(R.string.notification_text), item.location.first().name))
+        builder.setContentText(String.format(context.getString(R.string.notification_text), item.location.firstOrNull()?.name ?: "Unknown Location"))
 
         setItemPendingIntent(builder, item.event)
 

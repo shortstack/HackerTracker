@@ -100,7 +100,7 @@ class DatabaseManager(context: Context) {
     }
 
     private fun getSchedule(conference: DatabaseConference, list: List<Type>): LiveData<List<DatabaseEvent>> {
-        val date = if(conference.isExpired) {
+        val date = if (conference.isExpired) {
             conference.conference.start
         } else {
             Date().now()
@@ -223,7 +223,7 @@ class DatabaseManager(context: Context) {
 
         // TODO: Improve this, maybe use Date + Type. Same time-block?
         val typeEvents = db.eventDao().getEventByType(types.map { it.id })
-        result.addAll(typeEvents.sortedBy { it.location.first().name })
+        result.addAll(typeEvents.sortedBy { it.location.firstOrNull()?.name })
 
         return result.filter { it.event.id != id }.distinctBy { it.event.id }.take(3)
     }
