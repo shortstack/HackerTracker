@@ -8,6 +8,7 @@ import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Event
+import com.shortstack.hackertracker.models.FirebaseEvent
 import javax.inject.Inject
 
 /**
@@ -22,14 +23,14 @@ class HomeViewModel : ViewModel() {
         App.application.component.inject(this)
     }
 
-    val recent: LiveData<List<DatabaseEvent>>
+    val recent: LiveData<List<FirebaseEvent>>
         get() {
             val conference = database.conferenceLiveData
             return Transformations.switchMap(conference) { id ->
                 if (id == null) {
-                    return@switchMap MutableLiveData<List<DatabaseEvent>>()
+                    return@switchMap MutableLiveData<List<FirebaseEvent>>()
                 }
-                return@switchMap database.getRecent(id.conference)
+                return@switchMap database.getRecent(id)
             }
         }
 }

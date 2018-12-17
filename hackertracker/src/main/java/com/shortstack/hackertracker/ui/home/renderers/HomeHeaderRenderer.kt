@@ -7,9 +7,10 @@ import com.pedrogomez.renderers.Renderer
 import com.pedrogomez.renderers.RendererContent
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.DatabaseEvent
+import com.shortstack.hackertracker.models.FirebaseEvent
 import kotlinx.android.synthetic.main.header_home.view.*
 
-class HomeHeaderRenderer : Renderer<RendererContent<DatabaseEvent>>() {
+class HomeHeaderRenderer : Renderer<RendererContent<FirebaseEvent>>() {
 
     override fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
         return inflater.inflate(R.layout.header_home, parent, false)

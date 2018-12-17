@@ -8,7 +8,5 @@ import java.util.Date
  */
 data class Conferences(
         @SerializedName("conferences")
-        val conferences: List<Conference>,
-        @SerializedName("update_date")
-        val updatedAt: Date
+        val conferences: List<Conference>
 )

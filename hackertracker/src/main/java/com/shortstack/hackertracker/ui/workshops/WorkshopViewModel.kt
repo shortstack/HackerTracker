@@ -31,7 +31,7 @@ class WorkshopViewModel : ViewModel() {
                 result.value = Resource.loading(null)
 
                 if (id != null) {
-                    result.addSource(database.getWorkshops(id.conference)) {
+                    result.addSource(database.getWorkshops(id)) {
                         result.value = Resource.success(it)
                     }
                 } else {

@@ -28,7 +28,7 @@ class VendorsViewModel : ViewModel() {
                 result.value = Resource.loading(null)
 
                 if (id != null) {
-                    result.addSource(database.getVendors(id.conference), {
+                    result.addSource(database.getVendors(id), {
                         result.value = Resource.success(it)
                     })
                 } else {

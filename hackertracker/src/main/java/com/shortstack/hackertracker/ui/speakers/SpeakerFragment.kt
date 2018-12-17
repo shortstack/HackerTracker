@@ -106,11 +106,11 @@ class SpeakerFragment : Fragment() {
             app_bar.setBackgroundColor(color)
 
 
-            val eventsForSpeaker = database.getEventsForSpeaker(it.id)
-
-            eventsForSpeaker.forEach {
-                events.addView(EventView(context, it))
-            }
+//            val eventsForSpeaker = database.getEventsForSpeaker(it.id)
+//
+//            eventsForSpeaker.forEach {
+//                events.addView(EventView(context, it))
+//            }
 
             AnalyticsController.onSpeakerEvent(AnalyticsController.SPEAKER_VIEW, it)
         }

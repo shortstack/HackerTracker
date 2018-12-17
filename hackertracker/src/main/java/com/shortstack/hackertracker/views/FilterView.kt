@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.models.FirebaseType
 import com.shortstack.hackertracker.models.Type
 import kotlinx.android.synthetic.main.view_filter.view.*
 import javax.inject.Inject
@@ -28,17 +29,17 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
         View.inflate(context, R.layout.view_filter, this)
     }
 
-    fun setTypes(types: List<Type>?) {
+    fun setTypes(types: List<FirebaseType>?) {
         if (types != null) {
 
             val collection = ArrayList<Any>()
 
-            types.find { it.isBookmark }?.let {
-                collection.add(it)
+//            types.find { it.isBookmark }?.let {
+//                collection.add(it)
                 collection.add(context.getString(R.string.types))
-            }
+//            }
 
-            collection.addAll(types.filter { !it.isBookmark && it.id != TYPE_CONTESTS && it.id != TYPE_WORKSHOP })
+            collection.addAll(types.filter {  it.id != TYPE_CONTESTS && it.id != TYPE_WORKSHOP })
 
             val adapter = FilterAdapter(collection, database)
 

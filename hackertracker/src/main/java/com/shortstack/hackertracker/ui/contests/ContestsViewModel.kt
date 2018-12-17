@@ -31,7 +31,7 @@ class ContestsViewModel : ViewModel() {
                 result.value = Resource.loading(null)
 
                 if (id != null) {
-                    result.addSource(database.getContests(id.conference)) {
+                    result.addSource(database.getContests(id)) {
                         result.value = Resource.success(it)
                     }
                 } else {

@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "611899979455",
+    "firebase_url": "https://hackertest-5a202.firebaseio.com",
+    "project_id": "hackertest-5a202",
+    "storage_bucket": "hackertest-5a202.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:611899979455:android:d71841b5af6cf551",
+        "android_client_info": {
+          "package_name": "com.shortstack.hackertracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "611899979455-4js09fs2qfs9fdo9kob110b6a3bg84m3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.shortstack.hackertracker",
+            "certificate_hash": "4fa446d52bd152d78c660e7aefa862fe736e8dd9"
+          }
+        },
+        {
+          "client_id": "611899979455-13mkpi1gi0u9lt5oe9hj4762ehvtakb6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAB8kwNQBv3HGBVwrQQQK8KindcAX-dBTI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "611899979455-13mkpi1gi0u9lt5oe9hj4762ehvtakb6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

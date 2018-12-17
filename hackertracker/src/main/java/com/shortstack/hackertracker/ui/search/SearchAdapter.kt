@@ -4,6 +4,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.models.DatabaseEvent
+import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.Location
 import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
@@ -13,7 +14,7 @@ import com.shortstack.hackertracker.views.EventView
  * Created by Chris on 7/29/2018.
  */
 class SearchAdapter : RendererAdapter<Any>(RendererBuilder.create<DatabaseEvent>()
-        .bind(DatabaseEvent::class.java, EventRenderer(EventView.DISPLAY_MODE_FULL))
+        .bind(FirebaseEvent::class.java, EventRenderer(EventView.DISPLAY_MODE_FULL))
         .bind(Location::class.java, LocationRenderer())
         .bind(Speaker::class.java, SpeakerRenderer())
         .bind(String::class.java, HeaderRenderer()).rendererBuilder) {

@@ -79,10 +79,10 @@ class SyncWorker : Worker() {
             val updatedAt = local?.events?.updatedAt
 
             val count = database.getUpdatedEventsCount(updatedAt)
-            val updatedBookmarks = database.getUpdatedBookmarks(conference, updatedAt)
-
-            notifications.notifyUpdates(conference, localConference == null, count)
-            notifications.updatedBookmarks(updatedBookmarks)
+//            val updatedBookmarks = database.getUpdatedBookmarks(conference, updatedAt)
+//
+//            notifications.notifyUpdates(conference, localConference == null, count)
+//            notifications.updatedBookmarks(updatedBookmarks)
 
             Logger.d("Updated $count rows.")
             return count

@@ -5,6 +5,7 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'maven'
 apply plugin: 'io.fabric'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 28
@@ -53,7 +54,7 @@ androidExtensions {
 }
 
 configurations {
-   // compile.exclude group: "org.apache.httpcomponents", module: "httpclient"
+    // compile.exclude group: "org.apache.httpcomponents", module: "httpclient"
 }
 
 dependencies {
@@ -72,8 +73,6 @@ dependencies {
     implementation 'androidx.preference:preference:1.0.0-beta01'
 
     implementation 'androidx.constraintlayout:constraintlayout:1.1.2'
-
-
 
     // RxJava
     implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
@@ -119,6 +118,7 @@ dependencies {
 
 
     implementation "com.hendraanggrian.material:collapsingtoolbarlayout-subtitle:1.0.0-beta01"
+    implementation 'com.google.firebase:firebase-database:16.0.5'
 }
 
 repositories {

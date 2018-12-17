@@ -30,7 +30,7 @@ class InformationViewModel : ViewModel() {
                 result.value = Resource.loading(null)
 
                 if (id != null) {
-                    result.addSource(database.getFAQ(id.conference)) {
+                    result.addSource(database.getFAQ(id)) {
                         result.value = Resource.success(it)
                     }
                 } else {

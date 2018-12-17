@@ -1,17 +1,15 @@
 package com.shortstack.hackertracker.ui.schedule.list
 
 import androidx.recyclerview.widget.DiffUtil
+import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.DatabaseEvent
-import com.shortstack.hackertracker.models.Day
-import com.shortstack.hackertracker.models.Event
-import com.shortstack.hackertracker.models.Time
+import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
-import java.util.Comparator
+import java.text.SimpleDateFormat
+import java.util.*
 import javax.inject.Inject
 import kotlin.collections.ArrayList
 
@@ -29,25 +27,29 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
         App.application.component.inject(this)
     }
 
-    private fun getFormattedElements(elements: List<DatabaseEvent>): ArrayList<Any> {
+    private fun getFormattedElements(elements: List<FirebaseEvent>): ArrayList<Any> {
         val result = ArrayList<Any>()
 
-        val previous = collection.filterIsInstance<Event>().lastOrNull()
+        val previous = collection.filterIsInstance<FirebaseEvent>().lastOrNull()
         val prevDay = previous?.date
-        val prevTime = previous?.begin
+        val prevTime = previous?.start
 
-        elements.groupBy { it.event.date }.forEach {
+        elements.groupBy { it.date }.toSortedMap().forEach {
             if (prevDay != it.key) {
-                result.add(Day(it.key))
+                val day = Day(it.key)
+                Logger.d("adding day $day")
+                result.add(day)
             }
 
-            it.value.groupBy { it.event.begin }.forEach {
+            it.value.groupBy { it.start }.toSortedMap().forEach {
                 if (prevTime != it.key) {
-                    result.add(Time(it.key))
+                    val time = Time(it.key)
+                    Logger.d("Added time $time")
+                    result.add(time)
                 }
 
                 if (it.value.isNotEmpty()) {
-                    val group = it.value.sortedWith(compareBy({ it.type.firstOrNull()?.name }, { it.location.firstOrNull()?.name }))
+                    val group = it.value.sortedWith(compareBy({ it.type.values.firstOrNull() }, { it.location.values.firstOrNull() }))
                     result.addAll(group)
                 }
             }
@@ -57,9 +59,6 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
     }
 
     fun notifyTimeChanged() {
-        if(database.conferenceLiveData.value?.isExpired == true)
-            return
-
         if (collection.isEmpty())
             return
 
@@ -91,7 +90,7 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
         }
     }
 
-    fun setSchedule(list: List<DatabaseEvent>?) {
+    fun setSchedule(list: List<FirebaseEvent>?) {
         if (list == null) {
             clearAndNotify()
             return

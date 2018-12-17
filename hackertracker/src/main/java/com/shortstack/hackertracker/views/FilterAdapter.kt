@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.models.FirebaseType
 import com.shortstack.hackertracker.models.Type
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -54,18 +55,18 @@ class FilterAdapter(private val collection: ArrayList<Any>, private val database
                 }
             }
             is ViewHolder -> {
-                val type = collection[position] as Type
+                val type = collection[position] as FirebaseType
 
                 holder.view.apply {
                     val color = Color.parseColor(type.color)
 
                     chip.chipText = type.name
                     chip.chipBackgroundColor = ColorStateList.valueOf(color)
-                    chip.isCloseIconEnabled = type.isSelected
+//                    chip.isCloseIconEnabled = type.isSelected
 
                     chip.setOnCheckedChangeListener(null)
 
-                    chip.isChecked = type.isSelected
+//                    chip.isChecked = type.isSelected
 
 
                     chip.setOnCheckedChangeListener { _, isChecked ->
@@ -73,8 +74,8 @@ class FilterAdapter(private val collection: ArrayList<Any>, private val database
                         chip.isCloseIconEnabled = isChecked
 
                         Single.fromCallable {
-                            type.isSelected = isChecked
-                            database.updateTypeIsSelected(type)
+//                            type.isSelected = isChecked
+//                            database.updateTypeIsSelected(type)
                         }.subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe({}, {})

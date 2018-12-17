@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.models
 import androidx.room.Embedded
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.firebase.database.Exclude
 import com.google.gson.annotations.SerializedName
 import java.util.Date
 
@@ -43,4 +44,6 @@ data class Conference(
         var isSelected: Boolean
 ) {
     override fun toString() = name
+
+
 }

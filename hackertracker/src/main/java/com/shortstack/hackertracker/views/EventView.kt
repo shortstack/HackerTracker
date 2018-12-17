@@ -2,7 +2,6 @@ package com.shortstack.hackertracker.views
 
 import android.animation.ObjectAnimator
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
@@ -12,18 +11,21 @@ import android.util.DisplayMetrics
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
-import androidx.cardview.widget.CardView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.EventViewModel
-import com.shortstack.hackertracker.ui.activities.MainActivity
+import com.shortstack.hackertracker.models.FirebaseEvent
+import com.shortstack.hackertracker.models.FirebaseLocation
+import com.shortstack.hackertracker.models.FirebaseType
 import com.shortstack.hackertracker.utils.TickTimer
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.row_event.view.*
 import javax.inject.Inject
 
@@ -47,7 +49,7 @@ class EventView : FrameLayout {
         init()
     }
 
-    constructor(context: Context, event: DatabaseEvent, display: Int = DISPLAY_MODE_FULL) : super(context) {
+    constructor(context: Context, event: FirebaseEvent, display: Int = DISPLAY_MODE_FULL) : super(context) {
         displayMode = display
         init()
         setContent(event)
@@ -59,7 +61,7 @@ class EventView : FrameLayout {
         setDisplayMode()
     }
 
-    fun setContent(event: DatabaseEvent) {
+    fun setContent(event: FirebaseEvent) {
         content = EventViewModel(event)
         render()
     }
@@ -112,7 +114,7 @@ class EventView : FrameLayout {
         }
 
         setOnClickListener {
-            (context as? MainActivity)?.navigate(content?.event)
+            //            (context as? MainActivity)?.navigate(content?.event)
         }
 
         star_bar.setOnClickListener {
@@ -154,38 +156,59 @@ class EventView : FrameLayout {
 
     private fun renderText() {
         title.text = content?.title
-        val pair = content?.getTimeStamp(context)
-        if (displayMode == DISPLAY_MODE_MIN) {
-            location.text = content?.location + " | " + pair?.first + " - " + pair?.second
-        } else {
+
+        val text = content?.event?.location?.keys?.firstOrNull() ?: "Unknown"
+
+        FirebaseDatabase.getInstance().getReference("conferences/DC26/locations/$text").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Logger.e("cancelled")
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                location.text = p0.getValue(FirebaseLocation::class.java)?.name
+            }
+        })
+
+        if (displayMode != DISPLAY_MODE_MIN) {
             time.text = content?.getFullTimeStamp(context)
-            location.text = content?.location
         }
     }
 
     private fun renderCategoryColour() {
-        val type = content?.event?.type?.firstOrNull() ?: return
 
-        category_text.text = type.name
-        val color = Color.parseColor(type.color)
+        val id = content?.event?.type?.keys?.firstOrNull()
 
-        category.setBackgroundColor(color)
-        progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        FirebaseDatabase.getInstance().getReference("conferences/DC26/types/$id").addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+                Logger.e("cancelled")
+            }
 
+            override fun onDataChange(p0: DataSnapshot) {
+                Logger.d("Data changed!")
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
-            drawable?.setTint(color)
-            category_text.background = drawable
-        }
+                val type = p0.getValue(FirebaseType::class.java) ?: return
 
 
+                category_text.text = type.name
+                val color = Color.parseColor(type.color)
 
-        renderBookmark(color)
+                category.setBackgroundColor(color)
+                progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
+                    drawable?.setTint(color)
+                    category_text.background = drawable
+                }
+
+                renderBookmark(color)
+            }
+        })
     }
 
     private fun renderBookmark(color: Int) {
-        val isBookmarked = content?.event?.event?.isBookmarked == true
+        val isBookmarked = false
         val drawable = if (isBookmarked) {
             R.drawable.ic_star_accent_24dp
         } else {
@@ -209,18 +232,6 @@ class EventView : FrameLayout {
 
 
     fun onBookmarkClick() {
-        val event = content?.event?.event ?: return
-
-        event.isBookmarked = !event.isBookmarked
-
-
-        renderCategoryColour()
-
-        Single.fromCallable {
-            database.updateBookmark(event)
-        }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe()
 
     }
 

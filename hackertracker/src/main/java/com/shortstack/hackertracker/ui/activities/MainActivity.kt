@@ -78,7 +78,7 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
         val mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
         mainActivityViewModel.conference.observe(this, Observer {
             if (it != null) {
-                nav_view.getHeaderView(0).nav_title.text = it.conference.name
+                nav_view.getHeaderView(0).nav_title.text = it.name
             }
         })
         mainActivityViewModel.conferences.observe(this, Observer {

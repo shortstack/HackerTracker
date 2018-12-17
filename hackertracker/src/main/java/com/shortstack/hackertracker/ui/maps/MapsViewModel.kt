@@ -39,7 +39,7 @@ class MapsViewModel : ViewModel() {
 
                 if (id != null) {
 
-                    val list = when (id.conference.code) {
+                    val list = when (id.code) {
                         "DC26" -> listOf(
                                 ConferenceMap("Caesars", DC_26_CAESARS),
                                 ConferenceMap("Flamingo Day", DC_26_FLAMINGO),

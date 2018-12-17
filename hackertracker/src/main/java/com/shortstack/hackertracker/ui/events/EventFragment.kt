@@ -250,15 +250,15 @@ class EventFragment : Fragment() {
     private fun displayRelatedEvents(event: DatabaseEvent, speakers: List<Speaker>) {
         val context = context ?: return
 
-        val relatedEvents = database.getRelatedEvents(event.id, event.type, speakers)
-
-        if (relatedEvents.isNotEmpty()) {
-            related_events_header.visibility = View.VISIBLE
-            relatedEvents.forEach {
-                related_events.addView(EventView(context, it))
-            }
-        } else {
-            related_events_header.visibility = View.GONE
-        }
+//        val relatedEvents = database.getRelatedEvents(event.id, event.types, speakers)
+//
+//        if (relatedEvents.isNotEmpty()) {
+//            related_events_header.visibility = View.VISIBLE
+//            relatedEvents.forEach {
+//                related_events.addView(EventView(context, it))
+//            }
+//        } else {
+//            related_events_header.visibility = View.GONE
+//        }
     }
 }

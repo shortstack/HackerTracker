@@ -13,6 +13,7 @@ import com.pedrogomez.renderers.RendererBuilder
 import com.pedrogomez.renderers.RendererContent
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.DatabaseEvent
+import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.Navigation
 import com.shortstack.hackertracker.ui.home.renderers.ActivityNavRenderer
 import com.shortstack.hackertracker.ui.home.renderers.HomeHeaderRenderer
@@ -39,7 +40,7 @@ class HomeFragment : androidx.fragment.app.Fragment() {
         adapter = RendererBuilder.create<Any>()
                 .bind(TYPE_HEADER, HomeHeaderRenderer())
                 .bind(String::class.java, SubHeaderRenderer())
-                .bind(DatabaseEvent::class.java, EventRenderer(EventView.DISPLAY_MODE_FULL))
+                .bind(FirebaseEvent::class.java, EventRenderer(EventView.DISPLAY_MODE_FULL))
                 .bind(Navigation::class.java, ActivityNavRenderer())
                 .bind(TYPE_WIFI, WifiHelperRenderer())
                 .build()
@@ -67,13 +68,10 @@ class HomeFragment : androidx.fragment.app.Fragment() {
     }
 
     @SuppressLint("SimpleDateFormat")
-    private fun showRecentUpdates(items: List<DatabaseEvent>) {
+    private fun showRecentUpdates(items: List<FirebaseEvent>) {
         val size = adapter.collection.size
 
-        items.groupBy { it.event.updatedAt }.forEach {
-            adapter.add("Updated " + SimpleDateFormat("MMMM dd h:mm aa").format(it.key))
-            adapter.addAll(it.value)
-        }
+        adapter.addAll(items)
 
         adapter.notifyItemRangeInserted(size, adapter.collection.size - size)
     }
@@ -83,7 +81,7 @@ class HomeFragment : androidx.fragment.app.Fragment() {
         Toast.makeText(context, "Could not fetch recent updates.", Toast.LENGTH_SHORT).show()
     }
 
-    private fun getHeader(first: DatabaseEvent) = RendererContent<DatabaseEvent>(first, TYPE_HEADER)
+    private fun getHeader(first: FirebaseEvent) = RendererContent<FirebaseEvent>(first, TYPE_HEADER)
 
     private fun getWifiHelper() = RendererContent<Void>(null, TYPE_WIFI)
 
