@@ -191,7 +191,8 @@
             <TextView
                 android:id="@+id/related_events_header"
                 style="@style/SectionHeader"
-                android:text="@string/related_events" />
+                android:text="@string/related_events"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/related_events"
@@ -199,7 +200,8 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:paddingEnd="0dp"
-                android:paddingRight="0dp" />
+                android:paddingRight="0dp"
+                android:visibility="gone" />
 
 
             <include layout="@layout/row_footer" />

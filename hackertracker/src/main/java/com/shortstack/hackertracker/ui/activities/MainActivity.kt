@@ -26,6 +26,8 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.DatabaseEvent
+import com.shortstack.hackertracker.models.FirebaseEvent
+import com.shortstack.hackertracker.models.FirebaseSpeaker
 import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.network.task.SyncWorker
 import com.shortstack.hackertracker.replaceFragment
@@ -236,15 +238,13 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
         return map[id]!!
     }
 
-    fun navigate(event: DatabaseEvent?) {
-        if (event == null)
-            return
-
+    fun navigate(event: FirebaseEvent?) {
+        event ?: return
         replaceFragment(EventFragment.newInstance(event), R.id.container_above, hasAnimation = true)
     }
 
-    fun navigate(speaker: Speaker) {
-
+    fun navigate(speaker: FirebaseSpeaker?) {
+        speaker ?: return
         replaceFragment(SpeakerFragment.newInstance(speaker), R.id.container_above, hasAnimation = true)
     }
 

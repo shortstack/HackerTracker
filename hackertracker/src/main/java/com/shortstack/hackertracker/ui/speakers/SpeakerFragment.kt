@@ -14,12 +14,16 @@ import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.models.FirebaseSpeaker
 import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.views.EventView
 import com.shortstack.hackertracker.views.StatusBarSpacer
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_speakers.*
 import javax.inject.Inject
+import kotlin.math.absoluteValue
 
 
 /**
@@ -30,7 +34,7 @@ class SpeakerFragment : Fragment() {
 
         const val EXTRA_SPEAKER = "EXTRA_SPEAKER"
 
-        fun newInstance(speaker: Speaker): SpeakerFragment {
+        fun newInstance(speaker: FirebaseSpeaker): SpeakerFragment {
             val fragment = SpeakerFragment()
 
             val bundle = Bundle()
@@ -70,7 +74,7 @@ class SpeakerFragment : Fragment() {
         }
 
 
-        val speaker = arguments?.getParcelable(EXTRA_SPEAKER) as? Speaker
+        val speaker = arguments?.getParcelable(EXTRA_SPEAKER) as? FirebaseSpeaker
         speaker?.let {
             AnalyticsController.log("Viewing speaker ${it.name}")
 
@@ -101,16 +105,20 @@ class SpeakerFragment : Fragment() {
             description.text = it.description
 
             val colours = context.resources.getStringArray(R.array.colors)
-            val color = Color.parseColor(colours[speaker.id % colours.size])
+            val color = Color.parseColor(colours[speaker.hashCode().absoluteValue % colours.size])
 
             app_bar.setBackgroundColor(color)
 
 
-//            val eventsForSpeaker = database.getEventsForSpeaker(it.id)
-//
-//            eventsForSpeaker.forEach {
-//                events.addView(EventView(context, it))
-//            }
+            database.getEventsForSpeaker(it)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe { list ->
+
+                        list.forEach {
+                            events.addView(EventView(context, it))
+                        }
+                    }
 
             AnalyticsController.onSpeakerEvent(AnalyticsController.SPEAKER_VIEW, it)
         }

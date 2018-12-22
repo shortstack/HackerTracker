@@ -6,6 +6,8 @@ import com.crashlytics.android.answers.CustomEvent
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.models.Event
+import com.shortstack.hackertracker.models.FirebaseEvent
+import com.shortstack.hackertracker.models.FirebaseSpeaker
 import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 
@@ -38,7 +40,11 @@ object AnalyticsController {
         logCustom(EventCustomEvent(action, event))
     }
 
-    fun onSpeakerEvent(action: String, speaker: Speaker) {
+    fun onEventAction(action:String, event: FirebaseEvent) {
+        logCustom(EventCustomEvent(action, event))
+    }
+
+    fun onSpeakerEvent(action: String, speaker: FirebaseSpeaker) {
         logCustom(SpeakerEvent(action, speaker))
     }
 

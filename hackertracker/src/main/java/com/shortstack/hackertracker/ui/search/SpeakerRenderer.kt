@@ -6,11 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.pedrogomez.renderers.Renderer
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.models.Speaker
+import com.shortstack.hackertracker.models.FirebaseSpeaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.row_speaker.view.*
+import kotlin.math.absoluteValue
 
-class SpeakerRenderer : Renderer<Speaker>() {
+class SpeakerRenderer : Renderer<FirebaseSpeaker>() {
 
     override fun inflate(inflater: LayoutInflater, container: ViewGroup?): View {
         return inflater.inflate(R.layout.row_speaker, container, false)
@@ -31,7 +32,7 @@ class SpeakerRenderer : Renderer<Speaker>() {
         }
 
         val colours = context.resources.getStringArray(R.array.colors)
-        val color = Color.parseColor(colours[content.id % colours.size])
+        val color = Color.parseColor(colours[content.hashCode().absoluteValue % colours.size])
         rootView.card.setCardBackgroundColor(color)
     }
 }

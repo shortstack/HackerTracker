@@ -1,5 +1,7 @@
 package com.shortstack.hackertracker.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
@@ -17,6 +19,7 @@ data class FirebaseConference(
         val types: HashMap<String, FirebaseType> = HashMap()
 )
 
+@Parcelize
 data class FirebaseEvent(
         val id: Int = -1,
         val conference: String = "",
@@ -24,13 +27,19 @@ data class FirebaseEvent(
         val description: String = "",
         val begin: String = "",
         val end: String = "",
+        val link: String = "",
+        val isBookmarked: Boolean = false,
 
+        val speakers: Map<String, Boolean> = HashMap(),
         val type: Map<String, Boolean> = HashMap(),
         val location: Map<String, Boolean> = HashMap()
-) {
+) : Parcelable {
 
     val start: Date
         get() = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(begin)
+
+    val finish: Date
+        get() = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(end)
 
     val date: Date
         get() {
@@ -56,3 +65,14 @@ data class FirebaseLocation(
         val name: String = "",
         val conference: String = ""
 )
+
+@Parcelize
+data class FirebaseSpeaker(
+        val name: String = "",
+        val description: String = "",
+        val link: String = "",
+        val twitter: String = "",
+        val title: String = "",
+
+        val events: HashMap<String, Boolean> = HashMap()
+) : Parcelable

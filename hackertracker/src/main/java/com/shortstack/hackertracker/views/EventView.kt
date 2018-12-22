@@ -23,6 +23,7 @@ import com.shortstack.hackertracker.models.EventViewModel
 import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.FirebaseLocation
 import com.shortstack.hackertracker.models.FirebaseType
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utils.TickTimer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
@@ -114,7 +115,7 @@ class EventView : FrameLayout {
         }
 
         setOnClickListener {
-            //            (context as? MainActivity)?.navigate(content?.event)
+            (context as? MainActivity)?.navigate(content?.event)
         }
 
         star_bar.setOnClickListener {

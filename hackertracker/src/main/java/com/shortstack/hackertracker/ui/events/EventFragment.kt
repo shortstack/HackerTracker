@@ -12,11 +12,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.DatabaseEvent
+import com.shortstack.hackertracker.models.FirebaseEvent
+import com.shortstack.hackertracker.models.FirebaseType
 import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utils.TimeUtil
@@ -40,7 +46,7 @@ class EventFragment : Fragment() {
 
         const val EXTRA_EVENT = "EXTRA_EVENT"
 
-        fun newInstance(event: DatabaseEvent): EventFragment {
+        fun newInstance(event: FirebaseEvent): EventFragment {
             val fragment = EventFragment()
 
             val bundle = Bundle()
@@ -68,7 +74,7 @@ class EventFragment : Fragment() {
 
         App.application.component.inject(this)
 
-        val event = arguments?.getParcelable(EXTRA_EVENT) as? DatabaseEvent
+        val event = arguments?.getParcelable(EXTRA_EVENT) as? FirebaseEvent
 
 
         val drawable = ContextCompat.getDrawable(context
@@ -86,11 +92,11 @@ class EventFragment : Fragment() {
         }
 
         event?.let {
-            AnalyticsController.log("Viewing event ${it.event.title}")
+            AnalyticsController.log("Viewing event ${it.title}")
 
-            collapsing_toolbar.title = it.event.title
+            collapsing_toolbar.title = it.title
 
-            val body = it.event.description
+            val body = it.description
 
             if (body.isNotBlank()) {
                 empty.visibility = View.GONE
@@ -99,7 +105,7 @@ class EventFragment : Fragment() {
                 empty.visibility = View.VISIBLE
             }
 
-            val url = it.event.url
+            val url = it.link
             if (url.isNullOrBlank()) {
                 link.visibility = View.GONE
             } else {
@@ -107,13 +113,13 @@ class EventFragment : Fragment() {
 
                 link.setOnClickListener { _ ->
                     onLinkClick(url)
-                    AnalyticsController.onEventAction(AnalyticsController.EVENT_OPEN_URL, it.event)
+                    AnalyticsController.onEventAction(AnalyticsController.EVENT_OPEN_URL, it)
                 }
             }
 
             share.setOnClickListener { _ ->
                 onShareClick(it)
-                AnalyticsController.onEventAction(AnalyticsController.EVENT_SHARE, it.event)
+                AnalyticsController.onEventAction(AnalyticsController.EVENT_SHARE, it)
             }
 
             star.setOnClickListener { _ ->
@@ -128,9 +134,9 @@ class EventFragment : Fragment() {
 
 
             val speakers = displaySpeakers(it)
-            displayRelatedEvents(it, speakers)
+//            displayRelatedEvents(it, speakers)
 
-            AnalyticsController.onEventAction(AnalyticsController.EVENT_VIEW, it.event)
+            AnalyticsController.onEventAction(AnalyticsController.EVENT_VIEW, it)
         }
     }
 
@@ -139,7 +145,7 @@ class EventFragment : Fragment() {
         context?.startActivity(intent)
     }
 
-    private fun onShareClick(event: DatabaseEvent) {
+    private fun onShareClick(event: FirebaseEvent) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.putExtra(Intent.EXTRA_TEXT, getDetailsDescription(event))
         intent.type = "text/plain"
@@ -147,30 +153,31 @@ class EventFragment : Fragment() {
         context?.startActivity(intent)
     }
 
-    private fun onBookmarkClick(event: DatabaseEvent) {
-        event.event.isBookmarked = !event.event.isBookmarked
+    private fun onBookmarkClick(event: FirebaseEvent) {
+//        event.event.isBookmarked = !event.isBookmarked
 
-        displayBookmark(event)
-
-        Single.fromCallable {
-            database.updateBookmark(event.event)
-        }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe()
+//        displayBookmark(event)
+//
+//        Single.fromCallable {
+//            database.updateBookmark(event.event)
+//        }.subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe()
 
     }
 
-    private fun getDetailsDescription(event: DatabaseEvent): String {
-        val context = context ?: return ""
+    private fun getDetailsDescription(event: FirebaseEvent): String {
+//        val context = context ?:
+        return ""
 
-        return "Attending ${event.event.title} at ${getFullTimeStamp(context, event)} in ${event.location.firstOrNull()?.name} #hackertracker"
+//        return "Attending ${event.title} at ${getFullTimeStamp(context, event)} in ${event.location.firstOrNull()?.name} #hackertracker"
     }
 
-    private fun displayBookmark(event: DatabaseEvent) {
+    private fun displayBookmark(event: FirebaseEvent) {
 
         val context = context ?: return
 
-        val isBookmarked = event.event.isBookmarked
+        val isBookmarked = event.isBookmarked
         val drawable = if (isBookmarked) {
             R.drawable.ic_star_accent_24dp
         } else {
@@ -180,74 +187,82 @@ class EventFragment : Fragment() {
         val image = ContextCompat.getDrawable(context, drawable)?.mutate()
 
         if (isBookmarked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            event.type.firstOrNull()?.let {
-                val color = Color.parseColor(it.color)
-                image?.setTint(color)
-            }
+//            event.type.firstOrNull()?.let {
+//                val color = Color.parseColor(it.color)
+//                image?.setTint(color)
+//            }
         }
 
         star.setImageDrawable(image)
     }
 
-    private fun displayDescription(event: DatabaseEvent) {
+    private fun displayDescription(event: FirebaseEvent) {
 
         val context = context ?: return
 
         collapsing_toolbar.subtitle = getFullTimeStamp(context, event)
-        location.text = event.location.firstOrNull()?.name ?: "Unknown Location"
+//        location.text = event.location.firstOrNull()?.name ?: "Unknown Location"
     }
 
 
-    fun getFullTimeStamp(context: Context, event: DatabaseEvent): String {
+    fun getFullTimeStamp(context: Context, event: FirebaseEvent): String {
         val (begin, end) = getTimeStamp(context, event)
-        val timestamp = TimeUtil.getRelativeDateStamp(context, event.event.begin)
+        val timestamp = TimeUtil.getRelativeDateStamp(context, event.start)
 
         return String.format(context.getString(R.string.timestamp_full), timestamp, begin, end)
     }
 
-    fun getTimeStamp(context: Context, event: DatabaseEvent): Pair<String, String> {
-        val begin = TimeUtil.getTimeStamp(context, event.event.begin)
-        val end = TimeUtil.getTimeStamp(context, event.event.end)
+    fun getTimeStamp(context: Context, event: FirebaseEvent): Pair<String, String> {
+        val begin = TimeUtil.getTimeStamp(context, event.start)
+        val end = TimeUtil.getTimeStamp(context, event.finish)
         return Pair(begin, end)
     }
 
 
-    private fun displayTypes(event: DatabaseEvent) {
-        val type = event.type.firstOrNull()
+    private fun displayTypes(event: FirebaseEvent) {
 
-        type?.let {
-            val color = Color.parseColor(type.color)
-            app_bar.setBackgroundColor(color)
 
-            val context = context ?: return
+        database.getTypeForEvent(event)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { type ->
+                    val context = context ?: return@subscribe
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
-                drawable?.setTint(color)
-                category_text.background = drawable
-            }
+                    val color = Color.parseColor(type.color)
+                    app_bar.setBackgroundColor(color)
 
-            category_text.text = it.name
-        }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
+                        drawable?.setTint(color)
+                        category_text.background = drawable
+                    }
+
+                    category_text.text = type.name
+                }
     }
 
-    private fun displaySpeakers(event: DatabaseEvent): List<Speaker> {
-        val context = context ?: return emptyList()
+    private fun displaySpeakers(event: FirebaseEvent){
+        val context = context ?: return
 
-        val speakersForEvent = database.getSpeakers(event.id)
-        if (speakersForEvent.isNotEmpty()) {
-            speakers_header.visibility = View.VISIBLE
-            speakersForEvent.forEach {
-                speakers.addView(SpeakerView(context, it), ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
-            }
-        } else {
-            speakers_header.visibility = View.GONE
-        }
-        return speakersForEvent
+        database.getSpeakers(event)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe { list ->
+
+                    if(list.isEmpty()) {
+                        speakers_header.visibility = View.GONE
+                    } else {
+                        speakers_header.visibility = View.VISIBLE
+
+                        list.forEach { speaker ->
+                            speakers.addView(SpeakerView(context, speaker), ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+                        }
+                    }
+                }
     }
 
 
-    private fun displayRelatedEvents(event: DatabaseEvent, speakers: List<Speaker>) {
+    private fun displayRelatedEvents(event: FirebaseEvent, speakers: List<Speaker>) {
         val context = context ?: return
 
 //        val relatedEvents = database.getRelatedEvents(event.id, event.types, speakers)
@@ -258,7 +273,7 @@ class EventFragment : Fragment() {
 //                related_events.addView(EventView(context, it))
 //            }
 //        } else {
-//            related_events_header.visibility = View.GONE
+            related_events_header.visibility = View.GONE
 //        }
     }
 }

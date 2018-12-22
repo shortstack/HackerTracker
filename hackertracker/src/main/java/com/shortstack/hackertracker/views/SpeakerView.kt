@@ -6,14 +6,15 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.models.Speaker
+import com.shortstack.hackertracker.models.FirebaseSpeaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.row_speaker.view.*
+import kotlin.math.absoluteValue
 
 
 class SpeakerView : LinearLayout {
 
-    constructor(context: Context, speaker: Speaker) : super(context) {
+    constructor(context: Context, speaker: FirebaseSpeaker) : super(context) {
         speaker_name.text = speaker.name
 
         speaker_description.text = if (speaker.title.isNullOrEmpty()) {
@@ -23,7 +24,7 @@ class SpeakerView : LinearLayout {
         }
 
         val colours = context.resources.getStringArray(R.array.colors)
-        val color = Color.parseColor(colours[speaker.id % colours.size])
+        val color = Color.parseColor(colours[speaker.hashCode().absoluteValue % colours.size])
         card.setCardBackgroundColor(color)
 
         setOnClickListener {

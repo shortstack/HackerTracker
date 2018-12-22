@@ -32,6 +32,6 @@ class EventRenderer(private val displayMode: Int = EventView.DISPLAY_MODE_MIN) :
     }
 
     private fun showEventFragment() {
-//        (context as? MainActivity)?.navigate(content)
+        (context as? MainActivity)?.navigate(content)
     }
 }
