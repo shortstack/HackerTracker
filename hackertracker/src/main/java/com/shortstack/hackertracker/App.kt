@@ -2,6 +2,7 @@ package com.shortstack.hackertracker
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.multidex.MultiDexApplication
 import androidx.work.Constraints
 import androidx.work.NetworkType
 import androidx.work.PeriodicWorkRequestBuilder
@@ -19,7 +20,7 @@ import io.fabric.sdk.android.Fabric
 import java.util.concurrent.TimeUnit
 
 
-class App : Application() {
+class App : MultiDexApplication() {
 
     lateinit var component: AppComponent
 

@@ -64,7 +64,7 @@ class EventViewModel(val event: FirebaseEvent) : ViewModel() {
     }
 
     val location: String
-        get() = event.location.keys.firstOrNull()?: "Unknown"
+        get() = event.location.name ?: "Unknown"
 
 
     val id: Int

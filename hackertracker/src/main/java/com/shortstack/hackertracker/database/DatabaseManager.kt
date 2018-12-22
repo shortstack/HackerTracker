@@ -11,6 +11,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.models.*
@@ -41,6 +42,7 @@ class DatabaseManager(context: Context) {
 
 
     val database = FirebaseDatabase.getInstance()
+    val firestore = FirebaseFirestore.getInstance()
 
     val conferenceLiveData = MutableLiveData<FirebaseConference>()
 
@@ -50,6 +52,21 @@ class DatabaseManager(context: Context) {
 
 //        database.setPersistenceEnabled(true)
         val database = database.reference
+
+        firestore.collection("conferences")
+                .get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        it.result?.documents?.forEach {
+
+                            val con = it.toObject(FirebaseConference::class.java)
+
+                            conferenceLiveData.postValue(con)
+
+
+                        }
+                    }
+                }
 
 
         database.child("conferences").addValueEventListener(object : ValueEventListener {
@@ -70,7 +87,7 @@ class DatabaseManager(context: Context) {
 
                 conferenceLiveData.postValue(defcon)
 
-                typesLiveData.postValue(defcon.types.values.toList())
+//                typesLiveData.postValue(defcon.types.values.toList())
             }
         })
     }
@@ -124,7 +141,21 @@ class DatabaseManager(context: Context) {
 
         val mutableLiveData = MutableLiveData<List<FirebaseEvent>>()
 
-        mutableLiveData.value = conference.events.values.toList()
+        firestore.collection("conferences")
+                .document("TC20")
+                .collection("events")
+                .get()
+                .addOnCompleteListener { task ->
+
+                    if (task.isSuccessful) {
+                        val events = task.result?.documents?.mapNotNull { it.toObject(FirebaseEvent::class.java) }
+
+                        if (events != null)
+                            mutableLiveData.postValue(events)
+                    }
+                }
+
+
 
         return mutableLiveData
     }
@@ -160,7 +191,7 @@ class DatabaseManager(context: Context) {
 
     fun getTypeForEvent(event: FirebaseEvent): Single<FirebaseType> {
 
-        val id = event.type.keys.firstOrNull()
+        val id = event.type
 
         return Single.create<FirebaseType> { emitter ->
 
@@ -168,21 +199,7 @@ class DatabaseManager(context: Context) {
                 emitter.onError(IllegalArgumentException("Event cannot have no types."))
             }
 
-            FirebaseDatabase.getInstance().getReference("conferences/DC26/types/$id").addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    emitter.onError(p0.toException())
-                }
-
-                override fun onDataChange(p0: DataSnapshot) {
-                    val value = p0.getValue(FirebaseType::class.java)
-                    if (value != null) {
-                        emitter.onSuccess(value)
-                    } else {
-                        emitter.onError(NullPointerException("FirebaseType is null for event $id."))
-                    }
-                }
-
-            })
+            emitter.onSuccess(id)
         }
     }
 
@@ -232,28 +249,14 @@ class DatabaseManager(context: Context) {
     fun getSpeakers(event: FirebaseEvent): Single<List<FirebaseSpeaker>> {
         return Single.create<List<FirebaseSpeaker>> { emitter ->
 
-            val id = event.speakers.keys.firstOrNull()
+            val id = event.speakers
 
-            if( id == null ) {
+            if (id == null) {
                 emitter.onSuccess(emptyList())
                 return@create
             }
 
-            FirebaseDatabase.getInstance().getReference("conferences/DC26/speakers/$id").addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    emitter.onError(p0.toException())
-                }
-
-                override fun onDataChange(p0: DataSnapshot) {
-                    val value = p0.getValue(FirebaseSpeaker::class.java)
-                    if (value != null) {
-                        emitter.onSuccess(listOf(value))
-                    } else {
-                        emitter.onSuccess(emptyList())
-                    }
-                }
-
-            })
+            emitter.onSuccess(id)
         }
     }
 
@@ -262,7 +265,7 @@ class DatabaseManager(context: Context) {
 
             val id = speaker.events.keys.firstOrNull()
 
-            if( id == null ) {
+            if (id == null) {
                 emitter.onSuccess(emptyList())
                 return@create
             }

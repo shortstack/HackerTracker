@@ -158,17 +158,10 @@ class EventView : FrameLayout {
     private fun renderText() {
         title.text = content?.title
 
-        val text = content?.event?.location?.keys?.firstOrNull() ?: "Unknown"
+        val text = content?.event?.location?.name ?: "Unknown"
 
-        FirebaseDatabase.getInstance().getReference("conferences/DC26/locations/$text").addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                Logger.e("cancelled")
-            }
+        location.text = text
 
-            override fun onDataChange(p0: DataSnapshot) {
-                location.text = p0.getValue(FirebaseLocation::class.java)?.name
-            }
-        })
 
         if (displayMode != DISPLAY_MODE_MIN) {
             time.text = content?.getFullTimeStamp(context)
@@ -177,35 +170,23 @@ class EventView : FrameLayout {
 
     private fun renderCategoryColour() {
 
-        val id = content?.event?.type?.keys?.firstOrNull()
+        val type = content?.event?.type ?: return
 
-        FirebaseDatabase.getInstance().getReference("conferences/DC26/types/$id").addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                Logger.e("cancelled")
-            }
+        category_text.text = type.name
+        val color = Color.parseColor(type.color)
 
-            override fun onDataChange(p0: DataSnapshot) {
-                Logger.d("Data changed!")
-
-                val type = p0.getValue(FirebaseType::class.java) ?: return
+        category.setBackgroundColor(color)
+        progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
 
-                category_text.text = type.name
-                val color = Color.parseColor(type.color)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
+            drawable?.setTint(color)
+            category_text.background = drawable
+        }
 
-                category.setBackgroundColor(color)
-                progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        renderBookmark(color)
 
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
-                    drawable?.setTint(color)
-                    category_text.background = drawable
-                }
-
-                renderBookmark(color)
-            }
-        })
     }
 
     private fun renderBookmark(color: Int) {

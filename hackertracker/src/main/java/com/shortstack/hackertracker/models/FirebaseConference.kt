@@ -5,6 +5,7 @@ import kotlinx.android.parcel.Parcelize
 import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.collections.HashMap
 
 /**
@@ -14,9 +15,9 @@ data class FirebaseConference(
         val id: Int = 0,
         val name: String = "",
         val description: String = "",
-        val code: String = "",
-        val events: HashMap<String, FirebaseEvent> = HashMap(),
-        val types: HashMap<String, FirebaseType> = HashMap()
+        val code: String = ""
+//        val events: HashMap<String, FirebaseEvent> = HashMap(),
+//        val types: HashMap<String, FirebaseType> = HashMap()
 )
 
 @Parcelize
@@ -29,10 +30,10 @@ data class FirebaseEvent(
         val end: String = "",
         val link: String = "",
         val isBookmarked: Boolean = false,
-
-        val speakers: Map<String, Boolean> = HashMap(),
-        val type: Map<String, Boolean> = HashMap(),
-        val location: Map<String, Boolean> = HashMap()
+        val speakers: ArrayList<FirebaseSpeaker> = ArrayList(),
+//        val speakers: Map<String, Boolean> = HashMap(),
+        val type: FirebaseType = FirebaseType(),
+        val location: FirebaseLocation = FirebaseLocation()
 ) : Parcelable {
 
     val start: Date
@@ -54,17 +55,19 @@ data class FirebaseEvent(
         }
 }
 
+@Parcelize
 data class FirebaseType(
         val id: Int = -1,
         val name: String = "",
         val conference: String = "",
         val color: String = ""
-)
+) : Parcelable
 
+@Parcelize
 data class FirebaseLocation(
         val name: String = "",
         val conference: String = ""
-)
+) : Parcelable
 
 @Parcelize
 data class FirebaseSpeaker(

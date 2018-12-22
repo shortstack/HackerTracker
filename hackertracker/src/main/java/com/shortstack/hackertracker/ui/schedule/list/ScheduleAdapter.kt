@@ -49,7 +49,7 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
                 }
 
                 if (it.value.isNotEmpty()) {
-                    val group = it.value.sortedWith(compareBy({ it.type.values.firstOrNull() }, { it.location.values.firstOrNull() }))
+                    val group = it.value.sortedWith(compareBy({ it.type.name }, { it.location.name }))
                     result.addAll(group)
                 }
             }
