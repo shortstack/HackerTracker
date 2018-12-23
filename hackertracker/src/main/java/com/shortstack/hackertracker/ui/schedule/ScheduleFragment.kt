@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.view_empty.view.*
 import javax.inject.Inject
 
 
-class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
+class ScheduleFragment : Fragment(){
 
     private val adapter: ScheduleAdapter = ScheduleAdapter()
 
@@ -47,11 +47,6 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
         super.onViewCreated(view, savedInstanceState)
 
         App.application.component.inject(this)
-
-        swipe_refresh.setOnRefreshListener(this)
-        swipe_refresh.setColorSchemeResources(
-                R.color.blue_dark, R.color.purple_light, R.color.purple_dark, R.color.green,
-                R.color.red_dark, R.color.red_light, R.color.orange, R.color.blue_light)
 
         list.adapter = adapter
 
@@ -121,27 +116,6 @@ class ScheduleFragment : Fragment(), SwipeRefreshLayout.OnRefreshListener {
     private fun showErrorView(message: String?) {
         empty.title.text = message
         empty.visibility = View.VISIBLE
-    }
-
-    override fun onRefresh() {
-        val refresh = OneTimeWorkRequestBuilder<SyncWorker>()
-                .build()
-
-        val instance = WorkManager.getInstance()
-        instance?.enqueue(refresh)
-        instance?.getStatusById(refresh.id)?.observe(this, Observer {
-            when (it?.state) {
-                State.SUCCEEDED -> {
-                    swipe_refresh.isRefreshing = false
-                }
-                State.FAILED -> {
-                    swipe_refresh.isRefreshing = false
-                    Toast.makeText(context, context?.getString(R.string.error_unable_to_sync), Toast.LENGTH_SHORT).show()
-                }
-            }
-        })
-
-        AnalyticsController.logCustom(CustomEvent(AnalyticsController.SCHEDULE_REFRESH))
     }
 
     companion object {

@@ -23,10 +23,10 @@ class DatabaseManager {
     companion object {
         private const val CONFERENCES = "conferences"
 
-        private const val EVENTS = "EVENTS"
-        private const val TYPES = "TYPES"
-        private const val FAQS = "FAQS"
-        private const val VENDORS = "VENDORS"
+        private const val EVENTS = "events"
+        private const val TYPES = "types"
+        private const val FAQS = "faqs"
+        private const val VENDORS = "vendors"
     }
 
     val firestore = FirebaseFirestore.getInstance()
@@ -41,17 +41,23 @@ class DatabaseManager {
                 .build()
 
         firestore.firestoreSettings = settings
-        firestore.collection("conferences")
+        firestore.collection(CONFERENCES)
                 .get()
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         it.result?.documents?.forEach {
-
                             val con = it.toObject(FirebaseConference::class.java)
-
                             conferenceLiveData.postValue(con)
 
-
+                            if (con != null) {
+                                firestore.collection(CONFERENCES)
+                                        .document(con.code)
+                                        .collection(TYPES)
+                                        .get().addOnSuccessListener {
+                                            val types = it.toObjects(FirebaseType::class.java)
+                                            typesLiveData.postValue(types)
+                                        }
+                            }
                         }
                     }
                 }
@@ -124,7 +130,7 @@ class DatabaseManager {
                 .addOnCompleteListener { task ->
 
                     if (task.isSuccessful) {
-                        val events = task.result?.documents?.mapNotNull { it.toObject(FirebaseEvent::class.java) }
+                        val events = task.result?.toObjects(FirebaseEvent::class.java)
 
                         if (events != null)
                             mutableLiveData.postValue(events)

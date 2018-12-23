@@ -53,7 +53,7 @@ class HomeFragment : androidx.fragment.app.Fragment() {
             setProgressIndicator(false)
             if (it != null) {
                 adapter.clearAndNotify()
-                adapter.addAndNotify(getHeader(it.first()))
+                adapter.addAndNotify(getHeader())
 //                adapter.addAndNotify(getWifiHelper())
                 showRecentUpdates(it)
             }
@@ -79,7 +79,7 @@ class HomeFragment : androidx.fragment.app.Fragment() {
         Toast.makeText(context, "Could not fetch recent updates.", Toast.LENGTH_SHORT).show()
     }
 
-    private fun getHeader(first: FirebaseEvent) = RendererContent<FirebaseEvent>(first, TYPE_HEADER)
+    private fun getHeader() = RendererContent<Void>(null, TYPE_HEADER)
 
     private fun getWifiHelper() = RendererContent<Void>(null, TYPE_WIFI)
 

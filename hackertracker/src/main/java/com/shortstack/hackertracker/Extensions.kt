@@ -59,33 +59,7 @@ fun Date.getDateDifference(date: Date, timeUnit: TimeUnit): Long {
 
 
 inline fun <reified T> Gson.fromFile(filename: String, root: String?): T? {
-    try {
-        val s = if (root != null) {
-            "database/conferences/$root/$filename"
-        } else {
-            "database/conferences/$filename"
-        }
-        val stream = App.application.assets.open(s)
-
-        val size = stream.available()
-
-        val buffer = ByteArray(size)
-
-        stream.read(buffer)
-        stream.close()
-
-        return fromJson(String(buffer), T::class.java)
-
-    } catch (e: FileNotFoundException) {
-        Logger.e("Could not find the file. $root/$filename")
-        return fromJson("", T::class.java)
-    } catch (e: JSONException) {
-        Logger.e("Invalid JSON within the file. $root/$filename")
-        return null
-    } catch (e: IOException) {
-        Logger.e(e, "Could not create the database.")
-        return null
-    }
+    throw NotImplementedError("Do not use anymore")
 }
 
 fun Date.now(): Date {
