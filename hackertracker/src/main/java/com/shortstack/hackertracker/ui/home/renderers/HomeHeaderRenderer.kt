@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import com.pedrogomez.renderers.Renderer
 import com.pedrogomez.renderers.RendererContent
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.FirebaseEvent
 import kotlinx.android.synthetic.main.header_home.view.*
 

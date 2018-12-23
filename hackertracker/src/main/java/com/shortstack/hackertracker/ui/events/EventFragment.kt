@@ -12,24 +12,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.FirebaseEvent
-import com.shortstack.hackertracker.models.FirebaseType
-import com.shortstack.hackertracker.models.Speaker
+import com.shortstack.hackertracker.models.FirebaseSpeaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utils.TimeUtil
-import com.shortstack.hackertracker.views.EventView
 import com.shortstack.hackertracker.views.SpeakerView
 import com.shortstack.hackertracker.views.StatusBarSpacer
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.empty_text.*
@@ -262,7 +254,7 @@ class EventFragment : Fragment() {
     }
 
 
-    private fun displayRelatedEvents(event: FirebaseEvent, speakers: List<Speaker>) {
+    private fun displayRelatedEvents(event: FirebaseEvent, speakers: List<FirebaseSpeaker>) {
         val context = context ?: return
 
 //        val relatedEvents = database.getRelatedEvents(event.id, event.types, speakers)

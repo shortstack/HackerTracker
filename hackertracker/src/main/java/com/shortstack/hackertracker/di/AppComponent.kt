@@ -1,10 +1,8 @@
 package com.shortstack.hackertracker.di
 
-import com.shortstack.hackertracker.database.HTDatabase
 import com.shortstack.hackertracker.di.modules.*
 import com.shortstack.hackertracker.models.EventViewModel
 import com.shortstack.hackertracker.network.task.ReminderWorker
-import com.shortstack.hackertracker.network.task.SyncWorker
 import com.shortstack.hackertracker.ui.SearchFragment
 import com.shortstack.hackertracker.ui.SettingsFragment
 import com.shortstack.hackertracker.ui.activities.MainActivity
@@ -39,7 +37,6 @@ interface AppComponent {
     // Components
 
     fun inject(notificationHelper: NotificationHelper)
-    fun inject(HTDatabase: HTDatabase)
 
     // Activities + Fragments
 
@@ -73,8 +70,6 @@ interface AppComponent {
 
 
     // Background Workers
-
-    fun inject(syncWorker: SyncWorker)
     fun inject(reminderWorker: ReminderWorker)
 
 

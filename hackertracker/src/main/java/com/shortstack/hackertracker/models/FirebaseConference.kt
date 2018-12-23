@@ -15,7 +15,8 @@ data class FirebaseConference(
         val id: Int = 0,
         val name: String = "",
         val description: String = "",
-        val code: String = ""
+        val code: String = "",
+        val isSelected: Boolean = false
 //        val events: HashMap<String, FirebaseEvent> = HashMap(),
 //        val types: HashMap<String, FirebaseType> = HashMap()
 )
@@ -54,6 +55,16 @@ data class FirebaseEvent(
                 set(Calendar.MILLISECOND, 0)
             }.time
         }
+
+
+    val hasFinished: Boolean
+        get() = false // TODO: Return if the event has finished.
+
+    val notificationTime: Long
+        get() = 0L // TODO: Return the amount of milliseconds until this event starts.
+    
+    val hasStarted: Boolean
+        get() = true // TODO: Check if the event has started yet.
 }
 
 @Parcelize
@@ -78,5 +89,5 @@ data class FirebaseSpeaker(
         val twitter: String = "",
         val title: String = "",
 
-        val events: HashMap<String, Boolean> = HashMap()
+        val events: ArrayList<FirebaseEvent> = ArrayList()
 ) : Parcelable

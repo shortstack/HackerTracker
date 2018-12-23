@@ -3,9 +3,8 @@ package com.shortstack.hackertracker.ui.search
 import androidx.lifecycle.*
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.DatabaseEvent
-import com.shortstack.hackertracker.models.Location
-import com.shortstack.hackertracker.models.Speaker
+import com.shortstack.hackertracker.models.*
+import java.lang.IllegalStateException
 import javax.inject.Inject
 
 /**
@@ -20,14 +19,14 @@ class SearchViewModel : ViewModel() {
 
     val results: LiveData<List<Any>>
 
-    private val locations = ArrayList<Location>()
-    private val events = ArrayList<DatabaseEvent>()
-    private val speakers = ArrayList<Speaker>()
+    private val locations = ArrayList<FirebaseLocation>()
+    private val events = ArrayList<FirebaseEvent>()
+    private val speakers = ArrayList<FirebaseSpeaker>()
 
     init {
         App.application.component.inject(this)
 
-        val conference = database.getConferences().first { it.conference.isSelected }.conference
+        val conference = database.conferenceLiveData.value ?: throw IllegalStateException("Current con is null.")
 
         results = Transformations.switchMap(query) {
             val result = MediatorLiveData<List<Any>>()
@@ -60,7 +59,7 @@ class SearchViewModel : ViewModel() {
     private fun setValue(result: MediatorLiveData<List<Any>>) {
         val temp = ArrayList<Any>()
 
-        val tempEvents = ArrayList<DatabaseEvent>()
+        val tempEvents = ArrayList<FirebaseEvent>()
         tempEvents.addAll(events)
 
         if (speakers.isNotEmpty()) {
@@ -72,7 +71,7 @@ class SearchViewModel : ViewModel() {
             locations.forEach { loc ->
                 temp.add(loc)
 
-                val events = tempEvents.filter { it.event.location == loc.id }.sortedBy { it.event.begin }
+                val events = tempEvents.filter { it.location.name == loc.name }.sortedBy { it.begin }
                 tempEvents.removeAll(events)
 
                 temp.addAll(events)

@@ -10,6 +10,7 @@ import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
+import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -23,13 +24,9 @@ import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.FirebaseSpeaker
-import com.shortstack.hackertracker.models.Speaker
-import com.shortstack.hackertracker.network.task.SyncWorker
 import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.SearchFragment
 import com.shortstack.hackertracker.ui.SettingsFragment
@@ -120,16 +117,6 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
         ViewCompat.setTranslationZ(filters, 10f)
     }
 
-    private fun scheduleSyncTask() {
-        val scheduled = WorkManager.getInstance()?.getStatusesByTag(SyncWorker.TAG_SYNC)
-
-        scheduled?.observe(this, Observer {
-            if (it == null || !it.any { it.state == State.ENQUEUED || it.state == State.RUNNING }) {
-                App.application.scheduleSyncTask()
-            }
-        })
-    }
-
 
     override fun onResume() {
         super.onResume()
@@ -137,8 +124,6 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
     }
 
     override fun onPause() {
-        scheduleSyncTask()
-
         timer.stop()
         super.onPause()
     }
@@ -162,6 +147,7 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
     }
 
     private fun setFABVisibility(visibility: Int) {
+        // TODO: Change this to use the FAB's visiblty.
         filter.visibility = visibility
     }
 
@@ -182,7 +168,7 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
 
     override fun onBackPressed() {
         when {
-            drawer_layout.isDrawerOpen(Gravity.START) -> drawer_layout.closeDrawers()
+            drawer_layout.isDrawerOpen(GravityCompat.START) -> drawer_layout.closeDrawers()
             bottomSheet.state != BottomSheetBehavior.STATE_HIDDEN -> hideFilters()
             else -> super.onBackPressed()
         }
@@ -211,8 +197,7 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.groupId == R.id.nav_cons) {
-            val con = database.getConferences().firstOrNull { it.conference.id == item.itemId }
-            if (con != null) database.changeConference(con)
+            database.changeConference(item.itemId)
         } else {
             setMainFragment(item.itemId, item.title.toString(), false)
         }

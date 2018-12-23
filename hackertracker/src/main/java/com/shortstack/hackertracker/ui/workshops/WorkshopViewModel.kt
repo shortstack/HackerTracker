@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.DatabaseEvent
+import com.shortstack.hackertracker.models.FirebaseEvent
 import javax.inject.Inject
 
 /**
@@ -18,13 +18,13 @@ class WorkshopViewModel : ViewModel() {
     @Inject
     lateinit var database: DatabaseManager
 
-    private val result = MediatorLiveData<Resource<List<DatabaseEvent>>>()
+    private val result = MediatorLiveData<Resource<List<FirebaseEvent>>>()
 
     init {
         App.application.component.inject(this)
     }
 
-    val workshops: LiveData<Resource<List<DatabaseEvent>>>
+    val workshops: LiveData<Resource<List<FirebaseEvent>>>
         get() {
             val conference = database.conferenceLiveData
             return Transformations.switchMap(conference) { id ->

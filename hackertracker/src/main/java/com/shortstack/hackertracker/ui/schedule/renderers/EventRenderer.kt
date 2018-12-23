@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.pedrogomez.renderers.Renderer
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.views.EventView

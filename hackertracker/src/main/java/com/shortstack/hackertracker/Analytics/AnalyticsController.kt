@@ -5,10 +5,8 @@ import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
-import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.FirebaseSpeaker
-import com.shortstack.hackertracker.models.Speaker
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 
 
@@ -35,10 +33,6 @@ object AnalyticsController {
     const val SETTINGS_NOTIFICATIONS = "Settings - Notifications"
     const val SETTINGS_EXPIRED_EVENTS = "Settings - Expired Events"
 
-
-    fun onEventAction(action: String, event: Event) {
-        logCustom(EventCustomEvent(action, event))
-    }
 
     fun onEventAction(action:String, event: FirebaseEvent) {
         logCustom(EventCustomEvent(action, event))

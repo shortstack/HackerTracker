@@ -65,7 +65,7 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
         val collection = collection.toList()
 
         collection.forEach {
-            if (it is DatabaseEvent && it.event.hasFinished) {
+            if (it is FirebaseEvent && it.hasFinished) {
                 removeAndNotify(it)
             }
         }
@@ -104,8 +104,8 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
                 val left = collection[oldItemPosition]
                 val right = elements[newItemPosition]
 
-                if (left is DatabaseEvent && right is DatabaseEvent) {
-                    return left.event.id == right.event.id
+                if (left is FirebaseEvent && right is FirebaseEvent) {
+                    return left.id == right.id
                 } else if (left is Day && right is Day) {
                     return left.time == right.time
                 } else if (left is Time && right is Time) {
@@ -122,8 +122,8 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
                 val left = collection[oldItemPosition]
                 val right = elements[newItemPosition]
 
-                if (left is DatabaseEvent && right is DatabaseEvent) {
-                    return left.event.updatedAt == right.event.updatedAt && left.event.isBookmarked == right.event.isBookmarked
+                if (left is FirebaseEvent && right is FirebaseEvent) {
+                    return left.updated == right.updated && left.isBookmarked == right.isBookmarked
                 } else if (left is Day && right is Day) {
                     return left.time == right.time
                 } else if (left is Time && right is Time) {

@@ -4,9 +4,7 @@ import androidx.lifecycle.*
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.FAQ
-import com.shortstack.hackertracker.models.Vendor
 import javax.inject.Inject
 
 /**

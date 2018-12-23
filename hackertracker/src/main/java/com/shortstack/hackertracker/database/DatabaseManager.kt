@@ -2,47 +2,33 @@ package com.shortstack.hackertracker.database
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
-import android.content.Context
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.toWorkData
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.models.*
-import com.shortstack.hackertracker.network.FullResponse
 import com.shortstack.hackertracker.network.task.ReminderWorker
 import com.shortstack.hackertracker.now
-import io.reactivex.Completable
 import io.reactivex.Single
-import java.lang.IllegalArgumentException
-import java.lang.IllegalStateException
-import java.lang.NullPointerException
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 /**
  * Created by Chris on 3/31/2018.
  */
-class DatabaseManager(context: Context) {
+class DatabaseManager {
 
     companion object {
-        private const val TYPE_CONTEST = 7
-        private const val TYPE_WORKSHOP = 3
+        private const val CONFERENCES = "conferences"
+
+        private const val EVENTS = "EVENTS"
+        private const val TYPES = "TYPES"
+        private const val FAQS = "FAQS"
+        private const val VENDORS = "VENDORS"
     }
 
-    // TODO: Remove.
-    private val db: HTDatabase = HTDatabase.buildDatabase(context)
-
-
-    val database = FirebaseDatabase.getInstance()
     val firestore = FirebaseFirestore.getInstance()
 
     val conferenceLiveData = MutableLiveData<FirebaseConference>()
@@ -71,39 +57,50 @@ class DatabaseManager(context: Context) {
                 }
     }
 
-    private fun getCurrentCon(): DatabaseConference? {
-        return db.conferenceDao().getCurrentCon()
+    fun changeConference(id: Int) {
+        firestore.collection(CONFERENCES)
+                .document(id.toString())
+                .get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val con = it.result?.toObject(FirebaseConference::class.java)
+
+                        // TODO: Handle setting the conference as the currently selected con.
+
+                        conferenceLiveData.postValue(con)
+                    }
+                }
     }
 
-    fun changeConference(con: DatabaseConference) {
+    fun getConferences(): LiveData<List<FirebaseConference>> {
+        val mutableLiveData = MutableLiveData<List<FirebaseConference>>()
 
-    }
+        firestore.collection(CONFERENCES)
+                .get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val cons = it.result?.toObjects(FirebaseConference::class.java)
 
-    fun getCons(): LiveData<List<Conference>> {
-        return db.conferenceDao().getAll()
-    }
+                        mutableLiveData.postValue(cons)
+                    }
+                }
 
-    fun getConferences(): List<DatabaseConference> {
-        return db.conferenceDao().get()
+        return mutableLiveData
     }
 
     fun getRecent(conference: FirebaseConference): LiveData<List<FirebaseEvent>> {
         val mutableLiveData = MutableLiveData<List<FirebaseEvent>>()
 
-        conferenceLiveData.value?.let {
-            val id = it.code
-
-            firestore.collection("conferences")
-                    .document(id)
-                    .collection("events")
-                    .get().addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            val events = it.result?.toObjects(FirebaseEvent::class.java)
-                            val recent = events?.sortedBy { it.updated }?.take(10)
-                            mutableLiveData.postValue(recent)
-                        }
+        firestore.collection(CONFERENCES)
+                .document(conference.code)
+                .collection(EVENTS)
+                .get().addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val events = it.result?.toObjects(FirebaseEvent::class.java)
+                        val recent = events?.sortedBy { it.updated }?.take(10)
+                        mutableLiveData.postValue(recent)
                     }
-        }
+                }
 
         return mutableLiveData
     }
@@ -112,15 +109,17 @@ class DatabaseManager(context: Context) {
         return getSchedule(conference, emptyList())
     }
 
-    private fun getSchedule(conference: FirebaseConference, list: List<Type>): LiveData<List<FirebaseEvent>> {
-        val date = Date().now()
+    private fun getSchedule(conference: FirebaseConference, list: List<FirebaseType>): LiveData<List<FirebaseEvent>> {
 
+        // TODO Handle the date of the confrence.
+        val date = Date().now()
 
         val mutableLiveData = MutableLiveData<List<FirebaseEvent>>()
 
-        firestore.collection("conferences")
-                .document("TC20")
-                .collection("events")
+        // TODO: Handle searching by selected types.
+        firestore.collection(CONFERENCES)
+                .document(conference.code)
+                .collection(EVENTS)
                 .get()
                 .addOnCompleteListener { task ->
 
@@ -138,53 +137,76 @@ class DatabaseManager(context: Context) {
     }
 
     fun getFAQ(conference: FirebaseConference): LiveData<List<FAQ>> {
-        return db.faqDao().getAll(conference.code)
+        val mutableLiveData = MutableLiveData<List<FAQ>>()
+
+        firestore.collection(CONFERENCES)
+                .document(conference.code)
+                .collection(FAQS)
+                .get().addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val faqs = it.result?.toObjects(FAQ::class.java)
+                        mutableLiveData.postValue(faqs)
+                    }
+                }
+
+        return mutableLiveData
     }
 
     fun getVendors(conference: FirebaseConference): LiveData<List<Vendor>> {
-        return db.vendorDao().getAll(conference.code)
+        val mutableLiveData = MutableLiveData<List<Vendor>>()
+
+        firestore.collection(CONFERENCES)
+                .document(conference.code)
+                .collection(VENDORS)
+                .get().addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val vendors = it.result?.toObjects(Vendor::class.java)
+                        mutableLiveData.postValue(vendors)
+                    }
+                }
+        return mutableLiveData
     }
 
-    fun getTypes(conference: FirebaseConference): LiveData<List<Type>> {
-        return db.typeDao().getTypes(conference.code)
+    fun getEventById(id: Int): MutableLiveData<FirebaseEvent> {
+        val mutableLiveData = MutableLiveData<FirebaseEvent>()
+
+        firestore.collection(CONFERENCES)
+                .document(id.toString())
+                .get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val event = it.result?.toObject(FirebaseEvent::class.java)
+                        mutableLiveData.postValue(event)
+                    }
+                }
+
+        return mutableLiveData
     }
 
-    fun getEventById(id: Int): DatabaseEvent? {
-        return db.eventDao().getEventById(id)
+    fun searchForEvents(conference: FirebaseConference, text: String): List<FirebaseEvent> {
+        TODO("Need to implement a single threaded solution for searching.")
     }
 
-    fun searchForEvents(conference: Conference, text: String): List<DatabaseEvent> {
-        return db.eventDao().getEventByText(conference.code, text)
+    fun searchForLocation(conference: FirebaseConference, text: String): List<FirebaseLocation> {
+        TODO("Need to implement a single threaded solution for searching.")
     }
 
-    fun searchForLocation(conference: Conference, text: String): List<Location> {
-        return db.locationDao().getLocationByText(conference.code, text)
-    }
-
-    fun searchForSpeaker(conference: Conference, text: String): List<Speaker> {
-        return db.speakerDao().findSpeakerByText(conference.code, text)
+    fun searchForSpeaker(conference: FirebaseConference, text: String): List<FirebaseSpeaker> {
+        TODO("Need to implement a single threaded solution for searching.")
     }
 
 
     fun getTypeForEvent(event: FirebaseEvent): Single<FirebaseType> {
-
-        val id = event.type
-
         return Single.create<FirebaseType> { emitter ->
-
-            if (id == null) {
-                emitter.onError(IllegalArgumentException("Event cannot have no types."))
-            }
-
-            emitter.onSuccess(id)
+            emitter.onSuccess(event.type)
         }
     }
 
-    fun updateBookmark(event: Event) {
+    fun updateBookmark(event: FirebaseEvent) {
         val tag = "reminder_" + event.id
 
         if (event.isBookmarked) {
-            val delay = event.begin.time - Date().now().time - (1000 * 20 * 60)
+            val delay = event.start.time - Date().now().time - (1000 * 20 * 60)
 
             if (delay > 0) {
                 val notify = OneTimeWorkRequestBuilder<ReminderWorker>()
@@ -203,99 +225,70 @@ class DatabaseManager(context: Context) {
 
         }
 
-        return db.eventDao().updateBookmark(event.id, event.isBookmarked)
+        // TODO: Update the bookmark within Firestore.
     }
 
-    fun updateConference(conference: Conference) {
-        db.conferenceDao().update(conference)
-    }
-
-
-    fun updateConference(conference: Conference, body: FullResponse) {
-        db.updateDatabase(conference, body)
-    }
-
-    fun updateTypeIsSelected(type: Type): Int {
-        return db.typeDao().updateSelected(type.id, type.isSelected)
+    fun updateTypeIsSelected(type: FirebaseType) {
+        // TODO: Update the type within Firestore.
     }
 
     fun clear() {
-        return db.conferenceDao().deleteAll()
+
     }
 
     fun getSpeakers(event: FirebaseEvent): Single<List<FirebaseSpeaker>> {
         return Single.create<List<FirebaseSpeaker>> { emitter ->
-
-            val id = event.speakers
-
-            if (id == null) {
-                emitter.onSuccess(emptyList())
-                return@create
-            }
-
-            emitter.onSuccess(id)
+            emitter.onSuccess(event.speakers)
         }
     }
 
     fun getEventsForSpeaker(speaker: FirebaseSpeaker): Single<List<FirebaseEvent>> {
         return Single.create<List<FirebaseEvent>> { emitter ->
-
-            val id = speaker.events.keys.firstOrNull()
-
-            if (id == null) {
-                emitter.onSuccess(emptyList())
-                return@create
-            }
-
-            FirebaseDatabase.getInstance().getReference("conferences/DC26/speakers/$id").addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onCancelled(p0: DatabaseError) {
-                    emitter.onError(p0.toException())
-                }
-
-                override fun onDataChange(p0: DataSnapshot) {
-                    val value = p0.getValue(FirebaseEvent::class.java)
-                    if (value != null) {
-                        emitter.onSuccess(listOf(value))
-                    } else {
-                        emitter.onSuccess(emptyList())
-                    }
-                }
-
-            })
-
+            emitter.onSuccess(speaker.events)
         }
     }
 
 
-    fun getUpdatedEventsCount(updatedAt: Date?): Int {
-        return db.eventDao().getUpdatedCount(updatedAt)
+    fun getContests(conference: FirebaseConference): MutableLiveData<List<FirebaseEvent>> {
+        val mutableLiveData = MutableLiveData<List<FirebaseEvent>>()
+
+        firestore.collection(CONFERENCES)
+                .document(conference.code)
+                .collection(EVENTS)
+                .get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val events = it.result?.toObjects(FirebaseEvent::class.java)
+
+                        if (events != null) {
+                            val contents = events.filter { it.type.name == "Contest" }
+                            mutableLiveData.postValue(contents)
+                        }
+                    }
+                }
+
+        return mutableLiveData
     }
 
-    fun getUpdatedBookmarks(conference: FirebaseConference, updatedAt: Date?): List<DatabaseEvent> {
-        if (updatedAt != null)
-            return db.eventDao().getUpdatedBookmarks(conference.code, updatedAt)
-        return db.eventDao().getUpdatedBookmarks(conference.code)
-    }
+    fun getWorkshops(conference: FirebaseConference): MutableLiveData<List<FirebaseEvent>> {
+        val mutableLiveData = MutableLiveData<List<FirebaseEvent>>()
 
-    fun getRelatedEvents(id: Int, types: List<Type>, speakers: List<Speaker>): List<DatabaseEvent> {
-        val result = ArrayList<DatabaseEvent>()
+        firestore.collection(CONFERENCES)
+                .document(conference.code)
+                .collection(EVENTS)
+                .get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val events = it.result?.toObjects(FirebaseEvent::class.java)
 
-        val speakerEvents = db.eventSpeakerDao().getEventsForSpeakers(speakers.map { it.id })
-        result.addAll(speakerEvents)
+                        if (events != null) {
+                            val contents = events.filter { it.type.name == "Workshop" }
+                            mutableLiveData.postValue(contents)
+                        }
+                    }
+                }
 
-        // TODO: Improve this, maybe use Date + Type. Same time-block?
-        val typeEvents = db.eventDao().getEventByType(types.map { it.id })
-        result.addAll(typeEvents.sortedBy { it.location.firstOrNull()?.name })
-
-        return result.filter { it.event.id != id }.distinctBy { it.event.id }.take(3)
-    }
-
-    fun getContests(conference: FirebaseConference): LiveData<List<DatabaseEvent>> {
-        return db.eventDao().getContests(conference.code, Date().now())
-    }
-
-    fun getWorkshops(conference: FirebaseConference): LiveData<List<DatabaseEvent>> {
-        return db.eventDao().getWorkshops(conference.code, Date().now())
+        return mutableLiveData
     }
 
 }

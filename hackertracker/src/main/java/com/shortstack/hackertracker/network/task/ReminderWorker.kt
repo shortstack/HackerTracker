@@ -27,10 +27,14 @@ class ReminderWorker : Worker() {
             return Result.SUCCESS
 
         val id = inputData.getInt(NOTIFICATION_ID, -1)
-        val event = database.getEventById(id = id)
 
-        if (event != null)
-            notifications.notifyStartingSoon(event)
+        // TODO: Handle the LiveData Observer.
+//        database.getEventById(id = id)?.observe(this, Observer {
+//
+//            notifications.notifyStartingSoon(event)
+//
+//        })
+
 
         return Result.SUCCESS
     }

@@ -9,7 +9,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.FirebaseType
-import com.shortstack.hackertracker.models.Type
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers

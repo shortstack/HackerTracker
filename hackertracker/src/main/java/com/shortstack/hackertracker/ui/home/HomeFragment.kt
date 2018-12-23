@@ -12,7 +12,6 @@ import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.pedrogomez.renderers.RendererContent
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.Navigation
 import com.shortstack.hackertracker.ui.home.renderers.ActivityNavRenderer
@@ -22,7 +21,6 @@ import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
 import com.shortstack.hackertracker.views.EventView
 import com.shortstack.hackertracker.views.WifiHelperRenderer
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
-import java.text.SimpleDateFormat
 
 class HomeFragment : androidx.fragment.app.Fragment() {
 

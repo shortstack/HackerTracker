@@ -10,6 +10,7 @@ import com.shortstack.hackertracker.utils.TimeUtil
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.ArrayList
 
 class EventViewModel(val event: FirebaseEvent) : ViewModel() {
 
@@ -28,22 +29,20 @@ class EventViewModel(val event: FirebaseEvent) : ViewModel() {
 
     val progress: Float
         get() {
-//            if (!event.hasStarted)
-//                return 0f
+            if (!event.hasStarted)
+                return 0f
 
-//            val currentDate = Date().now()
-//
-//            val length = ((event.end.time - event.begin.time) / 1000 / 60).toFloat()
-//            val p = ((event.end.time - currentDate.time) / 1000 / 60).toFloat()
-//
-//            if (p == 0f)
-//                return 1f
-//
-//            val l = p / length
-//
-//            return Math.min(1.0f, 1 - l)
+            val currentDate = Date().now()
 
-            return 0f
+            val length = ((event.finish.time - event.start.time) / 1000 / 60).toFloat()
+            val p = ((event.finish.time - currentDate.time) / 1000 / 60).toFloat()
+
+            if (p == 0f)
+                return 1f
+
+            val l = p / length
+
+            return Math.min(1.0f, 1 - l)
         }
 
     var hasAnimatedProgress: Boolean = true
@@ -70,6 +69,6 @@ class EventViewModel(val event: FirebaseEvent) : ViewModel() {
     val id: Int
         get() = event.id
 
-    val speakers: Array<Speaker>?
-        get() = null
+    val speakers: ArrayList<FirebaseSpeaker>
+        get() = event.speakers
 }

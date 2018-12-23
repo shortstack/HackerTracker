@@ -1,16 +1,11 @@
 package com.shortstack.hackertracker.analytics
 
 import com.crashlytics.android.answers.CustomEvent
-import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.FirebaseEvent
 
-class EventCustomEvent : CustomEvent {
+class EventCustomEvent(action: String, event: FirebaseEvent) : CustomEvent(action) {
 
-    constructor(action: String, event: Event) : super(action) {
-        putCustomAttribute("Title", event.title)
-    }
-
-    constructor(action: String, event: FirebaseEvent) : super(action) {
+    init {
         putCustomAttribute("Title", event.title)
     }
 }
