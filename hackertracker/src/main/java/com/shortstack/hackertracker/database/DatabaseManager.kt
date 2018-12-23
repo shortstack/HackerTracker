@@ -12,6 +12,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.models.*
@@ -49,10 +50,11 @@ class DatabaseManager(context: Context) {
     val typesLiveData = MutableLiveData<List<FirebaseType>>()
 
     init {
+        val settings = FirebaseFirestoreSettings.Builder()
+                .setPersistenceEnabled(true)
+                .build()
 
-//        database.setPersistenceEnabled(true)
-        val database = database.reference
-
+        firestore.firestoreSettings = settings
         firestore.collection("conferences")
                 .get()
                 .addOnCompleteListener {
