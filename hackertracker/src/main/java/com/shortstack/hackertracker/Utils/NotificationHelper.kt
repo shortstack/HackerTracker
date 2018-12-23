@@ -102,7 +102,7 @@ class NotificationHelper @Inject constructor(private val context: Context) {
 
         WorkManager.getInstance()?.cancelAllWorkByTag(ReminderWorker.TAG + item.id)
 
-        val window: Long = (item.notificationTime - 1200).toLong()
+        val window: Long = (item.notificationTime - 1200)
 
         Logger.d("Scheduling event notification. In $window seconds, " + (window / 60) + " mins, " + (window / 3600) + " hrs.")
 

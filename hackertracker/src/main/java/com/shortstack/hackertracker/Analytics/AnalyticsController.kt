@@ -27,8 +27,6 @@ object AnalyticsController {
 
     const val MAP_VIEW = "Map - View"
 
-    const val SCHEDULE_REFRESH = "Schedule - Pull to Refresh"
-
     const val SETTINGS_ANALYTICS = "Settings - Analytics"
     const val SETTINGS_NOTIFICATIONS = "Settings - Notifications"
     const val SETTINGS_EXPIRED_EVENTS = "Settings - Expired Events"

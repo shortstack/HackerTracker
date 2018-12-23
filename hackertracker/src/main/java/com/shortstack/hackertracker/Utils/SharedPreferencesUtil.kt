@@ -3,8 +3,6 @@ package com.shortstack.hackertracker.utils
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import com.shortstack.hackertracker.Constants
-import com.shortstack.hackertracker.R
 import javax.inject.Inject
 
 

@@ -4,20 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.work.OneTimeWorkRequestBuilder
-import androidx.work.State
-import androidx.work.WorkManager
-import com.crashlytics.android.answers.CustomEvent
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Status
-import com.shortstack.hackertracker.analytics.AnalyticsController
-import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.utils.TickTimer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -30,9 +22,6 @@ import javax.inject.Inject
 class ScheduleFragment : Fragment(){
 
     private val adapter: ScheduleAdapter = ScheduleAdapter()
-
-    @Inject
-    lateinit var database: DatabaseManager
 
     @Inject
     lateinit var timer: TickTimer

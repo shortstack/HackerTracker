@@ -1,16 +1,14 @@
 package com.shortstack.hackertracker.models
 
-import androidx.lifecycle.ViewModel
 import android.content.Context
+import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.utils.TimeUtil
-import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 class EventViewModel(val event: FirebaseEvent) : ViewModel() {
 
@@ -63,7 +61,7 @@ class EventViewModel(val event: FirebaseEvent) : ViewModel() {
     }
 
     val location: String
-        get() = event.location.name ?: "Unknown"
+        get() = event.location.name
 
 
     val id: Int

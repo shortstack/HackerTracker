@@ -33,7 +33,7 @@ class MapsViewModel : ViewModel() {
 
     val maps: LiveData<List<ConferenceMap>>
         get() {
-            val conference = database.conferenceLiveData
+            val conference = database.conference
             return Transformations.switchMap(conference) { id ->
                 val mutableLiveData = MutableLiveData<List<ConferenceMap>>()
 

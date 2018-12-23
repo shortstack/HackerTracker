@@ -90,11 +90,6 @@ dependencies {
     implementation "android.arch.work:work-runtime-ktx:1.0.0-alpha04"
     implementation "android.arch.work:work-firebase:1.0.0-alpha04"
 
-    // Room
-    implementation 'androidx.room:room-rxjava2:2.0.0-beta01'
-    implementation "androidx.room:room-runtime:2.0.0-beta01"
-    kapt "androidx.room:room-compiler:2.0.0-beta01"
-
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.3.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.3.0'

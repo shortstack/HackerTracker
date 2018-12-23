@@ -26,7 +26,7 @@ class SearchViewModel : ViewModel() {
     init {
         App.application.component.inject(this)
 
-        val conference = database.conferenceLiveData.value ?: throw IllegalStateException("Current con is null.")
+        val conference = database.conference.value ?: throw IllegalStateException("Current con is null.")
 
         results = Transformations.switchMap(query) {
             val result = MediatorLiveData<List<Any>>()

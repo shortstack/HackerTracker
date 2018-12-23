@@ -25,7 +25,7 @@ class SpeakerRenderer : Renderer<FirebaseSpeaker>() {
 
     override fun render(p0: MutableList<Any>?) {
         rootView.speaker_name.text = content.name
-        rootView.speaker_description.text = if (content.title.isNullOrBlank()) {
+        rootView.speaker_description.text = if (content.title.isBlank()) {
             context.getString(R.string.speaker_default_title)
         } else {
             content.title

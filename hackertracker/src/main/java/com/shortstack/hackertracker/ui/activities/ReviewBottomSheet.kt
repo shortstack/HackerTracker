@@ -2,7 +2,6 @@ package com.shortstack.hackertracker.ui.activities
 
 import android.app.Dialog
 import android.os.Bundle
-import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import android.view.View
 import com.github.stkent.amplify.prompt.interfaces.IPromptPresenter
 import com.github.stkent.amplify.tracking.interfaces.IEvent

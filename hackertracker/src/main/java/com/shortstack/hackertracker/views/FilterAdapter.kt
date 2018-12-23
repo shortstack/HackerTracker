@@ -61,11 +61,11 @@ class FilterAdapter(private val collection: ArrayList<Any>, private val database
 
                     chip.chipText = type.name
                     chip.chipBackgroundColor = ColorStateList.valueOf(color)
-//                    chip.isCloseIconEnabled = type.isSelected
+                    chip.isCloseIconEnabled = type.isSelected
 
                     chip.setOnCheckedChangeListener(null)
 
-//                    chip.isChecked = type.isSelected
+                    chip.isChecked = type.isSelected
 
 
                     chip.setOnCheckedChangeListener { _, isChecked ->
@@ -73,8 +73,8 @@ class FilterAdapter(private val collection: ArrayList<Any>, private val database
                         chip.isCloseIconEnabled = isChecked
 
                         Single.fromCallable {
-//                            type.isSelected = isChecked
-//                            database.updateTypeIsSelected(type)
+                            type.isSelected = isChecked
+                            database.updateTypeIsSelected(type)
                         }.subscribeOn(Schedulers.io())
                                 .observeOn(AndroidSchedulers.mainThread())
                                 .subscribe({}, {})

@@ -83,12 +83,13 @@ class EventFragment : Fragment() {
             app_bar.setPadding(0, height, 0, 0)
         }
 
-        event?.let {
-            AnalyticsController.log("Viewing event ${it.title}")
+        event?.let { event ->
 
-            collapsing_toolbar.title = it.title
+            AnalyticsController.log("Viewing event ${event.title}")
 
-            val body = it.description
+            collapsing_toolbar.title = event.title
+
+            val body = event.description
 
             if (body.isNotBlank()) {
                 empty.visibility = View.GONE
@@ -97,38 +98,38 @@ class EventFragment : Fragment() {
                 empty.visibility = View.VISIBLE
             }
 
-            val url = it.link
-            if (url.isNullOrBlank()) {
+            val url = event.link
+            if (url.isBlank()) {
                 link.visibility = View.GONE
             } else {
                 link.visibility = View.VISIBLE
 
-                link.setOnClickListener { _ ->
+                link.setOnClickListener {
                     onLinkClick(url)
-                    AnalyticsController.onEventAction(AnalyticsController.EVENT_OPEN_URL, it)
+                    AnalyticsController.onEventAction(AnalyticsController.EVENT_OPEN_URL, event)
                 }
             }
 
-            share.setOnClickListener { _ ->
-                onShareClick(it)
-                AnalyticsController.onEventAction(AnalyticsController.EVENT_SHARE, it)
+            share.setOnClickListener {
+                onShareClick(event)
+                AnalyticsController.onEventAction(AnalyticsController.EVENT_SHARE, event)
             }
 
-            star.setOnClickListener { _ ->
-                onBookmarkClick(it)
+            star.setOnClickListener {
+                onBookmarkClick(event)
             }
 
-            displayDescription(it)
+            displayDescription(event)
 
-            displayTypes(it)
+            displayTypes(event)
 
-            displayBookmark(it)
+            displayBookmark(event)
 
 
-            val speakers = displaySpeakers(it)
+            val speakers = displaySpeakers(event)
 //            displayRelatedEvents(it, speakers)
 
-            AnalyticsController.onEventAction(AnalyticsController.EVENT_VIEW, it)
+            AnalyticsController.onEventAction(AnalyticsController.EVENT_VIEW, event)
         }
     }
 

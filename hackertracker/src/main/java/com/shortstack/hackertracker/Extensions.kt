@@ -1,21 +1,11 @@
 package com.shortstack.hackertracker
 
-import android.view.Gravity
-import android.view.animation.TranslateAnimation
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.transition.Fade
-import androidx.transition.Slide
-import androidx.transition.Transition
-import androidx.transition.TransitionSet
 import com.google.gson.Gson
-import com.orhanobut.logger.Logger
-import org.json.JSONException
-import java.io.FileNotFoundException
-import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -58,10 +48,6 @@ fun Date.getDateDifference(date: Date, timeUnit: TimeUnit): Long {
 }
 
 
-inline fun <reified T> Gson.fromFile(filename: String, root: String?): T? {
-    throw NotImplementedError("Do not use anymore")
-}
-
 fun Date.now(): Date {
 //    if (BuildConfig.DEBUG) {
 //        return Calendar.getInstance().now().time
@@ -102,17 +88,17 @@ fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int, hasAnima
 
         if (hasAnimation) {
 
-            val FADE_DEFAULT_TIME = 300L
+            val fadeDuration = 300L
 
 
             fragment.apply {
                 enterTransition = Fade().apply {
-                    duration = FADE_DEFAULT_TIME
+                    duration = fadeDuration
                 }
 
 
                 returnTransition = Fade().apply {
-                    duration = FADE_DEFAULT_TIME
+                    duration = fadeDuration
                 }
             }
         }

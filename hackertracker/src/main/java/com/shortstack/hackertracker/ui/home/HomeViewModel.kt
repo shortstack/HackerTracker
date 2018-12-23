@@ -23,7 +23,7 @@ class HomeViewModel : ViewModel() {
 
     val recent: LiveData<List<FirebaseEvent>>
         get() {
-            val conference = database.conferenceLiveData
+            val conference = database.conference
             return Transformations.switchMap(conference) { id ->
                 if (id == null) {
                     return@switchMap MutableLiveData<List<FirebaseEvent>>()

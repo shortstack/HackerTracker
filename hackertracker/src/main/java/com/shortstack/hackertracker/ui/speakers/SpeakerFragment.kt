@@ -59,8 +59,7 @@ class SpeakerFragment : Fragment() {
         val context = context ?: return
 
 
-        val drawable = ContextCompat.getDrawable(context
-                ?: return, R.drawable.ic_arrow_back_white_24dp)
+        val drawable = ContextCompat.getDrawable(context, R.drawable.ic_arrow_back_white_24dp)
         toolbar.navigationIcon = drawable
 
         toolbar.setNavigationOnClickListener {
@@ -78,7 +77,7 @@ class SpeakerFragment : Fragment() {
             AnalyticsController.log("Viewing speaker ${it.name}")
 
             collapsing_toolbar.title = it.name
-            collapsing_toolbar.subtitle = if (speaker.title.isNullOrEmpty()) {
+            collapsing_toolbar.subtitle = if (speaker.title.isEmpty()) {
                 context.getString(R.string.speaker_default_title)
             } else {
                 speaker.title
@@ -90,13 +89,13 @@ class SpeakerFragment : Fragment() {
             } else {
                 twitter.visibility = View.VISIBLE
 
-                twitter.setOnClickListener { _ ->
+                twitter.setOnClickListener {
                     val url = "https://twitter.com/" + url.replace("@", "")
 
                     val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(url))
                     context.startActivity(intent)
 
-                    AnalyticsController.onSpeakerEvent(AnalyticsController.SPEAKER_TWITTER, it)
+                    AnalyticsController.onSpeakerEvent(AnalyticsController.SPEAKER_TWITTER, speaker)
                 }
             }
 

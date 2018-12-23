@@ -2,15 +2,14 @@ package com.shortstack.hackertracker.models
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
-import java.sql.Timestamp
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 /**
  * Created by Chris on 2018-12-15.
  */
+@Parcelize
 data class FirebaseConference(
         val id: Int = 0,
         val name: String = "",
@@ -19,7 +18,7 @@ data class FirebaseConference(
         val isSelected: Boolean = false
 //        val events: HashMap<String, FirebaseEvent> = HashMap(),
 //        val types: HashMap<String, FirebaseType> = HashMap()
-)
+) : Parcelable
 
 @Parcelize
 data class FirebaseEvent(
@@ -62,7 +61,7 @@ data class FirebaseEvent(
 
     val notificationTime: Long
         get() = 0L // TODO: Return the amount of milliseconds until this event starts.
-    
+
     val hasStarted: Boolean
         get() = true // TODO: Check if the event has started yet.
 }
@@ -72,7 +71,8 @@ data class FirebaseType(
         val id: Int = -1,
         val name: String = "",
         val conference: String = "",
-        val color: String = ""
+        val color: String = "",
+        var isSelected: Boolean = false
 ) : Parcelable
 
 @Parcelize

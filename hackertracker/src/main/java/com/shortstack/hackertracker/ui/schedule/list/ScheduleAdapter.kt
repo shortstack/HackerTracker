@@ -1,25 +1,14 @@
 package com.shortstack.hackertracker.ui.schedule.list
 
 import androidx.recyclerview.widget.DiffUtil
-import com.orhanobut.logger.Logger
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Status
-import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.*
-import com.shortstack.hackertracker.utils.SharedPreferencesUtil
-import java.text.SimpleDateFormat
-import java.util.*
-import javax.inject.Inject
-import kotlin.collections.ArrayList
+import com.shortstack.hackertracker.models.Day
+import com.shortstack.hackertracker.models.FirebaseEvent
+import com.shortstack.hackertracker.models.Time
 
 class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) {
-
-    @Inject
-    lateinit var database: DatabaseManager
-
-    @Inject
-    lateinit var storage: SharedPreferencesUtil
 
     var state: Status = Status.NOT_INITIALIZED
 
@@ -37,14 +26,12 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
         elements.groupBy { it.date }.toSortedMap().forEach {
             if (prevDay != it.key) {
                 val day = Day(it.key)
-                Logger.d("adding day $day")
                 result.add(day)
             }
 
             it.value.groupBy { it.start }.toSortedMap().forEach {
                 if (prevTime != it.key) {
                     val time = Time(it.key)
-                    Logger.d("Added time $time")
                     result.add(time)
                 }
 

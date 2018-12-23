@@ -17,7 +17,7 @@ class SpeakerView : LinearLayout {
     constructor(context: Context, speaker: FirebaseSpeaker) : super(context) {
         speaker_name.text = speaker.name
 
-        speaker_description.text = if (speaker.title.isNullOrEmpty()) {
+        speaker_description.text = if (speaker.title.isEmpty()) {
             context.getString(R.string.speaker_default_title)
         } else {
             speaker.title

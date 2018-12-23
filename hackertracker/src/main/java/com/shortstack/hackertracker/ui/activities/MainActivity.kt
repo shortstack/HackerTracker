@@ -3,7 +3,6 @@ package com.shortstack.hackertracker.ui.activities
 
 import android.content.res.Resources
 import android.os.Bundle
-import android.view.Gravity
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -17,8 +16,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.work.State
-import androidx.work.WorkManager
 import com.github.stkent.amplify.tracking.Amplify
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.shortstack.hackertracker.App
@@ -49,10 +46,7 @@ import kotlinx.android.synthetic.main.view_filter.*
 import javax.inject.Inject
 
 
-class MainActivity() : AppCompatActivity(), com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
-
-    @Inject
-    lateinit var storage: SharedPreferencesUtil
+class MainActivity : AppCompatActivity(), com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
 
     @Inject
     lateinit var database: DatabaseManager
@@ -61,6 +55,8 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
     lateinit var timer: TickTimer
 
     private lateinit var bottomSheet: BottomSheetBehavior<View>
+
+    private lateinit var viewModel: MainActivityViewModel
 
     private val map = HashMap<Int, Fragment>()
 
@@ -74,13 +70,13 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
 
         initNavDrawer()
 
-        val mainActivityViewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
-        mainActivityViewModel.conference.observe(this, Observer {
+        viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+        viewModel.conference.observe(this, Observer {
             if (it != null) {
                 nav_view.getHeaderView(0).nav_title.text = it.name
             }
         })
-        mainActivityViewModel.conferences.observe(this, Observer {
+        viewModel.conferences.observe(this, Observer {
 
             nav_view.menu.removeGroup(R.id.nav_cons)
             it.filter { !it.isSelected }.forEach {
@@ -92,7 +88,7 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
         })
 
 
-        database.typesLiveData.observe(this, Observer {
+        viewModel.types.observe(this, Observer {
             filters.setTypes(it)
         })
 
@@ -197,7 +193,7 @@ class MainActivity() : AppCompatActivity(), com.google.android.material.navigati
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         if (item.groupId == R.id.nav_cons) {
-            database.changeConference(item.itemId)
+            viewModel.changeConference(item.itemId)
         } else {
             setMainFragment(item.itemId, item.title.toString(), false)
         }

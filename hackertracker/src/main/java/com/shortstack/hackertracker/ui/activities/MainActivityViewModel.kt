@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.FirebaseConference
+import com.shortstack.hackertracker.models.FirebaseType
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import javax.inject.Inject
 
@@ -13,8 +14,6 @@ import javax.inject.Inject
  */
 class MainActivityViewModel : ViewModel() {
 
-    @Inject
-    lateinit var storage: SharedPreferencesUtil
 
     @Inject
     lateinit var database: DatabaseManager
@@ -24,8 +23,15 @@ class MainActivityViewModel : ViewModel() {
     }
 
     val conference: LiveData<FirebaseConference>
-        get() = database.conferenceLiveData
+        get() = database.conference
 
     val conferences: LiveData<List<FirebaseConference>>
         get() = database.getConferences()
+
+    val types: LiveData<List<FirebaseType>>
+        get() = database.types
+
+    fun changeConference(itemId: Int) {
+        database.changeConference(itemId)
+    }
 }

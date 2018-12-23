@@ -23,7 +23,7 @@ class VendorsViewModel : ViewModel() {
 
     val vendors: LiveData<Resource<List<Vendor>>>
         get() {
-            val conference = database.conferenceLiveData
+            val conference = database.conference
             return Transformations.switchMap(conference) { id ->
                 result.value = Resource.loading(null)
 

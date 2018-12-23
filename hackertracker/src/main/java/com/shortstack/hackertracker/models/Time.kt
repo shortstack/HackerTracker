@@ -3,7 +3,7 @@ package com.shortstack.hackertracker.models
 import java.text.SimpleDateFormat
 import java.util.*
 
-class Day(date: Date) : Date() {
+class Time(date: Date) : Date() {
     init {
         this.time = date.time
     }

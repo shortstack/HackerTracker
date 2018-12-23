@@ -1,20 +1,17 @@
 package com.shortstack.hackertracker.ui.maps
 
+import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import android.os.Bundle
-import com.google.android.material.tabs.TabLayout
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
-import android.view.*
 import com.crashlytics.android.answers.CustomEvent
-import com.shortstack.hackertracker.App
+import com.google.android.material.tabs.TabLayout
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.models.ConferenceMap
 import kotlinx.android.synthetic.main.fragment_maps.*
-import javax.inject.Inject
 
 class MapsFragment : androidx.fragment.app.Fragment() {
 

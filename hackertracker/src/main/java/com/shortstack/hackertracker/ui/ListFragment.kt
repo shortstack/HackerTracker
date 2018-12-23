@@ -1,12 +1,11 @@
 package com.shortstack.hackertracker.ui
 
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProviders
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Resource

@@ -29,11 +29,10 @@ class DatabaseManager {
         private const val VENDORS = "vendors"
     }
 
-    val firestore = FirebaseFirestore.getInstance()
+    private val firestore = FirebaseFirestore.getInstance()
 
-    val conferenceLiveData = MutableLiveData<FirebaseConference>()
-
-    val typesLiveData = MutableLiveData<List<FirebaseType>>()
+    val conference = MutableLiveData<FirebaseConference>()
+    val types = MutableLiveData<List<FirebaseType>>()
 
     init {
         val settings = FirebaseFirestoreSettings.Builder()
@@ -50,7 +49,7 @@ class DatabaseManager {
                     val cons = it.toObjects(FirebaseConference::class.java)
                     val con = cons.firstOrNull()
 
-                    conferenceLiveData.postValue(con)
+                    conference.postValue(con)
 
                     if (con != null) {
                         firestore.collection(CONFERENCES)
@@ -58,10 +57,9 @@ class DatabaseManager {
                                 .collection(TYPES)
                                 .get().addOnSuccessListener {
                                     val types = it.toObjects(FirebaseType::class.java)
-                                    typesLiveData.postValue(types)
+                                    this.types.postValue(types)
                                 }
                     }
-
                 }
     }
 
@@ -74,7 +72,7 @@ class DatabaseManager {
 
                     // TODO: Handle setting the conference as the currently selected con.
 
-                    conferenceLiveData.postValue(con)
+                    conference.postValue(con)
                 }
     }
 
@@ -100,7 +98,7 @@ class DatabaseManager {
                 .get()
                 .addOnSuccessListener {
                     val events = it.toObjects(FirebaseEvent::class.java)
-                    val recent = events?.sortedBy { it.updated }?.take(10)
+                    val recent = events.sortedBy { it.updated }.take(10)
                     mutableLiveData.postValue(recent)
                 }
 
@@ -117,6 +115,7 @@ class DatabaseManager {
         val date = Date().now()
 
         val mutableLiveData = MutableLiveData<List<FirebaseEvent>>()
+
 
         // TODO: Handle searching by selected types.
         firestore.collection(CONFERENCES)
@@ -221,6 +220,7 @@ class DatabaseManager {
 
     fun updateTypeIsSelected(type: FirebaseType) {
         // TODO: Update the type within Firestore.
+
     }
 
     fun clear() {

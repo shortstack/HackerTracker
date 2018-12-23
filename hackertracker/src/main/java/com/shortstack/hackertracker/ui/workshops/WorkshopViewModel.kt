@@ -26,7 +26,7 @@ class WorkshopViewModel : ViewModel() {
 
     val workshops: LiveData<Resource<List<FirebaseEvent>>>
         get() {
-            val conference = database.conferenceLiveData
+            val conference = database.conference
             return Transformations.switchMap(conference) { id ->
                 result.value = Resource.loading(null)
 
