@@ -69,29 +69,6 @@ class DatabaseManager(context: Context) {
                         }
                     }
                 }
-
-
-        database.child("conferences").addValueEventListener(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
-                Logger.e("Cancelled!")
-            }
-
-            override fun onDataChange(snapshot: DataSnapshot) {
-                Logger.d("Data has changed!")
-                val cons = snapshot.children.map {
-                    it.getValue(FirebaseConference::class.java)
-                }
-                val defcon = cons.first()!!
-
-
-
-
-
-                conferenceLiveData.postValue(defcon)
-
-//                typesLiveData.postValue(defcon.types.values.toList())
-            }
-        })
     }
 
     private fun getCurrentCon(): DatabaseConference? {
@@ -113,22 +90,20 @@ class DatabaseManager(context: Context) {
     fun getRecent(conference: FirebaseConference): LiveData<List<FirebaseEvent>> {
         val mutableLiveData = MutableLiveData<List<FirebaseEvent>>()
 
-        FirebaseDatabase.getInstance().getReference("conferences/DC26/events").addListenerForSingleValueEvent(object : ValueEventListener {
-            override fun onCancelled(p0: DatabaseError) {
+        conferenceLiveData.value?.let {
+            val id = it.code
 
-            }
-
-            override fun onDataChange(p0: DataSnapshot) {
-                val events = p0.children.map {
-                    it.getValue(FirebaseEvent::class.java) ?: return
-                }.sortedBy { it.begin }.take(20)
-
-                mutableLiveData.postValue(events)
-            }
-
-        })
-
-
+            firestore.collection("conferences")
+                    .document(id)
+                    .collection("events")
+                    .get().addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            val events = it.result?.toObjects(FirebaseEvent::class.java)
+                            val recent = events?.sortedBy { it.updated }?.take(10)
+                            mutableLiveData.postValue(recent)
+                        }
+                    }
+        }
 
         return mutableLiveData
     }

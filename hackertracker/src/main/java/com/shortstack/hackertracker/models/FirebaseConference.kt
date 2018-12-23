@@ -29,6 +29,7 @@ data class FirebaseEvent(
         val begin: String = "",
         val end: String = "",
         val link: String = "",
+        val updated: String = "",
         val isBookmarked: Boolean = false,
         val speakers: ArrayList<FirebaseSpeaker> = ArrayList(),
 //        val speakers: Map<String, Boolean> = HashMap(),
