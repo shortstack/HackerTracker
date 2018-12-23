@@ -41,25 +41,27 @@ class DatabaseManager {
                 .build()
 
         firestore.firestoreSettings = settings
+
+
         firestore.collection(CONFERENCES)
                 .get()
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        it.result?.documents?.forEach {
-                            val con = it.toObject(FirebaseConference::class.java)
-                            conferenceLiveData.postValue(con)
+                .addOnSuccessListener {
 
-                            if (con != null) {
-                                firestore.collection(CONFERENCES)
-                                        .document(con.code)
-                                        .collection(TYPES)
-                                        .get().addOnSuccessListener {
-                                            val types = it.toObjects(FirebaseType::class.java)
-                                            typesLiveData.postValue(types)
-                                        }
-                            }
-                        }
+                    val cons = it.toObjects(FirebaseConference::class.java)
+                    val con = cons.firstOrNull()
+
+                    conferenceLiveData.postValue(con)
+
+                    if (con != null) {
+                        firestore.collection(CONFERENCES)
+                                .document(con.code)
+                                .collection(TYPES)
+                                .get().addOnSuccessListener {
+                                    val types = it.toObjects(FirebaseType::class.java)
+                                    typesLiveData.postValue(types)
+                                }
                     }
+
                 }
     }
 
@@ -67,14 +69,12 @@ class DatabaseManager {
         firestore.collection(CONFERENCES)
                 .document(id.toString())
                 .get()
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val con = it.result?.toObject(FirebaseConference::class.java)
+                .addOnSuccessListener {
+                    val con = it.toObject(FirebaseConference::class.java)
 
-                        // TODO: Handle setting the conference as the currently selected con.
+                    // TODO: Handle setting the conference as the currently selected con.
 
-                        conferenceLiveData.postValue(con)
-                    }
+                    conferenceLiveData.postValue(con)
                 }
     }
 
@@ -83,12 +83,9 @@ class DatabaseManager {
 
         firestore.collection(CONFERENCES)
                 .get()
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val cons = it.result?.toObjects(FirebaseConference::class.java)
-
-                        mutableLiveData.postValue(cons)
-                    }
+                .addOnSuccessListener {
+                    val cons = it.toObjects(FirebaseConference::class.java)
+                    mutableLiveData.postValue(cons)
                 }
 
         return mutableLiveData
@@ -100,12 +97,11 @@ class DatabaseManager {
         firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(EVENTS)
-                .get().addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val events = it.result?.toObjects(FirebaseEvent::class.java)
-                        val recent = events?.sortedBy { it.updated }?.take(10)
-                        mutableLiveData.postValue(recent)
-                    }
+                .get()
+                .addOnSuccessListener {
+                    val events = it.toObjects(FirebaseEvent::class.java)
+                    val recent = events?.sortedBy { it.updated }?.take(10)
+                    mutableLiveData.postValue(recent)
                 }
 
         return mutableLiveData
@@ -127,17 +123,10 @@ class DatabaseManager {
                 .document(conference.code)
                 .collection(EVENTS)
                 .get()
-                .addOnCompleteListener { task ->
-
-                    if (task.isSuccessful) {
-                        val events = task.result?.toObjects(FirebaseEvent::class.java)
-
-                        if (events != null)
-                            mutableLiveData.postValue(events)
-                    }
+                .addOnSuccessListener {
+                    val events = it.toObjects(FirebaseEvent::class.java)
+                    mutableLiveData.postValue(events)
                 }
-
-
 
         return mutableLiveData
     }
@@ -148,11 +137,10 @@ class DatabaseManager {
         firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(FAQS)
-                .get().addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val faqs = it.result?.toObjects(FAQ::class.java)
-                        mutableLiveData.postValue(faqs)
-                    }
+                .get()
+                .addOnSuccessListener {
+                    val faqs = it.toObjects(FAQ::class.java)
+                    mutableLiveData.postValue(faqs)
                 }
 
         return mutableLiveData
@@ -164,11 +152,10 @@ class DatabaseManager {
         firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(VENDORS)
-                .get().addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val vendors = it.result?.toObjects(Vendor::class.java)
-                        mutableLiveData.postValue(vendors)
-                    }
+                .get()
+                .addOnSuccessListener {
+                    val vendors = it.toObjects(Vendor::class.java)
+                    mutableLiveData.postValue(vendors)
                 }
         return mutableLiveData
     }
@@ -179,11 +166,9 @@ class DatabaseManager {
         firestore.collection(CONFERENCES)
                 .document(id.toString())
                 .get()
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val event = it.result?.toObject(FirebaseEvent::class.java)
-                        mutableLiveData.postValue(event)
-                    }
+                .addOnSuccessListener {
+                    val event = it.toObject(FirebaseEvent::class.java)
+                    mutableLiveData.postValue(event)
                 }
 
         return mutableLiveData
@@ -262,15 +247,11 @@ class DatabaseManager {
                 .document(conference.code)
                 .collection(EVENTS)
                 .get()
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val events = it.result?.toObjects(FirebaseEvent::class.java)
+                .addOnSuccessListener {
+                    val events = it.toObjects(FirebaseEvent::class.java)
 
-                        if (events != null) {
-                            val contents = events.filter { it.type.name == "Contest" }
-                            mutableLiveData.postValue(contents)
-                        }
-                    }
+                    val contents = events.filter { it.type.name == "Contest" }
+                    mutableLiveData.postValue(contents)
                 }
 
         return mutableLiveData
@@ -283,15 +264,10 @@ class DatabaseManager {
                 .document(conference.code)
                 .collection(EVENTS)
                 .get()
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val events = it.result?.toObjects(FirebaseEvent::class.java)
-
-                        if (events != null) {
-                            val contents = events.filter { it.type.name == "Workshop" }
-                            mutableLiveData.postValue(contents)
-                        }
-                    }
+                .addOnSuccessListener {
+                    val events = it.toObjects(FirebaseEvent::class.java)
+                    val contents = events.filter { it.type.name == "Workshop" }
+                    mutableLiveData.postValue(contents)
                 }
 
         return mutableLiveData
