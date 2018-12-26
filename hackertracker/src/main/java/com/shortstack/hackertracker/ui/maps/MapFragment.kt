@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.fragment_map.*
+import java.io.File
 
 class MapFragment : androidx.fragment.app.Fragment() {
 
@@ -15,9 +16,17 @@ class MapFragment : androidx.fragment.app.Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewer.fromAsset(arguments?.getString(ARG_PDF)).onLoad {
-            //            progress_container.visibility = View.GONE
-        }.load()
+        val file = arguments?.getSerializable(ARG_PDF) as? File
+
+        if (file == null) {
+            progress.visibility = View.VISIBLE
+        } else {
+            progress.visibility = View.VISIBLE
+
+            viewer.fromFile(file).onLoad {
+                progress.visibility = View.GONE
+            }.load()
+        }
     }
 
     override fun onDestroyView() {
@@ -27,13 +36,13 @@ class MapFragment : androidx.fragment.app.Fragment() {
     }
 
     companion object {
-        val ARG_PDF = "PDF"
+        private const val ARG_PDF = "PDF"
 
-        fun newInstance(file: String): MapFragment {
+        fun newInstance(file: File?): MapFragment {
             val fragment = MapFragment()
 
             val bundle = Bundle()
-            bundle.putString(ARG_PDF, file)
+            bundle.putSerializable(ARG_PDF, file)
             fragment.arguments = bundle
 
             return fragment

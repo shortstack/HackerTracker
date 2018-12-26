@@ -36,7 +36,6 @@ import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import com.shortstack.hackertracker.ui.workshops.WorkshopFragment
-import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.utils.TickTimer
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -80,7 +79,7 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
 
             nav_view.menu.removeGroup(R.id.nav_cons)
             it.filter { !it.isSelected }.forEach {
-                nav_view.menu.add(R.id.nav_cons, it.id, 0, it.name).apply {
+                nav_view.menu.add(R.id.nav_cons, it.id, 8, it.name).apply {
                     isChecked = it.isSelected
                     icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_chevron_right_white_24dp)
                 }
@@ -89,6 +88,25 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
 
 
         viewModel.types.observe(this, Observer {
+
+            val hasContest = it.firstOrNull { it.name == "Contest" } != null
+            if (!hasContest) {
+                nav_view.menu.removeItem(NAV_CONTESTS)
+            } else if (nav_view.menu.findItem(NAV_CONTESTS) == null) {
+                nav_view.menu.add(R.id.nav_main, NAV_CONTESTS, 3, R.string.contests).apply {
+                    icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_cake_white_24dp)
+                }
+            }
+
+            val hasWorkshops = it.firstOrNull { it.name == "Workshop" } != null
+            if (!hasWorkshops) {
+                nav_view.menu.removeItem(NAV_WORKSHOPS)
+            } else if (nav_view.menu.findItem(NAV_WORKSHOPS) == null) {
+                nav_view.menu.add(R.id.nav_main, NAV_WORKSHOPS, 3, R.string.workshops).apply {
+                    icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_computer_white_24dp)
+                }
+            }
+
             filters.setTypes(it)
         })
 
@@ -209,8 +227,8 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
                 R.id.nav_schedule -> ScheduleFragment.newInstance()
                 R.id.nav_map -> MapsFragment.newInstance()
                 R.id.nav_companies -> VendorsFragment.newInstance()
-                R.id.nav_contests -> ContestsFragment.newInstance()
-                R.id.nav_workshops -> WorkshopFragment.newInstance()
+                NAV_CONTESTS -> ContestsFragment.newInstance()
+                NAV_WORKSHOPS -> WorkshopFragment.newInstance()
                 R.id.nav_settings -> SettingsFragment.newInstance()
                 R.id.search -> SearchFragment.newInstance()
                 else -> InformationFragment.newInstance()
@@ -252,5 +270,10 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
                 setFABVisibility(View.INVISIBLE)
             }
         }
+    }
+
+    companion object {
+        private const val NAV_WORKSHOPS = 1001
+        private const val NAV_CONTESTS = 1002
     }
 }

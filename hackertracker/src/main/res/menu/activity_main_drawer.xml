@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group android:checkableBehavior="single">
+    <group
+        android:id="@+id/nav_main"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_white_24dp"
@@ -27,23 +29,16 @@
             android:title="@string/partners_vendors" />
 
         <item
-            android:id="@+id/nav_contests"
-            android:icon="@drawable/ic_cake_white_24dp"
-            android:title="@string/contests" />
-
-        <item
-            android:id="@+id/nav_workshops"
-            android:icon="@drawable/ic_computer_white_24dp"
-            android:title="@string/workshops" />
-
-        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings_white_24dp"
+            android:orderInCategory="4"
             android:title="@string/settings" />
+
     </group>
 
     <group
         android:id="@+id/nav_cons"
         android:checkableBehavior="single" />
+
 
 </menu>

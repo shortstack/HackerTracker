@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
@@ -33,6 +34,7 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
 
             val collection = ArrayList<Any>()
 
+            // TODO: Reimplement a 'show bookmarked events' type.
 //            types.find { it.isBookmark }?.let {
 //                collection.add(it)
                 collection.add(context.getString(R.string.types))
@@ -42,7 +44,7 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
 
             val adapter = FilterAdapter(collection, database)
 
-            list.layoutManager = GridLayoutManager(context, SPAN_COUNT, GridLayoutManager.VERTICAL, false).apply {
+            list.layoutManager = GridLayoutManager(context, SPAN_COUNT, RecyclerView.VERTICAL, false).apply {
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                     override fun getSpanSize(position: Int): Int {
                         return when (adapter.getItemViewType(position)) {

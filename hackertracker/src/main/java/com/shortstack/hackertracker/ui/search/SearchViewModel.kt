@@ -26,7 +26,8 @@ class SearchViewModel : ViewModel() {
     init {
         App.application.component.inject(this)
 
-        val conference = database.conference.value ?: throw IllegalStateException("Current con is null.")
+        val conference = database.conference.value
+                ?: throw IllegalStateException("Current con is null.")
 
         results = Transformations.switchMap(query) {
             val result = MediatorLiveData<List<Any>>()
@@ -37,9 +38,17 @@ class SearchViewModel : ViewModel() {
                 val text = "%$it%"
 
                 clear()
-                speakers.addAll(database.searchForSpeaker(conference, text))
-                events.addAll(database.searchForEvents(conference, text))
-                locations.addAll(database.searchForLocation(conference, text))
+//                speakers.addAll(database.searchForSpeaker(conference, text))
+//                events.addAll(database.searchForEvents(conference, text))
+                database.searchForEvents(conference, text)
+                        .subscribe { it ->
+                            events.addAll(it)
+
+                            setValue(result)
+                        }
+
+
+//                locations.addAll(database.searchForLocation(conference, text))
 
                 setValue(result)
             }

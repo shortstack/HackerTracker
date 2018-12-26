@@ -117,6 +117,8 @@ dependencies {
     implementation "com.hendraanggrian.material:collapsingtoolbarlayout-subtitle:1.0.0-beta01"
     implementation 'com.google.firebase:firebase-database:16.0.5'
     implementation 'com.google.firebase:firebase-firestore:17.1.4'
+    implementation 'com.google.firebase:firebase-storage:16.0.5'
+
 
 
     implementation 'com.android.support:multidex:1.0.3'

@@ -1,6 +1,8 @@
 package com.shortstack.hackertracker.models
 
 import android.os.Parcelable
+import com.google.firebase.firestore.PropertyName
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 import java.text.SimpleDateFormat
 import java.util.*
@@ -15,7 +17,10 @@ data class FirebaseConference(
         val name: String = "",
         val description: String = "",
         val code: String = "",
-        val isSelected: Boolean = false
+        @field:JvmField
+        @PropertyName("is_selected")
+        val isSelected: Boolean = false,
+        val maps: ArrayList<FirebaseMap> = ArrayList()
 //        val events: HashMap<String, FirebaseEvent> = HashMap(),
 //        val types: HashMap<String, FirebaseType> = HashMap()
 ) : Parcelable
@@ -30,9 +35,10 @@ data class FirebaseEvent(
         val end: String = "",
         val link: String = "",
         val updated: String = "",
-        val isBookmarked: Boolean = false,
+        @field:JvmField
+        @PropertyName("is_bookmarked")
+        var isBookmarked: Boolean = false,
         val speakers: ArrayList<FirebaseSpeaker> = ArrayList(),
-//        val speakers: Map<String, Boolean> = HashMap(),
         val type: FirebaseType = FirebaseType(),
         val location: FirebaseLocation = FirebaseLocation()
 ) : Parcelable {
@@ -72,8 +78,16 @@ data class FirebaseType(
         val name: String = "",
         val conference: String = "",
         val color: String = "",
+        @field:JvmField
+        @PropertyName("is_selected")
         var isSelected: Boolean = false
-) : Parcelable
+
+
+) : Parcelable {
+    override fun equals(other: Any?): Boolean {
+        return (other as? FirebaseType)?.id == id || super.equals(other)
+    }
+}
 
 @Parcelize
 data class FirebaseLocation(
@@ -90,4 +104,10 @@ data class FirebaseSpeaker(
         val title: String = "",
 
         val events: ArrayList<FirebaseEvent> = ArrayList()
+) : Parcelable
+
+@Parcelize
+data class FirebaseMap(
+        val name: String = "",
+        val file: String = ""
 ) : Parcelable

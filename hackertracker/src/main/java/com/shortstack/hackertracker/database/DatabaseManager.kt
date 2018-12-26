@@ -7,11 +7,15 @@ import androidx.work.WorkManager
 import androidx.work.toWorkData
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.storage.FirebaseStorage
+import com.orhanobut.logger.Logger
+import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.task.ReminderWorker
 import com.shortstack.hackertracker.now
 import io.reactivex.Single
+import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -30,49 +34,72 @@ class DatabaseManager {
     }
 
     private val firestore = FirebaseFirestore.getInstance()
+    private val storage = FirebaseStorage.getInstance()
 
     val conference = MutableLiveData<FirebaseConference>()
     val types = MutableLiveData<List<FirebaseType>>()
 
     init {
-        val settings = FirebaseFirestoreSettings.Builder()
-                .setPersistenceEnabled(true)
-                .build()
+        if (!BuildConfig.DEBUG) {
+            val settings = FirebaseFirestoreSettings.Builder()
+                    .setPersistenceEnabled(true)
+                    .build()
 
-        firestore.firestoreSettings = settings
-
+            firestore.firestoreSettings = settings
+        }
 
         firestore.collection(CONFERENCES)
-                .get()
-                .addOnSuccessListener {
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val cons = snapshot?.toObjects(FirebaseConference::class.java)
+                        val con = cons?.firstOrNull { it.isSelected } ?: cons?.firstOrNull()
 
-                    val cons = it.toObjects(FirebaseConference::class.java)
-                    val con = cons.firstOrNull()
+                        conference.postValue(con)
 
-                    conference.postValue(con)
+                        if (con != null) {
+                            firestore.collection(CONFERENCES)
+                                    .document(con.code)
+                                    .collection(TYPES)
+                                    .addSnapshotListener { snapshot, exception ->
+                                        if (exception == null) {
+                                            val types = snapshot?.toObjects(FirebaseType::class.java)
+                                            this.types.postValue(types)
 
-                    if (con != null) {
-                        firestore.collection(CONFERENCES)
-                                .document(con.code)
-                                .collection(TYPES)
-                                .get().addOnSuccessListener {
-                                    val types = it.toObjects(FirebaseType::class.java)
-                                    this.types.postValue(types)
-                                }
+                                            // TODO: Remove.
+                                            conference.postValue(conference.value)
+                                        }
+                                    }
+                        }
                     }
                 }
     }
 
     fun changeConference(id: Int) {
+        val current = conference.value
+
+        if (current != null) {
+            firestore.collection(CONFERENCES)
+                    .document(current.code)
+                    .update(mapOf("is_selected" to false))
+                    .addOnSuccessListener {
+                        Logger.d("Removed the prev selected.")
+                    }
+
+        }
+
         firestore.collection(CONFERENCES)
-                .document(id.toString())
+                .whereEqualTo("id", id)
                 .get()
+
                 .addOnSuccessListener {
-                    val con = it.toObject(FirebaseConference::class.java)
+                    Logger.d("Added the newly selected.")
 
-                    // TODO: Handle setting the conference as the currently selected con.
-
-                    conference.postValue(con)
+                    val selected = it.toObjects(FirebaseConference::class.java).firstOrNull()
+                    if (selected != null) {
+                        firestore.collection(CONFERENCES)
+                                .document(selected.code)
+                                .update(mapOf("is_selected" to true))
+                    }
                 }
     }
 
@@ -116,15 +143,20 @@ class DatabaseManager {
 
         val mutableLiveData = MutableLiveData<List<FirebaseEvent>>()
 
+        val types = types.value?.filter { it.isSelected } ?: emptyList()
+
 
         // TODO: Handle searching by selected types.
         firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(EVENTS)
-                .get()
-                .addOnSuccessListener {
-                    val events = it.toObjects(FirebaseEvent::class.java)
-                    mutableLiveData.postValue(events)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val events = snapshot?.toObjects(FirebaseEvent::class.java)?.filter {
+                            types.isEmpty() || types.contains(it.type)
+                        }
+                        mutableLiveData.postValue(events)
+                    }
                 }
 
         return mutableLiveData
@@ -173,8 +205,22 @@ class DatabaseManager {
         return mutableLiveData
     }
 
-    fun searchForEvents(conference: FirebaseConference, text: String): List<FirebaseEvent> {
-        TODO("Need to implement a single threaded solution for searching.")
+    fun searchForEvents(conference: FirebaseConference, text: String): Single<List<FirebaseEvent>> {
+        return Single.create { emitter ->
+            val eventsRef = firestore.collection(CONFERENCES)
+                    .document(conference.code)
+                    .collection(EVENTS)
+
+            eventsRef.whereGreaterThan("title", text).addSnapshotListener { snapshot, exception ->
+                if (exception == null) {
+                    val events = snapshot?.toObjects(FirebaseEvent::class.java)
+                            ?: return@addSnapshotListener
+                    Logger.d("got events!")
+
+                    emitter.onSuccess(events)
+                }
+            }
+        }
     }
 
     fun searchForLocation(conference: FirebaseConference, text: String): List<FirebaseLocation> {
@@ -188,7 +234,9 @@ class DatabaseManager {
 
     fun getTypeForEvent(event: FirebaseEvent): Single<FirebaseType> {
         return Single.create<FirebaseType> { emitter ->
-            emitter.onSuccess(event.type)
+
+            val type = types.value?.firstOrNull() { it.id == event.type.id } ?: return@create
+            emitter.onSuccess(type)
         }
     }
 
@@ -216,11 +264,21 @@ class DatabaseManager {
         }
 
         // TODO: Update the bookmark within Firestore.
+        firestore.collection(CONFERENCES)
+                .document(event.conference)
+                .collection(EVENTS)
+                .document(event.id.toString())
+                .update(mapOf("is_bookmarked" to event.isBookmarked))
+
     }
 
     fun updateTypeIsSelected(type: FirebaseType) {
         // TODO: Update the type within Firestore.
-
+        firestore.collection(CONFERENCES)
+                .document(type.conference)
+                .collection(TYPES)
+                .document(type.id.toString())
+                .update(mapOf("is_selected" to type.isSelected))
     }
 
     fun clear() {
@@ -269,6 +327,38 @@ class DatabaseManager {
                     val contents = events.filter { it.type.name == "Workshop" }
                     mutableLiveData.postValue(contents)
                 }
+
+        return mutableLiveData
+    }
+
+    fun getMaps(conference: FirebaseConference): MutableLiveData<List<ConferenceMap>> {
+        val mutableLiveData = MutableLiveData<List<ConferenceMap>>()
+
+        val list = ArrayList<ConferenceMap>()
+
+        val maps = conference.maps
+        if (maps.isEmpty()) {
+            mutableLiveData.postValue(emptyList())
+        }
+
+        maps.forEach {
+
+            val temp = ConferenceMap(it.name, null)
+            list.add(temp)
+            mutableLiveData.postValue(list.toList())
+
+            val map = storage.reference.child("/${conference.code}/${it.file}")
+
+            val localFile = File.createTempFile("images", "pdf")
+
+            map.getFile(localFile).addOnSuccessListener { task ->
+                temp.file = localFile
+
+                mutableLiveData.postValue(list.toList())
+            }.addOnFailureListener {
+                // Handle any errors
+            }
+        }
 
         return mutableLiveData
     }

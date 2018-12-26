@@ -163,27 +163,33 @@ class EventView : FrameLayout {
 
     private fun renderCategoryColour() {
 
-        val type = content?.event?.type ?: return
+        database.getTypeForEvent(content?.event ?: return)
+                .subscribe { type ->
 
-        category_text.text = type.name
-        val color = Color.parseColor(type.color)
+                    category_text.text = type.name
+                    val color = Color.parseColor(type.color)
 
-        category.setBackgroundColor(color)
-        progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+                    category.setBackgroundColor(color)
+                    progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
-            drawable?.setTint(color)
-            category_text.background = drawable
-        }
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                        val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
+                        drawable?.setTint(color)
+                        category_text.background = drawable
+                    }
 
-        renderBookmark(color)
+                    renderBookmark(color)
+
+                }
+
+//        val type = content?.event?.type ?: return
+
 
     }
 
     private fun renderBookmark(color: Int) {
-        val isBookmarked = false
+        val isBookmarked = content?.event?.isBookmarked ?: false
         val drawable = if (isBookmarked) {
             R.drawable.ic_star_accent_24dp
         } else {
@@ -207,7 +213,9 @@ class EventView : FrameLayout {
 
 
     fun onBookmarkClick() {
-
+        val event = content?.event ?: return
+        event.isBookmarked = !event.isBookmarked
+        database.updateBookmark(event)
     }
 
     companion object {
