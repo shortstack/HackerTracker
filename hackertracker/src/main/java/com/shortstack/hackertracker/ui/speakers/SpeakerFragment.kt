@@ -22,7 +22,6 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_speakers.*
 import javax.inject.Inject
-import kotlin.math.absoluteValue
 
 
 /**
@@ -103,7 +102,7 @@ class SpeakerFragment : Fragment() {
             description.text = it.description
 
             val colours = context.resources.getStringArray(R.array.colors)
-            val color = Color.parseColor(colours[speaker.hashCode().absoluteValue % colours.size])
+            val color = Color.parseColor(colours[speaker.id % colours.size])
 
             app_bar.setBackgroundColor(color)
 

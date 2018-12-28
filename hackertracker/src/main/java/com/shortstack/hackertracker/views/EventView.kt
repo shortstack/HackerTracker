@@ -34,8 +34,8 @@ class EventView : FrameLayout {
     private var disposable: Disposable? = null
 
     private var displayMode: Int = DISPLAY_MODE_MIN
-    var content: EventViewModel? = null
-        private set
+
+    private val model: EventViewModel = EventViewModel(null)
 
     private var animation: ObjectAnimator? = null
 
@@ -56,7 +56,7 @@ class EventView : FrameLayout {
     }
 
     fun setContent(event: FirebaseEvent) {
-        content = EventViewModel(event)
+        model.event = event
         render()
     }
 
@@ -99,8 +99,8 @@ class EventView : FrameLayout {
     private fun render() {
         renderText()
         renderCategoryColour()
-        if (content?.hasAnimatedProgress == false) {
-            content?.hasAnimatedProgress = true
+        if (!model.hasAnimatedProgress) {
+            model.hasAnimatedProgress = true
             progress.progress = 0
             updateProgressBar()
         } else {
@@ -108,7 +108,7 @@ class EventView : FrameLayout {
         }
 
         setOnClickListener {
-            (context as? MainActivity)?.navigate(content?.event)
+            (context as? MainActivity)?.navigate(model.event)
         }
 
         star_bar.setOnClickListener {
@@ -142,54 +142,41 @@ class EventView : FrameLayout {
     }
 
     private fun getProgress(): Int {
-//        if (BuildConfig.DEBUG)
-//            return Random().nextInt(100)
-
-        return (content!!.progress * 100).toInt()
+        return (model.progress * 100).toInt()
     }
 
     private fun renderText() {
-        title.text = content?.title
-
-        val text = content?.event?.location?.name ?: "Unknown"
-
-        location.text = text
-
+        title.text = model.title
+        location.text = model.location
 
         if (displayMode != DISPLAY_MODE_MIN) {
-            time.text = content?.getFullTimeStamp(context)
+            time.text = model.getFullTimeStamp(context)
         }
     }
 
     private fun renderCategoryColour() {
+        val type = model.type
 
-        database.getTypeForEvent(content?.event ?: return)
-                .subscribe { type ->
-
-                    category_text.text = type.name
-                    val color = Color.parseColor(type.color)
-
-                    category.setBackgroundColor(color)
-                    progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
+        category_text.text = type.name
 
 
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
-                        drawable?.setTint(color)
-                        category_text.background = drawable
-                    }
-
-                    renderBookmark(color)
-
-                }
-
-//        val type = content?.event?.type ?: return
+        val color = Color.parseColor(type.color)
+        category.setBackgroundColor(color)
+        progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
+            drawable?.setTint(color)
+            category_text.background = drawable
+        }
+
+        renderBookmark(color)
     }
 
     private fun renderBookmark(color: Int) {
-        val isBookmarked = content?.event?.isBookmarked ?: false
+        val isBookmarked = model.isBookmarked
+
         val drawable = if (isBookmarked) {
             R.drawable.ic_star_accent_24dp
         } else {
@@ -205,17 +192,11 @@ class EventView : FrameLayout {
         star_bar.setImageDrawable(image)
     }
 
-    private fun convertDpToPixel(dp: Float, context: Context): Float {
-        val resources = context.resources
-        val metrics = resources.displayMetrics
-        return dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-    }
-
-
-    fun onBookmarkClick() {
-        val event = content?.event ?: return
-        event.isBookmarked = !event.isBookmarked
-        database.updateBookmark(event)
+    private fun onBookmarkClick() {
+        model.event?.let {
+            it.isBookmarked = !it.isBookmarked
+            database.updateBookmark(it)
+        }
     }
 
     companion object {

@@ -7,6 +7,7 @@ import kotlinx.android.parcel.Parcelize
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.math.absoluteValue
 
 /**
  * Created by Chris on 2018-12-15.
@@ -77,7 +78,7 @@ data class FirebaseType(
         val id: Int = -1,
         val name: String = "",
         val conference: String = "",
-        val color: String = "",
+        val color: String = "#343434",
         @field:JvmField
         @PropertyName("is_selected")
         var isSelected: Boolean = false
@@ -104,7 +105,11 @@ data class FirebaseSpeaker(
         val title: String = "",
 
         val events: ArrayList<FirebaseEvent> = ArrayList()
-) : Parcelable
+) : Parcelable {
+
+    val id: Int
+        get() = hashCode().absoluteValue
+}
 
 @Parcelize
 data class FirebaseMap(

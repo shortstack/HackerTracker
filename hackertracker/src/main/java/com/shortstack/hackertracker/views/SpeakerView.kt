@@ -9,7 +9,6 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.FirebaseSpeaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.row_speaker.view.*
-import kotlin.math.absoluteValue
 
 
 class SpeakerView : LinearLayout {
@@ -24,7 +23,7 @@ class SpeakerView : LinearLayout {
         }
 
         val colours = context.resources.getStringArray(R.array.colors)
-        val color = Color.parseColor(colours[speaker.hashCode().absoluteValue % colours.size])
+        val color = Color.parseColor(colours[speaker.id % colours.size])
         card.setCardBackgroundColor(color)
 
         setOnClickListener {

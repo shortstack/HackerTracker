@@ -10,7 +10,7 @@ import com.shortstack.hackertracker.utils.TimeUtil
 import java.util.*
 import javax.inject.Inject
 
-class EventViewModel(val event: FirebaseEvent) : ViewModel() {
+class EventViewModel(var event: FirebaseEvent?) : ViewModel() {
 
     @Inject
     lateinit var database: DatabaseManager
@@ -19,14 +19,16 @@ class EventViewModel(val event: FirebaseEvent) : ViewModel() {
         App.application.component.inject(this)
     }
 
-    val title: String
-        get() = event.title
+    val title: String?
+        get() = event?.title
 
-    val description: String
-        get() = event.description
+    val description: String?
+        get() = event?.description
 
     val progress: Float
         get() {
+            val event = event ?: return 0f
+
             if (!event.hasStarted)
                 return 0f
 
@@ -47,26 +49,35 @@ class EventViewModel(val event: FirebaseEvent) : ViewModel() {
 
 
     fun getFullTimeStamp(context: Context): String {
-        val (begin, end) = getTimeStamp(context)
+        val event = event ?: return "???"
+
+        val (begin, end) = getTimeStamp(context, event)
         val timestamp = TimeUtil.getRelativeDateStamp(context, event.start)
 
         return String.format(context.getString(R.string.timestamp_full), timestamp, begin, end)
     }
 
 
-    fun getTimeStamp(context: Context): Pair<String, String> {
+    private fun getTimeStamp(context: Context, event: FirebaseEvent): Pair<String, String> {
         val begin = TimeUtil.getTimeStamp(context, event.start)
         val end = TimeUtil.getTimeStamp(context, event.start)
         return Pair(begin, end)
     }
 
-    val location: String
-        get() = event.location.name
+    val location: String?
+        get() = event?.location?.name
 
 
     val id: Int
-        get() = event.id
+        get() = event?.id ?: -1
 
     val speakers: ArrayList<FirebaseSpeaker>
-        get() = event.speakers
+        get() = event?.speakers ?: ArrayList()
+
+    val type: FirebaseType
+        get() = database.getTypeForEvent(event)
+                ?: FirebaseType(id = -1, name = "???", color = "#343434")
+
+    val isBookmarked: Boolean
+        get() = event?.isBookmarked ?: false
 }

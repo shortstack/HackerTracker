@@ -98,50 +98,6 @@ class NotificationHelper @Inject constructor(private val context: Context) {
             return builder
         }
 
-    fun scheduleItemNotification(item: FirebaseEvent) {
-
-        WorkManager.getInstance()?.cancelAllWorkByTag(ReminderWorker.TAG + item.id)
-
-        val window: Long = (item.notificationTime - 1200)
-
-        Logger.d("Scheduling event notification. In $window seconds, " + (window / 60) + " mins, " + (window / 3600) + " hrs.")
-
-        if (window <= 0) {
-            return
-        }
-
-        val data = Data.Builder()
-                .putInt(ReminderWorker.NOTIFICATION_ID, item.id).build()
-
-        val request = OneTimeWorkRequest.Builder(ReminderWorker::class.java)
-                .setInitialDelay(window, TimeUnit.SECONDS)
-                .addTag(ReminderWorker.TAG + item.id)
-                .setInputData(data)
-                .build()
-
-        WorkManager.getInstance()?.enqueue(request)
-    }
-
-    fun notifyUpdates(conference: FirebaseConference, newCon: Boolean, rowsUpdated: Int) {
-        val builder = notificationBuilder
-
-        when {
-            newCon -> {
-                builder.setContentTitle(conference.name)
-                builder.setContentText("A new conference has been added")
-            }
-            rowsUpdated > 0 -> {
-                builder.setContentTitle("Schedule Updated")
-                builder.setContentText(rowsUpdated.toString() + " events have been updated")
-            }
-            else -> return
-        }
-
-        setItemPendingIntent(builder)
-
-        notify(conference.id, builder.build())
-    }
-
     private fun setItemPendingIntent(builder: NotificationCompat.Builder, item: FirebaseEvent? = null) {
         val intent = Intent(context, MainActivity::class.java)
 

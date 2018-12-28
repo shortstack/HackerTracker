@@ -18,6 +18,7 @@ import io.reactivex.Single
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 /**
  * Created by Chris on 3/31/2018.
@@ -26,6 +27,9 @@ class DatabaseManager {
 
     companion object {
         private const val CONFERENCES = "conferences"
+
+        private const val USERS = "users"
+        private const val BOOKMARKS = "bookmarks"
 
         private const val EVENTS = "events"
         private const val TYPES = "types"
@@ -191,18 +195,17 @@ class DatabaseManager {
         return mutableLiveData
     }
 
-    fun getEventById(id: Int): MutableLiveData<FirebaseEvent> {
-        val mutableLiveData = MutableLiveData<FirebaseEvent>()
-
-        firestore.collection(CONFERENCES)
-                .document(id.toString())
-                .get()
-                .addOnSuccessListener {
-                    val event = it.toObject(FirebaseEvent::class.java)
-                    mutableLiveData.postValue(event)
-                }
-
-        return mutableLiveData
+    fun getEventById(id: Int): Single<FirebaseEvent> {
+        return Single.create { emitter ->
+            firestore.collection(CONFERENCES)
+                    .document(id.toString())
+                    .get()
+                    .addOnSuccessListener {
+                        val event = it.toObject(FirebaseEvent::class.java)
+                                ?: return@addOnSuccessListener
+                        emitter.onSuccess(event)
+                    }
+        }
     }
 
     fun searchForEvents(conference: FirebaseConference, text: String): Single<List<FirebaseEvent>> {
@@ -232,12 +235,10 @@ class DatabaseManager {
     }
 
 
-    fun getTypeForEvent(event: FirebaseEvent): Single<FirebaseType> {
-        return Single.create<FirebaseType> { emitter ->
+    fun getTypeForEvent(event: FirebaseEvent?): FirebaseType? {
+        if (event == null) return null
 
-            val type = types.value?.firstOrNull() { it.id == event.type.id } ?: return@create
-            emitter.onSuccess(type)
-        }
+        return types.value?.firstOrNull { it.id == event.type.id }
     }
 
     fun updateBookmark(event: FirebaseEvent) {
@@ -263,37 +264,62 @@ class DatabaseManager {
 
         }
 
-        // TODO: Update the bookmark within Firestore.
-        firestore.collection(CONFERENCES)
-                .document(event.conference)
-                .collection(EVENTS)
-                .document(event.id.toString())
-                .update(mapOf("is_bookmarked" to event.isBookmarked))
+        // TODO: Use the actual auth token.
+        val userId = "user-id"
 
+        val document = firestore.collection(CONFERENCES)
+                .document(event.conference)
+                .collection(USERS)
+                .document(userId)
+                .collection(BOOKMARKS)
+                .document(event.id.toString())
+
+        if (event.isBookmarked) {
+            document.set(event.id.toString() to true)
+        } else {
+            document.delete()
+        }
     }
 
     fun updateTypeIsSelected(type: FirebaseType) {
+        // TODO: Use the actual auth token.
+        val userId = "user-id"
+
+
         // TODO: Update the type within Firestore.
-        firestore.collection(CONFERENCES)
+        val document = firestore.collection(CONFERENCES)
                 .document(type.conference)
+                .collection(USERS)
+                .document(userId)
                 .collection(TYPES)
                 .document(type.id.toString())
-                .update(mapOf("is_selected" to type.isSelected))
+
+        if (type.isSelected) {
+            document.set(true)
+        } else {
+            document.delete()
+        }
     }
 
     fun clear() {
 
     }
 
-    fun getSpeakers(event: FirebaseEvent): Single<List<FirebaseSpeaker>> {
-        return Single.create<List<FirebaseSpeaker>> { emitter ->
-            emitter.onSuccess(event.speakers)
-        }
+    fun getSpeakers(event: FirebaseEvent): ArrayList<FirebaseSpeaker> {
+        return event.speakers
     }
 
     fun getEventsForSpeaker(speaker: FirebaseSpeaker): Single<List<FirebaseEvent>> {
         return Single.create<List<FirebaseEvent>> { emitter ->
-            emitter.onSuccess(speaker.events)
+
+            firestore.collection(CONFERENCES)
+                    .document(conference.value?.code ?: "")
+                    .collection(EVENTS)
+                    .whereArrayContains("speakers", speaker.name)
+                    .get()
+                    .addOnSuccessListener {
+                        emitter.onSuccess(it.toObjects(FirebaseEvent::class.java))
+                    }
         }
     }
 

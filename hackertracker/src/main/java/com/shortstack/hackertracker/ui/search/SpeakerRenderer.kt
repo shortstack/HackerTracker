@@ -9,7 +9,6 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.FirebaseSpeaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.row_speaker.view.*
-import kotlin.math.absoluteValue
 
 class SpeakerRenderer : Renderer<FirebaseSpeaker>() {
 
@@ -32,7 +31,7 @@ class SpeakerRenderer : Renderer<FirebaseSpeaker>() {
         }
 
         val colours = context.resources.getStringArray(R.array.colors)
-        val color = Color.parseColor(colours[content.hashCode().absoluteValue % colours.size])
+        val color = Color.parseColor(colours[content.id % colours.size])
         rootView.card.setCardBackgroundColor(color)
     }
 }

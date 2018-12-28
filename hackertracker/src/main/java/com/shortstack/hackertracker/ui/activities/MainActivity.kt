@@ -161,8 +161,11 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
     }
 
     private fun setFABVisibility(visibility: Int) {
-        // TODO: Change this to use the FAB's visiblty.
-        filter.visibility = visibility
+        if (visibility == View.VISIBLE) {
+            filter.show()
+        } else {
+            filter.hide()
+        }
     }
 
     private fun expandFilters() {

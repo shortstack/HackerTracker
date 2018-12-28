@@ -214,44 +214,36 @@ class EventFragment : Fragment() {
 
     private fun displayTypes(event: FirebaseEvent) {
 
-
-        database.getTypeForEvent(event)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { type ->
-                    val context = context ?: return@subscribe
-
-                    val color = Color.parseColor(type.color)
-                    app_bar.setBackgroundColor(color)
-
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                        val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
-                        drawable?.setTint(color)
-                        category_text.background = drawable
-                    }
-
-                    category_text.text = type.name
-                }
-    }
-
-    private fun displaySpeakers(event: FirebaseEvent){
+        val type = database.getTypeForEvent(event)
         val context = context ?: return
 
-        database.getSpeakers(event)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { list ->
+        val color = Color.parseColor(type?.color ?: "#FFF")
+        app_bar.setBackgroundColor(color)
 
-                    if(list.isEmpty()) {
-                        speakers_header.visibility = View.GONE
-                    } else {
-                        speakers_header.visibility = View.VISIBLE
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
+            drawable?.setTint(color)
+            category_text.background = drawable
+        }
 
-                        list.forEach { speaker ->
-                            speakers.addView(SpeakerView(context, speaker), ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
-                        }
-                    }
-                }
+        category_text.text = type?.name
+
+    }
+
+    private fun displaySpeakers(event: FirebaseEvent) {
+        val context = context ?: return
+
+        val list = database.getSpeakers(event)
+
+        if (list.isEmpty()) {
+            speakers_header.visibility = View.GONE
+        } else {
+            speakers_header.visibility = View.VISIBLE
+
+            list.forEach { speaker ->
+                speakers.addView(SpeakerView(context, speaker), ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+            }
+        }
     }
 
 
@@ -266,7 +258,7 @@ class EventFragment : Fragment() {
 //                related_events.addView(EventView(context, it))
 //            }
 //        } else {
-            related_events_header.visibility = View.GONE
+        related_events_header.visibility = View.GONE
 //        }
     }
 }
