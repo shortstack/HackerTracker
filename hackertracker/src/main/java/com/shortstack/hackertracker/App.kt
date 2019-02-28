@@ -18,9 +18,7 @@ class App : MultiDexApplication() {
         super.onCreate()
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
-
-        application = this
-
+        
         startKoin(this, listOf(appModule))
 
         initFabric()
@@ -44,11 +42,5 @@ class App : MultiDexApplication() {
     private fun initFabric() {
         if (!BuildConfig.DEBUG)
             Fabric.with(this, Crashlytics())
-    }
-
-    companion object {
-
-        lateinit var application: App
-
     }
 }

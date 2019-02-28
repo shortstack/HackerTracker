@@ -130,5 +130,5 @@ class WifiHelperRenderer : Renderer<RendererContent<Void>>() {
     }
 
 
-    private fun getWifiManager() = App.application.applicationContext.getSystemService(Context.WIFI_SERVICE) as WifiManager
+    private fun getWifiManager() = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
 }

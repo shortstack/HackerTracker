@@ -3,16 +3,17 @@ package com.shortstack.hackertracker.analytics
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.FirebaseSpeaker
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
 
-object AnalyticsController {
+object AnalyticsController : KoinComponent {
 
-    private val storage = SharedPreferencesUtil(App.application)
+    private val storage: SharedPreferencesUtil by inject()
 
     const val EVENT_VIEW = "Event - View"
     const val EVENT_OPEN_URL = "Event - Open URL"

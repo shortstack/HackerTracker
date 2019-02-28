@@ -1,11 +1,9 @@
 package com.shortstack.hackertracker.di
 
-import android.content.Context
 import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.firebase.jobdispatcher.GooglePlayDriver
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.utils.NotificationHelper
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
@@ -21,5 +19,4 @@ val appModule = module {
     single { FirebaseJobDispatcher(GooglePlayDriver(get())) }
     single { DatabaseManager() }
 
-    single<Context> { App.application.baseContext }
 }
