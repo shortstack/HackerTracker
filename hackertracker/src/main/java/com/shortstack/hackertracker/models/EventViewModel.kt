@@ -2,22 +2,17 @@ package com.shortstack.hackertracker.models
 
 import android.content.Context
 import androidx.lifecycle.ViewModel
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.utils.TimeUtil
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 import java.util.*
-import javax.inject.Inject
 
-class EventViewModel(var event: FirebaseEvent?) : ViewModel() {
+class EventViewModel(var event: FirebaseEvent?) : ViewModel(), KoinComponent {
 
-    @Inject
-    lateinit var database: DatabaseManager
-
-    init {
-        App.application.component.inject(this)
-    }
+    private val database: DatabaseManager by inject()
 
     val title: String?
         get() = event?.title

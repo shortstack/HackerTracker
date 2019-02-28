@@ -6,14 +6,14 @@ import android.view.View
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.FirebaseType
 import kotlinx.android.synthetic.main.view_filter.view.*
-import javax.inject.Inject
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs), KoinComponent {
 
     companion object {
         private const val SPAN_COUNT = 2
@@ -21,11 +21,9 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
         private const val TYPE_CONTESTS = 7
     }
 
-    @Inject
-    lateinit var database: DatabaseManager
+    private val database: DatabaseManager by inject()
 
     init {
-        App.application.component.inject(this)
         View.inflate(context, R.layout.view_filter, this)
     }
 

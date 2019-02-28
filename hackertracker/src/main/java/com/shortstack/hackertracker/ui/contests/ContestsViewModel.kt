@@ -4,25 +4,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.FirebaseEvent
-import javax.inject.Inject
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-/**
- * Created by Chris on 05/08/18.
- */
-class ContestsViewModel : ViewModel() {
+class ContestsViewModel : ViewModel(), KoinComponent {
 
-    @Inject
-    lateinit var database: DatabaseManager
+    private val database: DatabaseManager by inject()
 
     private val result = MediatorLiveData<Resource<List<FirebaseEvent>>>()
 
-    init {
-        App.application.component.inject(this)
-    }
 
     val contests: LiveData<Resource<List<FirebaseEvent>>>
         get() {

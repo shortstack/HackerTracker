@@ -1,19 +1,20 @@
 package com.shortstack.hackertracker.ui.search
 
-import androidx.lifecycle.*
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
+import androidx.lifecycle.Transformations
+import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.*
-import java.lang.IllegalStateException
-import javax.inject.Inject
+import com.shortstack.hackertracker.models.FirebaseEvent
+import com.shortstack.hackertracker.models.FirebaseLocation
+import com.shortstack.hackertracker.models.FirebaseSpeaker
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-/**
- * Created by Chris on 6/3/2018.
- */
-class SearchViewModel : ViewModel() {
+class SearchViewModel : ViewModel(), KoinComponent {
 
-    @Inject
-    lateinit var database: DatabaseManager
+    private val database: DatabaseManager by inject()
 
     private val query = MediatorLiveData<String>()
 
@@ -24,8 +25,6 @@ class SearchViewModel : ViewModel() {
     private val speakers = ArrayList<FirebaseSpeaker>()
 
     init {
-        App.application.component.inject(this)
-
         val conference = database.conference.value
                 ?: throw IllegalStateException("Current con is null.")
 

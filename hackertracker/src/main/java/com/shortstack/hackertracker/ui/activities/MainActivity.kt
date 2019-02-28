@@ -18,6 +18,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.github.stkent.amplify.tracking.Amplify
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
@@ -42,16 +43,14 @@ import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.row_nav_view.*
 import kotlinx.android.synthetic.main.view_filter.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 
-class MainActivity : AppCompatActivity(), com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
+class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
 
-    @Inject
-    lateinit var database: DatabaseManager
+    private val database: DatabaseManager by inject()
 
-    @Inject
-    lateinit var timer: TickTimer
+    private val timer: TickTimer by inject()
 
     private lateinit var bottomSheet: BottomSheetBehavior<View>
 
@@ -60,8 +59,6 @@ class MainActivity : AppCompatActivity(), com.google.android.material.navigation
     private val map = HashMap<Int, Fragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        App.application.component.inject(this)
-
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)

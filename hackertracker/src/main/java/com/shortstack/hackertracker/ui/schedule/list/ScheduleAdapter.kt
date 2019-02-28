@@ -12,10 +12,6 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
 
     var state: Status = Status.NOT_INITIALIZED
 
-    init {
-        App.application.component.inject(this)
-    }
-
     private fun getFormattedElements(elements: List<FirebaseEvent>): ArrayList<Any> {
         val result = ArrayList<Any>()
 

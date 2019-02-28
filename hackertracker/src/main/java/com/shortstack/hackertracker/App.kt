@@ -7,15 +7,12 @@ import com.github.stkent.amplify.feedback.DefaultEmailFeedbackCollector
 import com.github.stkent.amplify.feedback.GooglePlayStoreFeedbackCollector
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.di.AppComponent
-import com.shortstack.hackertracker.di.DaggerAppComponent
-import com.shortstack.hackertracker.di.modules.*
+import com.shortstack.hackertracker.di.appModule
 import io.fabric.sdk.android.Fabric
+import org.koin.android.ext.android.startKoin
 
 
 class App : MultiDexApplication() {
-
-    lateinit var component: AppComponent
 
     override fun onCreate() {
         super.onCreate()
@@ -24,19 +21,12 @@ class App : MultiDexApplication() {
 
         application = this
 
+        startKoin(this, listOf(appModule))
+
         initFabric()
         initLogger()
         initFeedback()
 
-        component = DaggerAppComponent.builder()
-                .sharedPreferencesModule(SharedPreferencesModule())
-                .databaseModule(DatabaseModule())
-                .gsonModule(GsonModule())
-                .notificationsModule(NotificationsModule())
-                .dispatcherModule(DispatcherModule())
-                .timerModule(TimerModule())
-                .contextModule(ContextModule(this))
-                .build()
     }
 
     private fun initFeedback() {

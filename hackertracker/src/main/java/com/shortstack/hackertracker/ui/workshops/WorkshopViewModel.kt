@@ -8,21 +8,14 @@ import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.FirebaseEvent
-import javax.inject.Inject
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-/**
- * Created by Chris on 05/08/18.
- */
-class WorkshopViewModel : ViewModel() {
+class WorkshopViewModel : ViewModel(), KoinComponent {
 
-    @Inject
-    lateinit var database: DatabaseManager
+    private val database: DatabaseManager by inject()
 
     private val result = MediatorLiveData<Resource<List<FirebaseEvent>>>()
-
-    init {
-        App.application.component.inject(this)
-    }
 
     val workshops: LiveData<Resource<List<FirebaseEvent>>>
         get() {

@@ -10,7 +10,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
@@ -21,12 +20,8 @@ import com.shortstack.hackertracker.views.StatusBarSpacer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_speakers.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
-
-/**
- * Created by Chris on 7/31/2018.
- */
 class SpeakerFragment : Fragment() {
     companion object {
 
@@ -43,8 +38,7 @@ class SpeakerFragment : Fragment() {
         }
     }
 
-    @Inject
-    lateinit var database: DatabaseManager
+    private val database: DatabaseManager by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_speakers, container, false)
@@ -52,8 +46,6 @@ class SpeakerFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        App.application.component.inject(this)
 
         val context = context ?: return
 

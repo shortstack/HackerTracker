@@ -10,23 +10,21 @@ import com.shortstack.hackertracker.utils.TimeUtil
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.row_header_time.view.*
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 import java.util.*
 import java.util.concurrent.TimeUnit
-import javax.inject.Inject
 
-class TimeView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
+class TimeView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs), KoinComponent {
 
     private lateinit var date: Date
 
-    @Inject
-    lateinit var timer: TickTimer
+    private val timer: TickTimer by inject()
 
     private var disposable: Disposable? = null
 
     init {
         inflate(context, R.layout.row_header_time, this)
-        App.application.component.inject(this)
-
         orientation = LinearLayout.VERTICAL
     }
 

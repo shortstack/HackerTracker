@@ -13,35 +13,24 @@ import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
 import com.firebase.jobdispatcher.FirebaseJobDispatcher
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.FirebaseConference
 import com.shortstack.hackertracker.models.FirebaseEvent
-import com.shortstack.hackertracker.network.task.ReminderWorker
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import java.util.concurrent.TimeUnit
-import javax.inject.Inject
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class NotificationHelper @Inject constructor(private val context: Context) {
+class NotificationHelper(private val context: Context) : KoinComponent {
 
-    @Inject
-    lateinit var dispatcher: FirebaseJobDispatcher
+    private val dispatcher: FirebaseJobDispatcher by inject()
 
-    @Inject
-    lateinit var database: DatabaseManager
+    private val database: DatabaseManager by inject()
 
     private val manager = NotificationManagerCompat.from(context)
 
     init {
-        App.application.component.inject(this)
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 

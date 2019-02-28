@@ -1,25 +1,17 @@
 package com.shortstack.hackertracker.ui.maps
 
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.ConferenceMap
-import javax.inject.Inject
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-/**
- * Created by Chris on 6/3/2018.
- */
-class MapsViewModel : ViewModel() {
+class MapsViewModel : ViewModel(), KoinComponent {
 
-    @Inject
-    lateinit var database: DatabaseManager
-
-    init {
-        App.application.component.inject(this)
-    }
+    private val database: DatabaseManager by inject()
 
     val maps: LiveData<List<ConferenceMap>>
         get() {

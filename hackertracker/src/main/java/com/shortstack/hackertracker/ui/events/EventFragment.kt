@@ -22,16 +22,10 @@ import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utils.TimeUtil
 import com.shortstack.hackertracker.views.SpeakerView
 import com.shortstack.hackertracker.views.StatusBarSpacer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.empty_text.*
 import kotlinx.android.synthetic.main.fragment_event.*
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
-
-/**
- * Created by Chris on 7/31/2018.
- */
 class EventFragment : Fragment() {
 
     companion object {
@@ -49,8 +43,7 @@ class EventFragment : Fragment() {
         }
     }
 
-    @Inject
-    lateinit var database: DatabaseManager
+    private val database: DatabaseManager by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_event, container, false)
@@ -63,8 +56,6 @@ class EventFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
-        App.application.component.inject(this)
 
         val event = arguments?.getParcelable(EXTRA_EVENT) as? FirebaseEvent
 

@@ -4,23 +4,17 @@ import androidx.work.Worker
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.utils.NotificationHelper
-import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import io.reactivex.disposables.Disposable
-import javax.inject.Inject
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class ReminderWorker : Worker() {
+class ReminderWorker : Worker(), KoinComponent {
 
-    @Inject
-    lateinit var notifications: NotificationHelper
+    private val notifications: NotificationHelper by inject()
 
-    @Inject
-    lateinit var database: DatabaseManager
+    private val database: DatabaseManager by inject()
 
     private var disposable: Disposable? = null
-
-    init {
-        App.application.component.inject(this)
-    }
 
     override fun doWork(): Result {
         val id = inputData.getInt(NOTIFICATION_ID, -1)

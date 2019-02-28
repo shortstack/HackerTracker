@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
@@ -16,15 +15,13 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.view_empty.view.*
-import javax.inject.Inject
-
+import org.koin.android.ext.android.inject
 
 class ScheduleFragment : Fragment(){
 
     private val adapter: ScheduleAdapter = ScheduleAdapter()
 
-    @Inject
-    lateinit var timer: TickTimer
+    private val timer: TickTimer by inject()
 
     private var disposable: Disposable? = null
 
@@ -34,8 +31,6 @@ class ScheduleFragment : Fragment(){
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        App.application.component.inject(this)
 
         list.adapter = adapter
 

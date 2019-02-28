@@ -6,12 +6,10 @@ import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
 import android.util.AttributeSet
-import android.util.DisplayMetrics
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.EventViewModel
@@ -21,15 +19,14 @@ import com.shortstack.hackertracker.utils.TickTimer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.row_event.view.*
-import javax.inject.Inject
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class EventView : FrameLayout {
+class EventView : FrameLayout, KoinComponent {
 
-    @Inject
-    lateinit var database: DatabaseManager
+    private val database: DatabaseManager by inject()
 
-    @Inject
-    lateinit var timer: TickTimer
+    private val timer: TickTimer by inject()
 
     private var disposable: Disposable? = null
 
@@ -51,7 +48,6 @@ class EventView : FrameLayout {
 
     private fun init() {
         inflate(context, R.layout.row_event, this)
-        App.application.component.inject(this)
         setDisplayMode()
     }
 

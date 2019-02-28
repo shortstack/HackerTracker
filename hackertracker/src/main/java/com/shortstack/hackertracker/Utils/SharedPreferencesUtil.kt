@@ -3,10 +3,8 @@ package com.shortstack.hackertracker.utils
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
-import javax.inject.Inject
 
-
-class SharedPreferencesUtil @Inject constructor(context: Context) {
+class SharedPreferencesUtil(context: Context) {
 
     companion object {
         private const val USER_ALLOW_PUSH = "user_allow_push_notifications"
