@@ -17,6 +17,7 @@ class SpeakersFragment : Fragment() {
         fun newInstance() = SpeakersFragment()
     }
 
+    private val adapter = SpeakerAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_list, container, false)
@@ -25,11 +26,12 @@ class SpeakersFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val viewModel = ViewModelProviders.of(this).get(SpeakersViewModel::class.java)
+        list.layoutManager = LinearLayoutManager(context)
+        list.adapter = adapter
 
+        val viewModel = ViewModelProviders.of(this).get(SpeakersViewModel::class.java)
         viewModel.speakers.observe(this, Observer {
-            list.layoutManager = LinearLayoutManager(context)
-            list.adapter = SpeakerAdapter(it)
+            adapter.setSpeakers(it)
         })
     }
 }

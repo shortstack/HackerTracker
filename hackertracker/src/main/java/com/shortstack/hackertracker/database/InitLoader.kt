@@ -53,10 +53,12 @@ class InitLoader(private val database: DatabaseManager) {
         firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(SPEAKERS)
-                .get()
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val list = it.result?.toObjects(FirebaseSpeaker::class.java) ?: emptyList()
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val list = snapshot?.toObjects(FirebaseSpeaker::class.java)
+                                ?: emptyList()
+
+                        speakers.clear()
                         speakers.addAll(list)
 
                         onSuccess()
