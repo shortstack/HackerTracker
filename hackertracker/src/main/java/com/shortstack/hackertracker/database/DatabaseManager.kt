@@ -47,6 +47,7 @@ class DatabaseManager {
     val conference = MutableLiveData<FirebaseConference>()
     val types = MutableLiveData<List<FirebaseType>>()
     val events = MutableLiveData<List<FirebaseEvent>>()
+    val speakers = MutableLiveData<List<FirebaseSpeaker>>()
 
 
 

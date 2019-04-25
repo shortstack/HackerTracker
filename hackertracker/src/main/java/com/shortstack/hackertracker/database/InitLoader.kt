@@ -1,10 +1,7 @@
 package com.shortstack.hackertracker.database
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.shortstack.hackertracker.models.FirebaseBookmark
-import com.shortstack.hackertracker.models.FirebaseConference
-import com.shortstack.hackertracker.models.FirebaseEvent
-import com.shortstack.hackertracker.models.FirebaseType
+import com.shortstack.hackertracker.models.*
 
 class InitLoader(private val database: DatabaseManager) {
 
@@ -17,6 +14,7 @@ class InitLoader(private val database: DatabaseManager) {
         private const val EVENTS = "events"
         private const val TYPES = "types"
         private const val FAQS = "faqs"
+        private const val SPEAKERS = "speakers"
         private const val VENDORS = "vendors"
     }
 
@@ -27,6 +25,7 @@ class InitLoader(private val database: DatabaseManager) {
 
     private val types = ArrayList<FirebaseType>()
     private val events = ArrayList<FirebaseEvent>()
+    private val speakers = ArrayList<FirebaseSpeaker>()
 
     init {
         firestore.collection(CONFERENCES)
@@ -43,10 +42,26 @@ class InitLoader(private val database: DatabaseManager) {
                         if (selected != null) {
                             getTypes(selected)
                             getEvents(selected)
+                            getSpeakers(selected)
                         }
                     }
                 }
 
+    }
+
+    private fun getSpeakers(conference: FirebaseConference) {
+        firestore.collection(CONFERENCES)
+                .document(conference.code)
+                .collection(SPEAKERS)
+                .get()
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val list = it.result?.toObjects(FirebaseSpeaker::class.java) ?: emptyList()
+                        speakers.addAll(list)
+
+                        onSuccess()
+                    }
+                }
     }
 
     private fun getEvents(conference: FirebaseConference) {
@@ -117,10 +132,11 @@ class InitLoader(private val database: DatabaseManager) {
 
 
     private fun onSuccess() {
-        if (events.isNotEmpty() && types.isNotEmpty()) {
+        if (events.isNotEmpty() && types.isNotEmpty() && speakers.isNotEmpty()) {
             database.conference.postValue(conferences.first())
             database.types.postValue(types)
             database.events.postValue(events)
+            database.speakers.postValue(speakers)
         }
     }
 
