@@ -6,30 +6,22 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.DatabaseEvent
-import com.shortstack.hackertracker.models.Event
-import javax.inject.Inject
+import com.shortstack.hackertracker.models.FirebaseEvent
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-/**
- * Created by Chris on 6/3/2018.
- */
-class HomeViewModel : ViewModel() {
+class HomeViewModel : ViewModel(), KoinComponent{
 
-    @Inject
-    lateinit var database: DatabaseManager
+    private val database: DatabaseManager by inject()
 
-    init {
-        App.application.component.inject(this)
-    }
-
-    val recent: LiveData<List<DatabaseEvent>>
+    val recent: LiveData<List<FirebaseEvent>>
         get() {
-            val conference = database.conferenceLiveData
+            val conference = database.conference
             return Transformations.switchMap(conference) { id ->
                 if (id == null) {
-                    return@switchMap MutableLiveData<List<DatabaseEvent>>()
+                    return@switchMap MutableLiveData<List<FirebaseEvent>>()
                 }
-                return@switchMap database.getRecent(id.conference)
+                return@switchMap database.getRecent(id)
             }
         }
 }

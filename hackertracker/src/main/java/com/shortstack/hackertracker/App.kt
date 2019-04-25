@@ -1,64 +1,30 @@
 package com.shortstack.hackertracker
 
-import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.work.Constraints
-import androidx.work.NetworkType
-import androidx.work.PeriodicWorkRequestBuilder
-import androidx.work.WorkManager
+import androidx.multidex.MultiDexApplication
 import com.crashlytics.android.Crashlytics
 import com.github.stkent.amplify.feedback.DefaultEmailFeedbackCollector
 import com.github.stkent.amplify.feedback.GooglePlayStoreFeedbackCollector
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.di.AppComponent
-import com.shortstack.hackertracker.di.DaggerAppComponent
-import com.shortstack.hackertracker.di.modules.*
-import com.shortstack.hackertracker.network.task.SyncWorker
+import com.shortstack.hackertracker.di.appModule
 import io.fabric.sdk.android.Fabric
-import java.util.concurrent.TimeUnit
+import org.koin.android.ext.android.startKoin
 
 
-class App : Application() {
-
-    lateinit var component: AppComponent
+class App : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
-
-        application = this
+        
+        startKoin(this, listOf(appModule))
 
         initFabric()
         initLogger()
         initFeedback()
 
-        component = DaggerAppComponent.builder()
-                .sharedPreferencesModule(SharedPreferencesModule())
-                .databaseModule(DatabaseModule())
-                .gsonModule(GsonModule())
-                .notificationsModule(NotificationsModule())
-                .dispatcherModule(DispatcherModule())
-                .timerModule(TimerModule())
-                .contextModule(ContextModule(this))
-                .build()
-    }
-
-    fun scheduleSyncTask() {
-        WorkManager.getInstance()?.cancelAllWorkByTag(SyncWorker.TAG_SYNC)
-
-        val constraints = Constraints.Builder()
-                .setRequiredNetworkType(NetworkType.CONNECTED)
-                .build()
-
-        val request =
-                PeriodicWorkRequestBuilder<SyncWorker>(7, TimeUnit.DAYS)
-                        .addTag(SyncWorker.TAG_SYNC)
-                        .setConstraints(constraints)
-                        .build()
-
-        WorkManager.getInstance()?.enqueue(request)
     }
 
     private fun initFeedback() {
@@ -76,11 +42,5 @@ class App : Application() {
     private fun initFabric() {
         if (!BuildConfig.DEBUG)
             Fabric.with(this, Crashlytics())
-    }
-
-    companion object {
-
-        lateinit var application: App
-
     }
 }

@@ -4,35 +4,31 @@ import androidx.work.Worker
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.utils.NotificationHelper
-import com.shortstack.hackertracker.utils.SharedPreferencesUtil
-import javax.inject.Inject
+import io.reactivex.disposables.Disposable
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class ReminderWorker : Worker() {
+class ReminderWorker : Worker(), KoinComponent {
 
-    @Inject
-    lateinit var notifications: NotificationHelper
+    private val notifications: NotificationHelper by inject()
 
-    @Inject
-    lateinit var storage: SharedPreferencesUtil
+    private val database: DatabaseManager by inject()
 
-    @Inject
-    lateinit var database: DatabaseManager
-
-    init {
-        App.application.component.inject(this)
-    }
+    private var disposable: Disposable? = null
 
     override fun doWork(): Result {
-        if (!storage.allowPushNotification)
-            return Result.SUCCESS
-
         val id = inputData.getInt(NOTIFICATION_ID, -1)
-        val event = database.getEventById(id = id)
 
-        if (event != null)
-            notifications.notifyStartingSoon(event)
+        disposable = database.getEventById(id)
+                .subscribe { event ->
+                    notifications.notifyStartingSoon(event)
+                }
 
         return Result.SUCCESS
+    }
+
+    override fun onStopped(cancelled: Boolean) {
+        disposable?.dispose()
     }
 
     companion object {

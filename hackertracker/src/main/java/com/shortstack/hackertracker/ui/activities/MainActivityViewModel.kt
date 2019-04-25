@@ -2,32 +2,26 @@ package com.shortstack.hackertracker.ui.activities
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
-import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.Conference
-import com.shortstack.hackertracker.models.DatabaseConference
-import com.shortstack.hackertracker.utils.SharedPreferencesUtil
-import javax.inject.Inject
+import com.shortstack.hackertracker.models.FirebaseConference
+import com.shortstack.hackertracker.models.FirebaseType
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-/**
- * Created by Chris on 6/2/2018.
- */
-class MainActivityViewModel : ViewModel() {
+class MainActivityViewModel : ViewModel(), KoinComponent {
 
-    @Inject
-    lateinit var storage: SharedPreferencesUtil
+    private val database: DatabaseManager by inject()
 
-    @Inject
-    lateinit var database: DatabaseManager
+    val conference: LiveData<FirebaseConference>
+        get() = database.conference
 
-    init {
-        App.application.component.inject(this)
+    val conferences: LiveData<List<FirebaseConference>>
+        get() = database.getConferences()
+
+    val types: LiveData<List<FirebaseType>>
+        get() = database.types
+
+    fun changeConference(itemId: Int) {
+        database.changeConference(itemId)
     }
-
-    val conference: LiveData<DatabaseConference>
-        get() = database.conferenceLiveData
-
-    val conferences: LiveData<List<Conference>>
-        get() = database.getCons()
 }

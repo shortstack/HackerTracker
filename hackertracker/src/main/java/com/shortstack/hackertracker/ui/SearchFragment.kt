@@ -7,13 +7,8 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
-import com.orhanobut.logger.Logger
-import com.pedrogomez.renderers.RendererAdapter
-import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
 import com.shortstack.hackertracker.ui.search.SearchAdapter
 import com.shortstack.hackertracker.ui.search.SearchAdapter.State.*
 import com.shortstack.hackertracker.ui.search.SearchViewModel

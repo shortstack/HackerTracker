@@ -3,51 +3,36 @@ package com.shortstack.hackertracker.ui.schedule.list
 import androidx.recyclerview.widget.DiffUtil
 import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.Status
-import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Day
-import com.shortstack.hackertracker.models.Event
+import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.Time
-import com.shortstack.hackertracker.utils.SharedPreferencesUtil
-import java.util.Comparator
-import javax.inject.Inject
-import kotlin.collections.ArrayList
 
 class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) {
 
-    @Inject
-    lateinit var database: DatabaseManager
-
-    @Inject
-    lateinit var storage: SharedPreferencesUtil
-
     var state: Status = Status.NOT_INITIALIZED
 
-    init {
-        App.application.component.inject(this)
-    }
-
-    private fun getFormattedElements(elements: List<DatabaseEvent>): ArrayList<Any> {
+    private fun getFormattedElements(elements: List<FirebaseEvent>): ArrayList<Any> {
         val result = ArrayList<Any>()
 
-        val previous = collection.filterIsInstance<Event>().lastOrNull()
+        val previous = collection.filterIsInstance<FirebaseEvent>().lastOrNull()
         val prevDay = previous?.date
-        val prevTime = previous?.begin
+        val prevTime = previous?.start
 
-        elements.groupBy { it.event.date }.forEach {
+        elements.groupBy { it.date }.toSortedMap().forEach {
             if (prevDay != it.key) {
-                result.add(Day(it.key))
+                val day = Day(it.key)
+                result.add(day)
             }
 
-            it.value.groupBy { it.event.begin }.forEach {
+            it.value.groupBy { it.start }.toSortedMap().forEach {
                 if (prevTime != it.key) {
-                    result.add(Time(it.key))
+                    val time = Time(it.key)
+                    result.add(time)
                 }
 
                 if (it.value.isNotEmpty()) {
-                    val group = it.value.sortedWith(compareBy({ it.type.firstOrNull()?.name }, { it.location.firstOrNull()?.name }))
+                    val group = it.value.sortedWith(compareBy({ it.type.name }, { it.location.name }))
                     result.addAll(group)
                 }
             }
@@ -57,16 +42,13 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
     }
 
     fun notifyTimeChanged() {
-        if(database.conferenceLiveData.value?.isExpired == true)
-            return
-
         if (collection.isEmpty())
             return
 
         val collection = collection.toList()
 
         collection.forEach {
-            if (it is DatabaseEvent && it.event.hasFinished) {
+            if (it is FirebaseEvent && it.hasFinished) {
                 removeAndNotify(it)
             }
         }
@@ -91,7 +73,7 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
         }
     }
 
-    fun setSchedule(list: List<DatabaseEvent>?) {
+    fun setSchedule(list: List<FirebaseEvent>?) {
         if (list == null) {
             clearAndNotify()
             return
@@ -105,8 +87,8 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
                 val left = collection[oldItemPosition]
                 val right = elements[newItemPosition]
 
-                if (left is DatabaseEvent && right is DatabaseEvent) {
-                    return left.event.id == right.event.id
+                if (left is FirebaseEvent && right is FirebaseEvent) {
+                    return left.id == right.id
                 } else if (left is Day && right is Day) {
                     return left.time == right.time
                 } else if (left is Time && right is Time) {
@@ -122,9 +104,9 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
             override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                 val left = collection[oldItemPosition]
                 val right = elements[newItemPosition]
-
-                if (left is DatabaseEvent && right is DatabaseEvent) {
-                    return left.event.updatedAt == right.event.updatedAt && left.event.isBookmarked == right.event.isBookmarked
+//
+                if (left is FirebaseEvent && right is FirebaseEvent) {
+                    return left.updated == right.updated && left.isBookmarked == right.isBookmarked
                 } else if (left is Day && right is Day) {
                     return left.time == right.time
                 } else if (left is Time && right is Time) {

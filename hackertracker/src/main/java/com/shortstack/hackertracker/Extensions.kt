@@ -1,21 +1,11 @@
 package com.shortstack.hackertracker
 
-import android.view.Gravity
-import android.view.animation.TranslateAnimation
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.transition.Fade
-import androidx.transition.Slide
-import androidx.transition.Transition
-import androidx.transition.TransitionSet
 import com.google.gson.Gson
-import com.orhanobut.logger.Logger
-import org.json.JSONException
-import java.io.FileNotFoundException
-import java.io.IOException
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -58,36 +48,6 @@ fun Date.getDateDifference(date: Date, timeUnit: TimeUnit): Long {
 }
 
 
-inline fun <reified T> Gson.fromFile(filename: String, root: String?): T? {
-    try {
-        val s = if (root != null) {
-            "database/conferences/$root/$filename"
-        } else {
-            "database/conferences/$filename"
-        }
-        val stream = App.application.assets.open(s)
-
-        val size = stream.available()
-
-        val buffer = ByteArray(size)
-
-        stream.read(buffer)
-        stream.close()
-
-        return fromJson(String(buffer), T::class.java)
-
-    } catch (e: FileNotFoundException) {
-        Logger.e("Could not find the file. $root/$filename")
-        return fromJson("", T::class.java)
-    } catch (e: JSONException) {
-        Logger.e("Invalid JSON within the file. $root/$filename")
-        return null
-    } catch (e: IOException) {
-        Logger.e(e, "Could not create the database.")
-        return null
-    }
-}
-
 fun Date.now(): Date {
 //    if (BuildConfig.DEBUG) {
 //        return Calendar.getInstance().now().time
@@ -128,17 +88,17 @@ fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int, hasAnima
 
         if (hasAnimation) {
 
-            val FADE_DEFAULT_TIME = 300L
+            val fadeDuration = 300L
 
 
             fragment.apply {
                 enterTransition = Fade().apply {
-                    duration = FADE_DEFAULT_TIME
+                    duration = fadeDuration
                 }
 
 
                 returnTransition = Fade().apply {
-                    duration = FADE_DEFAULT_TIME
+                    duration = fadeDuration
                 }
             }
         }

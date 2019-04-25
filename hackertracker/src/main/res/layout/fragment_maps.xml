@@ -11,10 +11,10 @@
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginBottom="0dp"
-        android:layout_marginEnd="0dp"
         android:layout_marginStart="0dp"
         android:layout_marginTop="0dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="0dp"
         app:layout_constraintBottom_toTopOf="@+id/tab_layout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -25,12 +25,24 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
+        android:layout_marginBottom="0dp"
         android:background="?attr/colorPrimary"
         android:minHeight="?attr/actionBarSize"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-        app:tabIndicatorColor="@color/white"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:layout_marginBottom="0dp" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:tabIndicatorColor="@color/white" />
+
+    <com.shortstack.hackertracker.views.EmptyView
+        android:id="@+id/empty_view"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:evIcon="@drawable/ic_image_white_128dp"
+        app:evMessage="@string/no_maps_to_show"
+        app:evTitle="@string/no_maps"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

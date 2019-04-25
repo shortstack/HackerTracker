@@ -3,16 +3,17 @@ package com.shortstack.hackertracker.analytics
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
-import com.shortstack.hackertracker.models.Event
-import com.shortstack.hackertracker.models.Speaker
+import com.shortstack.hackertracker.models.FirebaseEvent
+import com.shortstack.hackertracker.models.FirebaseSpeaker
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
 
-object AnalyticsController {
+object AnalyticsController : KoinComponent {
 
-    private val storage = SharedPreferencesUtil(App.application)
+    private val storage: SharedPreferencesUtil by inject()
 
     const val EVENT_VIEW = "Event - View"
     const val EVENT_OPEN_URL = "Event - Open URL"
@@ -27,18 +28,16 @@ object AnalyticsController {
 
     const val MAP_VIEW = "Map - View"
 
-    const val SCHEDULE_REFRESH = "Schedule - Pull to Refresh"
-
     const val SETTINGS_ANALYTICS = "Settings - Analytics"
     const val SETTINGS_NOTIFICATIONS = "Settings - Notifications"
     const val SETTINGS_EXPIRED_EVENTS = "Settings - Expired Events"
 
 
-    fun onEventAction(action: String, event: Event) {
+    fun onEventAction(action:String, event: FirebaseEvent) {
         logCustom(EventCustomEvent(action, event))
     }
 
-    fun onSpeakerEvent(action: String, speaker: Speaker) {
+    fun onSpeakerEvent(action: String, speaker: FirebaseSpeaker) {
         logCustom(SpeakerEvent(action, speaker))
     }
 

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.Type
+import com.shortstack.hackertracker.models.FirebaseType
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -54,7 +54,7 @@ class FilterAdapter(private val collection: ArrayList<Any>, private val database
                 }
             }
             is ViewHolder -> {
-                val type = collection[position] as Type
+                val type = collection[position] as FirebaseType
 
                 holder.view.apply {
                     val color = Color.parseColor(type.color)

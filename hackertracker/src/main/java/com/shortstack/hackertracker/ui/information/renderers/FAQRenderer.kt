@@ -1,16 +1,13 @@
 package com.shortstack.hackertracker.ui.information.renderers
 
-import androidx.transition.ChangeBounds
-import androidx.transition.TransitionManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.OvershootInterpolator
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
+import androidx.transition.ChangeBounds
+import androidx.transition.TransitionManager
 import com.crashlytics.android.answers.CustomEvent
-import com.firebase.jobdispatcher.Constraint
 import com.pedrogomez.renderers.Renderer
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController

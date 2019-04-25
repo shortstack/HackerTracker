@@ -9,8 +9,6 @@
         android:id="@+id/event"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         tools:layout_marginBottom="20dp"
         tools:layout_marginTop="20dp" />
 

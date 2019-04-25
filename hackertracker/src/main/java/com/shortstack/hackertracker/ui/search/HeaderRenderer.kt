@@ -5,7 +5,6 @@ import android.view.View
 import android.view.ViewGroup
 import com.pedrogomez.renderers.Renderer
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.models.Location
 import kotlinx.android.synthetic.main.item_type_header.view.*
 
 class HeaderRenderer : Renderer<String>() {

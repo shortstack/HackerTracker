@@ -18,7 +18,7 @@ class StatusBarSpacer(context: Context, attrs: AttributeSet?) : androidx.legacy.
     }
 
     private fun getMeasurement(measureSpec: Int, preferred: Int): Int {
-        val specSize = MeasureSpec.getSize(measureSpec);
+        val specSize = MeasureSpec.getSize(measureSpec)
 
         return when (MeasureSpec.getMode(measureSpec)) {
             MeasureSpec.EXACTLY -> specSize

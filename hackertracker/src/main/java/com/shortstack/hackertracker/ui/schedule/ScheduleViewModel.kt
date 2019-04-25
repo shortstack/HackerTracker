@@ -4,48 +4,46 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.DatabaseEvent
-import javax.inject.Inject
+import com.shortstack.hackertracker.models.FirebaseEvent
+import com.shortstack.hackertracker.models.FirebaseType
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-/**
- * Created by Chris on 6/2/2018.
- */
-class ScheduleViewModel : ViewModel() {
+class ScheduleViewModel : ViewModel(), KoinComponent {
 
-    @Inject
-    lateinit var database: DatabaseManager
+    private val database: DatabaseManager by inject()
 
-    private val result = MediatorLiveData<Resource<List<DatabaseEvent>>>()
+    val schedule: LiveData<Resource<List<FirebaseEvent>>>
+        get() = contents
 
-    init {
-        App.application.component.inject(this)
+    private val contents = Transformations.switchMap(database.conference) { id ->
+        val result = MediatorLiveData<Resource<List<FirebaseEvent>>>()
+
+        result.value = Resource.loading(null)
+
+        result.addSource(database.events) {
+            val types = database.types.value ?: emptyList()
+            result.value = Resource.success(getSchedule(it, types))
+        }
+
+        result.addSource(database.types) { types ->
+            val events = database.events.value ?: return@addSource
+            result.value = Resource.success(getSchedule(events, types))
+        }
+
+        return@switchMap result
     }
 
-    private var source: LiveData<List<DatabaseEvent>>? = null
-    val schedule: LiveData<Resource<List<DatabaseEvent>>>
-        get() {
-            val conference = database.conferenceLiveData
-            return Transformations.switchMap(conference) { id ->
-                result.value = Resource.loading(null)
+    private fun getSchedule(events: List<FirebaseEvent>, types: List<FirebaseType>): List<FirebaseEvent> {
+        if (types.isEmpty())
+            return events
 
-                if (id != null) {
-                    source?.let {
-                        result.removeSource(it)
-                    }
+        val filter = types.filter { it.isSelected }
+        if (filter.isEmpty())
+            return events
 
-                    source = database.getSchedule(id).also {
-                        result.addSource(it) {
-                            result.value = Resource.success(it)
-                        }
-                    }
-
-                } else {
-                    result.value = Resource.init(null)
-                }
-                return@switchMap result
-            }
-        }
+        return events.filter { event -> filter.find { it.id == event.type.id }?.isSelected == true }
+    }
 }

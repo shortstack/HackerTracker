@@ -3,19 +3,19 @@ package com.shortstack.hackertracker.ui.search
 import androidx.recyclerview.widget.DiffUtil
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
-import com.shortstack.hackertracker.models.DatabaseEvent
-import com.shortstack.hackertracker.models.Location
-import com.shortstack.hackertracker.models.Speaker
+import com.shortstack.hackertracker.models.FirebaseEvent
+import com.shortstack.hackertracker.models.FirebaseLocation
+import com.shortstack.hackertracker.models.FirebaseSpeaker
 import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
 import com.shortstack.hackertracker.views.EventView
 
 /**
  * Created by Chris on 7/29/2018.
  */
-class SearchAdapter : RendererAdapter<Any>(RendererBuilder.create<DatabaseEvent>()
-        .bind(DatabaseEvent::class.java, EventRenderer(EventView.DISPLAY_MODE_FULL))
-        .bind(Location::class.java, LocationRenderer())
-        .bind(Speaker::class.java, SpeakerRenderer())
+class SearchAdapter : RendererAdapter<Any>(RendererBuilder.create<FirebaseEvent>()
+        .bind(FirebaseEvent::class.java, EventRenderer(EventView.DISPLAY_MODE_FULL))
+        .bind(FirebaseLocation::class.java, LocationRenderer())
+        .bind(FirebaseSpeaker::class.java, SpeakerRenderer())
         .bind(String::class.java, HeaderRenderer()).rendererBuilder) {
 
     var state: State = State.INIT
@@ -23,7 +23,7 @@ class SearchAdapter : RendererAdapter<Any>(RendererBuilder.create<DatabaseEvent>
 
     fun setList(elements: List<Any>) {
         state = when {
-            query.isNullOrBlank() == true -> State.INIT
+            query.isNullOrBlank() -> State.INIT
             elements.isNotEmpty() -> State.RESULTS
             else -> State.EMPTY
         }
@@ -33,14 +33,14 @@ class SearchAdapter : RendererAdapter<Any>(RendererBuilder.create<DatabaseEvent>
 
                 val left = collection[oldItemPosition]
                 val right = elements[newItemPosition]
-                if (left is DatabaseEvent && right is DatabaseEvent) {
+                if (left is FirebaseEvent && right is FirebaseEvent) {
                     return left.id == right.id
                 }
-                if (left is Location && right is Location) {
-                    return left.id == right.id
+                if (left is FirebaseLocation && right is FirebaseLocation) {
+                    return left.name == right.name
                 }
-                if (left is Speaker && right is Speaker) {
-                    return left.id == right.id
+                if (left is FirebaseSpeaker && right is FirebaseSpeaker) {
+                    return left.name == right.name
                 }
                 if (left is String && right is String) {
                     return left == right

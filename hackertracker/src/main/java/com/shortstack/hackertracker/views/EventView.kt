@@ -2,44 +2,37 @@ package com.shortstack.hackertracker.views
 
 import android.animation.ObjectAnimator
 import android.content.Context
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Build
-import androidx.core.content.ContextCompat
 import android.util.AttributeSet
-import android.util.DisplayMetrics
 import android.view.View
 import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
-import androidx.cardview.widget.CardView
-import com.shortstack.hackertracker.App
+import androidx.core.content.ContextCompat
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.EventViewModel
+import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utils.TickTimer
-import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.row_event.view.*
-import javax.inject.Inject
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class EventView : FrameLayout {
+class EventView : FrameLayout, KoinComponent {
 
-    @Inject
-    lateinit var database: DatabaseManager
+    private val database: DatabaseManager by inject()
 
-    @Inject
-    lateinit var timer: TickTimer
+    private val timer: TickTimer by inject()
 
     private var disposable: Disposable? = null
 
     private var displayMode: Int = DISPLAY_MODE_MIN
-    var content: EventViewModel? = null
-        private set
+
+    private val model: EventViewModel = EventViewModel(null)
 
     private var animation: ObjectAnimator? = null
 
@@ -47,7 +40,7 @@ class EventView : FrameLayout {
         init()
     }
 
-    constructor(context: Context, event: DatabaseEvent, display: Int = DISPLAY_MODE_FULL) : super(context) {
+    constructor(context: Context, event: FirebaseEvent, display: Int = DISPLAY_MODE_FULL) : super(context) {
         displayMode = display
         init()
         setContent(event)
@@ -55,12 +48,11 @@ class EventView : FrameLayout {
 
     private fun init() {
         inflate(context, R.layout.row_event, this)
-        App.application.component.inject(this)
         setDisplayMode()
     }
 
-    fun setContent(event: DatabaseEvent) {
-        content = EventViewModel(event)
+    fun setContent(event: FirebaseEvent) {
+        model.event = event
         render()
     }
 
@@ -103,8 +95,11 @@ class EventView : FrameLayout {
     private fun render() {
         renderText()
         renderCategoryColour()
-        if (content?.hasAnimatedProgress == false) {
-            content?.hasAnimatedProgress = true
+        updateBookmark()
+
+
+        if (!model.hasAnimatedProgress) {
+            model.hasAnimatedProgress = true
             progress.progress = 0
             updateProgressBar()
         } else {
@@ -112,7 +107,7 @@ class EventView : FrameLayout {
         }
 
         setOnClickListener {
-            (context as? MainActivity)?.navigate(content?.event)
+            (context as? MainActivity)?.navigate(model.event)
         }
 
         star_bar.setOnClickListener {
@@ -146,29 +141,24 @@ class EventView : FrameLayout {
     }
 
     private fun getProgress(): Int {
-//        if (BuildConfig.DEBUG)
-//            return Random().nextInt(100)
-
-        return (content!!.progress * 100).toInt()
+        return (model.progress * 100).toInt()
     }
 
     private fun renderText() {
-        title.text = content?.title
-        val pair = content?.getTimeStamp(context)
-        if (displayMode == DISPLAY_MODE_MIN) {
-            location.text = content?.location + " | " + pair?.first + " - " + pair?.second
-        } else {
-            time.text = content?.getFullTimeStamp(context)
-            location.text = content?.location
+        title.text = model.title
+        location.text = model.location
+
+        if (displayMode != DISPLAY_MODE_MIN) {
+            time.text = model.getFullTimeStamp(context)
         }
     }
 
     private fun renderCategoryColour() {
-        val type = content?.event?.type?.firstOrNull() ?: return
+        val type = model.type
 
         category_text.text = type.name
-        val color = Color.parseColor(type.color)
 
+        val color = Color.parseColor(type.color)
         category.setBackgroundColor(color)
         progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
@@ -178,14 +168,18 @@ class EventView : FrameLayout {
             drawable?.setTint(color)
             category_text.background = drawable
         }
+    }
 
 
-
+    private fun updateBookmark() {
+        val type = model.type
+        val color = Color.parseColor(type.color)
         renderBookmark(color)
     }
 
     private fun renderBookmark(color: Int) {
-        val isBookmarked = content?.event?.event?.isBookmarked == true
+        val isBookmarked = model.isBookmarked
+
         val drawable = if (isBookmarked) {
             R.drawable.ic_star_accent_24dp
         } else {
@@ -201,27 +195,13 @@ class EventView : FrameLayout {
         star_bar.setImageDrawable(image)
     }
 
-    private fun convertDpToPixel(dp: Float, context: Context): Float {
-        val resources = context.resources
-        val metrics = resources.displayMetrics
-        return dp * (metrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-    }
+    private fun onBookmarkClick() {
+        model.event?.let {
+            it.isBookmarked = !it.isBookmarked
+            database.updateBookmark(it)
 
-
-    fun onBookmarkClick() {
-        val event = content?.event?.event ?: return
-
-        event.isBookmarked = !event.isBookmarked
-
-
-        renderCategoryColour()
-
-        Single.fromCallable {
-            database.updateBookmark(event)
-        }.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe()
-
+            updateBookmark()
+        }
     }
 
     companion object {

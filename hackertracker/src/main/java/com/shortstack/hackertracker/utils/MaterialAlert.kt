@@ -2,13 +2,11 @@ package com.shortstack.hackertracker.utils
 
 import android.content.Context
 import android.content.DialogInterface
-import android.graphics.Color
-import androidx.core.content.ContextCompat
-import androidx.appcompat.app.AlertDialog
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import com.shortstack.hackertracker.R
 
 class MaterialAlert(private val mContext: Context) {

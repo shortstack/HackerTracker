@@ -6,8 +6,8 @@ import androidx.lifecycle.Observer
 import com.pedrogomez.renderers.RendererAdapter
 import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.Resource
-import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Day
+import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.ui.ListFragment
 import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
@@ -36,18 +36,18 @@ class WorkshopFragment : ListFragment<Any>() {
         })
     }
 
-    private fun getFormattedElements(elements: List<DatabaseEvent>): ArrayList<Any> {
+    private fun getFormattedElements(elements: List<FirebaseEvent>): ArrayList<Any> {
         val result = ArrayList<Any>()
 
 
-        elements.groupBy { it.event.date }.forEach {
+        elements.groupBy { it.date }.forEach {
             result.add(Day(it.key))
 
-            it.value.groupBy { it.event.begin }.forEach {
+            it.value.groupBy { it.start }.forEach {
                 result.add(Time(it.key))
 
                 if (it.value.isNotEmpty()) {
-                    val group = it.value.sortedWith(compareBy({ it.type.firstOrNull()?.name }, { it.location.firstOrNull()?.name }))
+                    val group = it.value.sortedWith(compareBy({ it.type.name }, { it.location.name }))
                     result.addAll(group)
                 }
             }
@@ -58,7 +58,7 @@ class WorkshopFragment : ListFragment<Any>() {
 
     override fun initAdapter(): RendererAdapter<Any> {
         return RendererBuilder.create<Any>()
-                .bind(DatabaseEvent::class.java, EventRenderer())
+                .bind(FirebaseEvent::class.java, EventRenderer())
                 .bind(Day::class.java, RelativeDayRender())
                 .bind(Time::class.java, RelativeTimeRenderer())
                 .build()
