@@ -138,16 +138,9 @@ class EventFragment : Fragment() {
     }
 
     private fun onBookmarkClick(event: FirebaseEvent) {
-//        event.event.isBookmarked = !event.isBookmarked
-
-//        displayBookmark(event)
-//
-//        Single.fromCallable {
-//            database.updateBookmark(event.event)
-//        }.subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe()
-
+        event.isBookmarked = !event.isBookmarked
+        database.updateBookmark(event)
+        displayBookmark(event)
     }
 
     private fun getDetailsDescription(event: FirebaseEvent): String {

@@ -116,3 +116,9 @@ data class FirebaseMap(
         val name: String = "",
         val file: String = ""
 ) : Parcelable
+
+@Parcelize
+data class FirebaseBookmark(
+        val first: String = "",
+        val second: Boolean = false
+) : Parcelable

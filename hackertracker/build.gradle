@@ -115,9 +115,13 @@ dependencies {
 
 
     implementation "com.hendraanggrian.material:collapsingtoolbarlayout-subtitle:1.0.0-beta01"
-    implementation 'com.google.firebase:firebase-database:16.0.5'
-    implementation 'com.google.firebase:firebase-firestore:17.1.4'
-    implementation 'com.google.firebase:firebase-storage:16.0.5'
+
+    // Firebase
+    implementation 'com.google.firebase:firebase-database:16.1.0'
+    implementation 'com.google.firebase:firebase-firestore:18.1.0'
+    implementation 'com.google.firebase:firebase-storage:16.1.0'
+    implementation 'com.google.firebase:firebase-auth:16.1.0'
+
 
 
 

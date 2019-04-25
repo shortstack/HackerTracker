@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.toWorkData
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.storage.FirebaseStorage
@@ -25,6 +26,8 @@ import kotlin.collections.ArrayList
  */
 class DatabaseManager {
 
+    private val userId = "user-id"
+
     companion object {
         private const val CONFERENCES = "conferences"
 
@@ -39,9 +42,13 @@ class DatabaseManager {
 
     private val firestore = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
+    private val auth = FirebaseAuth.getInstance()
 
     val conference = MutableLiveData<FirebaseConference>()
     val types = MutableLiveData<List<FirebaseType>>()
+    val events = MutableLiveData<List<FirebaseEvent>>()
+
+
 
     init {
         if (!BuildConfig.DEBUG) {
@@ -52,6 +59,9 @@ class DatabaseManager {
             firestore.firestoreSettings = settings
         }
 
+        InitLoader(this)
+
+
         firestore.collection(CONFERENCES)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
@@ -61,20 +71,40 @@ class DatabaseManager {
                         conference.postValue(con)
 
                         if (con != null) {
-                            firestore.collection(CONFERENCES)
-                                    .document(con.code)
-                                    .collection(TYPES)
-                                    .addSnapshotListener { snapshot, exception ->
-                                        if (exception == null) {
-                                            val types = snapshot?.toObjects(FirebaseType::class.java)
-                                            this.types.postValue(types)
-
-                                            // TODO: Remove.
-                                            conference.postValue(conference.value)
-                                        }
-                                    }
+                            fetchConferenceTypes(con)
                         }
                     }
+                }
+    }
+
+    private fun fetchConferenceTypes(con: FirebaseConference) {
+        firestore.collection(CONFERENCES)
+                .document(con.code)
+                .collection(TYPES)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val types = snapshot?.toObjects(FirebaseType::class.java) ?: emptyList()
+                        fetchUserTypes(con, types)
+                    }
+                }
+    }
+
+    private fun fetchUserTypes(con: FirebaseConference, list: List<FirebaseType>) {
+        firestore.collection(CONFERENCES)
+                .document(con.code)
+                .collection(USERS)
+                .document(userId)
+                .collection(TYPES)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val bookmarkedTypes = snapshot?.toObjects(FirebaseBookmark::class.java) ?: emptyList()
+
+                        bookmarkedTypes.forEach { bookmark ->
+                            list.firstOrNull { it.id.toString() == bookmark.first }?.isSelected = bookmark.second
+                        }
+                    }
+
+                    types.postValue(list)
                 }
     }
 
@@ -111,10 +141,11 @@ class DatabaseManager {
         val mutableLiveData = MutableLiveData<List<FirebaseConference>>()
 
         firestore.collection(CONFERENCES)
-                .get()
-                .addOnSuccessListener {
-                    val cons = it.toObjects(FirebaseConference::class.java)
-                    mutableLiveData.postValue(cons)
+                .addSnapshotListener { snapshot, exception ->
+                    if( exception == null ) {
+                        val cons = snapshot?.toObjects(FirebaseConference::class.java)
+                        mutableLiveData.postValue(cons)
+                    }
                 }
 
         return mutableLiveData
@@ -136,30 +167,37 @@ class DatabaseManager {
         return mutableLiveData
     }
 
-    fun getSchedule(conference: FirebaseConference): LiveData<List<FirebaseEvent>> {
-        return getSchedule(conference, emptyList())
-    }
-
-    private fun getSchedule(conference: FirebaseConference, list: List<FirebaseType>): LiveData<List<FirebaseEvent>> {
+    fun getSchedule(conference: FirebaseConference, types: List<FirebaseType> = emptyList()): LiveData<List<FirebaseEvent>> {
 
         // TODO Handle the date of the confrence.
         val date = Date().now()
 
         val mutableLiveData = MutableLiveData<List<FirebaseEvent>>()
 
-        val types = types.value?.filter { it.isSelected } ?: emptyList()
+        val types = types.filter { it.isSelected }
 
 
-        // TODO: Handle searching by selected types.
+        val timer = System.currentTimeMillis()
+
+
         firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(EVENTS)
                 .addSnapshotListener { snapshot, exception ->
+
+                    Logger.d("Fetched events for ${conference.name} in ${System.currentTimeMillis() - timer}ms.")
+
                     if (exception == null) {
-                        val events = snapshot?.toObjects(FirebaseEvent::class.java)?.filter {
-                            types.isEmpty() || types.contains(it.type)
-                        }
-                        mutableLiveData.postValue(events)
+                        val events = snapshot?.toObjects(FirebaseEvent::class.java) ?: emptyList()
+
+                        val filtered = if(types.isNotEmpty())
+                            events.filter { it.type in types }
+                        else
+                            events
+
+
+
+                        mutableLiveData.postValue(filtered)
                     }
                 }
 
@@ -265,7 +303,6 @@ class DatabaseManager {
         }
 
         // TODO: Use the actual auth token.
-        val userId = "user-id"
 
         val document = firestore.collection(CONFERENCES)
                 .document(event.conference)
@@ -282,11 +319,14 @@ class DatabaseManager {
     }
 
     fun updateTypeIsSelected(type: FirebaseType) {
+        val value = types.value
+        value?.find { it.id == type.id }?.isSelected = type.isSelected
+        types.postValue(value)
+
+
+
+
         // TODO: Use the actual auth token.
-        val userId = "user-id"
-
-
-        // TODO: Update the type within Firestore.
         val document = firestore.collection(CONFERENCES)
                 .document(type.conference)
                 .collection(USERS)
@@ -295,7 +335,7 @@ class DatabaseManager {
                 .document(type.id.toString())
 
         if (type.isSelected) {
-            document.set(true)
+            document.set(type.id.toString() to true)
         } else {
             document.delete()
         }

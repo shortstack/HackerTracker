@@ -95,6 +95,9 @@ class EventView : FrameLayout, KoinComponent {
     private fun render() {
         renderText()
         renderCategoryColour()
+        updateBookmark()
+
+
         if (!model.hasAnimatedProgress) {
             model.hasAnimatedProgress = true
             progress.progress = 0
@@ -155,7 +158,6 @@ class EventView : FrameLayout, KoinComponent {
 
         category_text.text = type.name
 
-
         val color = Color.parseColor(type.color)
         category.setBackgroundColor(color)
         progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
@@ -166,7 +168,12 @@ class EventView : FrameLayout, KoinComponent {
             drawable?.setTint(color)
             category_text.background = drawable
         }
+    }
 
+
+    private fun updateBookmark() {
+        val type = model.type
+        val color = Color.parseColor(type.color)
         renderBookmark(color)
     }
 
@@ -192,6 +199,8 @@ class EventView : FrameLayout, KoinComponent {
         model.event?.let {
             it.isBookmarked = !it.isBookmarked
             database.updateBookmark(it)
+
+            updateBookmark()
         }
     }
 

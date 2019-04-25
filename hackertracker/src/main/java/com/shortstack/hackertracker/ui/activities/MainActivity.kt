@@ -19,6 +19,8 @@ import androidx.lifecycle.ViewModelProviders
 import com.github.stkent.amplify.tracking.Amplify
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
+import com.google.firebase.auth.FirebaseAuth
+import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
@@ -55,6 +57,8 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
     private lateinit var bottomSheet: BottomSheetBehavior<View>
 
     private lateinit var viewModel: MainActivityViewModel
+
+    private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     private val map = HashMap<Int, Fragment>()
 
@@ -128,6 +132,17 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         ViewCompat.setTranslationZ(filters, 10f)
     }
 
+    override fun onStart() {
+        super.onStart()
+        auth.signInAnonymously().addOnCompleteListener(this) {
+            if (it.isSuccessful) {
+                Logger.d("Successfully signed in. ${it.result}")
+
+            } else {
+                Logger.e("Could not sign in.")
+            }
+        }
+    }
 
     override fun onResume() {
         super.onResume()

@@ -105,13 +105,13 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
                 val left = collection[oldItemPosition]
                 val right = elements[newItemPosition]
 //
-//                if (left is FirebaseEvent && right is FirebaseEvent) {
-//                    return left.updated == right.updated && left.isBookmarked == right.isBookmarked
-//                } else if (left is Day && right is Day) {
-//                    return left.time == right.time
-//                } else if (left is Time && right is Time) {
-//                    return left.time == right.time
-//                }
+                if (left is FirebaseEvent && right is FirebaseEvent) {
+                    return left.updated == right.updated && left.isBookmarked == right.isBookmarked
+                } else if (left is Day && right is Day) {
+                    return left.time == right.time
+                } else if (left is Time && right is Time) {
+                    return left.time == right.time
+                }
                 return false
             }
 
