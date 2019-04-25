@@ -37,6 +37,7 @@ import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.speakers.SpeakerFragment
+import com.shortstack.hackertracker.ui.speakers.SpeakersFragment
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import com.shortstack.hackertracker.ui.workshops.WorkshopFragment
 import com.shortstack.hackertracker.utils.TickTimer
@@ -241,6 +242,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
                 R.id.nav_home -> HomeFragment.newInstance()
                 R.id.nav_schedule -> ScheduleFragment.newInstance()
                 R.id.nav_map -> MapsFragment.newInstance()
+                R.id.nav_speakers -> SpeakersFragment.newInstance()
                 R.id.nav_companies -> VendorsFragment.newInstance()
                 NAV_CONTESTS -> ContestsFragment.newInstance()
                 NAV_WORKSHOPS -> WorkshopFragment.newInstance()
