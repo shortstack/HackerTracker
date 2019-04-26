@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.FirebaseLocation
@@ -29,32 +28,23 @@ class SearchViewModel : ViewModel(), KoinComponent {
                 ?: throw IllegalStateException("Current con is null.")
 
         results = Transformations.switchMap(query) {
-            val result = MediatorLiveData<List<Any>>()
+            val results = MediatorLiveData<List<Any>>()
 
             if (it.isBlank()) {
-                result.value = emptyList()
+                results.value = emptyList()
             } else {
                 val text = "%$it%"
 
                 clear()
-//                speakers.addAll(database.searchForSpeaker(conference, text))
-//                events.addAll(database.searchForEvents(conference, text))
-                database.searchForEvents(conference, text)
+                database.search(conference, text)
                         .subscribe { it ->
-                            events.addAll(it)
-
-                            setValue(result)
+                            results.postValue(it)
                         }
 
-
-//                locations.addAll(database.searchForLocation(conference, text))
-
-                setValue(result)
             }
 
 
-            return@switchMap result
-
+            return@switchMap results
         }
     }
 
