@@ -1,16 +1,18 @@
 package com.shortstack.hackertracker.database
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.toWorkData
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.storage.FirebaseStorage
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.models.*
@@ -21,6 +23,7 @@ import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
+
 
 /**
  * Created by Chris on 3/31/2018.
@@ -67,6 +70,23 @@ class DatabaseManager {
 
             InitLoader(this@DatabaseManager)
         }
+
+
+
+        FirebaseInstanceId.getInstance().instanceId
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Log.w("TAG", "getInstanceId failed", task.exception)
+                        return@OnCompleteListener
+                    }
+
+                    // Get new Instance ID token
+                    val token = task.result?.token
+                    Log.d("TAG", token)
+
+
+                    updateFirebaseMessagingToken(conference.value, token)
+                })
     }
 
     fun changeConference(id: Int) {
@@ -242,6 +262,22 @@ class DatabaseManager {
         } else {
             document.delete()
         }
+    }
+
+    private fun updateFirebaseMessagingToken(conference: FirebaseConference?, token: String?) {
+        if (conference == null || token == null) {
+            Log.e("TAG", "Null, cannot update token.")
+            return
+        }
+
+        val document = firestore.collection(CONFERENCES)
+                .document(conference.code)
+                .collection(USERS)
+                .document(userId)
+                .update(mapOf("token" to token))
+                .addOnCompleteListener {
+                    Log.d("TAG", "Completed.")
+                }
     }
 
     fun clear() {
