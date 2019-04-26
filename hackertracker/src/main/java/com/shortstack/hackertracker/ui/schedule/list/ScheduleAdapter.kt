@@ -107,6 +107,7 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
 //
                 if (left is FirebaseEvent && right is FirebaseEvent) {
                     return left.updated == right.updated && left.isBookmarked == right.isBookmarked
+                            && left.title == right.title && left.location.name == right.location.name
                 } else if (left is Day && right is Day) {
                     return left.time == right.time
                 } else if (left is Time && right is Time) {

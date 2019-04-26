@@ -20,7 +20,7 @@ data class FirebaseConference(
         val code: String = "",
         @field:JvmField
         @PropertyName("is_selected")
-        val isSelected: Boolean = false,
+        var isSelected: Boolean = false,
         val maps: ArrayList<FirebaseMap> = ArrayList()
 //        val events: HashMap<String, FirebaseEvent> = HashMap(),
 //        val types: HashMap<String, FirebaseType> = HashMap()

@@ -3,7 +3,7 @@ package com.shortstack.hackertracker.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.shortstack.hackertracker.models.*
 
-class InitLoader(private val database: DatabaseManager) {
+class InitLoader(private val database: DatabaseManager, conference: FirebaseConference? = null) {
 
     companion object {
         private const val CONFERENCES = "conferences"
@@ -28,25 +28,33 @@ class InitLoader(private val database: DatabaseManager) {
     private val speakers = ArrayList<FirebaseSpeaker>()
 
     init {
-        firestore.collection(CONFERENCES)
-                .get()
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val cons = it.result?.toObjects(FirebaseConference::class.java)
-                                ?: emptyList()
-                        conferences.addAll(cons)
+        if (conference != null) {
+            getConferenceDetails(conference)
+        } else {
+            firestore.collection(CONFERENCES)
+                    .get()
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            val cons = it.result?.toObjects(FirebaseConference::class.java)
+                                    ?: emptyList()
+                            conferences.addAll(cons)
 
-                        // TODO: get the selected con
-                        val selected = cons.find { it.code == "THOTCON0xA" } ?: cons.firstOrNull()
+                            // TODO: get the selected con
+                            val selected = cons.find { it.code == "THOTCON0xA" }
+                                    ?: cons.firstOrNull()
 
-                        if (selected != null) {
-                            getTypes(selected)
-                            getEvents(selected)
-                            getSpeakers(selected)
+                            if (selected != null) {
+                                getConferenceDetails(selected)
+                            }
                         }
                     }
-                }
+        }
+    }
 
+    private fun getConferenceDetails(conference: FirebaseConference) {
+        getTypes(conference)
+        getEvents(conference)
+        getSpeakers(conference)
     }
 
     private fun getSpeakers(conference: FirebaseConference) {
@@ -61,7 +69,7 @@ class InitLoader(private val database: DatabaseManager) {
                         speakers.clear()
                         speakers.addAll(list)
 
-                        onSuccess()
+                        onSuccess(conference)
                     }
                 }
     }
@@ -70,16 +78,17 @@ class InitLoader(private val database: DatabaseManager) {
         firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(EVENTS)
-                .get()
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val list = it.result?.toObjects(FirebaseEvent::class.java) ?: emptyList()
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val list = snapshot?.toObjects(FirebaseEvent::class.java) ?: emptyList()
+
+                        events.clear()
                         events.addAll(list)
 
                         firestore.collection(CONFERENCES)
                                 .document(conference.code)
                                 .collection(USERS)
-                                .document("user-id")
+                                .document(database.user.uid)
                                 .collection(BOOKMARKS)
                                 .get()
                                 .addOnCompleteListener {
@@ -91,7 +100,7 @@ class InitLoader(private val database: DatabaseManager) {
                                         events.find { it.id.toString() == bookmark.first }?.isBookmarked = bookmark.second
                                     }
 
-                                    onSuccess()
+                                    onSuccess(conference)
 
                                 }
 
@@ -104,16 +113,17 @@ class InitLoader(private val database: DatabaseManager) {
         firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(TYPES)
-                .get()
-                .addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        val list = it.result?.toObjects(FirebaseType::class.java) ?: emptyList()
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val list = snapshot?.toObjects(FirebaseType::class.java) ?: emptyList()
+
+                        types.clear()
                         types.addAll(list)
 
                         firestore.collection(CONFERENCES)
                                 .document(conference.code)
                                 .collection(USERS)
-                                .document("user-id")
+                                .document(database.user.uid)
                                 .collection(TYPES)
                                 .get()
                                 .addOnCompleteListener {
@@ -125,7 +135,7 @@ class InitLoader(private val database: DatabaseManager) {
                                         types.find { it.id.toString() == bookmark.first }?.isSelected = bookmark.second
                                     }
 
-                                    onSuccess()
+                                    onSuccess(conference)
 
                                 }
                     }
@@ -133,14 +143,12 @@ class InitLoader(private val database: DatabaseManager) {
     }
 
 
-    private fun onSuccess() {
+    private fun onSuccess(conference: FirebaseConference) {
         if (events.isNotEmpty() && types.isNotEmpty() && speakers.isNotEmpty()) {
-            database.conference.postValue(conferences.first())
+            database.conference.postValue(conference)
             database.types.postValue(types)
             database.events.postValue(events)
             database.speakers.postValue(speakers)
         }
     }
-
-
 }

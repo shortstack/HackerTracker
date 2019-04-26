@@ -6,6 +6,7 @@ import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.toWorkData
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.storage.FirebaseStorage
@@ -50,6 +51,7 @@ class DatabaseManager {
     val speakers = MutableLiveData<List<FirebaseSpeaker>>()
 
 
+    lateinit var user: FirebaseUser
 
     init {
         if (!BuildConfig.DEBUG) {
@@ -60,80 +62,27 @@ class DatabaseManager {
             firestore.firestoreSettings = settings
         }
 
-        InitLoader(this)
+        auth.signInAnonymously().addOnCompleteListener {
+            user = it.result?.user ?: return@addOnCompleteListener
 
-
-        firestore.collection(CONFERENCES)
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception == null) {
-                        val cons = snapshot?.toObjects(FirebaseConference::class.java)
-                        val con = cons?.firstOrNull { it.isSelected } ?: cons?.firstOrNull()
-
-                        conference.postValue(con)
-
-                        if (con != null) {
-                            fetchConferenceTypes(con)
-                        }
-                    }
-                }
-    }
-
-    private fun fetchConferenceTypes(con: FirebaseConference) {
-        firestore.collection(CONFERENCES)
-                .document(con.code)
-                .collection(TYPES)
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception == null) {
-                        val types = snapshot?.toObjects(FirebaseType::class.java) ?: emptyList()
-                        fetchUserTypes(con, types)
-                    }
-                }
-    }
-
-    private fun fetchUserTypes(con: FirebaseConference, list: List<FirebaseType>) {
-        firestore.collection(CONFERENCES)
-                .document(con.code)
-                .collection(USERS)
-                .document(userId)
-                .collection(TYPES)
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception == null) {
-                        val bookmarkedTypes = snapshot?.toObjects(FirebaseBookmark::class.java) ?: emptyList()
-
-                        bookmarkedTypes.forEach { bookmark ->
-                            list.firstOrNull { it.id.toString() == bookmark.first }?.isSelected = bookmark.second
-                        }
-                    }
-
-                    types.postValue(list)
-                }
+            InitLoader(this@DatabaseManager)
+        }
     }
 
     fun changeConference(id: Int) {
         val current = conference.value
 
         if (current != null) {
-            firestore.collection(CONFERENCES)
-                    .document(current.code)
-                    .update(mapOf("is_selected" to false))
-                    .addOnSuccessListener {
-                        Logger.d("Removed the prev selected.")
-                    }
-
+            current.isSelected = false
         }
 
         firestore.collection(CONFERENCES)
                 .whereEqualTo("id", id)
                 .get()
-
-                .addOnSuccessListener {
-                    Logger.d("Added the newly selected.")
-
-                    val selected = it.toObjects(FirebaseConference::class.java).firstOrNull()
-                    if (selected != null) {
-                        firestore.collection(CONFERENCES)
-                                .document(selected.code)
-                                .update(mapOf("is_selected" to true))
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        val selected = it.result?.toObjects(FirebaseConference::class.java)?.firstOrNull()
+                        InitLoader(this, selected)
                     }
                 }
     }
@@ -143,7 +92,7 @@ class DatabaseManager {
 
         firestore.collection(CONFERENCES)
                 .addSnapshotListener { snapshot, exception ->
-                    if( exception == null ) {
+                    if (exception == null) {
                         val cons = snapshot?.toObjects(FirebaseConference::class.java)
                         mutableLiveData.postValue(cons)
                     }
@@ -163,43 +112,6 @@ class DatabaseManager {
                     val events = it.toObjects(FirebaseEvent::class.java)
                     val recent = events.sortedBy { it.updated }.take(10)
                     mutableLiveData.postValue(recent)
-                }
-
-        return mutableLiveData
-    }
-
-    fun getSchedule(conference: FirebaseConference, types: List<FirebaseType> = emptyList()): LiveData<List<FirebaseEvent>> {
-
-        // TODO Handle the date of the confrence.
-        val date = Date().now()
-
-        val mutableLiveData = MutableLiveData<List<FirebaseEvent>>()
-
-        val types = types.filter { it.isSelected }
-
-
-        val timer = System.currentTimeMillis()
-
-
-        firestore.collection(CONFERENCES)
-                .document(conference.code)
-                .collection(EVENTS)
-                .addSnapshotListener { snapshot, exception ->
-
-                    Logger.d("Fetched events for ${conference.name} in ${System.currentTimeMillis() - timer}ms.")
-
-                    if (exception == null) {
-                        val events = snapshot?.toObjects(FirebaseEvent::class.java) ?: emptyList()
-
-                        val filtered = if(types.isNotEmpty())
-                            events.filter { it.type in types }
-                        else
-                            events
-
-
-
-                        mutableLiveData.postValue(filtered)
-                    }
                 }
 
         return mutableLiveData
@@ -247,21 +159,15 @@ class DatabaseManager {
         }
     }
 
-    fun searchForEvents(conference: FirebaseConference, text: String): Single<List<FirebaseEvent>> {
+    fun search(conference: FirebaseConference, text: String): Single<List<Any>> {
         return Single.create { emitter ->
-            val eventsRef = firestore.collection(CONFERENCES)
-                    .document(conference.code)
-                    .collection(EVENTS)
 
-            eventsRef.whereGreaterThan("title", text).addSnapshotListener { snapshot, exception ->
-                if (exception == null) {
-                    val events = snapshot?.toObjects(FirebaseEvent::class.java)
-                            ?: return@addSnapshotListener
-                    Logger.d("got events!")
+            val result = ArrayList<Any>()
 
-                    emitter.onSuccess(events)
-                }
-            }
+            result.addAll(speakers.value?.filter { it.name.contains(text, true) } ?: emptyList())
+            result.addAll(events.value?.filter { it.title.contains(text, true) } ?: emptyList())
+
+            emitter.onSuccess(result)
         }
     }
 
@@ -303,8 +209,6 @@ class DatabaseManager {
 
         }
 
-        // TODO: Use the actual auth token.
-
         val document = firestore.collection(CONFERENCES)
                 .document(event.conference)
                 .collection(USERS)
@@ -323,8 +227,6 @@ class DatabaseManager {
         val value = types.value
         value?.find { it.id == type.id }?.isSelected = type.isSelected
         types.postValue(value)
-
-
 
 
         // TODO: Use the actual auth token.
@@ -352,15 +254,7 @@ class DatabaseManager {
 
     fun getEventsForSpeaker(speaker: FirebaseSpeaker): Single<List<FirebaseEvent>> {
         return Single.create<List<FirebaseEvent>> { emitter ->
-
-            firestore.collection(CONFERENCES)
-                    .document(conference.value?.code ?: "")
-                    .collection(EVENTS)
-                    .whereArrayContains("speakers", speaker.name)
-                    .get()
-                    .addOnSuccessListener {
-                        emitter.onSuccess(it.toObjects(FirebaseEvent::class.java))
-                    }
+            emitter.onSuccess(events.value?.filter { it.speakers.contains(speaker) } ?: emptyList())
         }
     }
 
