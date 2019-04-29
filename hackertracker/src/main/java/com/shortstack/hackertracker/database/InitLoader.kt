@@ -13,6 +13,7 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
 
         private const val EVENTS = "events"
         private const val TYPES = "types"
+        private const val LOCATIONS = "locations"
         private const val FAQS = "faqs"
         private const val SPEAKERS = "speakers"
         private const val VENDORS = "vendors"
@@ -26,6 +27,7 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
     private val types = ArrayList<FirebaseType>()
     private val events = ArrayList<FirebaseEvent>()
     private val speakers = ArrayList<FirebaseSpeaker>()
+    private val locations = ArrayList<FirebaseLocation>()
 
     init {
         if (conference != null) {
@@ -55,6 +57,22 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
         getTypes(conference)
         getEvents(conference)
         getSpeakers(conference)
+        getLocations(conference)
+    }
+
+    private fun getLocations(conference: FirebaseConference) {
+        firestore.collection(CONFERENCES)
+                .document(conference.code)
+                .collection(LOCATIONS)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val list = snapshot?.toObjects(FirebaseLocation::class.java)
+                                ?: emptyList()
+
+                        locations.clear()
+                        locations.addAll(list)
+                    }
+                }
     }
 
     private fun getSpeakers(conference: FirebaseConference) {

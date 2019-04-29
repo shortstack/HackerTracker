@@ -30,8 +30,6 @@ import kotlin.collections.ArrayList
  */
 class DatabaseManager {
 
-    private val userId = "user-id"
-
     companion object {
         private const val CONFERENCES = "conferences"
 
@@ -52,6 +50,7 @@ class DatabaseManager {
     val types = MutableLiveData<List<FirebaseType>>()
     val events = MutableLiveData<List<FirebaseEvent>>()
     val speakers = MutableLiveData<List<FirebaseSpeaker>>()
+    val locations = MutableLiveData<List<FirebaseLocation>>()
 
 
     lateinit var user: FirebaseUser
@@ -179,24 +178,16 @@ class DatabaseManager {
         }
     }
 
-    fun search(conference: FirebaseConference, text: String): Single<List<Any>> {
-        return Single.create { emitter ->
-
-            val result = ArrayList<Any>()
-
-            result.addAll(speakers.value?.filter { it.name.contains(text, true) } ?: emptyList())
-            result.addAll(events.value?.filter { it.title.contains(text, true) } ?: emptyList())
-
-            emitter.onSuccess(result)
-        }
+    fun findEvents(text: String): List<FirebaseEvent> {
+        return events.value?.filter { it.title.contains(text, true) } ?: emptyList()
     }
 
-    fun searchForLocation(conference: FirebaseConference, text: String): List<FirebaseLocation> {
-        TODO("Need to implement a single threaded solution for searching.")
+    fun findLocation(text: String): List<FirebaseLocation> {
+        return locations.value?.filter { it.name.contains(text, true) } ?: emptyList()
     }
 
-    fun searchForSpeaker(conference: FirebaseConference, text: String): List<FirebaseSpeaker> {
-        TODO("Need to implement a single threaded solution for searching.")
+    fun findSpeaker(text: String): List<FirebaseSpeaker> {
+        return speakers.value?.filter { it.name.contains(text, true) } ?: emptyList()
     }
 
 
@@ -232,7 +223,7 @@ class DatabaseManager {
         val document = firestore.collection(CONFERENCES)
                 .document(event.conference)
                 .collection(USERS)
-                .document(userId)
+                .document(user.uid)
                 .collection(BOOKMARKS)
                 .document(event.id.toString())
 
@@ -249,11 +240,10 @@ class DatabaseManager {
         types.postValue(value)
 
 
-        // TODO: Use the actual auth token.
         val document = firestore.collection(CONFERENCES)
                 .document(type.conference)
                 .collection(USERS)
-                .document(userId)
+                .document(user.uid)
                 .collection(TYPES)
                 .document(type.id.toString())
 
