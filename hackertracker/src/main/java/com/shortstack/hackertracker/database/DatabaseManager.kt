@@ -231,7 +231,8 @@ class DatabaseManager {
                 .document(event.id.toString())
 
         if (event.isBookmarked) {
-            document.set(event.id.toString() to true)
+            document.set(mapOf("id" to event.id.toString(),
+                    "value" to true))
         } else {
             document.delete()
         }
@@ -251,7 +252,8 @@ class DatabaseManager {
                 .document(type.id.toString())
 
         if (type.isSelected) {
-            document.set(type.id.toString() to true)
+            document.set(mapOf("id" to type.id.toString(),
+                    "value" to true))
         } else {
             document.delete()
         }
