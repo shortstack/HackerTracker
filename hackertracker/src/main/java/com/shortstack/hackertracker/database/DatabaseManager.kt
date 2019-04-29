@@ -26,8 +26,6 @@ import kotlin.collections.ArrayList
  */
 class DatabaseManager {
 
-    private val userId = "user-id"
-
     companion object {
         private const val CONFERENCES = "conferences"
 
@@ -204,7 +202,7 @@ class DatabaseManager {
         val document = firestore.collection(CONFERENCES)
                 .document(event.conference)
                 .collection(USERS)
-                .document(userId)
+                .document(user.uid)
                 .collection(BOOKMARKS)
                 .document(event.id.toString())
 
@@ -221,11 +219,10 @@ class DatabaseManager {
         types.postValue(value)
 
 
-        // TODO: Use the actual auth token.
         val document = firestore.collection(CONFERENCES)
                 .document(type.conference)
                 .collection(USERS)
-                .document(userId)
+                .document(user.uid)
                 .collection(TYPES)
                 .document(type.id.toString())
 
