@@ -3,7 +3,7 @@ package com.shortstack.hackertracker.database
 import com.google.firebase.firestore.FirebaseFirestore
 import com.shortstack.hackertracker.models.*
 
-class InitLoader(private val database: DatabaseManager, conference: FirebaseConference? = null) {
+class InitLoader(private val database: DatabaseManager, conference: FirebaseConference? = null, private val onComplete: ((FirebaseConference) -> Unit)? = null) {
 
     companion object {
         private const val CONFERENCES = "conferences"
@@ -167,6 +167,8 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
             database.types.postValue(types)
             database.events.postValue(events)
             database.speakers.postValue(speakers)
+
+            onComplete?.invoke(conference)
         }
     }
 }

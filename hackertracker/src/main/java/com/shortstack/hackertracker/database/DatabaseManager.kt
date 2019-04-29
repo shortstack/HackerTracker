@@ -13,6 +13,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.storage.FirebaseStorage
+import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.models.*
@@ -67,24 +68,26 @@ class DatabaseManager {
         auth.signInAnonymously().addOnCompleteListener {
             user = it.result?.user ?: return@addOnCompleteListener
 
-            InitLoader(this@DatabaseManager)
+            InitLoader(this@DatabaseManager) {
+                getFCMToken(it)
+            }
         }
 
 
+    }
 
+    private fun getFCMToken(conference: FirebaseConference) {
         FirebaseInstanceId.getInstance().instanceId
                 .addOnCompleteListener(OnCompleteListener { task ->
                     if (!task.isSuccessful) {
-                        Log.w("TAG", "getInstanceId failed", task.exception)
+                        Logger.e(task.exception, "Could not get token.")
                         return@OnCompleteListener
                     }
 
                     // Get new Instance ID token
                     val token = task.result?.token
-                    Log.d("TAG", token)
-
-
-                    updateFirebaseMessagingToken(conference.value, token)
+                    Logger.d("Obtained token: $token")
+                    updateFirebaseMessagingToken(conference, token)
                 })
     }
 
@@ -263,11 +266,10 @@ class DatabaseManager {
         val document = firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(USERS)
-                .document(userId)
-                .update(mapOf("token" to token))
-                .addOnCompleteListener {
-                    Log.d("TAG", "Completed.")
-                }
+                .document(user.uid)
+
+
+        document.set(mapOf("token" to token))
     }
 
     fun clear() {
