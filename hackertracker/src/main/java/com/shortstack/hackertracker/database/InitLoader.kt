@@ -115,7 +115,7 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
                                             ?: emptyList()
 
                                     list.forEach { bookmark ->
-                                        events.find { it.id.toString() == bookmark.first }?.isBookmarked = bookmark.second
+                                        events.find { it.id.toString() == bookmark.id }?.isBookmarked = bookmark.value
                                     }
 
                                     onSuccess(conference)
@@ -150,7 +150,7 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
                                             ?: emptyList()
 
                                     list.forEach { bookmark ->
-                                        types.find { it.id.toString() == bookmark.first }?.isSelected = bookmark.second
+                                        types.find { it.id.toString() == bookmark.id }?.isSelected = bookmark.value
                                     }
 
                                     onSuccess(conference)

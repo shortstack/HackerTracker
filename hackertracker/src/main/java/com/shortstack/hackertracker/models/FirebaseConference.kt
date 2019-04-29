@@ -119,6 +119,6 @@ data class FirebaseMap(
 
 @Parcelize
 data class FirebaseBookmark(
-        val first: String = "",
-        val second: Boolean = false
+        val id: String = "",
+        val value: Boolean = false
 ) : Parcelable
