@@ -1,15 +1,19 @@
 package com.shortstack.hackertracker.database
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.toWorkData
+import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.storage.FirebaseStorage
+import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.models.*
@@ -20,6 +24,7 @@ import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
+
 
 /**
  * Created by Chris on 3/31/2018.
@@ -63,8 +68,27 @@ class DatabaseManager {
         auth.signInAnonymously().addOnCompleteListener {
             user = it.result?.user ?: return@addOnCompleteListener
 
-            InitLoader(this@DatabaseManager)
+            InitLoader(this@DatabaseManager) {
+                getFCMToken(it)
+            }
         }
+
+
+    }
+
+    private fun getFCMToken(conference: FirebaseConference) {
+        FirebaseInstanceId.getInstance().instanceId
+                .addOnCompleteListener(OnCompleteListener { task ->
+                    if (!task.isSuccessful) {
+                        Logger.e(task.exception, "Could not get token.")
+                        return@OnCompleteListener
+                    }
+
+                    // Get new Instance ID token
+                    val token = task.result?.token
+                    Logger.d("Obtained token: $token")
+                    updateFirebaseMessagingToken(conference, token)
+                })
     }
 
     fun changeConference(id: Int) {
@@ -231,6 +255,21 @@ class DatabaseManager {
         } else {
             document.delete()
         }
+    }
+
+    private fun updateFirebaseMessagingToken(conference: FirebaseConference?, token: String?) {
+        if (conference == null || token == null) {
+            Log.e("TAG", "Null, cannot update token.")
+            return
+        }
+
+        val document = firestore.collection(CONFERENCES)
+                .document(conference.code)
+                .collection(USERS)
+                .document(user.uid)
+
+
+        document.set(mapOf("token" to token))
     }
 
     fun clear() {
