@@ -10,7 +10,6 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.storage.FirebaseStorage
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.models.*
@@ -49,6 +48,7 @@ class DatabaseManager {
     val types = MutableLiveData<List<FirebaseType>>()
     val events = MutableLiveData<List<FirebaseEvent>>()
     val speakers = MutableLiveData<List<FirebaseSpeaker>>()
+    val locations = MutableLiveData<List<FirebaseLocation>>()
 
 
     lateinit var user: FirebaseUser
@@ -159,24 +159,16 @@ class DatabaseManager {
         }
     }
 
-    fun search(conference: FirebaseConference, text: String): Single<List<Any>> {
-        return Single.create { emitter ->
-
-            val result = ArrayList<Any>()
-
-            result.addAll(speakers.value?.filter { it.name.contains(text, true) } ?: emptyList())
-            result.addAll(events.value?.filter { it.title.contains(text, true) } ?: emptyList())
-
-            emitter.onSuccess(result)
-        }
+    fun findEvents(text: String): List<FirebaseEvent> {
+        return events.value?.filter { it.title.contains(text, true) } ?: emptyList()
     }
 
-    fun searchForLocation(conference: FirebaseConference, text: String): List<FirebaseLocation> {
-        TODO("Need to implement a single threaded solution for searching.")
+    fun findLocation(text: String): List<FirebaseLocation> {
+        return locations.value?.filter { it.name.contains(text, true) } ?: emptyList()
     }
 
-    fun searchForSpeaker(conference: FirebaseConference, text: String): List<FirebaseSpeaker> {
-        TODO("Need to implement a single threaded solution for searching.")
+    fun findSpeaker(text: String): List<FirebaseSpeaker> {
+        return speakers.value?.filter { it.name.contains(text, true) } ?: emptyList()
     }
 
 

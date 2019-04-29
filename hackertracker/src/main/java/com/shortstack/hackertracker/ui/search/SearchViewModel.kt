@@ -8,6 +8,8 @@ import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.FirebaseLocation
 import com.shortstack.hackertracker.models.FirebaseSpeaker
+import io.reactivex.Single
+import io.reactivex.disposables.CompositeDisposable
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
@@ -23,24 +25,28 @@ class SearchViewModel : ViewModel(), KoinComponent {
     private val events = ArrayList<FirebaseEvent>()
     private val speakers = ArrayList<FirebaseSpeaker>()
 
-    init {
-        val conference = database.conference.value
-                ?: throw IllegalStateException("Current con is null.")
+    private val compositeDisposable = CompositeDisposable()
 
+    init {
         results = Transformations.switchMap(query) {
             val results = MediatorLiveData<List<Any>>()
 
             if (it.isBlank()) {
                 results.value = emptyList()
             } else {
-                val text = "%$it%"
 
-                clear()
-                database.search(conference, text)
-                        .subscribe { it ->
-                            results.postValue(it)
-                        }
 
+                val disposable = Single.fromCallable {
+                    clear()
+
+                    locations.addAll(database.findLocation(it))
+                    events.addAll(database.findEvents(it))
+                    speakers.addAll(database.findSpeaker(it))
+
+                    setValue(results)
+                }.subscribe()
+
+                compositeDisposable.add(disposable)
             }
 
 
@@ -87,5 +93,10 @@ class SearchViewModel : ViewModel(), KoinComponent {
 
     fun search(text: String?) {
         query.postValue(text)
+    }
+
+    override fun onCleared() {
+        super.onCleared()
+        compositeDisposable.clear()
     }
 }
