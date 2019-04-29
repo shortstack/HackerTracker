@@ -164,10 +164,10 @@ class EventFragment : Fragment() {
         val image = ContextCompat.getDrawable(context, drawable)?.mutate()
 
         if (isBookmarked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            event.type.firstOrNull()?.let {
-//                val color = Color.parseColor(it.color)
-//                image?.setTint(color)
-//            }
+            event.type.let {
+                val color = Color.parseColor(it.color)
+                image?.setTint(color)
+            }
         }
 
         star.setImageDrawable(image)
@@ -178,7 +178,7 @@ class EventFragment : Fragment() {
         val context = context ?: return
 
         collapsing_toolbar.subtitle = getFullTimeStamp(context, event)
-//        location.text = event.location.firstOrNull()?.name ?: "Unknown Location"
+        location.text = event.location.name
     }
 
 
