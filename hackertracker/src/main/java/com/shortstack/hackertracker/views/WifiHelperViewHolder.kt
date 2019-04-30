@@ -13,35 +13,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.pedrogomez.renderers.Renderer
-import com.pedrogomez.renderers.RendererContent
-import com.shortstack.hackertracker.App
+import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.wifi_item.view.*
 import java.io.ByteArrayInputStream
 import java.security.cert.CertificateFactory
 import java.security.cert.X509Certificate
 
-/**
- * Created by Chris on 6/29/2018.
- */
-class WifiHelperRenderer : Renderer<RendererContent<Void>>() {
+class WifiHelperViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
     companion object {
         private const val INSTALL_KEYSTORE_CODE = 1001
         private const val WIFI_URL = "https://wifireg.defcon.org/android.php"
     }
 
-    override fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
+    // TODO: Remove.
+    private val context = view.context
+
+    fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
         return inflater.inflate(R.layout.wifi_item, parent, false)
     }
 
-    override fun render(payloads: MutableList<Any>?) {
+    fun render(payloads: MutableList<Any>?) {
 
 
     }
 
-    override fun hookListeners(rootView: View?) {
+    fun hookListeners(rootView: View?) {
         rootView?.install?.setOnClickListener { startInstallCert() }
         rootView?.connect?.setOnClickListener { connectWifi() }
         rootView?.url?.setOnClickListener { openUrl() }

@@ -7,18 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
-import com.pedrogomez.renderers.RendererAdapter
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.Status
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
-/**
- * Created by Chris on 6/17/2018.
- */
 abstract class ListFragment<T> : Fragment() {
 
-    private lateinit var adapter: RendererAdapter<Any>
+    private val adapter = ListAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_recyclerview, container, false)
@@ -26,15 +22,12 @@ abstract class ListFragment<T> : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        adapter = initAdapter()
         list.adapter = adapter
     }
 
-    abstract fun initAdapter(): RendererAdapter<Any>
-
     inline fun <reified J : ViewModel> getViewModel(): J = ViewModelProviders.of(this).get(J::class.java)
 
-    fun onResource(resource: Resource<List<T>>?) {
+    fun onResource(resource: Resource<List<Any>>?) {
         when (resource?.status) {
             Status.SUCCESS -> {
                 setProgressIndicator(active = false)

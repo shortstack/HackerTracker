@@ -15,9 +15,6 @@ import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.item_type.view.*
 import kotlinx.android.synthetic.main.item_type_header.view.*
 
-/**
- * Created by Chris on 7/12/2018.
- */
 class FilterAdapter(private val collection: ArrayList<Any>, private val database: DatabaseManager) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {

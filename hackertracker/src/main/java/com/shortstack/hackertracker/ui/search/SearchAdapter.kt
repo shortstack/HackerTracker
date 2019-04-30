@@ -1,25 +1,64 @@
 package com.shortstack.hackertracker.ui.search
 
+import android.view.LayoutInflater
+import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import com.pedrogomez.renderers.RendererAdapter
-import com.pedrogomez.renderers.RendererBuilder
+import androidx.recyclerview.widget.RecyclerView
+import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.FirebaseLocation
 import com.shortstack.hackertracker.models.FirebaseSpeaker
-import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
-import com.shortstack.hackertracker.views.EventView
+import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 
-/**
- * Created by Chris on 7/29/2018.
- */
-class SearchAdapter : RendererAdapter<Any>(RendererBuilder.create<FirebaseEvent>()
-        .bind(FirebaseEvent::class.java, EventRenderer(EventView.DISPLAY_MODE_FULL))
-        .bind(FirebaseLocation::class.java, LocationRenderer())
-        .bind(FirebaseSpeaker::class.java, SpeakerRenderer())
-        .bind(String::class.java, HeaderRenderer()).rendererBuilder) {
+class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
+    companion object {
+        private const val EVENT = 0
+        private const val LOCATION = 1
+        private const val SPEAKER = 2
+        private const val HEADER = 3
+    }
+
+    private val collection = ArrayList<Any>()
     var state: State = State.INIT
     var query: String? = null
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+
+        return when(viewType) {
+            EVENT -> EventViewHolder(inflater.inflate(R.layout.row, parent, false))
+            SPEAKER -> SpeakerViewHolder(inflater.inflate(R.layout.row_speaker, parent, false))
+            LOCATION -> LocationViewHolder(inflater.inflate(R.layout.item_type_header, parent, false))
+            HEADER -> HeaderViewHolder(inflater.inflate(R.layout.item_type_header, parent, false))
+            else -> throw IllegalStateException("Unknown viewType $viewType.")
+        }
+    }
+
+    override fun getItemCount() = collection.size
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val item = collection[position]
+
+        when(holder) {
+            is EventViewHolder -> holder.render(item as FirebaseEvent)
+            is SpeakerViewHolder -> holder.render(item as FirebaseSpeaker)
+            is LocationViewHolder -> holder.render(item as FirebaseLocation)
+            is HeaderViewHolder -> holder.render(item as String)
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when(collection[position]) {
+            is FirebaseSpeaker -> SPEAKER
+            is FirebaseEvent -> EVENT
+            is FirebaseLocation -> LOCATION
+            is String -> HEADER
+            else -> throw IllegalStateException("Unknown viewType ${collection[position].javaClass}")
+        }
+    }
+
+
 
     fun setList(elements: List<Any>) {
         state = when {

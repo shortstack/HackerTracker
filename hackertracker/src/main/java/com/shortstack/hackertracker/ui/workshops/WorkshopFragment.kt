@@ -3,20 +3,12 @@ package com.shortstack.hackertracker.ui.workshops
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
-import com.pedrogomez.renderers.RendererAdapter
-import com.pedrogomez.renderers.RendererBuilder
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.ui.ListFragment
-import com.shortstack.hackertracker.ui.schedule.renderers.EventRenderer
-import com.shortstack.hackertracker.ui.schedule.renderers.RelativeDayRender
-import com.shortstack.hackertracker.ui.schedule.renderers.RelativeTimeRenderer
 
-/**
- * Created by Chris on 05/08/18.
- */
 class WorkshopFragment : ListFragment<Any>() {
 
     companion object {
@@ -54,13 +46,5 @@ class WorkshopFragment : ListFragment<Any>() {
         }
 
         return result
-    }
-
-    override fun initAdapter(): RendererAdapter<Any> {
-        return RendererBuilder.create<Any>()
-                .bind(FirebaseEvent::class.java, EventRenderer())
-                .bind(Day::class.java, RelativeDayRender())
-                .bind(Time::class.java, RelativeTimeRenderer())
-                .build()
     }
 }

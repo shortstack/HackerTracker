@@ -167,6 +167,7 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
             database.types.postValue(types)
             database.events.postValue(events)
             database.speakers.postValue(speakers)
+            database.locations.postValue(locations)
 
             onComplete?.invoke(conference)
         }
