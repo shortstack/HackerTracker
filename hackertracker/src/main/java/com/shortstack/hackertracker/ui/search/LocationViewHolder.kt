@@ -10,8 +10,11 @@ import kotlinx.android.synthetic.main.item_type_header.view.*
 
 class LocationViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    fun inflate(inflater: LayoutInflater, container: ViewGroup?): View {
-        return inflater.inflate(R.layout.item_type_header, container, false)
+    companion object {
+        fun inflate(parent: ViewGroup): LocationViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_type_header, parent, false)
+            return LocationViewHolder(view)
+        }
     }
 
     fun render(location: FirebaseLocation) {

@@ -1,12 +1,12 @@
 package com.shortstack.hackertracker.ui.schedule.list
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Status
-import com.shortstack.hackertracker.models.*
+import com.shortstack.hackertracker.models.Day
+import com.shortstack.hackertracker.models.FirebaseEvent
+import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.schedule.TimeViewHolder
@@ -24,12 +24,10 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var state: Status = Status.NOT_INITIALIZED
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-
         return when(viewType) {
-            EVENT -> EventViewHolder(inflater.inflate(R.layout.row, parent, false))
-            DAY -> DayViewHolder(inflater.inflate(R.layout.row_header, parent, false))
-            TIME -> TimeViewHolder(inflater.inflate(R.layout.row_time_container, parent, false))
+            EVENT -> EventViewHolder.inflate(parent)
+            DAY -> DayViewHolder.inflate(parent)
+            TIME -> TimeViewHolder.inflate(parent)
             else -> throw IllegalStateException("Unknown viewType $viewType.")
         }
     }

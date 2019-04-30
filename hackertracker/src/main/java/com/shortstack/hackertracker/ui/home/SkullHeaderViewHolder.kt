@@ -6,11 +6,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
 
-class SkullHeaderViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+class SkullHeaderViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-
-    fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
-        return inflater.inflate(R.layout.header_home, parent, false)
+    companion object {
+        fun inflate(parent: ViewGroup): SkullHeaderViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.header_home, parent, false)
+            return SkullHeaderViewHolder(view)
+        }
     }
 
     private fun onSkullClick() {

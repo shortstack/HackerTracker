@@ -13,8 +13,11 @@ import kotlinx.android.synthetic.main.row_time_container.view.*
 
 class TimeViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-    fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
-        return inflater.inflate(R.layout.row_time_container, parent, false)
+    companion object {
+        fun inflate(parent: ViewGroup): TimeViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.row_time_container, parent, false)
+            return TimeViewHolder(view)
+        }
     }
 
     fun render(time: Time) {
@@ -24,8 +27,11 @@ class TimeViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
 class DayViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-    fun inflate(inflater: LayoutInflater, parent: ViewGroup?): View {
-        return inflater.inflate(R.layout.row_header, parent, false)
+    companion object {
+        fun inflate(parent: ViewGroup): DayViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.row_header, parent, false)
+            return DayViewHolder(view)
+        }
     }
 
     fun render(day: Day) {

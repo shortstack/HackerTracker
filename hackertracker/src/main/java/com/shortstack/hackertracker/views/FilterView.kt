@@ -40,7 +40,7 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
 
             collection.addAll(types.filter {  it.id != TYPE_CONTESTS && it.id != TYPE_WORKSHOP })
 
-            val adapter = FilterAdapter(collection, database)
+            val adapter = FilterAdapter(collection)
 
             list.layoutManager = GridLayoutManager(context, SPAN_COUNT, RecyclerView.VERTICAL, false).apply {
                 spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {

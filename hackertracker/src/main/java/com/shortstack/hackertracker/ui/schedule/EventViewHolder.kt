@@ -9,10 +9,13 @@ import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.row.view.*
 
-class EventViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+class EventViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
-    fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
-        return inflater.inflate(R.layout.row, parent, false)
+    companion object {
+        fun inflate(parent: ViewGroup): EventViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.row, parent, false)
+            return EventViewHolder(view)
+        }
     }
 
     fun render(event: FirebaseEvent) {

@@ -13,8 +13,11 @@ import kotlinx.android.synthetic.main.row_vendor.view.*
 
 class VendorViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
-    fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
-        return inflater.inflate(R.layout.row_vendor, parent, false)
+    companion object {
+        fun inflate(parent: ViewGroup): VendorViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.row_vendor, parent, false)
+            return VendorViewHolder(view)
+        }
     }
 
     fun render(vendor: Vendor) {

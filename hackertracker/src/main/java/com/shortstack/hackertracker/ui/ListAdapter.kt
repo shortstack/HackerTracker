@@ -1,15 +1,13 @@
 package com.shortstack.hackertracker.ui
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.FirebaseLocation
 import com.shortstack.hackertracker.models.FirebaseSpeaker
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.search.LocationViewHolder
-import com.shortstack.hackertracker.ui.search.SpeakerViewHolder
+import com.shortstack.hackertracker.ui.speakers.SpeakerViewHolder
 
 class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -22,12 +20,10 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     private val collection = ArrayList<Any>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-
         return when(viewType) {
-            EVENT -> EventViewHolder(inflater.inflate(R.layout.row, parent, false))
-            SPEAKER -> SpeakerViewHolder(inflater.inflate(R.layout.row_speaker, parent, false))
-            LOCATION -> LocationViewHolder(inflater.inflate(R.layout.item_type_header, parent, false))
+            EVENT -> EventViewHolder.inflate(parent)
+            SPEAKER -> SpeakerViewHolder.inflate(parent)
+            LOCATION -> LocationViewHolder.inflate(parent)
             else -> throw IllegalStateException("Unknown viewType $viewType.")
         }
     }
@@ -43,8 +39,6 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is LocationViewHolder -> holder.render(item as FirebaseLocation)
         }
     }
-
-
 
     fun clearAndNotify() {
         val size = collection.size

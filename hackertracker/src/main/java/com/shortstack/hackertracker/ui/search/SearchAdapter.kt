@@ -9,6 +9,7 @@ import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.FirebaseLocation
 import com.shortstack.hackertracker.models.FirebaseSpeaker
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
+import com.shortstack.hackertracker.ui.speakers.SpeakerViewHolder
 
 class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -24,13 +25,11 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var query: String? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-
         return when(viewType) {
-            EVENT -> EventViewHolder(inflater.inflate(R.layout.row, parent, false))
-            SPEAKER -> SpeakerViewHolder(inflater.inflate(R.layout.row_speaker, parent, false))
-            LOCATION -> LocationViewHolder(inflater.inflate(R.layout.item_type_header, parent, false))
-            HEADER -> HeaderViewHolder(inflater.inflate(R.layout.item_type_header, parent, false))
+            EVENT -> EventViewHolder.inflate(parent)
+            SPEAKER -> SpeakerViewHolder.inflate(parent)
+            LOCATION -> LocationViewHolder.inflate(parent)
+            HEADER -> HeaderViewHolder.inflate(parent)
             else -> throw IllegalStateException("Unknown viewType $viewType.")
         }
     }
@@ -57,8 +56,6 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             else -> throw IllegalStateException("Unknown viewType ${collection[position].javaClass}")
         }
     }
-
-
 
     fun setList(elements: List<Any>) {
         state = when {

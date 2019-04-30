@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
 import com.shortstack.hackertracker.models.FAQ
-import com.shortstack.hackertracker.models.Information
-import com.shortstack.hackertracker.ui.HeaderViewHolder
 import com.shortstack.hackertracker.ui.ListFragment
 
 class InformationFragment : ListFragment<FAQ>() {

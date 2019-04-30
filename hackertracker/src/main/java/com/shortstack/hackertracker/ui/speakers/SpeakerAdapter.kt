@@ -1,10 +1,8 @@
 package com.shortstack.hackertracker.ui.speakers
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.FirebaseSpeaker
 
 class SpeakerAdapter : RecyclerView.Adapter<SpeakerViewHolder>() {
@@ -12,16 +10,13 @@ class SpeakerAdapter : RecyclerView.Adapter<SpeakerViewHolder>() {
     private val speakers = ArrayList<FirebaseSpeaker>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpeakerViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.row_speaker, parent, false)
-        return SpeakerViewHolder(view)
+        return SpeakerViewHolder.inflate(parent)
     }
 
     override fun getItemCount() = speakers.size
 
     override fun onBindViewHolder(holder: SpeakerViewHolder, position: Int) {
-        val speaker = speakers[position]
-
-        holder.render(speaker)
+        holder.render(speakers[position])
     }
 
     fun setSpeakers(list: List<FirebaseSpeaker>) {
