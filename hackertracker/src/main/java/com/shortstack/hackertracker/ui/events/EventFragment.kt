@@ -44,6 +44,8 @@ class EventFragment : Fragment() {
     }
 
     private val database: DatabaseManager by inject()
+    private val analytics: AnalyticsController by inject()
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_event, container, false)
@@ -76,7 +78,7 @@ class EventFragment : Fragment() {
 
         event?.let { event ->
 
-            AnalyticsController.log("Viewing event ${event.title}")
+            analytics.log("Viewing event ${event.title}")
 
             collapsing_toolbar.title = event.title
 
@@ -97,13 +99,13 @@ class EventFragment : Fragment() {
 
                 link.setOnClickListener {
                     onLinkClick(url)
-                    AnalyticsController.onEventAction(AnalyticsController.EVENT_OPEN_URL, event)
+                    analytics.onEventAction(AnalyticsController.EVENT_OPEN_URL, event)
                 }
             }
 
             share.setOnClickListener {
                 onShareClick(event)
-                AnalyticsController.onEventAction(AnalyticsController.EVENT_SHARE, event)
+                analytics.onEventAction(AnalyticsController.EVENT_SHARE, event)
             }
 
             star.setOnClickListener {
@@ -120,7 +122,7 @@ class EventFragment : Fragment() {
             val speakers = displaySpeakers(event)
 //            displayRelatedEvents(it, speakers)
 
-            AnalyticsController.onEventAction(AnalyticsController.EVENT_VIEW, event)
+            analytics.onEventAction(AnalyticsController.EVENT_VIEW, event)
         }
     }
 
@@ -139,7 +141,11 @@ class EventFragment : Fragment() {
 
     private fun onBookmarkClick(event: FirebaseEvent) {
         event.isBookmarked = !event.isBookmarked
+
         database.updateBookmark(event)
+        val action = if (event.isBookmarked) AnalyticsController.EVENT_BOOKMARK else AnalyticsController.EVENT_UNBOOKMARK
+        analytics.onEventAction(action, event)
+
         displayBookmark(event)
     }
 

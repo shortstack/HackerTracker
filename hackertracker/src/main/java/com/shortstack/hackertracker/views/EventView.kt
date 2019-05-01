@@ -11,6 +11,7 @@ import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.EventViewModel
 import com.shortstack.hackertracker.models.FirebaseEvent
@@ -19,14 +20,16 @@ import com.shortstack.hackertracker.utils.TickTimer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.row_event.view.*
+import org.koin.android.ext.android.inject
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
 class EventView : FrameLayout, KoinComponent {
 
-    private val database: DatabaseManager by inject()
-
     private val timer: TickTimer by inject()
+    private val database: DatabaseManager by inject()
+    private val analytics: AnalyticsController by inject()
+
 
     private var disposable: Disposable? = null
 
@@ -199,6 +202,9 @@ class EventView : FrameLayout, KoinComponent {
         model.event?.let {
             it.isBookmarked = !it.isBookmarked
             database.updateBookmark(it)
+
+            val action = if (it.isBookmarked) AnalyticsController.EVENT_BOOKMARK else AnalyticsController.EVENT_UNBOOKMARK
+            analytics.onEventAction(action, it)
 
             updateBookmark()
         }
