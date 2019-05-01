@@ -13,8 +13,12 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.models.FAQ
 import kotlinx.android.synthetic.main.row_faq.view.*
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class FAQViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+class FAQViewHolder(val view: View) : RecyclerView.ViewHolder(view), KoinComponent {
+
+    private val analytics: AnalyticsController by inject()
 
     fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
         return inflater.inflate(R.layout.row_faq, parent, false)
@@ -40,7 +44,7 @@ class FAQViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
             val event = CustomEvent(AnalyticsController.FAQ_VIEW).also {
                 it.putCustomAttribute("Question", faq.question)
             }
-            AnalyticsController.logCustom(event)
+            analytics.logCustom(event)
         }
 
 

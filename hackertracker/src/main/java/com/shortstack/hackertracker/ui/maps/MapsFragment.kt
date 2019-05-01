@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
@@ -13,8 +14,15 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.models.ConferenceMap
 import kotlinx.android.synthetic.main.fragment_maps.*
+import org.koin.android.ext.android.inject
 
-class MapsFragment : androidx.fragment.app.Fragment() {
+class MapsFragment : Fragment() {
+
+    companion object {
+        fun newInstance() = MapsFragment()
+    }
+
+    private val analytics: AnalyticsController by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_maps, container, false)
@@ -50,7 +58,7 @@ class MapsFragment : androidx.fragment.app.Fragment() {
             pager.adapter = adapter
         })
 
-        AnalyticsController.logCustom(CustomEvent(AnalyticsController.MAP_VIEW))
+        analytics.logCustom(CustomEvent(AnalyticsController.MAP_VIEW))
     }
 
     class PagerAdapter(fm: FragmentManager, private val maps: List<ConferenceMap>) : FragmentStatePagerAdapter(fm) {
@@ -62,9 +70,5 @@ class MapsFragment : androidx.fragment.app.Fragment() {
         override fun getCount() = maps.size
     }
 
-    companion object {
 
-        fun newInstance() = MapsFragment()
-
-    }
 }
