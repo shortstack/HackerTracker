@@ -54,6 +54,8 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
     }
 
     private fun getConferenceDetails(conference: FirebaseConference) {
+        database.conference.postValue(conference)
+
         getTypes(conference)
         getEvents(conference)
         getSpeakers(conference)
