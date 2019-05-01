@@ -19,15 +19,19 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         super.onViewCreated(view, savedInstanceState)
 
         if (BuildConfig.DEBUG) {
-            findPreference("dev_clear").setOnPreferenceClickListener {
-                database.clear()
-                return@setOnPreferenceClickListener true
-            }
+            findPreference("user_uid").summary = database.user.uid
+        }
+
+        findPreference("change_theme").setOnPreferenceClickListener {
+            // TODO: Show the change theme dialog.
+            return@setOnPreferenceClickListener true
         }
     }
 
     override fun onCreatePreferences(bundle: Bundle?, s: String?) {
-        if (BuildConfig.DEBUG) addPreferencesFromResource(R.xml.dev_settings)
+        if (BuildConfig.DEBUG)
+            addPreferencesFromResource(R.xml.dev_settings)
+
         addPreferencesFromResource(R.xml.settings)
     }
 

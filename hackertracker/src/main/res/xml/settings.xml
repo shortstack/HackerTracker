@@ -7,21 +7,14 @@
 
     <androidx.preference.PreferenceCategory android:title="Preferences">
 
-        <androidx.preference.CheckBoxPreference
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:defaultValue="True"
+        <Preference
+            android:summary="Change theme"
+            android:key="change_theme" />
+
+        <androidx.preference.SwitchPreference
             android:key="user_analytics"
             android:summary="Allow us track anonymous usage and report crashes."
             android:title="Allow Analytics" />
-
-        <androidx.preference.CheckBoxPreference
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:defaultValue="True"
-            android:key="user_allow_push_notifications"
-            android:summary="Allow notifications for upcoming bookmarked events."
-            android:title="Allow Notifications" />
 
     </androidx.preference.PreferenceCategory>
 

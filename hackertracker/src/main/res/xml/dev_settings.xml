@@ -7,12 +7,10 @@
 
     <androidx.preference.PreferenceCategory android:title="Developer">
 
-        <androidx.preference.Preference
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:key="dev_clear"
-            android:summary="Clear the entire database"
-            android:title="Delete Conferences" />
+        <Preference android:title="Firebase UID"
+            android:key="user_uid"
+            android:summary="..."/>
+
     </androidx.preference.PreferenceCategory>
 
 </androidx.preference.PreferenceScreen>
