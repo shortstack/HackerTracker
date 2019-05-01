@@ -8,9 +8,6 @@ import android.widget.TextView
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.view_empty.view.*
 
-/**
- * Created by Chris on 3/31/2018.
- */
 class EmptyView(context: Context?, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
     init {

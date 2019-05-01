@@ -9,9 +9,6 @@ import java.util.*
 import kotlin.collections.ArrayList
 import kotlin.math.absoluteValue
 
-/**
- * Created by Chris on 2018-12-15.
- */
 @Parcelize
 data class FirebaseConference(
         val id: Int = 0,

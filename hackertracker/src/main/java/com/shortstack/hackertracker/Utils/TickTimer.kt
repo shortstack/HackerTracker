@@ -5,9 +5,6 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.subjects.BehaviorSubject
 import java.util.concurrent.TimeUnit
 
-/**
- * Created by Chris on 6/14/2018.
- */
 class TickTimer {
 
     private val interval: Observable<Long> = Observable.interval(0, 15, TimeUnit.SECONDS)

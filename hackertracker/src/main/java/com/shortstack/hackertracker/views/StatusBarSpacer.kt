@@ -4,9 +4,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 
-/**
- * Created by Chris on 6/3/2018.
- */
 class StatusBarSpacer(context: Context, attrs: AttributeSet?) : androidx.legacy.widget.Space(context, attrs) {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {

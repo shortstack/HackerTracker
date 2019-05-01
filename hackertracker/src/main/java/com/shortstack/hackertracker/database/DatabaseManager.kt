@@ -26,9 +26,6 @@ import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
 
-/**
- * Created by Chris on 3/31/2018.
- */
 class DatabaseManager {
 
     companion object {
