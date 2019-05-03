@@ -5,8 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
@@ -27,21 +29,12 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         list.adapter = adapter
-        val manager = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
-        manager.spanSizeLookup = object: GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                return when (position) {
-                    0 -> 2
-                    2, 3, 5, 6 -> 1
-                    else -> 2
-                }
-            }
-        }
-
-        list.layoutManager = manager
+        list.layoutManager = LinearLayoutManager(context)
 
         val viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        // TODO: Use ViewModel.
+        viewModel.recent.observe(this, Observer {
+            adapter.addRecent(it)
+        })
 
         loading_progress.visibility = View.GONE
     }

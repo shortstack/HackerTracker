@@ -8,7 +8,7 @@
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#512DA8">
+        app:cardBackgroundColor="@color/background">
 
         <ImageView
             android:id="@+id/logo"
