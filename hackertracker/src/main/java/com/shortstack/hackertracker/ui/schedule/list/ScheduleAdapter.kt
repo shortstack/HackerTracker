@@ -24,7 +24,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var state: Status = Status.NOT_INITIALIZED
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType) {
+        return when (viewType) {
             EVENT -> EventViewHolder.inflate(parent)
             DAY -> DayViewHolder.inflate(parent)
             TIME -> TimeViewHolder.inflate(parent)
@@ -37,7 +37,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = collection[position]
 
-        when(holder) {
+        when (holder) {
             is EventViewHolder -> holder.render(item as FirebaseEvent)
             is DayViewHolder -> holder.render(item as Day)
             is TimeViewHolder -> holder.render(item as Time)
@@ -45,7 +45,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when(collection[position]) {
+        return when (collection[position]) {
             is FirebaseEvent -> EVENT
             is Day -> DAY
             is Time -> TIME
@@ -55,22 +55,12 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private fun getFormattedElements(elements: List<FirebaseEvent>): ArrayList<Any> {
         val result = ArrayList<Any>()
-
-        val previous = collection.filterIsInstance<FirebaseEvent>().lastOrNull()
-        val prevDay = previous?.date
-        val prevTime = previous?.start
-
+        
         elements.groupBy { it.date }.toSortedMap().forEach {
-            if (prevDay != it.key) {
-                val day = Day(it.key)
-                result.add(day)
-            }
+            result.add(Day(it.key))
 
             it.value.groupBy { it.start }.toSortedMap().forEach {
-                if (prevTime != it.key) {
-                    val time = Time(it.key)
-                    result.add(time)
-                }
+                result.add(Time(it.key))
 
                 if (it.value.isNotEmpty()) {
                     val group = it.value.sortedWith(compareBy({ it.type.name }, { it.location.name }))
@@ -118,7 +108,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private fun removeAndNotify(item: Any) {
         val index = collection.indexOf(item)
-        if( index != -1 ) {
+        if (index != -1) {
             collection.removeAt(index)
             notifyItemRemoved(index)
         }
