@@ -32,10 +32,10 @@ class WorkshopFragment : ListFragment<Any>() {
         val result = ArrayList<Any>()
 
 
-        elements.groupBy { it.date }.forEach {
+        elements.groupBy { it.date }.toSortedMap().forEach {
             result.add(Day(it.key))
 
-            it.value.groupBy { it.start }.forEach {
+            it.value.groupBy { it.start }.toSortedMap().forEach {
                 result.add(Time(it.key))
 
                 if (it.value.isNotEmpty()) {
