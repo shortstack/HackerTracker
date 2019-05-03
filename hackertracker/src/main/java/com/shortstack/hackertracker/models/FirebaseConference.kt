@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.models
 import android.os.Parcelable
 import com.google.firebase.firestore.PropertyName
 import com.google.gson.annotations.SerializedName
+import com.shortstack.hackertracker.now
 import kotlinx.android.parcel.Parcelize
 import java.text.SimpleDateFormat
 import java.util.*
@@ -61,7 +62,19 @@ data class FirebaseEvent(
 
 
     val hasFinished: Boolean
-        get() = false // TODO: Return if the event has finished.
+        get() {
+            val currentDate = Date().now()
+
+            val length = ((finish.time - start.time) / 1000 / 60).toFloat()
+            val p = ((finish.time - currentDate.time) / 1000 / 60).toFloat()
+
+            if (p == 0f)
+                return false
+
+            val l = p / length
+
+            return 1 - l >= 1.0f
+        }
 
     val notificationTime: Long
         get() = 0L // TODO: Return the amount of milliseconds until this event starts.

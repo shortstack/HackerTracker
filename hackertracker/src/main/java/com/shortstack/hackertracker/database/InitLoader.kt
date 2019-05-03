@@ -103,7 +103,7 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
                         val list = snapshot?.toObjects(FirebaseEvent::class.java) ?: emptyList()
 
                         events.clear()
-                        events.addAll(list)
+                        events.addAll(list.filter { !it.hasFinished })
 
                         firestore.collection(CONFERENCES)
                                 .document(conference.code)
