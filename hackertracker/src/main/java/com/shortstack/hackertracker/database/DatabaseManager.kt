@@ -63,14 +63,14 @@ class DatabaseManager {
         }
 
         auth.signInAnonymously().addOnCompleteListener {
-            user = it.result?.user ?: return@addOnCompleteListener
+            if (it.isSuccessful) {
+                user = it.result?.user ?: return@addOnCompleteListener
+            }
 
             InitLoader(this@DatabaseManager) {
                 getFCMToken(it)
             }
         }
-
-
     }
 
     private fun getFCMToken(conference: FirebaseConference) {
