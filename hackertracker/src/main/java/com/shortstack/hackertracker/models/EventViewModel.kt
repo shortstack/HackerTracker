@@ -21,24 +21,7 @@ class EventViewModel(var event: FirebaseEvent?) : ViewModel(), KoinComponent {
         get() = event?.description
 
     val progress: Float
-        get() {
-            val event = event ?: return 0f
-
-            if (!event.hasStarted)
-                return 0f
-
-            val currentDate = Date().now()
-
-            val length = ((event.finish.time - event.start.time) / 1000 / 60).toFloat()
-            val p = ((event.finish.time - currentDate.time) / 1000 / 60).toFloat()
-
-            if (p == 0f)
-                return 1f
-
-            val l = p / length
-
-            return Math.min(1.0f, 1 - l)
-        }
+        get() = event?.progress ?: 0f
 
     var hasAnimatedProgress: Boolean = true
 

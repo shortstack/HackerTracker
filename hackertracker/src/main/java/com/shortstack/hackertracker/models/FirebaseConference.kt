@@ -62,25 +62,25 @@ data class FirebaseEvent(
 
 
     val hasFinished: Boolean
+        get() = progress >= 1.0f
+
+    val hasStarted: Boolean
+        get() = progress >= 0f
+
+    val progress: Float
         get() {
             val currentDate = Date().now()
 
             val length = ((finish.time - start.time) / 1000 / 60).toFloat()
             val p = ((finish.time - currentDate.time) / 1000 / 60).toFloat()
 
-            if (p == 0f)
-                return false
+            if (p <= 0f)
+                return p
 
             val l = p / length
 
-            return 1 - l >= 1.0f
+            return 1 - l
         }
-
-    val notificationTime: Long
-        get() = 0L // TODO: Return the amount of milliseconds until this event starts.
-
-    val hasStarted: Boolean
-        get() = true // TODO: Check if the event has started yet.
 }
 
 @Parcelize

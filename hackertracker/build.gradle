@@ -14,8 +14,8 @@ android {
         applicationId "com.shortstack.hackertracker"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 119
-        versionName "5.1.1"
+        versionCode 161
+        versionName "6.0.2"
 
         vectorDrawables.useSupportLibrary = true
 
@@ -126,7 +126,8 @@ dependencies {
 
     implementation 'com.android.support:multidex:1.0.3'
 
-
+    testImplementation "junit:junit:4.12"
+    testImplementation "io.mockk:mockk:1.9.3.kotlin12"
 }
 
 repositories {
