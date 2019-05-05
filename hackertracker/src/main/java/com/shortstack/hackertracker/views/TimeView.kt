@@ -4,9 +4,13 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.LinearLayout
-import com.shortstack.hackertracker.*
+import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.getDateDifference
+import com.shortstack.hackertracker.isToday
+import com.shortstack.hackertracker.utils.MyClock
 import com.shortstack.hackertracker.utils.TickTimer
 import com.shortstack.hackertracker.utils.TimeUtil
+import com.shortstack.hackertracker.utils.now
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.row_header_time.view.*
@@ -52,7 +56,7 @@ class TimeView(context: Context, attrs: AttributeSet) : LinearLayout(context, at
     }
 
     private fun renderSubHeader() {
-        val currentDate = Date().now()
+        val currentDate = MyClock().now()
 
         // Not today, or already started.
         if (!date.isToday() || !date.after(currentDate)) {

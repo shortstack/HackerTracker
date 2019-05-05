@@ -2,8 +2,8 @@ package com.shortstack.hackertracker.models
 
 import android.os.Parcelable
 import com.google.firebase.firestore.PropertyName
-import com.google.gson.annotations.SerializedName
-import com.shortstack.hackertracker.now
+import com.shortstack.hackertracker.utils.MyClock
+import com.shortstack.hackertracker.utils.now
 import kotlinx.android.parcel.Parcelize
 import java.text.SimpleDateFormat
 import java.util.*
@@ -62,25 +62,28 @@ data class FirebaseEvent(
 
 
     val hasFinished: Boolean
+        get() = progress >= 1.0f
+
+    val hasStarted: Boolean
+        get() = progress >= 0f
+
+    val progress: Float
         get() {
-            val currentDate = Date().now()
+            val currentDate = MyClock().now()
+
+            if(currentDate.before(start))
+                return -1f
+
+            if(currentDate.after(finish))
+                return 1f
 
             val length = ((finish.time - start.time) / 1000 / 60).toFloat()
             val p = ((finish.time - currentDate.time) / 1000 / 60).toFloat()
 
-            if (p == 0f)
-                return false
-
             val l = p / length
 
-            return 1 - l >= 1.0f
+            return 1 - l
         }
-
-    val notificationTime: Long
-        get() = 0L // TODO: Return the amount of milliseconds until this event starts.
-
-    val hasStarted: Boolean
-        get() = true // TODO: Check if the event has started yet.
 }
 
 @Parcelize

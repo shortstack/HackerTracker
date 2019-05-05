@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.transition.Fade
 import com.google.gson.Gson
+import com.shortstack.hackertracker.utils.MyClock
+import com.shortstack.hackertracker.utils.now
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -40,7 +42,7 @@ fun Date.isSoonish(SOON_DAYS_AMOUNT: Int): Boolean {
     val time2 = cal2.time.time
 
     val daysInMilliSeconds = SOON_DAYS_AMOUNT * 1000 * 60 * 60 * 24
-    return Math.abs(time - time2) < daysInMilliSeconds
+    return time2 - time < daysInMilliSeconds
 }
 
 fun Date.getDateDifference(date: Date, timeUnit: TimeUnit): Long {
@@ -48,29 +50,8 @@ fun Date.getDateDifference(date: Date, timeUnit: TimeUnit): Long {
 }
 
 
-fun Date.now(): Date {
-//    if (BuildConfig.DEBUG) {
-//        return Calendar.getInstance().now().time
-//    }
-
-    return this
-}
-
 fun Calendar.now(): Calendar {
-//    if (BuildConfig.DEBUG) {
-//        val today = Date()
-//        today.time = Constants.DEBUG_FORCE_TIME_DATE
-//
-//        val calendar = Calendar.getInstance()
-//        calendar.time = today
-//
-//        this.set(Calendar.YEAR, calendar.get(Calendar.YEAR))
-//        this.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR))
-//
-//    } else {
-    this.time = Date()
-//    }
-
+    this.time = MyClock().now()
     return this
 }
 
