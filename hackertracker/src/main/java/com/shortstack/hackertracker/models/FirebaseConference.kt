@@ -71,11 +71,14 @@ data class FirebaseEvent(
         get() {
             val currentDate = Date().now()
 
+            if(currentDate.before(start))
+                return -1f
+
+            if(currentDate.after(finish))
+                return 1f
+
             val length = ((finish.time - start.time) / 1000 / 60).toFloat()
             val p = ((finish.time - currentDate.time) / 1000 / 60).toFloat()
-
-            if (p <= 0f)
-                return p
 
             val l = p / length
 
