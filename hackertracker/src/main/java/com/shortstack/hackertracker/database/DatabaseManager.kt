@@ -168,7 +168,7 @@ class DatabaseManager {
         return mutableLiveData
     }
 
-    fun getEventById(id: Int): Single<FirebaseEvent> {
+    fun getEventById(id: Int): Single<Event> {
         return Single.create { emitter ->
             firestore.collection(CONFERENCES)
                     .document(id.toString())
@@ -176,7 +176,7 @@ class DatabaseManager {
                     .addOnSuccessListener {
                         val event = it.toObject(FirebaseEvent::class.java)
                                 ?: return@addOnSuccessListener
-                        emitter.onSuccess(event)
+                        emitter.onSuccess(event.toEvent())
                     }
         }
     }

@@ -28,28 +28,27 @@ data class Event(
 
     val progress: Float
         get() {
-
-            if (!hasStarted)
-                return 0f
-
             val currentDate = Date().now()
+
+            if(currentDate.before(start))
+                return -1f
+
+            if(currentDate.after(end))
+                return 1.0f
 
             val length = ((end.time - start.time) / 1000 / 60).toFloat()
             val p = ((end.time - currentDate.time) / 1000 / 60).toFloat()
-
-            if (p == 0f)
-                return 1f
-
+            
             val l = p / length
 
             return Math.min(1.0f, 1 - l)
         }
 
     val hasFinished: Boolean
-        get() = false // TODO: Check if the event has started yet.
+        get() = progress >= 1.0f
 
     val hasStarted: Boolean
-        get() = true // TODO: Check if the event has started yet.
+        get() = progress >= 0.0f
 
     val date: Date
         get() {
