@@ -1,8 +1,7 @@
 package com.shortstack.hackertracker.models.firebase
 
 import android.os.Parcelable
-import com.shortstack.hackertracker.models.local.Speaker
-import com.shortstack.hackertracker.models.local.Type
+import com.shortstack.hackertracker.models.local.Location
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

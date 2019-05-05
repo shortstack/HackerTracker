@@ -5,7 +5,7 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.firebase.FirebaseLocation
+import com.shortstack.hackertracker.models.local.Location
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
 import io.reactivex.Single
@@ -21,7 +21,7 @@ class SearchViewModel : ViewModel(), KoinComponent {
 
     val results: LiveData<List<Any>>
 
-    private val locations = ArrayList<FirebaseLocation>()
+    private val locations = ArrayList<Location>()
     private val events = ArrayList<Event>()
     private val speakers = ArrayList<Speaker>()
 

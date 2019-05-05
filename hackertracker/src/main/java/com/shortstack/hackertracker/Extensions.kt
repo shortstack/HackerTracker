@@ -128,6 +128,11 @@ fun FirebaseType.toType() = Type(
         color
 )
 
+fun FirebaseLocation.toLocation() = Location(
+        name,
+        conference
+)
+
 fun FirebaseEvent.toEvent() = Event(
         id,
         conference,
@@ -139,7 +144,7 @@ fun FirebaseEvent.toEvent() = Event(
         updated,
         speakers.map { it.toSpeaker() },
         type.toType(),
-        location
+        location.toLocation()
 )
 
 fun FirebaseSpeaker.toSpeaker() = Speaker(

@@ -47,7 +47,7 @@ class DatabaseManager {
     val types = MutableLiveData<List<Type>>()
     val events = MutableLiveData<List<Event>>()
     val speakers = MutableLiveData<List<Speaker>>()
-    val locations = MutableLiveData<List<FirebaseLocation>>()
+    val locations = MutableLiveData<List<Location>>()
 
 
     lateinit var user: FirebaseUser
@@ -181,7 +181,7 @@ class DatabaseManager {
         return events.value?.filter { it.title.contains(text, true) } ?: emptyList()
     }
 
-    fun findLocation(text: String): List<FirebaseLocation> {
+    fun findLocation(text: String): List<Location> {
         return locations.value?.filter { it.name.contains(text, true) } ?: emptyList()
     }
 
