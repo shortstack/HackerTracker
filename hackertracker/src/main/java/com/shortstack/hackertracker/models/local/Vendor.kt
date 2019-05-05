@@ -1,8 +1,6 @@
 package com.shortstack.hackertracker.models.local
 
 import android.os.Parcelable
-import com.shortstack.hackertracker.models.firebase.FirebaseEvent
-import com.shortstack.hackertracker.models.firebase.FirebaseVendor
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

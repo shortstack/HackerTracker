@@ -6,8 +6,8 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.firebase.FirebaseEvent
 import com.shortstack.hackertracker.models.firebase.FirebaseType
+import com.shortstack.hackertracker.models.local.Event
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
@@ -15,11 +15,11 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
 
     private val database: DatabaseManager by inject()
 
-    val schedule: LiveData<Resource<List<FirebaseEvent>>>
+    val schedule: LiveData<Resource<List<Event>>>
         get() = contents
 
     private val contents = Transformations.switchMap(database.conference) { id ->
-        val result = MediatorLiveData<Resource<List<FirebaseEvent>>>()
+        val result = MediatorLiveData<Resource<List<Event>>>()
 
         result.value = Resource.loading(null)
 
@@ -36,7 +36,7 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
         return@switchMap result
     }
 
-    private fun getSchedule(events: List<FirebaseEvent>, types: List<FirebaseType>): List<FirebaseEvent> {
+    private fun getSchedule(events: List<Event>, types: List<FirebaseType>): List<Event> {
         if (types.isEmpty())
             return events
 

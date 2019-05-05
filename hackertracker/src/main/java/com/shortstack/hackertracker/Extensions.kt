@@ -5,9 +5,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.transition.Fade
-import com.google.gson.Gson
+import com.shortstack.hackertracker.models.firebase.FirebaseEvent
 import com.shortstack.hackertracker.models.firebase.FirebaseVendor
+import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Vendor
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -112,6 +114,20 @@ fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int, hasAnima
         return@inTransaction transaction
     }
 }
+
+fun FirebaseEvent.toEvent() = Event(
+        id,
+        conference,
+        title,
+        description,
+        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(begin),
+        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(end),
+        link,
+        updated,
+        speakers,
+        type,
+        location
+)
 
 fun FirebaseVendor.toVendor() = Vendor(
         id,

@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.models.firebase.FirebaseEvent
+import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.row.view.*
 
@@ -18,7 +18,7 @@ class EventViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
-    fun render(event: FirebaseEvent) {
+    fun render(event: Event) {
         view.event.setContent(event)
 
         view.setOnClickListener {
@@ -26,7 +26,7 @@ class EventViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
-    private fun showEventFragment(event: FirebaseEvent) {
+    private fun showEventFragment(event: Event) {
         (view.context as? MainActivity)?.navigate(event)
     }
 }

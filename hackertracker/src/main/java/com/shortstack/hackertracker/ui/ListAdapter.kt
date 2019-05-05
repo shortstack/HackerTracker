@@ -2,10 +2,11 @@ package com.shortstack.hackertracker.ui
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.models.*
-import com.shortstack.hackertracker.models.firebase.FirebaseEvent
+import com.shortstack.hackertracker.models.Day
+import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.models.firebase.FirebaseLocation
 import com.shortstack.hackertracker.models.firebase.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Vendor
 import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
@@ -45,7 +46,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val item = collection[position]
 
         when (holder) {
-            is EventViewHolder -> holder.render(item as FirebaseEvent)
+            is EventViewHolder -> holder.render(item as Event)
             is SpeakerViewHolder -> holder.render(item as FirebaseSpeaker)
             is LocationViewHolder -> holder.render(item as FirebaseLocation)
             is DayViewHolder -> holder.render(item as Day)
@@ -58,7 +59,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return when (collection[position]) {
             is FirebaseSpeaker -> SPEAKER
             is FirebaseLocation -> LOCATION
-            is FirebaseEvent -> EVENT
+            is Event -> EVENT
             is Day -> DAY
             is Time -> TIME
             is Vendor -> VENDOR

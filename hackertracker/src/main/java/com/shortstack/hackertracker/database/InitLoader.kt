@@ -2,6 +2,8 @@ package com.shortstack.hackertracker.database
 
 import com.google.firebase.firestore.FirebaseFirestore
 import com.shortstack.hackertracker.models.firebase.*
+import com.shortstack.hackertracker.models.local.Event
+import com.shortstack.hackertracker.toEvent
 
 class InitLoader(private val database: DatabaseManager, conference: FirebaseConference? = null, private val onComplete: ((FirebaseConference) -> Unit)? = null) {
 
@@ -25,7 +27,7 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
     private val conferences = ArrayList<FirebaseConference>()
 
     private val types = ArrayList<FirebaseType>()
-    private val events = ArrayList<FirebaseEvent>()
+    private val events = ArrayList<Event>()
     private val speakers = ArrayList<FirebaseSpeaker>()
     private val locations = ArrayList<FirebaseLocation>()
 
@@ -103,7 +105,7 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
                         val list = snapshot?.toObjects(FirebaseEvent::class.java) ?: emptyList()
 
                         events.clear()
-                        events.addAll(list.filter { !it.hasFinished })
+                        events.addAll(list.map { it.toEvent() }.filter { !it.hasFinished })
 
                         firestore.collection(CONFERENCES)
                                 .document(conference.code)

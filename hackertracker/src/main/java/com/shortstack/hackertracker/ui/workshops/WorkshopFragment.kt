@@ -5,8 +5,8 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.models.Day
-import com.shortstack.hackertracker.models.firebase.FirebaseEvent
 import com.shortstack.hackertracker.models.Time
+import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.ListFragment
 
 class WorkshopFragment : ListFragment<Any>() {
@@ -28,7 +28,7 @@ class WorkshopFragment : ListFragment<Any>() {
         })
     }
 
-    private fun getFormattedElements(elements: List<FirebaseEvent>): ArrayList<Any> {
+    private fun getFormattedElements(elements: List<Event>): ArrayList<Any> {
         val result = ArrayList<Any>()
 
 

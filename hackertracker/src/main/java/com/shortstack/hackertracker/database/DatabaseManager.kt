@@ -16,9 +16,11 @@ import com.google.firebase.storage.FirebaseStorage
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.models.firebase.*
+import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Vendor
 import com.shortstack.hackertracker.network.task.ReminderWorker
 import com.shortstack.hackertracker.now
+import com.shortstack.hackertracker.toEvent
 import com.shortstack.hackertracker.toVendor
 import io.reactivex.Single
 import java.io.File
@@ -47,7 +49,7 @@ class DatabaseManager {
 
     val conference = MutableLiveData<FirebaseConference>()
     val types = MutableLiveData<List<FirebaseType>>()
-    val events = MutableLiveData<List<FirebaseEvent>>()
+    val events = MutableLiveData<List<Event>>()
     val speakers = MutableLiveData<List<FirebaseSpeaker>>()
     val locations = MutableLiveData<List<FirebaseLocation>>()
 
@@ -121,8 +123,8 @@ class DatabaseManager {
         return mutableLiveData
     }
 
-    fun getRecent(conference: FirebaseConference): LiveData<List<FirebaseEvent>> {
-        val mutableLiveData = MutableLiveData<List<FirebaseEvent>>()
+    fun getRecent(conference: FirebaseConference): LiveData<List<Event>> {
+        val mutableLiveData = MutableLiveData<List<Event>>()
 
         firestore.collection(CONFERENCES)
                 .document(conference.code)
@@ -130,7 +132,7 @@ class DatabaseManager {
                 .get()
                 .addOnSuccessListener {
                     val events = it.toObjects(FirebaseEvent::class.java)
-                    val recent = events.sortedBy { it.updated }.take(10)
+                    val recent = events.map { it.toEvent() }.sortedBy { it.updated }.take(10)
                     mutableLiveData.postValue(recent)
                 }
 
@@ -179,7 +181,7 @@ class DatabaseManager {
         }
     }
 
-    fun findEvents(text: String): List<FirebaseEvent> {
+    fun findEvents(text: String): List<Event> {
         return events.value?.filter { it.title.contains(text, true) } ?: emptyList()
     }
 
@@ -192,13 +194,13 @@ class DatabaseManager {
     }
 
 
-    fun getTypeForEvent(event: FirebaseEvent?): FirebaseType? {
+    fun getTypeForEvent(event: Event?): FirebaseType? {
         if (event == null) return null
 
         return types.value?.firstOrNull { it.id == event.type.id }
     }
 
-    fun updateBookmark(event: FirebaseEvent) {
+    fun updateBookmark(event: Event) {
         val tag = "reminder_" + event.id
 
         if (event.isBookmarked) {
@@ -273,19 +275,19 @@ class DatabaseManager {
 
     }
 
-    fun getSpeakers(event: FirebaseEvent): ArrayList<FirebaseSpeaker> {
+    fun getSpeakers(event: Event): ArrayList<FirebaseSpeaker> {
         return event.speakers
     }
 
-    fun getEventsForSpeaker(speaker: FirebaseSpeaker): Single<List<FirebaseEvent>> {
-        return Single.create<List<FirebaseEvent>> { emitter ->
+    fun getEventsForSpeaker(speaker: FirebaseSpeaker): Single<List<Event>> {
+        return Single.create<List<Event>> { emitter ->
             emitter.onSuccess(events.value?.filter { it.speakers.contains(speaker) } ?: emptyList())
         }
     }
 
 
-    fun getContests(conference: FirebaseConference): MutableLiveData<List<FirebaseEvent>> {
-        val mutableLiveData = MutableLiveData<List<FirebaseEvent>>()
+    fun getContests(conference: FirebaseConference): MutableLiveData<List<Event>> {
+        val mutableLiveData = MutableLiveData<List<Event>>()
 
         firestore.collection(CONFERENCES)
                 .document(conference.code)
@@ -294,15 +296,15 @@ class DatabaseManager {
                 .addOnSuccessListener {
                     val events = it.toObjects(FirebaseEvent::class.java)
 
-                    val contents = events.filter { it.type.name == "Contest" }
+                    val contents = events.filter { it.type.name == "Contest" }.map { it.toEvent() }
                     mutableLiveData.postValue(contents)
                 }
 
         return mutableLiveData
     }
 
-    fun getWorkshops(conference: FirebaseConference): MutableLiveData<List<FirebaseEvent>> {
-        val mutableLiveData = MutableLiveData<List<FirebaseEvent>>()
+    fun getWorkshops(conference: FirebaseConference): MutableLiveData<List<Event>> {
+        val mutableLiveData = MutableLiveData<List<Event>>()
 
         firestore.collection(CONFERENCES)
                 .document(conference.code)
@@ -310,7 +312,7 @@ class DatabaseManager {
                 .get()
                 .addOnSuccessListener {
                     val events = it.toObjects(FirebaseEvent::class.java)
-                    val contents = events.filter { it.type.name == "Workshop" }
+                    val contents = events.filter { it.type.name == "Workshop" }.map { it.toEvent() }
                     mutableLiveData.postValue(contents)
                 }
 

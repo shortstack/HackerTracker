@@ -10,9 +10,7 @@ data class FirebaseSpeaker(
         val description: String = "",
         val link: String = "",
         val twitter: String = "",
-        val title: String = "",
-
-        val events: ArrayList<FirebaseEvent> = ArrayList()
+        val title: String = ""
 ) : Parcelable {
 
     val id: Int

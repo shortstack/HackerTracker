@@ -3,8 +3,8 @@ package com.shortstack.hackertracker.analytics
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
-import com.shortstack.hackertracker.models.firebase.FirebaseEvent
 import com.shortstack.hackertracker.models.firebase.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 
 class AnalyticsController(private val storage: SharedPreferencesUtil) {
@@ -28,7 +28,7 @@ class AnalyticsController(private val storage: SharedPreferencesUtil) {
         const val SETTINGS_EXPIRED_EVENTS = "Settings - Expired Events"
     }
 
-    fun onEventAction(action: String, event: FirebaseEvent) {
+    fun onEventAction(action: String, event: Event) {
         val event = CustomEvent(action).apply {
             putCustomAttribute("Title", event.title)
         }
