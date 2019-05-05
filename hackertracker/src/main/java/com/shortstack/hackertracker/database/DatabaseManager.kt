@@ -18,6 +18,7 @@ import com.shortstack.hackertracker.*
 import com.shortstack.hackertracker.models.firebase.*
 import com.shortstack.hackertracker.models.local.Conference
 import com.shortstack.hackertracker.models.local.Event
+import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.models.local.Vendor
 import com.shortstack.hackertracker.network.task.ReminderWorker
 import io.reactivex.Single
@@ -46,7 +47,7 @@ class DatabaseManager {
     private val auth = FirebaseAuth.getInstance()
 
     val conference = MutableLiveData<Conference>()
-    val types = MutableLiveData<List<FirebaseType>>()
+    val types = MutableLiveData<List<Type>>()
     val events = MutableLiveData<List<Event>>()
     val speakers = MutableLiveData<List<FirebaseSpeaker>>()
     val locations = MutableLiveData<List<FirebaseLocation>>()
@@ -192,7 +193,7 @@ class DatabaseManager {
     }
 
 
-    fun getTypeForEvent(event: Event?): FirebaseType? {
+    fun getTypeForEvent(event: Event?): Type? {
         if (event == null) return null
 
         return types.value?.firstOrNull { it.id == event.type.id }
@@ -233,7 +234,7 @@ class DatabaseManager {
         }
     }
 
-    fun updateTypeIsSelected(type: FirebaseType) {
+    fun updateTypeIsSelected(type: Type) {
         val value = types.value
         value?.find { it.id == type.id }?.isSelected = type.isSelected
         types.postValue(value)

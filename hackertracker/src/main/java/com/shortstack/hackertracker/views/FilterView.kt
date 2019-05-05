@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.firebase.FirebaseType
+import com.shortstack.hackertracker.models.local.Type
 import kotlinx.android.synthetic.main.view_filter.view.*
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -27,7 +27,7 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
         View.inflate(context, R.layout.view_filter, this)
     }
 
-    fun setTypes(types: List<FirebaseType>?) {
+    fun setTypes(types: List<Type>?) {
         if (types != null) {
 
             val collection = ArrayList<Any>()

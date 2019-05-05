@@ -7,9 +7,11 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.transition.Fade
 import com.shortstack.hackertracker.models.firebase.FirebaseConference
 import com.shortstack.hackertracker.models.firebase.FirebaseEvent
+import com.shortstack.hackertracker.models.firebase.FirebaseType
 import com.shortstack.hackertracker.models.firebase.FirebaseVendor
 import com.shortstack.hackertracker.models.local.Conference
 import com.shortstack.hackertracker.models.local.Event
+import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.models.local.Vendor
 import java.text.SimpleDateFormat
 import java.util.*
@@ -123,6 +125,13 @@ fun FirebaseConference.toConference() = Conference(
         description,
         code,
         maps
+)
+
+fun FirebaseType.toType() = Type(
+        id,
+        name,
+        conference,
+        color
 )
 
 fun FirebaseEvent.toEvent() = Event(

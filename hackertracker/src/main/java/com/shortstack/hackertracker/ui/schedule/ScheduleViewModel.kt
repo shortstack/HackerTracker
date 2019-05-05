@@ -6,7 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.firebase.FirebaseType
+import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.models.local.Event
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -36,7 +36,7 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
         return@switchMap result
     }
 
-    private fun getSchedule(events: List<Event>, types: List<FirebaseType>): List<Event> {
+    private fun getSchedule(events: List<Event>, types: List<Type>): List<Event> {
         if (types.isEmpty())
             return events
 

@@ -3,7 +3,7 @@ package com.shortstack.hackertracker.ui.activities
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.firebase.FirebaseType
+import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.models.local.Conference
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -18,7 +18,7 @@ class MainActivityViewModel : ViewModel(), KoinComponent {
     val conferences: LiveData<List<Conference>>
         get() = database.getConferences()
 
-    val types: LiveData<List<FirebaseType>>
+    val types: LiveData<List<Type>>
         get() = database.types
 
     fun changeConference(itemId: Int) {

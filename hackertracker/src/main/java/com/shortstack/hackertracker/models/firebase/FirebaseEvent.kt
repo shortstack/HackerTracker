@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.models.firebase
 
 import android.os.Parcelable
+import com.shortstack.hackertracker.models.local.Type
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -14,6 +15,6 @@ data class FirebaseEvent(
         val link: String = "",
         val updated: String = "",
         val speakers: ArrayList<FirebaseSpeaker> = ArrayList(),
-        val type: FirebaseType = FirebaseType(),
+        val type: Type = Type(),
         val location: FirebaseLocation = FirebaseLocation()
 ) : Parcelable
