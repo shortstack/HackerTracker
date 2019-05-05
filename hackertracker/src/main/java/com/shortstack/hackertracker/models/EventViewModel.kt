@@ -53,8 +53,7 @@ class EventViewModel(var event: FirebaseEvent?) : ViewModel(), KoinComponent {
         get() = event?.speakers ?: ArrayList()
 
     val type: FirebaseType
-        get() = database.getTypeForEvent(event)
-                ?: FirebaseType(id = -1, name = "???", color = "#343434")
+        get() = event?.type ?: FirebaseType(id = -1, name = "???", color = "#343434")
 
     val isBookmarked: Boolean
         get() = event?.isBookmarked ?: false
