@@ -5,14 +5,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.transition.Fade
-import com.shortstack.hackertracker.models.firebase.FirebaseConference
-import com.shortstack.hackertracker.models.firebase.FirebaseEvent
-import com.shortstack.hackertracker.models.firebase.FirebaseType
-import com.shortstack.hackertracker.models.firebase.FirebaseVendor
-import com.shortstack.hackertracker.models.local.Conference
-import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.models.local.Type
-import com.shortstack.hackertracker.models.local.Vendor
+import com.shortstack.hackertracker.models.firebase.*
+import com.shortstack.hackertracker.models.local.*
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -143,9 +137,17 @@ fun FirebaseEvent.toEvent() = Event(
         SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(end),
         link,
         updated,
-        speakers,
-        type,
+        speakers.map { it.toSpeaker() },
+        type.toType(),
         location
+)
+
+fun FirebaseSpeaker.toSpeaker() = Speaker(
+        name,
+        description,
+        link,
+        twitter,
+        title
 )
 
 fun FirebaseVendor.toVendor() = Vendor(

@@ -3,11 +3,11 @@ package com.shortstack.hackertracker.ui.speakers
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.models.firebase.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Speaker
 
 class SpeakerAdapter : RecyclerView.Adapter<SpeakerViewHolder>() {
 
-    private val speakers = ArrayList<FirebaseSpeaker>()
+    private val speakers = ArrayList<Speaker>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SpeakerViewHolder {
         return SpeakerViewHolder.inflate(parent)
@@ -19,7 +19,7 @@ class SpeakerAdapter : RecyclerView.Adapter<SpeakerViewHolder>() {
         holder.render(speakers[position])
     }
 
-    fun setSpeakers(list: List<FirebaseSpeaker>) {
+    fun setSpeakers(list: List<Speaker>) {
 
         val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {

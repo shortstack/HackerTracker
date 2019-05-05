@@ -4,7 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.models.firebase.FirebaseLocation
-import com.shortstack.hackertracker.models.firebase.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.speakers.SpeakerViewHolder
@@ -39,7 +39,7 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         when(holder) {
             is EventViewHolder -> holder.render(item as Event)
-            is SpeakerViewHolder -> holder.render(item as FirebaseSpeaker)
+            is SpeakerViewHolder -> holder.render(item as Speaker)
             is LocationViewHolder -> holder.render(item as FirebaseLocation)
             is HeaderViewHolder -> holder.render(item as String)
         }
@@ -47,7 +47,7 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
         return when(collection[position]) {
-            is FirebaseSpeaker -> SPEAKER
+            is Speaker -> SPEAKER
             is Event -> EVENT
             is FirebaseLocation -> LOCATION
             is String -> HEADER
@@ -73,7 +73,7 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 if (left is FirebaseLocation && right is FirebaseLocation) {
                     return left.name == right.name
                 }
-                if (left is FirebaseSpeaker && right is FirebaseSpeaker) {
+                if (left is Speaker && right is Speaker) {
                     return left.name == right.name
                 }
                 if (left is String && right is String) {

@@ -6,14 +6,14 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.models.firebase.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.row_speaker.view.*
 
 
 class SpeakerView : LinearLayout {
 
-    constructor(context: Context, speaker: FirebaseSpeaker) : super(context) {
+    constructor(context: Context, speaker: Speaker) : super(context) {
         speaker_name.text = speaker.name
 
         speaker_description.text = if (speaker.title.isEmpty()) {

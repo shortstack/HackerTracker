@@ -5,7 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.models.firebase.FirebaseLocation
-import com.shortstack.hackertracker.models.firebase.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Vendor
 import com.shortstack.hackertracker.ui.schedule.DayViewHolder
@@ -47,7 +47,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         when (holder) {
             is EventViewHolder -> holder.render(item as Event)
-            is SpeakerViewHolder -> holder.render(item as FirebaseSpeaker)
+            is SpeakerViewHolder -> holder.render(item as Speaker)
             is LocationViewHolder -> holder.render(item as FirebaseLocation)
             is DayViewHolder -> holder.render(item as Day)
             is TimeViewHolder -> holder.render(item as Time)
@@ -57,7 +57,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
         return when (collection[position]) {
-            is FirebaseSpeaker -> SPEAKER
+            is Speaker -> SPEAKER
             is FirebaseLocation -> LOCATION
             is Event -> EVENT
             is Day -> DAY

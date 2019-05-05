@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.firebase.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.views.EventView
 import com.shortstack.hackertracker.views.StatusBarSpacer
@@ -27,7 +27,7 @@ class SpeakerFragment : Fragment() {
     companion object {
         private const val EXTRA_SPEAKER = "EXTRA_SPEAKER"
 
-        fun newInstance(speaker: FirebaseSpeaker): SpeakerFragment {
+        fun newInstance(speaker: Speaker): SpeakerFragment {
             val fragment = SpeakerFragment()
 
             val bundle = Bundle()
@@ -64,7 +64,7 @@ class SpeakerFragment : Fragment() {
         }
 
 
-        val speaker = arguments?.getParcelable(EXTRA_SPEAKER) as? FirebaseSpeaker
+        val speaker = arguments?.getParcelable(EXTRA_SPEAKER) as? Speaker
         speaker?.let {
             analytics.log("Viewing speaker ${it.name}")
 

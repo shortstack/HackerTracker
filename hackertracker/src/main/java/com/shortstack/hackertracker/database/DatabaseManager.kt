@@ -16,10 +16,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.*
 import com.shortstack.hackertracker.models.firebase.*
-import com.shortstack.hackertracker.models.local.Conference
-import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.models.local.Type
-import com.shortstack.hackertracker.models.local.Vendor
+import com.shortstack.hackertracker.models.local.*
 import com.shortstack.hackertracker.network.task.ReminderWorker
 import io.reactivex.Single
 import java.io.File
@@ -49,7 +46,7 @@ class DatabaseManager {
     val conference = MutableLiveData<Conference>()
     val types = MutableLiveData<List<Type>>()
     val events = MutableLiveData<List<Event>>()
-    val speakers = MutableLiveData<List<FirebaseSpeaker>>()
+    val speakers = MutableLiveData<List<Speaker>>()
     val locations = MutableLiveData<List<FirebaseLocation>>()
 
 
@@ -188,7 +185,7 @@ class DatabaseManager {
         return locations.value?.filter { it.name.contains(text, true) } ?: emptyList()
     }
 
-    fun findSpeaker(text: String): List<FirebaseSpeaker> {
+    fun findSpeaker(text: String): List<Speaker> {
         return speakers.value?.filter { it.name.contains(text, true) } ?: emptyList()
     }
 
@@ -274,11 +271,11 @@ class DatabaseManager {
 
     }
 
-    fun getSpeakers(event: Event): ArrayList<FirebaseSpeaker> {
+    fun getSpeakers(event: Event): List<Speaker> {
         return event.speakers
     }
 
-    fun getEventsForSpeaker(speaker: FirebaseSpeaker): Single<List<Event>> {
+    fun getEventsForSpeaker(speaker: Speaker): Single<List<Event>> {
         return Single.create<List<Event>> { emitter ->
             emitter.onSuccess(events.value?.filter { it.speakers.contains(speaker) } ?: emptyList())
         }

@@ -24,7 +24,7 @@ import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.firebase.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.SearchFragment
@@ -257,7 +257,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         replaceFragment(EventFragment.newInstance(event), R.id.container_above, hasAnimation = true)
     }
 
-    fun navigate(speaker: FirebaseSpeaker?) {
+    fun navigate(speaker: Speaker?) {
         speaker ?: return
         replaceFragment(SpeakerFragment.newInstance(speaker), R.id.container_above, hasAnimation = true)
     }

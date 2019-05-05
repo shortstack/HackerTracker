@@ -11,8 +11,4 @@ data class FirebaseSpeaker(
         val link: String = "",
         val twitter: String = "",
         val title: String = ""
-) : Parcelable {
-
-    val id: Int
-        get() = hashCode().absoluteValue
-}
+) : Parcelable

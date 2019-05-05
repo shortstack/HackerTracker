@@ -3,7 +3,7 @@ package com.shortstack.hackertracker.analytics
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
-import com.shortstack.hackertracker.models.firebase.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 
@@ -36,7 +36,7 @@ class AnalyticsController(private val storage: SharedPreferencesUtil) {
         logCustom(event)
     }
 
-    fun onSpeakerEvent(action: String, speaker: FirebaseSpeaker) {
+    fun onSpeakerEvent(action: String, speaker: Speaker) {
         val event = CustomEvent(action).apply {
             putCustomAttribute("Name", speaker.name)
         }

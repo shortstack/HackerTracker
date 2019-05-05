@@ -4,9 +4,11 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.shortstack.hackertracker.models.firebase.*
 import com.shortstack.hackertracker.models.local.Conference
 import com.shortstack.hackertracker.models.local.Event
+import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.toConference
 import com.shortstack.hackertracker.toEvent
+import com.shortstack.hackertracker.toSpeaker
 import com.shortstack.hackertracker.toType
 
 class InitLoader(private val database: DatabaseManager, conference: Conference? = null, private val onComplete: ((Conference) -> Unit)? = null) {
@@ -32,7 +34,7 @@ class InitLoader(private val database: DatabaseManager, conference: Conference? 
 
     private val types = ArrayList<Type>()
     private val events = ArrayList<Event>()
-    private val speakers = ArrayList<FirebaseSpeaker>()
+    private val speakers = ArrayList<Speaker>()
     private val locations = ArrayList<FirebaseLocation>()
 
     init {
@@ -93,7 +95,7 @@ class InitLoader(private val database: DatabaseManager, conference: Conference? 
                                 ?: emptyList()
 
                         speakers.clear()
-                        speakers.addAll(list)
+                        speakers.addAll(list.map { it.toSpeaker() })
 
                         onSuccess(conference)
                     }

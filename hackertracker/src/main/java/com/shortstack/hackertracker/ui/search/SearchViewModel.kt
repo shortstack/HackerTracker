@@ -6,7 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.firebase.FirebaseLocation
-import com.shortstack.hackertracker.models.firebase.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
@@ -23,7 +23,7 @@ class SearchViewModel : ViewModel(), KoinComponent {
 
     private val locations = ArrayList<FirebaseLocation>()
     private val events = ArrayList<Event>()
-    private val speakers = ArrayList<FirebaseSpeaker>()
+    private val speakers = ArrayList<Speaker>()
 
     private val compositeDisposable = CompositeDisposable()
 
