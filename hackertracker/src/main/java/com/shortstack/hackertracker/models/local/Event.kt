@@ -38,7 +38,7 @@ data class Event(
 
             val length = ((end.time - start.time) / 1000 / 60).toFloat()
             val p = ((end.time - currentDate.time) / 1000 / 60).toFloat()
-            
+
             val l = p / length
 
             return Math.min(1.0f, 1 - l)

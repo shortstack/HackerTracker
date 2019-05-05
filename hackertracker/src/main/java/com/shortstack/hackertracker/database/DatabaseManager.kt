@@ -14,14 +14,12 @@ import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.storage.FirebaseStorage
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.BuildConfig
+import com.shortstack.hackertracker.*
 import com.shortstack.hackertracker.models.firebase.*
+import com.shortstack.hackertracker.models.local.Conference
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Vendor
 import com.shortstack.hackertracker.network.task.ReminderWorker
-import com.shortstack.hackertracker.now
-import com.shortstack.hackertracker.toEvent
-import com.shortstack.hackertracker.toVendor
 import io.reactivex.Single
 import java.io.File
 import java.util.*
@@ -47,7 +45,7 @@ class DatabaseManager {
     private val storage = FirebaseStorage.getInstance()
     private val auth = FirebaseAuth.getInstance()
 
-    val conference = MutableLiveData<FirebaseConference>()
+    val conference = MutableLiveData<Conference>()
     val types = MutableLiveData<List<FirebaseType>>()
     val events = MutableLiveData<List<Event>>()
     val speakers = MutableLiveData<List<FirebaseSpeaker>>()
@@ -76,7 +74,7 @@ class DatabaseManager {
         }
     }
 
-    private fun getFCMToken(conference: FirebaseConference) {
+    private fun getFCMToken(conference: Conference) {
         FirebaseInstanceId.getInstance().instanceId
                 .addOnCompleteListener(OnCompleteListener { task ->
                     if (!task.isSuccessful) {
@@ -103,19 +101,19 @@ class DatabaseManager {
                 .get()
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        val selected = it.result?.toObjects(FirebaseConference::class.java)?.firstOrNull()
+                        val selected = it.result?.toObjects(FirebaseConference::class.java)?.firstOrNull()?.toConference()
                         InitLoader(this, selected)
                     }
                 }
     }
 
-    fun getConferences(): LiveData<List<FirebaseConference>> {
-        val mutableLiveData = MutableLiveData<List<FirebaseConference>>()
+    fun getConferences(): LiveData<List<Conference>> {
+        val mutableLiveData = MutableLiveData<List<Conference>>()
 
         firestore.collection(CONFERENCES)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
-                        val cons = snapshot?.toObjects(FirebaseConference::class.java)
+                        val cons = snapshot?.toObjects(FirebaseConference::class.java)?.map { it.toConference() }
                         mutableLiveData.postValue(cons)
                     }
                 }
@@ -123,7 +121,7 @@ class DatabaseManager {
         return mutableLiveData
     }
 
-    fun getRecent(conference: FirebaseConference): LiveData<List<Event>> {
+    fun getRecent(conference: Conference): LiveData<List<Event>> {
         val mutableLiveData = MutableLiveData<List<Event>>()
 
         firestore.collection(CONFERENCES)
@@ -139,7 +137,7 @@ class DatabaseManager {
         return mutableLiveData
     }
 
-    fun getFAQ(conference: FirebaseConference): LiveData<List<FirebaseFAQ>> {
+    fun getFAQ(conference: Conference): LiveData<List<FirebaseFAQ>> {
         val mutableLiveData = MutableLiveData<List<FirebaseFAQ>>()
 
         firestore.collection(CONFERENCES)
@@ -154,7 +152,7 @@ class DatabaseManager {
         return mutableLiveData
     }
 
-    fun getVendors(conference: FirebaseConference): LiveData<List<Vendor>> {
+    fun getVendors(conference: Conference): LiveData<List<Vendor>> {
         val mutableLiveData = MutableLiveData<List<Vendor>>()
 
         firestore.collection(CONFERENCES)
@@ -256,7 +254,7 @@ class DatabaseManager {
         }
     }
 
-    private fun updateFirebaseMessagingToken(conference: FirebaseConference?, token: String?) {
+    private fun updateFirebaseMessagingToken(conference: Conference?, token: String?) {
         if (conference == null || token == null) {
             Log.e("TAG", "Null, cannot update token.")
             return
@@ -286,7 +284,7 @@ class DatabaseManager {
     }
 
 
-    fun getContests(conference: FirebaseConference): MutableLiveData<List<Event>> {
+    fun getContests(conference: Conference): MutableLiveData<List<Event>> {
         val mutableLiveData = MutableLiveData<List<Event>>()
 
         firestore.collection(CONFERENCES)
@@ -303,7 +301,7 @@ class DatabaseManager {
         return mutableLiveData
     }
 
-    fun getWorkshops(conference: FirebaseConference): MutableLiveData<List<Event>> {
+    fun getWorkshops(conference: Conference): MutableLiveData<List<Event>> {
         val mutableLiveData = MutableLiveData<List<Event>>()
 
         firestore.collection(CONFERENCES)
@@ -319,7 +317,7 @@ class DatabaseManager {
         return mutableLiveData
     }
 
-    fun getMaps(conference: FirebaseConference): MutableLiveData<List<FirebaseConferenceMap>> {
+    fun getMaps(conference: Conference): MutableLiveData<List<FirebaseConferenceMap>> {
         val mutableLiveData = MutableLiveData<List<FirebaseConferenceMap>>()
 
         val list = ArrayList<FirebaseConferenceMap>()
