@@ -50,10 +50,6 @@ fun Date.getDateDifference(date: Date, timeUnit: TimeUnit): Long {
 }
 
 
-fun Date.now(): Date {
-    return this
-}
-
 fun Calendar.now(): Calendar {
     this.time = MyClock().now()
     return this

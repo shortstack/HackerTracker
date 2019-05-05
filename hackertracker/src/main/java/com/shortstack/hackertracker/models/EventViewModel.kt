@@ -4,7 +4,6 @@ import android.content.Context
 import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.now
 import com.shortstack.hackertracker.utils.TimeUtil
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject

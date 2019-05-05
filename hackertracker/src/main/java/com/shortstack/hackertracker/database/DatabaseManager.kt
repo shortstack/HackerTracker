@@ -15,15 +15,13 @@ import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.storage.FirebaseStorage
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.BuildConfig
-import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.models.*
 import com.shortstack.hackertracker.network.task.ReminderWorker
-import com.shortstack.hackertracker.now
+import com.shortstack.hackertracker.utils.MyClock
+import com.shortstack.hackertracker.utils.now
 import io.reactivex.Single
 import java.io.File
-import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 
 class DatabaseManager {
@@ -201,7 +199,7 @@ class DatabaseManager {
         val tag = "reminder_" + event.id
 
         if (event.isBookmarked) {
-            val delay = event.start.time - Date().now().time - (1000 * 20 * 60)
+            val delay = event.start.time - MyClock().now().time - (1000 * 20 * 60)
 
             if (delay > 0) {
                 val notify = OneTimeWorkRequestBuilder<ReminderWorker>()
