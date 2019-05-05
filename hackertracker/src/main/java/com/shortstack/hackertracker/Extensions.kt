@@ -6,6 +6,8 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.transition.Fade
 import com.google.gson.Gson
+import com.shortstack.hackertracker.models.firebase.FirebaseVendor
+import com.shortstack.hackertracker.models.local.Vendor
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -110,3 +112,11 @@ fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int, hasAnima
         return@inTransaction transaction
     }
 }
+
+fun FirebaseVendor.toVendor() = Vendor(
+        id,
+        name,
+        description,
+        link,
+        partner
+)

@@ -152,15 +152,15 @@ class DatabaseManager {
         return mutableLiveData
     }
 
-    fun getVendors(conference: FirebaseConference): LiveData<List<FirebaseVendor>> {
-        val mutableLiveData = MutableLiveData<List<FirebaseVendor>>()
+    fun getVendors(conference: FirebaseConference): LiveData<List<Vendor>> {
+        val mutableLiveData = MutableLiveData<List<Vendor>>()
 
         firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(VENDORS)
                 .get()
                 .addOnSuccessListener {
-                    val vendors = it.toObjects(Vendor::class.java)
+                    val vendors = it.toObjects(FirebaseVendor::class.java).map { it.toVendor() }
                     mutableLiveData.postValue(vendors)
                 }
         return mutableLiveData

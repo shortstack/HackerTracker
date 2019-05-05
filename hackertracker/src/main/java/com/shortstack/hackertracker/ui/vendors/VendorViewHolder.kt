@@ -8,7 +8,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.models.Vendor
+import com.shortstack.hackertracker.models.firebase.FirebaseVendor
+import com.shortstack.hackertracker.models.local.Vendor
 import kotlinx.android.synthetic.main.row_vendor.view.*
 
 class VendorViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
@@ -22,11 +23,7 @@ class VendorViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
 
     fun render(vendor: Vendor) {
         view.title.text = vendor.name
-        view.description.text = if (vendor.description.isNullOrBlank()) {
-            "Nothing to say."
-        } else {
-            vendor.description
-        }
+        view.description.text = vendor.summary
 
         view.link.visibility = if (vendor.link.isNullOrBlank()) {
             View.GONE
@@ -35,7 +32,7 @@ class VendorViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         }
 
         val colours = view.context.resources.getStringArray(R.array.colors)
-        val color = Color.parseColor(colours[vendor.id % colours.size])
+        val color = Color.parseColor(colours[vendor.colour % colours.size])
         view.card.setCardBackgroundColor(color)
 
         view.link.setOnClickListener {
