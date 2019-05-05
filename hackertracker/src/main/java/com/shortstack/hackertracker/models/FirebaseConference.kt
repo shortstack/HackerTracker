@@ -2,8 +2,8 @@ package com.shortstack.hackertracker.models
 
 import android.os.Parcelable
 import com.google.firebase.firestore.PropertyName
-import com.google.gson.annotations.SerializedName
-import com.shortstack.hackertracker.now
+import com.shortstack.hackertracker.utils.MyClock
+import com.shortstack.hackertracker.utils.now
 import kotlinx.android.parcel.Parcelize
 import java.text.SimpleDateFormat
 import java.util.*
@@ -69,7 +69,7 @@ data class FirebaseEvent(
 
     val progress: Float
         get() {
-            val currentDate = Date().now()
+            val currentDate = MyClock().now()
 
             if(currentDate.before(start))
                 return -1f

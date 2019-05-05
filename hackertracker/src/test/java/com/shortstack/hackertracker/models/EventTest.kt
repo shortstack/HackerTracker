@@ -1,5 +1,9 @@
 package com.shortstack.hackertracker.models
 
+import com.shortstack.hackertracker.utils.MyClock
+import com.shortstack.hackertracker.utils.now
+import io.mockk.every
+import io.mockk.mockkStatic
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -15,68 +19,88 @@ class EventTest {
 
     }
 
-    // TODO: Inject current Date with Koin into the Event.
     @Test
     fun hasNotStarted() {
-        val current = parse("2019-01-01T11:00:00.000-0000")
+        mockkStatic("com.shortstack.hackertracker.utils.MyClockKt")
+        every {
+            MyClock().now()
+        } returns parse("2019-01-01T11:00:00.000-0000")
 
         assertEquals(false, event.hasStarted)
         assertEquals(false, event.hasFinished)
-        assertEquals(-1.0, event.progress)
+        assertEquals(-1.0f, event.progress)
     }
 
     @Test
     fun hasJustStarted() {
-        val current = parse("2019-01-01T12:00:00.000-0000")
+        mockkStatic("com.shortstack.hackertracker.utils.MyClockKt")
+        every {
+            MyClock().now()
+        } returns parse("2019-01-01T12:00:00.000-0000")
 
         assertEquals(true, event.hasStarted)
         assertEquals(false, event.hasFinished)
-        assertEquals(0.0, event.progress)
+        assertEquals(0.0f, event.progress)
     }
 
     @Test
     fun is25PercentComplete() {
-        val current = parse("2019-01-01T12:15:00.000-0000")
+        mockkStatic("com.shortstack.hackertracker.utils.MyClockKt")
+        every {
+            MyClock().now()
+        } returns parse("2019-01-01T12:15:00.000-0000")
 
         assertEquals(true, event.hasStarted)
         assertEquals(false, event.hasFinished)
-        assertEquals(0.25, event.progress)
+        assertEquals(0.25f, event.progress)
     }
 
     @Test
     fun is50PercentComplete() {
-        val current = parse("2019-01-01T12:30:00.000-0000")
+        mockkStatic("com.shortstack.hackertracker.utils.MyClockKt")
+        every {
+            MyClock().now()
+        } returns parse("2019-01-01T12:30:00.000-0000")
 
         assertEquals(true, event.hasStarted)
         assertEquals(false, event.hasFinished)
-        assertEquals(0.50, event.progress)
+        assertEquals(0.50f, event.progress)
     }
 
     @Test
     fun is75PercentComplete() {
-        val current = parse("2019-01-01T12:45:00.000-0000")
+        mockkStatic("com.shortstack.hackertracker.utils.MyClockKt")
+        every {
+            MyClock().now()
+        } returns parse("2019-01-01T12:45:00.000-0000")
 
         assertEquals(true, event.hasStarted)
         assertEquals(false, event.hasFinished)
-        assertEquals(0.75, event.progress)
+        assertEquals(0.75f, event.progress)
     }
 
     @Test
     fun hasJustFinished() {
-        val current = parse("2019-01-01T13:00:00.000-0000")
+        mockkStatic("com.shortstack.hackertracker.utils.MyClockKt")
+        every {
+            MyClock().now()
+        } returns parse("2019-01-01T13:00:00.000-0000")
 
         assertEquals(true, event.hasStarted)
         assertEquals(true, event.hasFinished)
-        assertEquals(1.0, event.progress)
+        assertEquals(1.0f, event.progress)
     }
 
     @Test
     fun hasFinished() {
-        val current = parse("2019-01-01T14:00:00.000-0000")
+        mockkStatic("com.shortstack.hackertracker.utils.MyClockKt")
+        every {
+            MyClock().now()
+        } returns parse("2019-01-01T14:00:00.000-0000")
 
         assertEquals(true, event.hasStarted)
         assertEquals(true, event.hasFinished)
-        assertEquals(1.0, event.progress)
+        assertEquals(1.0f, event.progress)
     }
 
 
