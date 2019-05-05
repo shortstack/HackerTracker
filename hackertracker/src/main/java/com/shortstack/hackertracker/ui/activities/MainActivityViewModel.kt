@@ -3,8 +3,8 @@ package com.shortstack.hackertracker.ui.activities
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.FirebaseConference
-import com.shortstack.hackertracker.models.FirebaseType
+import com.shortstack.hackertracker.models.firebase.FirebaseConference
+import com.shortstack.hackertracker.models.firebase.FirebaseType
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 

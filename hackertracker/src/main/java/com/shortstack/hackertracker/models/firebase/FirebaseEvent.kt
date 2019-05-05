@@ -1,28 +1,12 @@
-package com.shortstack.hackertracker.models
+package com.shortstack.hackertracker.models.firebase
 
 import android.os.Parcelable
 import com.google.firebase.firestore.PropertyName
-import com.google.gson.annotations.SerializedName
 import com.shortstack.hackertracker.now
 import kotlinx.android.parcel.Parcelize
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.absoluteValue
-
-@Parcelize
-data class FirebaseConference(
-        val id: Int = 0,
-        val name: String = "",
-        val description: String = "",
-        val code: String = "",
-        @field:JvmField
-        @PropertyName("is_selected")
-        var isSelected: Boolean = false,
-        val maps: ArrayList<FirebaseMap> = ArrayList()
-//        val events: HashMap<String, FirebaseEvent> = HashMap(),
-//        val types: HashMap<String, FirebaseType> = HashMap()
-) : Parcelable
 
 @Parcelize
 data class FirebaseEvent(
@@ -82,53 +66,3 @@ data class FirebaseEvent(
     val hasStarted: Boolean
         get() = true // TODO: Check if the event has started yet.
 }
-
-@Parcelize
-data class FirebaseType(
-        val id: Int = -1,
-        val name: String = "",
-        val conference: String = "",
-        val color: String = "#343434",
-        @field:JvmField
-        @PropertyName("is_selected")
-        var isSelected: Boolean = false
-
-
-) : Parcelable {
-    override fun equals(other: Any?): Boolean {
-        return (other as? FirebaseType)?.id == id || super.equals(other)
-    }
-}
-
-@Parcelize
-data class FirebaseLocation(
-        val name: String = "",
-        val conference: String = ""
-) : Parcelable
-
-@Parcelize
-data class FirebaseSpeaker(
-        val name: String = "",
-        val description: String = "",
-        val link: String = "",
-        val twitter: String = "",
-        val title: String = "",
-
-        val events: ArrayList<FirebaseEvent> = ArrayList()
-) : Parcelable {
-
-    val id: Int
-        get() = hashCode().absoluteValue
-}
-
-@Parcelize
-data class FirebaseMap(
-        val name: String = "",
-        val file: String = ""
-) : Parcelable
-
-@Parcelize
-data class FirebaseBookmark(
-        val id: String = "",
-        val value: Boolean = false
-) : Parcelable

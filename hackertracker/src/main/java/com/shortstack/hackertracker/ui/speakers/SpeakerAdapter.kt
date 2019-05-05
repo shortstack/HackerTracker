@@ -3,7 +3,7 @@ package com.shortstack.hackertracker.ui.speakers
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.models.FirebaseSpeaker
+import com.shortstack.hackertracker.models.firebase.FirebaseSpeaker
 
 class SpeakerAdapter : RecyclerView.Adapter<SpeakerViewHolder>() {
 

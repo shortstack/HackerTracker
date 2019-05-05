@@ -4,10 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.Vendor
+import com.shortstack.hackertracker.models.firebase.FirebaseVendor
+import com.shortstack.hackertracker.models.local.Vendor
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 

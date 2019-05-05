@@ -2,7 +2,7 @@ package com.shortstack.hackertracker.views
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.models.FirebaseType
+import com.shortstack.hackertracker.models.firebase.FirebaseType
 import com.shortstack.hackertracker.ui.search.HeaderViewHolder
 
 class FilterAdapter(private val collection: ArrayList<Any>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

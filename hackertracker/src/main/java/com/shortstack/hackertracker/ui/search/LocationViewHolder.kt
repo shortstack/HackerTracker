@@ -5,7 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.models.FirebaseLocation
+import com.shortstack.hackertracker.models.firebase.FirebaseLocation
 import kotlinx.android.synthetic.main.item_type_header.view.*
 
 class LocationViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {

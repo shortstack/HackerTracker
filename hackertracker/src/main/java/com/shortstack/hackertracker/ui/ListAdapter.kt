@@ -3,12 +3,16 @@ package com.shortstack.hackertracker.ui
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.models.*
+import com.shortstack.hackertracker.models.firebase.FirebaseEvent
+import com.shortstack.hackertracker.models.firebase.FirebaseLocation
+import com.shortstack.hackertracker.models.firebase.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Vendor
 import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.schedule.TimeViewHolder
-import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.ui.search.LocationViewHolder
 import com.shortstack.hackertracker.ui.speakers.SpeakerViewHolder
+import com.shortstack.hackertracker.ui.vendors.VendorViewHolder
 
 class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -18,6 +22,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private const val SPEAKER = 2
         private const val DAY = 3
         private const val TIME = 4
+        private const val VENDOR = 5
     }
 
     private val collection = ArrayList<Any>()
@@ -29,6 +34,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             LOCATION -> LocationViewHolder.inflate(parent)
             DAY -> DayViewHolder.inflate(parent)
             TIME -> TimeViewHolder.inflate(parent)
+            VENDOR -> VendorViewHolder.inflate(parent)
             else -> throw IllegalStateException("Unknown viewType $viewType.")
         }
     }
@@ -44,6 +50,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is LocationViewHolder -> holder.render(item as FirebaseLocation)
             is DayViewHolder -> holder.render(item as Day)
             is TimeViewHolder -> holder.render(item as Time)
+            is VendorViewHolder -> holder.render(item as Vendor)
         }
     }
 
@@ -54,6 +61,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is FirebaseEvent -> EVENT
             is Day -> DAY
             is Time -> TIME
+            is Vendor -> VENDOR
             else -> throw java.lang.IllegalStateException("Unknown viewType ${collection[position].javaClass}")
         }
     }

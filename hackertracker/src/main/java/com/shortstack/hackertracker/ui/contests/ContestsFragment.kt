@@ -5,7 +5,7 @@ import android.view.View
 import androidx.lifecycle.Observer
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.models.Day
-import com.shortstack.hackertracker.models.FirebaseEvent
+import com.shortstack.hackertracker.models.firebase.FirebaseEvent
 import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.ui.ListFragment
 

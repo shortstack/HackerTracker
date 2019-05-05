@@ -3,12 +3,9 @@ package com.shortstack.hackertracker.analytics
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
-import com.shortstack.hackertracker.BuildConfig
-import com.shortstack.hackertracker.models.FirebaseEvent
-import com.shortstack.hackertracker.models.FirebaseSpeaker
+import com.shortstack.hackertracker.models.firebase.FirebaseEvent
+import com.shortstack.hackertracker.models.firebase.FirebaseSpeaker
 import com.shortstack.hackertracker.utils.SharedPreferencesUtil
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
 
 class AnalyticsController(private val storage: SharedPreferencesUtil) {
 

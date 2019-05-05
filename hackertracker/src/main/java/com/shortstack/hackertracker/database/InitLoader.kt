@@ -1,7 +1,7 @@
 package com.shortstack.hackertracker.database
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.shortstack.hackertracker.models.*
+import com.shortstack.hackertracker.models.firebase.*
 
 class InitLoader(private val database: DatabaseManager, conference: FirebaseConference? = null, private val onComplete: ((FirebaseConference) -> Unit)? = null) {
 

@@ -2,7 +2,7 @@ package com.shortstack.hackertracker.ui.home
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.models.FirebaseEvent
+import com.shortstack.hackertracker.models.firebase.FirebaseEvent
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import java.lang.IllegalStateException
 

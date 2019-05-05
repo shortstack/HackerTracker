@@ -15,10 +15,11 @@ import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.storage.FirebaseStorage
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.BuildConfig
-import com.shortstack.hackertracker.analytics.AnalyticsController
-import com.shortstack.hackertracker.models.*
+import com.shortstack.hackertracker.models.firebase.*
+import com.shortstack.hackertracker.models.local.Vendor
 import com.shortstack.hackertracker.network.task.ReminderWorker
 import com.shortstack.hackertracker.now
+import com.shortstack.hackertracker.toVendor
 import io.reactivex.Single
 import java.io.File
 import java.util.*
@@ -136,23 +137,23 @@ class DatabaseManager {
         return mutableLiveData
     }
 
-    fun getFAQ(conference: FirebaseConference): LiveData<List<FAQ>> {
-        val mutableLiveData = MutableLiveData<List<FAQ>>()
+    fun getFAQ(conference: FirebaseConference): LiveData<List<FirebaseFAQ>> {
+        val mutableLiveData = MutableLiveData<List<FirebaseFAQ>>()
 
         firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(FAQS)
                 .get()
                 .addOnSuccessListener {
-                    val faqs = it.toObjects(FAQ::class.java)
+                    val faqs = it.toObjects(FirebaseFAQ::class.java)
                     mutableLiveData.postValue(faqs)
                 }
 
         return mutableLiveData
     }
 
-    fun getVendors(conference: FirebaseConference): LiveData<List<Vendor>> {
-        val mutableLiveData = MutableLiveData<List<Vendor>>()
+    fun getVendors(conference: FirebaseConference): LiveData<List<FirebaseVendor>> {
+        val mutableLiveData = MutableLiveData<List<FirebaseVendor>>()
 
         firestore.collection(CONFERENCES)
                 .document(conference.code)
@@ -316,10 +317,10 @@ class DatabaseManager {
         return mutableLiveData
     }
 
-    fun getMaps(conference: FirebaseConference): MutableLiveData<List<ConferenceMap>> {
-        val mutableLiveData = MutableLiveData<List<ConferenceMap>>()
+    fun getMaps(conference: FirebaseConference): MutableLiveData<List<FirebaseConferenceMap>> {
+        val mutableLiveData = MutableLiveData<List<FirebaseConferenceMap>>()
 
-        val list = ArrayList<ConferenceMap>()
+        val list = ArrayList<FirebaseConferenceMap>()
 
         val maps = conference.maps
         if (maps.isEmpty()) {
@@ -328,7 +329,7 @@ class DatabaseManager {
 
         maps.forEach {
 
-            val temp = ConferenceMap(it.name, null)
+            val temp = FirebaseConferenceMap(it.name, null)
             list.add(temp)
             mutableLiveData.postValue(list.toList())
 
