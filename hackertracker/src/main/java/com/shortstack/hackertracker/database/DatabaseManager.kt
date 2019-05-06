@@ -36,6 +36,8 @@ class DatabaseManager {
         private const val TYPES = "types"
         private const val FAQS = "faqs"
         private const val VENDORS = "vendors"
+        private const val SPEAKERS = "speakers"
+
     }
 
     private val firestore = FirebaseFirestore.getInstance()
@@ -270,8 +272,21 @@ class DatabaseManager {
 
     }
 
-    fun getSpeakers(event: FirebaseEvent): ArrayList<FirebaseSpeaker> {
-        return event.speakers
+    fun getSpeakers(conference: FirebaseConference): LiveData<List<FirebaseSpeaker>> {
+        val mutableLiveData = MutableLiveData<List<FirebaseSpeaker>>()
+
+        firestore.collection(CONFERENCES)
+                .document(conference.code)
+                .collection(SPEAKERS)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val speakers = snapshot?.toObjects(FirebaseSpeaker::class.java)
+                                ?: emptyList()
+                        mutableLiveData.postValue(speakers)
+                    }
+                }
+
+        return mutableLiveData
     }
 
     fun getEventsForSpeaker(speaker: FirebaseSpeaker): Single<List<FirebaseEvent>> {

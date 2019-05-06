@@ -223,7 +223,7 @@ class EventFragment : Fragment() {
     private fun displaySpeakers(event: FirebaseEvent) {
         val context = context ?: return
 
-        val list = database.getSpeakers(event)
+        val list = event.speakers
 
         if (list.isEmpty()) {
             speakers_header.visibility = View.GONE

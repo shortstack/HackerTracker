@@ -1,10 +1,8 @@
 package com.shortstack.hackertracker.ui.search
 
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.FirebaseLocation
 import com.shortstack.hackertracker.models.FirebaseSpeaker
