@@ -204,10 +204,10 @@ class EventFragment : Fragment() {
 
     private fun displayTypes(event: FirebaseEvent) {
 
-        val type = database.getTypeForEvent(event)
+        val type = event.type
         val context = context ?: return
 
-        val color = Color.parseColor(type?.color ?: "#FFF")
+        val color = Color.parseColor(type.color)
         app_bar.setBackgroundColor(color)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
@@ -216,7 +216,7 @@ class EventFragment : Fragment() {
             category_text.background = drawable
         }
 
-        category_text.text = type?.name
+        category_text.text = type.name
 
     }
 
