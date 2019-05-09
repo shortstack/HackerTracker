@@ -1,10 +1,10 @@
-package com.shortstack.hackertracker.models
+package com.shortstack.hackertracker.models.firebase
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
-data class Vendor(
+data class FirebaseVendor(
         val id: Int,
         val name: String,
         val description: String?,

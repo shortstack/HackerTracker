@@ -5,7 +5,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.transition.Fade
-import com.google.gson.Gson
+import com.shortstack.hackertracker.models.firebase.*
+import com.shortstack.hackertracker.models.local.*
+import com.shortstack.hackertracker.utils.MyClock
+import com.shortstack.hackertracker.utils.now
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -40,7 +44,7 @@ fun Date.isSoonish(SOON_DAYS_AMOUNT: Int): Boolean {
     val time2 = cal2.time.time
 
     val daysInMilliSeconds = SOON_DAYS_AMOUNT * 1000 * 60 * 60 * 24
-    return Math.abs(time - time2) < daysInMilliSeconds
+    return time2 - time < daysInMilliSeconds
 }
 
 fun Date.getDateDifference(date: Date, timeUnit: TimeUnit): Long {
@@ -48,29 +52,8 @@ fun Date.getDateDifference(date: Date, timeUnit: TimeUnit): Long {
 }
 
 
-fun Date.now(): Date {
-//    if (BuildConfig.DEBUG) {
-//        return Calendar.getInstance().now().time
-//    }
-
-    return this
-}
-
 fun Calendar.now(): Calendar {
-//    if (BuildConfig.DEBUG) {
-//        val today = Date()
-//        today.time = Constants.DEBUG_FORCE_TIME_DATE
-//
-//        val calendar = Calendar.getInstance()
-//        calendar.time = today
-//
-//        this.set(Calendar.YEAR, calendar.get(Calendar.YEAR))
-//        this.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR))
-//
-//    } else {
-    this.time = Date()
-//    }
-
+    this.time = MyClock().now()
     return this
 }
 
@@ -110,3 +93,53 @@ fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int, hasAnima
         return@inTransaction transaction
     }
 }
+
+fun FirebaseConference.toConference() = Conference(
+        id,
+        name,
+        description,
+        code,
+        maps
+)
+
+fun FirebaseType.toType() = Type(
+        id,
+        name,
+        conference,
+        color
+)
+
+fun FirebaseLocation.toLocation() = Location(
+        name,
+        conference
+)
+
+fun FirebaseEvent.toEvent() = Event(
+        id,
+        conference,
+        title,
+        description,
+        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(begin),
+        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(end),
+        link,
+        updated,
+        speakers.map { it.toSpeaker() },
+        type.toType(),
+        location.toLocation()
+)
+
+fun FirebaseSpeaker.toSpeaker() = Speaker(
+        name,
+        description,
+        link,
+        twitter,
+        title
+)
+
+fun FirebaseVendor.toVendor() = Vendor(
+        id,
+        name,
+        description,
+        link,
+        partner
+)

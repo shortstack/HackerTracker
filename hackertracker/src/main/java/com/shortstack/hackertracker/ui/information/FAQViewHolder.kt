@@ -11,16 +11,20 @@ import androidx.transition.TransitionManager
 import com.crashlytics.android.answers.CustomEvent
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
-import com.shortstack.hackertracker.models.FAQ
+import com.shortstack.hackertracker.models.firebase.FirebaseFAQ
 import kotlinx.android.synthetic.main.row_faq.view.*
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class FAQViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
+class FAQViewHolder(val view: View) : RecyclerView.ViewHolder(view), KoinComponent {
+
+    private val analytics: AnalyticsController by inject()
 
     fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
         return inflater.inflate(R.layout.row_faq, parent, false)
     }
 
-    fun render(faq: FAQ) {
+    fun render(faq: FirebaseFAQ) {
         view.answer.visibility = View.GONE
 
         view.question.text = faq.question
@@ -31,7 +35,7 @@ class FAQViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
-    private fun onFAQClick(faq: FAQ) {
+    private fun onFAQClick(faq: FirebaseFAQ) {
         val root = view.container
 
         val isExpanded = view.answer.visibility == View.VISIBLE
@@ -40,7 +44,7 @@ class FAQViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
             val event = CustomEvent(AnalyticsController.FAQ_VIEW).also {
                 it.putCustomAttribute("Question", faq.question)
             }
-            AnalyticsController.logCustom(event)
+            analytics.logCustom(event)
         }
 
 

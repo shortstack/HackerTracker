@@ -1,6 +1,6 @@
-package com.shortstack.hackertracker.models
+package com.shortstack.hackertracker.models.firebase
 
-data class FAQ(
+data class FirebaseFAQ(
         val id: Int,
         val conference: String,
         val question: String,

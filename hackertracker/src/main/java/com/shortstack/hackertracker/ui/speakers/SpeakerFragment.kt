@@ -13,7 +13,7 @@ import androidx.fragment.app.Fragment
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.views.EventView
 import com.shortstack.hackertracker.views.StatusBarSpacer
@@ -23,11 +23,11 @@ import kotlinx.android.synthetic.main.fragment_speakers.*
 import org.koin.android.ext.android.inject
 
 class SpeakerFragment : Fragment() {
+
     companion object {
+        private const val EXTRA_SPEAKER = "EXTRA_SPEAKER"
 
-        const val EXTRA_SPEAKER = "EXTRA_SPEAKER"
-
-        fun newInstance(speaker: FirebaseSpeaker): SpeakerFragment {
+        fun newInstance(speaker: Speaker): SpeakerFragment {
             val fragment = SpeakerFragment()
 
             val bundle = Bundle()
@@ -39,6 +39,7 @@ class SpeakerFragment : Fragment() {
     }
 
     private val database: DatabaseManager by inject()
+    private val analytics: AnalyticsController by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_speakers, container, false)
@@ -63,9 +64,9 @@ class SpeakerFragment : Fragment() {
         }
 
 
-        val speaker = arguments?.getParcelable(EXTRA_SPEAKER) as? FirebaseSpeaker
+        val speaker = arguments?.getParcelable(EXTRA_SPEAKER) as? Speaker
         speaker?.let {
-            AnalyticsController.log("Viewing speaker ${it.name}")
+            analytics.log("Viewing speaker ${it.name}")
 
             collapsing_toolbar.title = it.name
             collapsing_toolbar.subtitle = if (speaker.title.isEmpty()) {
@@ -86,7 +87,7 @@ class SpeakerFragment : Fragment() {
                     val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(url))
                     context.startActivity(intent)
 
-                    AnalyticsController.onSpeakerEvent(AnalyticsController.SPEAKER_TWITTER, speaker)
+                    analytics.onSpeakerEvent(AnalyticsController.SPEAKER_TWITTER, speaker)
                 }
             }
 
@@ -109,7 +110,7 @@ class SpeakerFragment : Fragment() {
                         }
                     }
 
-            AnalyticsController.onSpeakerEvent(AnalyticsController.SPEAKER_VIEW, it)
+            analytics.onSpeakerEvent(AnalyticsController.SPEAKER_VIEW, it)
         }
     }
 }

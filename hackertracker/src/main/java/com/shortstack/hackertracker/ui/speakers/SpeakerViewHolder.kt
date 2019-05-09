@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.models.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.row_speaker.view.*
 
@@ -19,7 +19,7 @@ class SpeakerViewHolder(private val view: View) : RecyclerView.ViewHolder(view) 
         }
     }
 
-    fun render(speaker: FirebaseSpeaker) {
+    fun render(speaker: Speaker) {
         view.apply {
             speaker_name.text = speaker.name
             speaker_description.text = if (speaker.title.isBlank()) {

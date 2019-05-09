@@ -14,10 +14,9 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import com.firebase.jobdispatcher.FirebaseJobDispatcher
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.FirebaseEvent
+import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -45,7 +44,7 @@ class NotificationHelper(private val context: Context) : KoinComponent {
         }
     }
 
-    private fun getStartingSoonNotification(item: FirebaseEvent): Notification {
+    private fun getStartingSoonNotification(item: Event): Notification {
         val builder = notificationBuilder
 
         builder.setContentTitle(item.title)
@@ -56,7 +55,7 @@ class NotificationHelper(private val context: Context) : KoinComponent {
         return builder.build()
     }
 
-    private fun getUpdatedEventNotification(item: FirebaseEvent): Notification {
+    private fun getUpdatedEventNotification(item: Event): Notification {
         val builder = notificationBuilder
 
         builder.setContentTitle(item.title)
@@ -87,7 +86,7 @@ class NotificationHelper(private val context: Context) : KoinComponent {
             return builder
         }
 
-    private fun setItemPendingIntent(builder: NotificationCompat.Builder, item: FirebaseEvent? = null) {
+    private fun setItemPendingIntent(builder: NotificationCompat.Builder, item: Event? = null) {
         val intent = Intent(context, MainActivity::class.java)
 
         if (item != null) {
@@ -106,11 +105,11 @@ class NotificationHelper(private val context: Context) : KoinComponent {
         manager.notify(id, notification)
     }
 
-    fun notifyStartingSoon(event: FirebaseEvent) {
+    fun notifyStartingSoon(event: Event) {
         manager.notify(event.id, getStartingSoonNotification(event))
     }
 
-    fun updatedBookmarks(updatedBookmarks: List<FirebaseEvent>) {
+    fun updatedBookmarks(updatedBookmarks: List<Event>) {
         updatedBookmarks.forEach {
             notify(it.id, getUpdatedEventNotification(it))
         }

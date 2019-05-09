@@ -13,7 +13,12 @@ import org.koin.android.ext.android.inject
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 
+    companion object {
+        fun newInstance() = SettingsFragment()
+    }
+
     private val database: DatabaseManager by inject()
+    private val analytics: AnalyticsController by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,7 +51,7 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
         }
 
         val value = sharedPreferences.getBoolean(key, false)
-        AnalyticsController.onSettingsChanged(event, value)
+        analytics.onSettingsChanged(event, value)
     }
 
     override fun onResume() {
@@ -57,11 +62,5 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     override fun onPause() {
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
         super.onPause()
-    }
-
-    companion object {
-
-        fun newInstance() = SettingsFragment()
-
     }
 }

@@ -1,9 +1,11 @@
 package com.shortstack.hackertracker.database
 
 import com.google.firebase.firestore.FirebaseFirestore
-import com.shortstack.hackertracker.models.*
+import com.shortstack.hackertracker.*
+import com.shortstack.hackertracker.models.firebase.*
+import com.shortstack.hackertracker.models.local.*
 
-class InitLoader(private val database: DatabaseManager, conference: FirebaseConference? = null, private val onComplete: ((FirebaseConference) -> Unit)? = null) {
+class InitLoader(private val database: DatabaseManager, conference: Conference? = null, private val onComplete: ((Conference) -> Unit)? = null) {
 
     companion object {
         private const val CONFERENCES = "conferences"
@@ -22,12 +24,12 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
     private val firestore = FirebaseFirestore.getInstance()
 
 
-    private val conferences = ArrayList<FirebaseConference>()
+    private val conferences = ArrayList<Conference>()
 
-    private val types = ArrayList<FirebaseType>()
-    private val events = ArrayList<FirebaseEvent>()
-    private val speakers = ArrayList<FirebaseSpeaker>()
-    private val locations = ArrayList<FirebaseLocation>()
+    private val types = ArrayList<Type>()
+    private val events = ArrayList<Event>()
+    private val speakers = ArrayList<Speaker>()
+    private val locations = ArrayList<Location>()
 
     init {
         if (conference != null) {
@@ -39,21 +41,21 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
                         if (it.isSuccessful) {
                             val cons = it.result?.toObjects(FirebaseConference::class.java)
                                     ?: emptyList()
-                            conferences.addAll(cons)
+                            conferences.addAll(cons.map { it.toConference() })
 
                             // TODO: get the selected con
                             val selected = cons.find { it.code == "THOTCON0xA" }
                                     ?: cons.firstOrNull()
 
                             if (selected != null) {
-                                getConferenceDetails(selected)
+                                getConferenceDetails(selected.toConference())
                             }
                         }
                     }
         }
     }
 
-    private fun getConferenceDetails(conference: FirebaseConference) {
+    private fun getConferenceDetails(conference: Conference) {
         database.conference.postValue(conference)
 
         getTypes(conference)
@@ -62,7 +64,7 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
         getLocations(conference)
     }
 
-    private fun getLocations(conference: FirebaseConference) {
+    private fun getLocations(conference: Conference) {
         firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(LOCATIONS)
@@ -72,12 +74,12 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
                                 ?: emptyList()
 
                         locations.clear()
-                        locations.addAll(list)
+                        locations.addAll(list.map { it.toLocation() })
                     }
                 }
     }
 
-    private fun getSpeakers(conference: FirebaseConference) {
+    private fun getSpeakers(conference: Conference) {
         firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(SPEAKERS)
@@ -87,14 +89,14 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
                                 ?: emptyList()
 
                         speakers.clear()
-                        speakers.addAll(list)
+                        speakers.addAll(list.map { it.toSpeaker() })
 
                         onSuccess(conference)
                     }
                 }
     }
 
-    private fun getEvents(conference: FirebaseConference) {
+    private fun getEvents(conference: Conference) {
         firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(EVENTS)
@@ -103,7 +105,7 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
                         val list = snapshot?.toObjects(FirebaseEvent::class.java) ?: emptyList()
 
                         events.clear()
-                        events.addAll(list)
+                        events.addAll(list.map { it.toEvent() })
 
                         firestore.collection(CONFERENCES)
                                 .document(conference.code)
@@ -129,7 +131,7 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
                 }
     }
 
-    private fun getTypes(conference: FirebaseConference) {
+    private fun getTypes(conference: Conference) {
         firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(TYPES)
@@ -138,7 +140,7 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
                         val list = snapshot?.toObjects(FirebaseType::class.java) ?: emptyList()
 
                         types.clear()
-                        types.addAll(list)
+                        types.addAll(list.map { it.toType() })
 
                         firestore.collection(CONFERENCES)
                                 .document(conference.code)
@@ -163,7 +165,7 @@ class InitLoader(private val database: DatabaseManager, conference: FirebaseConf
     }
 
 
-    private fun onSuccess(conference: FirebaseConference) {
+    private fun onSuccess(conference: Conference) {
         if (events.isNotEmpty() && types.isNotEmpty() && speakers.isNotEmpty()) {
             database.conference.postValue(conference)
             database.types.postValue(types)

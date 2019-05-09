@@ -5,8 +5,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.models.Day
-import com.shortstack.hackertracker.models.FirebaseEvent
 import com.shortstack.hackertracker.models.Time
+import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.schedule.TimeViewHolder
@@ -24,7 +24,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var state: Status = Status.NOT_INITIALIZED
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType) {
+        return when (viewType) {
             EVENT -> EventViewHolder.inflate(parent)
             DAY -> DayViewHolder.inflate(parent)
             TIME -> TimeViewHolder.inflate(parent)
@@ -37,40 +37,30 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = collection[position]
 
-        when(holder) {
-            is EventViewHolder -> holder.render(item as FirebaseEvent)
+        when (holder) {
+            is EventViewHolder -> holder.render(item as Event)
             is DayViewHolder -> holder.render(item as Day)
             is TimeViewHolder -> holder.render(item as Time)
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when(collection[position]) {
-            is FirebaseEvent -> EVENT
+        return when (collection[position]) {
+            is Event -> EVENT
             is Day -> DAY
             is Time -> TIME
             else -> throw IllegalStateException("Unknown viewType ${collection[position].javaClass}")
         }
     }
 
-    private fun getFormattedElements(elements: List<FirebaseEvent>): ArrayList<Any> {
+    private fun getFormattedElements(elements: List<Event>): ArrayList<Any> {
         val result = ArrayList<Any>()
-
-        val previous = collection.filterIsInstance<FirebaseEvent>().lastOrNull()
-        val prevDay = previous?.date
-        val prevTime = previous?.start
-
+        
         elements.groupBy { it.date }.toSortedMap().forEach {
-            if (prevDay != it.key) {
-                val day = Day(it.key)
-                result.add(day)
-            }
+            result.add(Day(it.key))
 
             it.value.groupBy { it.start }.toSortedMap().forEach {
-                if (prevTime != it.key) {
-                    val time = Time(it.key)
-                    result.add(time)
-                }
+                result.add(Time(it.key))
 
                 if (it.value.isNotEmpty()) {
                     val group = it.value.sortedWith(compareBy({ it.type.name }, { it.location.name }))
@@ -89,7 +79,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val list = collection.toList()
 
         list.forEach {
-            if (it is FirebaseEvent && it.hasFinished) {
+            if (it is Event && it.hasFinished) {
                 removeAndNotify(it)
             }
         }
@@ -118,13 +108,13 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private fun removeAndNotify(item: Any) {
         val index = collection.indexOf(item)
-        if( index != -1 ) {
+        if (index != -1) {
             collection.removeAt(index)
             notifyItemRemoved(index)
         }
     }
 
-    fun setSchedule(list: List<FirebaseEvent>?) {
+    fun setSchedule(list: List<Event>?) {
         if (list == null) {
             val size = collection.size
             collection.clear()
@@ -139,7 +129,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val left = collection[oldItemPosition]
                 val right = elements[newItemPosition]
 
-                if (left is FirebaseEvent && right is FirebaseEvent) {
+                if (left is Event && right is Event) {
                     return left.id == right.id
                 } else if (left is Day && right is Day) {
                     return left.time == right.time
@@ -157,7 +147,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                 val left = collection[oldItemPosition]
                 val right = elements[newItemPosition]
 
-                if (left is FirebaseEvent && right is FirebaseEvent) {
+                if (left is Event && right is Event) {
                     return left.updated == right.updated && left.isBookmarked == right.isBookmarked
                             && left.title == right.title && left.location.name == right.location.name
                 } else if (left is Day && right is Day) {

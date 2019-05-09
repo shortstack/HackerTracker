@@ -3,6 +3,8 @@ package com.shortstack.hackertracker
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDexApplication
 import com.crashlytics.android.Crashlytics
+import com.crashlytics.android.answers.Answers
+import com.crashlytics.android.core.CrashlyticsCore
 import com.github.stkent.amplify.feedback.DefaultEmailFeedbackCollector
 import com.github.stkent.amplify.feedback.GooglePlayStoreFeedbackCollector
 import com.github.stkent.amplify.tracking.Amplify
@@ -40,7 +42,7 @@ class App : MultiDexApplication() {
     }
 
     private fun initFabric() {
-        if (!BuildConfig.DEBUG)
-            Fabric.with(this, Crashlytics())
+        val crashlytics = Crashlytics.Builder().core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build()
+        Fabric.with(this, crashlytics, Answers())
     }
 }

@@ -69,7 +69,7 @@ class ScheduleFragment : Fragment(){
 
         disposable = timer.observable.observeOn(AndroidSchedulers.mainThread())
                 .subscribe {
-                    adapter.notifyTimeChanged()
+                    // adapter.notifyTimeChanged()
                     if (adapter.isEmpty()) {
                         showEmptyView()
                     } else {
