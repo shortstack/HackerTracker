@@ -12,12 +12,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.FirebaseEvent
-import com.shortstack.hackertracker.models.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Speaker
+import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utils.TimeUtil
 import com.shortstack.hackertracker.views.SpeakerView
@@ -32,7 +31,7 @@ class EventFragment : Fragment() {
 
         const val EXTRA_EVENT = "EXTRA_EVENT"
 
-        fun newInstance(event: FirebaseEvent): EventFragment {
+        fun newInstance(event: Event): EventFragment {
             val fragment = EventFragment()
 
             val bundle = Bundle()
@@ -59,7 +58,7 @@ class EventFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val event = arguments?.getParcelable(EXTRA_EVENT) as? FirebaseEvent
+        val event = arguments?.getParcelable(EXTRA_EVENT) as? Event
 
 
         val drawable = ContextCompat.getDrawable(context
@@ -131,7 +130,7 @@ class EventFragment : Fragment() {
         context?.startActivity(intent)
     }
 
-    private fun onShareClick(event: FirebaseEvent) {
+    private fun onShareClick(event: Event) {
         val intent = Intent(Intent.ACTION_SEND)
         intent.putExtra(Intent.EXTRA_TEXT, getDetailsDescription(event))
         intent.type = "text/plain"
@@ -139,7 +138,7 @@ class EventFragment : Fragment() {
         context?.startActivity(intent)
     }
 
-    private fun onBookmarkClick(event: FirebaseEvent) {
+    private fun onBookmarkClick(event: Event) {
         event.isBookmarked = !event.isBookmarked
 
         database.updateBookmark(event)
@@ -149,14 +148,14 @@ class EventFragment : Fragment() {
         displayBookmark(event)
     }
 
-    private fun getDetailsDescription(event: FirebaseEvent): String {
+    private fun getDetailsDescription(event: Event): String {
 //        val context = context ?:
         return ""
 
 //        return "Attending ${event.title} at ${getFullTimeStamp(context, event)} in ${event.location.firstOrNull()?.name} #hackertracker"
     }
 
-    private fun displayBookmark(event: FirebaseEvent) {
+    private fun displayBookmark(event: Event) {
 
         val context = context ?: return
 
@@ -179,7 +178,7 @@ class EventFragment : Fragment() {
         star.setImageDrawable(image)
     }
 
-    private fun displayDescription(event: FirebaseEvent) {
+    private fun displayDescription(event: Event) {
 
         val context = context ?: return
 
@@ -188,21 +187,21 @@ class EventFragment : Fragment() {
     }
 
 
-    fun getFullTimeStamp(context: Context, event: FirebaseEvent): String {
+    fun getFullTimeStamp(context: Context, event: Event): String {
         val (begin, end) = getTimeStamp(context, event)
         val timestamp = TimeUtil.getRelativeDateStamp(context, event.start)
 
         return String.format(context.getString(R.string.timestamp_full), timestamp, begin, end)
     }
 
-    fun getTimeStamp(context: Context, event: FirebaseEvent): Pair<String, String> {
+    fun getTimeStamp(context: Context, event: Event): Pair<String, String> {
         val begin = TimeUtil.getTimeStamp(context, event.start)
-        val end = TimeUtil.getTimeStamp(context, event.finish)
+        val end = TimeUtil.getTimeStamp(context, event.end)
         return Pair(begin, end)
     }
 
 
-    private fun displayTypes(event: FirebaseEvent) {
+    private fun displayTypes(event: Event) {
 
         val type = event.type
         val context = context ?: return
@@ -220,7 +219,7 @@ class EventFragment : Fragment() {
 
     }
 
-    private fun displaySpeakers(event: FirebaseEvent) {
+    private fun displaySpeakers(event: Event) {
         val context = context ?: return
 
         val list = event.speakers
@@ -237,7 +236,7 @@ class EventFragment : Fragment() {
     }
 
 
-    private fun displayRelatedEvents(event: FirebaseEvent, speakers: List<FirebaseSpeaker>) {
+    private fun displayRelatedEvents(event: Event, speakers: List<Speaker>) {
         val context = context ?: return
 
 //        val relatedEvents = database.getRelatedEvents(event.id, event.types, speakers)

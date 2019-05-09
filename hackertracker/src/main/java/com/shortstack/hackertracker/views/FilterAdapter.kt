@@ -2,7 +2,7 @@ package com.shortstack.hackertracker.views
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.models.FirebaseType
+import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.ui.search.HeaderViewHolder
 
 class FilterAdapter(private val collection: ArrayList<Any>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -32,7 +32,7 @@ class FilterAdapter(private val collection: ArrayList<Any>) : RecyclerView.Adapt
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is HeaderViewHolder -> holder.render(collection[position] as String)
-            is TypeViewHolder -> holder.render(collection[position] as FirebaseType)
+            is TypeViewHolder -> holder.render(collection[position] as Type)
         }
     }
 }

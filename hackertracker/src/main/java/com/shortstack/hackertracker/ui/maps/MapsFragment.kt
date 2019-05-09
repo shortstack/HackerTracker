@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProviders
 import com.crashlytics.android.answers.CustomEvent
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
-import com.shortstack.hackertracker.models.ConferenceMap
+import com.shortstack.hackertracker.models.firebase.FirebaseConferenceMap
 import kotlinx.android.synthetic.main.fragment_maps.*
 import org.koin.android.ext.android.inject
 
@@ -61,7 +61,7 @@ class MapsFragment : Fragment() {
         analytics.logCustom(CustomEvent(AnalyticsController.MAP_VIEW))
     }
 
-    class PagerAdapter(fm: FragmentManager, private val maps: List<ConferenceMap>) : FragmentStatePagerAdapter(fm) {
+    class PagerAdapter(fm: FragmentManager, private val maps: List<FirebaseConferenceMap>) : FragmentStatePagerAdapter(fm) {
 
         override fun getItem(position: Int) = MapFragment.newInstance(maps[position].file)
 

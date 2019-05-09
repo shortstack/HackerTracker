@@ -3,10 +3,10 @@ package com.shortstack.hackertracker.ui.information
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
-import com.shortstack.hackertracker.models.FAQ
+import com.shortstack.hackertracker.models.firebase.FirebaseFAQ
 import com.shortstack.hackertracker.ui.ListFragment
 
-class InformationFragment : ListFragment<FAQ>() {
+class InformationFragment : ListFragment<FirebaseFAQ>() {
 
     companion object {
         fun newInstance() = InformationFragment()

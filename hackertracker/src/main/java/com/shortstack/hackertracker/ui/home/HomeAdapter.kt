@@ -2,9 +2,8 @@ package com.shortstack.hackertracker.ui.home
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.models.FirebaseEvent
+import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
-import java.lang.IllegalStateException
 
 class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -14,7 +13,7 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private const val EVENT = 2
     }
 
-    private val collection = ArrayList<FirebaseEvent>()
+    private val collection = ArrayList<Event>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
@@ -40,7 +39,7 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    fun addRecent(list: List<FirebaseEvent>) {
+    fun addRecent(list: List<Event>) {
         val size = collection.size
         collection.clear()
         notifyItemRangeRemoved(1, size)

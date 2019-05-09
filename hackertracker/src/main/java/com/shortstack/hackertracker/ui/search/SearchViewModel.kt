@@ -5,9 +5,9 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.FirebaseEvent
-import com.shortstack.hackertracker.models.FirebaseLocation
-import com.shortstack.hackertracker.models.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Location
+import com.shortstack.hackertracker.models.local.Speaker
+import com.shortstack.hackertracker.models.local.Event
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import org.koin.standalone.KoinComponent
@@ -21,9 +21,9 @@ class SearchViewModel : ViewModel(), KoinComponent {
 
     val results: LiveData<List<Any>>
 
-    private val locations = ArrayList<FirebaseLocation>()
-    private val events = ArrayList<FirebaseEvent>()
-    private val speakers = ArrayList<FirebaseSpeaker>()
+    private val locations = ArrayList<Location>()
+    private val events = ArrayList<Event>()
+    private val speakers = ArrayList<Speaker>()
 
     private val compositeDisposable = CompositeDisposable()
 
@@ -63,7 +63,7 @@ class SearchViewModel : ViewModel(), KoinComponent {
     private fun setValue(result: MediatorLiveData<List<Any>>) {
         val temp = ArrayList<Any>()
 
-        val tempEvents = ArrayList<FirebaseEvent>()
+        val tempEvents = ArrayList<Event>()
         tempEvents.addAll(events)
 
         if (speakers.isNotEmpty()) {
@@ -75,7 +75,7 @@ class SearchViewModel : ViewModel(), KoinComponent {
             locations.forEach { loc ->
                 temp.add(loc)
 
-                val events = tempEvents.filter { it.location.name == loc.name }.sortedBy { it.begin }
+                val events = tempEvents.filter { it.location.name == loc.name }.sortedBy { it.start }
                 tempEvents.removeAll(events)
 
                 temp.addAll(events)

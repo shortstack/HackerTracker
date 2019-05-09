@@ -3,9 +3,9 @@ package com.shortstack.hackertracker.ui.search
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.models.FirebaseEvent
-import com.shortstack.hackertracker.models.FirebaseLocation
-import com.shortstack.hackertracker.models.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Event
+import com.shortstack.hackertracker.models.local.Location
+import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.speakers.SpeakerViewHolder
 
@@ -38,18 +38,18 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         val item = collection[position]
 
         when(holder) {
-            is EventViewHolder -> holder.render(item as FirebaseEvent)
-            is SpeakerViewHolder -> holder.render(item as FirebaseSpeaker)
-            is LocationViewHolder -> holder.render(item as FirebaseLocation)
+            is EventViewHolder -> holder.render(item as Event)
+            is SpeakerViewHolder -> holder.render(item as Speaker)
+            is LocationViewHolder -> holder.render(item as Location)
             is HeaderViewHolder -> holder.render(item as String)
         }
     }
 
     override fun getItemViewType(position: Int): Int {
         return when(collection[position]) {
-            is FirebaseSpeaker -> SPEAKER
-            is FirebaseEvent -> EVENT
-            is FirebaseLocation -> LOCATION
+            is Speaker -> SPEAKER
+            is Event -> EVENT
+            is Location -> LOCATION
             is String -> HEADER
             else -> throw IllegalStateException("Unknown viewType ${collection[position].javaClass}")
         }
@@ -67,13 +67,13 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
                 val left = collection[oldItemPosition]
                 val right = elements[newItemPosition]
-                if (left is FirebaseEvent && right is FirebaseEvent) {
+                if (left is Event && right is Event) {
                     return left.id == right.id
                 }
-                if (left is FirebaseLocation && right is FirebaseLocation) {
+                if (left is Location && right is Location) {
                     return left.name == right.name
                 }
-                if (left is FirebaseSpeaker && right is FirebaseSpeaker) {
+                if (left is Speaker && right is Speaker) {
                     return left.name == right.name
                 }
                 if (left is String && right is String) {
