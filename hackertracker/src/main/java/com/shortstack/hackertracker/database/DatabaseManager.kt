@@ -18,11 +18,11 @@ import com.shortstack.hackertracker.*
 import com.shortstack.hackertracker.models.firebase.*
 import com.shortstack.hackertracker.models.local.*
 import com.shortstack.hackertracker.network.task.ReminderWorker
+import com.shortstack.hackertracker.utils.MyClock
+import com.shortstack.hackertracker.utils.now
 import io.reactivex.Single
 import java.io.File
-import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 
 class DatabaseManager {
@@ -37,6 +37,8 @@ class DatabaseManager {
         private const val TYPES = "types"
         private const val FAQS = "faqs"
         private const val VENDORS = "vendors"
+        private const val SPEAKERS = "speakers"
+
     }
 
     private val firestore = FirebaseFirestore.getInstance()
@@ -200,7 +202,7 @@ class DatabaseManager {
         val tag = "reminder_" + event.id
 
         if (event.isBookmarked) {
-            val delay = event.start.time - Date().now().time - (1000 * 20 * 60)
+            val delay = event.start.time - MyClock().now().time - (1000 * 20 * 60)
 
             if (delay > 0) {
                 val notify = OneTimeWorkRequestBuilder<ReminderWorker>()
@@ -273,6 +275,23 @@ class DatabaseManager {
 
     fun getSpeakers(event: Event): List<Speaker> {
         return event.speakers
+    }
+
+    fun getSpeakers(conference: Conference): LiveData<List<Speaker>> {
+        val mutableLiveData = MutableLiveData<List<Speaker>>()
+
+        firestore.collection(CONFERENCES)
+                .document(conference.code)
+                .collection(SPEAKERS)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val speakers = snapshot?.toObjects(FirebaseSpeaker::class.java)
+                                ?: emptyList()
+                        mutableLiveData.postValue(speakers.map { it.toSpeaker() })
+                    }
+                }
+
+        return mutableLiveData
     }
 
     fun getEventsForSpeaker(speaker: Speaker): Single<List<Event>> {

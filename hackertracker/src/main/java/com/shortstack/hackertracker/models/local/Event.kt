@@ -3,8 +3,9 @@ package com.shortstack.hackertracker.models.local
 import android.content.Context
 import android.os.Parcelable
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.now
+import com.shortstack.hackertracker.utils.MyClock
 import com.shortstack.hackertracker.utils.TimeUtil
+import com.shortstack.hackertracker.utils.now
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
@@ -25,7 +26,7 @@ data class Event(
 
     val progress: Float
         get() {
-            val currentDate = Date().now()
+            val currentDate = MyClock().now()
 
             if(currentDate.before(start))
                 return -1f
