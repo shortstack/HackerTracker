@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.utils
 
 import android.content.Context
+import android.text.format.DateFormat
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import com.shortstack.hackertracker.R
@@ -9,6 +10,8 @@ import com.shortstack.hackertracker.isToday
 import com.shortstack.hackertracker.isTomorrow
 import io.mockk.every
 import io.mockk.mockkStatic
+import io.mockk.staticMockk
+import io.mockk.use
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -134,6 +137,36 @@ class TimeUtilTest {
         val result = TimeUtil.getRelativeDateStamp(context, date)
 
         assertEquals("December 31", result)
+    }
+
+    @Test
+    fun getRelativeTimeStampNull() {
+        val result = TimeUtil.getTimeStamp(context, null)
+
+        assertEquals("TBA", result)
+    }
+
+    @Test
+    fun getRelativeTimeStamp24() {
+        val date = parse("2018-12-31T12:00:00.000-0000")
+        mockkStatic(DateFormat::class)
+        every { DateFormat.is24HourFormat(context) } returns true
+
+        val result = TimeUtil.getTimeStamp(context, date)
+
+        assertEquals("04:00", result)
+
+    }
+
+    @Test
+    fun getRelativeTimeStampAM() {
+        val date = parse("2018-12-31T12:00:00.000-0000")
+        mockkStatic(DateFormat::class)
+        every { DateFormat.is24HourFormat(context) } returns false
+
+        val result = TimeUtil.getTimeStamp(context, date)
+
+        assertEquals("4:00 AM", result)
     }
 
     private fun parse(date: String): Date {
