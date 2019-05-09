@@ -277,6 +277,7 @@ class DatabaseManager {
         return event.speakers
     }
 
+
     fun getSpeakers(conference: Conference): LiveData<List<Speaker>> {
         val mutableLiveData = MutableLiveData<List<Speaker>>()
 
