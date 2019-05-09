@@ -1,5 +1,7 @@
 package com.shortstack.hackertracker.models
 
+import com.shortstack.hackertracker.models.firebase.FirebaseEvent
+import com.shortstack.hackertracker.toEvent
 import com.shortstack.hackertracker.utils.MyClock
 import com.shortstack.hackertracker.utils.now
 import io.mockk.every
@@ -12,7 +14,7 @@ import java.util.*
 
 class EventTest {
 
-    private val event = FirebaseEvent(title = "Test Event", begin = "2019-01-01T12:00:00.000-0000", end = "2019-01-01T13:00:00.000-0000")
+    private val event = FirebaseEvent(title = "Test Event", begin = "2019-01-01T12:00:00.000-0000", end = "2019-01-01T13:00:00.000-0000").toEvent()
 
     @Before
     fun before() {
