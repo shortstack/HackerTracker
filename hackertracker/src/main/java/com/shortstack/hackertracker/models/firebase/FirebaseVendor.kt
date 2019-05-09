@@ -5,12 +5,12 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class FirebaseVendor(
-        val id: Int,
-        val name: String,
-        val description: String?,
-        val link: String?,
-        val partner: Boolean,
-        val updatedAt: String,
-        val conference: String
+        val id: Int = -1,
+        val name: String = "",
+        val description: String? = null,
+        val link: String? = null,
+        val partner: Boolean = false,
+        val updatedAt: String = "",
+        val conference: String = ""
 ) : Parcelable
 

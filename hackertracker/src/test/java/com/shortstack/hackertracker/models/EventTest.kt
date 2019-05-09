@@ -1,24 +1,33 @@
 package com.shortstack.hackertracker.models
 
 import com.shortstack.hackertracker.models.firebase.FirebaseEvent
+import com.shortstack.hackertracker.models.firebase.FirebaseSpeaker
+import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.toEvent
 import com.shortstack.hackertracker.utils.MyClock
 import com.shortstack.hackertracker.utils.now
 import io.mockk.every
 import io.mockk.mockkStatic
 import org.junit.Assert.assertEquals
-import org.junit.Before
 import org.junit.Test
 import java.text.SimpleDateFormat
 import java.util.*
 
 class EventTest {
 
-    private val event = FirebaseEvent(title = "Test Event", begin = "2019-01-01T12:00:00.000-0000", end = "2019-01-01T13:00:00.000-0000").toEvent()
+    private val event: Event
 
-    @Before
-    fun before() {
+    init {
+        val firebase = FirebaseEvent(title = "Test Event", begin = "2019-01-01T12:00:00.000-0000", end = "2019-01-01T13:00:00.000-0000")
+        firebase.speakers.add(FirebaseSpeaker("John", "Tester"))
+        event = firebase.toEvent()
+    }
 
+    @Test
+    fun toEvent() {
+        assertEquals("Test Event", event.title)
+        assertEquals(1, event.speakers.size)
+        assertEquals("John", event.speakers.first().name)
     }
 
     @Test
