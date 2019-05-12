@@ -44,7 +44,7 @@ class InitLoader(private val database: DatabaseManager, conference: Conference? 
                             conferences.addAll(cons.map { it.toConference() })
 
                             // TODO: get the selected con
-                            val selected = cons.find { it.code == "THOTCON0xA" }
+                            val selected = cons.find { it.code == "CACKALACKY2019" }
                                     ?: cons.firstOrNull()
 
                             if (selected != null) {
