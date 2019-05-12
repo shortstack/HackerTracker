@@ -8,8 +8,6 @@ import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Location
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
-import io.reactivex.Single
-import io.reactivex.disposables.CompositeDisposable
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
@@ -21,82 +19,67 @@ class SearchViewModel : ViewModel(), KoinComponent {
 
     val results: LiveData<List<Any>>
 
-    private val locations = ArrayList<Location>()
-    private val events = ArrayList<Event>()
-    private val speakers = ArrayList<Speaker>()
-
-    private val compositeDisposable = CompositeDisposable()
+    private val locations = database.getLocations()
+    private val events = database.getSchedule()
+    private val speakers = database.getSpeakers()
 
     init {
-        results = Transformations.switchMap(query) {
+        results = Transformations.switchMap(query) { text ->
             val results = MediatorLiveData<List<Any>>()
 
-            if (it.isBlank()) {
-                results.value = emptyList()
-            } else {
-
-
-                val disposable = Single.fromCallable {
-                    clear()
-
-                    locations.addAll(database.findLocation(it))
-                    events.addAll(database.findEvents(it))
-                    speakers.addAll(database.findSpeaker(it))
-
-                    setValue(results)
-                }.subscribe()
-
-                compositeDisposable.add(disposable)
+            results.addSource(events) {
+                val locations = locations.value ?: emptyList()
+                val speakers = speakers.value ?: emptyList()
+                setValue(results, text, it, locations, speakers)
             }
 
+            results.addSource(locations) {
+                val events = events.value ?: emptyList()
+                val speakers = speakers.value ?: emptyList()
+                setValue(results, text, events, it, speakers)
+            }
+
+            results.addSource(speakers) {
+                val events = events.value ?: emptyList()
+                val locations = locations.value ?: emptyList()
+                setValue(results, text, events, locations, it)
+            }
 
             return@switchMap results
         }
     }
 
-    private fun clear() {
-        speakers.clear()
-        events.clear()
-        locations.clear()
-    }
+    private fun setValue(results: MediatorLiveData<List<Any>>, query: String, events: List<Event>, locations: List<Location>, speakers: List<Speaker>) {
+        if(query.isBlank()) {
+            results.value = emptyList()
+            return
+        }
 
-    private fun setValue(result: MediatorLiveData<List<Any>>) {
-        val temp = ArrayList<Any>()
+        val list = ArrayList<Any>()
 
-        val tempEvents = ArrayList<Event>()
-        tempEvents.addAll(events)
-
+        val speakers = speakers.filter { it.name.contains(query, true) }
         if (speakers.isNotEmpty()) {
-            temp.add("Speakers")
-            temp.addAll(speakers)
+            list.add("Speakers")
+            list.addAll(speakers)
         }
 
-        if (locations.isNotEmpty()) {
-            locations.forEach { loc ->
-                temp.add(loc)
-
-                val events = tempEvents.filter { it.location.name == loc.name }.sortedBy { it.start }
-                tempEvents.removeAll(events)
-
-                temp.addAll(events)
-            }
+        val locations = locations.filter { it.name.contains(query, true) }
+        locations.forEach { location ->
+            list.add(location)
+            // TODO: Should we add the filtered events, or all events for this location?
+            list.addAll(events.filter { it.location.name == location.name }.sortedBy { it.start })
         }
 
-        if (tempEvents.isNotEmpty()) {
-            temp.add("Events")
-            temp.addAll(tempEvents)
+        val events = events.filter { it.title.contains(query, true) }
+        if(events.isNotEmpty()) {
+            list.add("Events")
+            list.addAll(events)
         }
 
-        result.value = temp
+        results.value = list
     }
-
 
     fun search(text: String?) {
         query.postValue(text)
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        compositeDisposable.clear()
     }
 }

@@ -2,6 +2,7 @@ package com.shortstack.hackertracker.database
 
 import android.util.Log
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -38,6 +39,7 @@ class DatabaseManager {
         private const val FAQS = "faqs"
         private const val VENDORS = "vendors"
         private const val SPEAKERS = "speakers"
+        private const val LOCATIONS = "locations"
 
         private const val CURRENT_CON = "CACKALACKY2019"
     }
@@ -226,6 +228,22 @@ class DatabaseManager {
         return mutableLiveData
     }
 
+    fun getLocations(): MutableLiveData<List<Location>> {
+        val mutableLiveData = MutableLiveData<List<Location>>()
+
+        firestore.collection(CONFERENCES)
+                .document(CURRENT_CON)
+                .collection(LOCATIONS)
+                .addSnapshotListener { snapshot, exception ->
+                    if(exception == null) {
+                        val list = snapshot?.toObjects(FirebaseLocation::class.java)?.map { it.toLocation() }
+                        mutableLiveData.postValue(list)
+                    }
+                }
+
+        return mutableLiveData
+    }
+
     fun getVendors(conference: Conference): LiveData<List<Vendor>> {
         val mutableLiveData = MutableLiveData<List<Vendor>>()
 
@@ -251,21 +269,6 @@ class DatabaseManager {
                         emitter.onSuccess(event.toEvent())
                     }
         }
-    }
-
-    fun findEvents(text: String): List<Event> {
-        TODO()
-//        return events.value?.filter { it.title.contains(text, true) } ?: emptyList()
-    }
-
-    fun findLocation(text: String): List<Location> {
-        TODO()
-//        return locations.value?.filter { it.name.contains(text, true) } ?: emptyList()
-    }
-
-    fun findSpeaker(text: String): List<Speaker> {
-        TODO()
-//        return speakers.value?.filter { it.name.contains(text, true) } ?: emptyList()
     }
 
     fun updateBookmark(event: Event) {
@@ -338,8 +341,21 @@ class DatabaseManager {
 
     }
 
-    fun getSpeakers(event: Event): List<Speaker> {
-        return event.speakers
+    fun getSpeakers(): LiveData<List<Speaker>> {
+        val mutableLiveData = MutableLiveData<List<Speaker>>()
+
+        firestore.collection(CONFERENCES)
+                .document(CURRENT_CON)
+                .collection(SPEAKERS)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val speakers = snapshot?.toObjects(FirebaseSpeaker::class.java)
+                                ?: emptyList()
+                        mutableLiveData.postValue(speakers.map { it.toSpeaker() })
+                    }
+                }
+
+        return mutableLiveData
     }
 
 
@@ -431,4 +447,6 @@ class DatabaseManager {
         }
         return mutableLiveData
     }
+
+
 }
