@@ -14,8 +14,7 @@ class MapsViewModel : ViewModel(), KoinComponent {
 
     val maps: LiveData<List<FirebaseConferenceMap>>
         get() {
-            val conference = database.conference
-            return Transformations.switchMap(conference) { id ->
+            return Transformations.switchMap(database.conference) { id ->
                 return@switchMap database.getMaps(id)
             }
         }

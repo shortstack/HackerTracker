@@ -19,7 +19,7 @@ class MainActivityViewModel : ViewModel(), KoinComponent {
         get() = database.getConferences()
 
     val types: LiveData<List<Type>>
-        get() = database.types
+        get() = database.getScheduleTypes()
 
     fun changeConference(itemId: Int) {
         database.changeConference(itemId)
