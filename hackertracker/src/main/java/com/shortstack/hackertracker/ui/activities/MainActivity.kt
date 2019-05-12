@@ -76,17 +76,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
                 nav_view.getHeaderView(0).nav_title.text = it.name
             }
         })
-        viewModel.conferences.observe(this, Observer {
-
-            nav_view.menu.removeGroup(R.id.nav_cons)
-            it.filter { !it.isSelected }.forEach {
-                nav_view.menu.add(R.id.nav_cons, it.id, 8, it.name).apply {
-                    isChecked = it.isSelected
-                    icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_chevron_right_white_24dp)
-                }
-            }
-        })
-
 
         viewModel.types.observe(this, Observer {
 
