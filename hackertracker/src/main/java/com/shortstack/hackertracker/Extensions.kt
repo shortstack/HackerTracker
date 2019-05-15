@@ -1,10 +1,15 @@
 package com.shortstack.hackertracker
 
-import com.google.gson.Gson
-import com.orhanobut.logger.Logger
-import org.json.JSONException
-import java.io.FileNotFoundException
-import java.io.IOException
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentTransaction
+import androidx.transition.Fade
+import com.shortstack.hackertracker.models.firebase.*
+import com.shortstack.hackertracker.models.local.*
+import com.shortstack.hackertracker.utils.MyClock
+import com.shortstack.hackertracker.utils.now
+import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 
@@ -39,66 +44,102 @@ fun Date.isSoonish(SOON_DAYS_AMOUNT: Int): Boolean {
     val time2 = cal2.time.time
 
     val daysInMilliSeconds = SOON_DAYS_AMOUNT * 1000 * 60 * 60 * 24
-    return Math.abs(time - time2) < daysInMilliSeconds
+    return time2 - time < daysInMilliSeconds
 }
 
 fun Date.getDateDifference(date: Date, timeUnit: TimeUnit): Long {
-    return timeUnit.convert(date.time - this.time, TimeUnit.MILLISECONDS);
+    return timeUnit.convert(date.time - this.time, TimeUnit.MILLISECONDS)
 }
 
 
-inline fun <reified T> Gson.fromFile(filename: String, root: String?): T? {
-    try {
-        val s = if (root != null) {
-            "database/conferences/$root/$filename"
-        } else {
-            "database/conferences/$filename"
+fun Calendar.now(): Calendar {
+    this.time = MyClock().now()
+    return this
+}
+
+inline fun FragmentManager.inTransaction(func: FragmentTransaction.() -> FragmentTransaction) {
+    beginTransaction().func().commit()
+}
+
+fun AppCompatActivity.addFragment(fragment: Fragment, frameId: Int) {
+    supportFragmentManager.inTransaction { add(frameId, fragment) }
+}
+
+
+fun AppCompatActivity.replaceFragment(fragment: Fragment, frameId: Int, hasAnimation: Boolean = false, backStack: Boolean = true) {
+    supportFragmentManager.inTransaction {
+
+        if (hasAnimation) {
+
+            val fadeDuration = 300L
+
+
+            fragment.apply {
+                enterTransition = Fade().apply {
+                    duration = fadeDuration
+                }
+
+
+                returnTransition = Fade().apply {
+                    duration = fadeDuration
+                }
+            }
         }
-        val stream = App.application.assets.open(s)
 
-        val size = stream.available()
-
-        val buffer = ByteArray(size)
-
-        stream.read(buffer)
-        stream.close()
-
-        return fromJson(String(buffer), T::class.java)
-
-    } catch (e: FileNotFoundException) {
-        Logger.e("Could not find the file. $root/$filename")
-        return fromJson("", T::class.java)
-    } catch (e: JSONException) {
-        Logger.e("Invalid JSON within the file. $root/$filename")
-        return null
-    } catch (e: IOException) {
-        Logger.e(e, "Could not create the database.")
-        return null
+        val transaction = replace(frameId, fragment)
+        if (backStack) {
+            transaction.addToBackStack(null)
+        }
+        return@inTransaction transaction
     }
 }
 
-fun Date.now(): Date {
-//    if (BuildConfig.DEBUG) {
-//        return Calendar.getInstance().now().time
-//    }
+fun FirebaseConference.toConference() = Conference(
+        id,
+        name,
+        description,
+        code,
+        maps
+)
 
-    return this
-}
+fun FirebaseType.toType() = Type(
+        id,
+        name,
+        conference,
+        color
+)
 
-fun Calendar.now(): Calendar {
-//    if (BuildConfig.DEBUG) {
-//        val today = Date()
-//        today.time = Constants.DEBUG_FORCE_TIME_DATE
-//
-//        val calendar = Calendar.getInstance()
-//        calendar.time = today
-//
-//        this.set(Calendar.YEAR, calendar.get(Calendar.YEAR))
-//        this.set(Calendar.DAY_OF_YEAR, calendar.get(Calendar.DAY_OF_YEAR))
-//
-//    } else {
-    this.time = Date()
-//    }
+fun FirebaseLocation.toLocation() = Location(
+        name,
+        conference
+)
 
-    return this
-}
+fun FirebaseEvent.toEvent() = Event(
+        id,
+        conference,
+        title,
+        description,
+        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(begin),
+        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(end),
+        link,
+        updated,
+        speakers.map { it.toSpeaker() },
+        type.toType(),
+        location.toLocation()
+)
+
+fun FirebaseSpeaker.toSpeaker() = Speaker(
+        name,
+        description,
+        link,
+        twitter,
+        title
+)
+
+fun FirebaseVendor.toVendor() = Vendor(
+        id,
+        name,
+        description,
+        link,
+        partner
+)

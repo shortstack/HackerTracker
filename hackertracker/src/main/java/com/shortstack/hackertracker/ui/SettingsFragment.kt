@@ -2,26 +2,26 @@ package com.shortstack.hackertracker.ui
 
 import android.content.SharedPreferences
 import android.os.Bundle
-import androidx.preference.PreferenceFragmentCompat
 import android.view.View
+import androidx.preference.PreferenceFragmentCompat
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
 
 class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedPreferenceChangeListener {
 
-    @Inject
-    lateinit var analytics: AnalyticsController
+    companion object {
+        fun newInstance() = SettingsFragment()
+    }
 
-    @Inject
-    lateinit var database: DatabaseManager
+    private val database: DatabaseManager by inject()
+    private val analytics: AnalyticsController by inject()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        App.application.component.inject(this)
 
         if (BuildConfig.DEBUG) {
             findPreference("dev_clear").setOnPreferenceClickListener {
@@ -42,12 +42,6 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
             "user_analytics" -> AnalyticsController.SETTINGS_ANALYTICS
             "user_allow_push_notifications" -> AnalyticsController.SETTINGS_NOTIFICATIONS
             "user_show_expired_events" -> AnalyticsController.SETTINGS_EXPIRED_EVENTS
-
-            "sync_interval" -> {
-                App.application.scheduleSyncTask()
-                return
-            }
-
         // We're not tracking these events, ignore.
             else -> return
         }
@@ -64,11 +58,5 @@ class SettingsFragment : PreferenceFragmentCompat(), SharedPreferences.OnSharedP
     override fun onPause() {
         preferenceScreen.sharedPreferences.unregisterOnSharedPreferenceChangeListener(this)
         super.onPause()
-    }
-
-    companion object {
-
-        fun newInstance() = SettingsFragment()
-
     }
 }

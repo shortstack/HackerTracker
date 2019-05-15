@@ -13,36 +13,23 @@ import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import androidx.work.Data
-import androidx.work.OneTimeWorkRequest
-import androidx.work.WorkManager
 import com.firebase.jobdispatcher.FirebaseJobDispatcher
-import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.Conference
-import com.shortstack.hackertracker.models.DatabaseEvent
-import com.shortstack.hackertracker.models.Event
-import com.shortstack.hackertracker.network.task.ReminderWorker
+import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import java.util.concurrent.TimeUnit
-import javax.inject.Inject
+import org.koin.standalone.KoinComponent
+import org.koin.standalone.inject
 
-class NotificationHelper @Inject constructor(private val context: Context) {
+class NotificationHelper(private val context: Context) : KoinComponent {
 
-    @Inject
-    lateinit var dispatcher: FirebaseJobDispatcher
+    private val dispatcher: FirebaseJobDispatcher by inject()
 
-    @Inject
-    lateinit var database: DatabaseManager
+    private val database: DatabaseManager by inject()
 
     private val manager = NotificationManagerCompat.from(context)
 
     init {
-        App.application.component.inject(this)
-
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
@@ -57,24 +44,24 @@ class NotificationHelper @Inject constructor(private val context: Context) {
         }
     }
 
-    private fun getStartingSoonNotification(item: DatabaseEvent): Notification {
+    private fun getStartingSoonNotification(item: Event): Notification {
         val builder = notificationBuilder
 
-        builder.setContentTitle(item.event.title)
-        builder.setContentText(String.format(context.getString(R.string.notification_text), item.location.first().name))
+        builder.setContentTitle(item.title)
+        builder.setContentText(String.format(context.getString(R.string.notification_text), item.location.name))
 
-        setItemPendingIntent(builder, item.event)
+        setItemPendingIntent(builder, item)
 
         return builder.build()
     }
 
-    private fun getUpdatedEventNotification(item: DatabaseEvent): Notification {
+    private fun getUpdatedEventNotification(item: Event): Notification {
         val builder = notificationBuilder
 
-        builder.setContentTitle(item.event.title)
+        builder.setContentTitle(item.title)
         builder.setContentText(context.getString(R.string.notification_updated))
 
-        setItemPendingIntent(builder, item.event)
+        setItemPendingIntent(builder, item)
 
         return builder.build()
     }
@@ -99,50 +86,6 @@ class NotificationHelper @Inject constructor(private val context: Context) {
             return builder
         }
 
-    fun scheduleItemNotification(item: Event) {
-
-        WorkManager.getInstance()?.cancelAllWorkByTag(ReminderWorker.TAG + item.id)
-
-        val window: Long = (item.notificationTime - 1200).toLong()
-
-        Logger.d("Scheduling event notification. In $window seconds, " + (window / 60) + " mins, " + (window / 3600) + " hrs.")
-
-        if (window <= 0) {
-            return
-        }
-
-        val data = Data.Builder()
-                .putInt(ReminderWorker.NOTIFICATION_ID, item.id).build()
-
-        val request = OneTimeWorkRequest.Builder(ReminderWorker::class.java)
-                .setInitialDelay(window, TimeUnit.SECONDS)
-                .addTag(ReminderWorker.TAG + item.id)
-                .setInputData(data)
-                .build()
-
-        WorkManager.getInstance()?.enqueue(request)
-    }
-
-    fun notifyUpdates(conference: Conference, newCon: Boolean, rowsUpdated: Int) {
-        val builder = notificationBuilder
-
-        when {
-            newCon -> {
-                builder.setContentTitle(conference.name)
-                builder.setContentText("A new conference has been added")
-            }
-            rowsUpdated > 0 -> {
-                builder.setContentTitle("Schedule Updated")
-                builder.setContentText(rowsUpdated.toString() + " events have been updated")
-            }
-            else -> return
-        }
-
-        setItemPendingIntent(builder)
-
-        notify(conference.id, builder.build())
-    }
-
     private fun setItemPendingIntent(builder: NotificationCompat.Builder, item: Event? = null) {
         val intent = Intent(context, MainActivity::class.java)
 
@@ -162,20 +105,17 @@ class NotificationHelper @Inject constructor(private val context: Context) {
         manager.notify(id, notification)
     }
 
-    fun notifyStartingSoon(event: DatabaseEvent) {
-        manager.notify(event.event.id, getStartingSoonNotification(event))
+    fun notifyStartingSoon(event: Event) {
+        manager.notify(event.id, getStartingSoonNotification(event))
     }
 
-    fun updatedBookmarks(updatedBookmarks: List<DatabaseEvent>) {
+    fun updatedBookmarks(updatedBookmarks: List<Event>) {
         updatedBookmarks.forEach {
-            notify(it.event.id, getUpdatedEventNotification(it))
+            notify(it.id, getUpdatedEventNotification(it))
         }
     }
 
     companion object {
-
-        private const val NOTIFICATION_SCHEDULE_UPDATE = -1
-
         private const val CHANNEL_UPDATES = "updates_channel"
 
     }

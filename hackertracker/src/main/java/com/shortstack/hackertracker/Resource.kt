@@ -1,8 +1,5 @@
 package com.shortstack.hackertracker
 
-/**
- * Created by Chris on 6/17/2018.
- */
 data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
 
     companion object {

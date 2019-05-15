@@ -1,53 +1,69 @@
 package com.shortstack.hackertracker.ui.schedule.list
 
+import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
-import com.pedrogomez.renderers.RendererAdapter
-import com.shortstack.hackertracker.App
-import com.shortstack.hackertracker.Resource
+import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.Status
-import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.DatabaseEvent
 import com.shortstack.hackertracker.models.Day
-import com.shortstack.hackertracker.models.Event
 import com.shortstack.hackertracker.models.Time
-import com.shortstack.hackertracker.utils.SharedPreferencesUtil
-import java.util.Comparator
-import javax.inject.Inject
-import kotlin.collections.ArrayList
+import com.shortstack.hackertracker.models.local.Event
+import com.shortstack.hackertracker.ui.schedule.DayViewHolder
+import com.shortstack.hackertracker.ui.schedule.EventViewHolder
+import com.shortstack.hackertracker.ui.schedule.TimeViewHolder
 
-class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) {
+class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    @Inject
-    lateinit var database: DatabaseManager
+    companion object {
+        private const val EVENT = 0
+        private const val DAY = 1
+        private const val TIME = 2
+    }
 
-    @Inject
-    lateinit var storage: SharedPreferencesUtil
+    private val collection = ArrayList<Any>()
 
     var state: Status = Status.NOT_INITIALIZED
 
-    init {
-        App.application.component.inject(this)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        return when (viewType) {
+            EVENT -> EventViewHolder.inflate(parent)
+            DAY -> DayViewHolder.inflate(parent)
+            TIME -> TimeViewHolder.inflate(parent)
+            else -> throw IllegalStateException("Unknown viewType $viewType.")
+        }
     }
 
-    private fun getFormattedElements(elements: List<DatabaseEvent>): ArrayList<Any> {
+    override fun getItemCount() = collection.size
+
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        val item = collection[position]
+
+        when (holder) {
+            is EventViewHolder -> holder.render(item as Event)
+            is DayViewHolder -> holder.render(item as Day)
+            is TimeViewHolder -> holder.render(item as Time)
+        }
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return when (collection[position]) {
+            is Event -> EVENT
+            is Day -> DAY
+            is Time -> TIME
+            else -> throw IllegalStateException("Unknown viewType ${collection[position].javaClass}")
+        }
+    }
+
+    private fun getFormattedElements(elements: List<Event>): ArrayList<Any> {
         val result = ArrayList<Any>()
+        
+        elements.groupBy { it.date }.toSortedMap().forEach {
+            result.add(Day(it.key))
 
-        val previous = collection.filterIsInstance<Event>().lastOrNull()
-        val prevDay = previous?.date
-        val prevTime = previous?.begin
-
-        elements.groupBy { it.event.date }.forEach {
-            if (prevDay != it.key) {
-                result.add(Day(it.key))
-            }
-
-            it.value.groupBy { it.event.begin }.forEach {
-                if (prevTime != it.key) {
-                    result.add(Time(it.key))
-                }
+            it.value.groupBy { it.start }.toSortedMap().forEach {
+                result.add(Time(it.key))
 
                 if (it.value.isNotEmpty()) {
-                    val group = it.value.sortedWith(compareBy({ it.type.firstOrNull()?.name }, { it.location.firstOrNull()?.name }))
+                    val group = it.value.sortedWith(compareBy({ it.type.name }, { it.location.name }))
                     result.addAll(group)
                 }
             }
@@ -57,22 +73,19 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
     }
 
     fun notifyTimeChanged() {
-        if (storage.showExpiredEvents)
-            return
-
         if (collection.isEmpty())
             return
 
-        val collection = collection.toList()
+        val list = collection.toList()
 
-        collection.forEach {
-            if (it is DatabaseEvent && it.event.hasFinished) {
+        list.forEach {
+            if (it is Event && it.hasFinished) {
                 removeAndNotify(it)
             }
         }
 
 
-        if (collection.size != this.collection.size) {
+        if (list.size != this.collection.size) {
 
             for (i in this.collection.size - 1 downTo 1) {
                 val any = this.collection[i]
@@ -85,28 +98,39 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
             }
 
             // If no events and only headers remain.
-            if (this.collection.size == 2) {
-                clearAndNotify()
+            if (collection.size == 2) {
+                val size = list.size
+                collection.clear()
+                notifyItemRangeRemoved(0, size)
             }
         }
     }
 
-    fun setSchedule(list: List<DatabaseEvent>?) {
+    private fun removeAndNotify(item: Any) {
+        val index = collection.indexOf(item)
+        if (index != -1) {
+            collection.removeAt(index)
+            notifyItemRemoved(index)
+        }
+    }
+
+    fun setSchedule(list: List<Event>?) {
         if (list == null) {
-            clearAndNotify()
+            val size = collection.size
+            collection.clear()
+            notifyItemRangeRemoved(0, size)
             return
         }
 
         val elements = getFormattedElements(list)
-
 
         val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                 val left = collection[oldItemPosition]
                 val right = elements[newItemPosition]
 
-                if (left is DatabaseEvent && right is DatabaseEvent) {
-                    return left.event.id == right.event.id
+                if (left is Event && right is Event) {
+                    return left.id == right.id
                 } else if (left is Day && right is Day) {
                     return left.time == right.time
                 } else if (left is Time && right is Time) {
@@ -123,8 +147,9 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
                 val left = collection[oldItemPosition]
                 val right = elements[newItemPosition]
 
-                if (left is DatabaseEvent && right is DatabaseEvent) {
-                    return left.event.updatedAt == right.event.updatedAt
+                if (left is Event && right is Event) {
+                    return left.updated == right.updated && left.isBookmarked == right.isBookmarked
+                            && left.title == right.title && left.location.name == right.location.name
                 } else if (left is Day && right is Day) {
                     return left.time == right.time
                 } else if (left is Time && right is Time) {
@@ -142,4 +167,8 @@ class ScheduleAdapter : RendererAdapter<Any>(ScheduleBuilder().rendererBuilder) 
     }
 
     fun isEmpty() = state == Status.SUCCESS && collection.isEmpty()
+    fun clearAndNotify() {
+        collection.clear()
+        notifyDataSetChanged()
+    }
 }

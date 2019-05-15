@@ -4,12 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.TextView
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.view_empty.view.*
 
-/**
- * Created by Chris on 3/31/2018.
- */
 class EmptyView(context: Context?, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
     init {
@@ -38,24 +36,57 @@ class EmptyView(context: Context?, attrs: AttributeSet?) : FrameLayout(context, 
 
 
     fun showDefault() {
-        title.text = null
-        message.text = null
+        show()
+
+        setTitle(null)
+        setMessage(null)
     }
 
     fun showNoResults(query: String? = null) {
+        show()
+
         if (query != null) {
-            title.text = context.getString(R.string.no_results_for, query)
-            message.text = context.getString(R.string.no_results_message)
+            setTitle(context.getString(R.string.no_results_for, query))
+            setMessage(context.getString(R.string.no_results_message))
         } else {
-            title.text = null
-            message.text = null
+            setTitle(null)
+            setMessage(null)
         }
     }
 
     fun showError(msg: String?) {
-        title.text = context.getString(R.string.error_title)
-        message.text = msg
+        show()
+
+        setTitle(context.getString(R.string.error_title))
+        setMessage(msg)
     }
 
+    fun hide() {
+        visibility = View.GONE
+    }
+
+    fun show() {
+        visibility = View.VISIBLE
+    }
+
+    private fun setTitle(text: String?) {
+        setText(title, text)
+    }
+
+    private fun setMessage(text: String?) {
+        setText(message, text)
+    }
+
+    private fun setText(view: TextView, text: String?) {
+        view.apply {
+            this.text = text
+
+            visibility = if (text?.isNotBlank() == true) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+        }
+    }
 
 }

@@ -3,6 +3,7 @@
     package="com.shortstack.hackertracker"
     android:installLocation="auto">
 
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
@@ -39,7 +40,30 @@
 
         <meta-data
             android:name="io.fabric.ApiKey"
-            android:value="3439e34f4fcc9d7eabf24f7ce529cd7415acc49d" />
+            android:value="8905e29d4c9f8eb7baf966d4a30d17bbaadd563e" />
+
+        <service
+            android:name=".MyFirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
+     See README(https://goo.gl/l4GJaQ) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/skull" />
+        <!-- Set color used with incoming notification messages. This is used when no color is set for the incoming
+             notification message. See README(https://goo.gl/6BKBk7) for more. -->
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
+
+        <!--<meta-data-->
+        <!--android:name="com.google.firebase.messaging.default_notification_channel_id"-->
+        <!--android:value="@string/default_notification_channel_id" />-->
 
     </application>
 

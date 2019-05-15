@@ -12,21 +12,4 @@
         <item>#50d7e8</item>
     </string-array>
 
-    <string-array name="sync_intervals">
-        <item>0</item>
-        <item>3</item>
-        <item>6</item>
-        <item>12</item>
-        <item>24</item>
-    </string-array>
-
-    <string-array name="sync_intervals_display">
-        <item>Never</item>
-        <item>Every 3 hours</item>
-        <item>Every 6 hours</item>
-        <item>Every 12 hours</item>
-        <item>Once a day</item>
-    </string-array>
-
-
 </resources>
