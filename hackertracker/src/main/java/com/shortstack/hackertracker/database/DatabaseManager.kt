@@ -50,9 +50,8 @@ class DatabaseManager {
 
 
     val conference = MutableLiveData<Conference>()
-    lateinit var user: FirebaseUser
 
-
+    private var user: FirebaseUser? = null
 
     init {
         if (!BuildConfig.DEBUG) {
@@ -71,12 +70,12 @@ class DatabaseManager {
             firestore.collection(CONFERENCES)
                     .document(CURRENT_CON)
                     .addSnapshotListener { snapshot, exception ->
-                        if( exception == null ) {
+                        if (exception == null) {
                             val cack = snapshot?.toObject(FirebaseConference::class.java)?.toConference()
                             conference.postValue(cack)
 
-                            if( cack != null )
-                            getFCMToken(cack)
+                            if (cack != null)
+                                getFCMToken(cack)
                         }
                     }
         }
@@ -135,28 +134,31 @@ class DatabaseManager {
         firestore.collection(CONFERENCES)
                 .document(CURRENT_CON)
                 .collection(EVENTS)
-                .addSnapshotListener{ snapshot, exception ->
-                    if(exception == null) {
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
                         val events = snapshot?.toObjects(FirebaseEvent::class.java)
                         val recent = events?.map { it.toEvent() }
                         mutableLiveData.postValue(recent)
 
-                        firestore.collection(CONFERENCES)
-                                .document(CURRENT_CON)
-                                .collection(USERS)
-                                .document(user.uid)
-                                .collection(BOOKMARKS)
-                                .addSnapshotListener{ snapshot, exception ->
-                                    if(exception == null) {
-                                        val events = snapshot?.toObjects(FirebaseBookmark::class.java)
+                        val id = user?.uid
+                        if (id != null) {
+                            firestore.collection(CONFERENCES)
+                                    .document(CURRENT_CON)
+                                    .collection(USERS)
+                                    .document(id)
+                                    .collection(BOOKMARKS)
+                                    .addSnapshotListener { snapshot, exception ->
+                                        if (exception == null) {
+                                            val events = snapshot?.toObjects(FirebaseBookmark::class.java)
 
-                                        events?.forEach {  bookmark ->
-                                            recent?.find { it.id.toString() == bookmark.id }?.isBookmarked = bookmark.value
+                                            events?.forEach { bookmark ->
+                                                recent?.find { it.id.toString() == bookmark.id }?.isBookmarked = bookmark.value
+                                            }
+
+                                            mutableLiveData.postValue(recent)
                                         }
-
-                                        mutableLiveData.postValue(recent)
                                     }
-                                }
+                        }
                     }
                 }
 
@@ -169,27 +171,31 @@ class DatabaseManager {
         firestore.collection(CONFERENCES)
                 .document(CURRENT_CON)
                 .collection(TYPES)
-                .addSnapshotListener{ snapshot, exception ->
-                    if(exception == null) {
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
                         val types = snapshot?.toObjects(FirebaseType::class.java)?.map { it.toType() }
                         mutableLiveData.postValue(types)
 
-                        firestore.collection(CONFERENCES)
-                                .document(CURRENT_CON)
-                                .collection(USERS)
-                                .document(user.uid)
-                                .collection(TYPES)
-                                .addSnapshotListener{ snapshot, exception ->
-                                    if(exception == null) {
-                                        val bookmarks = snapshot?.toObjects(FirebaseBookmark::class.java)
+                        val id = user?.uid
+                        if (id != null) {
+                            firestore.collection(CONFERENCES)
+                                    .document(CURRENT_CON)
+                                    .collection(USERS)
+                                    .document(id)
+                                    .collection(TYPES)
+                                    .addSnapshotListener { snapshot, exception ->
+                                        if (exception == null) {
+                                            val bookmarks = snapshot?.toObjects(FirebaseBookmark::class.java)
 
-                                        types?.forEach { type ->
-                                            type.isSelected = bookmarks?.find { type.id.toString() == it.id }?.value ?: false
+                                            types?.forEach { type ->
+                                                type.isSelected = bookmarks?.find { type.id.toString() == it.id }?.value
+                                                        ?: false
+                                            }
+
+                                            mutableLiveData.postValue(types)
                                         }
-
-                                        mutableLiveData.postValue(types)
                                     }
-                                }
+                        }
                     }
                 }
 
@@ -235,7 +241,7 @@ class DatabaseManager {
                 .document(CURRENT_CON)
                 .collection(LOCATIONS)
                 .addSnapshotListener { snapshot, exception ->
-                    if(exception == null) {
+                    if (exception == null) {
                         val list = snapshot?.toObjects(FirebaseLocation::class.java)?.map { it.toLocation() }
                         mutableLiveData.postValue(list)
                     }
@@ -291,10 +297,12 @@ class DatabaseManager {
             WorkManager.getInstance()?.cancelAllWorkByTag(tag)
         }
 
+        val id = user?.uid ?: return
+
         val document = firestore.collection(CONFERENCES)
                 .document(event.conference)
                 .collection(USERS)
-                .document(user.uid)
+                .document(id)
                 .collection(BOOKMARKS)
                 .document(event.id.toString())
 
@@ -307,10 +315,12 @@ class DatabaseManager {
     }
 
     fun updateTypeIsSelected(type: Type) {
+        val id = user?.uid ?: return
+
         val document = firestore.collection(CONFERENCES)
                 .document(type.conference)
                 .collection(USERS)
-                .document(user.uid)
+                .document(id)
                 .collection(TYPES)
                 .document(type.id.toString())
 
@@ -323,7 +333,9 @@ class DatabaseManager {
     }
 
     private fun updateFirebaseMessagingToken(conference: Conference?, token: String?) {
-        if (conference == null || token == null) {
+        val id = user?.uid
+
+        if (conference == null || token == null || id == null) {
             Log.e("TAG", "Null, cannot update token.")
             return
         }
@@ -331,7 +343,7 @@ class DatabaseManager {
         val document = firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(USERS)
-                .document(user.uid)
+                .document(id)
 
 
         document.set(mapOf("token" to token))
