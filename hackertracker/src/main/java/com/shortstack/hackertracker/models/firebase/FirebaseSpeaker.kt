@@ -6,6 +6,7 @@ import kotlin.math.absoluteValue
 
 @Parcelize
 data class FirebaseSpeaker(
+        val id: Int = -1,
         val name: String = "",
         val description: String = "",
         val link: String = "",

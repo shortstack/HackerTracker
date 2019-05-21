@@ -6,13 +6,10 @@ import kotlin.math.absoluteValue
 
 @Parcelize
 data class Speaker(
+        val id: Int,
         val name: String,
         val description: String,
         val link: String,
         val twitter: String,
         val title: String
-) : Parcelable {
-
-    val id: Int
-        get() = hashCode().absoluteValue
-}
+) : Parcelable

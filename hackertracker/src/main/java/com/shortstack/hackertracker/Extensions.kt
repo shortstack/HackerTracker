@@ -129,6 +129,7 @@ fun FirebaseEvent.toEvent() = Event(
 )
 
 fun FirebaseSpeaker.toSpeaker() = Speaker(
+        id,
         name,
         description,
         link,

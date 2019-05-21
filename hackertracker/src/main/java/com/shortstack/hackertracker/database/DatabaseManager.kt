@@ -388,11 +388,21 @@ class DatabaseManager {
         return mutableLiveData
     }
 
-    fun getEventsForSpeaker(speaker: Speaker): Single<List<Event>> {
-        return Single.create<List<Event>> { emitter ->
-            TODO()
-//            emitter.onSuccess(events.value?.filter { it.speakers.contains(speaker) } ?: emptyList())
-        }
+    fun getEventsForSpeaker(speaker: Speaker): LiveData<List<Event>> {
+        val mutableLiveData = MutableLiveData<List<Event>>()
+
+        firestore.collection(CONFERENCES)
+                .document(CURRENT_CON)
+                .collection(EVENTS)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val events = snapshot?.toObjects(FirebaseEvent::class.java)
+                        val filtered = events?.filter { it.speakers.firstOrNull { it.id == speaker.id } != null }?.map { it.toEvent() }
+                        mutableLiveData.postValue(filtered)
+                    }
+                }
+
+        return mutableLiveData
     }
 
 

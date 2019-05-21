@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.analytics.AnalyticsController
 import com.shortstack.hackertracker.database.DatabaseManager
@@ -99,16 +100,14 @@ class SpeakerFragment : Fragment() {
 
             app_bar.setBackgroundColor(color)
 
+            database.getEventsForSpeaker(it).observe(this, Observer { list ->
 
-            database.getEventsForSpeaker(it)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { list ->
+                events_header.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
 
-                        list.forEach {
-                            events.addView(EventView(context, it))
-                        }
-                    }
+                list.forEach {
+                    events.addView(EventView(context, it))
+                }
+            })
 
             analytics.onSpeakerEvent(AnalyticsController.SPEAKER_VIEW, it)
         }
