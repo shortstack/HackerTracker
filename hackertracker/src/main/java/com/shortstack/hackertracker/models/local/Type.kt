@@ -10,4 +10,7 @@ data class Type(
         val conference: String,
         val color: String,
         var isSelected: Boolean = false
-) : Parcelable
+) : Parcelable {
+    val isBookmark: Boolean
+        get() = name.contains("bookmark", true)
+}

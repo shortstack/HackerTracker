@@ -43,10 +43,26 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
         if (types.isEmpty())
             return events
 
-        val filter = types.filter { it.isSelected }
-        if (filter.isEmpty())
+        val requireBookmark = types.firstOrNull{ it.isBookmark }?.isSelected ?: false
+        val filter = types.filter { !it.isBookmark && it.isSelected }
+        if (!requireBookmark && filter.isEmpty())
             return events
 
-        return events.filter { event -> filter.find { it.id == event.type.id }?.isSelected == true }
+        if(requireBookmark && filter.isEmpty())
+            return events.filter { it.isBookmarked }
+
+        return events.filter { event -> isShown(event, requireBookmark, filter) }
+    }
+
+    private fun isShown(event: Event, requireBookmark: Boolean, filter: List<Type>): Boolean {
+        val bookmark = if (requireBookmark) {
+            event.isBookmarked
+        } else {
+            true
+        }
+
+
+        return bookmark && filter.find { it.id == event.type.id }?.isSelected == true
+
     }
 }
