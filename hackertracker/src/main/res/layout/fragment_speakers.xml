@@ -62,12 +62,12 @@
 
             <ImageView
                 android:id="@+id/twitter"
+                style="@style/IconButton"
                 android:layout_gravity="end"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="16dp"
                 android:layout_marginRight="16dp"
-                app:srcCompat="@drawable/ic_twitter"
-                style="@style/IconButton" />
+                app:srcCompat="@drawable/ic_twitter" />
 
             <TextView
                 android:id="@+id/description"
@@ -76,16 +76,14 @@
                 android:layout_height="wrap_content" />
 
             <TextView
+                android:id="@+id/events_header"
                 style="@style/SectionHeader"
                 android:text="@string/events" />
 
             <LinearLayout
                 android:id="@+id/events"
                 style="@style/Section"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:paddingEnd="0dp"
-                android:paddingRight="0dp" />
+                android:padding="0dp" />
 
 
             <include layout="@layout/row_footer" />

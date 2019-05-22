@@ -17,8 +17,6 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
 
     companion object {
         private const val SPAN_COUNT = 2
-        private const val TYPE_WORKSHOP = 3
-        private const val TYPE_CONTESTS = 7
     }
 
     private val database: DatabaseManager by inject()
@@ -33,12 +31,13 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
             val collection = ArrayList<Any>()
 
             // TODO: Reimplement a 'show bookmarked events' type.
-//            types.find { it.isBookmark }?.let {
-//                collection.add(it)
-                collection.add(context.getString(R.string.types))
-//            }
+            types.find { it.isBookmark }?.let {
+                collection.add(it)
+            }
 
-            collection.addAll(types.filter {  it.id != TYPE_CONTESTS && it.id != TYPE_WORKSHOP })
+            collection.add(context.getString(R.string.types))
+
+            collection.addAll(types.filter { !it.isBookmark })
 
             val adapter = FilterAdapter(collection)
 

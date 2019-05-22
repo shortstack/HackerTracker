@@ -38,21 +38,24 @@ class DatabaseManager {
         private const val FAQS = "faqs"
         private const val VENDORS = "vendors"
         private const val SPEAKERS = "speakers"
+        private const val LOCATIONS = "locations"
 
+        fun getNextConference(conferences: List<Conference>): Conference? {
+            return conferences.sortedBy { it.startDate }.firstOrNull { !it.hasFinished } ?: conferences.lastOrNull()
+        }
     }
+
+    private val code
+        get() = conference.value?.code ?: "LAYERONE2019"
 
     private val firestore = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
     private val auth = FirebaseAuth.getInstance()
 
+
     val conference = MutableLiveData<Conference>()
-    val types = MutableLiveData<List<Type>>()
-    val events = MutableLiveData<List<Event>>()
-    val speakers = MutableLiveData<List<Speaker>>()
-    val locations = MutableLiveData<List<Location>>()
 
-
-    lateinit var user: FirebaseUser
+    private var user: FirebaseUser? = null
 
     init {
         if (!BuildConfig.DEBUG) {
@@ -68,11 +71,23 @@ class DatabaseManager {
                 user = it.result?.user ?: return@addOnCompleteListener
             }
 
-            InitLoader(this@DatabaseManager) {
-                getFCMToken(it)
-            }
+            firestore.collection(CONFERENCES)
+                    .get()
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            val conferences = it.result?.toObjects(FirebaseConference::class.java)?.map { it.toConference() }?.sortedBy { it.startDate } ?: emptyList()
+
+                            val con = getNextConference(conferences)
+                            conference.postValue(con)
+
+                            if (con != null)
+                                getFCMToken(con)
+                        }
+                    }
         }
     }
+
+
 
     private fun getFCMToken(conference: Conference) {
         FirebaseInstanceId.getInstance().instanceId
@@ -102,7 +117,7 @@ class DatabaseManager {
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         val selected = it.result?.toObjects(FirebaseConference::class.java)?.firstOrNull()?.toConference()
-                        InitLoader(this, selected)
+                        conference.postValue(selected)
                     }
                 }
     }
@@ -120,6 +135,81 @@ class DatabaseManager {
 
         return mutableLiveData
     }
+
+    fun getSchedule(): MutableLiveData<List<Event>> {
+        val mutableLiveData = MutableLiveData<List<Event>>()
+
+        firestore.collection(CONFERENCES)
+                .document(code)
+                .collection(EVENTS)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val events = snapshot?.toObjects(FirebaseEvent::class.java)
+                        val recent = events?.map { it.toEvent() }
+                        mutableLiveData.postValue(recent)
+
+                        val id = user?.uid
+                        if (id != null) {
+                            firestore.collection(CONFERENCES)
+                                    .document(code)
+                                    .collection(USERS)
+                                    .document(id)
+                                    .collection(BOOKMARKS)
+                                    .addSnapshotListener { snapshot, exception ->
+                                        if (exception == null) {
+                                            val events = snapshot?.toObjects(FirebaseBookmark::class.java)
+
+                                            events?.forEach { bookmark ->
+                                                recent?.find { it.id.toString() == bookmark.id }?.isBookmarked = bookmark.value
+                                            }
+
+                                            mutableLiveData.postValue(recent)
+                                        }
+                                    }
+                        }
+                    }
+                }
+
+        return mutableLiveData
+    }
+
+    fun getScheduleTypes(): MutableLiveData<List<Type>> {
+        val mutableLiveData = MutableLiveData<List<Type>>()
+
+        firestore.collection(CONFERENCES)
+                .document(code)
+                .collection(TYPES)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val types = snapshot?.toObjects(FirebaseType::class.java)?.map { it.toType() }
+                        mutableLiveData.postValue(types)
+
+                        val id = user?.uid
+                        if (id != null) {
+                            firestore.collection(CONFERENCES)
+                                    .document(code)
+                                    .collection(USERS)
+                                    .document(id)
+                                    .collection(TYPES)
+                                    .addSnapshotListener { snapshot, exception ->
+                                        if (exception == null) {
+                                            val bookmarks = snapshot?.toObjects(FirebaseBookmark::class.java)
+
+                                            types?.forEach { type ->
+                                                type.isSelected = bookmarks?.find { type.id.toString() == it.id }?.value
+                                                        ?: false
+                                            }
+
+                                            mutableLiveData.postValue(types)
+                                        }
+                                    }
+                        }
+                    }
+                }
+
+        return mutableLiveData
+    }
+
 
     fun getRecent(conference: Conference): LiveData<List<Event>> {
         val mutableLiveData = MutableLiveData<List<Event>>()
@@ -152,6 +242,22 @@ class DatabaseManager {
         return mutableLiveData
     }
 
+    fun getLocations(): MutableLiveData<List<Location>> {
+        val mutableLiveData = MutableLiveData<List<Location>>()
+
+        firestore.collection(CONFERENCES)
+                .document(code)
+                .collection(LOCATIONS)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val list = snapshot?.toObjects(FirebaseLocation::class.java)?.map { it.toLocation() }
+                        mutableLiveData.postValue(list)
+                    }
+                }
+
+        return mutableLiveData
+    }
+
     fun getVendors(conference: Conference): LiveData<List<Vendor>> {
         val mutableLiveData = MutableLiveData<List<Vendor>>()
 
@@ -179,25 +285,6 @@ class DatabaseManager {
         }
     }
 
-    fun findEvents(text: String): List<Event> {
-        return events.value?.filter { it.title.contains(text, true) } ?: emptyList()
-    }
-
-    fun findLocation(text: String): List<Location> {
-        return locations.value?.filter { it.name.contains(text, true) } ?: emptyList()
-    }
-
-    fun findSpeaker(text: String): List<Speaker> {
-        return speakers.value?.filter { it.name.contains(text, true) } ?: emptyList()
-    }
-
-
-    fun getTypeForEvent(event: Event?): Type? {
-        if (event == null) return null
-
-        return types.value?.firstOrNull { it.id == event.type.id }
-    }
-
     fun updateBookmark(event: Event) {
         val tag = "reminder_" + event.id
 
@@ -218,10 +305,12 @@ class DatabaseManager {
             WorkManager.getInstance()?.cancelAllWorkByTag(tag)
         }
 
+        val id = user?.uid ?: return
+
         val document = firestore.collection(CONFERENCES)
                 .document(event.conference)
                 .collection(USERS)
-                .document(user.uid)
+                .document(id)
                 .collection(BOOKMARKS)
                 .document(event.id.toString())
 
@@ -234,15 +323,12 @@ class DatabaseManager {
     }
 
     fun updateTypeIsSelected(type: Type) {
-        val value = types.value
-        value?.find { it.id == type.id }?.isSelected = type.isSelected
-        types.postValue(value)
-
+        val id = user?.uid ?: return
 
         val document = firestore.collection(CONFERENCES)
                 .document(type.conference)
                 .collection(USERS)
-                .document(user.uid)
+                .document(id)
                 .collection(TYPES)
                 .document(type.id.toString())
 
@@ -255,7 +341,9 @@ class DatabaseManager {
     }
 
     private fun updateFirebaseMessagingToken(conference: Conference?, token: String?) {
-        if (conference == null || token == null) {
+        val id = user?.uid
+
+        if (conference == null || token == null || id == null) {
             Log.e("TAG", "Null, cannot update token.")
             return
         }
@@ -263,7 +351,7 @@ class DatabaseManager {
         val document = firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(USERS)
-                .document(user.uid)
+                .document(id)
 
 
         document.set(mapOf("token" to token))
@@ -273,8 +361,21 @@ class DatabaseManager {
 
     }
 
-    fun getSpeakers(event: Event): List<Speaker> {
-        return event.speakers
+    fun getSpeakers(): LiveData<List<Speaker>> {
+        val mutableLiveData = MutableLiveData<List<Speaker>>()
+
+        firestore.collection(CONFERENCES)
+                .document(code)
+                .collection(SPEAKERS)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val speakers = snapshot?.toObjects(FirebaseSpeaker::class.java)
+                                ?: emptyList()
+                        mutableLiveData.postValue(speakers.map { it.toSpeaker() })
+                    }
+                }
+
+        return mutableLiveData
     }
 
 
@@ -295,10 +396,21 @@ class DatabaseManager {
         return mutableLiveData
     }
 
-    fun getEventsForSpeaker(speaker: Speaker): Single<List<Event>> {
-        return Single.create<List<Event>> { emitter ->
-            emitter.onSuccess(events.value?.filter { it.speakers.contains(speaker) } ?: emptyList())
-        }
+    fun getEventsForSpeaker(speaker: Speaker): LiveData<List<Event>> {
+        val mutableLiveData = MutableLiveData<List<Event>>()
+
+        firestore.collection(CONFERENCES)
+                .document(code)
+                .collection(EVENTS)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val events = snapshot?.toObjects(FirebaseEvent::class.java)
+                        val filtered = events?.filter { it.speakers.firstOrNull { it.id == speaker.id } != null }?.map { it.toEvent() }
+                        mutableLiveData.postValue(filtered)
+                    }
+                }
+
+        return mutableLiveData
     }
 
 
@@ -363,8 +475,8 @@ class DatabaseManager {
                 // Handle any errors
             }
         }
-
         return mutableLiveData
     }
+
 
 }

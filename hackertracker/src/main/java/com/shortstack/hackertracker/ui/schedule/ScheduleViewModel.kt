@@ -18,18 +18,21 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
     val schedule: LiveData<Resource<List<Event>>>
         get() = contents
 
+    private val events = database.getSchedule()
+    private val types = database.getScheduleTypes()
+
     private val contents = Transformations.switchMap(database.conference) { id ->
         val result = MediatorLiveData<Resource<List<Event>>>()
 
         result.value = Resource.loading(null)
 
-        result.addSource(database.events) {
-            val types = database.types.value ?: emptyList()
+        result.addSource(events) {
+            val types = types.value ?: emptyList()
             result.value = Resource.success(getSchedule(it, types))
         }
 
-        result.addSource(database.types) { types ->
-            val events = database.events.value ?: return@addSource
+        result.addSource(types) { types ->
+            val events = events.value ?: return@addSource
             result.value = Resource.success(getSchedule(events, types))
         }
 
@@ -40,10 +43,26 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
         if (types.isEmpty())
             return events
 
-        val filter = types.filter { it.isSelected }
-        if (filter.isEmpty())
+        val requireBookmark = types.firstOrNull{ it.isBookmark }?.isSelected ?: false
+        val filter = types.filter { !it.isBookmark && it.isSelected }
+        if (!requireBookmark && filter.isEmpty())
             return events
 
-        return events.filter { event -> filter.find { it.id == event.type.id }?.isSelected == true }
+        if(requireBookmark && filter.isEmpty())
+            return events.filter { it.isBookmarked }
+
+        return events.filter { event -> isShown(event, requireBookmark, filter) }
+    }
+
+    private fun isShown(event: Event, requireBookmark: Boolean, filter: List<Type>): Boolean {
+        val bookmark = if (requireBookmark) {
+            event.isBookmarked
+        } else {
+            true
+        }
+
+
+        return bookmark && filter.find { it.id == event.type.id }?.isSelected == true
+
     }
 }

@@ -14,8 +14,8 @@ android {
         applicationId "com.shortstack.hackertracker"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 161
-        versionName "6.0.2"
+        versionCode 165
+        versionName "6.0.5"
 
         vectorDrawables.useSupportLibrary = true
 
@@ -115,11 +115,12 @@ dependencies {
     implementation "com.hendraanggrian.material:collapsingtoolbarlayout-subtitle:1.0.0-beta01"
 
     // Firebase
-    implementation 'com.google.firebase:firebase-database:16.1.0'
-    implementation 'com.google.firebase:firebase-firestore:18.1.0'
-    implementation 'com.google.firebase:firebase-storage:16.1.0'
-    implementation 'com.google.firebase:firebase-auth:16.1.0'
-    implementation 'com.google.firebase:firebase-messaging:17.6.0'
+    implementation 'com.google.firebase:firebase-database:17.0.0'
+    implementation 'com.google.firebase:firebase-firestore:19.0.0'
+    implementation 'com.google.firebase:firebase-storage:17.0.0'
+    implementation 'com.google.firebase:firebase-auth:17.0.0'
+    implementation 'com.google.firebase:firebase-messaging:18.0.0'
+    implementation 'com.google.firebase:firebase-config:17.0.0'
 
 
 
