@@ -41,7 +41,7 @@ class DatabaseManager {
         private const val SPEAKERS = "speakers"
         private const val LOCATIONS = "locations"
 
-        private const val CURRENT_CON = "CACKALACKY2019"
+        private const val CURRENT_CON = "LAYERONE2019"
     }
 
     private val firestore = FirebaseFirestore.getInstance()
