@@ -99,7 +99,9 @@ fun FirebaseConference.toConference() = Conference(
         name,
         description,
         code,
-        maps
+        maps,
+        SimpleDateFormat("yyyy-MM-dd").parse(start_date),
+        SimpleDateFormat("yyyy-MM-dd").parse(end_date)
 )
 
 fun FirebaseType.toType() = Type(

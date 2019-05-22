@@ -2,7 +2,6 @@ package com.shortstack.hackertracker.database
 
 import android.util.Log
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
@@ -41,8 +40,13 @@ class DatabaseManager {
         private const val SPEAKERS = "speakers"
         private const val LOCATIONS = "locations"
 
-        private const val CURRENT_CON = "LAYERONE2019"
+        fun getNextConference(conferences: List<Conference>): Conference? {
+            return conferences.sortedBy { it.startDate }.firstOrNull { !it.hasFinished } ?: conferences.lastOrNull()
+        }
     }
+
+    private val code
+        get() = conference.value?.code ?: "LAYERONE2019"
 
     private val firestore = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
@@ -68,18 +72,22 @@ class DatabaseManager {
             }
 
             firestore.collection(CONFERENCES)
-                    .document(CURRENT_CON)
-                    .addSnapshotListener { snapshot, exception ->
-                        if (exception == null) {
-                            val cack = snapshot?.toObject(FirebaseConference::class.java)?.toConference()
-                            conference.postValue(cack)
+                    .get()
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            val conferences = it.result?.toObjects(FirebaseConference::class.java)?.map { it.toConference() }?.sortedBy { it.startDate } ?: emptyList()
 
-                            if (cack != null)
-                                getFCMToken(cack)
+                            val con = getNextConference(conferences)
+                            conference.postValue(con)
+
+                            if (con != null)
+                                getFCMToken(con)
                         }
                     }
         }
     }
+
+
 
     private fun getFCMToken(conference: Conference) {
         FirebaseInstanceId.getInstance().instanceId
@@ -132,7 +140,7 @@ class DatabaseManager {
         val mutableLiveData = MutableLiveData<List<Event>>()
 
         firestore.collection(CONFERENCES)
-                .document(CURRENT_CON)
+                .document(code)
                 .collection(EVENTS)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
@@ -143,7 +151,7 @@ class DatabaseManager {
                         val id = user?.uid
                         if (id != null) {
                             firestore.collection(CONFERENCES)
-                                    .document(CURRENT_CON)
+                                    .document(code)
                                     .collection(USERS)
                                     .document(id)
                                     .collection(BOOKMARKS)
@@ -169,7 +177,7 @@ class DatabaseManager {
         val mutableLiveData = MutableLiveData<List<Type>>()
 
         firestore.collection(CONFERENCES)
-                .document(CURRENT_CON)
+                .document(code)
                 .collection(TYPES)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
@@ -179,7 +187,7 @@ class DatabaseManager {
                         val id = user?.uid
                         if (id != null) {
                             firestore.collection(CONFERENCES)
-                                    .document(CURRENT_CON)
+                                    .document(code)
                                     .collection(USERS)
                                     .document(id)
                                     .collection(TYPES)
@@ -238,7 +246,7 @@ class DatabaseManager {
         val mutableLiveData = MutableLiveData<List<Location>>()
 
         firestore.collection(CONFERENCES)
-                .document(CURRENT_CON)
+                .document(code)
                 .collection(LOCATIONS)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
@@ -357,7 +365,7 @@ class DatabaseManager {
         val mutableLiveData = MutableLiveData<List<Speaker>>()
 
         firestore.collection(CONFERENCES)
-                .document(CURRENT_CON)
+                .document(code)
                 .collection(SPEAKERS)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
@@ -392,7 +400,7 @@ class DatabaseManager {
         val mutableLiveData = MutableLiveData<List<Event>>()
 
         firestore.collection(CONFERENCES)
-                .document(CURRENT_CON)
+                .document(code)
                 .collection(EVENTS)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {

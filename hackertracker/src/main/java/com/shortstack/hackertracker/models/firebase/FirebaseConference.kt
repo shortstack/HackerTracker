@@ -9,5 +9,7 @@ data class FirebaseConference(
         val name: String = "",
         val description: String = "",
         val code: String = "",
-        val maps: ArrayList<FirebaseMap> = ArrayList()
+        val maps: ArrayList<FirebaseMap> = ArrayList(),
+        val start_date: String = "",
+        val end_date: String = ""
 ) : Parcelable
