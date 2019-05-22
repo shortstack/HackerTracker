@@ -10,7 +10,7 @@ class VendorTest {
 
     @Test
     fun toVendorTitleDescription() {
-        val firebase = FirebaseVendor(name ="Vendor", description = "Description")
+        val firebase = FirebaseVendor(name = "Vendor", description = "Description")
 
         val vendor = firebase.toVendor()
 
@@ -22,7 +22,7 @@ class VendorTest {
 
     @Test
     fun toVendorNullDescription() {
-        val firebase = FirebaseVendor(name ="Vendor")
+        val firebase = FirebaseVendor(name = "Vendor")
 
         val vendor = firebase.toVendor()
 
@@ -32,7 +32,7 @@ class VendorTest {
 
     @Test
     fun toVendorPartner() {
-        val firebase = FirebaseVendor(name ="Vendor", partner = true)
+        val firebase = FirebaseVendor(name = "Vendor", partner = true)
 
         val vendor = firebase.toVendor()
 
@@ -43,7 +43,7 @@ class VendorTest {
 
     @Test
     fun toVendorLink() {
-        val firebase = FirebaseVendor(name ="Vendor", link = "google.ca")
+        val firebase = FirebaseVendor(name = "Vendor", link = "google.ca")
 
         val vendor = firebase.toVendor()
 
