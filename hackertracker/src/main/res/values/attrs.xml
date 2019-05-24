@@ -1,9 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <attr name="logo_main" format="reference" />
-    <attr name="logo_secondary" format="reference" />
-
     <declare-styleable name="EmptyView">
         <attr name="evIcon" format="reference" />
         <attr name="evTitle" format="reference" />

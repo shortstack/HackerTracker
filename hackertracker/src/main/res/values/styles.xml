@@ -16,10 +16,6 @@
 
     <style name="ThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
 
-        <item name="logo_main">@drawable/skull</item>
-        <item name="logo_secondary">@drawable/skull</item>
-
-
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="android:colorBackground">@color/background</item>

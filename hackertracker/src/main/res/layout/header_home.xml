@@ -16,7 +16,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:minHeight="200dp"
-            android:src="?attr/logo_main" />
+            android:src="@drawable/skull" />
     </androidx.cardview.widget.CardView>
 
 </FrameLayout>

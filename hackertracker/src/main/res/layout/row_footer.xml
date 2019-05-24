@@ -6,5 +6,5 @@
     android:layout_gravity="center_horizontal"
     android:layout_margin="16dp"
     android:paddingBottom="?android:attr/actionBarSize"
-    android:src="?attr/logo_secondary"
+    android:src="@drawable/skull"
     tools:background="@color/background" />
