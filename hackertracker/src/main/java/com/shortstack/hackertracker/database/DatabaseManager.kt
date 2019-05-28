@@ -41,7 +41,8 @@ class DatabaseManager {
         private const val LOCATIONS = "locations"
 
         fun getNextConference(conferences: List<Conference>): Conference? {
-            return conferences.sortedBy { it.startDate }.firstOrNull { !it.hasFinished } ?: conferences.lastOrNull()
+            return conferences.sortedBy { it.startDate }.firstOrNull { !it.hasFinished }
+                    ?: conferences.lastOrNull()
         }
     }
 
@@ -75,7 +76,8 @@ class DatabaseManager {
                     .get()
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
-                            val conferences = it.result?.toObjects(FirebaseConference::class.java)?.map { it.toConference() }?.sortedBy { it.startDate } ?: emptyList()
+                            val conferences = it.result?.toObjects(FirebaseConference::class.java)?.map { it.toConference() }?.sortedBy { it.startDate }
+                                    ?: emptyList()
 
                             val con = getNextConference(conferences)
                             conference.postValue(con)
@@ -86,7 +88,6 @@ class DatabaseManager {
                     }
         }
     }
-
 
 
     private fun getFCMToken(conference: Conference) {
@@ -136,6 +137,10 @@ class DatabaseManager {
         return mutableLiveData
     }
 
+    fun getEvents(id: Conference): LiveData<List<Event>> {
+        return getSchedule()
+    }
+
     fun getSchedule(): MutableLiveData<List<Event>> {
         val mutableLiveData = MutableLiveData<List<Event>>()
 
@@ -171,6 +176,10 @@ class DatabaseManager {
                 }
 
         return mutableLiveData
+    }
+
+    fun getTypes(id: Conference): LiveData<List<Type>> {
+        return getScheduleTypes()
     }
 
     fun getScheduleTypes(): MutableLiveData<List<Type>> {

@@ -18,13 +18,13 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
     val schedule: LiveData<Resource<List<Event>>>
         get() = contents
 
-    private val events = database.getSchedule()
-    private val types = database.getScheduleTypes()
-
     private val contents = Transformations.switchMap(database.conference) { id ->
         val result = MediatorLiveData<Resource<List<Event>>>()
 
         result.value = Resource.loading(null)
+
+        val events = database.getEvents(id)
+        val types = database.getTypes(id)
 
         result.addSource(events) {
             val types = types.value ?: emptyList()
