@@ -6,8 +6,8 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.models.local.Event
+import com.shortstack.hackertracker.models.local.Type
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
@@ -20,6 +20,11 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
 
     private val contents = Transformations.switchMap(database.conference) { id ->
         val result = MediatorLiveData<Resource<List<Event>>>()
+
+        if (id == null) {
+            result.value = Resource.init(null)
+            return@switchMap result
+        }
 
         result.value = Resource.loading(null)
 
@@ -43,12 +48,12 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
         if (types.isEmpty())
             return events
 
-        val requireBookmark = types.firstOrNull{ it.isBookmark }?.isSelected ?: false
+        val requireBookmark = types.firstOrNull { it.isBookmark }?.isSelected ?: false
         val filter = types.filter { !it.isBookmark && it.isSelected }
         if (!requireBookmark && filter.isEmpty())
             return events
 
-        if(requireBookmark && filter.isEmpty())
+        if (requireBookmark && filter.isEmpty())
             return events.filter { it.isBookmarked }
 
         return events.filter { event -> isShown(event, requireBookmark, filter) }
