@@ -114,12 +114,12 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         }
     }
 
-    fun setSchedule(list: List<Event>?) {
+    fun setSchedule(list: List<Event>?): ArrayList<Any> {
         if (list == null) {
             val size = collection.size
             collection.clear()
             notifyItemRangeRemoved(0, size)
-            return
+            return collection
         }
 
         val elements = getFormattedElements(list)
@@ -164,6 +164,8 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         collection.clear()
         collection.addAll(elements)
+
+        return collection
     }
 
     fun isEmpty() = state == Status.SUCCESS && collection.isEmpty()

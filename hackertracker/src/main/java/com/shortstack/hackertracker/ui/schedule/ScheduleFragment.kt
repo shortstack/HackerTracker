@@ -9,6 +9,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Status
+import com.shortstack.hackertracker.models.Day
+import com.shortstack.hackertracker.models.Time
+import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.utils.TickTimer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,13 +20,15 @@ import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.view_empty.view.*
 import org.koin.android.ext.android.inject
 
-class ScheduleFragment : Fragment(){
+class ScheduleFragment : Fragment() {
 
     private val adapter: ScheduleAdapter = ScheduleAdapter()
 
     private val timer: TickTimer by inject()
 
     private var disposable: Disposable? = null
+
+    private var shouldScroll = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_schedule, container, false) as ViewGroup
@@ -32,21 +37,24 @@ class ScheduleFragment : Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        shouldScroll = true
         list.adapter = adapter
 
         val scheduleViewModel = ViewModelProviders.of(this).get(ScheduleViewModel::class.java)
         scheduleViewModel.schedule.observe(this, Observer {
             hideViews()
 
-            if( it != null ) {
+            if (it != null) {
                 adapter.state = it.status
 
                 when (it.status) {
                     Status.SUCCESS -> {
-                        adapter.setSchedule(it.data)
+                        val list = adapter.setSchedule(it.data)
                         if (adapter.isEmpty()) {
                             showEmptyView()
                         }
+
+                        scrollToCurrentPosition(list)
                     }
                     Status.ERROR -> {
                         showErrorView(it.message)
@@ -61,6 +69,29 @@ class ScheduleFragment : Fragment(){
                 }
             }
         })
+    }
+
+    private fun scrollToCurrentPosition(data: ArrayList<Any>) {
+        val manager = list.layoutManager ?: return
+        val first = data.filterIsInstance<Event>().firstOrNull { !it.hasFinished } ?: return
+
+        if (shouldScroll) {
+            shouldScroll = false
+            val index = getScrollIndex(data, first)
+            manager.scrollToPosition(index)
+        }
+    }
+
+    private fun getScrollIndex(data: ArrayList<Any>, first: Event): Int {
+        val event = data.indexOf(first)
+        val index = data.indexOf(data.subList(0, event).filterIsInstance<Time>().last())
+        if (index > 1) {
+            if (data[index - 1] is Day) {
+                return index - 1
+            }
+            return index
+        }
+        return event
     }
 
 
