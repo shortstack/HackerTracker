@@ -57,8 +57,8 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     fun setList(elements: List<Any>) {
         state = when {
-            query.isNullOrBlank() -> State.INIT
             elements.isNotEmpty() -> State.RESULTS
+            query.isNullOrBlank() -> State.INIT
             else -> State.EMPTY
         }
 

@@ -4,10 +4,7 @@ import android.content.Context
 import android.text.format.DateFormat
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
-import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.isSoonish
-import com.shortstack.hackertracker.isToday
-import com.shortstack.hackertracker.isTomorrow
+import com.shortstack.hackertracker.*
 import io.mockk.every
 import io.mockk.mockkStatic
 import io.mockk.staticMockk
@@ -30,13 +27,9 @@ class TimeUtilTest {
         whenever(context.getString(R.string.tba)).thenReturn("TBA")
     }
 
-
     @Test
     fun isToday() {
-        mockkStatic("com.shortstack.hackertracker.utils.MyClockKt")
-        every {
-            MyClock().now()
-        } returns parse("2019-01-01T12:00:00.000-0000")
+        setCurrentClock("2019-01-01T12:00:00.000-0000")
 
         val date = parse("2019-01-01T12:00:00.000-0000")
 
@@ -47,10 +40,7 @@ class TimeUtilTest {
 
     @Test
     fun isTomorrow() {
-        mockkStatic("com.shortstack.hackertracker.utils.MyClockKt")
-        every {
-            MyClock().now()
-        } returns parse("2019-01-01T12:00:00.000-0000")
+        setCurrentClock("2019-01-01T12:00:00.000-0000")
 
         val date = parse("2019-01-02T12:00:00.000-0000")
 
@@ -61,10 +51,7 @@ class TimeUtilTest {
 
     @Test
     fun isSoonish() {
-        mockkStatic("com.shortstack.hackertracker.utils.MyClockKt")
-        every {
-            MyClock().now()
-        } returns parse("2019-01-01T12:00:00.000-0000")
+        setCurrentClock("2019-01-01T12:00:00.000-0000")
 
         val date = parse("2019-01-04T12:00:00.000-0000")
 
@@ -75,10 +62,7 @@ class TimeUtilTest {
 
     @Test
     fun getRelativeToday() {
-        mockkStatic("com.shortstack.hackertracker.utils.MyClockKt")
-        every {
-            MyClock().now()
-        } returns parse("2019-01-01T12:00:00.000-0000")
+        setCurrentClock("2019-01-01T12:00:00.000-0000")
 
         val date = parse("2019-01-01T12:00:00.000-0000")
 
@@ -89,10 +73,7 @@ class TimeUtilTest {
 
     @Test
     fun getRelativeTomorrow() {
-        mockkStatic("com.shortstack.hackertracker.utils.MyClockKt")
-        every {
-            MyClock().now()
-        } returns parse("2019-01-01T12:00:00.000-0000")
+        setCurrentClock("2019-01-01T12:00:00.000-0000")
         val date = parse("2019-01-02T12:00:00.000-0000")
 
         val result = TimeUtil.getRelativeDateStamp(context, date)
@@ -102,10 +83,7 @@ class TimeUtilTest {
 
     @Test
     fun getRelativeSoonish() {
-        mockkStatic("com.shortstack.hackertracker.utils.MyClockKt")
-        every {
-            MyClock().now()
-        } returns parse("2019-01-01T12:00:00.000-0000")
+        setCurrentClock("2019-01-01T12:00:00.000-0000")
         val date = parse("2019-01-04T12:00:00.000-0000")
 
         val result = TimeUtil.getRelativeDateStamp(context, date)
@@ -115,10 +93,7 @@ class TimeUtilTest {
 
     @Test
     fun getRelativeNotSoonish() {
-        mockkStatic("com.shortstack.hackertracker.utils.MyClockKt")
-        every {
-            MyClock().now()
-        } returns parse("2019-01-01T12:00:00.000-0000")
+        setCurrentClock("2019-01-01T12:00:00.000-0000")
         val date = parse("2019-01-10T12:00:00.000-0000")
 
         val result = TimeUtil.getRelativeDateStamp(context, date)
@@ -128,10 +103,7 @@ class TimeUtilTest {
 
     @Test
     fun getRelativeYesterday() {
-        mockkStatic("com.shortstack.hackertracker.utils.MyClockKt")
-        every {
-            MyClock().now()
-        } returns parse("2019-01-01T12:00:00.000-0000")
+        setCurrentClock("2019-01-01T12:00:00.000-0000")
         val date = parse("2018-12-31T12:00:00.000-0000")
 
         val result = TimeUtil.getRelativeDateStamp(context, date)
@@ -167,9 +139,5 @@ class TimeUtilTest {
         val result = TimeUtil.getTimeStamp(context, date)
 
         assertEquals("4:00 AM", result)
-    }
-
-    private fun parse(date: String): Date {
-        return SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(date)
     }
 }

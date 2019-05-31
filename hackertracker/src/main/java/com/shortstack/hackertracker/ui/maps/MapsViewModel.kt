@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.ui.maps
 
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.database.DatabaseManager
@@ -14,8 +15,10 @@ class MapsViewModel : ViewModel(), KoinComponent {
 
     val maps: LiveData<List<FirebaseConferenceMap>>
         get() {
-            val conference = database.conference
-            return Transformations.switchMap(conference) { id ->
+            return Transformations.switchMap(database.conference) { id ->
+                if (id == null) {
+                    return@switchMap MutableLiveData<List<FirebaseConferenceMap>>()
+                }
                 return@switchMap database.getMaps(id)
             }
         }

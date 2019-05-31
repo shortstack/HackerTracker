@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:gravity="bottom"
     android:orientation="vertical"
-    android:paddingBottom="32dp"
-    android:paddingTop="32dp">
+    android:paddingTop="32dp"
+    android:paddingBottom="32dp">
 
     <com.shortstack.hackertracker.views.StatusBarSpacer
         android:layout_width="match_parent"
@@ -20,7 +20,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:scaleType="fitCenter"
-        app:srcCompat="?attr/logo_main" />
+        app:srcCompat="@drawable/skull" />
 
     <TextView
         android:id="@+id/nav_title"
