@@ -77,6 +77,7 @@ class WifiHelperViewHolder(private val view: View) : RecyclerView.ViewHolder(vie
                     eapMethod = WifiEnterpriseConfig.Eap.PEAP
                     phase2Method = WifiEnterpriseConfig.Phase2.MSCHAPV2
                     caCertificate = certificate
+                    altSubjectMatch = "DNS:wifireg.defcon.org"
                 }
             }
 
