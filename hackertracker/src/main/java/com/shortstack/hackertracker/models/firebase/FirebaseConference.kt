@@ -11,5 +11,6 @@ data class FirebaseConference(
         val code: String = "",
         val maps: ArrayList<FirebaseMap> = ArrayList(),
         val start_date: String = "",
-        val end_date: String = ""
+        val end_date: String = "",
+        val hidden: Boolean = false
 ) : Parcelable

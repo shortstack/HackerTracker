@@ -76,7 +76,11 @@ class DatabaseManager {
                     .get()
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
-                            val conferences = it.result?.toObjects(FirebaseConference::class.java)?.map { it.toConference() }?.sortedBy { it.startDate }
+                            val conferences = it.result?.toObjects(FirebaseConference::class.java)
+                                    ?.filter { !it.hidden || App.isDeveloper }
+                                    ?.map { it.toConference() }
+                                    ?.sortedBy { it.startDate }
+
                                     ?: emptyList()
 
                             val con = getNextConference(conferences)
@@ -129,7 +133,10 @@ class DatabaseManager {
         firestore.collection(CONFERENCES)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
-                        val cons = snapshot?.toObjects(FirebaseConference::class.java)?.map { it.toConference() }
+                        val cons = snapshot?.toObjects(FirebaseConference::class.java)
+                                ?.filter { !it.hidden || App.isDeveloper }
+                                ?.map { it.toConference() }
+
                         mutableLiveData.postValue(cons)
                     }
                 }
@@ -150,8 +157,10 @@ class DatabaseManager {
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
                         val events = snapshot?.toObjects(FirebaseEvent::class.java)
-                        val recent = events?.map { it.toEvent() }
-                        mutableLiveData.postValue(recent)
+                                ?.filter { !it.hidden || App.isDeveloper }
+                                ?.map { it.toEvent() }
+
+                        mutableLiveData.postValue(events)
 
                         val id = user?.uid
                         if (id != null) {
@@ -162,13 +171,13 @@ class DatabaseManager {
                                     .collection(BOOKMARKS)
                                     .addSnapshotListener { snapshot, exception ->
                                         if (exception == null) {
-                                            val events = snapshot?.toObjects(FirebaseBookmark::class.java)
+                                            val bookmarks = snapshot?.toObjects(FirebaseBookmark::class.java)
 
-                                            events?.forEach { bookmark ->
-                                                recent?.find { it.id.toString() == bookmark.id }?.isBookmarked = bookmark.value
+                                            bookmarks?.forEach { bookmark ->
+                                                events?.find { it.id.toString() == bookmark.id }?.isBookmarked = bookmark.value
                                             }
 
-                                            mutableLiveData.postValue(recent)
+                                            mutableLiveData.postValue(events)
                                         }
                                     }
                         }
@@ -229,8 +238,12 @@ class DatabaseManager {
                 .get()
                 .addOnSuccessListener {
                     val events = it.toObjects(FirebaseEvent::class.java)
-                    val recent = events.map { it.toEvent() }.sortedBy { it.updated }.take(10)
-                    mutableLiveData.postValue(recent)
+                            .filter { !it.hidden || App.isDeveloper }
+                            .map { it.toEvent() }
+                            .sortedBy { it.updated }
+                            .take(10)
+
+                    mutableLiveData.postValue(events)
                 }
 
         return mutableLiveData
@@ -275,7 +288,10 @@ class DatabaseManager {
                 .collection(VENDORS)
                 .get()
                 .addOnSuccessListener {
-                    val vendors = it.toObjects(FirebaseVendor::class.java).map { it.toVendor() }
+                    val vendors = it.toObjects(FirebaseVendor::class.java)
+                            .filter { !it.hidden || App.isDeveloper }
+                            .map { it.toVendor() }
+
                     mutableLiveData.postValue(vendors)
                 }
         return mutableLiveData
@@ -379,8 +395,11 @@ class DatabaseManager {
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
                         val speakers = snapshot?.toObjects(FirebaseSpeaker::class.java)
+                                ?.filter { !it.hidden || App.isDeveloper }
+                                ?.map { it.toSpeaker() }
                                 ?: emptyList()
-                        mutableLiveData.postValue(speakers.map { it.toSpeaker() })
+
+                        mutableLiveData.postValue(speakers)
                     }
                 }
 
@@ -397,8 +416,11 @@ class DatabaseManager {
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
                         val speakers = snapshot?.toObjects(FirebaseSpeaker::class.java)
+                                ?.filter { !it.hidden || App.isDeveloper }
+                                ?.map { it.toSpeaker() }
                                 ?: emptyList()
-                        mutableLiveData.postValue(speakers.map { it.toSpeaker() })
+
+                        mutableLiveData.postValue(speakers)
                     }
                 }
 
@@ -431,10 +453,11 @@ class DatabaseManager {
                 .collection(EVENTS)
                 .get()
                 .addOnSuccessListener {
-                    val events = it.toObjects(FirebaseEvent::class.java)
+                    val contests = it.toObjects(FirebaseEvent::class.java)
+                            .filter { !it.hidden || App.isDeveloper && it.type.name == "Contest" }
+                            .map { it.toEvent() }
 
-                    val contents = events.filter { it.type.name == "Contest" }.map { it.toEvent() }
-                    mutableLiveData.postValue(contents)
+                    mutableLiveData.postValue(contests)
                 }
 
         return mutableLiveData
@@ -448,9 +471,11 @@ class DatabaseManager {
                 .collection(EVENTS)
                 .get()
                 .addOnSuccessListener {
-                    val events = it.toObjects(FirebaseEvent::class.java)
-                    val contents = events.filter { it.type.name == "Workshop" }.map { it.toEvent() }
-                    mutableLiveData.postValue(contents)
+                    val workshops = it.toObjects(FirebaseEvent::class.java)
+                            .filter { !it.hidden || App.isDeveloper && it.type.name == "Workshop" }
+                            .map { it.toEvent() }
+
+                    mutableLiveData.postValue(workshops)
                 }
 
         return mutableLiveData

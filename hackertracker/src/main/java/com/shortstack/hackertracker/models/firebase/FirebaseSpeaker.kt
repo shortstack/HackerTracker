@@ -11,5 +11,6 @@ data class FirebaseSpeaker(
         val description: String = "",
         val link: String = "",
         val twitter: String = "",
-        val title: String = ""
+        val title: String = "",
+        val hidden: Boolean = false
 ) : Parcelable
