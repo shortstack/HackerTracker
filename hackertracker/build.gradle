@@ -14,8 +14,8 @@ android {
         applicationId "com.shortstack.hackertracker"
         minSdkVersion 16
         targetSdkVersion 28
-        versionCode 169
-        versionName "6.0.9"
+        versionCode 170
+        versionName "6.0.10"
 
         vectorDrawables.useSupportLibrary = true
 
