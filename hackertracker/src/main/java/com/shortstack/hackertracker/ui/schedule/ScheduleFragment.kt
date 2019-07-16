@@ -15,6 +15,7 @@ import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.models.local.Conference
 import com.shortstack.hackertracker.models.local.Event
+import com.shortstack.hackertracker.ui.schedule.list.OverlapStickyItemDecoration
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.utils.TickTimer
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -47,6 +48,9 @@ class ScheduleFragment : Fragment() {
 
         shouldScroll = true
         list.adapter = adapter
+
+        val decoration = OverlapStickyItemDecoration(adapter)
+        list.addItemDecoration(decoration)
 
 
         val scheduleViewModel = ViewModelProviders.of(this).get(ScheduleViewModel::class.java)
@@ -122,8 +126,8 @@ class ScheduleFragment : Fragment() {
 
         if (shouldScroll) {
             shouldScroll = false
-            val index = getScrollIndex(data, first)
-            manager.scrollToPosition(index)
+//            val index = getScrollIndex(data, first)
+//            manager.scrollToPosition(index)
         }
     }
 

@@ -22,7 +22,8 @@ data class Event(
         val speakers: List<Speaker>,
         val type: Type,
         val location: Location,
-        var isBookmarked: Boolean = false) : Parcelable {
+        var isBookmarked: Boolean = false,
+        var key: Long = -1) : Parcelable {
 
     val progress: Float
         get() {

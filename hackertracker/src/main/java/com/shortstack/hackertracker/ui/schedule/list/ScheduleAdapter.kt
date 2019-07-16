@@ -12,23 +12,45 @@ import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.schedule.TimeViewHolder
 import com.shortstack.hackertracker.utils.StickyHeaderInterface
+import com.shortstack.hackertracker.views.TimeView
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
-//    override fun getHeaderPositionForItem(itemPosition: Int): Int {
-//
-//    }
-//
-//    override fun getHeaderLayout(headerPosition: Int): Int {
-//
-//    }
-//
-//    override fun bindHeaderData(header: View, headerPosition: Int) {
-//
-//    }
-//
-//    override fun isHeader(itemPosition: Int) = collection[itemPosition] is Time
+class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder>{
+
+    init {
+        setHasStableIds(true)
+    }
+
+    override fun getHeaderId(position: Int): Long {
+        return when(val obj = collection[position]) {
+            is Day -> -1
+            is Time -> obj.time
+            is Event -> obj.key
+            else -> throw java.lang.IllegalStateException("Unhandled object type ${obj.javaClass}")
+        }
+    }
+
+    override fun getItemId(position: Int): Long {
+        when(val obj = collection[position]) {
+            is Time -> return obj.time
+            is Event -> return obj.key
+        }
+        return super.getItemId(position)
+    }
+
+    override fun onCreateHeaderViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
+        return TimeViewHolder.inflate(parent)
+    }
+
+    override fun onBindHeaderViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
+        if(viewHolder is TimeViewHolder && collection[position] is Event) {
+            val event = collection[position] as Event
+            viewHolder.render(Time(Date(event.key)))
+        }
+    }
+
 
     companion object {
         private const val EVENT = 0
@@ -77,10 +99,13 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
             result.add(Day(it.key))
 
             it.value.groupBy { it.start }.toSortedMap().forEach {
-                result.add(Time(it.key))
+//                result.add(Time(it.key))
 
                 if (it.value.isNotEmpty()) {
                     val group = it.value.sortedWith(compareBy({ it.type.name }, { it.location.name }))
+
+                    group.forEach { event -> event.key = it.key.time }
+
                     result.addAll(group)
                 }
             }

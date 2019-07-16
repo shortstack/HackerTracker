@@ -134,6 +134,9 @@ dependencies {
     testImplementation 'org.koin:koin-test:2.0.0-beta-4'
 
 
+    implementation 'com.timehop.stickyheadersrecyclerview:library:0.4.3@aar'
+
+
 }
 
 repositories {
