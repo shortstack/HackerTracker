@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.ui.schedule.list
 
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
@@ -10,10 +11,24 @@ import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.schedule.TimeViewHolder
+import com.shortstack.hackertracker.utils.StickyHeaderInterface
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(){
+//    override fun getHeaderPositionForItem(itemPosition: Int): Int {
+//
+//    }
+//
+//    override fun getHeaderLayout(headerPosition: Int): Int {
+//
+//    }
+//
+//    override fun bindHeaderData(header: View, headerPosition: Int) {
+//
+//    }
+//
+//    override fun isHeader(itemPosition: Int) = collection[itemPosition] is Time
 
     companion object {
         private const val EVENT = 0

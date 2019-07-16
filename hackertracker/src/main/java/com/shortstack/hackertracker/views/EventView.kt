@@ -93,6 +93,9 @@ class EventView : FrameLayout, KoinComponent {
         updateBookmark(event)
 
 
+        time_stamp.setContent(event.start)
+
+
         setOnClickListener {
             (context as? MainActivity)?.navigate(event)
         }
