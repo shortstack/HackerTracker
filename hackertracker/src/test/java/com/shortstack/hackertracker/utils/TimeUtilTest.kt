@@ -7,13 +7,9 @@ import com.nhaarman.mockitokotlin2.whenever
 import com.shortstack.hackertracker.*
 import io.mockk.every
 import io.mockk.mockkStatic
-import io.mockk.staticMockk
-import io.mockk.use
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-import java.text.SimpleDateFormat
-import java.util.*
 
 
 class TimeUtilTest {
@@ -53,7 +49,7 @@ class TimeUtilTest {
 
         val date = parse("2019-01-01T12:00:00.000-0000")
 
-        val result = TimeUtil.getRelativeDateStamp(context, date)
+        val result = TimeUtil.getDateStamp(date)
 
         assertEquals("Today", result)
     }
@@ -63,7 +59,7 @@ class TimeUtilTest {
         setCurrentClock("2019-01-01T12:00:00.000-0000")
         val date = parse("2019-01-02T12:00:00.000-0000")
 
-        val result = TimeUtil.getRelativeDateStamp(context, date)
+        val result = TimeUtil.getDateStamp(date)
 
         assertEquals("Tomorrow", result)
     }

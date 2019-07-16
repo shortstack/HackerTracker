@@ -8,16 +8,8 @@ import java.util.*
 
 object TimeUtil {
 
-    private const val SOON_DAYS_AMOUNT = 5
-
     @SuppressLint("SimpleDateFormat")
-    fun getRelativeDateStamp(context: Context, date: Date): String {
-        if (date.isToday())
-            return context.getString(R.string.today)
-
-        if (date.isTomorrow())
-            return context.getString(R.string.tomorrow)
-
+    fun getDateStamp(date: Date): String {
         val format = SimpleDateFormat("MMMM d")
 
         return format.format(date)

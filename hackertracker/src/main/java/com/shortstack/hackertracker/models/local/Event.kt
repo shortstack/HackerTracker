@@ -62,7 +62,7 @@ data class Event(
 
     fun getFullTimeStamp(context: Context): String {
         val (begin, end) = getTimeStamp(context)
-        val timestamp = TimeUtil.getRelativeDateStamp(context, start)
+        val timestamp = TimeUtil.getDateStamp(start)
 
         return String.format(context.getString(R.string.timestamp_full), timestamp, begin, end)
     }

@@ -35,6 +35,6 @@ class DayViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     }
 
     fun render(day: Day) {
-        (view as TextView).text = TimeUtil.getRelativeDateStamp(view.context, day)
+        (view as TextView).text = TimeUtil.getDateStamp(day)
     }
 }

@@ -91,7 +91,6 @@ class EventView : FrameLayout, KoinComponent {
 
         renderCategoryColour(event)
         updateBookmark(event)
-        setProgressBar(event)
 
 
         setOnClickListener {
@@ -101,39 +100,6 @@ class EventView : FrameLayout, KoinComponent {
         star_bar.setOnClickListener {
             onBookmarkClick(event)
         }
-
-        // TODO: Check that this works as intended instead of from within onAttachedToWindow().
-        disposable?.dispose()
-        disposable = timer.observable.observeOn(AndroidSchedulers.mainThread())
-                .subscribe { updateProgressBar(event) }
-    }
-
-    private fun setProgressBar(event: Event) {
-        progress.progress = getProgress(event)
-    }
-
-    private fun updateProgressBar(event: Event) {
-        val progress = getProgress(event)
-
-        if (progress < this.progress.progress) {
-            setProgressBar(event)
-            return
-        }
-
-        finishAnimation()
-
-        val duration = PROGRESS_UPDATE_DURATION_PER_PERCENT * (progress - this.progress.progress)
-
-        animation = ObjectAnimator.ofInt(this.progress, "progress", progress)
-                .also {
-                    it.duration = duration.toLong()
-                    it.interpolator = DecelerateInterpolator()
-                    it.start()
-                }
-    }
-
-    private fun getProgress(event: Event): Int {
-        return (event.progress * 100).toInt()
     }
 
     private fun renderCategoryColour(event: Event) {
@@ -143,7 +109,6 @@ class EventView : FrameLayout, KoinComponent {
 
         val color = Color.parseColor(type.color)
         category.setBackgroundColor(color)
-        progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
