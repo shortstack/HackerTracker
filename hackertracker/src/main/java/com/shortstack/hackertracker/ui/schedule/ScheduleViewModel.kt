@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.models.local.Conference
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Type
 import org.koin.standalone.KoinComponent
@@ -17,6 +18,9 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
 
     val schedule: LiveData<Resource<List<Event>>>
         get() = contents
+
+    val conference: LiveData<Conference>
+        get() = database.conference
 
     private val contents = Transformations.switchMap(database.conference) { id ->
         val result = MediatorLiveData<Resource<List<Event>>>()

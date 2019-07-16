@@ -10,6 +10,8 @@ import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.schedule.TimeViewHolder
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -172,5 +174,9 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun clearAndNotify() {
         collection.clear()
         notifyDataSetChanged()
+    }
+
+    fun getDatePosition(date: Date): Int {
+        return collection.indexOfFirst { it is Day && it.time == date.time }
     }
 }
