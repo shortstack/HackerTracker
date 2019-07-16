@@ -29,7 +29,7 @@
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="Compelled Decryption - State of the Art in Doctrinal Perversions" />
-    
+
     <TextView
         android:id="@+id/time"
         style="@style/TextAppearance.AppCompat.Body1"
@@ -105,7 +105,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintGuide_begin="30dp"
+        app:layout_constraintGuide_begin="@dimen/time_width"
         app:layout_constraintStart_toEndOf="@id/category"
         app:layout_constraintTop_toTopOf="parent" />
 

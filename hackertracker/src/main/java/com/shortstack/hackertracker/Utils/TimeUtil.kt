@@ -25,7 +25,7 @@ object TimeUtil {
         return if (android.text.format.DateFormat.is24HourFormat(context)) {
             SimpleDateFormat("HH:mm").format(date)
         } else {
-            SimpleDateFormat("h:mm aa").format(date)
+            SimpleDateFormat("h:mm\naa").format(date)
         }
     }
 }

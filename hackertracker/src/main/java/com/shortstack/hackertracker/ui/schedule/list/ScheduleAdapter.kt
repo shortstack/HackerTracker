@@ -74,48 +74,6 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return result
     }
 
-    fun notifyTimeChanged() {
-        if (collection.isEmpty())
-            return
-
-        val list = collection.toList()
-
-        list.forEach {
-            if (it is Event && it.hasFinished) {
-                removeAndNotify(it)
-            }
-        }
-
-
-        if (list.size != this.collection.size) {
-
-            for (i in this.collection.size - 1 downTo 1) {
-                val any = this.collection[i]
-                val any1 = this.collection[i - 1]
-                if ((any is Day && any1 is Day)
-                        || (any is Time && any1 is Time)
-                        || (any is Day && any1 is Time)) {
-                    removeAndNotify(any1)
-                }
-            }
-
-            // If no events and only headers remain.
-            if (collection.size == 2) {
-                val size = list.size
-                collection.clear()
-                notifyItemRangeRemoved(0, size)
-            }
-        }
-    }
-
-    private fun removeAndNotify(item: Any) {
-        val index = collection.indexOf(item)
-        if (index != -1) {
-            collection.removeAt(index)
-            notifyItemRemoved(index)
-        }
-    }
-
     fun setSchedule(list: List<Event>?): ArrayList<Any> {
         if (list == null) {
             val size = collection.size
@@ -171,6 +129,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun isEmpty() = state == Status.SUCCESS && collection.isEmpty()
+
     fun clearAndNotify() {
         collection.clear()
         notifyDataSetChanged()
