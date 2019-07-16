@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.firestore.Query
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.storage.FirebaseStorage
 import com.orhanobut.logger.Logger
@@ -235,13 +236,13 @@ class DatabaseManager {
         firestore.collection(CONFERENCES)
                 .document(conference.code)
                 .collection(EVENTS)
+                .orderBy("updated_timestamp", Query.Direction.DESCENDING)
+                .limit(3)
                 .get()
                 .addOnSuccessListener {
                     val events = it.toObjects(FirebaseEvent::class.java)
                             .filter { !it.hidden || App.isDeveloper }
                             .map { it.toEvent() }
-                            .sortedBy { it.updated }
-                            .take(10)
 
                     mutableLiveData.postValue(events)
                 }
