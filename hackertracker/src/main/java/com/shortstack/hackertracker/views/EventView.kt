@@ -114,7 +114,7 @@ class EventView : FrameLayout, KoinComponent {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
             drawable?.setTint(color)
-            category_text.background = drawable
+            category_dot.background = drawable
         }
     }
 
