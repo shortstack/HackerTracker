@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Status
@@ -16,7 +18,9 @@ import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.models.local.Conference
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
+import com.shortstack.hackertracker.utils.StickyHeaderItemDecoration
 import com.shortstack.hackertracker.utils.TickTimer
+import com.shortstack.hackertracker.views.DaySelectorView
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_schedule.*
@@ -47,6 +51,28 @@ class ScheduleFragment : Fragment() {
 
         shouldScroll = true
         list.adapter = adapter
+
+//        val decoration = StickyHeaderItemDecoration(adapter)
+//        list.addItemDecoration(decoration)
+
+        list.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val manager = list.layoutManager as? LinearLayoutManager
+                if(manager != null ) {
+                    val first = manager.findFirstVisibleItemPosition()
+                    val last = manager.findLastVisibleItemPosition()
+
+                    day_selector.onScroll(adapter.getDateOfPosition(first), adapter.getDateOfPosition(last))
+                }
+            }
+        })
+
+        day_selector.addOnDaySelectedListener(object: DaySelectorView.OnDaySelectedListener{
+            override fun onDaySelected(day: Date) {
+                scrollToDate(day)
+            }
+        })
 
 
         val scheduleViewModel = ViewModelProviders.of(this).get(ScheduleViewModel::class.java)
@@ -82,22 +108,6 @@ class ScheduleFragment : Fragment() {
                 }
             }
         })
-
-        tab_layout.addOnTabSelectedListener(object : TabLayout.BaseOnTabSelectedListener<TabLayout.Tab> {
-            override fun onTabReselected(tab: TabLayout.Tab) {
-                val date = Date(tab.tag as Long)
-                scrollToDate(date)
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-
-            }
-
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                val date = Date(tab.tag as Long)
-                scrollToDate(date)
-            }
-        })
     }
 
     private fun addDayTabs(conference: Conference) {
@@ -106,6 +116,8 @@ class ScheduleFragment : Fragment() {
         tab_layout.removeAllTabs()
 
         val format = SimpleDateFormat("MMM d")
+
+        day_selector.setDays(days)
 
         for (day in days) {
             val tab = tab_layout.newTab()
@@ -129,7 +141,8 @@ class ScheduleFragment : Fragment() {
 
     private fun getScrollIndex(data: ArrayList<Any>, first: Event): Int {
         val event = data.indexOf(first)
-        val index = data.indexOf(data.subList(0, event).filterIsInstance<Time>().last())
+        val element = data.subList(0, event).filterIsInstance<Time>().lastOrNull() ?: data.subList(0, event).filterIsInstance<Day>().last()
+        val index = data.indexOf(element)
         if (index > 1) {
             if (data[index - 1] is Day) {
                 return index - 1
