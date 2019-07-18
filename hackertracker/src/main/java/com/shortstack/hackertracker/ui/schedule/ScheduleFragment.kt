@@ -10,18 +10,16 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.tabs.TabLayout
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.models.local.Conference
 import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.ui.schedule.list.OverlapStickyItemDecoration
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
-import com.shortstack.hackertracker.utils.StickyHeaderItemDecoration
 import com.shortstack.hackertracker.utils.TickTimer
 import com.shortstack.hackertracker.views.DaySelectorView
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_schedule.*
@@ -53,7 +51,7 @@ class ScheduleFragment : Fragment() {
         shouldScroll = true
         list.adapter = adapter
 
-        val decoration = OverlapStickyItemDecoration(adapter)
+        val decoration = StickyRecyclerHeadersDecoration(adapter)
         list.addItemDecoration(decoration)
 
         list.addOnScrollListener(object: RecyclerView.OnScrollListener(){

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="@dimen/time_width"
     android:layout_height="wrap_content">
 
@@ -9,9 +8,9 @@
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:padding="16dp"
-        android:text="10:00\nAM"
-        tools:background="@color/background" />
+        android:text="10:00\nAM" />
 
 </FrameLayout>
