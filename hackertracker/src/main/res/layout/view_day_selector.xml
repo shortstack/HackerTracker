@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/frame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="52dp"
+    android:paddingLeft="48dp">
+
+
+    <View
+        android:id="@+id/bubble"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/day_selector_bubble"
+        app:layout_constraintBottom_toBottomOf="@+id/day_1"
+        app:layout_constraintEnd_toEndOf="@+id/day_1"
+        app:layout_constraintStart_toStartOf="@+id/day_1"
+        app:layout_constraintTop_toTopOf="@+id/day_1" />
+
+
+    <TextView
+        android:id="@+id/day_1"
+        style="@style/day_selector_day"
+        android:tag="1559286000000"
+        android:text="May 31"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/day_2"
+        style="@style/day_selector_day"
+        android:tag="1559372400000"
+        android:text="June 1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/day_1"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/day_3"
+        style="@style/day_selector_day"
+        android:tag="1559458800000"
+        android:text="June 2"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@id/day_2"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

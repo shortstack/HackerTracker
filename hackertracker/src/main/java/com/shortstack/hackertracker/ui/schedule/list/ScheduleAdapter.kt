@@ -2,8 +2,10 @@ package com.shortstack.hackertracker.ui.schedule.list
 
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Time
@@ -50,7 +52,6 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyR
             viewHolder.render(Time(Date(event.key)))
         }
     }
-
 
     companion object {
         private const val EVENT = 0
@@ -177,5 +178,15 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyR
 
     fun getDatePosition(date: Date): Int {
         return collection.indexOfFirst { it is Day && it.time == date.time }
+    }
+
+    fun getDateOfPosition(index: Int): Date {
+        val obj = collection[index]
+        return when(obj) {
+            is Event -> obj.start
+            is Time -> Date(obj.time)
+            is Day -> Date(obj.time)
+            else -> TODO()
+        }
     }
 }
