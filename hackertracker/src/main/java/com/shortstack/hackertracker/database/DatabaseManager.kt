@@ -42,7 +42,7 @@ class DatabaseManager {
         private const val LOCATIONS = "locations"
 
         fun getNextConference(conferences: List<Conference>): Conference? {
-            return conferences.sortedBy { it.startDate }.firstOrNull { !it.hasFinished }
+            return conferences.sortedByDescending { it.startDate }.firstOrNull { !it.hasFinished }
                     ?: conferences.lastOrNull()
         }
     }
