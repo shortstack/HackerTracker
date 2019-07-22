@@ -27,8 +27,14 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
     private val children = ArrayList<TextView>()
     private var listener: OnDaySelectedListener? = null
 
+    private var begin: Int = -1
+    private var end: Int = -1
+
     init {
         View.inflate(context, R.layout.view_day_selector, this)
+
+        begin = day_1.id
+        end = day_1.id
 
         for (i in 0..frame.childCount) {
             val view = frame.getChildAt(i)
@@ -79,10 +85,20 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
     }
 
     private fun onBeginDaySelected(view: View) {
+        if(begin == view.id)
+            return
+
+        begin = view.id
+
         onDaySelected(view, START)
     }
 
     private fun onEndDaySelected(view: View) {
+        if(end == view.id)
+            return
+
+        end = view.id
+
         onDaySelected(view, END)
     }
 
