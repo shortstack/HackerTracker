@@ -7,7 +7,7 @@ import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Location
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
-import com.shortstack.hackertracker.ui.speakers.SpeakerViewHolder
+import com.shortstack.hackertracker.ui.information.speakers.SpeakerViewHolder
 
 class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.vendors
+package com.shortstack.hackertracker.ui.information.vendors
 
 import android.os.Bundle
 import android.view.View

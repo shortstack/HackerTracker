@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.information
+package com.shortstack.hackertracker.ui.information.faq
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
@@ -10,7 +10,7 @@ import com.shortstack.hackertracker.models.firebase.FirebaseFAQ
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
-class InformationViewModel : ViewModel(), KoinComponent {
+class FAQViewModel : ViewModel(), KoinComponent {
 
     private val database: DatabaseManager by inject()
 

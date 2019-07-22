@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.speakers
+package com.shortstack.hackertracker.ui.information.speakers
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -24,16 +24,6 @@
             android:title="@string/information" />
 
         <item
-            android:id="@+id/nav_speakers"
-            android:icon="@drawable/ic_people_white_24dp"
-            android:title="@string/speakers" />
-
-        <item
-            android:id="@+id/nav_companies"
-            android:icon="@drawable/ic_people_white_24dp"
-            android:title="@string/partners_vendors" />
-
-        <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings_white_24dp"
             android:orderInCategory="4"

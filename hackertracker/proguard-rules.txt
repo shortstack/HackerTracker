@@ -76,8 +76,8 @@
 -keep class com.shortstack.hackertracker.ui.home.HomeFragment { *; }
 -keep class com.shortstack.hackertracker.ui.schedule.ScheduleFragment { *; }
 -keep class com.shortstack.hackertracker.ui.maps.MapsFragment { *; }
--keep class com.shortstack.hackertracker.ui.information.InformationFragment { *; }
--keep class com.shortstack.hackertracker.ui.vendors.VendorsFragment { *; }
+-keep class com.shortstack.hackertracker.ui.information.faq.FAQFragment { *; }
+-keep class com.shortstack.hackertracker.ui.information.vendors.VendorsFragment { *; }
 -keep class com.shortstack.hackertracker.ui.SearchFragment { *; }
 -keep class com.shortstack.hackertracker.ui.SettingsFragment { *; }
 

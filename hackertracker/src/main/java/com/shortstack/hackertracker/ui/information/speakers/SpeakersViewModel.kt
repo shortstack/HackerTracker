@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.speakers
+package com.shortstack.hackertracker.ui.information.speakers
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData

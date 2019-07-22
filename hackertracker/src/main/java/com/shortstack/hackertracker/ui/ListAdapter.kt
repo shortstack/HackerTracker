@@ -9,13 +9,13 @@ import com.shortstack.hackertracker.models.local.Location
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Vendor
-import com.shortstack.hackertracker.ui.information.FAQViewHolder
+import com.shortstack.hackertracker.ui.information.faq.FAQViewHolder
 import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.schedule.TimeViewHolder
 import com.shortstack.hackertracker.ui.search.LocationViewHolder
-import com.shortstack.hackertracker.ui.speakers.SpeakerViewHolder
-import com.shortstack.hackertracker.ui.vendors.VendorViewHolder
+import com.shortstack.hackertracker.ui.information.speakers.SpeakerViewHolder
+import com.shortstack.hackertracker.ui.information.vendors.VendorViewHolder
 
 class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 

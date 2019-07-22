@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.vendors
+package com.shortstack.hackertracker.ui.information.vendors
 
 import android.content.Intent
 import android.graphics.Color
@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.models.firebase.FirebaseVendor
 import com.shortstack.hackertracker.models.local.Vendor
 import kotlinx.android.synthetic.main.row_vendor.view.*
 

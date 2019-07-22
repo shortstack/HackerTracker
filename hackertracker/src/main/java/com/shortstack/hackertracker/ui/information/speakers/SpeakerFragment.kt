@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.speakers
+package com.shortstack.hackertracker.ui.information.speakers
 
 import android.content.Intent
 import android.graphics.Color
@@ -18,8 +18,6 @@ import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.views.EventView
 import com.shortstack.hackertracker.views.StatusBarSpacer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_speakers.*
 import org.koin.android.ext.android.inject
 
