@@ -111,20 +111,7 @@ class ScheduleFragment : Fragment() {
 
     private fun addDayTabs(conference: Conference) {
         val days = getDaysBetweenDates(conference.startDate, conference.endDate) + conference.endDate
-
-        tab_layout.removeAllTabs()
-
-        val format = SimpleDateFormat("MMM d")
-
         day_selector.setDays(days)
-
-        for (day in days) {
-            val tab = tab_layout.newTab()
-            tab.text = format.format(day)
-            tab.tag = day.time
-
-            tab_layout.addTab(tab)
-        }
     }
 
     private fun scrollToCurrentPosition(data: ArrayList<Any>) {
@@ -133,14 +120,14 @@ class ScheduleFragment : Fragment() {
 
         if (shouldScroll) {
             shouldScroll = false
-//            val index = getScrollIndex(data, first)
-//            manager.scrollToPosition(index)
+            val index = getScrollIndex(data, first)
+            manager.scrollToPosition(index)
         }
     }
 
     private fun getScrollIndex(data: ArrayList<Any>, first: Event): Int {
         val event = data.indexOf(first)
-        val element = data.subList(0, event).filterIsInstance<Time>().lastOrNull() ?: data.subList(0, event).filterIsInstance<Day>().last()
+        val element = data.subList(0, event).filterIsInstance<Day>().last()
         val index = data.indexOf(element)
         if (index > 1) {
             if (data[index - 1] is Day) {
