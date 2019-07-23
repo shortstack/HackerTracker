@@ -10,6 +10,7 @@ import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.schedule.TimeViewHolder
+import com.shortstack.hackertracker.views.EventView
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter
 import java.util.*
 import kotlin.collections.ArrayList
@@ -60,7 +61,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyR
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            EVENT -> EventViewHolder.inflate(parent)
+            EVENT -> EventViewHolder.inflate(parent, EventView.DISPLAY_MODE_FULL)
             DAY -> DayViewHolder.inflate(parent)
             TIME -> TimeViewHolder.inflate(parent)
             else -> throw IllegalStateException("Unknown viewType $viewType.")

@@ -3,11 +3,10 @@ package com.shortstack.hackertracker.views
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Build
 import android.util.AttributeSet
+import android.util.DisplayMetrics
 import android.view.View
-import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import com.shortstack.hackertracker.R
@@ -16,7 +15,6 @@ import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utils.TickTimer
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.row_event.view.*
 import org.koin.standalone.KoinComponent
@@ -27,7 +25,6 @@ class EventView : FrameLayout, KoinComponent {
     companion object {
         const val DISPLAY_MODE_MIN = 0
         const val DISPLAY_MODE_FULL = 1
-        private const val PROGRESS_UPDATE_DURATION_PER_PERCENT = 50
     }
 
     private val timer: TickTimer by inject()
@@ -36,10 +33,12 @@ class EventView : FrameLayout, KoinComponent {
 
 
     private var disposable: Disposable? = null
-    private var displayMode: Int = DISPLAY_MODE_MIN
+    var displayMode: Int = DISPLAY_MODE_MIN
     private var animation: ObjectAnimator? = null
 
-    constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs) {
+
+    constructor(context: Context, attrs: AttributeSet? = null, display: Int = DISPLAY_MODE_MIN) : super(context, attrs) {
+        displayMode = display
         init()
     }
 
@@ -73,28 +72,36 @@ class EventView : FrameLayout, KoinComponent {
     private fun setDisplayMode() {
         when (displayMode) {
             DISPLAY_MODE_MIN -> {
-                time.visibility = View.GONE
+                guideline.setGuidelineBegin(convertDpToPixel(16.0f, context).toInt())
+                category_dot.visibility = View.GONE
+                category_text.visibility = View.GONE
             }
             DISPLAY_MODE_FULL -> {
-                time.visibility = View.VISIBLE
+                guideline.setGuidelineBegin(convertDpToPixel(100.0f, context).toInt())
+                category_dot.visibility = View.VISIBLE
+                category_text.visibility = View.VISIBLE
             }
         }
     }
 
+    fun convertDpToPixel(dp: Float, context: Context): Float {
+        return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
+    }
+
+
     private fun render(event: Event) {
         title.text = event.title
-        location.text = event.location.name
 
-        if (displayMode != DISPLAY_MODE_MIN) {
-            time.text = event.getFullTimeStamp(context)
+        // Stage 2
+        if (displayMode == DISPLAY_MODE_FULL) {
+            location.text = event.location.name
+        } else {
+            location.text = event.getFullTimeStamp(context) + " / " + event.location.name
         }
+
 
         renderCategoryColour(event)
         updateBookmark(event)
-
-
-        time_stamp.setContent(event.start)
-
 
         setOnClickListener {
             (context as? MainActivity)?.navigate(event)
@@ -128,7 +135,7 @@ class EventView : FrameLayout, KoinComponent {
         renderBookmark(event, color)
     }
 
-    private fun renderBookmark(event: Event,color: Int) {
+    private fun renderBookmark(event: Event, color: Int) {
         val isBookmarked = event.isBookmarked
 
         val drawable = if (isBookmarked) {

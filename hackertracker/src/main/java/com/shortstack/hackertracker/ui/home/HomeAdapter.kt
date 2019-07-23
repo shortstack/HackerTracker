@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.models.local.Article
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
+import com.shortstack.hackertracker.views.EventView
 
 class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -21,7 +22,7 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return when (viewType) {
             SKULL -> SkullHeaderViewHolder.inflate(parent)
             HEADER -> HeaderViewHolder.inflate(parent)
-            EVENT -> EventViewHolder.inflate(parent)
+            EVENT -> EventViewHolder.inflate(parent, EventView.DISPLAY_MODE_MIN)
             ARTICLE -> ArticleViewHolder.inflate(parent)
             else -> throw IllegalStateException("Unknown viewType $viewType")
         }

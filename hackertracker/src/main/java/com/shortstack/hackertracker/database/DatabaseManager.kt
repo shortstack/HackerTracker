@@ -238,7 +238,7 @@ class DatabaseManager {
                 .document(code)
                 .collection(EVENTS)
                 .orderBy("updated_timestamp", Query.Direction.DESCENDING)
-                .limit(3)
+                .limit(5)
                 .get()
                 .addOnSuccessListener {
                     val events = it.toObjects(FirebaseEvent::class.java)

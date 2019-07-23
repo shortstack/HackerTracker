@@ -10,8 +10,9 @@ import com.shortstack.hackertracker.views.EventView
 class EventViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     companion object {
-        fun inflate(parent: ViewGroup): EventViewHolder {
-            val view = EventView(parent.context)
+
+        fun inflate(parent: ViewGroup, mode: Int): EventViewHolder {
+            val view = EventView(parent.context, display = mode)
             view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             return EventViewHolder(view)
         }

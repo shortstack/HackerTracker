@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Location
 import com.shortstack.hackertracker.models.local.Speaker
-import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.information.speakers.SpeakerViewHolder
+import com.shortstack.hackertracker.ui.schedule.EventViewHolder
+import com.shortstack.hackertracker.views.EventView
 
 class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -23,8 +24,8 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     var query: String? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        return when(viewType) {
-            EVENT -> EventViewHolder.inflate(parent)
+        return when (viewType) {
+            EVENT -> EventViewHolder.inflate(parent, EventView.DISPLAY_MODE_MIN)
             SPEAKER -> SpeakerViewHolder.inflate(parent)
             LOCATION -> LocationViewHolder.inflate(parent)
             HEADER -> HeaderViewHolder.inflate(parent)
@@ -37,7 +38,7 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         val item = collection[position]
 
-        when(holder) {
+        when (holder) {
             is EventViewHolder -> holder.render(item as Event)
             is SpeakerViewHolder -> holder.render(item as Speaker)
             is LocationViewHolder -> holder.render(item as Location)
@@ -46,7 +47,7 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when(collection[position]) {
+        return when (collection[position]) {
             is Speaker -> SPEAKER
             is Event -> EVENT
             is Location -> LOCATION

@@ -31,20 +31,6 @@
         tools:text="Compelled Decryption - State of the Art in Doctrinal Perversions" />
 
     <TextView
-        android:id="@+id/time"
-        style="@style/TextAppearance.AppCompat.Body1"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginRight="8dp"
-        android:textColor="@color/white_70"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        tools:text="Friday, 11:00 AM - 3:00 PM" />
-
-    <TextView
         android:id="@+id/location"
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="0dp"
@@ -55,7 +41,7 @@
         android:textColor="@color/white_70"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/time"
+        app:layout_constraintTop_toBottomOf="@+id/title"
         tools:text="Track 1" />
 
     <View
@@ -107,19 +93,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintGuide_begin="@dimen/time_width"
         app:layout_constraintStart_toEndOf="@id/category"
-        app:layout_constraintTop_toTopOf="parent" />
-
-
-    <com.shortstack.hackertracker.views.TimeView
-        android:id="@+id/time_stamp"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="8dp"
-        android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/guideline"
-        app:layout_constraintStart_toEndOf="@+id/category"
         app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
