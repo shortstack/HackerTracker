@@ -17,7 +17,7 @@ import org.koin.android.ext.android.startKoin
 class App : MultiDexApplication() {
 
     companion object {
-        val isDeveloper = BuildConfig.DEBUG
+        val isDeveloper = false
     }
 
     override fun onCreate() {

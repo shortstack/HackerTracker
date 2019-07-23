@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.models.local.Article
 import kotlinx.android.synthetic.main.item_article.view.*
 
 class ArticleViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
@@ -16,8 +17,8 @@ class ArticleViewHolder(private val view: View) : RecyclerView.ViewHolder(view) 
         }
     }
 
-    fun render(title: String, content: String) {
-        view.title.text = title
-        view.content.text = content
+    fun render(article: Article) {
+        view.title.text = article.name
+        view.content.text = article.text
     }
 }
