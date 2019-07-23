@@ -17,6 +17,8 @@ class HomeViewModel : ViewModel(), KoinComponent {
 
     val results: LiveData<List<Any>>
 
+    private val bookmarks = database.getBookmarks()
+
     private val recent = database.getRecent()
     private val articles = database.getArticles()
     private val faq = database.getFAQ()
@@ -25,15 +27,16 @@ class HomeViewModel : ViewModel(), KoinComponent {
         results = Transformations.switchMap(database.conference) {
             val results = MediatorLiveData<List<Any>>()
 
+            results.addSource(bookmarks) {
+                setValue(results, bookmarks = it)
+            }
 
             results.addSource(recent) {
-                val articles = articles.value ?: emptyList()
-                setValue(results, articles, it)
+                setValue(results, recent = it)
             }
 
             results.addSource(articles) {
-                val recent = recent.value ?: emptyList()
-                setValue(results, it, recent)
+                setValue(results, articles = it)
             }
 
             results.addSource(faq) {
@@ -45,13 +48,26 @@ class HomeViewModel : ViewModel(), KoinComponent {
         }
     }
 
-    private fun setValue(results: MediatorLiveData<List<Any>>, articles: List<Article>, recent: List<Event>) {
+    private fun setValue(results: MediatorLiveData<List<Any>>,
+                         articles: List<Article> = this.articles.value ?: emptyList(),
+                         recent: List<Event> = this.recent.value ?: emptyList(),
+                         bookmarks: List<Event> = this.bookmarks.value ?: emptyList()) {
         val list = ArrayList<Any>()
 
-        list.add("Announcements")
-        list.addAll(articles)
-        list.add("Recent Updates")
-        list.addAll(recent)
+        if (bookmarks.isNotEmpty()) {
+            list.add("Saved Events")
+            list.addAll(bookmarks)
+        }
+
+        if (articles.isNotEmpty()) {
+            list.add("Announcements")
+            list.addAll(articles)
+        }
+
+        if (recent.isNotEmpty()) {
+            list.add("Recent Updates")
+            list.addAll(recent)
+        }
 
         results.postValue(list)
     }

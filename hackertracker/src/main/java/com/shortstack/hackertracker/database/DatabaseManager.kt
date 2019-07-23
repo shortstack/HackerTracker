@@ -269,6 +269,43 @@ class DatabaseManager {
         return results
     }
 
+    fun getBookmarks(): LiveData<List<Event>> {
+        val result = MutableLiveData<List<Event>>()
+
+        val id = user?.uid ?: return result
+
+        firestore.collection(CONFERENCES)
+                .document(code)
+                .collection(EVENTS)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val events = snapshot?.toObjects(FirebaseEvent::class.java)
+                                ?.filter { !it.hidden || App.isDeveloper }
+                                ?.map { it.toEvent() } ?: emptyList()
+
+
+                        firestore.collection(CONFERENCES)
+                                .document(code)
+                                .collection(USERS)
+                                .document(id)
+                                .collection(BOOKMARKS)
+                                .addSnapshotListener { snapshot, exception ->
+                                    if (exception == null) {
+                                        val bookmarks = snapshot?.toObjects(FirebaseBookmark::class.java)?.map { it.id }
+                                                ?: emptyList()
+
+                                        val bookmarked = events.filter { it.id.toString() in bookmarks }.take(3)
+                                        bookmarked.forEach { it.isBookmarked = true }
+
+                                        result.postValue(bookmarked)
+                                    }
+                                }
+                    }
+                }
+
+        return result
+    }
+
 
     fun getFAQ(code: String = this.code): LiveData<List<FirebaseFAQ>> {
         val mutableLiveData = MutableLiveData<List<FirebaseFAQ>>()
