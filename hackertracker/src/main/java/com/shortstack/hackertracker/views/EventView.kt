@@ -39,7 +39,7 @@ class EventView : FrameLayout, KoinComponent {
     private var displayMode: Int = DISPLAY_MODE_MIN
     private var animation: ObjectAnimator? = null
 
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet? = null) : super(context, attrs) {
         init()
     }
 

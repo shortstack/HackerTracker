@@ -1,25 +1,24 @@
 package com.shortstack.hackertracker.ui.schedule
 
-import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import kotlinx.android.synthetic.main.row.view.*
+import com.shortstack.hackertracker.views.EventView
 
 class EventViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 
     companion object {
         fun inflate(parent: ViewGroup): EventViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.row, parent, false)
+            val view = EventView(parent.context)
+            view.layoutParams = ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
             return EventViewHolder(view)
         }
     }
 
     fun render(event: Event) {
-        view.event.setContent(event)
+        (view as EventView).setContent(event)
 
         view.setOnClickListener {
             showEventFragment(event)
