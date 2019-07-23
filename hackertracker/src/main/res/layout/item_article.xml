@@ -8,7 +8,6 @@
     android:paddingRight="16dp"
     android:paddingBottom="8dp">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -16,17 +15,15 @@
         android:orientation="vertical"
         android:padding="16dp">
 
-
         <TextView
             android:id="@+id/title"
             style="@style/TextAppearance.MaterialComponents.Headline6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginBottom="16dp"
             android:textColor="@color/white"
             android:textSize="18sp"
             tools:text="Thank You" />
-
 
         <TextView
             android:id="@+id/content"
@@ -34,6 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:autoLink="all"
+            android:lineSpacingExtra="3dp"
             android:textColor="@color/white_70"
             android:textColorLink="@color/blue_dark"
             android:textSize="13sp"

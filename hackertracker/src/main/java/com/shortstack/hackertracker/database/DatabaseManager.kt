@@ -41,6 +41,7 @@ class DatabaseManager(private val preferences: SharedPreferencesUtil) {
         private const val VENDORS = "vendors"
         private const val SPEAKERS = "speakers"
         private const val LOCATIONS = "locations"
+        private const val ARTICLES = "articles"
 
         fun getNextConference(preferred: Int, conferences: List<Conference>): Conference? {
             if (preferred != -1) {
@@ -54,7 +55,7 @@ class DatabaseManager(private val preferences: SharedPreferencesUtil) {
     }
 
     private val code
-        get() = conference.value?.code ?: "LAYERONE2019"
+        get() = conference.value?.code ?: "DEFCON27"
 
     private val firestore = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
@@ -241,11 +242,11 @@ class DatabaseManager(private val preferences: SharedPreferencesUtil) {
     }
 
 
-    fun getRecent(conference: Conference): LiveData<List<Event>> {
+    fun getRecent(): LiveData<List<Event>> {
         val mutableLiveData = MutableLiveData<List<Event>>()
 
         firestore.collection(CONFERENCES)
-                .document(conference.code)
+                .document(code)
                 .collection(EVENTS)
                 .orderBy("updated_timestamp", Query.Direction.DESCENDING)
                 .limit(3)
@@ -261,11 +262,30 @@ class DatabaseManager(private val preferences: SharedPreferencesUtil) {
         return mutableLiveData
     }
 
-    fun getFAQ(conference: Conference): LiveData<List<FirebaseFAQ>> {
+    fun getArticles(): LiveData<List<Article>> {
+        val results = MutableLiveData<List<Article>>()
+
+        firestore.collection(CONFERENCES)
+                .document(code)
+                .collection(ARTICLES)
+                .get()
+                .addOnSuccessListener {
+                    val articles = it.toObjects(FirebaseArticle::class.java)
+                            .filter { !it.hidden || App.isDeveloper }
+                            .map { it.toArticle() }
+
+                    results.postValue(articles)
+                }
+
+        return results
+    }
+
+
+    fun getFAQ(code: String = this.code): LiveData<List<FirebaseFAQ>> {
         val mutableLiveData = MutableLiveData<List<FirebaseFAQ>>()
 
         firestore.collection(CONFERENCES)
-                .document(conference.code)
+                .document(code)
                 .collection(FAQS)
                 .get()
                 .addOnSuccessListener {
