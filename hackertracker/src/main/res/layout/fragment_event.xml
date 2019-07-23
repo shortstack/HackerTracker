@@ -138,17 +138,28 @@
                     android:layout_gravity="bottom"
                     android:textColor="@color/white_70"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/category_text"
+                    app:layout_constraintEnd_toStartOf="@+id/category_dot"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     tools:text="Track 1 - Ceaser's" />
+
+
+                <View
+                    android:id="@+id/category_dot"
+                    android:layout_width="10dp"
+                    android:layout_height="10dp"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    android:background="@drawable/chip_background"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/category_text"
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <TextView
                     android:id="@+id/category_text"
                     style="@style/TextAppearance.AppCompat.Body1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/chip_background"
                     android:gravity="center"
                     android:textColor="@color/white_70"
                     app:layout_constraintBottom_toBottomOf="parent"
