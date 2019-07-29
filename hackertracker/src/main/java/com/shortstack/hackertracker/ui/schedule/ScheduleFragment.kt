@@ -62,6 +62,9 @@ class ScheduleFragment : Fragment() {
                     val first = manager.findFirstVisibleItemPosition()
                     val last = manager.findLastVisibleItemPosition()
 
+                    if( first == -1 || last == -1)
+                        return
+
                     day_selector.onScroll(adapter.getDateOfPosition(first), adapter.getDateOfPosition(last))
                 }
             }
