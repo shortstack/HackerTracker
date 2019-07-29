@@ -18,11 +18,14 @@ import org.koin.standalone.inject
 
 class FAQViewHolder(val view: View) : RecyclerView.ViewHolder(view), KoinComponent {
 
-    private val analytics: AnalyticsController by inject()
-
-    fun inflate(inflater: LayoutInflater, parent: ViewGroup): View {
-        return inflater.inflate(R.layout.row_faq, parent, false)
+    companion object {
+        fun inflate(parent: ViewGroup): RecyclerView.ViewHolder {
+            val view = LayoutInflater.from(parent.context).inflate(R.layout.row_faq, parent, false)
+            return FAQViewHolder(view)
+        }
     }
+
+    private val analytics: AnalyticsController by inject()
 
     fun render(faq: FirebaseFAQ) {
         view.answer.visibility = View.GONE
