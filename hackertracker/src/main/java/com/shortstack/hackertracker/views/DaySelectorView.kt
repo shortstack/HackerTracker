@@ -16,6 +16,7 @@ import androidx.transition.TransitionManager
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.view_day_selector.view.*
+import java.lang.IllegalArgumentException
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -41,7 +42,7 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
             if (view is TextView) {
                 children.add(view)
                 view.setOnClickListener {
-                    listener?.onDaySelected(Date((view.tag as String).toLong()))
+                    listener?.onDaySelected(Date(view.tag as Long))
                 }
             }
         }
@@ -111,76 +112,23 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
 
         children.clear()
 
-
         val format = SimpleDateFormat("MMM d")
 
-        val constraintSet = ConstraintSet()
-        constraintSet.clone(frame)
 
+        days.forEachIndexed { index, date ->
+            val view = when(index) {
+                0 -> day_1
+                1 -> day_2
+                2 -> day_3
+                3 -> day_4
+                else -> throw IllegalArgumentException("Day is out of bounds $index.")
+            }
 
-        val text = (LayoutInflater.from(context).inflate(R.layout.view_day, frame, false) as TextView).apply {
-//        val text = TextView(context).apply {
-            layoutParams = Constraints.LayoutParams(Constraints.LayoutParams.WRAP_CONTENT, Constraints.LayoutParams.MATCH_CONSTRAINT)
-            text = "Test"
-            id = 10000
+            view.text = format.format(date)
+            view.tag = date.time
         }
 
-
-        frame.addView(text)
-
-        constraintSet.apply {
-
-//            addToVerticalChain(text.id, ConstraintSet.PARENT_ID, ConstraintSet.PARENT_ID)
-//            addToHorizontalChain(text.id, ConstraintSet.PARENT_ID, 0)
-
-            connect(text.id, START, PARENT_ID, START)
-//            connect(text.id, ConstraintSet.END, ConstraintSet.PARENT_ID, ConstraintSet.UNSET)
-            connect(text.id, TOP, PARENT_ID, TOP)
-            connect(text.id, BOTTOM, PARENT_ID, BOTTOM)
-        }
-
-
-//
-//
-//
-//
-//        var previous = ConstraintSet.PARENT_ID
-//        for (day in days) {
-//
-//
-//
-//            val view = LayoutInflater.from(context).inflate(R.layout.view_day, this, false) as TextView
-//            view.id = day.hashCode()
-//            view.text = format.format(day)
-//            view.tag = day.time
-//
-//            constraintSet.apply {
-//                if(previous == ConstraintSet.PARENT_ID)
-//                    connect(view.id, ConstraintSet.START, previous, ConstraintSet.START)
-//                else
-//                    connect(view.id, ConstraintSet.START, previous, ConstraintSet.END)
-//
-//                connect(view.id, ConstraintSet.TOP, ConstraintSet.PARENT_ID, ConstraintSet.TOP)
-//                connect(view.id, ConstraintSet.BOTTOM, ConstraintSet.PARENT_ID, ConstraintSet.BOTTOM)
-//            }
-//
-//            frame.addView(view)
-//
-//            children.add(view)
-//            view.setOnClickListener {
-//                listener?.onDaySelected(Date(view.tag as Long))
-//            }
-//
-//            previous = view.id
-//        }
-
-        val transition = ChangeBounds().apply {
-            interpolator = AnticipateOvershootInterpolator(1.0f)
-            duration = 500
-        }
-
-        TransitionManager.beginDelayedTransition(frame, transition)
-        constraintSet.applyTo(frame)
+        3 /4
     }
 
     interface OnDaySelectedListener {
