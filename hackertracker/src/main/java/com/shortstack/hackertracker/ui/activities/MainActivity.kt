@@ -26,19 +26,16 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
+import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.SearchFragment
 import com.shortstack.hackertracker.ui.SettingsFragment
-import com.shortstack.hackertracker.ui.contests.ContestsFragment
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.information.speakers.SpeakerFragment
-import com.shortstack.hackertracker.ui.information.speakers.SpeakersFragment
-import com.shortstack.hackertracker.ui.information.vendors.VendorsFragment
-import com.shortstack.hackertracker.ui.workshops.WorkshopFragment
 import com.shortstack.hackertracker.utils.TickTimer
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -230,8 +227,8 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
                 R.id.nav_home -> HomeFragment.newInstance()
                 R.id.nav_schedule -> ScheduleFragment.newInstance()
                 R.id.nav_map -> MapsFragment.newInstance()
-                NAV_CONTESTS -> ContestsFragment.newInstance()
-                NAV_WORKSHOPS -> WorkshopFragment.newInstance()
+                NAV_CONTESTS -> ScheduleFragment.newInstance(Type(40003, "Contests", "DEFCON27", "", true))
+                NAV_WORKSHOPS -> ScheduleFragment.newInstance(Type(40001, "Workshops", "DEFCON27", "", true))
                 R.id.nav_settings -> SettingsFragment.newInstance()
                 R.id.search -> SearchFragment.newInstance()
                 else -> InformationFragment.newInstance()
