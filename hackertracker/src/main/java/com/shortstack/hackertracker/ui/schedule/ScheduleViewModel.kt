@@ -12,7 +12,7 @@ import com.shortstack.hackertracker.models.local.Type
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
-class ScheduleViewModel : ViewModel(), KoinComponent {
+class ScheduleViewModel(type: Type? = null) : ViewModel(), KoinComponent {
 
     private val database: DatabaseManager by inject()
 
@@ -33,7 +33,14 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
         result.value = Resource.loading(null)
 
         val events = database.getEvents(id)
-        val types = database.getTypes(id)
+
+        val types = if (type != null) {
+            val result = MediatorLiveData<List<Type>>()
+            result.value = listOf(type)
+            result
+        } else {
+            database.getTypes(id)
+        }
 
         result.addSource(events) {
             val types = types.value ?: emptyList()

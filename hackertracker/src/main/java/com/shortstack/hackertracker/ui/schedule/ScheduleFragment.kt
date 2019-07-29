@@ -16,6 +16,7 @@ import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.models.local.Conference
 import com.shortstack.hackertracker.models.local.Event
+import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.utils.TickTimer
 import com.shortstack.hackertracker.views.DaySelectorView
@@ -31,9 +32,27 @@ import kotlin.collections.ArrayList
 
 class ScheduleFragment : Fragment() {
 
-    private val adapter: ScheduleAdapter = ScheduleAdapter()
+    companion object {
+        private const val EXTRA_TYPE = "type"
+
+        fun newInstance(type: Type? = null): ScheduleFragment {
+            val fragment = ScheduleFragment()
+
+            if (type != null) {
+                val bundle = Bundle()
+                bundle.putParcelable(EXTRA_TYPE, type)
+                fragment.arguments = bundle
+            }
+
+            return fragment
+        }
+    }
 
     private val timer: TickTimer by inject()
+
+
+    private val adapter: ScheduleAdapter = ScheduleAdapter()
+
 
     private var disposable: Disposable? = null
 
@@ -46,23 +65,21 @@ class ScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
-
         shouldScroll = true
         list.adapter = adapter
 
         val decoration = StickyRecyclerHeadersDecoration(adapter)
         list.addItemDecoration(decoration)
 
-        list.addOnScrollListener(object: RecyclerView.OnScrollListener(){
+        list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 val manager = list.layoutManager as? LinearLayoutManager
-                if(manager != null ) {
+                if (manager != null) {
                     val first = manager.findFirstVisibleItemPosition()
                     val last = manager.findLastVisibleItemPosition()
 
-                    if( first == -1 || last == -1)
+                    if (first == -1 || last == -1)
                         return
 
                     day_selector.onScroll(adapter.getDateOfPosition(first), adapter.getDateOfPosition(last))
@@ -70,14 +87,18 @@ class ScheduleFragment : Fragment() {
             }
         })
 
-        day_selector.addOnDaySelectedListener(object: DaySelectorView.OnDaySelectedListener{
+        day_selector.addOnDaySelectedListener(object : DaySelectorView.OnDaySelectedListener {
             override fun onDaySelected(day: Date) {
                 scrollToDate(day)
             }
         })
 
 
-        val scheduleViewModel = ViewModelProviders.of(this).get(ScheduleViewModel::class.java)
+        val type = arguments?.getParcelable<Type>(EXTRA_TYPE)
+
+        val factory = ScheduleViewModelFactory(type)
+
+        val scheduleViewModel = ViewModelProviders.of(this, factory).get(ScheduleViewModel::class.java)
         scheduleViewModel.conference.observe(this, Observer {
             addDayTabs(it)
         })
@@ -205,9 +226,5 @@ class ScheduleFragment : Fragment() {
         return dates
     }
 
-    companion object {
 
-        fun newInstance() = ScheduleFragment()
-
-    }
 }
