@@ -103,7 +103,7 @@ class SpeakerFragment : Fragment() {
                 events_header.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
 
                 list.forEach {
-                    events.addView(EventView(context, it))
+                    events.addView(EventView(context, it, EventView.DISPLAY_MODE_MIN))
                 }
             })
 
