@@ -98,6 +98,12 @@
     <string name="wifi_diy">Or click here to do it yourself!</string>
     <string name="link">Link</string>
     <string name="website">Website</string>
+    <string name="choose_theme">Choose theme</string>
+
+
+    <!-- Settings -->
+    <string name="version">Version %1$s</string>
+    <string name="change_conference">Change conference</string>
 
 
 </resources>

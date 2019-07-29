@@ -28,7 +28,7 @@ import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.SearchFragment
-import com.shortstack.hackertracker.ui.SettingsFragment
+import com.shortstack.hackertracker.ui.settings.SettingsFragment
 import com.shortstack.hackertracker.ui.contests.ContestsFragment
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment

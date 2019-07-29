@@ -56,6 +56,7 @@ class DatabaseManager {
 
 
     val conference = MutableLiveData<Conference>()
+    val conferences = MutableLiveData<List<Conference>>()
 
     private var user: FirebaseUser? = null
 
@@ -77,15 +78,16 @@ class DatabaseManager {
                     .get()
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
-                            val conferences = it.result?.toObjects(FirebaseConference::class.java)
+                            val list = it.result?.toObjects(FirebaseConference::class.java)
                                     ?.filter { !it.hidden || App.isDeveloper }
                                     ?.map { it.toConference() }
                                     ?.sortedBy { it.startDate }
 
                                     ?: emptyList()
 
-                            val con = getNextConference(conferences)
+                            val con = getNextConference(list)
                             conference.postValue(con)
+                            conferences.postValue(list)
 
                             if (con != null)
                                 getFCMToken(con)
