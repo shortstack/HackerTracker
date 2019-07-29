@@ -20,13 +20,14 @@ import com.shortstack.hackertracker.models.firebase.*
 import com.shortstack.hackertracker.models.local.*
 import com.shortstack.hackertracker.network.task.ReminderWorker
 import com.shortstack.hackertracker.utils.MyClock
+import com.shortstack.hackertracker.utils.SharedPreferencesUtil
 import com.shortstack.hackertracker.utils.now
 import io.reactivex.Single
 import java.io.File
 import java.util.concurrent.TimeUnit
 
 
-class DatabaseManager {
+class DatabaseManager(private val preferences: SharedPreferencesUtil) {
 
     companion object {
         private const val CONFERENCES = "conferences"
@@ -41,7 +42,12 @@ class DatabaseManager {
         private const val SPEAKERS = "speakers"
         private const val LOCATIONS = "locations"
 
-        fun getNextConference(conferences: List<Conference>): Conference? {
+        fun getNextConference(preferred: Int, conferences: List<Conference>): Conference? {
+            if (preferred != -1) {
+                val pref = conferences.find { it.id == preferred && !it.hasFinished }
+                if (pref != null) return pref
+            }
+
             return conferences.sortedBy { it.startDate }.firstOrNull { !it.hasFinished }
                     ?: conferences.lastOrNull()
         }
@@ -85,7 +91,8 @@ class DatabaseManager {
 
                                     ?: emptyList()
 
-                            val con = getNextConference(list)
+
+                            val con = getNextConference(preferences.preferredConference, list)
                             conference.postValue(con)
                             conferences.postValue(list)
 
@@ -113,6 +120,8 @@ class DatabaseManager {
     }
 
     fun changeConference(id: Int) {
+        preferences.preferredConference = id
+
         val current = conference.value
 
         if (current != null) {

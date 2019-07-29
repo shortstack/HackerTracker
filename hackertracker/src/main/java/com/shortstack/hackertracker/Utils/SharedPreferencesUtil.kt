@@ -25,6 +25,13 @@ class SharedPreferencesUtil(context: Context) {
             preferences.edit().putBoolean(USER_ANALYTICS, value).apply()
         }
 
+
+    var preferredConference: Int
+        get() = preferences.getInt(USER_CONFERENCE, -1)
+        set(value) {
+            preferences.edit().putInt(USER_CONFERENCE, value).apply()
+        }
+
     fun setPreference(key: String, isChecked: Boolean) {
         when (key) {
             USER_ANALYTICS -> allowAnalytics = isChecked
