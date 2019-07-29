@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.firebase.FirebaseFAQ
+import com.shortstack.hackertracker.models.local.FAQ
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
@@ -14,9 +15,9 @@ class FAQViewModel : ViewModel(), KoinComponent {
 
     private val database: DatabaseManager by inject()
 
-    private val result = MediatorLiveData<Resource<List<FirebaseFAQ>>>()
+    private val result = MediatorLiveData<Resource<List<FAQ>>>()
 
-    val faq: LiveData<Resource<List<FirebaseFAQ>>>
+    val faq: LiveData<Resource<List<FAQ>>>
         get() {
             val conference = database.conference
             return Transformations.switchMap(conference) { id ->

@@ -137,3 +137,9 @@ fun FirebaseArticle.toArticle() = Article(
         name,
         text
 )
+
+fun FirebaseFAQ.toFAQ() = FAQ(
+        id,
+        question,
+        answer
+)

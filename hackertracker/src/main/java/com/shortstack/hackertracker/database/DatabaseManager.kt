@@ -307,8 +307,8 @@ class DatabaseManager {
     }
 
 
-    fun getFAQ(code: String = this.code): LiveData<List<FirebaseFAQ>> {
-        val mutableLiveData = MutableLiveData<List<FirebaseFAQ>>()
+    fun getFAQ(code: String = this.code): LiveData<List<FAQ>> {
+        val mutableLiveData = MutableLiveData<List<FAQ>>()
 
         firestore.collection(CONFERENCES)
                 .document(code)
@@ -316,6 +316,7 @@ class DatabaseManager {
                 .get()
                 .addOnSuccessListener {
                     val faqs = it.toObjects(FirebaseFAQ::class.java)
+                            .map { it.toFAQ() }
                     mutableLiveData.postValue(faqs)
                 }
 

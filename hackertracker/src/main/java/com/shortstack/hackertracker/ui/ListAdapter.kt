@@ -5,10 +5,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.models.firebase.FirebaseFAQ
-import com.shortstack.hackertracker.models.local.Location
-import com.shortstack.hackertracker.models.local.Speaker
-import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.models.local.Vendor
+import com.shortstack.hackertracker.models.local.*
 import com.shortstack.hackertracker.ui.information.faq.FAQViewHolder
 import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
@@ -54,7 +51,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is LocationViewHolder -> holder.render(item as Location)
             is DayViewHolder -> holder.render(item as Day)
             is VendorViewHolder -> holder.render(item as Vendor)
-            is FAQViewHolder -> holder.render(item as FirebaseFAQ)
+            is FAQViewHolder -> holder.render(item as FAQ)
         }
     }
 
@@ -65,7 +62,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is Event -> EVENT
             is Day -> DAY
             is Vendor -> VENDOR
-            is FirebaseFAQ -> FAQ
+            is FAQ -> FAQ
             else -> throw java.lang.IllegalStateException("Unknown viewType ${collection[position].javaClass}")
         }
     }
