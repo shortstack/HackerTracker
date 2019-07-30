@@ -7,9 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
@@ -32,8 +30,8 @@ class HomeFragment : Fragment() {
         list.layoutManager = LinearLayoutManager(context)
 
         val viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
-        viewModel.recent.observe(this, Observer {
-            adapter.addRecent(it)
+        viewModel.results.observe(this, Observer {
+            adapter.setElements(it)
         })
 
         loading_progress.visibility = View.GONE

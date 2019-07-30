@@ -132,3 +132,8 @@ fun FirebaseVendor.toVendor() = Vendor(
         link,
         partner
 )
+
+fun FirebaseArticle.toArticle() = Article(
+        name,
+        text
+)

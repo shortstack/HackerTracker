@@ -23,7 +23,7 @@ class InformationViewModel : ViewModel(), KoinComponent {
                 result.value = Resource.loading(null)
 
                 if (id != null) {
-                    result.addSource(database.getFAQ(id)) {
+                    result.addSource(database.getFAQ(id.code)) {
                         result.value = Resource.success(it)
                     }
                 } else {
