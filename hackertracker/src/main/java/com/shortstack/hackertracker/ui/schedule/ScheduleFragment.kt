@@ -85,7 +85,7 @@ class ScheduleFragment : Fragment() {
     private fun getScrollIndex(data: ArrayList<Any>, first: Event): Int {
         val event = data.indexOf(first)
         val index = data.indexOf(data.subList(0, event).filterIsInstance<Time>().last())
-        if (index > 1) {
+        if (index > 0) {
             if (data[index - 1] is Day) {
                 return index - 1
             }
