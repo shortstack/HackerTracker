@@ -41,6 +41,7 @@ class DatabaseManager(private val preferences: SharedPreferencesUtil) {
         private const val VENDORS = "vendors"
         private const val SPEAKERS = "speakers"
         private const val LOCATIONS = "locations"
+        private const val ARTICLES = "articles"
 
         fun getNextConference(preferred: Int, conferences: List<Conference>): Conference? {
             if (preferred != -1) {
@@ -48,13 +49,20 @@ class DatabaseManager(private val preferences: SharedPreferencesUtil) {
                 if (pref != null) return pref
             }
 
-            return conferences.sortedBy { it.startDate }.firstOrNull { !it.hasFinished }
+            val list = conferences.sortedBy { it.startDate }
+
+            val defcon = list.find { it.code == "DEFCON27" }
+            if (defcon?.hasFinished == false) {
+                return defcon
+            }
+
+            return list.firstOrNull { !it.hasFinished }
                     ?: conferences.lastOrNull()
         }
     }
 
     private val code
-        get() = conference.value?.code ?: "LAYERONE2019"
+        get() = conference.value?.code ?: "DEFCON27"
 
     private val firestore = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
@@ -169,7 +177,7 @@ class DatabaseManager(private val preferences: SharedPreferencesUtil) {
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
                         val events = snapshot?.toObjects(FirebaseEvent::class.java)
-                                ?.filter { !it.hidden || App.isDeveloper }
+                                ?.filter { (!it.hidden || App.isDeveloper) && !it.type.filtered }
                                 ?.map { it.toEvent() }
 
                         mutableLiveData.postValue(events)
@@ -241,11 +249,11 @@ class DatabaseManager(private val preferences: SharedPreferencesUtil) {
     }
 
 
-    fun getRecent(conference: Conference): LiveData<List<Event>> {
+    fun getRecent(): LiveData<List<Event>> {
         val mutableLiveData = MutableLiveData<List<Event>>()
 
         firestore.collection(CONFERENCES)
-                .document(conference.code)
+                .document(code)
                 .collection(EVENTS)
                 .orderBy("updated_timestamp", Query.Direction.DESCENDING)
                 .limit(3)
@@ -261,11 +269,30 @@ class DatabaseManager(private val preferences: SharedPreferencesUtil) {
         return mutableLiveData
     }
 
-    fun getFAQ(conference: Conference): LiveData<List<FirebaseFAQ>> {
+    fun getArticles(): LiveData<List<Article>> {
+        val results = MutableLiveData<List<Article>>()
+
+        firestore.collection(CONFERENCES)
+                .document(code)
+                .collection(ARTICLES)
+                .get()
+                .addOnSuccessListener {
+                    val articles = it.toObjects(FirebaseArticle::class.java)
+                            .filter { !it.hidden || App.isDeveloper }
+                            .map { it.toArticle() }
+
+                    results.postValue(articles)
+                }
+
+        return results
+    }
+
+
+    fun getFAQ(code: String = this.code): LiveData<List<FirebaseFAQ>> {
         val mutableLiveData = MutableLiveData<List<FirebaseFAQ>>()
 
         firestore.collection(CONFERENCES)
-                .document(conference.code)
+                .document(code)
                 .collection(FAQS)
                 .get()
                 .addOnSuccessListener {
@@ -466,7 +493,7 @@ class DatabaseManager(private val preferences: SharedPreferencesUtil) {
                 .get()
                 .addOnSuccessListener {
                     val contests = it.toObjects(FirebaseEvent::class.java)
-                            .filter { !it.hidden || App.isDeveloper && it.type.name == "Contest" }
+                            .filter { (!it.hidden || App.isDeveloper) && it.type.name == "Contest" }
                             .map { it.toEvent() }
 
                     mutableLiveData.postValue(contests)
@@ -484,7 +511,7 @@ class DatabaseManager(private val preferences: SharedPreferencesUtil) {
                 .get()
                 .addOnSuccessListener {
                     val workshops = it.toObjects(FirebaseEvent::class.java)
-                            .filter { !it.hidden || App.isDeveloper && it.type.name == "Workshop" }
+                            .filter { (!it.hidden || App.isDeveloper) && it.type.name == "Workshop" }
                             .map { it.toEvent() }
 
                     mutableLiveData.postValue(workshops)

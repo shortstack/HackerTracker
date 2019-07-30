@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.utilities
+package com.shortstack.hackertracker.utils
 
 import com.shortstack.hackertracker.BuildConfig
 import java.text.SimpleDateFormat

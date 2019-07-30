@@ -1,7 +1,9 @@
 package com.shortstack.hackertracker.ui.home
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.shortstack.hackertracker.models.local.Article
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 
@@ -9,24 +11,31 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     companion object {
         private const val SKULL = 0
-        private const val CARD = 1
+        private const val HEADER = 1
         private const val EVENT = 2
+        private const val ARTICLE = 3
     }
 
-    private val collection = ArrayList<Event>()
+    private val collection = ArrayList<Any>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
             SKULL -> SkullHeaderViewHolder.inflate(parent)
-            CARD -> HomeCardViewHolder.inflate(parent)
+            HEADER -> HeaderViewHolder.inflate(parent)
             EVENT -> EventViewHolder.inflate(parent)
+            ARTICLE -> ArticleViewHolder.inflate(parent)
             else -> throw IllegalStateException("Unknown viewType $viewType")
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (position) {
-            0 -> SKULL
+        if (position == 0)
+            return SKULL
+
+
+        return when (collection[position - 1]) {
+            is Article -> ARTICLE
+            is String -> HEADER
             else -> EVENT
         }
     }
@@ -35,11 +44,13 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
-            is EventViewHolder -> holder.render(collection[position - 1])
+            is EventViewHolder -> holder.render(collection[position - 1] as Event)
+            is ArticleViewHolder -> holder.render(collection[position - 1] as Article)
+            is HeaderViewHolder -> holder.render(collection[position - 1] as String)
         }
     }
 
-    fun addRecent(list: List<Event>) {
+    fun setElements(list: List<Any>) {
         val size = collection.size
         collection.clear()
         notifyItemRangeRemoved(1, size)
