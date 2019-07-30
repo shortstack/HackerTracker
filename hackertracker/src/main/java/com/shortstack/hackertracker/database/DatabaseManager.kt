@@ -49,7 +49,14 @@ class DatabaseManager(private val preferences: SharedPreferencesUtil) {
                 if (pref != null) return pref
             }
 
-            return conferences.sortedBy { it.startDate }.firstOrNull { !it.hasFinished }
+            val list = conferences.sortedBy { it.startDate }
+
+            val defcon = list.find { it.code == "DEFCON27" }
+            if (defcon?.hasFinished == false) {
+                return defcon
+            }
+
+            return list.firstOrNull { !it.hasFinished }
                     ?: conferences.lastOrNull()
         }
     }
