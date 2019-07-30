@@ -170,7 +170,7 @@ class DatabaseManager(private val preferences: SharedPreferencesUtil) {
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
                         val events = snapshot?.toObjects(FirebaseEvent::class.java)
-                                ?.filter { !it.hidden || App.isDeveloper }
+                                ?.filter { (!it.hidden || App.isDeveloper) && !it.type.filtered }
                                 ?.map { it.toEvent() }
 
                         mutableLiveData.postValue(events)
@@ -486,7 +486,7 @@ class DatabaseManager(private val preferences: SharedPreferencesUtil) {
                 .get()
                 .addOnSuccessListener {
                     val contests = it.toObjects(FirebaseEvent::class.java)
-                            .filter { !it.hidden || App.isDeveloper && it.type.name == "Contest" }
+                            .filter { (!it.hidden || App.isDeveloper) && it.type.name == "Contest" }
                             .map { it.toEvent() }
 
                     mutableLiveData.postValue(contests)
@@ -504,7 +504,7 @@ class DatabaseManager(private val preferences: SharedPreferencesUtil) {
                 .get()
                 .addOnSuccessListener {
                     val workshops = it.toObjects(FirebaseEvent::class.java)
-                            .filter { !it.hidden || App.isDeveloper && it.type.name == "Workshop" }
+                            .filter { (!it.hidden || App.isDeveloper) && it.type.name == "Workshop" }
                             .map { it.toEvent() }
 
                     mutableLiveData.postValue(workshops)
