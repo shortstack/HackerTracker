@@ -153,10 +153,7 @@ class ScheduleFragment : Fragment() {
         val event = data.indexOf(first)
         val element = data.subList(0, event).filterIsInstance<Day>().last()
         val index = data.indexOf(element)
-        if (index > 1) {
-            if (data[index - 1] is Day) {
-                return index - 1
-            }
+        if (index != -1) {
             return index
         }
         return event

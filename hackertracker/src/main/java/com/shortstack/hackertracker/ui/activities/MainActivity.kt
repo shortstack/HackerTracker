@@ -23,23 +23,18 @@ import com.google.firebase.auth.FirebaseAuth
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
+import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.SearchFragment
-import com.shortstack.hackertracker.ui.settings.SettingsFragment
-import com.shortstack.hackertracker.ui.contests.ContestsFragment
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
+import com.shortstack.hackertracker.ui.information.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
-import com.shortstack.hackertracker.ui.speakers.SpeakerFragment
-import com.shortstack.hackertracker.ui.speakers.SpeakersFragment
-import com.shortstack.hackertracker.ui.vendors.VendorsFragment
-import com.shortstack.hackertracker.ui.workshops.WorkshopFragment
+import com.shortstack.hackertracker.ui.settings.SettingsFragment
 import com.shortstack.hackertracker.utilities.TickTimer
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -50,8 +45,6 @@ import org.koin.android.ext.android.inject
 
 
 class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
-
-    private val database: DatabaseManager by inject()
 
     private val timer: TickTimer by inject()
 
