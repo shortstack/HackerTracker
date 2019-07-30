@@ -8,8 +8,8 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.getDateDifference
 import com.shortstack.hackertracker.isToday
 import com.shortstack.hackertracker.utilities.MyClock
-import com.shortstack.hackertracker.utils.TickTimer
-import com.shortstack.hackertracker.utils.TimeUtil
+import com.shortstack.hackertracker.utilities.TickTimer
+import com.shortstack.hackertracker.utilities.TimeUtil
 import com.shortstack.hackertracker.utilities.now
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 
-class SharedPreferencesUtil(context: Context) {
+class Storage(context: Context) {
 
     companion object {
         private const val USER_THEME = "user_theme"

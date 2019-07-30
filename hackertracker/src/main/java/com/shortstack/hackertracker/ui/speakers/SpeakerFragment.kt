@@ -12,14 +12,12 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.analytics.AnalyticsController
+import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.views.EventView
 import com.shortstack.hackertracker.views.StatusBarSpacer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_speakers.*
 import org.koin.android.ext.android.inject
 
@@ -40,7 +38,7 @@ class SpeakerFragment : Fragment() {
     }
 
     private val database: DatabaseManager by inject()
-    private val analytics: AnalyticsController by inject()
+    private val analytics: Analytics by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_speakers, container, false)
@@ -88,7 +86,7 @@ class SpeakerFragment : Fragment() {
                     val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(url))
                     context.startActivity(intent)
 
-                    analytics.onSpeakerEvent(AnalyticsController.SPEAKER_TWITTER, speaker)
+                    analytics.onSpeakerEvent(Analytics.SPEAKER_TWITTER, speaker)
                 }
             }
 
@@ -109,7 +107,7 @@ class SpeakerFragment : Fragment() {
                 }
             })
 
-            analytics.onSpeakerEvent(AnalyticsController.SPEAKER_VIEW, it)
+            analytics.onSpeakerEvent(Analytics.SPEAKER_VIEW, it)
         }
     }
 }

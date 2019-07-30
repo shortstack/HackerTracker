@@ -39,7 +39,7 @@ import com.shortstack.hackertracker.ui.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.speakers.SpeakersFragment
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import com.shortstack.hackertracker.ui.workshops.WorkshopFragment
-import com.shortstack.hackertracker.utils.TickTimer
+import com.shortstack.hackertracker.utilities.TickTimer
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*

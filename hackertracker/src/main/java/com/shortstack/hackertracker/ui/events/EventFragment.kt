@@ -13,12 +13,12 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.analytics.AnalyticsController
+import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.utils.TimeUtil
+import com.shortstack.hackertracker.utilities.TimeUtil
 import com.shortstack.hackertracker.views.SpeakerView
 import com.shortstack.hackertracker.views.StatusBarSpacer
 import kotlinx.android.synthetic.main.empty_text.*
@@ -43,7 +43,7 @@ class EventFragment : Fragment() {
     }
 
     private val database: DatabaseManager by inject()
-    private val analytics: AnalyticsController by inject()
+    private val analytics: Analytics by inject()
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -98,13 +98,13 @@ class EventFragment : Fragment() {
 
                 link.setOnClickListener {
                     onLinkClick(url)
-                    analytics.onEventAction(AnalyticsController.EVENT_OPEN_URL, event)
+                    analytics.onEventAction(Analytics.EVENT_OPEN_URL, event)
                 }
             }
 
             share.setOnClickListener {
                 onShareClick(event)
-                analytics.onEventAction(AnalyticsController.EVENT_SHARE, event)
+                analytics.onEventAction(Analytics.EVENT_SHARE, event)
             }
 
             star.setOnClickListener {
@@ -121,7 +121,7 @@ class EventFragment : Fragment() {
             val speakers = displaySpeakers(event)
 //            displayRelatedEvents(it, speakers)
 
-            analytics.onEventAction(AnalyticsController.EVENT_VIEW, event)
+            analytics.onEventAction(Analytics.EVENT_VIEW, event)
         }
     }
 
@@ -142,7 +142,7 @@ class EventFragment : Fragment() {
         event.isBookmarked = !event.isBookmarked
 
         database.updateBookmark(event)
-        val action = if (event.isBookmarked) AnalyticsController.EVENT_BOOKMARK else AnalyticsController.EVENT_UNBOOKMARK
+        val action = if (event.isBookmarked) Analytics.EVENT_BOOKMARK else Analytics.EVENT_UNBOOKMARK
         analytics.onEventAction(action, event)
 
         displayBookmark(event)

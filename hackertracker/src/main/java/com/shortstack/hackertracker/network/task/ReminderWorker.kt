@@ -3,7 +3,7 @@ package com.shortstack.hackertracker.network.task
 import androidx.work.Worker
 import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.utils.NotificationHelper
+import com.shortstack.hackertracker.utilities.NotificationHelper
 import io.reactivex.disposables.Disposable
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject

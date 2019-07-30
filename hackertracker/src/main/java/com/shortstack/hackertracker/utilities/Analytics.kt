@@ -1,13 +1,12 @@
-package com.shortstack.hackertracker.analytics
+package com.shortstack.hackertracker.utilities
 
 import com.crashlytics.android.Crashlytics
 import com.crashlytics.android.answers.Answers
 import com.crashlytics.android.answers.CustomEvent
-import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.utils.SharedPreferencesUtil
+import com.shortstack.hackertracker.models.local.Speaker
 
-class AnalyticsController(private val storage: SharedPreferencesUtil) {
+class Analytics(private val storage: Storage) {
 
     companion object {
         const val EVENT_VIEW = "Event - View"

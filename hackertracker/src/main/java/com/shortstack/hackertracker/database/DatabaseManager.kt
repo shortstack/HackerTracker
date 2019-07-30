@@ -20,14 +20,14 @@ import com.shortstack.hackertracker.models.firebase.*
 import com.shortstack.hackertracker.models.local.*
 import com.shortstack.hackertracker.network.task.ReminderWorker
 import com.shortstack.hackertracker.utilities.MyClock
-import com.shortstack.hackertracker.utils.SharedPreferencesUtil
+import com.shortstack.hackertracker.utilities.Storage
 import com.shortstack.hackertracker.utilities.now
 import io.reactivex.Single
 import java.io.File
 import java.util.concurrent.TimeUnit
 
 
-class DatabaseManager(private val preferences: SharedPreferencesUtil) {
+class DatabaseManager(private val preferences: Storage) {
 
     companion object {
         private const val CONFERENCES = "conferences"

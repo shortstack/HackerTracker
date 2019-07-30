@@ -8,7 +8,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 fun setCurrentClock(date: String) {
-    mockkStatic("com.shortstack.hackertracker.utils.MyClockKt")
+    mockkStatic("com.shortstack.hackertracker.utilities.MyClockKt")
     every {
         MyClock().now()
     } returns parse(date)

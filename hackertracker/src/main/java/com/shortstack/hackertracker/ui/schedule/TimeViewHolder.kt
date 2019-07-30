@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Time
-import com.shortstack.hackertracker.utils.TimeUtil
+import com.shortstack.hackertracker.utilities.TimeUtil
 import kotlinx.android.synthetic.main.row_time_container.view.*
 
 class TimeViewHolder(val view: View) : RecyclerView.ViewHolder(view) {

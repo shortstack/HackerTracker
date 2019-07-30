@@ -4,16 +4,16 @@ import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.analytics.AnalyticsController
-import com.shortstack.hackertracker.utils.SharedPreferencesUtil
+import com.shortstack.hackertracker.utilities.Analytics
+import com.shortstack.hackertracker.utilities.Storage
 import kotlinx.android.synthetic.main.view_settings_switch.view.*
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
 class SettingsSwitchView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs), KoinComponent {
 
-    private val storage: SharedPreferencesUtil by inject()
-    private val analytics: AnalyticsController by inject()
+    private val storage: Storage by inject()
+    private val analytics: Analytics by inject()
 
     init {
         inflate(context, R.layout.view_settings_switch, this)
@@ -49,9 +49,9 @@ class SettingsSwitchView(context: Context?, attrs: AttributeSet?) : LinearLayout
         storage.setPreference(control.tag as String, control.isChecked)
 
         val event = when (control.tag as String) {
-            "user_analytics" -> AnalyticsController.SETTINGS_ANALYTICS
-            "user_allow_push_notifications" -> AnalyticsController.SETTINGS_NOTIFICATIONS
-            "user_show_expired_events" -> AnalyticsController.SETTINGS_EXPIRED_EVENTS
+            "user_analytics" -> Analytics.SETTINGS_ANALYTICS
+            "user_allow_push_notifications" -> Analytics.SETTINGS_NOTIFICATIONS
+            "user_show_expired_events" -> Analytics.SETTINGS_EXPIRED_EVENTS
             // We're not tracking these events, ignore.
             else -> return
         }
