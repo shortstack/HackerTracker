@@ -18,9 +18,9 @@ import com.shortstack.hackertracker.models.local.Conference
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
-import com.shortstack.hackertracker.utils.TickTimer
 import com.shortstack.hackertracker.views.DaySelectorView
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
+import com.shortstack.hackertracker.utilities.TickTimer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_schedule.*

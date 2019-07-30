@@ -19,14 +19,15 @@ import com.shortstack.hackertracker.*
 import com.shortstack.hackertracker.models.firebase.*
 import com.shortstack.hackertracker.models.local.*
 import com.shortstack.hackertracker.network.task.ReminderWorker
-import com.shortstack.hackertracker.utils.MyClock
-import com.shortstack.hackertracker.utils.now
+import com.shortstack.hackertracker.utilities.MyClock
+import com.shortstack.hackertracker.utilities.Storage
+import com.shortstack.hackertracker.utilities.now
 import io.reactivex.Single
 import java.io.File
 import java.util.concurrent.TimeUnit
 
 
-class DatabaseManager {
+class DatabaseManager(private val preferences: Storage) {
 
     companion object {
         private const val CONFERENCES = "conferences"
@@ -42,8 +43,20 @@ class DatabaseManager {
         private const val LOCATIONS = "locations"
         private const val ARTICLES = "articles"
 
-        fun getNextConference(conferences: List<Conference>): Conference? {
-            return conferences.sortedByDescending { it.startDate }.firstOrNull { !it.hasFinished }
+        fun getNextConference(preferred: Int, conferences: List<Conference>): Conference? {
+            if (preferred != -1) {
+                val pref = conferences.find { it.id == preferred && !it.hasFinished }
+                if (pref != null) return pref
+            }
+
+            val list = conferences.sortedBy { it.startDate }
+
+            val defcon = list.find { it.code == "DEFCON27" }
+            if (defcon?.hasFinished == false) {
+                return defcon
+            }
+
+            return list.firstOrNull { !it.hasFinished }
                     ?: conferences.lastOrNull()
         }
     }
@@ -57,6 +70,7 @@ class DatabaseManager {
 
 
     val conference = MutableLiveData<Conference>()
+    val conferences = MutableLiveData<List<Conference>>()
 
     private var user: FirebaseUser? = null
 
@@ -78,15 +92,17 @@ class DatabaseManager {
                     .get()
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
-                            val conferences = it.result?.toObjects(FirebaseConference::class.java)
+                            val list = it.result?.toObjects(FirebaseConference::class.java)
                                     ?.filter { !it.hidden || App.isDeveloper }
                                     ?.map { it.toConference() }
                                     ?.sortedBy { it.startDate }
 
                                     ?: emptyList()
 
-                            val con = getNextConference(conferences)
+
+                            val con = getNextConference(preferences.preferredConference, list)
                             conference.postValue(con)
+                            conferences.postValue(list)
 
                             if (con != null)
                                 getFCMToken(con)
@@ -112,6 +128,8 @@ class DatabaseManager {
     }
 
     fun changeConference(id: Int) {
+        preferences.preferredConference = id
+
         val current = conference.value
 
         if (current != null) {
@@ -159,7 +177,7 @@ class DatabaseManager {
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
                         val events = snapshot?.toObjects(FirebaseEvent::class.java)
-                                ?.filter { !it.hidden || App.isDeveloper }
+                                ?.filter { (!it.hidden || App.isDeveloper) && !it.type.filtered }
                                 ?.map { it.toEvent() }
 
                         mutableLiveData.postValue(events)
@@ -513,7 +531,7 @@ class DatabaseManager {
                 .get()
                 .addOnSuccessListener {
                     val contests = it.toObjects(FirebaseEvent::class.java)
-                            .filter { !it.hidden || App.isDeveloper && it.type.name == "Contest" }
+                            .filter { (!it.hidden || App.isDeveloper) && it.type.name == "Contest" }
                             .map { it.toEvent() }
 
                     mutableLiveData.postValue(contests)
@@ -531,7 +549,7 @@ class DatabaseManager {
                 .get()
                 .addOnSuccessListener {
                     val workshops = it.toObjects(FirebaseEvent::class.java)
-                            .filter { !it.hidden || App.isDeveloper && it.type.name == "Workshop" }
+                            .filter { (!it.hidden || App.isDeveloper) && it.type.name == "Workshop" }
                             .map { it.toEvent() }
 
                     mutableLiveData.postValue(workshops)

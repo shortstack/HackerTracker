@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.utils
+package com.shortstack.hackertracker.utilities
 
 import io.reactivex.Observable
 import io.reactivex.disposables.Disposable

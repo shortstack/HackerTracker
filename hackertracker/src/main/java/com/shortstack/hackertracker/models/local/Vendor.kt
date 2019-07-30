@@ -12,7 +12,12 @@ data class Vendor(
         val partner: Boolean
 ) : Parcelable {
 
-    val colour: Int = id
+    val colour: Int
+        get() {
+            if (id == -1)
+                return 0
+            return id
+        }
 
     val summary: String
         get() {

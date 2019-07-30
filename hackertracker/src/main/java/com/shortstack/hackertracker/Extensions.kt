@@ -7,8 +7,8 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.transition.Fade
 import com.shortstack.hackertracker.models.firebase.*
 import com.shortstack.hackertracker.models.local.*
-import com.shortstack.hackertracker.utils.MyClock
-import com.shortstack.hackertracker.utils.now
+import com.shortstack.hackertracker.utilities.MyClock
+import com.shortstack.hackertracker.utilities.now
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit

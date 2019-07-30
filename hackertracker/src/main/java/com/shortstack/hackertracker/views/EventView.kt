@@ -10,11 +10,12 @@ import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.analytics.AnalyticsController
+import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.utils.TickTimer
+import com.shortstack.hackertracker.utilities.TickTimer
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.row_event.view.*
 import org.koin.standalone.KoinComponent
@@ -29,7 +30,7 @@ class EventView : FrameLayout, KoinComponent {
 
     private val timer: TickTimer by inject()
     private val database: DatabaseManager by inject()
-    private val analytics: AnalyticsController by inject()
+    private val analytics: Analytics by inject()
 
 
     private var disposable: Disposable? = null
@@ -157,7 +158,7 @@ class EventView : FrameLayout, KoinComponent {
         event.isBookmarked = !event.isBookmarked
         database.updateBookmark(event)
 
-        val action = if (event.isBookmarked) AnalyticsController.EVENT_BOOKMARK else AnalyticsController.EVENT_UNBOOKMARK
+        val action = if (event.isBookmarked) Analytics.EVENT_BOOKMARK else Analytics.EVENT_UNBOOKMARK
         analytics.onEventAction(action, event)
 
         updateBookmark(event)

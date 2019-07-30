@@ -18,10 +18,8 @@ class HomeViewModel : ViewModel(), KoinComponent {
     val results: LiveData<List<Any>>
 
     private val bookmarks = database.getBookmarks()
-
     private val recent = database.getRecent()
     private val articles = database.getArticles()
-    private val faq = database.getFAQ()
 
     init {
         results = Transformations.switchMap(database.conference) {
@@ -38,11 +36,6 @@ class HomeViewModel : ViewModel(), KoinComponent {
             results.addSource(articles) {
                 setValue(results, articles = it)
             }
-
-            results.addSource(faq) {
-                Logger.d("Got FAQ.")
-            }
-
 
             return@switchMap results
         }
@@ -68,6 +61,15 @@ class HomeViewModel : ViewModel(), KoinComponent {
             list.add("Recent Updates")
             list.addAll(recent)
         }
+    }
+
+    private fun setValue(results: MediatorLiveData<List<Any>>, articles: List<Article>, recent: List<Event>) {
+        val list = ArrayList<Any>()
+
+        list.add("Announcements")
+        list.addAll(articles)
+        list.add("Recent Updates")
+        list.addAll(recent)
 
         results.postValue(list)
     }

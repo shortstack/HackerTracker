@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.ui.home
 
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.models.local.Article
 import com.shortstack.hackertracker.models.local.Event

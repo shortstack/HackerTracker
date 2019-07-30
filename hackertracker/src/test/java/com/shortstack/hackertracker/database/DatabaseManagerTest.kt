@@ -4,14 +4,8 @@ import com.shortstack.hackertracker.models.firebase.FirebaseConference
 import com.shortstack.hackertracker.models.local.Conference
 import com.shortstack.hackertracker.setCurrentClock
 import com.shortstack.hackertracker.toConference
-import com.shortstack.hackertracker.utils.MyClock
-import com.shortstack.hackertracker.utils.now
-import io.mockk.every
-import io.mockk.mockkStatic
 import org.junit.Assert.*
 import org.junit.Test
-import java.text.SimpleDateFormat
-import java.util.*
 
 class DatabaseManagerTest {
 
