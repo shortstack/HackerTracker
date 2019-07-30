@@ -1,7 +1,7 @@
 package com.shortstack.hackertracker
 
-import com.shortstack.hackertracker.utils.MyClock
-import com.shortstack.hackertracker.utils.now
+import com.shortstack.hackertracker.utilities.MyClock
+import com.shortstack.hackertracker.utilities.now
 import io.mockk.every
 import io.mockk.mockkStatic
 import java.text.SimpleDateFormat

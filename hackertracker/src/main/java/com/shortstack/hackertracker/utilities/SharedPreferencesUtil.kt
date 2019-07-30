@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.utils
+package com.shortstack.hackertracker.utilities
 
 import android.content.Context
 import android.content.SharedPreferences

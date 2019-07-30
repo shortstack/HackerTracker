@@ -9,7 +9,7 @@ import androidx.fragment.app.Fragment
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.utils.MaterialAlert
+import com.shortstack.hackertracker.utilities.MaterialAlert
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.ext.android.inject
 
