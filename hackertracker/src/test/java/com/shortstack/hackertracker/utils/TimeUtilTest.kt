@@ -35,7 +35,6 @@ class TimeUtilTest {
 
         assertEquals(true, date.isToday())
         assertEquals(false, date.isTomorrow())
-        assertEquals(true, date.isSoonish(5))
     }
 
     @Test
@@ -46,18 +45,6 @@ class TimeUtilTest {
 
         assertEquals(false, date.isToday())
         assertEquals(true, date.isTomorrow())
-        assertEquals(true, date.isSoonish(5))
-    }
-
-    @Test
-    fun isSoonish() {
-        setCurrentClock("2019-01-01T12:00:00.000-0000")
-
-        val date = parse("2019-01-04T12:00:00.000-0000")
-
-        assertEquals(false, date.isToday())
-        assertEquals(false, date.isTomorrow())
-        assertEquals(true, date.isSoonish(5))
     }
 
     @Test
@@ -79,36 +66,6 @@ class TimeUtilTest {
         val result = TimeUtil.getRelativeDateStamp(context, date)
 
         assertEquals("Tomorrow", result)
-    }
-
-    @Test
-    fun getRelativeSoonish() {
-        setCurrentClock("2019-01-01T12:00:00.000-0000")
-        val date = parse("2019-01-04T12:00:00.000-0000")
-
-        val result = TimeUtil.getRelativeDateStamp(context, date)
-
-        assertEquals("Friday", result)
-    }
-
-    @Test
-    fun getRelativeNotSoonish() {
-        setCurrentClock("2019-01-01T12:00:00.000-0000")
-        val date = parse("2019-01-10T12:00:00.000-0000")
-
-        val result = TimeUtil.getRelativeDateStamp(context, date)
-
-        assertEquals("January 10", result)
-    }
-
-    @Test
-    fun getRelativeYesterday() {
-        setCurrentClock("2019-01-01T12:00:00.000-0000")
-        val date = parse("2018-12-31T12:00:00.000-0000")
-
-        val result = TimeUtil.getRelativeDateStamp(context, date)
-
-        assertEquals("December 31", result)
     }
 
     @Test

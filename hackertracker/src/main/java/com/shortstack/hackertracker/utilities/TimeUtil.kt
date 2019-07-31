@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.utils
+package com.shortstack.hackertracker.utilities
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -18,7 +18,7 @@ object TimeUtil {
         if (date.isTomorrow())
             return context.getString(R.string.tomorrow)
 
-        val format = SimpleDateFormat(if (date.isSoonish(SOON_DAYS_AMOUNT)) "EEEE" else "MMMM d")
+        val format = SimpleDateFormat("MMMM d")
 
         return format.format(date)
     }

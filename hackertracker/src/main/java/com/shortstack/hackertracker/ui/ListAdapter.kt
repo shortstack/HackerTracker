@@ -4,10 +4,12 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Time
+import com.shortstack.hackertracker.models.firebase.FirebaseFAQ
 import com.shortstack.hackertracker.models.local.Location
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Vendor
+import com.shortstack.hackertracker.ui.information.FAQViewHolder
 import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.schedule.TimeViewHolder
@@ -24,6 +26,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private const val DAY = 3
         private const val TIME = 4
         private const val VENDOR = 5
+        private const val FAQ = 6
     }
 
     private val collection = ArrayList<Any>()
@@ -36,6 +39,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             DAY -> DayViewHolder.inflate(parent)
             TIME -> TimeViewHolder.inflate(parent)
             VENDOR -> VendorViewHolder.inflate(parent)
+            FAQ -> FAQViewHolder.inflate(parent)
             else -> throw IllegalStateException("Unknown viewType $viewType.")
         }
     }
@@ -52,6 +56,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is DayViewHolder -> holder.render(item as Day)
             is TimeViewHolder -> holder.render(item as Time)
             is VendorViewHolder -> holder.render(item as Vendor)
+            is FAQViewHolder -> holder.render(item as FirebaseFAQ)
         }
     }
 
@@ -63,6 +68,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is Day -> DAY
             is Time -> TIME
             is Vendor -> VENDOR
+            is FirebaseFAQ -> FAQ
             else -> throw java.lang.IllegalStateException("Unknown viewType ${collection[position].javaClass}")
         }
     }

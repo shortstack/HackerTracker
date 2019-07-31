@@ -13,7 +13,7 @@ import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
-import com.shortstack.hackertracker.utils.TickTimer
+import com.shortstack.hackertracker.utilities.TickTimer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_schedule.*
@@ -85,7 +85,7 @@ class ScheduleFragment : Fragment() {
     private fun getScrollIndex(data: ArrayList<Any>, first: Event): Int {
         val event = data.indexOf(first)
         val index = data.indexOf(data.subList(0, event).filterIsInstance<Time>().last())
-        if (index > 1) {
+        if (index > 0) {
             if (data[index - 1] is Day) {
                 return index - 1
             }

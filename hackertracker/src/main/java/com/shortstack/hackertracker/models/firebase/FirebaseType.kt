@@ -1,7 +1,6 @@
 package com.shortstack.hackertracker.models.firebase
 
 import android.os.Parcelable
-import com.google.firebase.firestore.PropertyName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -10,4 +9,9 @@ data class FirebaseType(
         val name: String = "",
         val conference: String = "",
         val color: String = "#343434"
-) : Parcelable
+) : Parcelable {
+
+    val filtered: Boolean
+        get() = name.contains("Workshop", true) || name.contains("Contest", true)
+
+}

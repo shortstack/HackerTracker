@@ -19,6 +19,9 @@
     <!-- Category colours -->
 
     <color name="black_20">#33000000</color>
+    <color name="black_70">#B3000000</color>
+
+    <color name="white_20">#33ffffff</color>
     <color name="white_70">#B3ffffff</color>
     <color name="white_90">#F2ffffff</color>
 

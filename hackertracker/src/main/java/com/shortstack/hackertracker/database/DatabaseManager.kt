@@ -11,6 +11,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
+import com.google.firebase.firestore.Query
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.storage.FirebaseStorage
 import com.orhanobut.logger.Logger
@@ -18,14 +19,15 @@ import com.shortstack.hackertracker.*
 import com.shortstack.hackertracker.models.firebase.*
 import com.shortstack.hackertracker.models.local.*
 import com.shortstack.hackertracker.network.task.ReminderWorker
-import com.shortstack.hackertracker.utils.MyClock
-import com.shortstack.hackertracker.utils.now
+import com.shortstack.hackertracker.utilities.MyClock
+import com.shortstack.hackertracker.utilities.Storage
+import com.shortstack.hackertracker.utilities.now
 import io.reactivex.Single
 import java.io.File
 import java.util.concurrent.TimeUnit
 
 
-class DatabaseManager {
+class DatabaseManager(private val preferences: Storage) {
 
     companion object {
         private const val CONFERENCES = "conferences"
@@ -39,15 +41,28 @@ class DatabaseManager {
         private const val VENDORS = "vendors"
         private const val SPEAKERS = "speakers"
         private const val LOCATIONS = "locations"
+        private const val ARTICLES = "articles"
 
-        fun getNextConference(conferences: List<Conference>): Conference? {
-            return conferences.sortedBy { it.startDate }.firstOrNull { !it.hasFinished }
+        fun getNextConference(preferred: Int, conferences: List<Conference>): Conference? {
+            if (preferred != -1) {
+                val pref = conferences.find { it.id == preferred && !it.hasFinished }
+                if (pref != null) return pref
+            }
+
+            val list = conferences.sortedBy { it.startDate }
+
+            val defcon = list.find { it.code == "DEFCON27" }
+            if (defcon?.hasFinished == false) {
+                return defcon
+            }
+
+            return list.firstOrNull { !it.hasFinished }
                     ?: conferences.lastOrNull()
         }
     }
 
     private val code
-        get() = conference.value?.code ?: "LAYERONE2019"
+        get() = conference.value?.code ?: "DEFCON27"
 
     private val firestore = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
@@ -55,6 +70,7 @@ class DatabaseManager {
 
 
     val conference = MutableLiveData<Conference>()
+    val conferences = MutableLiveData<List<Conference>>()
 
     private var user: FirebaseUser? = null
 
@@ -76,11 +92,17 @@ class DatabaseManager {
                     .get()
                     .addOnCompleteListener {
                         if (it.isSuccessful) {
-                            val conferences = it.result?.toObjects(FirebaseConference::class.java)?.map { it.toConference() }?.sortedBy { it.startDate }
+                            val list = it.result?.toObjects(FirebaseConference::class.java)
+                                    ?.filter { !it.hidden || App.isDeveloper }
+                                    ?.map { it.toConference() }
+                                    ?.sortedBy { it.startDate }
+
                                     ?: emptyList()
 
-                            val con = getNextConference(conferences)
+
+                            val con = getNextConference(preferences.preferredConference, list)
                             conference.postValue(con)
+                            conferences.postValue(list)
 
                             if (con != null)
                                 getFCMToken(con)
@@ -106,6 +128,8 @@ class DatabaseManager {
     }
 
     fun changeConference(id: Int) {
+        preferences.preferredConference = id
+
         val current = conference.value
 
         if (current != null) {
@@ -129,7 +153,10 @@ class DatabaseManager {
         firestore.collection(CONFERENCES)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
-                        val cons = snapshot?.toObjects(FirebaseConference::class.java)?.map { it.toConference() }
+                        val cons = snapshot?.toObjects(FirebaseConference::class.java)
+                                ?.filter { !it.hidden || App.isDeveloper }
+                                ?.map { it.toConference() }
+
                         mutableLiveData.postValue(cons)
                     }
                 }
@@ -150,8 +177,10 @@ class DatabaseManager {
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
                         val events = snapshot?.toObjects(FirebaseEvent::class.java)
-                        val recent = events?.map { it.toEvent() }
-                        mutableLiveData.postValue(recent)
+                                ?.filter { (!it.hidden || App.isDeveloper) && !it.type.filtered }
+                                ?.map { it.toEvent() }
+
+                        mutableLiveData.postValue(events)
 
                         val id = user?.uid
                         if (id != null) {
@@ -162,13 +191,13 @@ class DatabaseManager {
                                     .collection(BOOKMARKS)
                                     .addSnapshotListener { snapshot, exception ->
                                         if (exception == null) {
-                                            val events = snapshot?.toObjects(FirebaseBookmark::class.java)
+                                            val bookmarks = snapshot?.toObjects(FirebaseBookmark::class.java)
 
-                                            events?.forEach { bookmark ->
-                                                recent?.find { it.id.toString() == bookmark.id }?.isBookmarked = bookmark.value
+                                            bookmarks?.forEach { bookmark ->
+                                                events?.find { it.id.toString() == bookmark.id }?.isBookmarked = bookmark.value
                                             }
 
-                                            mutableLiveData.postValue(recent)
+                                            mutableLiveData.postValue(events)
                                         }
                                     }
                         }
@@ -220,27 +249,50 @@ class DatabaseManager {
     }
 
 
-    fun getRecent(conference: Conference): LiveData<List<Event>> {
+    fun getRecent(): LiveData<List<Event>> {
         val mutableLiveData = MutableLiveData<List<Event>>()
 
         firestore.collection(CONFERENCES)
-                .document(conference.code)
+                .document(code)
                 .collection(EVENTS)
+                .orderBy("updated_timestamp", Query.Direction.DESCENDING)
+                .limit(3)
                 .get()
                 .addOnSuccessListener {
                     val events = it.toObjects(FirebaseEvent::class.java)
-                    val recent = events.map { it.toEvent() }.sortedBy { it.updated }.take(10)
-                    mutableLiveData.postValue(recent)
+                            .filter { !it.hidden || App.isDeveloper }
+                            .map { it.toEvent() }
+
+                    mutableLiveData.postValue(events)
                 }
 
         return mutableLiveData
     }
 
-    fun getFAQ(conference: Conference): LiveData<List<FirebaseFAQ>> {
+    fun getArticles(): LiveData<List<Article>> {
+        val results = MutableLiveData<List<Article>>()
+
+        firestore.collection(CONFERENCES)
+                .document(code)
+                .collection(ARTICLES)
+                .get()
+                .addOnSuccessListener {
+                    val articles = it.toObjects(FirebaseArticle::class.java)
+                            .filter { !it.hidden || App.isDeveloper }
+                            .map { it.toArticle() }
+
+                    results.postValue(articles)
+                }
+
+        return results
+    }
+
+
+    fun getFAQ(code: String = this.code): LiveData<List<FirebaseFAQ>> {
         val mutableLiveData = MutableLiveData<List<FirebaseFAQ>>()
 
         firestore.collection(CONFERENCES)
-                .document(conference.code)
+                .document(code)
                 .collection(FAQS)
                 .get()
                 .addOnSuccessListener {
@@ -275,7 +327,10 @@ class DatabaseManager {
                 .collection(VENDORS)
                 .get()
                 .addOnSuccessListener {
-                    val vendors = it.toObjects(FirebaseVendor::class.java).map { it.toVendor() }
+                    val vendors = it.toObjects(FirebaseVendor::class.java)
+                            .filter { !it.hidden || App.isDeveloper }
+                            .map { it.toVendor() }
+
                     mutableLiveData.postValue(vendors)
                 }
         return mutableLiveData
@@ -379,8 +434,11 @@ class DatabaseManager {
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
                         val speakers = snapshot?.toObjects(FirebaseSpeaker::class.java)
+                                ?.filter { !it.hidden || App.isDeveloper }
+                                ?.map { it.toSpeaker() }
                                 ?: emptyList()
-                        mutableLiveData.postValue(speakers.map { it.toSpeaker() })
+
+                        mutableLiveData.postValue(speakers)
                     }
                 }
 
@@ -397,8 +455,11 @@ class DatabaseManager {
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
                         val speakers = snapshot?.toObjects(FirebaseSpeaker::class.java)
+                                ?.filter { !it.hidden || App.isDeveloper }
+                                ?.map { it.toSpeaker() }
                                 ?: emptyList()
-                        mutableLiveData.postValue(speakers.map { it.toSpeaker() })
+
+                        mutableLiveData.postValue(speakers)
                     }
                 }
 
@@ -431,10 +492,11 @@ class DatabaseManager {
                 .collection(EVENTS)
                 .get()
                 .addOnSuccessListener {
-                    val events = it.toObjects(FirebaseEvent::class.java)
+                    val contests = it.toObjects(FirebaseEvent::class.java)
+                            .filter { (!it.hidden || App.isDeveloper) && it.type.name == "Contest" }
+                            .map { it.toEvent() }
 
-                    val contents = events.filter { it.type.name == "Contest" }.map { it.toEvent() }
-                    mutableLiveData.postValue(contents)
+                    mutableLiveData.postValue(contests)
                 }
 
         return mutableLiveData
@@ -448,9 +510,11 @@ class DatabaseManager {
                 .collection(EVENTS)
                 .get()
                 .addOnSuccessListener {
-                    val events = it.toObjects(FirebaseEvent::class.java)
-                    val contents = events.filter { it.type.name == "Workshop" }.map { it.toEvent() }
-                    mutableLiveData.postValue(contents)
+                    val workshops = it.toObjects(FirebaseEvent::class.java)
+                            .filter { (!it.hidden || App.isDeveloper) && it.type.name == "Workshop" }
+                            .map { it.toEvent() }
+
+                    mutableLiveData.postValue(workshops)
                 }
 
         return mutableLiveData

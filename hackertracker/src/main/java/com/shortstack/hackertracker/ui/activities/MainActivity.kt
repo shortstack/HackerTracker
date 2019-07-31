@@ -28,7 +28,7 @@ import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.SearchFragment
-import com.shortstack.hackertracker.ui.SettingsFragment
+import com.shortstack.hackertracker.ui.settings.SettingsFragment
 import com.shortstack.hackertracker.ui.contests.ContestsFragment
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
@@ -39,7 +39,7 @@ import com.shortstack.hackertracker.ui.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.speakers.SpeakersFragment
 import com.shortstack.hackertracker.ui.vendors.VendorsFragment
 import com.shortstack.hackertracker.ui.workshops.WorkshopFragment
-import com.shortstack.hackertracker.utils.TickTimer
+import com.shortstack.hackertracker.utilities.TickTimer
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*

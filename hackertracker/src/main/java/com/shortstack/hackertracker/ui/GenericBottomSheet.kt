@@ -7,7 +7,7 @@ import android.net.Uri
 import android.text.TextUtils
 import android.view.View
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.utils.MaterialAlert
+import com.shortstack.hackertracker.utilities.MaterialAlert
 import kotlinx.android.synthetic.main.bottom_sheet_generic.view.*
 import kotlinx.android.synthetic.main.empty_text.view.*
 

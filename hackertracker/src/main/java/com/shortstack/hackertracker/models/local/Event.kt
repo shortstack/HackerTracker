@@ -3,9 +3,9 @@ package com.shortstack.hackertracker.models.local
 import android.content.Context
 import android.os.Parcelable
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.utils.MyClock
-import com.shortstack.hackertracker.utils.TimeUtil
-import com.shortstack.hackertracker.utils.now
+import com.shortstack.hackertracker.utilities.MyClock
+import com.shortstack.hackertracker.utilities.TimeUtil
+import com.shortstack.hackertracker.utilities.now
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 
