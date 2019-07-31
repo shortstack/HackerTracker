@@ -74,22 +74,10 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         viewModel.types.observe(this, Observer {
 
             val hasContest = it.firstOrNull { it.name == "Contest" } != null
-            if (!hasContest) {
-                nav_view.menu.removeItem(NAV_CONTESTS)
-            } else if (nav_view.menu.findItem(NAV_CONTESTS) == null) {
-                nav_view.menu.add(R.id.nav_main, NAV_CONTESTS, 3, R.string.contests).apply {
-                    icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_cake_white_24dp)
-                }
-            }
+            nav_view.menu.findItem(R.id.nav_contests).isVisible = hasContest
 
             val hasWorkshops = it.firstOrNull { it.name == "Workshop" } != null
-            if (!hasWorkshops) {
-                nav_view.menu.removeItem(NAV_WORKSHOPS)
-            } else if (nav_view.menu.findItem(NAV_WORKSHOPS) == null) {
-                nav_view.menu.add(R.id.nav_main, NAV_WORKSHOPS, 3, R.string.workshops).apply {
-                    icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_computer_white_24dp)
-                }
-            }
+            nav_view.menu.findItem(R.id.nav_workshops).isVisible = hasWorkshops
 
             filters.setTypes(it)
         })
@@ -224,8 +212,8 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
                 R.id.nav_home -> HomeFragment.newInstance()
                 R.id.nav_schedule -> ScheduleFragment.newInstance()
                 R.id.nav_map -> MapsFragment.newInstance()
-                NAV_CONTESTS -> ScheduleFragment.newInstance(Type(40003, "Contests", "DEFCON27", "", true))
-                NAV_WORKSHOPS -> ScheduleFragment.newInstance(Type(40001, "Workshops", "DEFCON27", "", true))
+                R.id.nav_contests -> ScheduleFragment.newInstance(Type(40003, "Contests", "DEFCON27", "", true))
+                R.id.nav_workshops -> ScheduleFragment.newInstance(Type(40001, "Workshops", "DEFCON27", "", true))
                 R.id.nav_settings -> SettingsFragment.newInstance()
                 R.id.search -> SearchFragment.newInstance()
                 else -> InformationFragment.newInstance()
@@ -266,10 +254,5 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
                 setFABVisibility(View.INVISIBLE)
             }
         }
-    }
-
-    companion object {
-        private const val NAV_WORKSHOPS = 1001
-        private const val NAV_CONTESTS = 1002
     }
 }
