@@ -61,15 +61,6 @@ class HomeViewModel : ViewModel(), KoinComponent {
             list.add("Recent Updates")
             list.addAll(recent)
         }
-    }
-
-    private fun setValue(results: MediatorLiveData<List<Any>>, articles: List<Article>, recent: List<Event>) {
-        val list = ArrayList<Any>()
-
-        list.add("Announcements")
-        list.addAll(articles)
-        list.add("Recent Updates")
-        list.addAll(recent)
 
         results.postValue(list)
     }
