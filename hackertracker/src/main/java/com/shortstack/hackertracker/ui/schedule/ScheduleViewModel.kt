@@ -12,7 +12,7 @@ import com.shortstack.hackertracker.models.local.Type
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
-class ScheduleViewModel(type: Type? = null) : ViewModel(), KoinComponent {
+class ScheduleViewModel(private val type: Type? = null) : ViewModel(), KoinComponent {
 
     private val database: DatabaseManager by inject()
 
@@ -32,7 +32,7 @@ class ScheduleViewModel(type: Type? = null) : ViewModel(), KoinComponent {
 
         result.value = Resource.loading(null)
 
-        val events = database.getEvents(id)
+        val events = database.getEvents(id, type)
 
         val types = if (type != null) {
             val result = MediatorLiveData<List<Type>>()
@@ -58,6 +58,11 @@ class ScheduleViewModel(type: Type? = null) : ViewModel(), KoinComponent {
     private fun getSchedule(events: List<Event>, types: List<Type>): List<Event> {
         if (types.isEmpty())
             return events
+
+        if(type != null) {
+            val list = events.filter { it.type.id == type.id }
+            return list
+        }
 
         val requireBookmark = types.firstOrNull { it.isBookmark }?.isSelected ?: false
         val filter = types.filter { !it.isBookmark && it.isSelected }
