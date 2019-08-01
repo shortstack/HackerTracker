@@ -173,7 +173,18 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyR
     }
 
     fun getDatePosition(date: Date): Int {
-        return collection.indexOfFirst { it is Day && it.time == date.time }
+        val calendar = Calendar.getInstance()
+
+        calendar.time = date
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+
+
+        val otherDay = Day(calendar.time)
+
+        return collection.indexOfFirst { it is Day && it.time == otherDay.time }
     }
 
     fun getDateOfPosition(index: Int): Date {

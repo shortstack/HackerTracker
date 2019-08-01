@@ -13,28 +13,25 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.models.Day
-import com.shortstack.hackertracker.models.Time
-import com.shortstack.hackertracker.models.local.Conference
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
+import com.shortstack.hackertracker.utilities.TickTimer
 import com.shortstack.hackertracker.views.DaySelectorView
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
-import com.shortstack.hackertracker.utilities.TickTimer
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.view_empty.view.*
 import org.koin.android.ext.android.inject
-import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
+
 
 class ScheduleFragment : Fragment() {
 
     companion object {
         private const val EXTRA_TYPE = "type"
-
+        
         fun newInstance(type: Type? = null): ScheduleFragment {
             val fragment = ScheduleFragment()
 
@@ -99,10 +96,6 @@ class ScheduleFragment : Fragment() {
         val factory = ScheduleViewModelFactory(type)
 
         val scheduleViewModel = ViewModelProviders.of(this, factory).get(ScheduleViewModel::class.java)
-        scheduleViewModel.conference.observe(this, Observer {
-            addDayTabs(it)
-        })
-
         scheduleViewModel.schedule.observe(this, Observer {
             hideViews()
 
@@ -112,6 +105,9 @@ class ScheduleFragment : Fragment() {
                 when (it.status) {
                     Status.SUCCESS -> {
                         val list = adapter.setSchedule(it.data)
+                        val days = list.filterIsInstance<Day>()
+                        day_selector.setDays(days)
+
                         if (adapter.isEmpty()) {
                             showEmptyView()
                         }
@@ -131,11 +127,6 @@ class ScheduleFragment : Fragment() {
                 }
             }
         })
-    }
-
-    private fun addDayTabs(conference: Conference) {
-        val days = getDaysBetweenDates(conference.startDate, conference.endDate) + conference.endDate
-        day_selector.setDays(days)
     }
 
     private fun scrollToCurrentPosition(data: ArrayList<Any>) {
@@ -163,6 +154,7 @@ class ScheduleFragment : Fragment() {
         val index = adapter.getDatePosition(date)
         if (index != -1) {
             val scroller = object : LinearSmoothScroller(context) {
+
                 override fun getVerticalSnapPreference(): Int {
                     return SNAP_TO_START
                 }
@@ -209,19 +201,4 @@ class ScheduleFragment : Fragment() {
         empty.title.text = message
         empty.visibility = View.VISIBLE
     }
-
-    fun getDaysBetweenDates(startdate: Date, enddate: Date): List<Date> {
-        val dates = ArrayList<Date>()
-        val calendar = GregorianCalendar()
-        calendar.time = startdate
-
-        while (calendar.time.before(enddate)) {
-            val result = calendar.time
-            dates.add(result)
-            calendar.add(Calendar.DATE, 1)
-        }
-        return dates
-    }
-
-
 }
