@@ -6,6 +6,4 @@
     android:layout_height="wrap_content"
     android:gravity="center"
     android:minHeight="?actionBarSize"
-    android:textColor="@color/white"
-    tools:background="@color/background"
     tools:text="Wednesday" />

@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/background"
     android:orientation="horizontal">
 
     <View
@@ -41,7 +40,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:paddingBottom="8dp"
-        android:textColor="@color/white_70"
+        android:alpha="0.70"
         app:layout_constraintEnd_toStartOf="@+id/star_bar"
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/title"
@@ -65,7 +64,7 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginBottom="8dp"
-        android:textColor="@color/white_70"
+        android:alpha="0.70"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/category_dot"
         app:layout_constraintTop_toBottomOf="@+id/location"

@@ -18,13 +18,13 @@
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="android:colorBackground">@color/background</item>
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
-        <item name="colorControlActivated">@color/white</item>
-        <item name="colorControlNormal">@color/white</item>
-        <item name="colorControlHighlight">@color/white</item>
+        <!--<item name="android:colorBackground">@color/background</item>-->
+        <!--<item name="colorPrimary">@color/colorPrimary</item>-->
+        <!--<item name="colorPrimaryDark">@color/colorPrimaryDark</item>-->
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+        <!--<item name="colorControlActivated">@color/white</item>-->
+        <!--<item name="colorControlNormal">@color/white</item>-->
+        <!--<item name="colorControlHighlight">@color/white</item>-->
         <item name="preferenceTheme">@style/Theme.WtfPreference</item>
 
         <item name="android:checkboxStyle">@style/AppCheckBoxStyle</item>
@@ -32,8 +32,8 @@
         <item name="android:buttonStyle">@style/buttonStyle</item>
 
         <!-- Preferences-->
-        <item name="android:textColorPrimary">@color/white</item>
-        <item name="android:textColorSecondary">@color/white_70</item>
+        <!--<item name="android:textColorPrimary">@color/white</item>-->
+        <!--<item name="android:textColorSecondary">@color/white_70</item>-->
 
         <!-- AppCompat Dialog Attributes -->
         <item name="dialogTheme">@style/AppCompatDialog</item>
@@ -242,7 +242,7 @@
         <item name="android:paddingBottom">8dp</item>
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
-        <item name="android:textColor">@color/white</item>
+        <!--<item name="android:textColor">@color/white</item>-->
     </style>
 
     <style name="ListHeader">

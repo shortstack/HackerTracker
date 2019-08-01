@@ -41,7 +41,7 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:padding="16dp"
-            android:textColor="@color/white_70"
+            android:alpha="0.70"
             tools:text="Version 6.0.1" />
 
         <include layout="@layout/row_footer" />
