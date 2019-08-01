@@ -46,8 +46,6 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
 
-    private val timer: TickTimer by inject()
-
     private lateinit var bottomSheet: BottomSheetBehavior<View>
 
     private lateinit var viewModel: MainActivityViewModel
@@ -113,16 +111,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
                 Logger.e("Could not sign in.")
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        timer.start()
-    }
-
-    override fun onPause() {
-        timer.stop()
-        super.onPause()
     }
 
     private lateinit var toggle: ActionBarDrawerToggle
