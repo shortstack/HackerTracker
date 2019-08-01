@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.ui.information.faq.FAQFragment
+import com.shortstack.hackertracker.ui.information.info.InfoFragment
 import com.shortstack.hackertracker.ui.information.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.information.speakers.SpeakersFragment
 import com.shortstack.hackertracker.ui.information.vendors.VendorsFragment
@@ -40,9 +41,10 @@ class InformationFragment : Fragment() {
                 .addToBackStack(null)
                 .commit()
 
-        tabs.addTab(tabs.newTab().setText("FAQ").also { it.tag = FAQ })
-        tabs.addTab(tabs.newTab().setText("Speakers").also { it.tag = SPEAKERS })
-        tabs.addTab(tabs.newTab().setText("Vendors").also { it.tag = VENDORS })
+        tabs.addTab(tabs.newTab().setText("Info"))
+        tabs.addTab(tabs.newTab().setText("FAQ"))
+        tabs.addTab(tabs.newTab().setText("Speakers"))
+        tabs.addTab(tabs.newTab().setText("Vendors"))
 
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab) {
@@ -54,7 +56,8 @@ class InformationFragment : Fragment() {
             }
 
             override fun onTabSelected(tab: TabLayout.Tab) {
-                val fragment = when (tab.tag as Int) {
+                val fragment = when (tab.position) {
+                    INFO -> InfoFragment.newInstance()
                     SPEAKERS -> SpeakersFragment.newInstance()
                     FAQ -> FAQFragment.newInstance()
                     VENDORS -> VendorsFragment.newInstance()

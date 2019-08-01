@@ -14,7 +14,7 @@
         <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
     </style>
 
-    <style name="ThemeBase" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="ThemeBase" parent="Theme.MaterialComponents.Light.NoActionBar">
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -81,7 +81,7 @@
 
 
     <!-- Used for Filter View -->
-    <style name="MyAlertDialogStyle" parent="Base.Theme.AppCompat.Dialog">
+    <style name="MyAlertDialogStyle" parent="ThemeOverlay.MaterialComponents.Dialog">
         <item name="android:windowTitleStyle">@style/windowTitleStyle</item>
         <!-- Used for the buttons -->
         <item name="colorAccent">@color/colorAccent</item>
@@ -89,6 +89,13 @@
         <item name="android:textColorPrimary">@color/white</item>
         <!-- Used for the background -->
         <item name="android:background">@color/background</item>
+
+        <item name="buttonBarNegativeButtonStyle">@style/AlertButtonStyle</item>
+        <item name="buttonBarPositiveButtonStyle">@style/AlertButtonStyle</item>
+    </style>
+
+    <style name="AlertButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
+        <item name="android:textColor">@color/white</item>
     </style>
 
     <style name="windowTitleStyle">
