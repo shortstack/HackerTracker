@@ -14,6 +14,12 @@
 
 
         <com.shortstack.hackertracker.views.SettingsActionView
+            android:id="@+id/change_theme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            action:actionText="Change Theme" />
+
+        <com.shortstack.hackertracker.views.SettingsActionView
             android:id="@+id/change_conference"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

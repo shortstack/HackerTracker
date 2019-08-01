@@ -46,6 +46,12 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
 
+    companion object {
+
+        var isDarkMode = true
+    }
+
+
     private lateinit var bottomSheet: BottomSheetBehavior<View>
 
     private lateinit var viewModel: MainActivityViewModel
@@ -55,6 +61,12 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
     private val map = HashMap<Int, Fragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if(isDarkMode) {
+            setTheme(R.style.AppTheme_Dark)
+        } else {
+            setTheme(R.style.AppTheme)
+        }
+
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
@@ -91,15 +103,18 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
                 val review = ReviewBottomSheet.newInstance()
                 review.show(this.supportFragmentManager, review.tag)
             }
+
+
+            setMainFragment(R.id.nav_schedule, getString(R.string.schedule), false)
         }
 
 
         supportFragmentManager.addOnBackStackChangedListener(this)
 
-        setMainFragment(R.id.nav_schedule, getString(R.string.schedule), false)
 
         ViewCompat.setTranslationZ(filters, 10f)
     }
+
 
     override fun onStart() {
         super.onStart()
@@ -127,7 +142,11 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
     override fun getTheme(): Resources.Theme {
         val theme = super.getTheme()
-        theme.applyStyle(R.style.AppTheme, true)
+        if(isDarkMode) {
+            theme.applyStyle(R.style.AppTheme_Dark, true)
+        } else {
+            theme.applyStyle(R.style.AppTheme, true)
+        }
         return theme
     }
 

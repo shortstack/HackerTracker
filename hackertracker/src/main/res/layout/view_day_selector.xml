@@ -5,8 +5,7 @@
     android:id="@+id/frame"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="52dp"
-    android:paddingLeft="48dp">
+    android:minHeight="52dp">
 
 
     <View
@@ -15,9 +14,9 @@
         android:layout_height="0dp"
         android:background="@drawable/day_selector_bubble"
         app:layout_constraintBottom_toBottomOf="@+id/day_1"
-        app:layout_constraintEnd_toEndOf="@+id/day_1"
-        app:layout_constraintStart_toStartOf="@+id/day_1"
-        app:layout_constraintTop_toTopOf="@+id/day_1" />
+        app:layout_constraintTop_toTopOf="@+id/day_1"
+        tools:layout_constraintEnd_toEndOf="@+id/day_1"
+        tools:layout_constraintStart_toStartOf="@+id/day_1" />
 
 
     <TextView

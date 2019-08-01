@@ -15,12 +15,14 @@ import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Type
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.utilities.TickTimer
 import com.shortstack.hackertracker.views.DaySelectorView
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
+import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.view_empty.view.*
 import org.koin.android.ext.android.inject
@@ -79,12 +81,12 @@ class ScheduleFragment : Fragment() {
                     if (first == -1 || last == -1)
                         return
 
-                    day_selector.onScroll(adapter.getDateOfPosition(first), adapter.getDateOfPosition(last))
+                    (context as MainActivity).day_selector.onScroll(adapter.getDateOfPosition(first), adapter.getDateOfPosition(last))
                 }
             }
         })
 
-        day_selector.addOnDaySelectedListener(object : DaySelectorView.OnDaySelectedListener {
+        (context as MainActivity).day_selector.addOnDaySelectedListener(object : DaySelectorView.OnDaySelectedListener {
             override fun onDaySelected(day: Date) {
                 scrollToDate(day)
             }
@@ -106,7 +108,7 @@ class ScheduleFragment : Fragment() {
                     Status.SUCCESS -> {
                         val list = adapter.setSchedule(it.data)
                         val days = list.filterIsInstance<Day>()
-                        day_selector.setDays(days)
+                        (context as MainActivity).day_selector.setDays(days)
 
                         if (adapter.isEmpty()) {
                             showEmptyView()
