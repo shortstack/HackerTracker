@@ -8,7 +8,6 @@ import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -35,13 +34,11 @@ import com.shortstack.hackertracker.ui.information.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.settings.SettingsFragment
-import com.shortstack.hackertracker.utilities.TickTimer
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.row_nav_view.*
 import kotlinx.android.synthetic.main.view_filter.*
-import org.koin.android.ext.android.inject
 
 
 class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
