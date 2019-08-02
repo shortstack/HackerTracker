@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <attr name="dark_mode" format="string" />
+
     <declare-styleable name="EmptyView">
         <attr name="evIcon" format="reference" />
         <attr name="evTitle" format="reference" />

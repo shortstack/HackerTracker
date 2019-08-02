@@ -125,7 +125,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         }
     }
 
-    private fun getThemeAccentColor(context: Context, theme: Resources.Theme = context.theme): Int {
+    fun getThemeAccentColor(context: Context, theme: Resources.Theme = context.theme): Int {
         val colorAttr =
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     android.R.attr.colorBackground
@@ -285,5 +285,9 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
                 setFABVisibility(View.INVISIBLE)
             }
         }
+    }
+
+    fun openNavDrawer() {
+        drawer_layout.openDrawer(GravityCompat.START)
     }
 }

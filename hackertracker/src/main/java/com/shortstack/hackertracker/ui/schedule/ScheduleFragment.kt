@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.ui.schedule
 
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Type
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.views.DaySelectorView
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
@@ -59,6 +61,24 @@ class ScheduleFragment : Fragment() {
 
         shouldScroll = true
         list.adapter = adapter
+
+
+        val theme = (context as MainActivity).theme
+        val outValue = TypedValue()
+        theme.resolveAttribute(R.attr.dark_mode, outValue, true)
+
+
+
+        if ("dark" == outValue.string) {
+            toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp)
+        } else {
+            toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp)
+        }
+
+        toolbar.setNavigationOnClickListener {
+            (context as MainActivity).openNavDrawer()
+        }
+
 
         val decoration = StickyRecyclerHeadersDecoration(adapter)
         list.addItemDecoration(decoration)

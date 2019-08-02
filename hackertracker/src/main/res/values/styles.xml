@@ -15,7 +15,7 @@
     </style>
 
     <style name="ThemeBase" parent="Theme.MaterialComponents.Light.NoActionBar">
-
+        <item name="dark_mode">light</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <!--<item name="android:colorBackground">@color/background</item>-->
@@ -50,6 +50,7 @@
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="dark_mode">dark</item>
         <!--<item name="colorPrimary">@color/light_gray</item>-->
         <!--<item name="colorPrimaryDark">@color/light_gray</item>-->
         <!--<item name="colorAccent">@color/light_gray</item>-->
