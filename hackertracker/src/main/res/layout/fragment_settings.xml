@@ -1,57 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:action="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:switch="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
 
-    <LinearLayout
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="16dp">
+        android:background="?android:colorBackground">
 
-
-        <com.shortstack.hackertracker.views.SettingsActionView
-            android:id="@+id/change_theme"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            action:actionText="Change Theme" />
+            app:title="@string/settings" />
 
-        <com.shortstack.hackertracker.views.SettingsActionView
-            android:id="@+id/change_conference"
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            action:actionText="Change Conference" />
+            android:orientation="vertical"
+            android:paddingTop="16dp">
 
 
-        <com.shortstack.hackertracker.views.SettingsSwitchView
-            android:id="@+id/usage"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            switch:switchDefaultValue="true"
-            switch:switchKey="user_analytics"
-            switch:switchText="Send anonymous usage statistics" />
+            <com.shortstack.hackertracker.views.SettingsActionView
+                android:id="@+id/change_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                action:actionText="Change Theme" />
+
+            <com.shortstack.hackertracker.views.SettingsActionView
+                android:id="@+id/change_conference"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                action:actionText="Change Conference" />
 
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/white_20" />
+            <com.shortstack.hackertracker.views.SettingsSwitchView
+                android:id="@+id/usage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                switch:switchDefaultValue="true"
+                switch:switchKey="user_analytics"
+                switch:switchText="Send anonymous usage statistics" />
 
 
-        <TextView
-            android:id="@+id/version"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="16dp"
-            android:alpha="0.70"
-            tools:text="Version 6.0.1" />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/white_20" />
 
-        <include layout="@layout/row_footer" />
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.70"
+                android:gravity="center"
+                android:padding="16dp"
+                tools:text="Version 6.0.1" />
 
-</ScrollView>
+            <include layout="@layout/row_footer" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="16dp"
@@ -21,17 +20,16 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:text="The DEF CON Support Hotline"
-            android:textColor="@color/white"
             android:textSize="18sp" />
 
         <TextView
             style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:alpha="0.70"
             android:autoLink="all"
             android:lineSpacingExtra="3dp"
             android:text="You can reach DEF CON staff during normal hours of operation to anonymously report any behaviour violating our code of conduct or to find an empathic ear by calling the Hotline. Trained community volunteers will be standing by to help any attendees."
-            android:textColor="@color/white_70"
             android:textColorLink="@color/blue_dark"
             android:textSize="13sp" />
 
@@ -43,10 +41,10 @@
             style="@style/TextAppearance.MaterialComponents.Body1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:alpha="0.70"
             android:autoLink="all"
             android:lineSpacingExtra="3dp"
             android:text="You can still report issues by going to any Info Booth or talking to any SOC Goon, but sometimes you may not want to be walking around in person with a problem, and so we have added a phone option. When you call the Hotline you will reach DEF CON community Goons trained to help in these areas."
-            android:textColor="@color/white_70"
             android:textColorLink="@color/blue_dark"
             android:textSize="13sp" />
 
@@ -60,7 +58,7 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp"
             android:text="Call +1 (725) 222-0934"
-            android:textColor="@color/white" />
+             />
 
     </LinearLayout>
 

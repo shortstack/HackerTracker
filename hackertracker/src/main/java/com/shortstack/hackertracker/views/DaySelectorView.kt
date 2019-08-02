@@ -30,9 +30,6 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
     init {
         View.inflate(context, R.layout.view_day_selector, this)
 
-        begin = day_1.id
-        end = day_1.id
-
         for (i in 0..frame.childCount) {
             val view = frame.getChildAt(i)
             if (view is TextView) {

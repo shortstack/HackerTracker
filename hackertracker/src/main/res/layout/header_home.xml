@@ -14,5 +14,6 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:minHeight="200dp"
-        android:src="@drawable/skull" />
+        android:src="@drawable/skull"
+        android:tint="?android:colorForeground" />
 </FrameLayout>

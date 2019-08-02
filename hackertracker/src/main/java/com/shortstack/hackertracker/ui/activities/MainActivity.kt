@@ -1,8 +1,11 @@
 package com.shortstack.hackertracker.ui.activities
 
 
+import android.content.Context
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -45,7 +48,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
     companion object {
 
-        var isDarkMode = true
+        var isDarkMode = false
     }
 
 
@@ -58,16 +61,18 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
     private val map = HashMap<Int, Fragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if(isDarkMode) {
+        if (isDarkMode) {
             setTheme(R.style.AppTheme_Dark)
+
         } else {
             setTheme(R.style.AppTheme)
         }
 
+
+
         super.onCreate(savedInstanceState)
 
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
 
         initNavDrawer()
 
@@ -112,6 +117,27 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         ViewCompat.setTranslationZ(filters, 10f)
     }
 
+    override fun onResume() {
+        super.onResume()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = getThemeAccentColor(this)
+        }
+    }
+
+    private fun getThemeAccentColor(context: Context, theme: Resources.Theme = context.theme): Int {
+        val colorAttr =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    android.R.attr.colorBackground
+                } else {
+                    //Get colorAccent defined for AppCompat
+                    context.resources.getIdentifier("colorBackground", "attr", context.packageName)
+                }
+        val outValue = TypedValue()
+        theme.resolveAttribute(colorAttr, outValue, true)
+        return outValue.data
+    }
+
 
     override fun onStart() {
         super.onStart()
@@ -129,21 +155,22 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
 
     private fun initNavDrawer() {
-        toggle = ActionBarDrawerToggle(
-                this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
+//        toggle = ActionBarDrawerToggle(
+//                this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+//        drawer_layout.addDrawerListener(toggle)
+//        toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
     }
 
     override fun getTheme(): Resources.Theme {
         val theme = super.getTheme()
-        if(isDarkMode) {
+        if (isDarkMode) {
             theme.applyStyle(R.style.AppTheme_Dark, true)
         } else {
             theme.applyStyle(R.style.AppTheme, true)
         }
+
         return theme
     }
 
@@ -247,12 +274,10 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
         if (last is EventFragment || last is SpeakerFragment) {
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-            toolbar.visibility = View.INVISIBLE
             container.visibility = View.INVISIBLE
             setFABVisibility(View.INVISIBLE)
         } else {
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-            toolbar.visibility = View.VISIBLE
             container.visibility = View.VISIBLE
             if (last is ScheduleFragment) {
                 setFABVisibility(View.VISIBLE)

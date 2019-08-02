@@ -15,7 +15,6 @@ import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Type
-import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.views.DaySelectorView
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
@@ -28,7 +27,7 @@ class ScheduleFragment : Fragment() {
 
     companion object {
         private const val EXTRA_TYPE = "type"
-        
+
         fun newInstance(type: Type? = null): ScheduleFragment {
             val fragment = ScheduleFragment()
 
@@ -52,6 +51,11 @@ class ScheduleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        val type = arguments?.getParcelable<Type>(EXTRA_TYPE)
+        if (type != null) {
+            toolbar.title = type.name
+        }
 
         shouldScroll = true
         list.adapter = adapter
@@ -81,8 +85,6 @@ class ScheduleFragment : Fragment() {
             }
         })
 
-
-        val type = arguments?.getParcelable<Type>(EXTRA_TYPE)
 
         val factory = ScheduleViewModelFactory(type)
 
