@@ -171,8 +171,10 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
     }
 
     override fun onBackPressed() {
+        val drawerOpen = drawer_layout.isDrawerOpen(GravityCompat.START)
         when {
-            drawer_layout.isDrawerOpen(GravityCompat.START) -> drawer_layout.closeDrawers()
+            drawerOpen -> drawer_layout.closeDrawers()
+            !drawerOpen -> drawer_layout.openDrawer(GravityCompat.START)
             bottomSheet.state != BottomSheetBehavior.STATE_HIDDEN -> hideFilters()
             else -> super.onBackPressed()
         }

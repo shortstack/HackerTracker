@@ -75,16 +75,19 @@
                 <ImageView
                     android:id="@+id/link"
                     style="@style/IconButton"
+                    android:tint="?android:colorForeground"
                     app:srcCompat="@drawable/ic_link_white_24dp" />
 
                 <ImageView
                     android:id="@+id/share"
                     style="@style/IconButton"
+                    android:tint="?android:colorForeground"
                     app:srcCompat="@drawable/ic_share_white_24dp" />
 
                 <ImageView
                     android:id="@+id/star"
                     style="@style/IconButton"
+                    android:tint="?android:colorForeground"
                     app:srcCompat="@drawable/ic_star_border_white_24dp" />
 
 
@@ -159,8 +162,8 @@
                     style="@style/TextAppearance.AppCompat.Body1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:gravity="center"
                     android:alpha="0.70"
+                    android:gravity="center"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
