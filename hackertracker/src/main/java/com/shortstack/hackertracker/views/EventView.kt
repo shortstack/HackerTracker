@@ -106,12 +106,6 @@ class EventView : FrameLayout, KoinComponent {
 
 
     private fun updateBookmark(event: Event) {
-        val type = event.type
-        val color = Color.parseColor(type.color)
-        renderBookmark(event, color)
-    }
-
-    private fun renderBookmark(event: Event, color: Int) {
         val isBookmarked = event.isBookmarked
 
         val drawable = if (isBookmarked) {
@@ -120,13 +114,7 @@ class EventView : FrameLayout, KoinComponent {
             R.drawable.ic_star_border_white_24dp
         }
 
-        val image = ContextCompat.getDrawable(context, drawable)?.mutate()
-
-        if (isBookmarked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            image?.setTint(color)
-        }
-
-        star_bar.setImageDrawable(image)
+        star_bar.setImageResource(drawable)
     }
 
     private fun onBookmarkClick(event: Event) {

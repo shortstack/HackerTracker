@@ -38,14 +38,29 @@
                 android:id="@+id/change_theme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                action:actionText="Change Theme" />
+                action:actionText="Choose Theme" />
 
             <com.shortstack.hackertracker.views.SettingsActionView
                 android:id="@+id/change_conference"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                action:actionText="Change Conference" />
+                action:actionText="Choose Conference" />
 
+            <com.shortstack.hackertracker.views.SettingsSwitchView
+                android:id="@+id/force_time_zone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                switch:switchDefaultValue="true"
+                switch:switchKey="force_time_zone"
+                switch:switchText="Events in Pacific Time Zone(UTC-8)" />
+
+            <com.shortstack.hackertracker.views.SettingsSwitchView
+                android:id="@+id/nav_drawer_on_back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                switch:switchDefaultValue="false"
+                switch:switchKey="nav_drawer_on_back"
+                switch:switchText="Open drawer onBackPressed" />
 
             <com.shortstack.hackertracker.views.SettingsSwitchView
                 android:id="@+id/usage"
@@ -54,7 +69,6 @@
                 switch:switchDefaultValue="true"
                 switch:switchKey="user_analytics"
                 switch:switchText="Send anonymous usage statistics" />
-
 
             <View
                 android:layout_width="match_parent"

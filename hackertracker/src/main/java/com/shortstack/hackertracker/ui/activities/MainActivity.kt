@@ -61,17 +61,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
     private val map = HashMap<Int, Fragment>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (isDarkMode) {
-            setTheme(R.style.AppTheme_Dark)
-
-        } else {
-            setTheme(R.style.AppTheme)
-        }
-
-
-
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
 
         initNavDrawer()
@@ -201,7 +191,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         val drawerOpen = drawer_layout.isDrawerOpen(GravityCompat.START)
         when {
             drawerOpen -> drawer_layout.closeDrawers()
-            !drawerOpen -> drawer_layout.openDrawer(GravityCompat.START)
             bottomSheet.state != BottomSheetBehavior.STATE_HIDDEN -> hideFilters()
             else -> super.onBackPressed()
         }

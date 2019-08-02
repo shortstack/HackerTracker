@@ -74,13 +74,20 @@
     </style>
 
 
-    <style name="StyleTheme.Goon" parent="AppTheme.Dark">
+    <style name="AppTheme.Goon" parent="AppTheme.Dark">
         <item name="colorPrimary">@color/colorPrimary_goon</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark_goon</item>
         <item name="android:colorBackground">@color/colorPrimary</item>
         <item name="android:textColorPrimary">@color/textColorPrimary_Goon</item>
         <item name="android:textColorSecondary">@color/textColorSecondary_Goon</item>
         <item name="colorAccent">@color/colorAccent_Goon</item>
+    </style>
+
+    <style name="AppTheme.Poker" parent="AppTheme.Dark">
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorPrimary">#c82525</item>
+        <item name="colorPrimaryDark">#8e2020</item>
+        <item name="colorAccent">#c82525</item>
     </style>
 
 
