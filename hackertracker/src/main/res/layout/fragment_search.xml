@@ -16,6 +16,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:navigationIcon="?attr/menu_icon"
             app:title="@string/search" />
 
     </com.google.android.material.appbar.AppBarLayout>

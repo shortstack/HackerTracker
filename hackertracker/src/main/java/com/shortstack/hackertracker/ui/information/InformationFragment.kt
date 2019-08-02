@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayout
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.information.faq.FAQFragment
 import com.shortstack.hackertracker.ui.information.info.InfoFragment
 import com.shortstack.hackertracker.ui.information.speakers.SpeakersFragment
@@ -33,6 +34,11 @@ class InformationFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        toolbar.setNavigationOnClickListener {
+            (context as MainActivity).openNavDrawer()
+        }
+
 
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabReselected(tab: TabLayout.Tab) {

@@ -30,6 +30,11 @@ class SettingsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        toolbar.setNavigationOnClickListener {
+            (context as MainActivity).openNavDrawer()
+        }
+
+
         change_theme.setOnClickListener {
             showChangeThemeDialog()
         }

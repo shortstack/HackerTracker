@@ -15,6 +15,7 @@
     </style>
 
     <style name="ThemeBase" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="menu_icon">@drawable/ic_menu_black_24dp</item>
         <item name="dark_mode">light</item>
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -48,6 +49,7 @@
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="menu_icon">@drawable/ic_menu_white_24dp</item>
         <item name="dark_mode">dark</item>
         <!--<item name="colorPrimary">@color/light_gray</item>-->
         <!--<item name="colorPrimaryDark">@color/light_gray</item>-->

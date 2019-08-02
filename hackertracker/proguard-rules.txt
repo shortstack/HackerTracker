@@ -78,7 +78,7 @@
 -keep class com.shortstack.hackertracker.ui.maps.MapsFragment { *; }
 -keep class com.shortstack.hackertracker.ui.information.faq.FAQFragment { *; }
 -keep class com.shortstack.hackertracker.ui.information.vendors.VendorsFragment { *; }
--keep class com.shortstack.hackertracker.ui.SearchFragment { *; }
+-keep class com.shortstack.hackertracker.ui.search.SearchFragment { *; }
 -keep class com.shortstack.hackertracker.ui.settings.SettingsFragment { *; }
 
 -keep class android.support.v7.widget.SearchView { *; }

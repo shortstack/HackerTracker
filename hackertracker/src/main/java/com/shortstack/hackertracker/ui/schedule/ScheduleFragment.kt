@@ -1,7 +1,6 @@
 package com.shortstack.hackertracker.ui.schedule
 
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -61,19 +60,6 @@ class ScheduleFragment : Fragment() {
 
         shouldScroll = true
         list.adapter = adapter
-
-
-        val theme = (context as MainActivity).theme
-        val outValue = TypedValue()
-        theme.resolveAttribute(R.attr.dark_mode, outValue, true)
-
-
-
-        if ("dark" == outValue.string) {
-            toolbar.setNavigationIcon(R.drawable.ic_menu_white_24dp)
-        } else {
-            toolbar.setNavigationIcon(R.drawable.ic_menu_black_24dp)
-        }
 
         toolbar.setNavigationOnClickListener {
             (context as MainActivity).openNavDrawer()

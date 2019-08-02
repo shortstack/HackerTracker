@@ -18,6 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            action:navigationIcon="?attr/menu_icon"
             app:title="@string/settings" />
 
     </com.google.android.material.appbar.AppBarLayout>

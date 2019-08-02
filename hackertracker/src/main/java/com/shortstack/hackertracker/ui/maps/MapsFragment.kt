@@ -13,6 +13,7 @@ import com.crashlytics.android.answers.CustomEvent
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.models.firebase.FirebaseConferenceMap
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.fragment_maps.*
 import org.koin.android.ext.android.inject
 
@@ -34,6 +35,10 @@ class MapsFragment : Fragment() {
         tab_layout.apply {
             tabGravity = com.google.android.material.tabs.TabLayout.GRAVITY_FILL
             setupWithViewPager(pager)
+        }
+
+        toolbar.setNavigationOnClickListener {
+            (context as MainActivity).openNavDrawer()
         }
 
 

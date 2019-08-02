@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui
+package com.shortstack.hackertracker.ui.search
 
 import android.os.Bundle
 import android.view.*
@@ -9,9 +9,7 @@ import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.ui.search.SearchAdapter
 import com.shortstack.hackertracker.ui.search.SearchAdapter.State.*
-import com.shortstack.hackertracker.ui.search.SearchViewModel
 import kotlinx.android.synthetic.main.fragment_search.*
 
 class SearchFragment : Fragment(), SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
@@ -39,6 +37,10 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener, MenuItem.OnAc
         empty_view.showDefault()
 
         list.adapter = adapter
+
+        toolbar.setNavigationOnClickListener {
+            (context as MainActivity).openNavDrawer()
+        }
 
         viewModel.results.observe(this, Observer {
             adapter.setList(it)

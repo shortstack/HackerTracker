@@ -9,6 +9,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
@@ -28,6 +29,11 @@ class HomeFragment : Fragment() {
 
         list.adapter = adapter
         list.layoutManager = LinearLayoutManager(context)
+
+        toolbar.setNavigationOnClickListener {
+            (context as MainActivity).openNavDrawer()
+        }
+
 
         val viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         viewModel.results.observe(this, Observer {
