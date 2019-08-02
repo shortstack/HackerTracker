@@ -78,7 +78,8 @@ class EventView : FrameLayout, KoinComponent {
                 category_text.visibility = View.GONE
             }
             DISPLAY_MODE_FULL -> {
-                guideline.setGuidelineBegin(convertDpToPixel(100.0f, context).toInt())
+                val width = context.resources.getDimension(R.dimen.time_width).toInt()
+                guideline.setGuidelineBegin(width)
                 category_dot.visibility = View.VISIBLE
                 category_text.visibility = View.VISIBLE
             }

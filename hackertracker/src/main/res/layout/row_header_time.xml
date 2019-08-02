@@ -4,6 +4,7 @@
     android:layout_height="wrap_content">
 
     <TextView
+        android:layout_marginLeft="@dimen/category_bar_width"
         android:id="@+id/header"
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="match_parent"
