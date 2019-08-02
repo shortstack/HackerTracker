@@ -45,8 +45,6 @@
     <style name="AppTheme" parent="ThemeBase">
 
 
-
-
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
@@ -88,11 +86,11 @@
     <style name="MyAlertDialogStyle" parent="ThemeOverlay.MaterialComponents.Dialog">
         <item name="android:windowTitleStyle">@style/windowTitleStyle</item>
         <!-- Used for the buttons -->
-        <item name="colorAccent">@color/colorAccent</item>
-        <!-- Used for the title and text -->
-        <item name="android:textColorPrimary">@color/white</item>
+        <!--<item name="colorAccent">@color/colorAccent</item>-->
+        <!--Used for the title and text -->
+        <!--<item name="android:textColorPrimary">@color/white</item>-->
         <!-- Used for the background -->
-        <item name="android:background">@color/background</item>
+        <!--<item name="android:background">@color/background</item>-->
 
         <item name="buttonBarNegativeButtonStyle">@style/AlertButtonStyle</item>
         <item name="buttonBarPositiveButtonStyle">@style/AlertButtonStyle</item>
@@ -251,7 +249,7 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textAllCaps">true</item>
-        <item name="android:textColor">@color/white_70</item>
+        <item name="android:alpha">0.70</item>
     </style>
 
 </resources>

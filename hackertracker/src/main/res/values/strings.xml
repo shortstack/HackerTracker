@@ -111,6 +111,7 @@
 
     <string name="help_line_title">Call Support Hotline</string>
     <string name="help_line_message">Note: The hotline is not for general DEF CON questions, if you have those, please see the nearest Info Booth. \n\nWould you still like to call?</string>
+    <string name="change_theme">Change theme</string>
 
 
 </resources>

@@ -62,7 +62,7 @@ class SettingsFragment : Fragment() {
         val items = list.map { MaterialAlert.Item(it) }
 
         MaterialAlert(context)
-                .setTitle(getString(R.string.change_conference))
+                .setTitle(getString(R.string.change_theme))
                 .setItems(items, DialogInterface.OnClickListener { _, which ->
 
                     MainActivity.isDarkMode = (which == 0)
