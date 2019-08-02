@@ -5,13 +5,17 @@
     android:id="@+id/frame"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="52dp">
-
+    android:minHeight="52dp"
+    android:paddingLeft="24dp">
 
     <View
         android:id="@+id/bubble"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:background="@drawable/day_selector_bubble"
         app:layout_constraintBottom_toBottomOf="@+id/day_1"
         app:layout_constraintTop_toTopOf="@+id/day_1"

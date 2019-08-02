@@ -1,22 +1,17 @@
 package com.shortstack.hackertracker.views
 
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.util.AttributeSet
-import android.util.DisplayMetrics
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.utilities.TickTimer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import com.shortstack.hackertracker.utilities.Analytics
 import kotlinx.android.synthetic.main.row_event.view.*
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -28,15 +23,10 @@ class EventView : FrameLayout, KoinComponent {
         const val DISPLAY_MODE_FULL = 1
     }
 
-    private val timer: TickTimer by inject()
     private val database: DatabaseManager by inject()
     private val analytics: Analytics by inject()
 
-
-    private var disposable: Disposable? = null
     var displayMode: Int = DISPLAY_MODE_MIN
-    private var animation: ObjectAnimator? = null
-
 
     constructor(context: Context, attrs: AttributeSet? = null, display: Int = DISPLAY_MODE_MIN) : super(context, attrs) {
         displayMode = display
@@ -58,37 +48,22 @@ class EventView : FrameLayout, KoinComponent {
         render(event)
     }
 
-    override fun onDetachedFromWindow() {
-        disposable?.dispose()
-        disposable = null
-        finishAnimation()
-        super.onDetachedFromWindow()
-    }
-
-    private fun finishAnimation() {
-        animation?.cancel()
-        animation = null
-    }
-
     private fun setDisplayMode() {
         when (displayMode) {
             DISPLAY_MODE_MIN -> {
-                guideline.setGuidelineBegin(convertDpToPixel(16.0f, context).toInt())
+                val width = context.resources.getDimension(R.dimen.event_view_min_guideline).toInt()
+                guideline.setGuidelineBegin(width)
                 category_dot.visibility = View.GONE
                 category_text.visibility = View.GONE
             }
             DISPLAY_MODE_FULL -> {
-                guideline.setGuidelineBegin(convertDpToPixel(100.0f, context).toInt())
+                val width = context.resources.getDimension(R.dimen.time_width).toInt()
+                guideline.setGuidelineBegin(width)
                 category_dot.visibility = View.VISIBLE
                 category_text.visibility = View.VISIBLE
             }
         }
     }
-
-    fun convertDpToPixel(dp: Float, context: Context): Float {
-        return dp * (context.resources.displayMetrics.densityDpi.toFloat() / DisplayMetrics.DENSITY_DEFAULT)
-    }
-
 
     private fun render(event: Event) {
         title.text = event.title

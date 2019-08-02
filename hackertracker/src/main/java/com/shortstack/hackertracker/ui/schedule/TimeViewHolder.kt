@@ -20,8 +20,8 @@ class TimeViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
-    fun render(time: Time) {
-        view.time_item.setContent(time)
+    fun render(time: Time?) {
+        view.time_item.render(time)
     }
 }
 

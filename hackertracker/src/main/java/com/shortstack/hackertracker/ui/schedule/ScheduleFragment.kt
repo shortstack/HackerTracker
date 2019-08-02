@@ -17,15 +17,10 @@ import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
-import com.shortstack.hackertracker.utilities.TickTimer
 import com.shortstack.hackertracker.views.DaySelectorView
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
-import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.view_empty.view.*
-import org.koin.android.ext.android.inject
 import java.util.*
 
 
@@ -47,13 +42,7 @@ class ScheduleFragment : Fragment() {
         }
     }
 
-    private val timer: TickTimer by inject()
-
-
     private val adapter: ScheduleAdapter = ScheduleAdapter()
-
-
-    private var disposable: Disposable? = null
 
     private var shouldScroll = true
 
@@ -81,12 +70,12 @@ class ScheduleFragment : Fragment() {
                     if (first == -1 || last == -1)
                         return
 
-                    (context as MainActivity).day_selector.onScroll(adapter.getDateOfPosition(first), adapter.getDateOfPosition(last))
+                    day_selector.onScroll(adapter.getDateOfPosition(first), adapter.getDateOfPosition(last))
                 }
             }
         })
 
-        (context as MainActivity).day_selector.addOnDaySelectedListener(object : DaySelectorView.OnDaySelectedListener {
+        day_selector.addOnDaySelectedListener(object : DaySelectorView.OnDaySelectedListener {
             override fun onDaySelected(day: Date) {
                 scrollToDate(day)
             }
@@ -108,7 +97,7 @@ class ScheduleFragment : Fragment() {
                     Status.SUCCESS -> {
                         val list = adapter.setSchedule(it.data)
                         val days = list.filterIsInstance<Day>()
-                        (context as MainActivity).day_selector.setDays(days)
+                        day_selector.setDays(days)
 
                         if (adapter.isEmpty()) {
                             showEmptyView()
@@ -164,26 +153,6 @@ class ScheduleFragment : Fragment() {
             scroller.targetPosition = index
             list.layoutManager?.startSmoothScroll(scroller)
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        disposable = timer.observable.observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    // adapter.notifyTimeChanged()
-                    if (adapter.isEmpty()) {
-                        showEmptyView()
-                    } else {
-                        hideViews()
-                    }
-                }
-    }
-
-    override fun onPause() {
-        disposable?.dispose()
-        disposable = null
-        super.onPause()
     }
 
     private fun showProgress() {

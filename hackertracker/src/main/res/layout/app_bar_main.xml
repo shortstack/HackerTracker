@@ -10,7 +10,8 @@
         android:id="@+id/app_bar"
         style="@style/Theme.MaterialComponents.NoActionBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -58,8 +59,7 @@
         app:behavior_hideable="true"
         app:behavior_peekHeight="240dp"
         app:behavior_skipCollapsed="true"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-        tools:background="@color/dark_background" />
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
