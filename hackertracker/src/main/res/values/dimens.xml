@@ -25,6 +25,8 @@
     <dimen name="card_elevation">1dp</dimen>
     <dimen name="card_content_padding">8dp</dimen>
 
+    <!-- Schedule Time View-->
     <dimen name="time_width">85dp</dimen>
     <dimen name="category_bar_width">4dp</dimen>
+    <dimen name="event_view_min_guideline">16dp</dimen>
 </resources>
