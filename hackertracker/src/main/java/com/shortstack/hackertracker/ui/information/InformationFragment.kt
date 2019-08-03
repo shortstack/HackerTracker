@@ -19,9 +19,9 @@ class InformationFragment : Fragment() {
     companion object {
 
         private const val INFO = 0
-        private const val SPEAKERS = 1
-        private const val VENDORS = 2
-        private const val FAQ = 3
+        private const val SPEAKERS = 2
+        private const val VENDORS = 3
+        private const val FAQ = 1
 
         fun newInstance(): InformationFragment {
             return InformationFragment()
