@@ -5,7 +5,6 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorBackground"
     android:clickable="true"
     android:focusable="true">
 
@@ -40,8 +39,10 @@
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="?android:attr/actionBarSize"
+                android:layout_marginTop="0dp"
                 android:background="@android:color/transparent"
-                app:layout_collapseMode="pin" />
+                app:layout_collapseMode="pin"
+                app:navigationIcon="@drawable/ic_arrow_back_white_24dp" />
 
 
         </com.google.android.material.appbar.SubtitleCollapsingToolbarLayout>
@@ -92,37 +93,6 @@
 
 
             </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/icons"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/demo"
-                    style="@style/Label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/demo" />
-
-                <TextView
-                    android:id="@+id/exploit"
-                    style="@style/Label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/exploit" />
-
-                <TextView
-                    android:id="@+id/tool"
-                    style="@style/Label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tool" />
-
-            </LinearLayout>
-
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -199,23 +169,6 @@
             <LinearLayout
                 android:id="@+id/speakers"
                 style="@style/Section" />
-
-
-            <TextView
-                android:id="@+id/related_events_header"
-                style="@style/SectionHeader"
-                android:text="@string/related_events"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:id="@+id/related_events"
-                style="@style/Section"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:paddingEnd="0dp"
-                android:paddingRight="0dp"
-                android:visibility="gone" />
-
 
             <include layout="@layout/row_footer" />
 

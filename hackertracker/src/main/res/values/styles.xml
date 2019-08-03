@@ -206,13 +206,13 @@
         <item name="android:textSize">18sp</item>
     </style>
 
-    <style name="SectionHeader" parent="Subhead">
+    <style name="SectionHeader" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">60dp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
-        <item name="android:textColor">@color/white_70</item>
+        <item name="android:alpha">0.70</item>
     </style>
 
     <style name="Section">

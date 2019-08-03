@@ -18,6 +18,7 @@ import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.views.EventView
 import com.shortstack.hackertracker.views.StatusBarSpacer
+import kotlinx.android.synthetic.main.empty_text.*
 import kotlinx.android.synthetic.main.fragment_speakers.*
 import org.koin.android.ext.android.inject
 
@@ -57,10 +58,10 @@ class SpeakerFragment : Fragment() {
             (activity as? MainActivity)?.popBackStack()
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            val height = StatusBarSpacer.getStatusBarHeight(context, app_bar)
-            app_bar.setPadding(0, height, 0, 0)
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            val height = StatusBarSpacer.getStatusBarHeight(context, app_bar)
+//            app_bar.setPadding(0, height, 0, 0)
+//        }
 
 
         val speaker = arguments?.getParcelable(EXTRA_SPEAKER) as? Speaker
@@ -91,7 +92,14 @@ class SpeakerFragment : Fragment() {
             }
 
 
-            description.text = it.description
+            val body = it.description
+
+            if (body.isNotBlank()) {
+                empty.visibility = View.GONE
+                description.text = body
+            } else {
+                empty.visibility = View.VISIBLE
+            }
 
             val colours = context.resources.getStringArray(R.array.colors)
             val color = Color.parseColor(colours[speaker.id % colours.size])

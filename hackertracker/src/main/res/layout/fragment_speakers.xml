@@ -70,11 +70,22 @@
                 android:tint="?android:colorForeground"
                 app:srcCompat="@drawable/ic_twitter" />
 
-            <TextView
-                android:id="@+id/description"
-                style="@style/Paragraph"
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent">
+
+                <include
+                    layout="@layout/empty_text"
+                    tools:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/description"
+                    style="@style/Paragraph"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="My event is so fresh!\nSofresh!" />
+
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/events_header"
