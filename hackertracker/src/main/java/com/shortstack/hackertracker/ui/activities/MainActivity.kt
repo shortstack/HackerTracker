@@ -96,7 +96,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
             }
 
 
-            setMainFragment(R.id.nav_schedule, getString(R.string.schedule), false)
+            setMainFragment(R.id.nav_home, getString(R.string.home), false)
         }
 
 

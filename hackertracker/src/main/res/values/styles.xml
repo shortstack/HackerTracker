@@ -49,7 +49,7 @@
     <style name="AppTheme.Dark.Default">
         <item name="colorPrimary">@color/purple_dark</item>
         <item name="colorPrimaryDark">@color/purple_dark</item>
-        <item name="colorAccent">@color/purple_light</item>
+        <item name="colorAccent">@color/purple_dark</item>
         <item name="colorControlNormal">@color/purple_dark</item>
         <item name="colorControlHighlight">@color/purple_dark</item>
         <item name="android:colorBackground">@color/dark_background</item>

@@ -5,11 +5,11 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
+            android:checked="true"
             android:icon="@drawable/ic_home_white_24dp"
             android:title="@string/home" />
         <item
             android:id="@+id/nav_schedule"
-            android:checked="true"
             android:icon="@drawable/ic_schedule_white_24dp"
             android:title="@string/schedule" />
 
@@ -40,10 +40,5 @@
             android:title="@string/settings" />
 
     </group>
-
-    <group
-        android:id="@+id/nav_cons"
-        android:checkableBehavior="single" />
-
 
 </menu>
