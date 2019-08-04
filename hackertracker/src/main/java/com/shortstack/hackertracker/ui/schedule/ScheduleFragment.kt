@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.models.Day
@@ -20,7 +22,9 @@ import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.views.DaySelectorView
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 import kotlinx.android.synthetic.main.fragment_schedule.*
+import kotlinx.android.synthetic.main.fragment_schedule.list
 import kotlinx.android.synthetic.main.view_empty.view.*
+import kotlinx.android.synthetic.main.view_filter.*
 import java.util.*
 
 
@@ -46,6 +50,9 @@ class ScheduleFragment : Fragment() {
 
     private var shouldScroll = true
 
+    private lateinit var bottomSheet: BottomSheetBehavior<View>
+
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_schedule, container, false) as ViewGroup
     }
@@ -56,6 +63,7 @@ class ScheduleFragment : Fragment() {
         val type = arguments?.getParcelable<Type>(EXTRA_TYPE)
         if (type != null) {
             toolbar.title = type.name
+            filter.visibility = View.GONE
         }
 
         shouldScroll = true
@@ -65,7 +73,7 @@ class ScheduleFragment : Fragment() {
             (context as MainActivity).openNavDrawer()
         }
 
-
+        
         val decoration = StickyRecyclerHeadersDecoration(adapter)
         list.addItemDecoration(decoration)
 
@@ -126,6 +134,20 @@ class ScheduleFragment : Fragment() {
                 }
             }
         })
+
+        scheduleViewModel.types.observe(this, Observer {
+            filters.setTypes(it)
+        })
+
+
+        bottomSheet = BottomSheetBehavior.from(filters)
+        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
+
+        filter.setOnClickListener { expandFilters() }
+        close.setOnClickListener { hideFilters() }
+
+        ViewCompat.setTranslationZ(filters, 10f)
+
     }
 
     private fun scrollToCurrentPosition(data: ArrayList<Any>) {
@@ -179,5 +201,13 @@ class ScheduleFragment : Fragment() {
     private fun showErrorView(message: String?) {
         empty.title.text = message
         empty.visibility = View.VISIBLE
+    }
+
+    private fun expandFilters() {
+        bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+    }
+
+    private fun hideFilters() {
+        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
     }
 }

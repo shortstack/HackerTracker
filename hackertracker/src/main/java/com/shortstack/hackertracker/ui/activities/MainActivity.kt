@@ -56,7 +56,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
     private val storage: Storage by inject()
 
-    private lateinit var bottomSheet: BottomSheetBehavior<View>
 
     private lateinit var viewModel: MainActivityViewModel
 
@@ -87,14 +86,8 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
             val hasWorkshops = it.firstOrNull { it.name == "Workshop" } != null
             nav_view.menu.findItem(R.id.nav_workshops).isVisible = hasWorkshops
 
-            filters.setTypes(it)
         })
 
-        bottomSheet = BottomSheetBehavior.from(filters)
-        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
-
-        filter.setOnClickListener { expandFilters() }
-        close.setOnClickListener { hideFilters() }
 
         if (savedInstanceState == null) {
             if (Amplify.getSharedInstance().shouldPrompt() && !BuildConfig.DEBUG) {
@@ -110,7 +103,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         supportFragmentManager.addOnBackStackChangedListener(this)
 
 
-        ViewCompat.setTranslationZ(filters, 10f)
     }
 
     override fun onResume() {
@@ -170,23 +162,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         return theme
     }
 
-    private fun setFABVisibility(visibility: Int) {
-        if (visibility == View.VISIBLE) {
-            filter.show()
-        } else {
-            filter.hide()
-        }
-    }
-
-    private fun expandFilters() {
-        bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
-    }
-
-    private fun hideFilters() {
-        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
-    }
-
-
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
         inflater.inflate(R.menu.search_menu, menu)
@@ -199,7 +174,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         when {
             drawerOpen -> drawer_layout.closeDrawers()
             storage.navDrawerOnBack && !drawerOpen && !secondaryVisible -> drawer_layout.openDrawer(GravityCompat.START)
-            bottomSheet.state != BottomSheetBehavior.STATE_HIDDEN -> hideFilters()
             else -> super.onBackPressed()
         }
     }
@@ -214,9 +188,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
     }
 
     private fun setMainFragment(id: Int, title: String? = null, addToBackStack: Boolean) {
-        val visibility = if (id == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
-        setFABVisibility(visibility)
-
         replaceFragment(getFragment(id), R.id.container, backStack = addToBackStack)
 
         title?.let {
@@ -273,16 +244,10 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
             secondaryVisible = true
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             container.visibility = View.INVISIBLE
-            setFABVisibility(View.INVISIBLE)
         } else {
             secondaryVisible = false
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             container.visibility = View.VISIBLE
-            if (last is ScheduleFragment) {
-                setFABVisibility(View.VISIBLE)
-            } else {
-                setFABVisibility(View.INVISIBLE)
-            }
         }
     }
 

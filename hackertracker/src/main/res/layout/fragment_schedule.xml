@@ -15,7 +15,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="?attr/menu_icon"
-            app:title="@string/schedule" />
+            app:title="@string/schedule"
+            />
 
         <com.shortstack.hackertracker.views.DaySelectorView
             android:id="@+id/day_selector"
@@ -54,7 +55,29 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 
+
+
     </FrameLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/filter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:visibility="visible"
+        app:elevation="0dp"
+        app:srcCompat="@drawable/ic_filter_list_white_24dp" />
+
+    <com.shortstack.hackertracker.views.FilterView
+        android:id="@+id/filters"
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="240dp"
+        app:behavior_skipCollapsed="true"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
+
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
