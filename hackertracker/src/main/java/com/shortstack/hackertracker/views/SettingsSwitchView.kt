@@ -23,9 +23,15 @@ class SettingsSwitchView(context: Context?, attrs: AttributeSet?) : LinearLayout
                 R.styleable.SettingsSwitchView,
                 0, 0)?.apply {
             try {
+
                 label.text = getString(R.styleable.SettingsSwitchView_switchText)
-                control.tag = getString(R.styleable.SettingsSwitchView_switchKey)
-                control.isChecked = getBoolean(R.styleable.SettingsSwitchView_switchDefaultValue, true)
+                val key = getString(R.styleable.SettingsSwitchView_switchKey)
+                control.tag = key
+                control.id = key.hashCode()
+
+                val defaultValue = getBoolean(R.styleable.SettingsSwitchView_switchDefaultValue, true)
+                val isChecked = storage.getPreference(key, defaultValue)
+                control.isChecked = isChecked
             } finally {
                 recycle()
             }

@@ -55,4 +55,13 @@ class Storage(context: Context) {
             else -> throw IllegalArgumentException("Unknown key: $key")
         }
     }
+
+    fun getPreference(key: String, defaultValue: Boolean): Boolean {
+        return when (key) {
+            USER_ANALYTICS -> allowAnalytics
+            NAV_DRAWER_ON_BACK -> navDrawerOnBack
+            FORCE_TIME_ZONE -> forceTimeZone
+            else -> throw IllegalArgumentException("Unknown key: $key")
+        }
+    }
 }

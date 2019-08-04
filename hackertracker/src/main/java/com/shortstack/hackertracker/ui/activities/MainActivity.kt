@@ -37,11 +37,13 @@ import com.shortstack.hackertracker.ui.information.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.settings.SettingsFragment
+import com.shortstack.hackertracker.utilities.Storage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.row_nav_view.*
 import kotlinx.android.synthetic.main.view_filter.*
+import org.koin.android.ext.android.inject
 
 
 class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
@@ -51,6 +53,8 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         var isDarkMode = false
     }
 
+
+    private val storage: Storage by inject()
 
     private lateinit var bottomSheet: BottomSheetBehavior<View>
 
@@ -191,6 +195,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         val drawerOpen = drawer_layout.isDrawerOpen(GravityCompat.START)
         when {
             drawerOpen -> drawer_layout.closeDrawers()
+            storage.navDrawerOnBack && !drawerOpen -> drawer_layout.openDrawer(GravityCompat.START)
             bottomSheet.state != BottomSheetBehavior.STATE_HIDDEN -> hideFilters()
             else -> super.onBackPressed()
         }
