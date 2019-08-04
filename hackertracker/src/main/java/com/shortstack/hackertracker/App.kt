@@ -10,7 +10,9 @@ import com.github.stkent.amplify.feedback.GooglePlayStoreFeedbackCollector
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.di.appModule
+import com.shortstack.hackertracker.utilities.Storage
 import io.fabric.sdk.android.Fabric
+import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.startKoin
 
 
@@ -18,10 +20,16 @@ class App : MultiDexApplication() {
 
     companion object {
         val isDeveloper = false
+
+        lateinit var instance: App
     }
+
+
+    val storage: Storage by inject()
 
     override fun onCreate() {
         super.onCreate()
+        instance = this
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         

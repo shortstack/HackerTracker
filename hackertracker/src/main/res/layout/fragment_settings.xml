@@ -52,7 +52,7 @@
                 android:layout_height="wrap_content"
                 switch:switchDefaultValue="true"
                 switch:switchKey="force_time_zone"
-                switch:switchText="Events in Pacific Time Zone(UTC-8)" />
+                switch:switchText="Events in local timezone (America/Los_Angeles)" />
 
             <com.shortstack.hackertracker.views.SettingsSwitchView
                 android:id="@+id/nav_drawer_on_back"
@@ -60,7 +60,7 @@
                 android:layout_height="wrap_content"
                 switch:switchDefaultValue="false"
                 switch:switchKey="nav_drawer_on_back"
-                switch:switchText="Open drawer onBackPressed" />
+                switch:switchText="Back button to open the drawer" />
 
             <com.shortstack.hackertracker.views.SettingsSwitchView
                 android:id="@+id/usage"

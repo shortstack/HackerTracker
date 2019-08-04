@@ -22,10 +22,19 @@ object TimeUtil {
         if (date == null)
             return context.getString(R.string.tba)
 
-        return if (android.text.format.DateFormat.is24HourFormat(context)) {
-            SimpleDateFormat("HH:mm").format(date)
+
+        val s = if (android.text.format.DateFormat.is24HourFormat(context)) {
+            "HH:mm"
         } else {
-            SimpleDateFormat("h:mm\naa").format(date)
+            "h:mm\naa"
         }
+
+        val formatter = SimpleDateFormat(s)
+
+        if (App.instance.storage.forceTimeZone) {
+            formatter.timeZone = TimeZone.getTimeZone("America/Los_Angeles")
+        }
+
+        return formatter.format(date)
     }
 }
