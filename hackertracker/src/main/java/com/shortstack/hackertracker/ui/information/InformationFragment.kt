@@ -18,10 +18,11 @@ class InformationFragment : Fragment() {
 
     companion object {
 
-        private const val INFO = 0
-        private const val SPEAKERS = 2
-        private const val VENDORS = 3
-        private const val FAQ = 1
+//        private const val INFO = 0
+        private const val FAQ = 0
+        private const val SPEAKERS = 1
+        private const val VENDORS = 2
+
 
         fun newInstance(): InformationFragment {
             return InformationFragment()
@@ -51,11 +52,11 @@ class InformationFragment : Fragment() {
 
             override fun onTabSelected(tab: TabLayout.Tab) {
                 val fragment = when (tab.position) {
-                    INFO -> InfoFragment.newInstance()
+//                    INFO -> InfoFragment.newInstance()
                     SPEAKERS -> SpeakersFragment.newInstance()
                     FAQ -> FAQFragment.newInstance()
                     VENDORS -> VendorsFragment.newInstance()
-                    else -> throw IllegalArgumentException("Unknown tag type ${tab.tag}")
+                    else -> throw IndexOutOfBoundsException("Position out of bounds: ${tab.position}")
                 }
 
 
@@ -69,7 +70,7 @@ class InformationFragment : Fragment() {
 
 
 
-        tabs.addTab(tabs.newTab().setText("Info"))
+//        tabs.addTab(tabs.newTab().setText("Info"))
         tabs.addTab(tabs.newTab().setText("FAQ"))
         tabs.addTab(tabs.newTab().setText("Speakers"))
         tabs.addTab(tabs.newTab().setText("Vendors"))
