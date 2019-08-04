@@ -4,8 +4,10 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
+import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Speaker
+import com.shortstack.hackertracker.models.local.Vendor
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
@@ -13,15 +15,22 @@ class SpeakersViewModel : ViewModel(), KoinComponent {
 
     private val database: DatabaseManager by inject()
 
-    val speakers: LiveData<List<Speaker>>
-        get() = contents
+    private val result = MediatorLiveData<Resource<List<Speaker>>>()
 
-    private val contents = Transformations.switchMap(database.conference) { id ->
-        val result = MediatorLiveData<List<Speaker>>()
-        if (id == null) {
-            return@switchMap result
+    val speakers: LiveData<Resource<List<Speaker>>>
+        get() {
+            val conference = database.conference
+            return Transformations.switchMap(conference) { id ->
+                result.value = Resource.loading(null)
+
+                if (id != null) {
+                    result.addSource(database.getSpeakers(id)) {
+                        result.value = Resource.success(it)
+                    }
+                } else {
+                    result.value = Resource.init(null)
+                }
+                return@switchMap result
+            }
         }
-        return@switchMap database.getSpeakers(id)
-    }
-
 }

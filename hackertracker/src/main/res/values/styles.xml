@@ -17,6 +17,8 @@
     <style name="ThemeBase" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="menu_icon">@drawable/ic_menu_black_24dp</item>
         <item name="dark_mode">light</item>
+
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="preferenceTheme">@style/Theme.WtfPreference</item>
@@ -50,8 +52,6 @@
         <item name="colorPrimary">@color/purple_dark</item>
         <item name="colorPrimaryDark">@color/purple_dark</item>
         <item name="colorAccent">@color/purple_dark</item>
-        <item name="colorControlNormal">@color/purple_dark</item>
-        <item name="colorControlHighlight">@color/purple_dark</item>
         <item name="android:colorBackground">@color/dark_background</item>
     </style>
 

@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
     companion object {
 
-        var isDarkMode = false
+        var isDarkMode = true
     }
 
 
@@ -197,12 +197,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        if (item.groupId == R.id.nav_cons) {
-            viewModel.changeConference(item.itemId)
-        } else {
-            setMainFragment(item.itemId, item.title.toString(), false)
-        }
-
+        setMainFragment(item.itemId, item.title.toString(), false)
         drawer_layout.closeDrawers()
         return true
     }

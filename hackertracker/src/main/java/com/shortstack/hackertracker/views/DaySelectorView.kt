@@ -35,7 +35,10 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
             if (view is TextView) {
                 children.add(view)
                 view.setOnClickListener {
-                    listener?.onDaySelected(Date(view.tag as Long))
+                    val tag = view.tag as? Long
+                    if( tag != null) {
+                        listener?.onDaySelected(Date(tag))
+                    }
                 }
             }
         }
