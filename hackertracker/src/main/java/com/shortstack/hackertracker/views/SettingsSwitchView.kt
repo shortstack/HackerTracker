@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.views
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
+import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.utilities.Storage
@@ -24,14 +25,20 @@ class SettingsSwitchView(context: Context?, attrs: AttributeSet?) : LinearLayout
                 0, 0)?.apply {
             try {
 
-                label.text = getString(R.styleable.SettingsSwitchView_switchText)
+                val text = getString(R.styleable.SettingsSwitchView_switchText)
+                val defaultValue = getBoolean(R.styleable.SettingsSwitchView_switchDefaultValue, true)
                 val key = getString(R.styleable.SettingsSwitchView_switchKey)
+
+                label.text = text
                 control.tag = key
                 control.id = key.hashCode()
 
-                val defaultValue = getBoolean(R.styleable.SettingsSwitchView_switchDefaultValue, true)
-                val isChecked = storage.getPreference(key, defaultValue)
-                control.isChecked = isChecked
+                if (!isInEditMode) {
+                    val isChecked = storage.getPreference(key, defaultValue)
+                    control.isChecked = isChecked
+                } else {
+                    control.isChecked = defaultValue
+                }
             } finally {
                 recycle()
             }

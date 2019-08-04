@@ -64,6 +64,8 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
     private val map = HashMap<Int, Fragment>()
 
+    private var secondaryVisible = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -160,7 +162,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
     override fun getTheme(): Resources.Theme {
         val theme = super.getTheme()
         if (isDarkMode) {
-            theme.applyStyle(R.style.AppTheme_Dark, true)
+            theme.applyStyle(R.style.AppTheme_Dark_Default, true)
         } else {
             theme.applyStyle(R.style.AppTheme, true)
         }
@@ -193,9 +195,10 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
     override fun onBackPressed() {
         val drawerOpen = drawer_layout.isDrawerOpen(GravityCompat.START)
+
         when {
             drawerOpen -> drawer_layout.closeDrawers()
-            storage.navDrawerOnBack && !drawerOpen -> drawer_layout.openDrawer(GravityCompat.START)
+            storage.navDrawerOnBack && !drawerOpen && !secondaryVisible -> drawer_layout.openDrawer(GravityCompat.START)
             bottomSheet.state != BottomSheetBehavior.STATE_HIDDEN -> hideFilters()
             else -> super.onBackPressed()
         }
@@ -267,10 +270,12 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         val last = fragments.lastOrNull()
 
         if (last is EventFragment || last is SpeakerFragment) {
+            secondaryVisible = true
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
             container.visibility = View.INVISIBLE
             setFABVisibility(View.INVISIBLE)
         } else {
+            secondaryVisible = false
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             container.visibility = View.VISIBLE
             if (last is ScheduleFragment) {
