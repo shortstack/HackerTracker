@@ -295,30 +295,28 @@ class DatabaseManager(private val preferences: Storage) {
         firestore.collection(CONFERENCES)
                 .document(code)
                 .collection(EVENTS)
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception == null) {
-                        val events = snapshot?.toObjects(FirebaseEvent::class.java)
-                                ?.filter { !it.hidden || App.isDeveloper }
-                                ?.map { it.toEvent() } ?: emptyList()
+                .get()
+                .addOnSuccessListener {
+                    val events = it.toObjects(FirebaseEvent::class.java)
+                            .filter { !it.hidden || App.isDeveloper }
+                            .map { it.toEvent() }
+
+                    firestore.collection(CONFERENCES)
+                            .document(code)
+                            .collection(USERS)
+                            .document(id)
+                            .collection(BOOKMARKS)
+                            .get()
+                            .addOnSuccessListener {
+                                val bookmarks = it.toObjects(FirebaseBookmark::class.java).map { it.id }
+
+                                val bookmarked = events.filter { it.id.toString() in bookmarks }.take(3)
+                                bookmarked.forEach { it.isBookmarked = true }
+
+                                result.postValue(bookmarked)
 
 
-                        firestore.collection(CONFERENCES)
-                                .document(code)
-                                .collection(USERS)
-                                .document(id)
-                                .collection(BOOKMARKS)
-                                .addSnapshotListener { snapshot, exception ->
-                                    if (exception == null) {
-                                        val bookmarks = snapshot?.toObjects(FirebaseBookmark::class.java)?.map { it.id }
-                                                ?: emptyList()
-
-                                        val bookmarked = events.filter { it.id.toString() in bookmarks }.take(3)
-                                        bookmarked.forEach { it.isBookmarked = true }
-
-                                        result.postValue(bookmarked)
-                                    }
-                                }
-                    }
+                            }
                 }
 
         return result
