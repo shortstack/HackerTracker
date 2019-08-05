@@ -101,6 +101,9 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
             1 -> day_2
             2 -> day_3
             3 -> day_4
+            4 -> day_5
+            5 -> day_6
+            6 -> day_7
             else -> throw ArrayIndexOutOfBoundsException("Index out of bounds: $index.")
         }
     }
@@ -152,7 +155,7 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
         val format = SimpleDateFormat("MMM d")
 
 
-        for (index in 0..3) {
+        for (index in 0..6) {
             val view = getViewByIndex(index) as TextView
 
             if (index < days.size) {
