@@ -48,7 +48,7 @@
     <string name="demo">DEMO</string>
     <string name="tool">TOOL</string>
     <string name="exploit">EXPLOIT</string>
-    <string name="timestamp_full">%1$s, %2$s - %3$s</string>
+    <string name="timestamp_full">%1$s, %2$s</string>
 
 
     <!-- Time -->
@@ -104,6 +104,14 @@
     <!-- Settings -->
     <string name="version">Version %1$s</string>
     <string name="change_conference">Change conference</string>
+
+    <!-- DEF CON Support Hotline -->
+    <string name="call">Call</string>
+
+
+    <string name="help_line_title">Call Support Hotline</string>
+    <string name="help_line_message">Note: The hotline is not for general DEF CON questions, if you have those, please see the nearest Info Booth. \n\nWould you still like to call?</string>
+    <string name="change_theme">Change theme</string>
 
 
 </resources>

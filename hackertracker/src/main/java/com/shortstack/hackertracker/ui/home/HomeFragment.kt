@@ -9,7 +9,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shortstack.hackertracker.R
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import com.shortstack.hackertracker.ui.activities.MainActivity
+import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : Fragment() {
 
@@ -20,7 +21,7 @@ class HomeFragment : Fragment() {
     private val adapter = HomeAdapter()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_recyclerview, container, false)
+        return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -28,6 +29,11 @@ class HomeFragment : Fragment() {
 
         list.adapter = adapter
         list.layoutManager = LinearLayoutManager(context)
+
+        toolbar.setNavigationOnClickListener {
+            (context as MainActivity).openNavDrawer()
+        }
+
 
         val viewModel = ViewModelProviders.of(this).get(HomeViewModel::class.java)
         viewModel.results.observe(this, Observer {

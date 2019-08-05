@@ -20,8 +20,8 @@ class TimeViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         }
     }
 
-    fun render(time: Time) {
-        view.time_item.setContent(time)
+    fun render(time: Time?) {
+        view.time_item.render(time)
     }
 }
 
@@ -35,6 +35,6 @@ class DayViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
     }
 
     fun render(day: Day) {
-        (view as TextView).text = TimeUtil.getRelativeDateStamp(view.context, day)
+        (view as TextView).text = TimeUtil.getDateStamp(day)
     }
 }

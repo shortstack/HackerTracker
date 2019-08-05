@@ -4,31 +4,54 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.LinearSmoothScroller
+import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.models.Day
-import com.shortstack.hackertracker.models.Time
 import com.shortstack.hackertracker.models.local.Event
+import com.shortstack.hackertracker.models.local.Type
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
-import com.shortstack.hackertracker.utilities.TickTimer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import com.shortstack.hackertracker.views.DaySelectorView
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 import kotlinx.android.synthetic.main.fragment_schedule.*
+import kotlinx.android.synthetic.main.fragment_schedule.list
 import kotlinx.android.synthetic.main.view_empty.view.*
-import org.koin.android.ext.android.inject
+import kotlinx.android.synthetic.main.view_filter.*
+import java.util.*
+
 
 class ScheduleFragment : Fragment() {
 
+    companion object {
+        private const val EXTRA_TYPE = "type"
+
+        fun newInstance(type: Type? = null): ScheduleFragment {
+            val fragment = ScheduleFragment()
+
+            if (type != null) {
+                val bundle = Bundle()
+                bundle.putParcelable(EXTRA_TYPE, type)
+                fragment.arguments = bundle
+            }
+
+            return fragment
+        }
+    }
+
     private val adapter: ScheduleAdapter = ScheduleAdapter()
 
-    private val timer: TickTimer by inject()
-
-    private var disposable: Disposable? = null
-
     private var shouldScroll = true
+
+    private lateinit var bottomSheet: BottomSheetBehavior<View>
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_schedule, container, false) as ViewGroup
@@ -37,10 +60,49 @@ class ScheduleFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val type = arguments?.getParcelable<Type>(EXTRA_TYPE)
+        if (type != null) {
+            toolbar.title = type.name
+            filter.visibility = View.GONE
+        }
+
         shouldScroll = true
         list.adapter = adapter
 
-        val scheduleViewModel = ViewModelProviders.of(this).get(ScheduleViewModel::class.java)
+        toolbar.setNavigationOnClickListener {
+            (context as MainActivity).openNavDrawer()
+        }
+
+        
+        val decoration = StickyRecyclerHeadersDecoration(adapter)
+        list.addItemDecoration(decoration)
+
+        list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                val manager = list.layoutManager as? LinearLayoutManager
+                if (manager != null) {
+                    val first = manager.findFirstVisibleItemPosition()
+                    val last = manager.findLastVisibleItemPosition()
+
+                    if (first == -1 || last == -1)
+                        return
+
+                    day_selector.onScroll(adapter.getDateOfPosition(first), adapter.getDateOfPosition(last))
+                }
+            }
+        })
+
+        day_selector.addOnDaySelectedListener(object : DaySelectorView.OnDaySelectedListener {
+            override fun onDaySelected(day: Date) {
+                scrollToDate(day)
+            }
+        })
+
+
+        val factory = ScheduleViewModelFactory(type)
+
+        val scheduleViewModel = ViewModelProviders.of(this, factory).get(ScheduleViewModel::class.java)
         scheduleViewModel.schedule.observe(this, Observer {
             hideViews()
 
@@ -50,6 +112,9 @@ class ScheduleFragment : Fragment() {
                 when (it.status) {
                     Status.SUCCESS -> {
                         val list = adapter.setSchedule(it.data)
+                        val days = list.filterIsInstance<Day>()
+                        day_selector.setDays(days)
+
                         if (adapter.isEmpty()) {
                             showEmptyView()
                         }
@@ -69,6 +134,20 @@ class ScheduleFragment : Fragment() {
                 }
             }
         })
+
+        scheduleViewModel.types.observe(this, Observer {
+            filters.setTypes(it)
+        })
+
+
+        bottomSheet = BottomSheetBehavior.from(filters)
+        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
+
+        filter.setOnClickListener { expandFilters() }
+        close.setOnClickListener { hideFilters() }
+
+        ViewCompat.setTranslationZ(filters, 10f)
+
     }
 
     private fun scrollToCurrentPosition(data: ArrayList<Any>) {
@@ -84,35 +163,26 @@ class ScheduleFragment : Fragment() {
 
     private fun getScrollIndex(data: ArrayList<Any>, first: Event): Int {
         val event = data.indexOf(first)
-        val index = data.indexOf(data.subList(0, event).filterIsInstance<Time>().last())
-        if (index > 0) {
-            if (data[index - 1] is Day) {
-                return index - 1
-            }
+        val element = data.subList(0, event).filterIsInstance<Day>().last()
+        val index = data.indexOf(element)
+        if (index != -1) {
             return index
         }
         return event
     }
 
+    private fun scrollToDate(date: Date) {
+        val index = adapter.getDatePosition(date)
+        if (index != -1) {
+            val scroller = object : LinearSmoothScroller(context) {
 
-    override fun onResume() {
-        super.onResume()
-
-        disposable = timer.observable.observeOn(AndroidSchedulers.mainThread())
-                .subscribe {
-                    // adapter.notifyTimeChanged()
-                    if (adapter.isEmpty()) {
-                        showEmptyView()
-                    } else {
-                        hideViews()
-                    }
+                override fun getVerticalSnapPreference(): Int {
+                    return SNAP_TO_START
                 }
-    }
-
-    override fun onPause() {
-        disposable?.dispose()
-        disposable = null
-        super.onPause()
+            }
+            scroller.targetPosition = index
+            list.layoutManager?.startSmoothScroll(scroller)
+        }
     }
 
     private fun showProgress() {
@@ -133,9 +203,11 @@ class ScheduleFragment : Fragment() {
         empty.visibility = View.VISIBLE
     }
 
-    companion object {
+    private fun expandFilters() {
+        bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+    }
 
-        fun newInstance() = ScheduleFragment()
-
+    private fun hideFilters() {
+        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
     }
 }

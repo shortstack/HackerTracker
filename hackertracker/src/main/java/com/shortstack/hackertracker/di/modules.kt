@@ -8,12 +8,10 @@ import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.utilities.NotificationHelper
 import com.shortstack.hackertracker.utilities.Storage
-import com.shortstack.hackertracker.utilities.TickTimer
 import org.koin.dsl.module.module
 
 val appModule = module {
 
-    single { TickTimer() }
     single { Storage(get()) }
     single { NotificationHelper(get()) }
     single { GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create() }

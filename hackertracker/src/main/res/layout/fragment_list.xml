@@ -8,4 +8,4 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingBottom="30dp"
-    tools:listitem="@layout/row" />
+    tools:listitem="@layout/row_event" />

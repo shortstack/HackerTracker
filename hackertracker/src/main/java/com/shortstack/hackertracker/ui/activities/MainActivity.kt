@@ -1,14 +1,16 @@
 package com.shortstack.hackertracker.ui.activities
 
 
+import android.content.Context
 import android.content.res.Resources
+import android.os.Build
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.ViewCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -23,23 +25,19 @@ import com.google.firebase.auth.FirebaseAuth
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
+import com.shortstack.hackertracker.models.local.Speaker
+import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.replaceFragment
-import com.shortstack.hackertracker.ui.SearchFragment
-import com.shortstack.hackertracker.ui.settings.SettingsFragment
-import com.shortstack.hackertracker.ui.contests.ContestsFragment
+import com.shortstack.hackertracker.ui.search.SearchFragment
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
+import com.shortstack.hackertracker.ui.information.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
-import com.shortstack.hackertracker.ui.speakers.SpeakerFragment
-import com.shortstack.hackertracker.ui.speakers.SpeakersFragment
-import com.shortstack.hackertracker.ui.vendors.VendorsFragment
-import com.shortstack.hackertracker.ui.workshops.WorkshopFragment
-import com.shortstack.hackertracker.utilities.TickTimer
+import com.shortstack.hackertracker.ui.settings.SettingsFragment
+import com.shortstack.hackertracker.utilities.Storage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
@@ -50,11 +48,14 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
 
-    private val database: DatabaseManager by inject()
+    companion object {
 
-    private val timer: TickTimer by inject()
+        var isDarkMode = true
+    }
 
-    private lateinit var bottomSheet: BottomSheetBehavior<View>
+
+    private val storage: Storage by inject()
+
 
     private lateinit var viewModel: MainActivityViewModel
 
@@ -62,11 +63,11 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
     private val map = HashMap<Int, Fragment>()
 
+    private var secondaryVisible = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
-        setSupportActionBar(toolbar)
 
         initNavDrawer()
 
@@ -80,46 +81,51 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         viewModel.types.observe(this, Observer {
 
             val hasContest = it.firstOrNull { it.name == "Contest" } != null
-            if (!hasContest) {
-                nav_view.menu.removeItem(NAV_CONTESTS)
-            } else if (nav_view.menu.findItem(NAV_CONTESTS) == null) {
-                nav_view.menu.add(R.id.nav_main, NAV_CONTESTS, 3, R.string.contests).apply {
-                    icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_cake_white_24dp)
-                }
-            }
+            nav_view.menu.findItem(R.id.nav_contests).isVisible = hasContest
 
             val hasWorkshops = it.firstOrNull { it.name == "Workshop" } != null
-            if (!hasWorkshops) {
-                nav_view.menu.removeItem(NAV_WORKSHOPS)
-            } else if (nav_view.menu.findItem(NAV_WORKSHOPS) == null) {
-                nav_view.menu.add(R.id.nav_main, NAV_WORKSHOPS, 3, R.string.workshops).apply {
-                    icon = ContextCompat.getDrawable(this@MainActivity, R.drawable.ic_computer_white_24dp)
-                }
-            }
+            nav_view.menu.findItem(R.id.nav_workshops).isVisible = hasWorkshops
 
-            filters.setTypes(it)
         })
 
-        bottomSheet = BottomSheetBehavior.from(filters)
-        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
-
-        filter.setOnClickListener { expandFilters() }
-        close.setOnClickListener { hideFilters() }
 
         if (savedInstanceState == null) {
             if (Amplify.getSharedInstance().shouldPrompt() && !BuildConfig.DEBUG) {
                 val review = ReviewBottomSheet.newInstance()
                 review.show(this.supportFragmentManager, review.tag)
             }
+
+
+            setMainFragment(R.id.nav_home, getString(R.string.home), false)
         }
 
 
         supportFragmentManager.addOnBackStackChangedListener(this)
 
-        setMainFragment(R.id.nav_schedule, getString(R.string.schedule), false)
 
-        ViewCompat.setTranslationZ(filters, 10f)
     }
+
+    override fun onResume() {
+        super.onResume()
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            window.statusBarColor = getThemeAccentColor(this)
+        }
+    }
+
+    fun getThemeAccentColor(context: Context, theme: Resources.Theme = context.theme): Int {
+        val colorAttr =
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    android.R.attr.colorBackground
+                } else {
+                    //Get colorAccent defined for AppCompat
+                    context.resources.getIdentifier("colorBackground", "attr", context.packageName)
+                }
+        val outValue = TypedValue()
+        theme.resolveAttribute(colorAttr, outValue, true)
+        return outValue.data
+    }
+
 
     override fun onStart() {
         super.onStart()
@@ -133,50 +139,28 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        timer.start()
-    }
-
-    override fun onPause() {
-        timer.stop()
-        super.onPause()
-    }
-
     private lateinit var toggle: ActionBarDrawerToggle
 
 
     private fun initNavDrawer() {
-        toggle = ActionBarDrawerToggle(
-                this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-        drawer_layout.addDrawerListener(toggle)
-        toggle.syncState()
+//        toggle = ActionBarDrawerToggle(
+//                this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
+//        drawer_layout.addDrawerListener(toggle)
+//        toggle.syncState()
 
         nav_view.setNavigationItemSelectedListener(this)
     }
 
     override fun getTheme(): Resources.Theme {
         val theme = super.getTheme()
-        theme.applyStyle(R.style.AppTheme, true)
+        if (isDarkMode) {
+            theme.applyStyle(R.style.AppTheme_Dark_Default, true)
+        } else {
+            theme.applyStyle(R.style.AppTheme, true)
+        }
+
         return theme
     }
-
-    private fun setFABVisibility(visibility: Int) {
-        if (visibility == View.VISIBLE) {
-            filter.show()
-        } else {
-            filter.hide()
-        }
-    }
-
-    private fun expandFilters() {
-        bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
-    }
-
-    private fun hideFilters() {
-        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
-    }
-
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
@@ -185,9 +169,11 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
     }
 
     override fun onBackPressed() {
+        val drawerOpen = drawer_layout.isDrawerOpen(GravityCompat.START)
+
         when {
-            drawer_layout.isDrawerOpen(GravityCompat.START) -> drawer_layout.closeDrawers()
-            bottomSheet.state != BottomSheetBehavior.STATE_HIDDEN -> hideFilters()
+            drawerOpen -> drawer_layout.closeDrawers()
+            storage.navDrawerOnBack && !drawerOpen && !secondaryVisible -> drawer_layout.openDrawer(GravityCompat.START)
             else -> super.onBackPressed()
         }
     }
@@ -202,9 +188,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
     }
 
     private fun setMainFragment(id: Int, title: String? = null, addToBackStack: Boolean) {
-        val visibility = if (id == R.id.nav_schedule) View.VISIBLE else View.INVISIBLE
-        setFABVisibility(visibility)
-
         replaceFragment(getFragment(id), R.id.container, backStack = addToBackStack)
 
         title?.let {
@@ -214,12 +197,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
     }
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        if (item.groupId == R.id.nav_cons) {
-            viewModel.changeConference(item.itemId)
-        } else {
-            setMainFragment(item.itemId, item.title.toString(), false)
-        }
-
+        setMainFragment(item.itemId, item.title.toString(), false)
         drawer_layout.closeDrawers()
         return true
     }
@@ -230,10 +208,8 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
                 R.id.nav_home -> HomeFragment.newInstance()
                 R.id.nav_schedule -> ScheduleFragment.newInstance()
                 R.id.nav_map -> MapsFragment.newInstance()
-                R.id.nav_speakers -> SpeakersFragment.newInstance()
-                R.id.nav_companies -> VendorsFragment.newInstance()
-                NAV_CONTESTS -> ContestsFragment.newInstance()
-                NAV_WORKSHOPS -> WorkshopFragment.newInstance()
+                R.id.nav_contests -> ScheduleFragment.newInstance(Type(40003, "Contests", "DEFCON27", "", true))
+                R.id.nav_workshops -> ScheduleFragment.newInstance(Type(40001, "Workshops", "DEFCON27", "", true))
                 R.id.nav_settings -> SettingsFragment.newInstance()
                 R.id.search -> SearchFragment.newInstance()
                 else -> InformationFragment.newInstance()
@@ -260,24 +236,17 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         val last = fragments.lastOrNull()
 
         if (last is EventFragment || last is SpeakerFragment) {
+            secondaryVisible = true
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-            toolbar.visibility = View.INVISIBLE
             container.visibility = View.INVISIBLE
-            setFABVisibility(View.INVISIBLE)
         } else {
+            secondaryVisible = false
             drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-            toolbar.visibility = View.VISIBLE
             container.visibility = View.VISIBLE
-            if (last is ScheduleFragment) {
-                setFABVisibility(View.VISIBLE)
-            } else {
-                setFABVisibility(View.INVISIBLE)
-            }
         }
     }
 
-    companion object {
-        private const val NAV_WORKSHOPS = 1001
-        private const val NAV_CONTESTS = 1002
+    fun openNavDrawer() {
+        drawer_layout.openDrawer(GravityCompat.START)
     }
 }

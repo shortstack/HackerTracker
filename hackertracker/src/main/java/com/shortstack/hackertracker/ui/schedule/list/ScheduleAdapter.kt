@@ -10,24 +10,57 @@ import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.schedule.TimeViewHolder
+import com.shortstack.hackertracker.views.EventView
+import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter
+import java.util.*
+import kotlin.collections.ArrayList
 
-class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
 
     companion object {
         private const val EVENT = 0
         private const val DAY = 1
-        private const val TIME = 2
     }
 
     private val collection = ArrayList<Any>()
 
     var state: Status = Status.NOT_INITIALIZED
 
+    override fun getHeaderId(position: Int): Long {
+        return when (val obj = collection[position]) {
+            is Day -> obj.time
+            is Event -> obj.key
+            else -> throw java.lang.IllegalStateException("Unhandled object type ${obj.javaClass}")
+        }
+    }
+
+    override fun getItemId(position: Int): Long {
+        when (val obj = collection[position]) {
+            is Event -> return obj.key
+        }
+        return super.getItemId(position)
+    }
+
+    override fun onCreateHeaderViewHolder(parent: ViewGroup): RecyclerView.ViewHolder {
+        return TimeViewHolder.inflate(parent)
+    }
+
+    override fun onBindHeaderViewHolder(viewHolder: RecyclerView.ViewHolder, position: Int) {
+        val event = (collection[position] as? Event)
+
+        if (viewHolder is TimeViewHolder) {
+            if (event != null) {
+                viewHolder.render(Time(Date(event.key)))
+            } else {
+                viewHolder.render(null)
+            }
+        }
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            EVENT -> EventViewHolder.inflate(parent)
+            EVENT -> EventViewHolder.inflate(parent, EventView.DISPLAY_MODE_FULL)
             DAY -> DayViewHolder.inflate(parent)
-            TIME -> TimeViewHolder.inflate(parent)
             else -> throw IllegalStateException("Unknown viewType $viewType.")
         }
     }
@@ -40,7 +73,6 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         when (holder) {
             is EventViewHolder -> holder.render(item as Event)
             is DayViewHolder -> holder.render(item as Day)
-            is TimeViewHolder -> holder.render(item as Time)
         }
     }
 
@@ -48,70 +80,28 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         return when (collection[position]) {
             is Event -> EVENT
             is Day -> DAY
-            is Time -> TIME
             else -> throw IllegalStateException("Unknown viewType ${collection[position].javaClass}")
         }
     }
 
     private fun getFormattedElements(elements: List<Event>): ArrayList<Any> {
         val result = ArrayList<Any>()
-        
+
         elements.groupBy { it.date }.toSortedMap().forEach {
             result.add(Day(it.key))
 
             it.value.groupBy { it.start }.toSortedMap().forEach {
-                result.add(Time(it.key))
-
                 if (it.value.isNotEmpty()) {
                     val group = it.value.sortedWith(compareBy({ it.type.name }, { it.location.name }))
+
+                    group.forEach { event -> event.key = it.key.time }
+
                     result.addAll(group)
                 }
             }
         }
 
         return result
-    }
-
-    fun notifyTimeChanged() {
-        if (collection.isEmpty())
-            return
-
-        val list = collection.toList()
-
-        list.forEach {
-            if (it is Event && it.hasFinished) {
-                removeAndNotify(it)
-            }
-        }
-
-
-        if (list.size != this.collection.size) {
-
-            for (i in this.collection.size - 1 downTo 1) {
-                val any = this.collection[i]
-                val any1 = this.collection[i - 1]
-                if ((any is Day && any1 is Day)
-                        || (any is Time && any1 is Time)
-                        || (any is Day && any1 is Time)) {
-                    removeAndNotify(any1)
-                }
-            }
-
-            // If no events and only headers remain.
-            if (collection.size == 2) {
-                val size = list.size
-                collection.clear()
-                notifyItemRangeRemoved(0, size)
-            }
-        }
-    }
-
-    private fun removeAndNotify(item: Any) {
-        val index = collection.indexOf(item)
-        if (index != -1) {
-            collection.removeAt(index)
-            notifyItemRemoved(index)
-        }
     }
 
     fun setSchedule(list: List<Event>?): ArrayList<Any> {
@@ -133,8 +123,6 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                     return left.id == right.id
                 } else if (left is Day && right is Day) {
                     return left.time == right.time
-                } else if (left is Time && right is Time) {
-                    return left.time == right.time
                 }
                 return false
             }
@@ -152,8 +140,6 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
                             && left.title == right.title && left.location.name == right.location.name
                 } else if (left is Day && right is Day) {
                     return left.time == right.time
-                } else if (left is Time && right is Time) {
-                    return left.time == right.time
                 }
                 return false
             }
@@ -169,8 +155,32 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun isEmpty() = state == Status.SUCCESS && collection.isEmpty()
+
     fun clearAndNotify() {
         collection.clear()
         notifyDataSetChanged()
+    }
+
+    fun getDatePosition(date: Date): Int {
+        val calendar = Calendar.getInstance()
+
+        calendar.time = date
+        calendar.set(Calendar.HOUR_OF_DAY, 0)
+        calendar.set(Calendar.MINUTE, 0)
+        calendar.set(Calendar.SECOND, 0)
+        calendar.set(Calendar.MILLISECOND, 0)
+
+
+        val otherDay = Day(calendar.time)
+
+        return collection.indexOfFirst { it is Day && it.time == otherDay.time }
+    }
+
+    fun getDateOfPosition(index: Int): Date {
+        return when (val obj = collection[index]) {
+            is Event -> obj.start
+            is Day -> Date(obj.time)
+            else -> TODO()
+        }
     }
 }

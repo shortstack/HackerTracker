@@ -5,11 +5,11 @@
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
+            android:checked="true"
             android:icon="@drawable/ic_home_white_24dp"
             android:title="@string/home" />
         <item
             android:id="@+id/nav_schedule"
-            android:checked="true"
             android:icon="@drawable/ic_schedule_white_24dp"
             android:title="@string/schedule" />
 
@@ -23,15 +23,15 @@
             android:icon="@drawable/ic_info_outline_white_24dp"
             android:title="@string/information" />
 
-        <item
-            android:id="@+id/nav_speakers"
-            android:icon="@drawable/ic_people_white_24dp"
-            android:title="@string/speakers" />
+        <item android:id="@+id/nav_contests"
+            android:icon="@drawable/ic_cake_white_24dp"
+            android:title="@string/contests"
+            android:visible="false"/>
 
-        <item
-            android:id="@+id/nav_companies"
-            android:icon="@drawable/ic_people_white_24dp"
-            android:title="@string/partners_vendors" />
+        <item android:id="@+id/nav_workshops"
+            android:icon="@drawable/ic_computer_white_24dp"
+            android:title="@string/workshops"
+            android:visible="false"/>
 
         <item
             android:id="@+id/nav_settings"
@@ -40,10 +40,5 @@
             android:title="@string/settings" />
 
     </group>
-
-    <group
-        android:id="@+id/nav_cons"
-        android:checkableBehavior="single" />
-
 
 </menu>

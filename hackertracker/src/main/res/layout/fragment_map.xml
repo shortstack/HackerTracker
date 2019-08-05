@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    >
 
     <com.joanzapata.pdfview.PDFView
         android:id="@+id/viewer"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background" />
+        android:background="?android:colorBackground" />
 
     <FrameLayout
         android:id="@+id/progress"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/background">
+        android:background="?android:colorBackground">
 
         <ProgressBar
             android:layout_width="wrap_content"

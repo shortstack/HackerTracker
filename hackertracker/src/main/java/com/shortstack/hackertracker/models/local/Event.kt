@@ -7,6 +7,7 @@ import com.shortstack.hackertracker.utilities.MyClock
 import com.shortstack.hackertracker.utilities.TimeUtil
 import com.shortstack.hackertracker.utilities.now
 import kotlinx.android.parcel.Parcelize
+import java.text.SimpleDateFormat
 import java.util.*
 
 @Parcelize
@@ -22,7 +23,8 @@ data class Event(
         val speakers: List<Speaker>,
         val type: Type,
         val location: Location,
-        var isBookmarked: Boolean = false) : Parcelable {
+        var isBookmarked: Boolean = false,
+        var key: Long = -1) : Parcelable {
 
     val progress: Float
         get() {
@@ -61,15 +63,14 @@ data class Event(
         }
 
     fun getFullTimeStamp(context: Context): String {
-        val (begin, end) = getTimeStamp(context)
-        val timestamp = TimeUtil.getRelativeDateStamp(context, start)
+        val date = TimeUtil.getDateStamp(start)
 
-        return String.format(context.getString(R.string.timestamp_full), timestamp, begin, end)
-    }
+        val time = if (android.text.format.DateFormat.is24HourFormat(context)) {
+            SimpleDateFormat("HH:mm").format(start)
+        } else {
+            SimpleDateFormat("h:mm aa").format(start)
+        }
 
-    private fun getTimeStamp(context: Context): Pair<String, String> {
-        val begin = TimeUtil.getTimeStamp(context, start)
-        val end = TimeUtil.getTimeStamp(context, end)
-        return Pair(begin, end)
+        return String.format(context.getString(R.string.timestamp_full), date, time)
     }
 }

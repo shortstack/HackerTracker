@@ -3,19 +3,14 @@ package com.shortstack.hackertracker.ui
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.models.Day
-import com.shortstack.hackertracker.models.Time
-import com.shortstack.hackertracker.models.firebase.FirebaseFAQ
-import com.shortstack.hackertracker.models.local.Location
-import com.shortstack.hackertracker.models.local.Speaker
-import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.models.local.Vendor
-import com.shortstack.hackertracker.ui.information.FAQViewHolder
+import com.shortstack.hackertracker.models.local.*
+import com.shortstack.hackertracker.ui.information.faq.FAQViewHolder
+import com.shortstack.hackertracker.ui.information.speakers.SpeakerViewHolder
+import com.shortstack.hackertracker.ui.information.vendors.VendorViewHolder
 import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
-import com.shortstack.hackertracker.ui.schedule.TimeViewHolder
 import com.shortstack.hackertracker.ui.search.LocationViewHolder
-import com.shortstack.hackertracker.ui.speakers.SpeakerViewHolder
-import com.shortstack.hackertracker.ui.vendors.VendorViewHolder
+import com.shortstack.hackertracker.views.EventView
 
 class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -24,7 +19,6 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private const val LOCATION = 1
         private const val SPEAKER = 2
         private const val DAY = 3
-        private const val TIME = 4
         private const val VENDOR = 5
         private const val FAQ = 6
     }
@@ -33,11 +27,10 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            EVENT -> EventViewHolder.inflate(parent)
+            EVENT -> EventViewHolder.inflate(parent, EventView.DISPLAY_MODE_MIN)
             SPEAKER -> SpeakerViewHolder.inflate(parent)
             LOCATION -> LocationViewHolder.inflate(parent)
             DAY -> DayViewHolder.inflate(parent)
-            TIME -> TimeViewHolder.inflate(parent)
             VENDOR -> VendorViewHolder.inflate(parent)
             FAQ -> FAQViewHolder.inflate(parent)
             else -> throw IllegalStateException("Unknown viewType $viewType.")
@@ -54,9 +47,8 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is SpeakerViewHolder -> holder.render(item as Speaker)
             is LocationViewHolder -> holder.render(item as Location)
             is DayViewHolder -> holder.render(item as Day)
-            is TimeViewHolder -> holder.render(item as Time)
             is VendorViewHolder -> holder.render(item as Vendor)
-            is FAQViewHolder -> holder.render(item as FirebaseFAQ)
+            is FAQViewHolder -> holder.render(item as FAQ)
         }
     }
 
@@ -66,9 +58,8 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is Location -> LOCATION
             is Event -> EVENT
             is Day -> DAY
-            is Time -> TIME
             is Vendor -> VENDOR
-            is FirebaseFAQ -> FAQ
+            is FAQ -> FAQ
             else -> throw java.lang.IllegalStateException("Unknown viewType ${collection[position].javaClass}")
         }
     }

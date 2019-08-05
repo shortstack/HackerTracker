@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utilities.MaterialAlert
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.ext.android.inject
@@ -29,6 +30,15 @@ class SettingsFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        toolbar.setNavigationOnClickListener {
+            (context as MainActivity).openNavDrawer()
+        }
+
+
+        change_theme.setOnClickListener {
+            showChangeThemeDialog()
+        }
+
         change_conference.setOnClickListener {
             showChangeConferenceDialog()
         }
@@ -46,6 +56,23 @@ class SettingsFragment : Fragment() {
                 .setTitle(getString(R.string.change_conference))
                 .setItems(items, DialogInterface.OnClickListener { _, which ->
                     database.changeConference(conferences[which].id)
+                }).show()
+    }
+
+    private fun showChangeThemeDialog() {
+        val context = context ?: return
+
+        val list = listOf("Dark", "Light")
+
+        val items = list.map { MaterialAlert.Item(it) }
+
+        MaterialAlert(context)
+                .setTitle(getString(R.string.change_theme))
+                .setItems(items, DialogInterface.OnClickListener { _, which ->
+
+                    MainActivity.isDarkMode = (which == 0)
+
+                    (context as MainActivity).recreate()
                 }).show()
     }
 }

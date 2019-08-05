@@ -8,16 +8,8 @@ import java.util.*
 
 object TimeUtil {
 
-    private const val SOON_DAYS_AMOUNT = 5
-
     @SuppressLint("SimpleDateFormat")
-    fun getRelativeDateStamp(context: Context, date: Date): String {
-        if (date.isToday())
-            return context.getString(R.string.today)
-
-        if (date.isTomorrow())
-            return context.getString(R.string.tomorrow)
-
+    fun getDateStamp(date: Date): String {
         val format = SimpleDateFormat("MMMM d")
 
         return format.format(date)
@@ -30,10 +22,19 @@ object TimeUtil {
         if (date == null)
             return context.getString(R.string.tba)
 
-        return if (android.text.format.DateFormat.is24HourFormat(context)) {
-            SimpleDateFormat("HH:mm").format(date)
+
+        val s = if (android.text.format.DateFormat.is24HourFormat(context)) {
+            "HH:mm"
         } else {
-            SimpleDateFormat("h:mm aa").format(date)
+            "h:mm\naa"
         }
+
+        val formatter = SimpleDateFormat(s)
+
+        if (App.instance.storage.forceTimeZone) {
+            formatter.timeZone = TimeZone.getTimeZone("America/Los_Angeles")
+        }
+
+        return formatter.format(date)
     }
 }

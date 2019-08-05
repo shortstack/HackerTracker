@@ -1,23 +1,17 @@
 package com.shortstack.hackertracker.views
 
-import android.animation.ObjectAnimator
 import android.content.Context
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.os.Build
 import android.util.AttributeSet
 import android.view.View
-import android.view.animation.DecelerateInterpolator
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.utilities.TickTimer
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.Disposable
+import com.shortstack.hackertracker.utilities.Analytics
 import kotlinx.android.synthetic.main.row_event.view.*
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
@@ -27,19 +21,15 @@ class EventView : FrameLayout, KoinComponent {
     companion object {
         const val DISPLAY_MODE_MIN = 0
         const val DISPLAY_MODE_FULL = 1
-        private const val PROGRESS_UPDATE_DURATION_PER_PERCENT = 50
     }
 
-    private val timer: TickTimer by inject()
     private val database: DatabaseManager by inject()
     private val analytics: Analytics by inject()
 
+    var displayMode: Int = DISPLAY_MODE_MIN
 
-    private var disposable: Disposable? = null
-    private var displayMode: Int = DISPLAY_MODE_MIN
-    private var animation: ObjectAnimator? = null
-
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
+    constructor(context: Context, attrs: AttributeSet? = null, display: Int = DISPLAY_MODE_MIN) : super(context, attrs) {
+        displayMode = display
         init()
     }
 
@@ -58,41 +48,36 @@ class EventView : FrameLayout, KoinComponent {
         render(event)
     }
 
-    override fun onDetachedFromWindow() {
-        disposable?.dispose()
-        disposable = null
-        finishAnimation()
-        super.onDetachedFromWindow()
-    }
-
-    private fun finishAnimation() {
-        animation?.cancel()
-        animation = null
-    }
-
     private fun setDisplayMode() {
         when (displayMode) {
             DISPLAY_MODE_MIN -> {
-                time.visibility = View.GONE
+                val width = context.resources.getDimension(R.dimen.event_view_min_guideline).toInt()
+                guideline.setGuidelineBegin(width)
+                category_dot.visibility = View.GONE
+                category_text.visibility = View.GONE
             }
             DISPLAY_MODE_FULL -> {
-                time.visibility = View.VISIBLE
+                val width = context.resources.getDimension(R.dimen.time_width).toInt()
+                guideline.setGuidelineBegin(width)
+                category_dot.visibility = View.VISIBLE
+                category_text.visibility = View.VISIBLE
             }
         }
     }
 
     private fun render(event: Event) {
         title.text = event.title
-        location.text = event.location.name
 
-        if (displayMode != DISPLAY_MODE_MIN) {
-            time.text = event.getFullTimeStamp(context)
+        // Stage 2
+        if (displayMode == DISPLAY_MODE_FULL) {
+            location.text = event.location.name
+        } else {
+            location.text = event.getFullTimeStamp(context) + " / " + event.location.name
         }
+
 
         renderCategoryColour(event)
         updateBookmark(event)
-        setProgressBar(event)
-
 
         setOnClickListener {
             (context as? MainActivity)?.navigate(event)
@@ -101,39 +86,6 @@ class EventView : FrameLayout, KoinComponent {
         star_bar.setOnClickListener {
             onBookmarkClick(event)
         }
-
-        // TODO: Check that this works as intended instead of from within onAttachedToWindow().
-        disposable?.dispose()
-        disposable = timer.observable.observeOn(AndroidSchedulers.mainThread())
-                .subscribe { updateProgressBar(event) }
-    }
-
-    private fun setProgressBar(event: Event) {
-        progress.progress = getProgress(event)
-    }
-
-    private fun updateProgressBar(event: Event) {
-        val progress = getProgress(event)
-
-        if (progress < this.progress.progress) {
-            setProgressBar(event)
-            return
-        }
-
-        finishAnimation()
-
-        val duration = PROGRESS_UPDATE_DURATION_PER_PERCENT * (progress - this.progress.progress)
-
-        animation = ObjectAnimator.ofInt(this.progress, "progress", progress)
-                .also {
-                    it.duration = duration.toLong()
-                    it.interpolator = DecelerateInterpolator()
-                    it.start()
-                }
-    }
-
-    private fun getProgress(event: Event): Int {
-        return (event.progress * 100).toInt()
     }
 
     private fun renderCategoryColour(event: Event) {
@@ -143,24 +95,17 @@ class EventView : FrameLayout, KoinComponent {
 
         val color = Color.parseColor(type.color)
         category.setBackgroundColor(color)
-        progress.progressDrawable.setColorFilter(color, PorterDuff.Mode.SRC_IN)
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
             drawable?.setTint(color)
-            category_text.background = drawable
+            category_dot.background = drawable
         }
     }
 
 
     private fun updateBookmark(event: Event) {
-        val type = event.type
-        val color = Color.parseColor(type.color)
-        renderBookmark(event, color)
-    }
-
-    private fun renderBookmark(event: Event,color: Int) {
         val isBookmarked = event.isBookmarked
 
         val drawable = if (isBookmarked) {
@@ -169,13 +114,7 @@ class EventView : FrameLayout, KoinComponent {
             R.drawable.ic_star_border_white_24dp
         }
 
-        val image = ContextCompat.getDrawable(context, drawable)?.mutate()
-
-        if (isBookmarked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            image?.setTint(color)
-        }
-
-        star_bar.setImageDrawable(image)
+        star_bar.setImageResource(drawable)
     }
 
     private fun onBookmarkClick(event: Event) {

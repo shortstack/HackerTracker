@@ -164,11 +164,11 @@ class DatabaseManager(private val preferences: Storage) {
         return mutableLiveData
     }
 
-    fun getEvents(id: Conference): LiveData<List<Event>> {
-        return getSchedule()
+    fun getEvents(id: Conference, type: Type?): LiveData<List<Event>> {
+        return getSchedule(type)
     }
 
-    fun getSchedule(): MutableLiveData<List<Event>> {
+    fun getSchedule(type: Type? = null): MutableLiveData<List<Event>> {
         val mutableLiveData = MutableLiveData<List<Event>>()
 
         firestore.collection(CONFERENCES)
@@ -177,7 +177,7 @@ class DatabaseManager(private val preferences: Storage) {
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
                         val events = snapshot?.toObjects(FirebaseEvent::class.java)
-                                ?.filter { (!it.hidden || App.isDeveloper) && !it.type.filtered }
+                                ?.filter { (!it.hidden || App.isDeveloper) && (type == null && !it.type.filtered || type?.id == it.type.id ) }
                                 ?.map { it.toEvent() }
 
                         mutableLiveData.postValue(events)
@@ -256,7 +256,7 @@ class DatabaseManager(private val preferences: Storage) {
                 .document(code)
                 .collection(EVENTS)
                 .orderBy("updated_timestamp", Query.Direction.DESCENDING)
-                .limit(3)
+                .limit(5)
                 .get()
                 .addOnSuccessListener {
                     val events = it.toObjects(FirebaseEvent::class.java)
@@ -287,9 +287,44 @@ class DatabaseManager(private val preferences: Storage) {
         return results
     }
 
+    fun getBookmarks(): LiveData<List<Event>> {
+        val result = MutableLiveData<List<Event>>()
 
-    fun getFAQ(code: String = this.code): LiveData<List<FirebaseFAQ>> {
-        val mutableLiveData = MutableLiveData<List<FirebaseFAQ>>()
+        val id = user?.uid ?: return result
+
+        firestore.collection(CONFERENCES)
+                .document(code)
+                .collection(EVENTS)
+                .get()
+                .addOnSuccessListener {
+                    val events = it.toObjects(FirebaseEvent::class.java)
+                            .filter { !it.hidden || App.isDeveloper }
+                            .map { it.toEvent() }
+
+                    firestore.collection(CONFERENCES)
+                            .document(code)
+                            .collection(USERS)
+                            .document(id)
+                            .collection(BOOKMARKS)
+                            .get()
+                            .addOnSuccessListener {
+                                val bookmarks = it.toObjects(FirebaseBookmark::class.java).map { it.id }
+
+                                val bookmarked = events.filter { it.id.toString() in bookmarks }.take(3)
+                                bookmarked.forEach { it.isBookmarked = true }
+
+                                result.postValue(bookmarked)
+
+
+                            }
+                }
+
+        return result
+    }
+
+
+    fun getFAQ(code: String = this.code): LiveData<List<FAQ>> {
+        val mutableLiveData = MutableLiveData<List<FAQ>>()
 
         firestore.collection(CONFERENCES)
                 .document(code)
@@ -297,6 +332,7 @@ class DatabaseManager(private val preferences: Storage) {
                 .get()
                 .addOnSuccessListener {
                     val faqs = it.toObjects(FirebaseFAQ::class.java)
+                            .map { it.toFAQ() }
                     mutableLiveData.postValue(faqs)
                 }
 

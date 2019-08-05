@@ -6,17 +6,24 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.models.local.Conference
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Type
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
-class ScheduleViewModel : ViewModel(), KoinComponent {
+class ScheduleViewModel(private val type: Type? = null) : ViewModel(), KoinComponent {
 
     private val database: DatabaseManager by inject()
 
     val schedule: LiveData<Resource<List<Event>>>
         get() = contents
+
+    val conference: LiveData<Conference>
+        get() = database.conference
+
+    val types: LiveData<List<Type>>
+        get() = database.getScheduleTypes()
 
     private val contents = Transformations.switchMap(database.conference) { id ->
         val result = MediatorLiveData<Resource<List<Event>>>()
@@ -28,8 +35,15 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
 
         result.value = Resource.loading(null)
 
-        val events = database.getEvents(id)
-        val types = database.getTypes(id)
+        val events = database.getEvents(id, type)
+
+        val types = if (type != null) {
+            val result = MediatorLiveData<List<Type>>()
+            result.value = listOf(type)
+            result
+        } else {
+            database.getTypes(id)
+        }
 
         result.addSource(events) {
             val types = types.value ?: emptyList()
@@ -47,6 +61,11 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
     private fun getSchedule(events: List<Event>, types: List<Type>): List<Event> {
         if (types.isEmpty())
             return events
+
+        if(type != null) {
+            val list = events.filter { it.type.id == type.id }
+            return list
+        }
 
         val requireBookmark = types.firstOrNull { it.isBookmark }?.isSelected ?: false
         val filter = types.filter { !it.isBookmark && it.isSelected }

@@ -69,11 +69,11 @@ class EventFragment : Fragment() {
             (activity as? MainActivity)?.popBackStack()
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            val context = context ?: return
-            val height = StatusBarSpacer.getStatusBarHeight(context, app_bar)
-            app_bar.setPadding(0, height, 0, 0)
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+//            val context = context ?: return
+//            val height = StatusBarSpacer.getStatusBarHeight(context, app_bar)
+//            app_bar.setPadding(0, height, 0, 0)
+//        }
 
         event?.let { event ->
 
@@ -189,7 +189,7 @@ class EventFragment : Fragment() {
 
     fun getFullTimeStamp(context: Context, event: Event): String {
         val (begin, end) = getTimeStamp(context, event)
-        val timestamp = TimeUtil.getRelativeDateStamp(context, event.start)
+        val timestamp = TimeUtil.getDateStamp(event.start)
 
         return String.format(context.getString(R.string.timestamp_full), timestamp, begin, end)
     }
@@ -212,7 +212,7 @@ class EventFragment : Fragment() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
             drawable?.setTint(color)
-            category_text.background = drawable
+            category_dot.background = drawable
         }
 
         category_text.text = type.name
@@ -233,21 +233,5 @@ class EventFragment : Fragment() {
                 speakers.addView(SpeakerView(context, speaker), ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT))
             }
         }
-    }
-
-
-    private fun displayRelatedEvents(event: Event, speakers: List<Speaker>) {
-        val context = context ?: return
-
-//        val relatedEvents = database.getRelatedEvents(event.id, event.types, speakers)
-//
-//        if (relatedEvents.isNotEmpty()) {
-//            related_events_header.visibility = View.VISIBLE
-//            relatedEvents.forEach {
-//                related_events.addView(EventView(context, it))
-//            }
-//        } else {
-        related_events_header.visibility = View.GONE
-//        }
     }
 }

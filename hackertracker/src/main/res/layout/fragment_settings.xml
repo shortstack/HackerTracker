@@ -1,51 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:action="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:switch="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
 
-    <LinearLayout
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingTop="16dp">
+        android:background="?android:colorBackground">
 
-
-        <com.shortstack.hackertracker.views.SettingsActionView
-            android:id="@+id/change_conference"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            action:actionText="Change Conference" />
+            action:navigationIcon="?attr/menu_icon"
+            app:title="@string/settings" />
 
+    </com.google.android.material.appbar.AppBarLayout>
 
-        <com.shortstack.hackertracker.views.SettingsSwitchView
-            android:id="@+id/usage"
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            switch:switchDefaultValue="true"
-            switch:switchKey="user_analytics"
-            switch:switchText="Send anonymous usage statistics" />
+            android:orientation="vertical"
+            android:paddingTop="16dp">
 
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/white_20" />
+            <com.shortstack.hackertracker.views.SettingsActionView
+                android:id="@+id/change_theme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                action:actionText="Choose Theme" />
+
+            <com.shortstack.hackertracker.views.SettingsActionView
+                android:id="@+id/change_conference"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                action:actionText="Choose Conference" />
+
+            <com.shortstack.hackertracker.views.SettingsSwitchView
+                android:id="@+id/force_time_zone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                switch:switchDefaultValue="true"
+                switch:switchKey="force_time_zone"
+                switch:switchText="Events in local timezone (America/Los_Angeles)" />
+
+            <com.shortstack.hackertracker.views.SettingsSwitchView
+                android:id="@+id/nav_drawer_on_back"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                switch:switchDefaultValue="false"
+                switch:switchKey="nav_drawer_on_back"
+                switch:switchText="Back button to open the drawer" />
+
+            <com.shortstack.hackertracker.views.SettingsSwitchView
+                android:id="@+id/usage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                switch:switchDefaultValue="true"
+                switch:switchKey="user_analytics"
+                switch:switchText="Send anonymous usage statistics" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:alpha=".20"
+                android:background="?android:colorForeground" />
 
 
-        <TextView
-            android:id="@+id/version"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:padding="16dp"
-            android:textColor="@color/white_70"
-            tools:text="Version 6.0.1" />
+            <TextView
+                android:id="@+id/version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.70"
+                android:gravity="center"
+                android:padding="16dp"
+                tools:text="Version 6.0.1" />
 
-        <include layout="@layout/row_footer" />
+            <include layout="@layout/row_footer" />
 
-    </LinearLayout>
+        </LinearLayout>
 
-</ScrollView>
+    </ScrollView>
+
+</LinearLayout>

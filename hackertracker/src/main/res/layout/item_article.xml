@@ -21,7 +21,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
-            android:textColor="@color/white"
             android:textSize="18sp"
             tools:text="Thank You" />
 
@@ -32,7 +31,7 @@
             android:layout_height="wrap_content"
             android:autoLink="all"
             android:lineSpacingExtra="3dp"
-            android:textColor="@color/white_70"
+            android:alpha="0.70"
             android:textColorLink="@color/blue_dark"
             android:textSize="13sp"
             tools:text="Thanks for being part of #io19! Keep the conversation going and remember to rate sessions you were able to attend. We'd love ot hear your feedback on the event as a whole: g.co/io/feedback" />
