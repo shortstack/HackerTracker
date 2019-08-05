@@ -2,6 +2,7 @@ package com.shortstack.hackertracker.ui.schedule
 
 import android.os.Bundle
 import android.view.LayoutInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.ViewCompat
@@ -66,6 +67,15 @@ class ScheduleFragment : Fragment() {
             filter.visibility = View.GONE
         }
 
+        toolbar.inflateMenu(R.menu.schedule)
+        toolbar.setOnMenuItemClickListener {
+            if(it?.itemId == R.id.search) {
+                (context as MainActivity).showSearch()
+                true
+            }
+            false
+        }
+
         shouldScroll = true
         list.adapter = adapter
 
@@ -73,7 +83,7 @@ class ScheduleFragment : Fragment() {
             (context as MainActivity).openNavDrawer()
         }
 
-        
+
         val decoration = StickyRecyclerHeadersDecoration(adapter)
         list.addItemDecoration(decoration)
 
@@ -147,7 +157,13 @@ class ScheduleFragment : Fragment() {
         close.setOnClickListener { hideFilters() }
 
         ViewCompat.setTranslationZ(filters, 10f)
+    }
 
+    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
+        when(item?.itemId) {
+            R.id.search -> (context as MainActivity).showSearch()
+        }
+        return super.onOptionsItemSelected(item)
     }
 
     private fun scrollToCurrentPosition(data: ArrayList<Any>) {

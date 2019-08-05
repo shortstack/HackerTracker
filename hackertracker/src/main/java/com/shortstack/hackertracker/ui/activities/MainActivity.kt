@@ -101,8 +101,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
 
         supportFragmentManager.addOnBackStackChangedListener(this)
-
-
     }
 
     override fun onResume() {
@@ -248,5 +246,9 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
     fun openNavDrawer() {
         drawer_layout.openDrawer(GravityCompat.START)
+    }
+
+    fun showSearch() {
+        setMainFragment(R.id.search, getString(R.string.search), true)
     }
 }

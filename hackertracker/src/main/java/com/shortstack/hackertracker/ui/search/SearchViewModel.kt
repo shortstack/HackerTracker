@@ -20,7 +20,7 @@ class SearchViewModel : ViewModel(), KoinComponent {
     val results: LiveData<List<Any>>
 
     private val locations = database.getLocations()
-    private val events = database.getSchedule()
+    private val events = database.getSchedule(isTypeFiltered = false)
     private val speakers = database.getSpeakers()
 
     init {
@@ -57,7 +57,7 @@ class SearchViewModel : ViewModel(), KoinComponent {
 
         val list = ArrayList<Any>()
 
-        val speakers = speakers.filter { it.name.contains(query, true) }
+        val speakers = speakers.filter { it.name.contains(query, true) || it.description.contains(query, true) }
         if (speakers.isNotEmpty()) {
             list.add("Speakers")
             list.addAll(speakers)
@@ -70,7 +70,7 @@ class SearchViewModel : ViewModel(), KoinComponent {
             list.addAll(events.filter { it.location.name == location.name }.sortedBy { it.start })
         }
 
-        val events = events.filter { it.title.contains(query, true) }
+        val events = events.filter { it.title.contains(query, true) || it.description.contains(query, true)}
         if(events.isNotEmpty()) {
             list.add("Events")
             list.addAll(events)

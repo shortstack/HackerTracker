@@ -11,8 +11,11 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.search.SearchAdapter.State.*
 import kotlinx.android.synthetic.main.fragment_search.*
+import android.app.Activity
+import android.view.inputmethod.InputMethodManager
 
-class SearchFragment : Fragment(), SearchView.OnQueryTextListener, MenuItem.OnActionExpandListener {
+
+class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
     companion object {
         fun newInstance() = SearchFragment()
@@ -32,15 +35,25 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener, MenuItem.OnAc
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-
         loading_progress.visibility = View.GONE
         empty_view.showDefault()
 
         list.adapter = adapter
 
         toolbar.setNavigationOnClickListener {
-            (context as MainActivity).openNavDrawer()
+            hideKeyboard(context as MainActivity)
+            (context as MainActivity).popBackStack()
         }
+
+        search.onActionViewExpanded()
+        search.setOnCloseListener {
+            hideKeyboard(context as MainActivity)
+            (context as MainActivity).popBackStack()
+            return@setOnCloseListener true
+        }
+        
+        search.setOnQueryTextListener(this)
+
 
         viewModel.results.observe(this, Observer {
             adapter.setList(it)
@@ -56,20 +69,6 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener, MenuItem.OnAc
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
-        menu?.findItem(R.id.search)?.apply {
-            expandActionView()
-            setOnActionExpandListener(this@SearchFragment)
-
-            (actionView as SearchView).apply {
-                setOnQueryTextListener(this@SearchFragment)
-            }
-        }
-
-        super.onCreateOptionsMenu(menu, inflater)
-    }
-
-
     override fun onQueryTextSubmit(query: String?) = true
 
     override fun onQueryTextChange(newText: String?): Boolean {
@@ -78,11 +77,9 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener, MenuItem.OnAc
         return false
     }
 
-    override fun onMenuItemActionExpand(item: MenuItem?) = false
-
-    override fun onMenuItemActionCollapse(item: MenuItem?): Boolean {
-        val activity = context as? MainActivity
-        activity?.popBackStack()
-        return true
+    private fun hideKeyboard(activity: Activity) {
+        val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        val view = activity.currentFocus ?: View(activity)
+        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 }
