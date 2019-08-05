@@ -19,7 +19,7 @@ import org.koin.android.ext.android.startKoin
 class App : MultiDexApplication() {
 
     companion object {
-        val isDeveloper = false
+        val isDeveloper = BuildConfig.DEBUG
 
         lateinit var instance: App
     }
