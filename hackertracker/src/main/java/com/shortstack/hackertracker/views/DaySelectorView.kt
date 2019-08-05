@@ -85,10 +85,14 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
 
 
         val beginIndex = getDayIndex(dates, beginDay)
-        onBeginDaySelected(getViewByIndex(beginIndex))
+        if(beginIndex != -1) {
+            onBeginDaySelected(getViewByIndex(beginIndex))
+        }
 
         val endIndex = getDayIndex(dates, endDay)
-        onEndDaySelected(getViewByIndex(endIndex))
+        if (endIndex != -1) {
+            onEndDaySelected(getViewByIndex(endIndex))
+        }
     }
 
     private fun getViewByIndex(index: Int): View {
