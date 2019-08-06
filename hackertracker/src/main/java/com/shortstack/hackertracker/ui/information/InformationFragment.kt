@@ -5,23 +5,28 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.google.android.material.tabs.TabLayout
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.information.faq.FAQFragment
 import com.shortstack.hackertracker.ui.information.info.InfoFragment
 import com.shortstack.hackertracker.ui.information.speakers.SpeakersFragment
 import com.shortstack.hackertracker.ui.information.vendors.VendorsFragment
 import kotlinx.android.synthetic.main.fragment_information.*
+import org.koin.android.ext.android.inject
 
 class InformationFragment : Fragment() {
 
     companion object {
-
-//        private const val INFO = 0
-        private const val FAQ = 0
-        private const val SPEAKERS = 1
-        private const val VENDORS = 2
+        private const val INFO = 0
+        private const val FAQ = 1
+        private const val SPEAKERS = 2
+        private const val VENDORS = 3
 
 
         fun newInstance(): InformationFragment {
@@ -40,39 +45,69 @@ class InformationFragment : Fragment() {
             (context as MainActivity).openNavDrawer()
         }
 
+        tabs.apply {
+            tabGravity = TabLayout.GRAVITY_FILL
+            setupWithViewPager(pager)
+        }
+
+        pager.offscreenPageLimit = 4
 
         tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab) {
+            override fun onTabReselected(tab: TabLayout.Tab) {}
 
-            }
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {
-
-            }
+            override fun onTabUnselected(tab: TabLayout.Tab) {}
 
             override fun onTabSelected(tab: TabLayout.Tab) {
-                val fragment = when (tab.position) {
-//                    INFO -> InfoFragment.newInstance()
-                    SPEAKERS -> SpeakersFragment.newInstance()
-                    FAQ -> FAQFragment.newInstance()
-                    VENDORS -> VendorsFragment.newInstance()
-                    else -> throw IndexOutOfBoundsException("Position out of bounds: ${tab.position}")
-                }
-
-
-                childFragmentManager.beginTransaction()
-                        .replace(R.id.container, fragment, "")
-                        .addToBackStack(null)
-                        .commit()
-
+                pager.currentItem = tab.position
             }
         })
 
+        val viewModel = ViewModelProviders.of(this).get(InformationViewModel::class.java)
+        viewModel.conference.observe(this, Observer {
+            val fm = activity?.supportFragmentManager ?: return@Observer
+            val adapter = PagerAdapter(fm, it.code)
+            pager.adapter = adapter
+        })
+    }
 
+    class PagerAdapter(fm: FragmentManager, private val conference: String) : FragmentStatePagerAdapter(fm) {
+        override fun getItem(position: Int): Fragment {
+            val index = if (conference == "DEFCON27") {
+                position
+            } else {
+                position + 1
+            }
 
-//        tabs.addTab(tabs.newTab().setText("Info"))
-        tabs.addTab(tabs.newTab().setText("FAQ"))
-        tabs.addTab(tabs.newTab().setText("Speakers"))
-        tabs.addTab(tabs.newTab().setText("Vendors"))
+            return when (index) {
+                INFO -> InfoFragment.newInstance()
+                SPEAKERS -> SpeakersFragment.newInstance()
+                FAQ -> FAQFragment.newInstance()
+                VENDORS -> VendorsFragment.newInstance()
+                else -> throw IndexOutOfBoundsException("Position out of bounds: $index")
+            }
+        }
+
+        override fun getPageTitle(position: Int): CharSequence? {
+            val index = if (conference == "DEFCON27") {
+                position
+            } else {
+                position + 1
+            }
+
+            return when (index) {
+                INFO -> "Event"
+                SPEAKERS -> "Speakers"
+                FAQ -> "FAQ"
+                VENDORS -> "Vendors"
+                else -> throw IndexOutOfBoundsException("Position out of bounds: $index")
+            }
+        }
+
+        override fun getCount(): Int {
+            if (conference == "DEFCON27")
+                return 4
+            return 3
+        }
+
     }
 }

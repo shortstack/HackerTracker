@@ -34,10 +34,12 @@ import com.shortstack.hackertracker.ui.search.SearchFragment
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
+import com.shortstack.hackertracker.ui.information.info.InfoFragment
 import com.shortstack.hackertracker.ui.information.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.settings.SettingsFragment
+import com.shortstack.hackertracker.ui.themes.ThemesManager
 import com.shortstack.hackertracker.utilities.Storage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
@@ -50,14 +52,7 @@ import org.koin.android.ext.android.inject
 
 class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
 
-    companion object {
-
-        var isDarkMode = true
-    }
-
-
     private val storage: Storage by inject()
-
 
     private lateinit var viewModel: MainActivityViewModel
 
@@ -113,7 +108,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         }
     }
 
-    fun getThemeAccentColor(context: Context, theme: Resources.Theme = context.theme): Int {
+    private fun getThemeAccentColor(context: Context, theme: Resources.Theme = context.theme): Int {
         val colorAttr =
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                     android.R.attr.colorBackground
@@ -139,25 +134,19 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         }
     }
 
-    private lateinit var toggle: ActionBarDrawerToggle
-
 
     private fun initNavDrawer() {
-//        toggle = ActionBarDrawerToggle(
-//                this, drawer_layout, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close)
-//        drawer_layout.addDrawerListener(toggle)
-//        toggle.syncState()
-
         nav_view.setNavigationItemSelectedListener(this)
     }
 
     override fun getTheme(): Resources.Theme {
         val theme = super.getTheme()
-        if (isDarkMode) {
-            theme.applyStyle(R.style.AppTheme_Dark_Default, true)
-        } else {
-            theme.applyStyle(R.style.AppTheme, true)
+        val style = when (storage.theme) {
+            ThemesManager.THEME_ADVICE -> R.style.AppTheme_Developer
+            ThemesManager.THEME_LIGHT -> R.style.AppTheme
+            else -> R.style.AppTheme_Dark_Default
         }
+        theme.applyStyle(style, true)
 
         return theme
     }
@@ -203,6 +192,10 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
     }
 
     private fun getFragment(id: Int): Fragment {
+        // TODO: Remove, this is a hacky solution for caching issue with InformationFragment's children fragments.
+        if(id == R.id.nav_information)
+            return InformationFragment.newInstance()
+
         if (map[id] == null) {
             map[id] = when (id) {
                 R.id.nav_home -> HomeFragment.newInstance()
