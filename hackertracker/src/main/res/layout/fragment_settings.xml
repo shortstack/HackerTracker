@@ -64,6 +64,13 @@
                 switch:switchText="Back button to open the drawer" />
 
             <com.shortstack.hackertracker.views.SettingsSwitchView
+                action:switchDefaultValue="false"
+                action:switchText="Easter eggs"
+                action:switchKey="easter_eggs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.shortstack.hackertracker.views.SettingsSwitchView
                 android:id="@+id/usage"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

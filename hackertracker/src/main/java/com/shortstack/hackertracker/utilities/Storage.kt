@@ -10,6 +10,7 @@ class Storage(context: Context) {
         private const val USER_THEME = "user_theme"
         private const val USER_CONFERENCE = "user_conference"
 
+        private const val EASTER_EGGS = "easter_eggs"
         private const val NAV_DRAWER_ON_BACK = "nav_drawer_on_back"
         private const val FORCE_TIME_ZONE = "force_time_zone"
 
@@ -40,6 +41,12 @@ class Storage(context: Context) {
             preferences.edit().putBoolean(FORCE_TIME_ZONE, value).apply()
         }
 
+    var easterEggs: Boolean
+        get() = preferences.getBoolean(EASTER_EGGS, false)
+        set(value) {
+            preferences.edit().putBoolean(EASTER_EGGS, value).apply()
+        }
+
 
     var preferredConference: Int
         get() = preferences.getInt(USER_CONFERENCE, -1)
@@ -52,6 +59,7 @@ class Storage(context: Context) {
             USER_ANALYTICS -> allowAnalytics = isChecked
             NAV_DRAWER_ON_BACK -> navDrawerOnBack = isChecked
             FORCE_TIME_ZONE -> forceTimeZone = isChecked
+            EASTER_EGGS -> easterEggs = isChecked
             else -> throw IllegalArgumentException("Unknown key: $key")
         }
     }
@@ -61,6 +69,7 @@ class Storage(context: Context) {
             USER_ANALYTICS -> allowAnalytics
             NAV_DRAWER_ON_BACK -> navDrawerOnBack
             FORCE_TIME_ZONE -> forceTimeZone
+            EASTER_EGGS -> easterEggs
             else -> throw IllegalArgumentException("Unknown key: $key")
         }
     }
