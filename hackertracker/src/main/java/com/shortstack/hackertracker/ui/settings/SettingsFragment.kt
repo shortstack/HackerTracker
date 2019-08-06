@@ -11,6 +11,9 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utilities.MaterialAlert
+import com.shortstack.hackertracker.utilities.Storage
+import com.shortstack.hackertracker.ui.themes.ThemeContainer
+import com.shortstack.hackertracker.ui.themes.ThemesManager
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.ext.android.inject
 
@@ -22,6 +25,7 @@ class SettingsFragment : Fragment() {
     }
 
     private val database: DatabaseManager by inject()
+    private val storage: Storage by inject()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_settings, container, false)
@@ -62,16 +66,14 @@ class SettingsFragment : Fragment() {
     private fun showChangeThemeDialog() {
         val context = context ?: return
 
-        val list = listOf("Dark", "Light")
+        val list = ThemesManager.getThemes()
 
-        val items = list.map { MaterialAlert.Item(it) }
+        val items = list.map { MaterialAlert.Item(it.label) }
 
         MaterialAlert(context)
                 .setTitle(getString(R.string.change_theme))
                 .setItems(items, DialogInterface.OnClickListener { _, which ->
-
-                    MainActivity.isDarkMode = (which == 0)
-
+                    storage.theme = list[which].id
                     (context as MainActivity).recreate()
                 }).show()
     }
