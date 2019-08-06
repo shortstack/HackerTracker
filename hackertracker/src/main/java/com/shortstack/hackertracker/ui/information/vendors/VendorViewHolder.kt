@@ -30,10 +30,6 @@ class VendorViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
             View.VISIBLE
         }
 
-        val colours = view.context.resources.getStringArray(R.array.colors)
-        val color = Color.parseColor(colours[vendor.colour % colours.size])
-        view.card.setCardBackgroundColor(color)
-
         view.link.setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(vendor.link))
             view.context.startActivity(intent)
