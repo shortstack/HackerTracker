@@ -85,8 +85,8 @@
 
 
     <!-- WiFi Helper -->
-    <string name="wifi_title">Quick Connect to DEF CON WiFi</string>
-    <string name="wifi_subtitle">Quickly connect to DEF CON\'s secure WiFi.</string>
+    <string name="wifi_title">WiFi</string>
+    <string name="wifi_content">Quickly connect to DEF CON\'s secure WiFi using Hacker Tracker. </string>
     <!-- Cert -->
     <string name="wifi_cert">Install DEF CON Certificate</string>
     <string name="wifi_cert_description">Select \'Wi-Fi\' for credential use. Your device will need a PIN to install the certificate.</string>
