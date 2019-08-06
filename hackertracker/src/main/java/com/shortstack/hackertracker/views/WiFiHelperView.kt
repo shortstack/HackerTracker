@@ -10,8 +10,10 @@ import android.net.wifi.WifiEnterpriseConfig
 import android.net.wifi.WifiManager
 import android.os.Build
 import android.util.AttributeSet
+import android.view.View
 import android.widget.FrameLayout
 import android.widget.Toast
+import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.view_wifi_helper.view.*
 import java.security.cert.CertificateFactory
@@ -20,19 +22,21 @@ import java.security.cert.X509Certificate
 
 class WiFiHelperView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
-    companion object {
-        private const val WIFI_URL = "https://wifireg.defcon.org/android.php"
-    }
-
     init {
         inflate(context, R.layout.view_wifi_helper, this)
 
-        save.setOnClickListener { connectWifi() }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR2) {
+            save.visibility = View.VISIBLE
+            save.setOnClickListener { connectWifi() }
+        } else {
+            content.text = context.getString(R.string.wifi_content_legacy)
+            save.visibility = View.GONE
+        }
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     private fun connectWifi() {
-        val wifi = getWifiManager()
+        val wifi = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
 
         wifi.isWifiEnabled = true
 
@@ -69,7 +73,12 @@ class WiFiHelperView(context: Context, attrs: AttributeSet?) : FrameLayout(conte
                 eapMethod = WifiEnterpriseConfig.Eap.PEAP
                 phase2Method = WifiEnterpriseConfig.Phase2.MSCHAPV2
                 caCertificate = x509Certificate
-                altSubjectMatch = "/CN=wifireg.defcon.org"
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    altSubjectMatch = "/CN=wifireg.defcon.org"
+                } else {
+                    subjectMatch = "/CN=wifireg.defcon.org"
+                }
             }
         }
 
@@ -77,14 +86,10 @@ class WiFiHelperView(context: Context, attrs: AttributeSet?) : FrameLayout(conte
 
 
         val result = wifi.enableNetwork(network, true)
-        Toast.makeText(context, result.toString(), Toast.LENGTH_SHORT).show()
-
+        if (result) {
+            Toast.makeText(context, "Wifi network saved", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(context, "Could not save network", Toast.LENGTH_SHORT).show()
+        }
     }
-
-    private fun openUrl() {
-        val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(WIFI_URL))
-        context.startActivity(intent)
-    }
-
-    private fun getWifiManager() = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
 }
