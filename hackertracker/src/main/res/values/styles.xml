@@ -262,4 +262,47 @@
         <item name="android:alpha">0.70</item>
     </style>
 
+    <style name="Card_Body" parent="TextAppearance.MaterialComponents.Body1">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:autoLink">all</item>
+        <item name="android:lineSpacingExtra">3dp</item>
+        <item name="android:alpha">0.70</item>
+        <item name="android:textColorLink">@color/blue_dark</item>
+        <item name="android:textSize">13sp</item>
+    </style>
+
+    <style name="Card_Frame">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingRight">16dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <style name="Card_Container">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@drawable/article_background</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="Card_Title" parent="TextAppearance.MaterialComponents.Headline6">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginBottom">16dp</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="Card_Action" parent="Widget.MaterialComponents.Button.TextButton">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">end</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:paddingLeft">16dp</item>
+        <item name="android:paddingRight">16dp</item>
+    </style>
+
 </resources>

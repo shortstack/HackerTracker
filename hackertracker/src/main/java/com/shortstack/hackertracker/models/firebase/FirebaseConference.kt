@@ -11,6 +11,7 @@ data class FirebaseConference(
         val id: Int = 0,
         val name: String = "",
         val description: String = "",
+        val codeofconduct: String? = null,
         val code: String = "",
         val maps: ArrayList<FirebaseMap> = ArrayList(),
         val start_date: String = "",

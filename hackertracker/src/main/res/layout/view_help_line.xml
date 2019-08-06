@@ -1,64 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:paddingLeft="16dp"
-    android:paddingTop="8dp"
-    android:paddingRight="16dp"
-    android:paddingBottom="8dp">
+    style="@style/Card_Frame">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/article_background"
-        android:orientation="vertical"
-        android:padding="16dp">
+    <LinearLayout style="@style/Card_Container">
 
         <TextView
-            style="@style/TextAppearance.MaterialComponents.Headline6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:text="The DEF CON Support Hotline"
-            android:textSize="18sp" />
+            style="@style/Card_Title"
+            android:text="@string/help_line_title" />
 
         <TextView
-            style="@style/TextAppearance.MaterialComponents.Body1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:alpha="0.70"
-            android:autoLink="all"
-            android:lineSpacingExtra="3dp"
-            android:text="You can reach DEF CON staff during normal hours of operation to anonymously report any behaviour violating our code of conduct or to find an empathic ear by calling the Hotline. Trained community volunteers will be standing by to help any attendees."
-            android:textColorLink="@color/blue_dark"
-            android:textSize="13sp" />
+            style="@style/Card_Body"
+            android:text="@string/help_line_content" />
 
-        <Space
-            android:layout_width="0dp"
-            android:layout_height="16dp" />
-
-        <TextView
-            style="@style/TextAppearance.MaterialComponents.Body1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:alpha="0.70"
-            android:autoLink="all"
-            android:lineSpacingExtra="3dp"
-            android:text="You can still report issues by going to any Info Booth or talking to any SOC Goon, but sometimes you may not want to be walking around in person with a problem, and so we have added a phone option. When you call the Hotline you will reach DEF CON community Goons trained to help in these areas."
-            android:textColorLink="@color/blue_dark"
-            android:textSize="13sp" />
 
         <Button
             android:id="@+id/call"
-            style="@style/Widget.MaterialComponents.Button.TextButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end"
-            android:layout_marginTop="16dp"
-            android:paddingLeft="16dp"
-            android:paddingRight="16dp"
-            android:text="Call +1 (725) 222-0934"
-             />
+            style="@style/Card_Action"
+            android:text="@string/help_line_action" />
 
     </LinearLayout>
 

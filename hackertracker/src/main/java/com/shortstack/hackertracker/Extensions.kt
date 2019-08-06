@@ -84,6 +84,7 @@ fun FirebaseConference.toConference() = Conference(
         id,
         name,
         description,
+        codeofconduct,
         code,
         maps,
         start_timestamp.toDate(),

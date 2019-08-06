@@ -13,6 +13,7 @@ data class Conference(
         val id: Int,
         val name: String,
         val description: String,
+        val conduct: String?,
         val code: String,
         val maps: ArrayList<FirebaseMap>,
         val startDate: Date,
