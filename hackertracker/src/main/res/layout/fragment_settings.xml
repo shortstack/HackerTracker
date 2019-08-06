@@ -38,7 +38,6 @@
                 android:id="@+id/change_theme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
                 action:actionText="Choose Theme" />
 
             <com.shortstack.hackertracker.views.SettingsActionView

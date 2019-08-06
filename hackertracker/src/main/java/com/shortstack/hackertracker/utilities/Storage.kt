@@ -54,6 +54,12 @@ class Storage(context: Context) {
             preferences.edit().putInt(USER_CONFERENCE, value).apply()
         }
 
+    var theme: Int
+        get() = preferences.getInt(USER_THEME, -1)
+        set(value) {
+            preferences.edit().putInt(USER_THEME, value).apply()
+        }
+
     fun setPreference(key: String, isChecked: Boolean) {
         when (key) {
             USER_ANALYTICS -> allowAnalytics = isChecked

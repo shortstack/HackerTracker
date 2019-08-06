@@ -4,6 +4,8 @@
     <attr name="dark_mode" format="string" />
 
     <attr name="menu_icon" format="reference" />
+    <attr name="footer_icon" format="reference" />
+    <attr name="footer_tint" format="reference"/>
 
     <declare-styleable name="EmptyView">
         <attr name="evIcon" format="reference" />
