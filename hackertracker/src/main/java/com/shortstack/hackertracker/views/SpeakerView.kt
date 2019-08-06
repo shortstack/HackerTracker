@@ -24,7 +24,7 @@ class SpeakerView : LinearLayout {
 
         val colours = context.resources.getStringArray(R.array.colors)
         val color = Color.parseColor(colours[speaker.id % colours.size])
-        card.setCardBackgroundColor(color)
+        category.setBackgroundColor(color)
 
         setOnClickListener {
             (context as? MainActivity)?.navigate(speaker)

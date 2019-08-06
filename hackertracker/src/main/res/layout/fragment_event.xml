@@ -174,7 +174,8 @@
 
             <LinearLayout
                 android:id="@+id/speakers"
-                style="@style/Section" />
+                style="@style/Section"
+                android:padding="0dp" />
 
             <include layout="@layout/row_footer" />
 
