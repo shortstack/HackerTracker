@@ -48,7 +48,8 @@
     <string name="demo">DEMO</string>
     <string name="tool">TOOL</string>
     <string name="exploit">EXPLOIT</string>
-    <string name="timestamp_full">%1$s, %2$s</string>
+    <string name="timestamp_start">%1$s, %2$s</string>
+    <string name="timestamp_full">%1$s, %2$s - %3$s</string>
 
 
     <!-- Time -->

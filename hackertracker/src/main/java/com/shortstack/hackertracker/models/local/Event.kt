@@ -71,6 +71,6 @@ data class Event(
             SimpleDateFormat("h:mm aa").format(start)
         }
 
-        return String.format(context.getString(R.string.timestamp_full), date, time)
+        return String.format(context.getString(R.string.timestamp_start), date, time)
     }
 }

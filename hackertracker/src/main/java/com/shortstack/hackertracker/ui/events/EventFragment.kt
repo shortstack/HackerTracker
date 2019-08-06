@@ -159,10 +159,8 @@ class EventFragment : Fragment() {
     }
 
     private fun getDetailsDescription(event: Event): String {
-//        val context = context ?:
-        return ""
-
-//        return "Attending ${event.title} at ${getFullTimeStamp(context, event)} in ${event.location.firstOrNull()?.name} #hackertracker"
+        val context = context ?: return ""
+        return "Attending ${event.title} at ${getFullTimeStamp(context, event)} in ${event.location.name} #hackertracker"
     }
 
     private fun displayBookmark(event: Event) {
@@ -197,14 +195,14 @@ class EventFragment : Fragment() {
     }
 
 
-    fun getFullTimeStamp(context: Context, event: Event): String {
+    private fun getFullTimeStamp(context: Context, event: Event): String {
         val (begin, end) = getTimeStamp(context, event)
         val timestamp = TimeUtil.getDateStamp(event.start)
 
         return String.format(context.getString(R.string.timestamp_full), timestamp, begin, end)
     }
 
-    fun getTimeStamp(context: Context, event: Event): Pair<String, String> {
+    private fun getTimeStamp(context: Context, event: Event): Pair<String, String> {
         val begin = TimeUtil.getTimeStamp(context, event.start)
         val end = TimeUtil.getTimeStamp(context, event.end)
         return Pair(begin, end)
