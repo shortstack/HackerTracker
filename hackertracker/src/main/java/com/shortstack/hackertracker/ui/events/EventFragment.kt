@@ -15,12 +15,10 @@ import androidx.fragment.app.Fragment
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utilities.TimeUtil
 import com.shortstack.hackertracker.views.SpeakerView
-import com.shortstack.hackertracker.views.StatusBarSpacer
 import kotlinx.android.synthetic.main.empty_text.*
 import kotlinx.android.synthetic.main.fragment_event.*
 import org.koin.android.ext.android.inject
@@ -111,6 +109,15 @@ class EventFragment : Fragment() {
                 onBookmarkClick(event)
             }
 
+            if (event.location.hotel == null) {
+                map.visibility = View.GONE
+            } else {
+                map.visibility = View.VISIBLE
+                map.setOnClickListener {
+                    onMapClick(event)
+                }
+            }
+
             displayDescription(event)
 
             displayTypes(event)
@@ -118,11 +125,14 @@ class EventFragment : Fragment() {
             displayBookmark(event)
 
 
-            val speakers = displaySpeakers(event)
-//            displayRelatedEvents(it, speakers)
+            displaySpeakers(event)
 
             analytics.onEventAction(Analytics.EVENT_VIEW, event)
         }
+    }
+
+    private fun onMapClick(event: Event) {
+        (context as? MainActivity)?.showMap(event.location)
     }
 
     private fun onLinkClick(url: String?) {

@@ -99,6 +99,7 @@ fun FirebaseType.toType() = Type(
 
 fun FirebaseLocation.toLocation() = Location(
         name,
+        hotel,
         conference
 )
 

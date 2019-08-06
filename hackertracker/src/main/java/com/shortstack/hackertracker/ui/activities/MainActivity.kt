@@ -26,6 +26,7 @@ import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.local.Event
+import com.shortstack.hackertracker.models.local.Location
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.replaceFragment
@@ -40,6 +41,7 @@ import com.shortstack.hackertracker.ui.settings.SettingsFragment
 import com.shortstack.hackertracker.utilities.Storage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
+import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.row_nav_view.*
 import kotlinx.android.synthetic.main.view_filter.*
@@ -250,5 +252,14 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
     fun showSearch() {
         setMainFragment(R.id.search, getString(R.string.search), true)
+    }
+
+    fun showMap(location: Location) {
+        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
+
+        val fragment = MapsFragment.newInstance(location)
+        map[R.id.nav_map] = fragment
+
+        setMainFragment(R.id.nav_map, getString(R.string.map), true)
     }
 }

@@ -6,5 +6,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class FirebaseLocation(
         val name: String = "",
+        val hotel: String? = null,
         val conference: String = ""
 ) : Parcelable

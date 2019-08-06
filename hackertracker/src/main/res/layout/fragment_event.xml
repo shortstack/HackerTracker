@@ -87,6 +87,12 @@
                     app:srcCompat="@drawable/ic_share_white_24dp" />
 
                 <ImageView
+                    android:id="@+id/map"
+                    style="@style/IconButton"
+                    android:tint="?android:colorForeground"
+                    app:srcCompat="@drawable/ic_map_white_24dp" />
+
+                <ImageView
                     android:id="@+id/star"
                     style="@style/IconButton"
                     app:srcCompat="@drawable/ic_star_border_white_24dp" />

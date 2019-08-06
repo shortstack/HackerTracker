@@ -13,6 +13,7 @@ import com.crashlytics.android.answers.CustomEvent
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.models.firebase.FirebaseConferenceMap
+import com.shortstack.hackertracker.models.local.Location
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.fragment_maps.*
 import org.koin.android.ext.android.inject
@@ -20,10 +21,25 @@ import org.koin.android.ext.android.inject
 class MapsFragment : Fragment() {
 
     companion object {
-        fun newInstance() = MapsFragment()
+
+        private const val EXTRA_LOCATION = "location"
+
+        fun newInstance(location: Location? = null): MapsFragment {
+            val fragment = MapsFragment()
+
+            if (location != null) {
+                val bundle = Bundle()
+
+                bundle.putParcelable(EXTRA_LOCATION, location)
+                fragment.arguments = bundle
+            }
+
+            return fragment
+        }
     }
 
     private val analytics: Analytics by inject()
+    private var isFirstLoad: Boolean = true
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_maps, container, false)
@@ -61,9 +77,25 @@ class MapsFragment : Fragment() {
 
             val adapter = PagerAdapter(activity!!.supportFragmentManager, it)
             pager.adapter = adapter
+
+            if (isFirstLoad) {
+                isFirstLoad = false
+
+                showSelectedMap(it)
+            }
+
         })
 
         analytics.logCustom(CustomEvent(Analytics.MAP_VIEW))
+    }
+
+    private fun showSelectedMap(it: List<FirebaseConferenceMap>) {
+        val location = arguments?.getParcelable<Location>(EXTRA_LOCATION)
+        if (location != null) {
+            val position = it.indexOfFirst { it.title == location.hotel }
+            if (position != -1)
+                pager.currentItem = position
+        }
     }
 
     class PagerAdapter(fm: FragmentManager, private val maps: List<FirebaseConferenceMap>) : FragmentStatePagerAdapter(fm) {
