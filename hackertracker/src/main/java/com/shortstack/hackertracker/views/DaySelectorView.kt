@@ -120,6 +120,11 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
             4 -> day_5
             5 -> day_6
             6 -> day_7
+            7 -> day_8
+            8 -> day_9
+            9 -> day_10
+            10 -> day_11
+            11 -> day_12
             else -> throw ArrayIndexOutOfBoundsException("Index out of bounds: $index.")
         }
     }

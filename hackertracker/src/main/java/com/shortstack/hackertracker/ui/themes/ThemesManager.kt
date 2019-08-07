@@ -1,24 +1,39 @@
 package com.shortstack.hackertracker.ui.themes
 
 import com.shortstack.hackertracker.BuildConfig
+import com.shortstack.hackertracker.utilities.Storage
 
-object ThemesManager {
+class ThemesManager(private val storage: Storage) {
 
-    const val THEME_DARK = 1
-    const val THEME_LIGHT = 2
-    const val THEME_ADVICE = 3
+    enum class Theme(val label: String) {
+        Dark("Dark"),
+        Light("Light"),
+        Developer("Advice"),
+        Hacker("Hacker"),
+        Gambler("Gambler"),
+        Queer("Queer")
+    }
 
-    fun getThemes(): List<ThemeContainer> {
+    fun getThemes(): List<Theme> {
+        val list = ArrayList<Theme>()
 
-        val list = ArrayList<ThemeContainer>()
+        list.add(Theme.Dark)
+        list.add(Theme.Light)
 
-        list.add(ThemeContainer("Dark", THEME_DARK))
-        list.add(ThemeContainer("Light", THEME_LIGHT))
-
-        if(BuildConfig.DEBUG) {
-            list.add(ThemeContainer("Advice", THEME_ADVICE))
+        if(storage.isHacker) {
+            list.add(Theme.Hacker)
         }
 
+        if(storage.isGambler) {
+            list.add(Theme.Gambler)
+        }
+        if(storage.isQueer) {
+            list.add(Theme.Queer)
+        }
+
+        if (BuildConfig.DEBUG) {
+            list.add(Theme.Developer)
+        }
 
         return list
     }

@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="?attr/menu_icon"
+            app:navigationIcon="@drawable/ic_menu_black_24dp"
             app:title="@string/information" />
 
         <com.google.android.material.tabs.TabLayout

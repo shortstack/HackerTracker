@@ -3,9 +3,14 @@
 
     <attr name="dark_mode" format="string" />
 
-    <attr name="menu_icon" format="reference" />
+    <attr name="footer_label" format="string" />
     <attr name="footer_icon" format="reference" />
-    <attr name="footer_tint" format="reference"/>
+    <attr name="footer_tint" format="reference" />
+
+    <attr name="border_tint" format="reference" />
+    <attr name="menu_tint" format="reference" />
+    <attr name="filter_background" format="reference"/>
+    <attr name="category_tint" format="reference"/>
 
     <declare-styleable name="EmptyView">
         <attr name="evIcon" format="reference" />

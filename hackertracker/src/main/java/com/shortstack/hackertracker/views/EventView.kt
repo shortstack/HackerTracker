@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Color
 import android.os.Build
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
@@ -93,12 +94,21 @@ class EventView : FrameLayout, KoinComponent {
 
         category_text.text = type.name
 
-        val color = Color.parseColor(type.color)
+        val value = TypedValue()
+        context.theme.resolveAttribute(R.attr.category_tint, value, true)
+        val id = value.resourceId
+
+        val color = if (id > 0) {
+            ContextCompat.getColor(context, id)
+        } else {
+            Color.parseColor(type.color)
+        }
         category.setBackgroundColor(color)
 
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
+
             drawable?.setTint(color)
             category_dot.background = drawable
         }

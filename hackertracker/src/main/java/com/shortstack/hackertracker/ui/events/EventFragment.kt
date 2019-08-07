@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
@@ -176,13 +177,6 @@ class EventFragment : Fragment() {
 
         val image = ContextCompat.getDrawable(context, drawable)?.mutate()
 
-        if (isBookmarked && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            event.type.let {
-                val color = Color.parseColor(it.color)
-                image?.setTint(color)
-            }
-        }
-
         star.setImageDrawable(image)
     }
 
@@ -214,8 +208,17 @@ class EventFragment : Fragment() {
         val type = event.type
         val context = context ?: return
 
-        val color = Color.parseColor(type.color)
-        app_bar.setBackgroundColor(color)
+        val value = TypedValue()
+        context.theme.resolveAttribute(R.attr.category_tint, value, true)
+        val id = value.resourceId
+
+        val color = if (id > 0) {
+            ContextCompat.getColor(context, id)
+        } else {
+            Color.parseColor(type.color)
+        }
+
+        app_bar.setBackgroundColor(Color.parseColor(type.color))
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()

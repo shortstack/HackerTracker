@@ -45,6 +45,13 @@
 
     <color name="bubble">#653fff</color>
 
+    <color name="hacker_green">#0F0</color>
+    <color name="hacker_red">#F00</color>
+    <color name="hacker_blue">#00F</color>
+
+    <color name="queer_background">#FF69B4</color>
+    <color name="queer_primary">#ffb6db</color>
+
 
     <!--
         100% — FF

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
@@ -12,7 +13,6 @@ import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utilities.MaterialAlert
 import com.shortstack.hackertracker.utilities.Storage
-import com.shortstack.hackertracker.ui.themes.ThemeContainer
 import com.shortstack.hackertracker.ui.themes.ThemesManager
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.ext.android.inject
@@ -26,6 +26,9 @@ class SettingsFragment : Fragment() {
 
     private val database: DatabaseManager by inject()
     private val storage: Storage by inject()
+    private val themes: ThemesManager by inject()
+
+    private var index = 0
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_settings, container, false)
@@ -48,6 +51,17 @@ class SettingsFragment : Fragment() {
         }
 
         version.text = getString(R.string.version, BuildConfig.VERSION_NAME)
+
+        logo.setOnClickListener {
+            index++
+            if(index in 4..9) {
+                Toast.makeText(context, "${10 - index} clicks to become a hacker..", Toast.LENGTH_SHORT).show()
+            }
+            if(index == 10) {
+                storage.isHacker = true
+                Toast.makeText(context, "You're now a hacker!", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun showChangeConferenceDialog() {
@@ -66,14 +80,14 @@ class SettingsFragment : Fragment() {
     private fun showChangeThemeDialog() {
         val context = context ?: return
 
-        val list = ThemesManager.getThemes()
+        val list = themes.getThemes()
 
         val items = list.map { MaterialAlert.Item(it.label) }
 
         MaterialAlert(context)
                 .setTitle(getString(R.string.change_theme))
                 .setItems(items, DialogInterface.OnClickListener { _, which ->
-                    storage.theme = list[which].id
+                    storage.theme = list[which]
                     (context as MainActivity).recreate()
                 }).show()
     }

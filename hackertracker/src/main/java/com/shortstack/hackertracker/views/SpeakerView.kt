@@ -3,8 +3,10 @@ package com.shortstack.hackertracker.views
 import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import androidx.core.content.ContextCompat
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.ui.activities.MainActivity
@@ -22,8 +24,17 @@ class SpeakerView : LinearLayout {
             speaker.title
         }
 
-        val colours = context.resources.getStringArray(R.array.colors)
-        val color = Color.parseColor(colours[speaker.id % colours.size])
+        val value = TypedValue()
+        context.theme.resolveAttribute(R.attr.category_tint, value, true)
+        val id = value.resourceId
+
+        val color = if (id > 0) {
+            ContextCompat.getColor(context, id)
+        } else {
+            val colours = context.resources.getStringArray(R.array.colors)
+            Color.parseColor(colours[speaker.id % colours.size])
+        }
+
         category.setBackgroundColor(color)
 
         setOnClickListener {

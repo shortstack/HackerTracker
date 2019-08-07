@@ -9,17 +9,14 @@ import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
-import androidx.core.view.ViewCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.github.stkent.amplify.tracking.Amplify
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
 import com.google.firebase.auth.FirebaseAuth
 import com.orhanobut.logger.Logger
@@ -34,19 +31,16 @@ import com.shortstack.hackertracker.ui.search.SearchFragment
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
-import com.shortstack.hackertracker.ui.information.info.InfoFragment
 import com.shortstack.hackertracker.ui.information.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.settings.SettingsFragment
-import com.shortstack.hackertracker.ui.themes.ThemesManager
+import com.shortstack.hackertracker.ui.themes.ThemesManager.Theme.*
 import com.shortstack.hackertracker.utilities.Storage
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.app_bar_main.*
-import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
 import kotlinx.android.synthetic.main.row_nav_view.*
-import kotlinx.android.synthetic.main.view_filter.*
 import org.koin.android.ext.android.inject
 
 
@@ -103,23 +97,32 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
     override fun onResume() {
         super.onResume()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            window.statusBarColor = getThemeAccentColor(this)
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val value = TypedValue()
+            theme.resolveAttribute(R.attr.dark_mode, value, true)
+            if (value.string == "dark") {
+                window.decorView.systemUiVisibility = 0
+                window.statusBarColor = getThemeAccentColor(this)
+            } else {
+                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+                window.statusBarColor = getThemeAccentColor(this)
+            }
         }
     }
 
     private fun getThemeAccentColor(context: Context, theme: Resources.Theme = context.theme): Int {
-        val colorAttr =
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                    android.R.attr.colorBackground
-                } else {
-                    //Get colorAccent defined for AppCompat
-                    context.resources.getIdentifier("colorBackground", "attr", context.packageName)
-                }
+        val colorAttr = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            android.R.attr.colorBackground
+        } else {
+            context.resources.getIdentifier("colorBackground", "attr", context.packageName)
+        }
         val outValue = TypedValue()
         theme.resolveAttribute(colorAttr, outValue, true)
         return outValue.data
     }
+
+
 
 
     override fun onStart() {
@@ -141,10 +144,15 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
     override fun getTheme(): Resources.Theme {
         val theme = super.getTheme()
+
         val style = when (storage.theme) {
-            ThemesManager.THEME_ADVICE -> R.style.AppTheme_Developer
-            ThemesManager.THEME_LIGHT -> R.style.AppTheme
-            else -> R.style.AppTheme_Dark_Default
+            Dark -> R.style.AppTheme_Dark
+            Light -> R.style.AppTheme
+            Developer -> R.style.AppTheme_Developer
+            Queer -> R.style.AppTheme_Queer
+            Gambler -> R.style.AppTheme_Gambler
+            Hacker -> R.style.AppTheme_Hacker
+            null -> R.style.AppTheme_Dark
         }
         theme.applyStyle(style, true)
 
@@ -193,10 +201,10 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
     private fun getFragment(id: Int): Fragment {
         // TODO: Remove, this is a hacky solution for caching issue with InformationFragment's children fragments.
-        if(id == R.id.nav_information)
+        if (id == R.id.nav_information)
             return InformationFragment.newInstance()
 
-        if(id == R.id.nav_map)
+        if (id == R.id.nav_map)
             return MapsFragment.newInstance()
 
         if (map[id] == null) {

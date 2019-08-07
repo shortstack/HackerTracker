@@ -3,12 +3,18 @@ package com.shortstack.hackertracker.utilities
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
+import com.google.gson.Gson
+import com.shortstack.hackertracker.ui.themes.ThemesManager
 
-class Storage(context: Context) {
+class Storage(context: Context, private val gson: Gson) {
 
     companion object {
         private const val USER_THEME = "user_theme"
         private const val USER_CONFERENCE = "user_conference"
+
+        private const val THEME_IS_HACKER = "theme_is_hacker"
+        private const val THEME_IS_QUEER = "theme_is_queer"
+        private const val THEME_IS_GAMBLER = "theme_is_gambler"
 
         private const val EASTER_EGGS = "easter_eggs"
         private const val NAV_DRAWER_ON_BACK = "nav_drawer_on_back"
@@ -54,10 +60,29 @@ class Storage(context: Context) {
             preferences.edit().putInt(USER_CONFERENCE, value).apply()
         }
 
-    var theme: Int
-        get() = preferences.getInt(USER_THEME, -1)
+
+    var isHacker: Boolean
+        get() = preferences.getBoolean(THEME_IS_HACKER, false)
         set(value) {
-            preferences.edit().putInt(USER_THEME, value).apply()
+            preferences.edit().putBoolean(THEME_IS_HACKER, value).apply()
+        }
+
+    var isQueer: Boolean
+        get() = preferences.getBoolean(THEME_IS_QUEER, false)
+        set(value) {
+            preferences.edit().putBoolean(THEME_IS_QUEER, value).apply()
+        }
+
+    var isGambler: Boolean
+        get() = preferences.getBoolean(THEME_IS_GAMBLER, false)
+        set(value) {
+            preferences.edit().putBoolean(THEME_IS_GAMBLER, value).apply()
+        }
+
+    var theme: ThemesManager.Theme?
+        get() = gson.fromJson(preferences.getString(USER_THEME, ""), ThemesManager.Theme::class.java)
+        set(value) {
+            preferences.edit().putString(USER_THEME, gson.toJson(value)).apply()
         }
 
     fun setPreference(key: String, isChecked: Boolean) {

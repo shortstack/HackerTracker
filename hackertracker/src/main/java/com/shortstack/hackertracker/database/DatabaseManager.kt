@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.database
 
 import android.util.Log
+import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.OneTimeWorkRequestBuilder
@@ -387,10 +388,18 @@ class DatabaseManager(private val preferences: Storage) {
         }
     }
 
+    var index = 0
+
     fun updateBookmark(event: Event) {
         val tag = "reminder_" + event.id
 
         if (event.isBookmarked) {
+            index++
+            if(index == 15) {
+                Toast.makeText(App.instance.applicationContext, "All in.", Toast.LENGTH_SHORT).show()
+                preferences.isGambler = true
+            }
+
             val delay = event.start.time - MyClock().now().time - (1000 * 20 * 60)
 
             if (delay > 0) {

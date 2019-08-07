@@ -18,7 +18,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            action:navigationIcon="?attr/menu_icon"
+            action:navigationIcon="@drawable/ic_menu_black_24dp"
             app:title="@string/settings" />
 
     </com.google.android.material.appbar.AppBarLayout>
@@ -63,11 +63,11 @@
                 switch:switchText="Back button to open the drawer" />
 
             <com.shortstack.hackertracker.views.SettingsSwitchView
-                action:switchDefaultValue="false"
-                action:switchText="Easter eggs"
-                action:switchKey="easter_eggs"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                action:switchDefaultValue="false"
+                action:switchKey="easter_eggs"
+                action:switchText="Easter eggs" />
 
             <com.shortstack.hackertracker.views.SettingsSwitchView
                 android:id="@+id/usage"
@@ -93,7 +93,16 @@
                 android:padding="16dp"
                 tools:text="Version 6.0.1" />
 
-            <include layout="@layout/row_footer" />
+            <ImageView
+                android:id="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="16dp"
+                android:paddingBottom="?android:attr/actionBarSize"
+                android:src="?footer_icon"
+                android:tint="?footer_tint" />
+
 
         </LinearLayout>
 
