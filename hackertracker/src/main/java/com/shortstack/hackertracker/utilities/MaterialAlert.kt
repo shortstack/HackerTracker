@@ -43,17 +43,17 @@ class MaterialAlert(private val context: Context) {
     fun setItems(items: List<Item>, listener: DialogInterface.OnClickListener): MaterialAlert {
         val adapter = object : ArrayAdapter<Item>(
                 context,
-                android.R.layout.select_dialog_singlechoice,
+                R.layout.select_dialog_singlechoice,
                 android.R.id.text1,
                 items) {
 
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                val v = super.getView(position, convertView, parent)
-                val textView = v.findViewById<CheckedTextView>(android.R.id.text1)
-                textView.text = items[position].text
-                textView.isChecked = items[position].isChecked
-
-                return v
+                return super.getView(position, convertView, parent).apply {
+                    findViewById<CheckedTextView>(android.R.id.text1).apply {
+                        text = items[position].text
+                        isChecked = items[position].isChecked
+                    }
+                }
             }
 
         }

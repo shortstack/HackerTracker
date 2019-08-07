@@ -118,13 +118,6 @@
     <!-- Used for Filter View -->
     <style name="MyAlertDialogStyle" parent="ThemeOverlay.MaterialComponents.Dialog">
         <item name="android:windowTitleStyle">@style/windowTitleStyle</item>
-        <!-- Used for the buttons -->
-        <!--<item name="colorAccent">@color/colorAccent</item>-->
-        <!--Used for the title and text -->
-        <!--<item name="android:textColorPrimary">@color/white</item>-->
-        <!-- Used for the background -->
-        <!--<item name="android:background">@color/background</item>-->
-
         <item name="buttonBarNegativeButtonStyle">@style/AlertButtonStyle</item>
         <item name="buttonBarPositiveButtonStyle">@style/AlertButtonStyle</item>
     </style>
@@ -135,6 +128,7 @@
 
     <style name="windowTitleStyle">
         <item name="android:textAppearance">@style/TextAppearance.AppCompat.Title</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <style name="AppCheckBoxStyle" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">

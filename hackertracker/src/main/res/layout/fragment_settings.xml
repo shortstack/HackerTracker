@@ -38,13 +38,13 @@
                 android:id="@+id/change_theme"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                action:actionText="Choose Theme" />
+                action:actionText="Choose theme" />
 
             <com.shortstack.hackertracker.views.SettingsActionView
                 android:id="@+id/change_conference"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                action:actionText="Choose Conference" />
+                action:actionText="Choose conference" />
 
             <com.shortstack.hackertracker.views.SettingsSwitchView
                 android:id="@+id/force_time_zone"
@@ -92,6 +92,17 @@
                 android:gravity="center"
                 android:padding="16dp"
                 tools:text="Version 6.0.1" />
+
+
+            <TextView
+                android:id="@+id/hacker_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.30"
+                android:gravity="center"
+                android:visibility="invisible"
+                tools:text="af8Zh92cFaE12"
+                tools:visibility="visible" />
 
             <ImageView
                 android:id="@+id/logo"

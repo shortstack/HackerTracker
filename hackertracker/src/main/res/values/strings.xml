@@ -91,13 +91,13 @@
     <string name="wifi_action">Save network</string>
 
     <string name="website">Website</string>
-    <string name="choose_theme">Choose theme</string>
+
 
 
     <!-- Settings -->
+    <string name="choose_theme">Choose theme</string>
+    <string name="choose_conference">Choose conference</string>
     <string name="version">Version %1$s</string>
-    <string name="change_theme">Change theme</string>
-    <string name="change_conference">Change conference</string>
 
     <!-- DEF CON Support Hotline -->
 

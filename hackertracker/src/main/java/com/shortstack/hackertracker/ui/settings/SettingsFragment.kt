@@ -72,7 +72,7 @@ class SettingsFragment : Fragment() {
         val items = conferences.map { MaterialAlert.Item(it.name, it.code == current?.code) }
 
         MaterialAlert(context)
-                .setTitle(getString(R.string.change_conference))
+                .setTitle(getString(R.string.choose_conference))
                 .setItems(items, DialogInterface.OnClickListener { _, which ->
                     database.changeConference(conferences[which].id)
                 }).show()
@@ -86,7 +86,7 @@ class SettingsFragment : Fragment() {
         val items = list.map { MaterialAlert.Item(it.label, it.label == storage.theme?.label) }
 
         MaterialAlert(context)
-                .setTitle(getString(R.string.change_theme))
+                .setTitle(getString(R.string.choose_theme))
                 .setItems(items, DialogInterface.OnClickListener { _, which ->
                     storage.theme = list[which]
                     (context as MainActivity).recreate()
