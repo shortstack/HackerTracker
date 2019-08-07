@@ -2,8 +2,10 @@
 <HorizontalScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:scrollbars="none">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/frame"
@@ -81,6 +83,46 @@
             style="@style/day_selector_day"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@id/day_6"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="June 6" />
+
+        <TextView
+            android:id="@+id/day_8"
+            style="@style/day_selector_day"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/day_7"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="June 6" />
+
+        <TextView
+            android:id="@+id/day_9"
+            style="@style/day_selector_day"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/day_8"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="June 6" />
+
+        <TextView
+            android:id="@+id/day_10"
+            style="@style/day_selector_day"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/day_9"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="June 6" />
+
+        <TextView
+            android:id="@+id/day_11"
+            style="@style/day_selector_day"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/day_10"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="June 6" />
+
+        <TextView
+            android:id="@+id/day_12"
+            style="@style/day_selector_day"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toEndOf="@id/day_11"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="June 6" />
 

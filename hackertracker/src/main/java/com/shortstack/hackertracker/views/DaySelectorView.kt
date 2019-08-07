@@ -1,5 +1,7 @@
 package com.shortstack.hackertracker.views
 
+import android.animation.ObjectAnimator
+import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
@@ -12,7 +14,6 @@ import androidx.constraintlayout.widget.ConstraintSet.START
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.models.Day
 import kotlinx.android.synthetic.main.view_day_selector.view.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -86,13 +87,28 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
 
         val beginIndex = getDayIndex(dates, beginDay)
         if(beginIndex != -1) {
-            onBeginDaySelected(getViewByIndex(beginIndex))
+            val view = getViewByIndex(beginIndex)
+            onBeginDaySelected(view)
+            setCenter(view)
         }
 
         val endIndex = getDayIndex(dates, endDay)
         if (endIndex != -1) {
             onEndDaySelected(getViewByIndex(endIndex))
         }
+
+
+    }
+
+    private fun setCenter(view: View) {
+        val screenWidth = (context as Activity).windowManager
+                .defaultDisplay.width
+
+        val scrollX = view.left - screenWidth / 2 + view.width / 2
+
+        val animator = ObjectAnimator.ofInt(root, "scrollX", scrollX)
+        animator.duration = 300
+        animator.start()
     }
 
     private fun getViewByIndex(index: Int): View {
