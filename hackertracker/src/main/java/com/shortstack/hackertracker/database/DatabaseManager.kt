@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.toWorkData
+import com.crashlytics.android.answers.CustomEvent
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -20,6 +21,7 @@ import com.shortstack.hackertracker.*
 import com.shortstack.hackertracker.models.firebase.*
 import com.shortstack.hackertracker.models.local.*
 import com.shortstack.hackertracker.network.task.ReminderWorker
+import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.utilities.MyClock
 import com.shortstack.hackertracker.utilities.Storage
 import com.shortstack.hackertracker.utilities.now
@@ -28,7 +30,7 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 
 
-class DatabaseManager(private val preferences: Storage) {
+class DatabaseManager(private val preferences: Storage, private val analytics: Analytics) {
 
     companion object {
         private const val CONFERENCES = "conferences"
@@ -395,7 +397,8 @@ class DatabaseManager(private val preferences: Storage) {
 
         if (event.isBookmarked) {
             index++
-            if(index == 15) {
+            if (index == 15 && !preferences.isGambler) {
+                analytics.logCustom(CustomEvent("Theme - Gambler"))
                 Toast.makeText(App.instance.applicationContext, "All in.", Toast.LENGTH_SHORT).show()
                 preferences.isGambler = true
             }
@@ -578,7 +581,7 @@ class DatabaseManager(private val preferences: Storage) {
         }
 
         maps.forEach {
-            val map = FirebaseConferenceMap(it.name, it.file,null)
+            val map = FirebaseConferenceMap(it.name, it.file, null)
             list.add(map)
         }
 

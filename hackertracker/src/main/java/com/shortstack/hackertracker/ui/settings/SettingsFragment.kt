@@ -7,13 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import com.crashlytics.android.answers.CustomEvent
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.ui.activities.MainActivity
+import com.shortstack.hackertracker.ui.themes.ThemesManager
+import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.utilities.MaterialAlert
 import com.shortstack.hackertracker.utilities.Storage
-import com.shortstack.hackertracker.ui.themes.ThemesManager
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.ext.android.inject
 
@@ -27,6 +29,7 @@ class SettingsFragment : Fragment() {
     private val database: DatabaseManager by inject()
     private val storage: Storage by inject()
     private val themes: ThemesManager by inject()
+    private val analytics: Analytics by inject()
 
     private var index = 0
 
@@ -53,11 +56,15 @@ class SettingsFragment : Fragment() {
         version.text = getString(R.string.version, BuildConfig.VERSION_NAME)
 
         logo.setOnClickListener {
+            if (storage.isHacker)
+                return@setOnClickListener
+
             index++
-            if(index in 4..9) {
+            if (index in 4..9) {
                 Toast.makeText(context, "${10 - index} clicks to become a hacker..", Toast.LENGTH_SHORT).show()
             }
-            if(index == 10) {
+            if (index == 10) {
+                analytics.logCustom(CustomEvent("Theme - Hacker"))
                 storage.isHacker = true
                 Toast.makeText(context, "You're now a hacker!", Toast.LENGTH_SHORT).show()
             }
