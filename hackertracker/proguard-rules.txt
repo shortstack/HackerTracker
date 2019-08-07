@@ -70,6 +70,7 @@
 
 -keep class com.shortstack.hackertracker.network.** { *; }
 -keep class com.shortstack.hackertracker.models.** { *; }
+-keep class com.shortstack.hackertracker.ui.themes.** { *; }
 
 -dontwarn com.shortstack.hackertracker.views.**
 
