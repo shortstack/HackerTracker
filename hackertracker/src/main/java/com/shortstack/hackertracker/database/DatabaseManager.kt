@@ -471,6 +471,24 @@ class DatabaseManager(private val preferences: Storage, private val analytics: A
         document.set(mapOf("token" to token))
     }
 
+    fun getUser(): LiveData<FirebaseHacker> {
+        val result = MutableLiveData<FirebaseHacker>()
+
+        val uid = user?.uid ?: return result
+
+        firestore.collection(CONFERENCES)
+                .document(code)
+                .collection(USERS)
+                .document(uid)
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        result.postValue(snapshot?.toObject(FirebaseHacker::class.java))
+                    }
+                }
+
+        return result
+    }
+
     fun clear() {
 
     }

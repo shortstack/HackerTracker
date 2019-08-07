@@ -7,10 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.crashlytics.android.answers.CustomEvent
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.models.firebase.FirebaseHacker
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.themes.ThemesManager
 import com.shortstack.hackertracker.utilities.Analytics
@@ -69,6 +72,25 @@ class SettingsFragment : Fragment() {
                 Toast.makeText(context, "You're now a hacker!", Toast.LENGTH_SHORT).show()
             }
         }
+
+        if (storage.isHacker) {
+            hacker_id.visibility = View.VISIBLE
+        }
+
+
+
+        val viewModel = ViewModelProviders.of(this).get(SettingsViewModel::class.java)
+//        viewModel.hacker.observe(this, Observer {
+        val it = FirebaseHacker("abc123ef", "Advice", "...")
+
+            hacker_id.text = it.id
+
+            if (storage.isHacker) {
+                hacker_id.setOnClickListener { _ ->
+                    (context as MainActivity).showUser(it)
+                }
+            }
+//        })
     }
 
     private fun showChangeConferenceDialog() {
