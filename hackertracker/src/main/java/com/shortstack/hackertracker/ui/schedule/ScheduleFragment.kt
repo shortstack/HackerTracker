@@ -69,7 +69,7 @@ class ScheduleFragment : Fragment() {
 
         toolbar.inflateMenu(R.menu.schedule)
         toolbar.setOnMenuItemClickListener {
-            if(it?.itemId == R.id.search) {
+            if (it?.itemId == R.id.search) {
                 (context as MainActivity).showSearch()
                 true
             }
@@ -160,7 +160,7 @@ class ScheduleFragment : Fragment() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId) {
+        when (item?.itemId) {
             R.id.search -> (context as MainActivity).showSearch()
         }
         return super.onOptionsItemSelected(item)
@@ -168,7 +168,7 @@ class ScheduleFragment : Fragment() {
 
     private fun scrollToCurrentPosition(data: ArrayList<Any>) {
         val manager = list.layoutManager ?: return
-        val first = data.filterIsInstance<Event>().firstOrNull { !it.hasFinished } ?: return
+        val first = data.filterIsInstance<Event>().firstOrNull { !it.hasStarted } ?: return
 
         if (shouldScroll) {
             shouldScroll = false
@@ -179,8 +179,16 @@ class ScheduleFragment : Fragment() {
 
     private fun getScrollIndex(data: ArrayList<Any>, first: Event): Int {
         val event = data.indexOf(first)
+
         val element = data.subList(0, event).filterIsInstance<Day>().last()
         val index = data.indexOf(element)
+
+        val x = data.subList(index, event).filterIsInstance<Event>().firstOrNull { it.start.time != first.start.time } == null
+        if (!x) {
+            return event
+        }
+
+
         if (index != -1) {
             return index
         }
