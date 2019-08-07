@@ -276,6 +276,7 @@ class DatabaseManager(private val preferences: Storage) {
         firestore.collection(CONFERENCES)
                 .document(code)
                 .collection(ARTICLES)
+                .orderBy("updated_at", Query.Direction.DESCENDING)
                 .get()
                 .addOnSuccessListener {
                     val articles = it.toObjects(FirebaseArticle::class.java)
