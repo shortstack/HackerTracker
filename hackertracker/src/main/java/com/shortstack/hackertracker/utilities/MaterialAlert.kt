@@ -5,21 +5,28 @@ import android.content.DialogInterface
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
-import android.widget.TextView
+import android.widget.CheckedTextView
 import androidx.appcompat.app.AlertDialog
 import com.shortstack.hackertracker.R
 
-class MaterialAlert(private val mContext: Context) {
+class MaterialAlert(private val context: Context) {
 
-    private var mBuilder: AlertDialog.Builder = AlertDialog.Builder(mContext, R.style.MyAlertDialogStyle)
+    companion object {
+
+        fun create(context: Context): MaterialAlert {
+            return MaterialAlert(context)
+        }
+    }
+
+    private val builder: AlertDialog.Builder = AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
 
     fun setTitle(title: Int): MaterialAlert {
-        mBuilder.setTitle(getString(title))
+        builder.setTitle(getString(title))
         return this
     }
 
     fun setTitle(title: String): MaterialAlert {
-        mBuilder.setTitle(title)
+        builder.setTitle(title)
         return this
     }
 
@@ -29,113 +36,57 @@ class MaterialAlert(private val mContext: Context) {
     }
 
     fun setMessage(message: String): MaterialAlert {
-        mBuilder.setMessage(message)
-        return this
-    }
-
-    fun setItems(items: Int, listener: DialogInterface.OnClickListener): MaterialAlert {
-        mBuilder.setItems(items, listener)
+        builder.setMessage(message)
         return this
     }
 
     fun setItems(items: List<Item>, listener: DialogInterface.OnClickListener): MaterialAlert {
         val adapter = object : ArrayAdapter<Item>(
-                mContext,
-                R.layout.select_dialog_item,
+                context,
+                android.R.layout.select_dialog_singlechoice,
                 android.R.id.text1,
                 items) {
+
             override fun getView(position: Int, convertView: View?, parent: ViewGroup): View {
-                //Use super class to create the View
                 val v = super.getView(position, convertView, parent)
-                val tv = v.findViewById<View>(android.R.id.text1) as TextView
-
-                //Put the image on the TextView
-                if (items[position].icon != 0)
-                    tv.setCompoundDrawablesWithIntrinsicBounds(items[position].icon, 0, 0, 0)
-
-                //Add margin between image and text (support various screen densities)
-                val dp5 = (5 * mContext.resources.displayMetrics.density + 0.5f).toInt()
-                tv.compoundDrawablePadding = dp5
+                val textView = v.findViewById<CheckedTextView>(android.R.id.text1)
+                textView.text = items[position].text
+                textView.isChecked = items[position].isChecked
 
                 return v
             }
+
         }
 
-        mBuilder.setAdapter(adapter, listener)
+        builder.setAdapter(adapter, listener)
         return this
     }
 
     fun setPositiveButton(text: Int, listener: DialogInterface.OnClickListener): MaterialAlert {
-        mBuilder.setPositiveButton(getString(text), listener)
+        builder.setPositiveButton(getString(text), listener)
         return this
     }
 
     fun setNegativeButton(text: Int, listener: DialogInterface.OnClickListener): MaterialAlert {
-        mBuilder.setNegativeButton(getString(text), listener)
-        return this
-    }
-
-    fun setBasicNegativeButton(text: Int): MaterialAlert {
-        mBuilder.setNegativeButton(getString(text)) { dialog, which -> dialog.dismiss() }
-        return this
-    }
-
-    fun setBasicNegativeButton(): MaterialAlert {
-        setBasicNegativeButton(R.string.cancel)
-        return this
-    }
-
-    fun setView(view: View): MaterialAlert {
-        mBuilder.setView(view)
+        builder.setNegativeButton(getString(text), listener)
         return this
     }
 
     private fun getString(text: Int): String {
-        return mContext.getString(text)
+        return context.getString(text)
     }
 
     fun build(): AlertDialog {
-        //if( !mHasPositiveButton ) setBasicPositiveButton();
-        return mBuilder.create()
-    }
-
-    fun setBasicPositiveButton(): MaterialAlert {
-        mBuilder.setPositiveButton(getString(R.string.okay)) { dialog, which -> dialog.dismiss() }
-        return this
-    }
-
-    fun setDismissCallback(listener: DialogInterface.OnDismissListener): MaterialAlert {
-        mBuilder.setOnDismissListener(listener)
-        return this
+        return builder.create()
     }
 
     fun show() {
         build().show()
     }
 
-    class Item {
-        val text: String
-        val icon: Int
-
-        constructor(text: String, icon: Int?) {
-            this.text = text
-            this.icon = icon!!
-        }
-
-        constructor(text: String) {
-            this.text = text
-            this.icon = 0
-        }
-
-        override fun toString(): String {
-            return text
-        }
+    data class Item(val text: String, val isChecked: Boolean) {
+        override fun toString() = text
     }
 
-    companion object {
 
-        fun create(context: Context): MaterialAlert {
-            return MaterialAlert(context)
-        }
-    }
 }

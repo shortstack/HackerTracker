@@ -68,7 +68,8 @@ class SettingsFragment : Fragment() {
         val context = context ?: return
 
         val conferences = database.conferences.value ?: emptyList()
-        val items = conferences.map { MaterialAlert.Item(it.name) }
+        val current = database.conference.value
+        val items = conferences.map { MaterialAlert.Item(it.name, it.code == current?.code) }
 
         MaterialAlert(context)
                 .setTitle(getString(R.string.change_conference))
@@ -82,7 +83,7 @@ class SettingsFragment : Fragment() {
 
         val list = themes.getThemes()
 
-        val items = list.map { MaterialAlert.Item(it.label) }
+        val items = list.map { MaterialAlert.Item(it.label, it.label == storage.theme?.label) }
 
         MaterialAlert(context)
                 .setTitle(getString(R.string.change_theme))
