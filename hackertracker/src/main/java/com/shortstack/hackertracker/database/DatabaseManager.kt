@@ -169,7 +169,6 @@ class DatabaseManager(private val preferences: Storage) {
     }
 
 
-
     fun getSchedule(type: Type? = null, isTypeFiltered: Boolean = true): MutableLiveData<List<Event>> {
         val mutableLiveData = MutableLiveData<List<Event>>()
 
@@ -179,7 +178,7 @@ class DatabaseManager(private val preferences: Storage) {
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
                         val events = snapshot?.toObjects(FirebaseEvent::class.java)
-                                ?.filter { (!it.hidden || App.isDeveloper) && (!isTypeFiltered || (type == null && !it.type.filtered || type?.id == it.type.id )) }
+                                ?.filter { (!it.hidden || App.isDeveloper) && (!isTypeFiltered || (type == null && !it.type.filtered || type?.id == it.type.id)) }
                                 ?.map { it.toEvent() }
 
                         mutableLiveData.postValue(events)
@@ -565,25 +564,33 @@ class DatabaseManager(private val preferences: Storage) {
 
         val maps = conference.maps
         if (maps.isEmpty()) {
-            mutableLiveData.postValue(emptyList())
+            return mutableLiveData
         }
 
         maps.forEach {
+            val map = FirebaseConferenceMap(it.name, it.file,null)
+            list.add(map)
+        }
 
-            val temp = FirebaseConferenceMap(it.name, null)
-            list.add(temp)
-            mutableLiveData.postValue(list.toList())
+        mutableLiveData.postValue(list)
 
-            val map = storage.reference.child("/${conference.code}/${it.file}")
+        list.forEach {
+            val filename = "${conference.code}-${it.path}"
+            val file = File(App.instance.applicationContext.getExternalFilesDir(null), filename)
+            if (file.exists()) {
+                it.file = file
+            } else {
+                file.createNewFile()
 
-            val localFile = File.createTempFile("images", "pdf")
+                val map = storage.reference.child("/${conference.code}/${it.path}")
 
-            map.getFile(localFile).addOnSuccessListener { task ->
-                temp.file = localFile
+                map.getFile(file).addOnSuccessListener { task ->
+                    it.file = file
 
-                mutableLiveData.postValue(list.toList())
-            }.addOnFailureListener {
-                // Handle any errors
+                    mutableLiveData.postValue(list.toList())
+                }.addOnFailureListener {
+                    // Handle any errors
+                }
             }
         }
         return mutableLiveData

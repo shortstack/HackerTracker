@@ -196,6 +196,9 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
         if(id == R.id.nav_information)
             return InformationFragment.newInstance()
 
+        if(id == R.id.nav_map)
+            return MapsFragment.newInstance()
+
         if (map[id] == null) {
             map[id] = when (id) {
                 R.id.nav_home -> HomeFragment.newInstance()
