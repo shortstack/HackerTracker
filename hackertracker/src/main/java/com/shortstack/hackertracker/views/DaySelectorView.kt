@@ -176,7 +176,7 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
         val format = SimpleDateFormat("MMM d")
 
 
-        for (index in 0..6) {
+        for (index in 0..11) {
             val view = getViewByIndex(index) as TextView
 
             if (index < days.size) {

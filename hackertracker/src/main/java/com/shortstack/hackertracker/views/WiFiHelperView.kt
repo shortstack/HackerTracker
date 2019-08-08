@@ -2,8 +2,6 @@ package com.shortstack.hackertracker.views
 
 import android.annotation.TargetApi
 import android.content.Context
-import android.content.Intent
-import android.net.Uri
 import android.net.wifi.WifiConfiguration
 import android.net.wifi.WifiConfiguration.*
 import android.net.wifi.WifiEnterpriseConfig
@@ -13,7 +11,6 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.Toast
-import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.view_wifi_helper.view.*
 import java.security.cert.CertificateFactory
@@ -40,11 +37,14 @@ class WiFiHelperView(context: Context, attrs: AttributeSet?) : FrameLayout(conte
 
         wifi.isWifiEnabled = true
 
+
+        val exists = wifi.configuredNetworks.find { it.SSID == "\"DefCon\"" } != null
+
         val config = WifiConfiguration().apply {
             SSID = "\"DefCon\""
             hiddenSSID = false
             priority = 40
-            status = 1
+            status = Status.ENABLED
 
             allowedKeyManagement.clear()
             allowedKeyManagement.set(KeyMgmt.WPA_EAP)
@@ -73,17 +73,15 @@ class WiFiHelperView(context: Context, attrs: AttributeSet?) : FrameLayout(conte
                 eapMethod = WifiEnterpriseConfig.Eap.PEAP
                 phase2Method = WifiEnterpriseConfig.Phase2.MSCHAPV2
                 caCertificate = x509Certificate
-
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    altSubjectMatch = "/CN=wifireg.defcon.org"
-                } else {
-                    subjectMatch = "/CN=wifireg.defcon.org"
-                }
+                subjectMatch = "/CN=wifireg.defcon.org"
             }
         }
 
-        val network = wifi.addNetwork(config)
-
+        val network = if (exists) {
+            wifi.updateNetwork(config)
+        } else {
+            wifi.addNetwork(config)
+        }
 
         val result = wifi.enableNetwork(network, true)
         if (result) {
