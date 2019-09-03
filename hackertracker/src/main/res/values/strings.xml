@@ -86,8 +86,8 @@
 
     <!-- WiFi Helper -->
     <string name="wifi_title">WIFI</string>
-    <string name="wifi_content">Quickly connect to DEF CON\'s WiFi using Hacker Tracker.\n\nIf you run into any issues, you can try doing it yourself: wifireg.defcon.org/android</string>
-    <string name="wifi_content_legacy">Your Android version is too low to setup. You can try doing it yourself: wifireg.defcon.org/android</string>
+    <string name="wifi_content">Quickly connect to DEF CON\'s WiFi using Hacker Tracker.\n\nIf you run into any issues, you can try doing it yourself: wifireg.defcon.org/android.php</string>
+    <string name="wifi_content_legacy">Your Android version is too low to setup. You can try doing it yourself: wifireg.defcon.org/android.php</string>
     <string name="wifi_action">Save network</string>
 
     <string name="website">Website</string>
