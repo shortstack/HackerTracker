@@ -9,6 +9,7 @@ import com.github.stkent.amplify.feedback.DefaultEmailFeedbackCollector
 import com.github.stkent.amplify.feedback.GooglePlayStoreFeedbackCollector
 import com.github.stkent.amplify.tracking.Amplify
 import com.orhanobut.logger.Logger
+import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.di.appModule
 import com.shortstack.hackertracker.utilities.Storage
 import io.fabric.sdk.android.Fabric
@@ -26,6 +27,7 @@ class App : MultiDexApplication() {
 
 
     val storage: Storage by inject()
+    val database: DatabaseManager by inject()
 
     override fun onCreate() {
         super.onCreate()

@@ -18,6 +18,7 @@ data class Conference(
         val maps: ArrayList<FirebaseMap>,
         val startDate: Date,
         val endDate: Date,
+        val timezone: String,
         var isSelected: Boolean = false
 ) : Parcelable {
 

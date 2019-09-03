@@ -3,7 +3,6 @@ package com.shortstack.hackertracker.views
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.LinearLayout
-import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.utilities.Storage
@@ -15,6 +14,12 @@ class SettingsSwitchView(context: Context?, attrs: AttributeSet?) : LinearLayout
 
     private val storage: Storage by inject()
     private val analytics: Analytics by inject()
+
+    var text: String
+        get() = label.text.toString()
+        set(value) {
+            label.text = value
+        }
 
     init {
         inflate(context, R.layout.view_settings_switch, this)

@@ -88,7 +88,8 @@ fun FirebaseConference.toConference() = Conference(
         code,
         maps,
         start_timestamp.toDate(),
-        end_timestamp.toDate()
+        end_timestamp.toDate(),
+        timezone
 )
 
 fun FirebaseType.toType() = Type(

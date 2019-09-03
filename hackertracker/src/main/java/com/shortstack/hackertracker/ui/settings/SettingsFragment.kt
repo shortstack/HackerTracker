@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
@@ -48,6 +49,10 @@ class SettingsFragment : Fragment() {
             showChangeConferenceDialog()
         }
 
+        database.conference.observe(this, Observer {
+            force_time_zone.text = getString(R.string.setting_time_zone, it.timezone)
+        })
+
         version.text = getString(R.string.version, BuildConfig.VERSION_NAME)
     }
 
@@ -58,7 +63,7 @@ class SettingsFragment : Fragment() {
         val items = conferences.map { MaterialAlert.Item(it.name) }
 
         MaterialAlert(context)
-                .setTitle(getString(R.string.change_conference))
+                .setTitle(getString(R.string.choose_conference))
                 .setItems(items, DialogInterface.OnClickListener { _, which ->
                     database.changeConference(conferences[which].id)
                 }).show()
@@ -72,7 +77,7 @@ class SettingsFragment : Fragment() {
         val items = list.map { MaterialAlert.Item(it.label) }
 
         MaterialAlert(context)
-                .setTitle(getString(R.string.change_theme))
+                .setTitle(getString(R.string.choose_theme))
                 .setItems(items, DialogInterface.OnClickListener { _, which ->
                     storage.theme = list[which]
                     (context as MainActivity).recreate()
