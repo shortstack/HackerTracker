@@ -4,7 +4,6 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Article
 import com.shortstack.hackertracker.models.local.Event
@@ -17,13 +16,22 @@ class HomeViewModel : ViewModel(), KoinComponent {
 
     val results: LiveData<List<Any>>
 
-    private val bookmarks = database.getBookmarks()
-    private val recent = database.getRecent()
-    private val articles = database.getArticles()
+    private var bookmarks = database.getBookmarks()
+    private var recent = database.getRecent()
+    private var articles = database.getArticles()
 
     init {
         results = Transformations.switchMap(database.conference) {
             val results = MediatorLiveData<List<Any>>()
+
+            results.removeSource(bookmarks)
+            results.removeSource(recent)
+            results.removeSource(articles)
+
+            bookmarks = database.getBookmarks()
+            recent = database.getRecent()
+            articles = database.getArticles()
+
 
             results.addSource(bookmarks) {
                 setValue(results, bookmarks = it)

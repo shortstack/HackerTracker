@@ -1,7 +1,6 @@
 package com.shortstack.hackertracker.database
 
 import android.util.Log
-import android.widget.Toast
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.work.OneTimeWorkRequestBuilder
@@ -278,13 +277,15 @@ class DatabaseManager(private val preferences: Storage) {
                 .document(code)
                 .collection(ARTICLES)
                 .orderBy("updated_at", Query.Direction.DESCENDING)
-                .get()
-                .addOnSuccessListener {
-                    val articles = it.toObjects(FirebaseArticle::class.java)
-                            .filter { !it.hidden || App.isDeveloper }
-                            .map { it.toArticle() }
+                .addSnapshotListener { snapshot, exception ->
+                    if (exception == null) {
+                        val articles = snapshot?.toObjects(FirebaseArticle::class.java)
+                                ?.filter { !it.hidden || App.isDeveloper }
+                                ?.map { it.toArticle() } ?: emptyList()
 
-                    results.postValue(articles)
+                        results.postValue(articles)
+                    }
+
                 }
 
         return results
@@ -570,7 +571,7 @@ class DatabaseManager(private val preferences: Storage) {
         }
 
         maps.forEach {
-            val map = FirebaseConferenceMap(it.name, it.file,null)
+            val map = FirebaseConferenceMap(it.name, it.file, null)
             list.add(map)
         }
 

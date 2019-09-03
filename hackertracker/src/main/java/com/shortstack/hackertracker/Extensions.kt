@@ -137,6 +137,7 @@ fun FirebaseVendor.toVendor() = Vendor(
 )
 
 fun FirebaseArticle.toArticle() = Article(
+        id,
         name,
         text
 )
