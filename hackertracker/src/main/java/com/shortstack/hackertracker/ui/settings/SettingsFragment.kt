@@ -28,8 +28,6 @@ class SettingsFragment : Fragment() {
     private val storage: Storage by inject()
     private val themes: ThemesManager by inject()
 
-    private var index = 0
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_settings, container, false)
     }
@@ -51,17 +49,6 @@ class SettingsFragment : Fragment() {
         }
 
         version.text = getString(R.string.version, BuildConfig.VERSION_NAME)
-
-        logo.setOnClickListener {
-            index++
-            if(index in 4..9) {
-                Toast.makeText(context, "${10 - index} clicks to become a hacker..", Toast.LENGTH_SHORT).show()
-            }
-            if(index == 10) {
-                storage.isHacker = true
-                Toast.makeText(context, "You're now a hacker!", Toast.LENGTH_SHORT).show()
-            }
-        }
     }
 
     private fun showChangeConferenceDialog() {

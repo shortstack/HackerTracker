@@ -24,8 +24,6 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         fun newInstance() = SearchFragment()
     }
 
-    private val storage: Storage by inject()
-
     private val adapter = SearchAdapter()
     private val viewModel by lazy { ViewModelProviders.of(this).get(SearchViewModel::class.java) }
 
@@ -77,11 +75,6 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     override fun onQueryTextSubmit(query: String?) = true
 
     override fun onQueryTextChange(newText: String?): Boolean {
-        if(newText?.contains("queercon", true) == true) {
-            Toast.makeText(context, "#FF69B4", Toast.LENGTH_SHORT).show()
-            storage.isQueer = true
-        }
-
         adapter.query = newText
         viewModel.search(newText)
         return false

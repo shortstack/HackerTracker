@@ -18,7 +18,7 @@ val appModule = module {
     single { GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create() }
     single { FirebaseJobDispatcher(GooglePlayDriver(get())) }
     single { DatabaseManager(get()) }
-    single { ThemesManager(get()) }
+    single { ThemesManager() }
 
     single { Analytics(get()) }
 

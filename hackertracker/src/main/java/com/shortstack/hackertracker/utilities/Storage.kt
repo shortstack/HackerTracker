@@ -12,10 +12,6 @@ class Storage(context: Context, private val gson: Gson) {
         private const val USER_THEME = "user_theme"
         private const val USER_CONFERENCE = "user_conference"
 
-        private const val THEME_IS_HACKER = "theme_is_hacker"
-        private const val THEME_IS_QUEER = "theme_is_queer"
-        private const val THEME_IS_GAMBLER = "theme_is_gambler"
-
         private const val EASTER_EGGS = "easter_eggs"
         private const val NAV_DRAWER_ON_BACK = "nav_drawer_on_back"
         private const val FORCE_TIME_ZONE = "force_time_zone"
@@ -58,25 +54,6 @@ class Storage(context: Context, private val gson: Gson) {
         get() = preferences.getInt(USER_CONFERENCE, -1)
         set(value) {
             preferences.edit().putInt(USER_CONFERENCE, value).apply()
-        }
-
-
-    var isHacker: Boolean
-        get() = preferences.getBoolean(THEME_IS_HACKER, false)
-        set(value) {
-            preferences.edit().putBoolean(THEME_IS_HACKER, value).apply()
-        }
-
-    var isQueer: Boolean
-        get() = preferences.getBoolean(THEME_IS_QUEER, false)
-        set(value) {
-            preferences.edit().putBoolean(THEME_IS_QUEER, value).apply()
-        }
-
-    var isGambler: Boolean
-        get() = preferences.getBoolean(THEME_IS_GAMBLER, false)
-        set(value) {
-            preferences.edit().putBoolean(THEME_IS_GAMBLER, value).apply()
         }
 
     var theme: ThemesManager.Theme?
