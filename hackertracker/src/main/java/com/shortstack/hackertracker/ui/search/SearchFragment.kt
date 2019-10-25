@@ -1,21 +1,21 @@
 package com.shortstack.hackertracker.ui.search
 
+import android.app.Activity
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.search.SearchAdapter.State.*
 import kotlinx.android.synthetic.main.fragment_search.*
-import android.app.Activity
-import android.view.inputmethod.InputMethodManager
-import android.widget.Toast
-import com.shortstack.hackertracker.utilities.Storage
-import org.koin.android.ext.android.inject
 
 
 class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
@@ -25,7 +25,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
     }
 
     private val adapter = SearchAdapter()
-    private val viewModel by lazy { ViewModelProviders.of(this).get(SearchViewModel::class.java) }
+    private val viewModel by lazy { ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,11 +54,11 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
             (context as MainActivity).popBackStack()
             return@setOnCloseListener true
         }
-        
+
         search.setOnQueryTextListener(this)
 
 
-        viewModel.results.observe(this, Observer {
+        viewModel.search.observe(this, Observer {
             adapter.setList(it)
 
             when (adapter.state) {
@@ -76,7 +76,7 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
     override fun onQueryTextChange(newText: String?): Boolean {
         adapter.query = newText
-        viewModel.search(newText)
+        viewModel.onQueryTextChange(newText)
         return false
     }
 

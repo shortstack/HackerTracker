@@ -35,7 +35,7 @@ class NotificationHelper(private val context: Context) : KoinComponent {
 
             val channel = NotificationChannel(CHANNEL_UPDATES, "Schedule Updates", NotificationManager.IMPORTANCE_DEFAULT)
                     .apply {
-                        description = "Notifications about changes within the schedule"
+                        description = "Notifications about changes within the events"
                         enableLights(true)
                         lightColor = Color.MAGENTA
                     }

@@ -15,6 +15,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.github.stkent.amplify.tracking.Amplify
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
@@ -27,6 +28,7 @@ import com.shortstack.hackertracker.models.local.Location
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.replaceFragment
+import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.search.SearchFragment
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
@@ -48,7 +50,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
     private val storage: Storage by inject()
 
-    private lateinit var viewModel: MainActivityViewModel
+    private lateinit var viewModel: HackerTrackerViewModel
 
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
@@ -62,20 +64,20 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
         initNavDrawer()
 
-        viewModel = ViewModelProviders.of(this).get(MainActivityViewModel::class.java)
+        viewModel = ViewModelProvider(this)[HackerTrackerViewModel::class.java]
         viewModel.conference.observe(this, Observer {
             if (it != null) {
-                nav_view.getHeaderView(0).nav_title.text = it.name
+                nav_view.getHeaderView(0).nav_title.text = it.data?.name
             }
         })
 
         viewModel.types.observe(this, Observer {
 
-            val hasContest = it.firstOrNull { it.name == "Contest" } != null
-            nav_view.menu.findItem(R.id.nav_contests).isVisible = hasContest
-
-            val hasWorkshops = it.firstOrNull { it.name == "Workshop" } != null
-            nav_view.menu.findItem(R.id.nav_workshops).isVisible = hasWorkshops
+//            val hasContest = it.firstOrNull { it.name == "Contest" } != null
+//            nav_view.menu.findItem(R.id.nav_contests).isVisible = hasContest
+//
+//            val hasWorkshops = it.firstOrNull { it.name == "Workshop" } != null
+//            nav_view.menu.findItem(R.id.nav_workshops).isVisible = hasWorkshops
 
         })
 

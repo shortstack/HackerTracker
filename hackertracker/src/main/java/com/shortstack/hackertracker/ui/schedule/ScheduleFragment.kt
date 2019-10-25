@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +18,7 @@ import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Type
+import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.views.DaySelectorView
@@ -110,9 +111,7 @@ class ScheduleFragment : Fragment() {
         })
 
 
-        val factory = ScheduleViewModelFactory(type)
-
-        val scheduleViewModel = ViewModelProviders.of(this, factory).get(ScheduleViewModel::class.java)
+        val scheduleViewModel = ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java]
         scheduleViewModel.schedule.observe(this, Observer {
             hideViews()
 
@@ -146,7 +145,7 @@ class ScheduleFragment : Fragment() {
         })
 
         scheduleViewModel.types.observe(this, Observer {
-            filters.setTypes(it)
+            filters.setTypes(it.data)
         })
 
 

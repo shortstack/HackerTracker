@@ -270,11 +270,11 @@ class DatabaseManager(private val preferences: Storage) {
         return mutableLiveData
     }
 
-    fun getArticles(): LiveData<List<Article>> {
+    fun getArticles(id: Conference? = null): LiveData<List<Article>> {
         val results = MutableLiveData<List<Article>>()
 
         firestore.collection(CONFERENCES)
-                .document(code)
+                .document(id?.code ?: code)
                 .collection(ARTICLES)
                 .orderBy("updated_at", Query.Direction.DESCENDING)
                 .addSnapshotListener { snapshot, exception ->
@@ -343,11 +343,11 @@ class DatabaseManager(private val preferences: Storage) {
         return mutableLiveData
     }
 
-    fun getLocations(): MutableLiveData<List<Location>> {
+    fun getLocations(id: Conference? = null): MutableLiveData<List<Location>> {
         val mutableLiveData = MutableLiveData<List<Location>>()
 
         firestore.collection(CONFERENCES)
-                .document(code)
+                .document(id?.code ?: code)
                 .collection(LOCATIONS)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {

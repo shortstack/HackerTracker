@@ -13,11 +13,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Event
+import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.activities.MainActivity
+import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.utilities.TimeUtil
 import com.shortstack.hackertracker.views.SpeakerView
 import kotlinx.android.synthetic.main.empty_text.*
@@ -44,6 +47,7 @@ class EventFragment : Fragment() {
     private val database: DatabaseManager by inject()
     private val analytics: Analytics by inject()
 
+    private val viewModel: HackerTrackerViewModel by lazy { ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java] }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_event, container, false)
@@ -59,6 +63,13 @@ class EventFragment : Fragment() {
 
         val event = arguments?.getParcelable(EXTRA_EVENT) as? Event
 
+        viewModel.events.observe(this, Observer {
+            val target = it.data?.find { it.id == event?.id }
+            if (target != null) {
+                showEvent(target)
+            }
+        })
+
 
         val drawable = ContextCompat.getDrawable(context
                 ?: return, R.drawable.ic_arrow_back_white_24dp)
@@ -73,63 +84,62 @@ class EventFragment : Fragment() {
 //            val height = StatusBarSpacer.getStatusBarHeight(context, app_bar)
 //            app_bar.setPadding(0, height, 0, 0)
 //        }
+    }
 
-        event?.let { event ->
+    private fun showEvent(event: Event) {
+        analytics.log("Viewing event ${event.title}")
 
-            analytics.log("Viewing event ${event.title}")
+        collapsing_toolbar.title = event.title
 
-            collapsing_toolbar.title = event.title
+        val body = event.description
 
-            val body = event.description
-
-            if (body.isNotBlank()) {
-                empty.visibility = View.GONE
-                description.text = body
-            } else {
-                empty.visibility = View.VISIBLE
-            }
-
-            val url = event.link
-            if (url.isBlank()) {
-                link.visibility = View.GONE
-            } else {
-                link.visibility = View.VISIBLE
-
-                link.setOnClickListener {
-                    onLinkClick(url)
-                    analytics.onEventAction(Analytics.EVENT_OPEN_URL, event)
-                }
-            }
-
-            share.setOnClickListener {
-                onShareClick(event)
-                analytics.onEventAction(Analytics.EVENT_SHARE, event)
-            }
-
-            star.setOnClickListener {
-                onBookmarkClick(event)
-            }
-
-            if (event.location.hotel == null) {
-                map.visibility = View.GONE
-            } else {
-                map.visibility = View.VISIBLE
-                map.setOnClickListener {
-                    onMapClick(event)
-                }
-            }
-
-            displayDescription(event)
-
-            displayTypes(event)
-
-            displayBookmark(event)
-
-
-            displaySpeakers(event)
-
-            analytics.onEventAction(Analytics.EVENT_VIEW, event)
+        if (body.isNotBlank()) {
+            empty.visibility = View.GONE
+            description.text = body
+        } else {
+            empty.visibility = View.VISIBLE
         }
+
+        val url = event.link
+        if (url.isBlank()) {
+            link.visibility = View.GONE
+        } else {
+            link.visibility = View.VISIBLE
+
+            link.setOnClickListener {
+                onLinkClick(url)
+                analytics.onEventAction(Analytics.EVENT_OPEN_URL, event)
+            }
+        }
+
+        share.setOnClickListener {
+            onShareClick(event)
+            analytics.onEventAction(Analytics.EVENT_SHARE, event)
+        }
+
+        star.setOnClickListener {
+            onBookmarkClick(event)
+        }
+
+        if (event.location.hotel == null) {
+            map.visibility = View.GONE
+        } else {
+            map.visibility = View.VISIBLE
+            map.setOnClickListener {
+                onMapClick(event)
+            }
+        }
+
+        displayDescription(event)
+
+        displayTypes(event)
+
+        displayBookmark(event)
+
+
+        displaySpeakers(event)
+
+        analytics.onEventAction(Analytics.EVENT_VIEW, event)
     }
 
     private fun onMapClick(event: Event) {

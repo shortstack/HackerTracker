@@ -7,7 +7,7 @@ interface StickyHeaderInterface {
     /**
      * This method gets called by [StickHeaderItemDecoration] to fetch the position of the header item in the adapter
      * that is used for (represents) item at specified position.
-     * @param itemPosition int. Adapter's position of the item for which to do the search of the position of the header item.
+     * @param itemPosition int. Adapter's position of the item for which to do the onQueryTextChange of the position of the header item.
      * @return int. Position of the header item in the adapter.
      */
     fun getHeaderPositionForItem(itemPosition: Int): Int
