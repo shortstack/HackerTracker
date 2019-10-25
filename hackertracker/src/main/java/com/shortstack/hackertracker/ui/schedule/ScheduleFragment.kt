@@ -159,8 +159,8 @@ class ScheduleFragment : Fragment() {
         ViewCompat.setTranslationZ(filters, 10f)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
             R.id.search -> (context as MainActivity).showSearch()
         }
         return super.onOptionsItemSelected(item)

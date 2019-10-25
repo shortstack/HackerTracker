@@ -9,7 +9,7 @@ data class Resource<out T>(val status: Status, val data: T?, val message: String
 
         fun <T> loading(data: T?) = Resource(Status.LOADING, data, null)
 
-        fun <T> init(data: T?) = Resource(Status.NOT_INITIALIZED, data, null)
+        fun <T> init(data: T? = null) = Resource(Status.NOT_INITIALIZED, data, null)
     }
 }
 

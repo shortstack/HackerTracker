@@ -85,8 +85,8 @@ dependencies {
     implementation 'org.koin:koin-androidx-viewmodel:1.0.2'
 
     // Arch
-    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0-beta01"
-    implementation "androidx.lifecycle:lifecycle-viewmodel:2.0.0-beta01"
+    implementation "androidx.lifecycle:lifecycle-extensions:2.2.0-rc01"
+    implementation "androidx.lifecycle:lifecycle-viewmodel:2.2.0-rc01"
     implementation "android.arch.work:work-runtime-ktx:1.0.0-alpha04"
     implementation "android.arch.work:work-firebase:1.0.0-alpha04"
 

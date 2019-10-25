@@ -49,8 +49,8 @@ class EventFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_event, container, false)
     }
 
-    override fun onPrepareOptionsMenu(menu: Menu?) {
-        menu?.clear()
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        menu.clear()
         super.onPrepareOptionsMenu(menu)
     }
 
