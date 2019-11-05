@@ -37,7 +37,7 @@ class HomeFragment : Fragment() {
 
 
         val viewModel = ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java]
-        viewModel.articles.observe(this, Observer {
+        viewModel.home.observe(this, Observer {
             if (it.data != null)
                 adapter.setElements(it.data)
         })

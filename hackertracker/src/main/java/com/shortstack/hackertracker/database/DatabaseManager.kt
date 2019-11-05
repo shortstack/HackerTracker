@@ -291,13 +291,13 @@ class DatabaseManager(private val preferences: Storage) {
         return results
     }
 
-    fun getBookmarks(): LiveData<List<Event>> {
+    fun getBookmarks(conference: Conference? = null): LiveData<List<Event>> {
         val result = MutableLiveData<List<Event>>()
 
         val id = user?.uid ?: return result
 
         firestore.collection(CONFERENCES)
-                .document(code)
+                .document(conference?.code ?: code)
                 .collection(EVENTS)
                 .get()
                 .addOnSuccessListener {
@@ -465,26 +465,6 @@ class DatabaseManager(private val preferences: Storage) {
 
     }
 
-    fun getSpeakers(): LiveData<List<Speaker>> {
-        val mutableLiveData = MutableLiveData<List<Speaker>>()
-
-        firestore.collection(CONFERENCES)
-                .document(code)
-                .collection(SPEAKERS)
-                .addSnapshotListener { snapshot, exception ->
-                    if (exception == null) {
-                        val speakers = snapshot?.toObjects(FirebaseSpeaker::class.java)
-                                ?.filter { !it.hidden || App.isDeveloper }
-                                ?.map { it.toSpeaker() }
-                                ?: emptyList()
-
-                        mutableLiveData.postValue(speakers)
-                    }
-                }
-
-        return mutableLiveData
-    }
-
 
     fun getSpeakers(conference: Conference): LiveData<List<Speaker>> {
         val mutableLiveData = MutableLiveData<List<Speaker>>()
@@ -523,42 +503,6 @@ class DatabaseManager(private val preferences: Storage) {
         return mutableLiveData
     }
 
-
-    fun getContests(conference: Conference): MutableLiveData<List<Event>> {
-        val mutableLiveData = MutableLiveData<List<Event>>()
-
-        firestore.collection(CONFERENCES)
-                .document(conference.code)
-                .collection(EVENTS)
-                .get()
-                .addOnSuccessListener {
-                    val contests = it.toObjects(FirebaseEvent::class.java)
-                            .filter { (!it.hidden || App.isDeveloper) && it.type.name == "Contest" }
-                            .map { it.toEvent() }
-
-                    mutableLiveData.postValue(contests)
-                }
-
-        return mutableLiveData
-    }
-
-    fun getWorkshops(conference: Conference): MutableLiveData<List<Event>> {
-        val mutableLiveData = MutableLiveData<List<Event>>()
-
-        firestore.collection(CONFERENCES)
-                .document(conference.code)
-                .collection(EVENTS)
-                .get()
-                .addOnSuccessListener {
-                    val workshops = it.toObjects(FirebaseEvent::class.java)
-                            .filter { (!it.hidden || App.isDeveloper) && it.type.name == "Workshop" }
-                            .map { it.toEvent() }
-
-                    mutableLiveData.postValue(workshops)
-                }
-
-        return mutableLiveData
-    }
 
     fun getMaps(conference: Conference): MutableLiveData<List<FirebaseConferenceMap>> {
         val mutableLiveData = MutableLiveData<List<FirebaseConferenceMap>>()
