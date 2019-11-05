@@ -5,10 +5,7 @@ class ThemesManager {
     enum class Theme(val label: String) {
         Dark("Dark"),
         Light("Light"),
-        Developer("Advice"),
-        Hacker("Hacker"),
-        Gambler("Gambler"),
-        Queer("Queer")
+        Developer("Advice")
     }
 
     fun getThemes() = Theme.values().toList()
