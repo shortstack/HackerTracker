@@ -1,20 +1,18 @@
 package com.shortstack.hackertracker.ui.settings
 
-import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.utilities.MaterialAlert
-import com.shortstack.hackertracker.utilities.Storage
 import com.shortstack.hackertracker.ui.themes.ThemesManager
+import com.shortstack.hackertracker.utilities.Storage
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.ext.android.inject
 
@@ -60,27 +58,32 @@ class SettingsFragment : Fragment() {
         val context = context ?: return
 
         val conferences = database.conferences.value ?: emptyList()
-        val items = conferences.map { MaterialAlert.Item(it.name) }
+        val selected = conferences.indexOf(database.conference.value)
 
-        MaterialAlert(context)
+        val items = conferences.map { it.name }.toTypedArray()
+
+        AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
                 .setTitle(getString(R.string.choose_conference))
-                .setItems(items, DialogInterface.OnClickListener { _, which ->
+                .setSingleChoiceItems(items, selected) { dialog, which ->
                     database.changeConference(conferences[which].id)
-                }).show()
+                    dialog.dismiss()
+                }.show()
     }
 
     private fun showChangeThemeDialog() {
         val context = context ?: return
 
         val list = themes.getThemes()
+        val selected = list.indexOf(storage.theme)
 
-        val items = list.map { MaterialAlert.Item(it.label) }
+        val items = list.map { it.label }.toTypedArray()
 
-        MaterialAlert(context)
+        AlertDialog.Builder(context, R.style.MyAlertDialogStyle)
                 .setTitle(getString(R.string.choose_theme))
-                .setItems(items, DialogInterface.OnClickListener { _, which ->
+                .setSingleChoiceItems(items, selected) { dialog, which ->
                     storage.theme = list[which]
+                    dialog.dismiss()
                     (context as MainActivity).recreate()
-                }).show()
+                }.show()
     }
 }
