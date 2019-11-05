@@ -14,6 +14,4 @@ data class Type(
     val isBookmark: Boolean
         get() = name.contains("bookmark", true)
 
-    val filtered: Boolean
-        get() = name.contains("Workshop", true) || name.contains("Contest", true)
 }

@@ -23,16 +23,6 @@
             android:icon="@drawable/ic_info_outline_white_24dp"
             android:title="@string/information" />
 
-        <item android:id="@+id/nav_contests"
-            android:icon="@drawable/ic_cake_white_24dp"
-            android:title="@string/contests"
-            android:visible="false"/>
-
-        <item android:id="@+id/nav_workshops"
-            android:icon="@drawable/ic_computer_white_24dp"
-            android:title="@string/workshops"
-            android:visible="false"/>
-
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings_white_24dp"

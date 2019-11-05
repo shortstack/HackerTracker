@@ -71,17 +71,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
             }
         })
 
-        viewModel.types.observe(this, Observer {
-
-//            val hasContest = it.firstOrNull { it.name == "Contest" } != null
-//            nav_view.menu.findItem(R.id.nav_contests).isVisible = hasContest
-//
-//            val hasWorkshops = it.firstOrNull { it.name == "Workshop" } != null
-//            nav_view.menu.findItem(R.id.nav_workshops).isVisible = hasWorkshops
-
-        })
-
-
         if (savedInstanceState == null) {
             if (Amplify.getSharedInstance().shouldPrompt() && !BuildConfig.DEBUG) {
                 val review = ReviewBottomSheet.newInstance()
@@ -151,9 +140,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
             Dark -> R.style.AppTheme_Dark
             Light -> R.style.AppTheme
             Developer -> R.style.AppTheme_Developer
-            Queer -> R.style.AppTheme_Queer
-            Gambler -> R.style.AppTheme_Gambler
-            Hacker -> R.style.AppTheme_Hacker
             null -> R.style.AppTheme_Dark
         }
         theme.applyStyle(style, true)
@@ -214,8 +200,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
                 R.id.nav_home -> HomeFragment.newInstance()
                 R.id.nav_schedule -> ScheduleFragment.newInstance()
                 R.id.nav_map -> MapsFragment.newInstance()
-                R.id.nav_contests -> ScheduleFragment.newInstance(Type(40003, "Contests", "DEFCON27", "", true))
-                R.id.nav_workshops -> ScheduleFragment.newInstance(Type(40001, "Workshops", "DEFCON27", "", true))
                 R.id.nav_settings -> SettingsFragment.newInstance()
                 R.id.search -> SearchFragment.newInstance()
                 else -> InformationFragment.newInstance()

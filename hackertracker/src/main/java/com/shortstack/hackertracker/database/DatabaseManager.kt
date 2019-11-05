@@ -165,11 +165,11 @@ class DatabaseManager(private val preferences: Storage) {
     }
 
     fun getEvents(id: Conference, type: Type?): LiveData<List<Event>> {
-        return getSchedule(type)
+        return getSchedule()
     }
 
 
-    fun getSchedule(type: Type? = null, isTypeFiltered: Boolean = true): MutableLiveData<List<Event>> {
+    fun getSchedule(): MutableLiveData<List<Event>> {
         val mutableLiveData = MutableLiveData<List<Event>>()
 
         firestore.collection(CONFERENCES)
@@ -178,7 +178,7 @@ class DatabaseManager(private val preferences: Storage) {
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {
                         val events = snapshot?.toObjects(FirebaseEvent::class.java)
-                                ?.filter { (!it.hidden || App.isDeveloper) && (!isTypeFiltered || (type == null && !it.type.filtered || type?.id == it.type.id)) }
+                                ?.filter { (!it.hidden || App.isDeveloper) }
                                 ?.map { it.toEvent() }
 
                         mutableLiveData.postValue(events)
@@ -209,14 +209,10 @@ class DatabaseManager(private val preferences: Storage) {
     }
 
     fun getTypes(id: Conference): LiveData<List<Type>> {
-        return getScheduleTypes()
-    }
-
-    fun getScheduleTypes(): MutableLiveData<List<Type>> {
         val mutableLiveData = MutableLiveData<List<Type>>()
 
         firestore.collection(CONFERENCES)
-                .document(code)
+                .document(id.code)
                 .collection(TYPES)
                 .addSnapshotListener { snapshot, exception ->
                     if (exception == null) {

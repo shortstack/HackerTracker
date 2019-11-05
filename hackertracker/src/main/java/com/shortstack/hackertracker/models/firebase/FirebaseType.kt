@@ -9,9 +9,4 @@ data class FirebaseType(
         val name: String = "",
         val conference: String = "",
         val color: String = "#343434"
-) : Parcelable {
-
-    val filtered: Boolean
-        get() = name.contains("Workshop", true) || name.contains("Contest", true)
-
-}
+) : Parcelable

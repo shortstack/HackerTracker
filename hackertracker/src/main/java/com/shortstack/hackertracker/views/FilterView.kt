@@ -32,7 +32,7 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
 
             collection.add(context.getString(R.string.types))
 
-            val elements = types.filter { !it.isBookmark && !it.filtered }
+            val elements = types.filter { !it.isBookmark }
             collection.addAll(elements)
 
             val adapter = FilterAdapter(collection)

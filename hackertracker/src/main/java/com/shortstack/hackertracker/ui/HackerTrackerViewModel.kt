@@ -21,11 +21,15 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
 
     val conference: LiveData<Resource<Conference>>
     val events: LiveData<Resource<List<Event>>>
+    val bookmarks: LiveData<Resource<List<Event>>>
     val types: LiveData<Resource<List<Type>>>
     val locations: LiveData<Resource<List<Location>>>
     val speakers: LiveData<Resource<List<Speaker>>>
+
     val articles: LiveData<Resource<List<Article>>>
 
+    // Home
+    val home: LiveData<Resource<List<Any>>>
 
     // Schedule
     val schedule: LiveData<Resource<List<Event>>>
@@ -82,7 +86,7 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
             if (it == null) {
                 result.value = Resource.init()
             } else {
-                result.addSource(database.getSchedule(null)) {
+                result.addSource(database.getSchedule()) {
                     result.value = Resource.success(it)
                 }
             }
@@ -110,6 +114,23 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
                 val events = events.value?.data ?: return@addSource
                 result.value = Resource.success(getSchedule(events, types?.data ?: emptyList()))
             }
+
+            return@switchMap result
+        }
+
+        bookmarks = Transformations.switchMap(database.conference) {
+            val result = MediatorLiveData<Resource<List<Event>>>()
+
+            if (it == null) {
+                result.value = Resource.init(null)
+                return@switchMap result
+            } else {
+                result.addSource(database.getBookmarks(it)) {
+                    result.value = Resource.success(it)
+                }
+            }
+
+
 
             return@switchMap result
         }
@@ -169,16 +190,34 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
             return@switchMap results
         }
 
+        home = Transformations.switchMap(database.conference) { id ->
+            val result = MediatorLiveData<Resource<List<Any>>>()
+
+            if (id == null) {
+                result.value = Resource.init(null)
+                return@switchMap result
+            }
+
+            result.value = Resource.loading(null)
+
+            result.addSource(bookmarks) {
+                val articles = articles.value?.data?.take(4) ?: emptyList()
+                result.value = Resource.success(articles + (it.data?.take(3) ?: emptyList()))
+            }
+
+            result.addSource(articles) {
+                val bookmarks = bookmarks.value?.data?.take(3) ?: emptyList()
+                result.value = Resource.success((it.data?.take(4) ?: emptyList()) + bookmarks)
+            }
+
+            return@switchMap result
+        }
+
     }
 
     private fun getSchedule(events: List<Event>, types: List<Type>): List<Event> {
         if (types.isEmpty())
             return events
-
-//        if(type != null) {
-//            val list = events.filter { it.type.id == type.id }
-//            return list
-//        }
 
         val requireBookmark = types.firstOrNull { it.isBookmark }?.isSelected ?: false
         val filter = types.filter { !it.isBookmark && it.isSelected }
