@@ -42,14 +42,6 @@
             android:name="io.fabric.ApiKey"
             android:value="8905e29d4c9f8eb7baf966d4a30d17bbaadd563e" />
 
-        <service
-            android:name=".MyFirebaseMessagingService"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT" />
-            </intent-filter>
-        </service>
-
         <!-- Set custom default icon. This is used when no icon is set for incoming notification messages.
      See README(https://goo.gl/l4GJaQ) for more. -->
         <meta-data
