@@ -8,17 +8,17 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayout
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.Status
+import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.information.faq.FAQFragment
 import com.shortstack.hackertracker.ui.information.info.InfoFragment
 import com.shortstack.hackertracker.ui.information.speakers.SpeakersFragment
 import com.shortstack.hackertracker.ui.information.vendors.VendorsFragment
 import kotlinx.android.synthetic.main.fragment_information.*
-import org.koin.android.ext.android.inject
 
 class InformationFragment : Fragment() {
 
@@ -62,11 +62,13 @@ class InformationFragment : Fragment() {
             }
         })
 
-        val viewModel = ViewModelProviders.of(this).get(InformationViewModel::class.java)
+        val viewModel = ViewModelProvider(this)[HackerTrackerViewModel::class.java]
         viewModel.conference.observe(this, Observer {
             val fm = activity?.supportFragmentManager ?: return@Observer
-            val adapter = PagerAdapter(fm, it.code)
-            pager.adapter = adapter
+            if (it.status == Status.SUCCESS) {
+                val adapter = PagerAdapter(fm, it.data!!.code)
+                pager.adapter = adapter
+            }
         })
     }
 

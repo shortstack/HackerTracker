@@ -323,11 +323,11 @@ class DatabaseManager(private val preferences: Storage) {
     }
 
 
-    fun getFAQ(code: String = this.code): LiveData<List<FAQ>> {
+    fun getFAQ(id: Conference): LiveData<List<FAQ>> {
         val mutableLiveData = MutableLiveData<List<FAQ>>()
 
         firestore.collection(CONFERENCES)
-                .document(code)
+                .document(id.code)
                 .collection(FAQS)
                 .get()
                 .addOnSuccessListener {

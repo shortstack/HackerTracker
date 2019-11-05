@@ -8,13 +8,14 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.crashlytics.android.answers.CustomEvent
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.models.firebase.FirebaseConferenceMap
 import com.shortstack.hackertracker.models.local.Location
+import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.activities.MainActivity
+import com.shortstack.hackertracker.utilities.Analytics
 import kotlinx.android.synthetic.main.fragment_maps.*
 import org.koin.android.ext.android.inject
 
@@ -58,9 +59,11 @@ class MapsFragment : Fragment() {
         }
 
 
-        val mapsViewModel = ViewModelProviders.of(this).get(MapsViewModel::class.java)
+        val mapsViewModel = ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java]
         mapsViewModel.maps.observe(this, Observer {
-            when (it.size) {
+            val maps = it.data ?: emptyList()
+
+            when (maps.size) {
                 0 -> {
                     tab_layout.visibility = View.GONE
                     empty_view.visibility = View.VISIBLE
@@ -75,13 +78,13 @@ class MapsFragment : Fragment() {
                 }
             }
 
-            val adapter = PagerAdapter(activity!!.supportFragmentManager, it)
+            val adapter = PagerAdapter(activity!!.supportFragmentManager, maps)
             pager.adapter = adapter
 
             if (isFirstLoad) {
                 isFirstLoad = false
 
-                showSelectedMap(it)
+                showSelectedMap(maps)
             }
 
         })

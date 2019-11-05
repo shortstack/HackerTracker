@@ -6,6 +6,7 @@ import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.models.firebase.FirebaseConferenceMap
 import com.shortstack.hackertracker.models.local.*
 import com.shortstack.hackertracker.ui.themes.ThemesManager
 import com.shortstack.hackertracker.utilities.Storage
@@ -27,6 +28,10 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
     val speakers: LiveData<Resource<List<Speaker>>>
 
     val articles: LiveData<Resource<List<Article>>>
+    val faq: LiveData<Resource<List<FAQ>>>
+    val vendors: LiveData<Resource<List<Vendor>>>
+
+    val maps: LiveData<Resource<List<FirebaseConferenceMap>>>
 
     // Home
     val home: LiveData<Resource<List<Any>>>
@@ -162,6 +167,48 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
                 }
             }
 
+
+            return@switchMap result
+        }
+
+        faq = Transformations.switchMap(database.conference) {
+            val result = MediatorLiveData<Resource<List<FAQ>>>()
+
+            if (it == null) {
+                result.value = Resource.init()
+            } else {
+                result.addSource(database.getFAQ(it)) {
+                    result.value = Resource.success(it)
+                }
+            }
+
+            return@switchMap result
+        }
+
+        vendors = Transformations.switchMap(database.conference) {
+            val result = MediatorLiveData<Resource<List<Vendor>>>()
+
+            if (it == null) {
+                result.value = Resource.init()
+            } else {
+                result.addSource(database.getVendors(it)) {
+                    result.value = Resource.success(it)
+                }
+            }
+
+            return@switchMap result
+        }
+
+        maps = Transformations.switchMap(database.conference) {
+            val result = MediatorLiveData<Resource<List<FirebaseConferenceMap>>>()
+
+            if (it == null) {
+                result.value = Resource.init()
+            } else {
+                result.addSource(database.getMaps(it)) {
+                    result.value = Resource.success(it)
+                }
+            }
 
             return@switchMap result
         }
