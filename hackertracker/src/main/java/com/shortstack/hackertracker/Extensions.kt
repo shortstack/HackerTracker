@@ -147,3 +147,10 @@ fun FirebaseFAQ.toFAQ() = FAQ(
         question,
         answer
 )
+
+/**
+ * Linearly interpolate between two values.
+ */
+fun lerp(a: Float, b: Float, t: Float): Float {
+    return a + (b - a) * t
+}

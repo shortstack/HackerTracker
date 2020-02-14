@@ -333,4 +333,10 @@
         <item name="android:paddingRight">16dp</item>
     </style>
 
+    <style name="DayIndicatorDecoration">
+        <item name="android:color">?colorPrimary</item>
+        <item name="insetVertical">0dp</item>
+    </style>
+
+
 </resources>

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomsheet.BottomSheetBehavior
+import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.models.Day
@@ -20,13 +21,14 @@ import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
-import com.shortstack.hackertracker.views.DaySelectorView
+import com.shortstack.hackertracker.views.BubbleDecoration
 import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersDecoration
 import kotlinx.android.synthetic.main.fragment_schedule.*
 import kotlinx.android.synthetic.main.fragment_schedule.list
 import kotlinx.android.synthetic.main.view_empty.view.*
 import kotlinx.android.synthetic.main.view_filter.*
 import java.util.*
+import kotlin.collections.ArrayList
 
 
 class ScheduleFragment : Fragment() {
@@ -58,8 +60,22 @@ class ScheduleFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_schedule, container, false) as ViewGroup
     }
 
+    var temp = Random().nextLong()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+
+        val adapter1 = DayIndicatorAdapter()
+        day_selector.adapter = adapter1
+        day_selector.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
+        val bubbleDecoration = BubbleDecoration(context!!)
+        day_selector.addItemDecoration(bubbleDecoration)
+
+        var tempDays = ArrayList<Day>()
+
+
+        Logger.e("ScheduleFragment Created $temp")
 
         val type = arguments?.getParcelable<Type>(EXTRA_TYPE)
         if (type != null) {
@@ -95,19 +111,29 @@ class ScheduleFragment : Fragment() {
                     val first = manager.findFirstVisibleItemPosition()
                     val last = manager.findLastVisibleItemPosition()
 
-                    if (first == -1 || last == -1)
-                        return
+//                    if (first == -1 || last == -1)
+//                        return
 
-                    day_selector.onScroll(adapter.getDateOfPosition(first), adapter.getDateOfPosition(last))
+
+
+
+
+
+
+                    adapter1.submitList(tempDays)
+                    bubbleDecoration.bubbleRange = adapter1.getRange(adapter.getDateOfPosition(first), adapter.getDateOfPosition(last))
+
+
+//                    day_selector.onScroll(adapter.getDateOfPosition(first), adapter.getDateOfPosition(last))
                 }
             }
         })
 
-        day_selector.addOnDaySelectedListener(object : DaySelectorView.OnDaySelectedListener {
-            override fun onDaySelected(day: Date) {
-                scrollToDate(day)
-            }
-        })
+//        day_selector.addOnDaySelectedListener(object : DaySelectorView.OnDaySelectedListener {
+//            override fun onDaySelected(day: Date) {
+//                scrollToDate(day)
+//            }
+//        })
 
 
         val factory = ScheduleViewModelFactory(type)
@@ -123,7 +149,11 @@ class ScheduleFragment : Fragment() {
                     Status.SUCCESS -> {
                         val list = adapter.setSchedule(it.data)
                         val days = list.filterIsInstance<Day>()
-                        day_selector.setDays(days)
+
+                        tempDays.clear()
+                        tempDays.addAll(days)
+
+                        adapter1.submitList(days)
 
                         if (adapter.isEmpty()) {
                             showEmptyView()
@@ -158,6 +188,7 @@ class ScheduleFragment : Fragment() {
 
         ViewCompat.setTranslationZ(filters, 10f)
     }
+
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {
@@ -233,5 +264,15 @@ class ScheduleFragment : Fragment() {
 
     private fun hideFilters() {
         bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Logger.e("ScheduleFragment Resumed $temp")
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Logger.e("ScheduleFragment Destroyed $temp")
     }
 }

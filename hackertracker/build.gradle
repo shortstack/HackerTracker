@@ -10,6 +10,7 @@ apply plugin: 'com.google.gms.google-services'
 android {
     compileSdkVersion 28
     useLibrary 'org.apache.http.legacy'
+
     defaultConfig {
         applicationId "com.shortstack.hackertracker"
         minSdkVersion 16
@@ -21,6 +22,16 @@ android {
 
         multiDexEnabled true
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
+    }
+
     buildTypes {
         debug {
 //            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
@@ -65,6 +76,8 @@ dependencies {
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    implementation "androidx.core:core-ktx:1.2.0"
 
     // Support Libraries
     implementation 'com.google.android.material:material:1.0.0-beta01'
