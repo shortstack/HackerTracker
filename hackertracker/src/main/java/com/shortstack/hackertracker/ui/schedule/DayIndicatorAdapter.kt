@@ -64,8 +64,6 @@ class DayIndicatorAdapter : ListAdapter<DayIndicator, DayIndicatorAdapter.DayInd
         val first = dates.indexOfFirst { it.time == beginDay.time }
         val last = dates.indexOfFirst { it.time == endDay.time }
 
-        Logger.d("Setting Range: $first .. $last")
-
         return first..last
 
     }

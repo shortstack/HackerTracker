@@ -10,6 +10,7 @@ import android.graphics.RectF
 import androidx.core.view.forEach
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration
+import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.lerp
 import kotlin.math.max
@@ -53,15 +54,18 @@ class BubbleDecoration(context: Context) : ItemDecoration() {
     }
 
     override fun onDraw(canvas: Canvas, parent: RecyclerView, state: RecyclerView.State) {
-        if (pendingAnimation) {
-            pendingAnimation = false
 
-            animator?.cancel()
-
+        if(animator == null || pendingAnimation) {
             // Update rects
             computeTargetRect(parent, state, bubbleRange, temp)
             previousRect.set(currentRect)
             currentRect.set(temp)
+        }
+
+        if (pendingAnimation) {
+            pendingAnimation = false
+
+            animator?.cancel()
 
             startAnimatorIfNeeded(previousRect, currentRect, parent)
         }
