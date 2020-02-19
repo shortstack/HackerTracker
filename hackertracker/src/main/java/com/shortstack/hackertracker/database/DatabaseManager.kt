@@ -3,9 +3,9 @@ package com.shortstack.hackertracker.database
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.work.Data
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import androidx.work.toWorkData
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -392,17 +392,21 @@ class DatabaseManager(private val preferences: Storage) {
             val delay = event.start.time - MyClock().now().time - (1000 * 20 * 60)
 
             if (delay > 0) {
+                val data = Data.Builder()
+                        .putInt(ReminderWorker.NOTIFICATION_ID, event.id)
+                        .build()
+
                 val notify = OneTimeWorkRequestBuilder<ReminderWorker>()
-                        .setInputData(mapOf(ReminderWorker.NOTIFICATION_ID to event.id).toWorkData())
+                        .setInputData(data)
                         .setInitialDelay(delay, TimeUnit.MILLISECONDS)
                         .addTag(tag)
                         .build()
 
-                WorkManager.getInstance()?.enqueue(notify)
+                WorkManager.getInstance().enqueue(notify)
             }
 
         } else {
-            WorkManager.getInstance()?.cancelAllWorkByTag(tag)
+            WorkManager.getInstance().cancelAllWorkByTag(tag)
         }
 
         val id = user?.uid ?: return

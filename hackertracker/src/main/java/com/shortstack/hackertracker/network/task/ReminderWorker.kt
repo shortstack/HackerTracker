@@ -1,17 +1,22 @@
 package com.shortstack.hackertracker.network.task
 
+import android.content.Context
 import androidx.work.Worker
-import com.shortstack.hackertracker.App
+import androidx.work.WorkerParameters
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.utilities.NotificationHelper
 import io.reactivex.disposables.Disposable
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
-class ReminderWorker : Worker(), KoinComponent {
+class ReminderWorker(context: Context, params: WorkerParameters) : Worker(context, params), KoinComponent {
+
+    companion object {
+        const val NOTIFICATION_ID = "NOTIFICATION_ID"
+        const val TAG = "TAG_REMINDER_"
+    }
 
     private val notifications: NotificationHelper by inject()
-
     private val database: DatabaseManager by inject()
 
     private var disposable: Disposable? = null
@@ -24,15 +29,10 @@ class ReminderWorker : Worker(), KoinComponent {
                     notifications.notifyStartingSoon(event)
                 }
 
-        return Result.SUCCESS
+        return Result.success()
     }
 
-    override fun onStopped(cancelled: Boolean) {
+    override fun onStopped() {
         disposable?.dispose()
-    }
-
-    companion object {
-        const val NOTIFICATION_ID = "NOTIFICATION_ID"
-        const val TAG = "TAG_REMINDER_"
     }
 }
