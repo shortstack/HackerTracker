@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.ui.schedule
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckedTextView
 import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -10,11 +11,21 @@ import androidx.recyclerview.widget.RecyclerView
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.Day
+import com.shortstack.hackertracker.models.DayIndicator
 import com.shortstack.hackertracker.models.local.Event
 import java.text.SimpleDateFormat
 import java.util.*
 
-class DayIndicatorAdapter : ListAdapter<Day, DayIndicatorAdapter.DayIndicatorViewHolder>(IndicatorDiff) {
+class DayIndicatorAdapter : ListAdapter<DayIndicator, DayIndicatorAdapter.DayIndicatorViewHolder>(IndicatorDiff) {
+
+    init {
+        setHasStableIds(true)
+    }
+
+    override fun getItemId(position: Int): Long {
+        return getItem(position).hashCode().toLong()
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DayIndicatorViewHolder {
         return DayIndicatorViewHolder.inflate(parent)
@@ -22,38 +33,6 @@ class DayIndicatorAdapter : ListAdapter<Day, DayIndicatorAdapter.DayIndicatorVie
 
     override fun onBindViewHolder(holder: DayIndicatorViewHolder, position: Int) {
         holder.render(getItem(position))
-    }
-
-    fun getDatePosition(date: Date): Int {
-        val collection = ArrayList<Day>()
-        for(i in 0 until itemCount) {
-            collection.add(getItem(i))
-        }
-
-
-        val calendar = Calendar.getInstance()
-
-        calendar.time = date
-        calendar.set(Calendar.HOUR_OF_DAY, 0)
-        calendar.set(Calendar.MINUTE, 0)
-        calendar.set(Calendar.SECOND, 0)
-        calendar.set(Calendar.MILLISECOND, 0)
-
-
-        val otherDay = Day(calendar.time)
-
-        return collection.indexOfFirst { it is Day && it.time == otherDay.time }
-    }
-
-    fun getDateOfPosition(index: Int): Date {
-        val collection = ArrayList<Day>()
-        for(i in 0 until itemCount) {
-            collection.add(getItem(i))
-        }
-
-        return when (val obj = collection[index]) {
-            else -> Date(obj.time)
-        }
     }
 
     fun getRange(begin: Date, end: Date): IntRange {
@@ -75,12 +54,12 @@ class DayIndicatorAdapter : ListAdapter<Day, DayIndicatorAdapter.DayIndicatorVie
 
         val endDay = instance.time
 
-        val collection = ArrayList<Day>()
+        val collection = ArrayList<DayIndicator>()
         for(i in 0 until itemCount) {
             collection.add(getItem(i))
         }
 
-        val dates = collection.map { Date(it.time) }
+        val dates = collection.map { Date(it.day.time) }
 
         val first = dates.indexOfFirst { it.time == beginDay.time }
         val last = dates.indexOfFirst { it.time == endDay.time }
@@ -102,18 +81,19 @@ class DayIndicatorAdapter : ListAdapter<Day, DayIndicatorAdapter.DayIndicatorVie
         }
 
 
-        fun render(day: Day) {
+        fun render(day: DayIndicator) {
             val format = SimpleDateFormat("MMM d")
 
-            (view as TextView).text = format.format(day.time)
+            val textView = view as CheckedTextView
+            textView.text = format.format(day.day.time)
+            textView.isChecked = day.checked
         }
-
     }
 
-    object IndicatorDiff : DiffUtil.ItemCallback<Day>() {
-        override fun areItemsTheSame(oldItem: Day, newItem: Day) = oldItem == newItem
+    object IndicatorDiff : DiffUtil.ItemCallback<DayIndicator>() {
+        override fun areItemsTheSame(oldItem: DayIndicator, newItem: DayIndicator) = oldItem.hashCode() == newItem.hashCode()
 
-        override fun areContentsTheSame(oldItem: Day, newItem: Day) = oldItem.time == newItem.time
+        override fun areContentsTheSame(oldItem: DayIndicator, newItem: DayIndicator) = oldItem.areUiContentsTheSame(newItem)
 
     }
 

@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.DefaultItemAnimator
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
@@ -17,6 +18,7 @@ import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.models.Day
+import com.shortstack.hackertracker.models.DayIndicator
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.ui.activities.MainActivity
@@ -49,7 +51,13 @@ class ScheduleFragment : Fragment() {
         }
     }
 
-    private val adapter: ScheduleAdapter = ScheduleAdapter()
+    private var days = emptyList<Day>()
+    private var cachedBubbleRange: IntRange? = null
+
+    private lateinit var dayIndicatorItemDecoration: BubbleDecoration
+    private lateinit var dayIndicatorAdapter: DayIndicatorAdapter
+
+    private val scheduleAdapter: ScheduleAdapter = ScheduleAdapter()
 
     private var shouldScroll = true
 
@@ -66,16 +74,8 @@ class ScheduleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
 
-        val adapter1 = DayIndicatorAdapter()
-        day_selector.adapter = adapter1
-        day_selector.layoutManager = LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false)
-        val bubbleDecoration = BubbleDecoration(context!!)
-        day_selector.addItemDecoration(bubbleDecoration)
-
-        var tempDays = ArrayList<Day>()
 
 
-        Logger.e("ScheduleFragment Created $temp")
 
         val type = arguments?.getParcelable<Type>(EXTRA_TYPE)
         if (type != null) {
@@ -92,48 +92,42 @@ class ScheduleFragment : Fragment() {
             false
         }
 
+
+        list.apply {
+            adapter = scheduleAdapter
+            (itemAnimator as DefaultItemAnimator).run {
+                supportsChangeAnimations = false
+                addDuration = 160L
+                moveDuration = 160L
+                changeDuration = 160L
+                removeDuration = 120L
+            }
+
+            addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                    onScheduleScrolled()
+                }
+            })
+        }
+
+        dayIndicatorItemDecoration = BubbleDecoration(view.context)
+        day_selector.addItemDecoration(dayIndicatorItemDecoration)
+
+        dayIndicatorAdapter = DayIndicatorAdapter()
+        day_selector.adapter = dayIndicatorAdapter
+
+
+        day_selector.layoutManager = LinearLayoutManager(view.context, LinearLayoutManager.HORIZONTAL, false)
+
         shouldScroll = true
-        list.adapter = adapter
 
         toolbar.setNavigationOnClickListener {
             (context as MainActivity).openNavDrawer()
         }
 
 
-        val decoration = StickyRecyclerHeadersDecoration(adapter)
+        val decoration = StickyRecyclerHeadersDecoration(scheduleAdapter)
         list.addItemDecoration(decoration)
-
-        list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
-            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                super.onScrolled(recyclerView, dx, dy)
-                val manager = list.layoutManager as? LinearLayoutManager
-                if (manager != null) {
-                    val first = manager.findFirstVisibleItemPosition()
-                    val last = manager.findLastVisibleItemPosition()
-
-//                    if (first == -1 || last == -1)
-//                        return
-
-
-
-
-
-
-
-                    adapter1.submitList(tempDays)
-                    bubbleDecoration.bubbleRange = adapter1.getRange(adapter.getDateOfPosition(first), adapter.getDateOfPosition(last))
-
-
-//                    day_selector.onScroll(adapter.getDateOfPosition(first), adapter.getDateOfPosition(last))
-                }
-            }
-        })
-
-//        day_selector.addOnDaySelectedListener(object : DaySelectorView.OnDaySelectedListener {
-//            override fun onDaySelected(day: Date) {
-//                scrollToDate(day)
-//            }
-//        })
 
 
         val factory = ScheduleViewModelFactory(type)
@@ -143,19 +137,18 @@ class ScheduleFragment : Fragment() {
             hideViews()
 
             if (it != null) {
-                adapter.state = it.status
+                scheduleAdapter.state = it.status
 
                 when (it.status) {
                     Status.SUCCESS -> {
-                        val list = adapter.setSchedule(it.data)
-                        val days = list.filterIsInstance<Day>()
+                        val list = scheduleAdapter.setSchedule(it.data)
 
-                        tempDays.clear()
-                        tempDays.addAll(days)
+                        
+                        days = list.filterIsInstance<Day>()
+                        rebuildDayIndicators()
 
-                        adapter1.submitList(days)
 
-                        if (adapter.isEmpty()) {
+                        if (scheduleAdapter.isEmpty()) {
                             showEmptyView()
                         }
 
@@ -165,7 +158,7 @@ class ScheduleFragment : Fragment() {
                         showErrorView(it.message)
                     }
                     Status.LOADING -> {
-                        adapter.clearAndNotify()
+                        scheduleAdapter.clearAndNotify()
                         showProgress()
                     }
                     Status.NOT_INITIALIZED -> {
@@ -187,6 +180,35 @@ class ScheduleFragment : Fragment() {
         close.setOnClickListener { hideFilters() }
 
         ViewCompat.setTranslationZ(filters, 10f)
+    }
+
+    fun onScheduleScrolled() {
+        val layoutManager = (list.layoutManager) as LinearLayoutManager
+        val first = layoutManager.findFirstVisibleItemPosition()
+        val last = layoutManager.findLastVisibleItemPosition()
+        if (first < 0 || last < 0) {
+            // When the list is empty, we get -1 for the positions.
+            return
+        }
+
+        val highlightRange = dayIndicatorAdapter.getRange(scheduleAdapter.getDateOfPosition(first), scheduleAdapter.getDateOfPosition(last))
+
+        if (highlightRange != cachedBubbleRange) {
+            cachedBubbleRange = highlightRange
+            rebuildDayIndicators()
+        }
+    }
+
+    private fun rebuildDayIndicators() {
+        // cachedBubbleRange will get set once we have scroll information, so wait until then.
+        val bubbleRange = cachedBubbleRange ?: return
+        val indicators = days.mapIndexed { index: Int, day: Day ->
+                DayIndicator(day = day, checked = index in bubbleRange)
+            }
+
+
+        dayIndicatorAdapter.submitList(indicators)
+        dayIndicatorItemDecoration.bubbleRange = bubbleRange
     }
 
 
@@ -227,7 +249,7 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun scrollToDate(date: Date) {
-        val index = adapter.getDatePosition(date)
+        val index = scheduleAdapter.getDatePosition(date)
         if (index != -1) {
             val scroller = object : LinearSmoothScroller(context) {
 
