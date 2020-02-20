@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.ui.settings
 
+import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,10 @@ class SettingsFragment : Fragment() {
             (context as MainActivity).openNavDrawer()
         }
 
+        // Disabling themes on old devices
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+            change_theme.visibility = View.GONE
+        }
 
         change_theme.setOnClickListener {
             showChangeThemeDialog()
