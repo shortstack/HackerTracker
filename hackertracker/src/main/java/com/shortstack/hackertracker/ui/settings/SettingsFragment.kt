@@ -48,7 +48,9 @@ class SettingsFragment : Fragment() {
         }
 
         database.conference.observe(this, Observer {
-            force_time_zone.text = getString(R.string.setting_time_zone, it.timezone)
+            if (it != null) {
+                force_time_zone.text = getString(R.string.setting_time_zone, it.timezone)
+            }
         })
 
         version.text = getString(R.string.version, BuildConfig.VERSION_NAME)
