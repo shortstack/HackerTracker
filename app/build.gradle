@@ -8,7 +8,6 @@ apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 28
-    useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.shortstack.hackertracker"
         minSdkVersion 16
