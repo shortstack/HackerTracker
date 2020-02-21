@@ -5,12 +5,12 @@ import android.text.format.DateFormat
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import com.shortstack.hackertracker.*
+import com.shortstack.hackertracker.utilities.TimeUtil
 import io.mockk.every
 import io.mockk.mockkStatic
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
-
 
 class TimeUtilTest {
 

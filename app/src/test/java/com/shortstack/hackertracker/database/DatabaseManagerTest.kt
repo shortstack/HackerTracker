@@ -19,7 +19,7 @@ class DatabaseManagerTest {
     fun `get newest conference` (){
         setCurrentClock("2019-01-02T11:00:00.000-0000")
 
-        val result = DatabaseManager.getNextConference(conferences)
+        val result = DatabaseManager.getNextConference(-1, conferences)
 
         assertEquals("123", result?.code)
     }
@@ -28,7 +28,7 @@ class DatabaseManagerTest {
     fun `get newest conference when all finished` (){
         setCurrentClock("2019-06-01T11:00:00.000-0000")
 
-        val result = DatabaseManager.getNextConference(conferences)
+        val result = DatabaseManager.getNextConference(-1, conferences)
 
         assertEquals("456", result?.code)
     }
