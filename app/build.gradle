@@ -5,7 +5,6 @@ apply plugin: 'kotlin-kapt'
 apply plugin: 'maven'
 apply plugin: 'io.fabric'
 apply plugin: 'kotlin-kapt'
-apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 28
@@ -16,50 +15,25 @@ android {
         targetSdkVersion 28
         versionCode 191
         versionName "6.2.0"
-
         vectorDrawables.useSupportLibrary = true
-
         multiDexEnabled true
     }
     buildTypes {
-        debug {
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-//            minifyEnabled true
-        }
-
         release {
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-            minifyEnabled true
-            useProguard true
         }
     }
-    flavorDimensions "versionCode"
-    productFlavors {
-        defaultFlavor {
-            dimension "versionCode"
-        }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
-    packagingOptions {
-        exclude 'META-INF/LICENSE.txt'
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
-    sourceSets {
-        main.java.srcDirs += 'src/main/kotlin'
-    }
-    kapt {
-        generateStubs = true
-    }
-}
-
-androidExtensions {
-    experimental = true
-}
-
-configurations {
-    // compile.exclude group: "org.apache.httpcomponents", module: "httpclient"
 }
 
 dependencies {
-
     implementation fileTree(include: ['*.jar'], dir: 'libs')
 
     // Kotlin
@@ -97,11 +71,6 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.10.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:3.9.0'
 
-    // Crash
-    implementation('com.crashlytics.sdk.android:crashlytics:2.6.5@aar') {
-        transitive = true
-    }
-
     // Pretty Logger
     implementation 'com.orhanobut:logger:1.15'
     // PDF Viewer
@@ -121,7 +90,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:17.0.0'
     implementation 'com.google.firebase:firebase-messaging:18.0.0'
     implementation 'com.google.firebase:firebase-config:17.0.0'
-
+    implementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
 
 
 
@@ -134,9 +103,4 @@ dependencies {
     testImplementation 'org.koin:koin-test:2.0.0-beta-4'
 }
 
-repositories {
-    mavenCentral()
-    maven { url "https://jitpack.io" }
-    maven { url 'https://maven.fabric.io/public' }
-    maven { url 'https://maven.google.com' }
-}
+apply plugin: 'com.google.gms.google-services'
