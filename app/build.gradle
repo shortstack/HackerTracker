@@ -73,7 +73,7 @@ dependencies {
     // Pretty Logger
     implementation 'com.orhanobut:logger:1.15'
     // PDF Viewer
-    implementation 'com.joanzapata.pdfview:android-pdfview:1.0.4@aar'
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
     // Reviews
     implementation 'com.github.stkent:amplify:2.2.0'
     // Firebase Job Dispatcher
