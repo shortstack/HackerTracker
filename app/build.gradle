@@ -125,7 +125,7 @@ dependencies {
 
 
 
-    implementation 'com.android.support:multidex:1.0.3'
+    implementation 'androidx.multidex:multidex:2.0.1'
 
     testImplementation "junit:junit:4.12"
     testImplementation "io.mockk:mockk:1.9.3.kotlin12"

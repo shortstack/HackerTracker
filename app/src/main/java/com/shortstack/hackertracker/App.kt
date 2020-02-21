@@ -16,7 +16,6 @@ import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.android.startKoin
 
-
 class App : MultiDexApplication() {
 
     companion object {
