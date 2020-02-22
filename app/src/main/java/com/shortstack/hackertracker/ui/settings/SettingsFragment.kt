@@ -40,7 +40,7 @@ class SettingsFragment : Fragment() {
         }
 
         // Disabling themes on old devices
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             change_theme.visibility = View.GONE
         }
 
