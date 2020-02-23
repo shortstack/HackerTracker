@@ -1,11 +1,13 @@
 package com.shortstack.hackertracker.di
 
+import androidx.work.WorkManager
 import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.firebase.jobdispatcher.GooglePlayDriver
 import com.google.gson.FieldNamingPolicy
 import com.google.gson.GsonBuilder
 import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.database.ReminderManager
 import com.shortstack.hackertracker.ui.themes.ThemesManager
 import com.shortstack.hackertracker.utilities.NotificationHelper
 import com.shortstack.hackertracker.utilities.Storage
@@ -21,5 +23,7 @@ val appModule = module {
     single { ThemesManager() }
 
     single { Analytics(get()) }
+    single { WorkManager.getInstance()!! }
+    single { ReminderManager(get(), get()) }
 
 }

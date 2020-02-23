@@ -23,10 +23,6 @@ import org.koin.standalone.inject
 
 class NotificationHelper(private val context: Context) : KoinComponent {
 
-    private val dispatcher: FirebaseJobDispatcher by inject()
-
-    private val database: DatabaseManager by inject()
-
     private val manager = NotificationManagerCompat.from(context)
 
     init {

@@ -17,6 +17,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.database.ReminderManager
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.activities.MainActivity
@@ -33,19 +34,20 @@ class EventFragment : Fragment() {
 
         const val EXTRA_EVENT = "EXTRA_EVENT"
 
-        fun newInstance(event: Event): EventFragment {
+        fun newInstance(event: Int): EventFragment {
             val fragment = EventFragment()
 
             val bundle = Bundle()
-            bundle.putParcelable(EXTRA_EVENT, event)
+            bundle.putInt(EXTRA_EVENT, event)
             fragment.arguments = bundle
 
             return fragment
         }
     }
 
-    private val database: DatabaseManager by inject()
     private val analytics: Analytics by inject()
+    private val database: DatabaseManager by inject()
+    private val reminder: ReminderManager by inject()
 
     private val viewModel: HackerTrackerViewModel by lazy { ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java] }
 
@@ -61,10 +63,10 @@ class EventFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val event = arguments?.getParcelable(EXTRA_EVENT) as? Event
+        val id = arguments?.getInt(EXTRA_EVENT)
 
         viewModel.events.observe(this, Observer {
-            val target = it.data?.find { it.id == event?.id }
+            val target = it.data?.find { it.id == id }
             if (target != null) {
                 showEvent(target)
             }
@@ -163,6 +165,12 @@ class EventFragment : Fragment() {
         event.isBookmarked = !event.isBookmarked
 
         database.updateBookmark(event)
+        if(event.isBookmarked) {
+            reminder.setReminder(event)
+        } else {
+            reminder.cancel(event)
+        }
+
         val action = if (event.isBookmarked) Analytics.EVENT_BOOKMARK else Analytics.EVENT_UNBOOKMARK
         analytics.onEventAction(action, event)
 

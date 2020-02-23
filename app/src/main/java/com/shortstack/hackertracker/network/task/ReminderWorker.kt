@@ -4,35 +4,31 @@ import androidx.work.Worker
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.utilities.NotificationHelper
 import io.reactivex.disposables.Disposable
+import kotlinx.coroutines.runBlocking
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
 class ReminderWorker : Worker(), KoinComponent {
 
-    private val notifications: NotificationHelper by inject()
-
     private val database: DatabaseManager by inject()
-
-    private var disposable: Disposable? = null
+    private val notifications: NotificationHelper by inject()
 
     override fun doWork(): Result {
         val conference = inputData.getString(INPUT_CONFERENCE, null)
         val id = inputData.getInt(INPUT_ID, -1)
 
-        if(conference == null || id == -1) {
+        if (conference == null || id == -1) {
             return Result.FAILURE
         }
 
-        disposable = database.getEventById(conference, id)
-                .subscribe { event ->
-                    notifications.notifyStartingSoon(event)
-                }
+        runBlocking {
+            val event = database.getEventById(conference, id)
+            if (event != null) {
+                notifications.notifyStartingSoon(event)
+            }
+        }
 
         return Result.SUCCESS
-    }
-
-    override fun onStopped(cancelled: Boolean) {
-        disposable?.dispose()
     }
 
     companion object {

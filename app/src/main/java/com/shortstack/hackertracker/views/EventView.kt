@@ -10,6 +10,7 @@ import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.database.ReminderManager
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utilities.Analytics
@@ -24,8 +25,9 @@ class EventView : FrameLayout, KoinComponent {
         const val DISPLAY_MODE_FULL = 1
     }
 
-    private val database: DatabaseManager by inject()
     private val analytics: Analytics by inject()
+    private val database: DatabaseManager by inject()
+    private val reminder: ReminderManager by inject()
 
     var displayMode: Int = DISPLAY_MODE_MIN
 
@@ -130,6 +132,12 @@ class EventView : FrameLayout, KoinComponent {
     private fun onBookmarkClick(event: Event) {
         event.isBookmarked = !event.isBookmarked
         database.updateBookmark(event)
+
+        if(event.isBookmarked) {
+            reminder.setReminder(event)
+        } else {
+            reminder.cancel(event)
+        }
 
         val action = if (event.isBookmarked) Analytics.EVENT_BOOKMARK else Analytics.EVENT_UNBOOKMARK
         analytics.onEventAction(action, event)

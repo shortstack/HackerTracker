@@ -23,6 +23,7 @@ import com.shortstack.hackertracker.utilities.MyClock
 import com.shortstack.hackertracker.utilities.Storage
 import com.shortstack.hackertracker.utilities.now
 import io.reactivex.Single
+import kotlinx.coroutines.tasks.await
 import java.io.File
 import java.util.concurrent.TimeUnit
 
