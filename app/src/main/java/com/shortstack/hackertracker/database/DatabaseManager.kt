@@ -372,16 +372,18 @@ class DatabaseManager(private val preferences: Storage) {
         return mutableLiveData
     }
 
-    fun getEventById(id: Int): Single<Event> {
+    fun getEventById(conference: String, id: Int): Single<Event> {
         return Single.create { emitter ->
             firestore.collection(CONFERENCES)
-                    .document(id.toString())
-                    .get()
-                    .addOnSuccessListener {
-                        val event = it.toObject(FirebaseEvent::class.java)
-                                ?: return@addOnSuccessListener
-                        emitter.onSuccess(event.toEvent())
-                    }
+                .document(conference)
+                .collection(EVENTS)
+                .document(id.toString())
+                .get()
+                .addOnSuccessListener {
+                    val event = it.toObject(FirebaseEvent::class.java)
+                        ?: return@addOnSuccessListener
+                    emitter.onSuccess(event.toEvent())
+                }
         }
     }
 
@@ -392,11 +394,16 @@ class DatabaseManager(private val preferences: Storage) {
             val delay = event.start.time - MyClock().now().time - (1000 * 20 * 60)
 
             if (delay > 0) {
+                val data = mapOf(
+                    ReminderWorker.INPUT_ID to event.id,
+                    ReminderWorker.INPUT_CONFERENCE to event.conference
+                ).toWorkData()
+
                 val notify = OneTimeWorkRequestBuilder<ReminderWorker>()
-                        .setInputData(mapOf(ReminderWorker.NOTIFICATION_ID to event.id).toWorkData())
-                        .setInitialDelay(delay, TimeUnit.MILLISECONDS)
-                        .addTag(tag)
-                        .build()
+                    .setInputData(data)
+                    .setInitialDelay(delay, TimeUnit.MILLISECONDS)
+                    .addTag(tag)
+                    .build()
 
                 WorkManager.getInstance()?.enqueue(notify)
             }

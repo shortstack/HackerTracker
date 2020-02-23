@@ -1,7 +1,6 @@
 package com.shortstack.hackertracker.network.task
 
 import androidx.work.Worker
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.utilities.NotificationHelper
 import io.reactivex.disposables.Disposable
@@ -17,9 +16,14 @@ class ReminderWorker : Worker(), KoinComponent {
     private var disposable: Disposable? = null
 
     override fun doWork(): Result {
-        val id = inputData.getInt(NOTIFICATION_ID, -1)
+        val conference = inputData.getString(INPUT_CONFERENCE, null)
+        val id = inputData.getInt(INPUT_ID, -1)
 
-        disposable = database.getEventById(id)
+        if(conference == null || id == -1) {
+            return Result.FAILURE
+        }
+
+        disposable = database.getEventById(conference, id)
                 .subscribe { event ->
                     notifications.notifyStartingSoon(event)
                 }
@@ -32,7 +36,7 @@ class ReminderWorker : Worker(), KoinComponent {
     }
 
     companion object {
-        const val NOTIFICATION_ID = "NOTIFICATION_ID"
-        const val TAG = "TAG_REMINDER_"
+        const val INPUT_CONFERENCE = "INPUT_CONFERENCE"
+        const val INPUT_ID = "INPUT_ID"
     }
 }
