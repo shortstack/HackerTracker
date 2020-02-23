@@ -2,6 +2,7 @@ package com.shortstack.hackertracker.ui.activities
 
 
 import android.content.Context
+import android.content.Intent
 import android.content.res.Resources
 import android.os.Build
 import android.os.Bundle
@@ -83,6 +84,15 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
 
         supportFragmentManager.addOnBackStackChangedListener(this)
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
+        val target = intent?.getIntExtra("target", -1)
+        if (target != null && target != -1) {
+            navigate(target)
+        }
     }
 
     override fun onResume() {
@@ -209,7 +219,11 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
     }
 
     fun navigate(event: Event) {
-        replaceFragment(EventFragment.newInstance(event), R.id.container_above, hasAnimation = true)
+        navigate(event.id)
+    }
+
+    fun navigate(id: Int) {
+        replaceFragment(EventFragment.newInstance(id), R.id.container_above, hasAnimation = true)
     }
 
     fun navigate(speaker: Speaker?) {
