@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.shortstack.hackertracker.R
 import kotlinx.android.synthetic.main.view_empty.view.*
 
-class EmptyView(context: Context?, attrs: AttributeSet?) : FrameLayout(context, attrs) {
+class EmptyView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
     init {
         View.inflate(context, R.layout.view_empty, this)

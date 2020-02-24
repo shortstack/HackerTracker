@@ -2,7 +2,7 @@ package com.shortstack.hackertracker.database
 
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import androidx.work.toWorkData
+import androidx.work.workDataOf
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.network.task.ReminderWorker
 import com.shortstack.hackertracker.utilities.MyClock
@@ -33,10 +33,10 @@ class ReminderManager(
             return
         }
 
-        val data = mapOf(
+        val data = workDataOf(
             ReminderWorker.INPUT_ID to event.id,
             ReminderWorker.INPUT_CONFERENCE to event.conference
-        ).toWorkData()
+        )
 
         val notify = OneTimeWorkRequestBuilder<ReminderWorker>()
             .setInputData(data)

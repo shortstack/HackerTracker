@@ -21,7 +21,7 @@
         <item name="footer_label" />
         <item name="menu_tint">@color/black</item>
         <item name="filter_background">@color/white</item>
-        <item name="category_tint"/>
+        <item name="category_tint">@null</item>
 
 
         <item name="windowActionBar">false</item>

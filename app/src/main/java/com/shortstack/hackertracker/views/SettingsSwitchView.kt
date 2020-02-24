@@ -32,7 +32,7 @@ class SettingsSwitchView(context: Context?, attrs: AttributeSet?) : LinearLayout
 
                 val text = getString(R.styleable.SettingsSwitchView_switchText)
                 val defaultValue = getBoolean(R.styleable.SettingsSwitchView_switchDefaultValue, true)
-                val key = getString(R.styleable.SettingsSwitchView_switchKey)
+                val key = getString(R.styleable.SettingsSwitchView_switchKey) ?: ""
 
                 label.text = text
                 control.tag = key
@@ -55,9 +55,9 @@ class SettingsSwitchView(context: Context?, attrs: AttributeSet?) : LinearLayout
     }
 
 
-    override fun setOnClickListener(listener: OnClickListener) {
+    override fun setOnClickListener(listener: OnClickListener?) {
         control_overlay.setOnClickListener {
-            listener.onClick(it)
+            listener?.onClick(it)
             onClick()
         }
     }

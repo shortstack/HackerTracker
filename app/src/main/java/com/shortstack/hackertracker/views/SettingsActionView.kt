@@ -23,10 +23,9 @@ class SettingsActionView(context: Context?, attrs: AttributeSet?) : LinearLayout
         }
     }
 
-
-    override fun setOnClickListener(listener: OnClickListener) {
+    override fun setOnClickListener(listener: OnClickListener?) {
         control_overlay.setOnClickListener {
-            listener.onClick(it)
+            listener?.onClick(it)
         }
     }
 }

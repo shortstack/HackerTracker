@@ -1,6 +1,8 @@
 package com.shortstack.hackertracker.network.task
 
+import android.content.Context
 import androidx.work.Worker
+import androidx.work.WorkerParameters
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.utilities.NotificationHelper
 import io.reactivex.disposables.Disposable
@@ -8,17 +10,17 @@ import kotlinx.coroutines.runBlocking
 import org.koin.standalone.KoinComponent
 import org.koin.standalone.inject
 
-class ReminderWorker : Worker(), KoinComponent {
+class ReminderWorker(context: Context, params: WorkerParameters) : Worker(context, params), KoinComponent {
 
     private val database: DatabaseManager by inject()
     private val notifications: NotificationHelper by inject()
 
     override fun doWork(): Result {
-        val conference = inputData.getString(INPUT_CONFERENCE, null)
+        val conference = inputData.getString(INPUT_CONFERENCE)
         val id = inputData.getInt(INPUT_ID, -1)
 
         if (conference == null || id == -1) {
-            return Result.FAILURE
+            return Result.failure()
         }
 
         runBlocking {
@@ -28,7 +30,7 @@ class ReminderWorker : Worker(), KoinComponent {
             }
         }
 
-        return Result.SUCCESS
+        return Result.success()
     }
 
     companion object {
