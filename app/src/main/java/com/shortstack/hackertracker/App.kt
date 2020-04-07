@@ -47,7 +47,7 @@ class App : MultiDexApplication() {
                 .setPositiveFeedbackCollectors(GooglePlayStoreFeedbackCollector())
                 .setCriticalFeedbackCollectors(DefaultEmailFeedbackCollector(Constants.FEEDBACK_EMAIL))
                 .applyAllDefaultRules()
-                .setLastUpdateTimeCooldownDays(1)
+                .setLastUpdateTimeCooldownDays(4)
     }
 
     private fun initLogger() {
