@@ -15,8 +15,8 @@ import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utilities.Analytics
 import kotlinx.android.synthetic.main.row_event.view.*
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 class EventView : FrameLayout, KoinComponent {
 
@@ -31,7 +31,11 @@ class EventView : FrameLayout, KoinComponent {
 
     var displayMode: Int = DISPLAY_MODE_MIN
 
-    constructor(context: Context, attrs: AttributeSet? = null, display: Int = DISPLAY_MODE_MIN) : super(context, attrs) {
+    constructor(
+        context: Context,
+        attrs: AttributeSet? = null,
+        display: Int = DISPLAY_MODE_MIN
+    ) : super(context, attrs) {
         displayMode = display
         init()
     }
@@ -133,13 +137,14 @@ class EventView : FrameLayout, KoinComponent {
         event.isBookmarked = !event.isBookmarked
         database.updateBookmark(event)
 
-        if(event.isBookmarked) {
+        if (event.isBookmarked) {
             reminder.setReminder(event)
         } else {
             reminder.cancel(event)
         }
 
-        val action = if (event.isBookmarked) Analytics.EVENT_BOOKMARK else Analytics.EVENT_UNBOOKMARK
+        val action =
+            if (event.isBookmarked) Analytics.EVENT_BOOKMARK else Analytics.EVENT_UNBOOKMARK
         analytics.onEventAction(action, event)
 
         updateBookmark(event)

@@ -10,8 +10,8 @@ import com.shortstack.hackertracker.models.firebase.FirebaseConferenceMap
 import com.shortstack.hackertracker.models.local.*
 import com.shortstack.hackertracker.ui.themes.ThemesManager
 import com.shortstack.hackertracker.utilities.Storage
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 class HackerTrackerViewModel : ViewModel(), KoinComponent {
 
@@ -287,7 +287,13 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
         return bookmark && filter.find { it.id == event.type.id }?.isSelected == true
     }
 
-    private fun setValue(results: MediatorLiveData<List<Any>>, query: String, events: List<Event>, locations: List<Location>, speakers: List<Speaker>) {
+    private fun setValue(
+        results: MediatorLiveData<List<Any>>,
+        query: String,
+        events: List<Event>,
+        locations: List<Location>,
+        speakers: List<Speaker>
+    ) {
         if (query.isBlank()) {
             results.value = emptyList()
             return
@@ -295,7 +301,12 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
 
         val list = ArrayList<Any>()
 
-        val speakers = speakers.filter { it.name.contains(query, true) || it.description.contains(query, true) }
+        val speakers = speakers.filter {
+            it.name.contains(query, true) || it.description.contains(
+                query,
+                true
+            )
+        }
         if (speakers.isNotEmpty()) {
             list.add("Speakers")
             list.addAll(speakers)
@@ -308,7 +319,8 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
             list.addAll(events.filter { it.location.name == location.name }.sortedBy { it.start })
         }
 
-        val events = events.filter { it.title.contains(query, true) || it.description.contains(query, true) }
+        val events =
+            events.filter { it.title.contains(query, true) || it.description.contains(query, true) }
         if (events.isNotEmpty()) {
             list.add("Events")
             list.addAll(events)

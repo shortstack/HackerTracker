@@ -13,13 +13,10 @@ import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
-import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
 
 class NotificationHelper(private val context: Context) : KoinComponent {
 
@@ -27,14 +24,19 @@ class NotificationHelper(private val context: Context) : KoinComponent {
 
     init {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val manager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            val manager =
+                context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-            val channel = NotificationChannel(CHANNEL_UPDATES, "Schedule Updates", NotificationManager.IMPORTANCE_DEFAULT)
-                    .apply {
-                        description = "Notifications about changes within the events"
-                        enableLights(true)
-                        lightColor = Color.MAGENTA
-                    }
+            val channel = NotificationChannel(
+                CHANNEL_UPDATES,
+                "Schedule Updates",
+                NotificationManager.IMPORTANCE_DEFAULT
+            )
+                .apply {
+                    description = "Notifications about changes within the events"
+                    enableLights(true)
+                    lightColor = Color.MAGENTA
+                }
 
             manager.createNotificationChannel(channel)
         }
@@ -44,7 +46,12 @@ class NotificationHelper(private val context: Context) : KoinComponent {
         val builder = notificationBuilder
 
         builder.setContentTitle(item.title)
-        builder.setContentText(String.format(context.getString(R.string.notification_text), item.location.name))
+        builder.setContentText(
+            String.format(
+                context.getString(R.string.notification_text),
+                item.location.name
+            )
+        )
 
         setItemPendingIntent(builder, item)
 
@@ -91,7 +98,8 @@ class NotificationHelper(private val context: Context) : KoinComponent {
             intent.putExtras(bundle)
         }
 
-        val pendingIntent = PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        val pendingIntent =
+            PendingIntent.getActivity(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
 
         builder.setContentIntent(pendingIntent)
     }

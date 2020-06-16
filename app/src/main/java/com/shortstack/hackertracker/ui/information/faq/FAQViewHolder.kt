@@ -10,12 +10,11 @@ import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
 import com.crashlytics.android.answers.CustomEvent
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.utilities.Analytics
-import com.shortstack.hackertracker.models.firebase.FirebaseFAQ
 import com.shortstack.hackertracker.models.local.FAQ
+import com.shortstack.hackertracker.utilities.Analytics
 import kotlinx.android.synthetic.main.row_faq.view.*
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 class FAQViewHolder(val view: View) : RecyclerView.ViewHolder(view), KoinComponent {
 

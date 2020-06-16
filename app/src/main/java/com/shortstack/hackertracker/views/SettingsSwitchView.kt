@@ -7,10 +7,11 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.utilities.Storage
 import kotlinx.android.synthetic.main.view_settings_switch.view.*
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class SettingsSwitchView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs), KoinComponent {
+class SettingsSwitchView(context: Context?, attrs: AttributeSet?) : LinearLayout(context, attrs),
+    KoinComponent {
 
     private val storage: Storage by inject()
     private val analytics: Analytics by inject()
@@ -25,13 +26,15 @@ class SettingsSwitchView(context: Context?, attrs: AttributeSet?) : LinearLayout
         inflate(context, R.layout.view_settings_switch, this)
 
         context?.theme?.obtainStyledAttributes(
-                attrs,
-                R.styleable.SettingsSwitchView,
-                0, 0)?.apply {
+            attrs,
+            R.styleable.SettingsSwitchView,
+            0, 0
+        )?.apply {
             try {
 
                 val text = getString(R.styleable.SettingsSwitchView_switchText)
-                val defaultValue = getBoolean(R.styleable.SettingsSwitchView_switchDefaultValue, true)
+                val defaultValue =
+                    getBoolean(R.styleable.SettingsSwitchView_switchDefaultValue, true)
                 val key = getString(R.styleable.SettingsSwitchView_switchKey) ?: ""
 
                 label.text = text

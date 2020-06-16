@@ -5,12 +5,12 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.utilities.NotificationHelper
-import io.reactivex.disposables.Disposable
 import kotlinx.coroutines.runBlocking
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
-class ReminderWorker(context: Context, params: WorkerParameters) : Worker(context, params), KoinComponent {
+class ReminderWorker(context: Context, params: WorkerParameters) : Worker(context, params),
+    KoinComponent {
 
     private val database: DatabaseManager by inject()
     private val notifications: NotificationHelper by inject()

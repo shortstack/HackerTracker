@@ -10,7 +10,6 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import kotlinx.android.synthetic.main.fragment_info.*
 import org.koin.android.ext.android.inject
-import org.koin.standalone.inject
 
 class InfoFragment : Fragment() {
 

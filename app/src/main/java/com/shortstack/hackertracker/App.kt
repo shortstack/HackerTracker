@@ -14,7 +14,8 @@ import com.shortstack.hackertracker.di.appModule
 import com.shortstack.hackertracker.utilities.Storage
 import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.inject
-import org.koin.android.ext.android.startKoin
+import org.koin.android.ext.koin.androidContext
+import org.koin.core.context.startKoin
 
 class App : MultiDexApplication() {
 
@@ -34,7 +35,10 @@ class App : MultiDexApplication() {
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
         
-        startKoin(this, listOf(appModule))
+        startKoin{
+            androidContext(this@App)
+            modules(appModule)
+        }
 
         initFabric()
         initLogger()

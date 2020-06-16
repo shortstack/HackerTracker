@@ -9,18 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Type
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.item_type.view.*
-import org.koin.standalone.KoinComponent
-import org.koin.standalone.inject
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 
 class TypeViewHolder(val view: View) : RecyclerView.ViewHolder(view), KoinComponent {
 
     companion object {
         fun inflate(parent: ViewGroup): TypeViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_type, parent, false)
+            val view =
+                LayoutInflater.from(parent.context).inflate(R.layout.item_type, parent, false)
             return TypeViewHolder(view)
         }
     }
@@ -44,12 +44,11 @@ class TypeViewHolder(val view: View) : RecyclerView.ViewHolder(view), KoinCompon
 
                 chip.isCloseIconEnabled = isChecked
 
-                Single.fromCallable {
+                // todo: put this on the right scope
+                GlobalScope.launch {
                     type.isSelected = isChecked
                     database.updateTypeIsSelected(type)
-                }.subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe({}, {})
+                }
             }
         }
     }

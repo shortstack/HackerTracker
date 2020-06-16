@@ -9,9 +9,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.local.Type
 import kotlinx.android.synthetic.main.view_filter.view.*
-import org.koin.standalone.KoinComponent
 
-class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs), KoinComponent {
+class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
     companion object {
         private const val SPAN_COUNT = 2
@@ -37,16 +36,17 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
 
             val adapter = FilterAdapter(collection)
 
-            list.layoutManager = GridLayoutManager(context, SPAN_COUNT, RecyclerView.VERTICAL, false).apply {
-                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                    override fun getSpanSize(position: Int): Int {
-                        return when (adapter.getItemViewType(position)) {
-                            FilterAdapter.TYPE_HEADER -> SPAN_COUNT
-                            else -> 1
+            list.layoutManager =
+                GridLayoutManager(context, SPAN_COUNT, RecyclerView.VERTICAL, false).apply {
+                    spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                        override fun getSpanSize(position: Int): Int {
+                            return when (adapter.getItemViewType(position)) {
+                                FilterAdapter.TYPE_HEADER -> SPAN_COUNT
+                                else -> 1
+                            }
                         }
                     }
                 }
-            }
             list.adapter = adapter
 
         }
