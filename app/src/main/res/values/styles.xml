@@ -45,10 +45,6 @@
     </style>
 
     <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
-        <item name="colorPrimary">@color/purple_dark</item>
-        <item name="colorPrimaryDark">@color/purple_dark</item>
-        <item name="colorAccent">@color/purple_dark</item>
-        <item name="android:colorBackground">@color/dark_background</item>
 
         <item name="dark_mode">dark</item>
         <item name="footer_icon">@drawable/skull</item>
@@ -56,6 +52,19 @@
         <item name="footer_label" />
         <item name="menu_tint">@color/white</item>
         <item name="filter_background">@color/dark_background</item>
+
+        <item name="colorPrimary">@color/purple_dark</item>
+        <item name="colorPrimaryVariant">@color/dark_background</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">@color/purple_dark</item>
+        <item name="colorSecondaryVariant">@color/purple_dark</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorError">#F44336</item>
+        <item name="colorOnError">#FFFFFF</item>
+        <item name="colorSurface">@color/dark_background</item>
+        <item name="colorOnSurface">#212121</item>
+        <item name="android:colorBackground">@color/background</item>
+        <item name="colorOnBackground">#212121</item>
 
 
         <item name="windowActionBar">false</item>
