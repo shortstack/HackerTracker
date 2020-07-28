@@ -2,17 +2,14 @@ package com.shortstack.hackertracker
 
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDexApplication
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.answers.Answers
-import com.crashlytics.android.core.CrashlyticsCore
 import com.github.stkent.amplify.feedback.DefaultEmailFeedbackCollector
 import com.github.stkent.amplify.feedback.GooglePlayStoreFeedbackCollector
 import com.github.stkent.amplify.tracking.Amplify
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.di.appModule
 import com.shortstack.hackertracker.utilities.Storage
-import io.fabric.sdk.android.Fabric
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -34,13 +31,14 @@ class App : MultiDexApplication() {
         instance = this
 
         AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
-        
-        startKoin{
+
+        startKoin {
             androidContext(this@App)
             modules(appModule)
         }
 
-        initFabric()
+        FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(!BuildConfig.DEBUG)
+
         initLogger()
         initFeedback()
 
@@ -48,18 +46,13 @@ class App : MultiDexApplication() {
 
     private fun initFeedback() {
         Amplify.initSharedInstance(this)
-                .setPositiveFeedbackCollectors(GooglePlayStoreFeedbackCollector())
-                .setCriticalFeedbackCollectors(DefaultEmailFeedbackCollector(Constants.FEEDBACK_EMAIL))
-                .applyAllDefaultRules()
-                .setLastUpdateTimeCooldownDays(4)
+            .setPositiveFeedbackCollectors(GooglePlayStoreFeedbackCollector())
+            .setCriticalFeedbackCollectors(DefaultEmailFeedbackCollector(Constants.FEEDBACK_EMAIL))
+            .applyAllDefaultRules()
+            .setLastUpdateTimeCooldownDays(4)
     }
 
     private fun initLogger() {
         Logger.init().methodCount(1).hideThreadInfo()
-    }
-
-    private fun initFabric() {
-        val crashlytics = Crashlytics.Builder().core(CrashlyticsCore.Builder().disabled(BuildConfig.DEBUG).build()).build()
-        Fabric.with(this, crashlytics, Answers())
     }
 }

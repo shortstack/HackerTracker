@@ -9,7 +9,6 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.crashlytics.android.answers.CustomEvent
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.firebase.FirebaseConferenceMap
 import com.shortstack.hackertracker.models.local.Location
@@ -89,7 +88,7 @@ class MapsFragment : Fragment() {
 
         })
 
-        analytics.logCustom(CustomEvent(Analytics.MAP_VIEW))
+        analytics.logCustom(Analytics.CustomEvent(Analytics.MAP_VIEW))
     }
 
     private fun showSelectedMap(it: List<FirebaseConferenceMap>) {

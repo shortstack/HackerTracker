@@ -24,7 +24,7 @@ val appModule = module {
     single { DatabaseManager(get()) }
     single { ThemesManager() }
 
-    single { Analytics(get()) }
+    single { Analytics(get(), get()) }
     single { WorkManager.getInstance()!! }
     single { ReminderManager(get(), get()) }
 

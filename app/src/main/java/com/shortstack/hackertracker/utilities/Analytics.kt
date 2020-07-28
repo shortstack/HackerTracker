@@ -1,12 +1,13 @@
 package com.shortstack.hackertracker.utilities
 
-import com.crashlytics.android.Crashlytics
-import com.crashlytics.android.answers.Answers
-import com.crashlytics.android.answers.CustomEvent
+
+import android.content.Context
+import android.os.Bundle
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Speaker
 
-class Analytics(private val storage: Storage) {
+class Analytics(context: Context, private val storage: Storage) {
 
     companion object {
         const val EVENT_VIEW = "Event - View"
@@ -26,6 +27,8 @@ class Analytics(private val storage: Storage) {
         const val SETTINGS_NOTIFICATIONS = "Settings - Notifications"
         const val SETTINGS_EXPIRED_EVENTS = "Settings - Expired Events"
     }
+
+    private val analytics: FirebaseAnalytics = FirebaseAnalytics.getInstance(context)
 
     fun onEventAction(action: String, event: Event) {
         val event = CustomEvent(action).apply {
@@ -57,11 +60,20 @@ class Analytics(private val storage: Storage) {
             return
         }
 
-        Answers.getInstance().logCustom(event)
+        analytics.logEvent(event.event, event.extras)
     }
 
     fun log(message: String) {
-        Crashlytics.getInstance().core.log(message)
+        //Crashlytics.getInstance().core.log(message)
+    }
+
+
+    @Deprecated("Replace with Firebase default solution.")
+    class CustomEvent(val event: String, val extras: Bundle = Bundle()) {
+
+        fun putCustomAttribute(key: String, value: String) {
+            extras.putString(key, value)
+        }
     }
 
 }

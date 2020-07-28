@@ -8,7 +8,6 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
-import com.crashlytics.android.answers.CustomEvent
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.local.FAQ
 import com.shortstack.hackertracker.utilities.Analytics
@@ -46,7 +45,7 @@ class FAQViewHolder(val view: View) : RecyclerView.ViewHolder(view), KoinCompone
         faq.isExpanded = !faq.isExpanded
 
         if (!isExpanded) {
-            val event = CustomEvent(Analytics.FAQ_VIEW).also {
+            val event = Analytics.CustomEvent(Analytics.FAQ_VIEW).also {
                 it.putCustomAttribute("Question", faq.question)
             }
             analytics.logCustom(event)
