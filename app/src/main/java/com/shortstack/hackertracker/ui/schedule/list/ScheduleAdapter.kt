@@ -3,6 +3,7 @@ package com.shortstack.hackertracker.ui.schedule.list
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.advice.timehop.StickyRecyclerHeadersAdapter
 import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.Time
@@ -11,11 +12,11 @@ import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.schedule.TimeViewHolder
 import com.shortstack.hackertracker.views.EventView
-import com.timehop.stickyheadersrecyclerview.StickyRecyclerHeadersAdapter
 import java.util.*
 import kotlin.collections.ArrayList
 
-class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(), StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
+class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
+    StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
 
     companion object {
         private const val EVENT = 0

@@ -76,6 +76,8 @@ dependencies {
     // Firebase Job Dispatcher
     implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
 
+    implementation 'com.github.Advice-Dog:timehop:master-SNAPSHOT'
+
 
     implementation "com.hendraanggrian.material:collapsingtoolbarlayout-subtitle:1.0.0-beta01"
 
