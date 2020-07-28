@@ -29,7 +29,8 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
 
     override fun getHeaderId(position: Int): Long {
         return when (val obj = collection[position]) {
-            is Day -> obj.time
+            // (time - 1) to make it different than the first Event if they both start at 12:00:00
+            is Day -> obj.time - 1
             is Event -> obj.key
             else -> throw java.lang.IllegalStateException("Unhandled object type ${obj.javaClass}")
         }
