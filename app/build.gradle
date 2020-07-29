@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.shortstack.hackertracker"
-        minSdkVersion 19
+        minSdkVersion 21
         targetSdkVersion 30
         versionCode 1
         versionName "6.3.0"
@@ -25,9 +25,6 @@ android {
             useProguard true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
-        debug {
-            multiDexEnabled true
-        }
     }
 }
 
@@ -37,7 +34,6 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation 'androidx.core:core-ktx:1.3.1'
     implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation 'com.google.android.material:material:1.3.0-alpha02'
     implementation 'androidx.recyclerview:recyclerview:1.2.0-alpha05'

@@ -154,8 +154,6 @@ class ScheduleFragment : Fragment() {
 
         filter.setOnClickListener { expandFilters() }
         close.setOnClickListener { hideFilters() }
-
-        ViewCompat.setTranslationZ(filters, 10f)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -227,7 +225,7 @@ class ScheduleFragment : Fragment() {
     }
 
     private fun expandFilters() {
-        bottomSheet.state = BottomSheetBehavior.STATE_EXPANDED
+        bottomSheet.state = BottomSheetBehavior.STATE_HALF_EXPANDED
     }
 
     private fun hideFilters() {

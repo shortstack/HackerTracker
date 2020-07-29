@@ -1,7 +1,7 @@
 package com.shortstack.hackertracker
 
+import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.multidex.MultiDexApplication
 import com.github.stkent.amplify.feedback.DefaultEmailFeedbackCollector
 import com.github.stkent.amplify.feedback.GooglePlayStoreFeedbackCollector
 import com.github.stkent.amplify.tracking.Amplify
@@ -14,7 +14,7 @@ import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 
-class App : MultiDexApplication() {
+class App : Application() {
 
     companion object {
         val isDeveloper = BuildConfig.DEBUG
