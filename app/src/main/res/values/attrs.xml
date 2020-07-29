@@ -17,14 +17,5 @@
         <attr name="evTitle" format="reference" />
         <attr name="evMessage" format="reference" />
     </declare-styleable>
-
-    <declare-styleable name="SettingsSwitchView">
-        <attr name="switchText" format="string" />
-        <attr name="switchKey" format="string" />
-        <attr name="switchDefaultValue" format="boolean" />
-    </declare-styleable>
-
-    <declare-styleable name="SettingsActionView">
-        <attr name="actionText" format="string" />
-    </declare-styleable>
+    
 </resources>

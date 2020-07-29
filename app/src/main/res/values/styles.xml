@@ -25,7 +25,7 @@
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="preferenceTheme">@style/Theme.WtfPreference</item>
+        <item name="preferenceTheme">@style/PrefsTheme</item>
 
         <item name="android:checkboxStyle">@style/AppCheckBoxStyle</item>
 
@@ -65,7 +65,6 @@
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
-        <item name="preferenceTheme">@style/Theme.WtfPreference</item>
 
         <item name="android:checkboxStyle">@style/AppCheckBoxStyle</item>
 
@@ -93,18 +92,10 @@
     </style>
 
 
-    <style name="Theme.WtfPreference" parent="@style/PreferenceThemeOverlay">
-        <item name="preferenceScreenStyle">@style/Preference.PreferenceScreen</item>
-        <item name="preferenceFragmentStyle">@style/PreferenceFragment</item>
-        <item name="preferenceCategoryStyle">@style/Preference.Category</item>
-        <item name="preferenceStyle">@style/Preference</item>
-        <item name="preferenceInformationStyle">@style/Preference.Information</item>
-        <item name="checkBoxPreferenceStyle">@style/Preference.CheckBoxPreference</item>
-        <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat</item>
-        <item name="dialogPreferenceStyle">@style/Preference.DialogPreference</item>
-        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference
-        </item>
-        <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
+    <style name="PrefsTheme" parent="PreferenceThemeOverlay">
+        <item name="android:layout">@layout/fragment_settings</item>
+        <item name="android:listPreferredItemPaddingLeft">@dimen/activity_horizontal_margin</item>
+        <item name="android:listPreferredItemPaddingRight">@dimen/activity_horizontal_margin</item>
     </style>
 
     <!-- Used for Filter View -->

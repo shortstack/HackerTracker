@@ -112,5 +112,13 @@
 
     <!-- Code of Conduct-->
     <string name="code_of_conduct">Code of Conduct</string>
+    <string name="setting_change_theme">Change Theme</string>
+    <string name="setting_change_conference">Change Conference</string>
+    <string name="setting_back_button_drawer">Back button to open the drawer</string>
+    <string name="setting_easter_eggs_summary">\???</string>
+    <string name="setting_easter_eggs">Easter Eggs</string>
+    <string name="setting_user_analytics">Send anonymous usage statistics</string>
+    <string name="setting_time_zone_summary_on">Showing times in conference\'s timezone</string>
+    <string name="setting_time_zone_summary_off">Showing times in your timezone</string>
 
 </resources>
