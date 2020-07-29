@@ -491,6 +491,7 @@ class DatabaseManager(private val preferences: Storage) {
                     val speakers = snapshot?.toObjects(FirebaseSpeaker::class.java)
                         ?.filter { !it.hidden || App.isDeveloper }
                         ?.map { it.toSpeaker() }
+                        ?.sortedBy { it.name.toLowerCase() }
                         ?: emptyList()
 
                     mutableLiveData.postValue(speakers)
