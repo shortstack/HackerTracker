@@ -236,7 +236,7 @@ class EventFragment : Fragment() {
             Color.parseColor(type.color)
         }
 
-        app_bar.setBackgroundColor(Color.parseColor(type.color))
+        //app_bar.setBackgroundColor(Color.parseColor(type.color))
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
