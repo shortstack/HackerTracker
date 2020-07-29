@@ -1,19 +1,5 @@
 <resources>
 
-    <style name="Theme.WtfPreference" parent="@style/PreferenceThemeOverlay">
-        <item name="preferenceScreenStyle">@style/Preference.PreferenceScreen</item>
-        <item name="preferenceFragmentStyle">@style/PreferenceFragment</item>
-        <item name="preferenceCategoryStyle">@style/Preference.Category</item>
-        <item name="preferenceStyle">@style/Preference</item>
-        <item name="preferenceInformationStyle">@style/Preference.Information</item>
-        <item name="checkBoxPreferenceStyle">@style/Preference.CheckBoxPreference</item>
-        <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat</item>
-        <item name="dialogPreferenceStyle">@style/Preference.DialogPreference</item>
-        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference
-        </item>
-        <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
-    </style>
-
     <style name="ThemeBase" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="dark_mode">light</item>
         <item name="footer_icon">@drawable/skull</item>
@@ -22,6 +8,19 @@
         <item name="menu_tint">@color/black</item>
         <item name="filter_background">@color/white</item>
         <item name="category_tint">@null</item>
+
+        <item name="colorPrimary">@color/purple_dark</item>
+        <item name="colorPrimaryVariant">@color/white</item>
+        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorSecondary">@color/purple_dark</item>
+        <item name="colorSecondaryVariant">@color/purple_dark</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorError">#F44336</item>
+        <item name="colorOnError">#FFFFFF</item>
+        <item name="colorSurface">@color/white</item>
+        <item name="colorOnSurface">@color/white</item>
+        <item name="android:colorBackground">@color/white</item>
+        <item name="colorOnBackground">@color/white</item>
 
 
         <item name="windowActionBar">false</item>
@@ -39,10 +38,7 @@
         <item name="checkboxStyle">@style/AppCheckBoxStyle</item>
     </style>
 
-    <style name="AppTheme" parent="ThemeBase">
-
-
-    </style>
+    <style name="AppTheme" parent="ThemeBase" />
 
     <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
 
@@ -96,6 +92,20 @@
         <item name="footer_label">Developer</item>
     </style>
 
+
+    <style name="Theme.WtfPreference" parent="@style/PreferenceThemeOverlay">
+        <item name="preferenceScreenStyle">@style/Preference.PreferenceScreen</item>
+        <item name="preferenceFragmentStyle">@style/PreferenceFragment</item>
+        <item name="preferenceCategoryStyle">@style/Preference.Category</item>
+        <item name="preferenceStyle">@style/Preference</item>
+        <item name="preferenceInformationStyle">@style/Preference.Information</item>
+        <item name="checkBoxPreferenceStyle">@style/Preference.CheckBoxPreference</item>
+        <item name="switchPreferenceCompatStyle">@style/Preference.SwitchPreferenceCompat</item>
+        <item name="dialogPreferenceStyle">@style/Preference.DialogPreference</item>
+        <item name="editTextPreferenceStyle">@style/Preference.DialogPreference.EditTextPreference
+        </item>
+        <item name="preferenceFragmentListStyle">@style/PreferenceFragmentList</item>
+    </style>
 
     <!-- Used for Filter View -->
     <style name="MyAlertDialogStyle" parent="ThemeOverlay.MaterialComponents.Dialog">
