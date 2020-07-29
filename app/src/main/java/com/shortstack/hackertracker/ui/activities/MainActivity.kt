@@ -17,7 +17,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import com.github.stkent.amplify.tracking.Amplify
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
 import com.google.firebase.auth.FirebaseAuth
@@ -27,16 +26,15 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Location
 import com.shortstack.hackertracker.models.local.Speaker
-import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.HackerTrackerViewModel
-import com.shortstack.hackertracker.ui.search.SearchFragment
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.information.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
+import com.shortstack.hackertracker.ui.search.SearchFragment
 import com.shortstack.hackertracker.ui.settings.SettingsFragment
 import com.shortstack.hackertracker.ui.themes.ThemesManager.Theme.*
 import com.shortstack.hackertracker.utilities.Storage
@@ -47,7 +45,8 @@ import kotlinx.android.synthetic.main.row_nav_view.*
 import org.koin.android.ext.android.inject
 
 
-class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, FragmentManager.OnBackStackChangedListener {
+class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
+    FragmentManager.OnBackStackChangedListener {
 
     private val storage: Storage by inject()
 
@@ -113,18 +112,10 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
     }
 
     private fun getThemeAccentColor(context: Context, theme: Resources.Theme = context.theme): Int {
-        val colorAttr = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            android.R.attr.colorBackground
-        } else {
-            context.resources.getIdentifier("colorBackground", "attr", context.packageName)
-        }
         val outValue = TypedValue()
-        theme.resolveAttribute(colorAttr, outValue, true)
+        theme.resolveAttribute(android.R.attr.colorBackground, outValue, true)
         return outValue.data
     }
-
-
-
 
     override fun onStart() {
         super.onStart()
@@ -168,7 +159,9 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
         when {
             drawerOpen -> drawer_layout.closeDrawers()
-            storage.navDrawerOnBack && !drawerOpen && !secondaryVisible -> drawer_layout.openDrawer(GravityCompat.START)
+            storage.navDrawerOnBack && !drawerOpen && !secondaryVisible -> drawer_layout.openDrawer(
+                GravityCompat.START
+            )
             else -> super.onBackPressed()
         }
     }
@@ -228,7 +221,11 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener, Frag
 
     fun navigate(speaker: Speaker?) {
         speaker ?: return
-        replaceFragment(SpeakerFragment.newInstance(speaker), R.id.container_above, hasAnimation = true)
+        replaceFragment(
+            SpeakerFragment.newInstance(speaker),
+            R.id.container_above,
+            hasAnimation = true
+        )
     }
 
     fun popBackStack() {
