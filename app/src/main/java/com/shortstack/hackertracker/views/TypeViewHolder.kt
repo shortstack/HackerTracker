@@ -2,6 +2,7 @@ package com.shortstack.hackertracker.views
 
 import android.content.res.ColorStateList
 import android.graphics.Color
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Type
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.item_type.view.*
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
@@ -29,20 +31,30 @@ class TypeViewHolder(val view: View) : RecyclerView.ViewHolder(view), KoinCompon
 
     fun render(type: Type) {
         view.apply {
-            val color = Color.parseColor(type.color)
 
-            chip.chipText = type.name
+            val color = if (type.isBookmark) {
+                val theme = (context as MainActivity).theme
+                val outValue = TypedValue()
+                theme.resolveAttribute(R.attr.colorOnPrimary, outValue, true)
+                outValue.data
+            } else {
+                Color.parseColor(type.color)
+            }
+
+            chip.text = type.name
             chip.chipBackgroundColor = ColorStateList.valueOf(color)
-            chip.isCloseIconEnabled = type.isSelected
+            chip.isCloseIconVisible = type.isSelected
 
             chip.setOnCheckedChangeListener(null)
 
             chip.isChecked = type.isSelected
 
+            chip.setOnCloseIconClickListener {
+                chip.isChecked = false
+            }
 
             chip.setOnCheckedChangeListener { _, isChecked ->
-
-                chip.isCloseIconEnabled = isChecked
+                chip.isCloseIconVisible = isChecked
 
                 // todo: put this on the right scope
                 GlobalScope.launch {

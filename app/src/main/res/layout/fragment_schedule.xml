@@ -73,7 +73,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="52dp"
-        android:background="@drawable/bottom_sheet_shadow"
         android:elevation="8dp"
         android:outlineProvider="bounds"
         app:behavior_hideable="true"
