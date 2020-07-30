@@ -206,6 +206,13 @@ class SkullView : FrameLayout {
         val random = Random(offset)
 
         val isNormal = random.nextBoolean()
+        val pixelShift = random.nextBoolean()
+        val areas = listOf(
+            IntRange(0, 5000) to random.nextBoolean(),
+            IntRange(5000, 10000) to random.nextBoolean(),
+            IntRange(10000, 12000) to random.nextBoolean(),
+            IntRange(12000, 18000) to random.nextBoolean()
+        )
 
 
         val MAX_HORIZONTAL_OFFSET = w * .0060f * 40
@@ -234,14 +241,15 @@ class SkullView : FrameLayout {
                 val gaussX = Math.exp((-(distX * distX)).toDouble() / d).toFloat() * 0.4f
                 val gaussY = Math.exp((-(distY * distY)).toDouble() / d).toFloat() * 0.4f
 
+                fArr[i5] = left + xOriginal
+                fArr[i5 + 1] = right + yOriginal
+
                 if (isNormal) {
-                    fArr[i5] = left + xOriginal
-                    fArr[i5 + 1] = right + yOriginal
                     continue
                 }
-
-                //Log.d("DEBUG","$xOriginal $yOriginal $distX $distY $d $gaussX $gaussY")
-
+//
+//                //Log.d("DEBUG","$xOriginal $yOriginal $distX $distY $d $gaussX $gaussY")
+//
                 when (channel) {
                     CHANNEL.RED -> {
                         // shift left
@@ -258,6 +266,16 @@ class SkullView : FrameLayout {
                         fArr[i5] = left + xOriginal + xOffset
                         fArr[i5 + 1] = right + yOriginal// - yOffset
                     }
+                }
+
+                val pixelShift = areas.find { i5 in it.first }?.second ?: false
+
+                if (pixelShift) {
+                    fArr[i5] = fArr[i5] + Random(offset).nextInt(50)
+                    if (Random(offset).nextBoolean()) {
+                        fArr[i5] = -fArr[i5]
+                    }
+                    //fArr[i5 + 1] = right + yOriginal
                 }
             }
 
