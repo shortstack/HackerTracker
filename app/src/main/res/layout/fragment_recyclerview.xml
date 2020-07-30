@@ -29,7 +29,8 @@
             android:clipToPadding="false"
             android:paddingTop="@dimen/recycler_view_padding_top"
             android:paddingBottom="@dimen/recycler_view_padding_bottom"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2" />
 
 
         <ProgressBar

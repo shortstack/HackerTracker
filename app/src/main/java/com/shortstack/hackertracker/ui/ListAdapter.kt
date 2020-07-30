@@ -23,7 +23,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private const val FAQ = 6
     }
 
-    private val collection = ArrayList<Any>()
+    val collection = ArrayList<Any>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
