@@ -129,9 +129,9 @@ class SkullView : FrameLayout {
                 // can call h again after work!
                 invalidate()
 
-                h.postDelayed(this, 100)
+                h.postDelayed(this, 30)
             }
-        }, 150) // 1 second delay (takes millis)
+        }, 1000) // 1 second delay (takes millis)
 
 
     }
@@ -186,18 +186,21 @@ class SkullView : FrameLayout {
         fArr[i * 2 + 1] = f2
     }
 
+    var offset = 0
+
+
     private fun smudgeGhostRGB(left: Int, right: Int, i3: Int, i4: Int, motion: Int): FloatArray? {
 
         val random = Random
 
-        var isNormal = random.nextInt(100) > 75
+        var isNormal = false//offset < 0
 
 
-        val MAX_HORIZONTAL_OFFSET = w * 1.00f
-        val MAX_VERTICAL_OFFSET = h * 0.20f
+        val MAX_HORIZONTAL_OFFSET = w * .0060f
+        val MAX_VERTICAL_OFFSET = h * 0.0030f
 
-        val xOffset = random.nextInt(MAX_HORIZONTAL_OFFSET.toInt())
-        val yOffset = random.nextInt(MAX_VERTICAL_OFFSET.toInt())
+        val xOffset = offset * MAX_HORIZONTAL_OFFSET//random.nextInt(MAX_HORIZONTAL_OFFSET.toInt())
+        val yOffset = offset * MAX_VERTICAL_OFFSET //random.nextInt(MAX_VERTICAL_OFFSET.toInt())
 
         Logger.d("Drawing with offset: $xOffset, $yOffset")
 
@@ -210,7 +213,7 @@ class SkullView : FrameLayout {
                 val xOriginal = matrixOriginal[i5]
                 val yOriginal = matrixOriginal[i5 + 1]
 
-                if(isNormal)
+                if (isNormal)
                     continue
 
 
@@ -230,6 +233,14 @@ class SkullView : FrameLayout {
                     }
                     1 -> {
                         fArr[i5] = left + xOriginal - xOffset
+                        fArr[i5 + 1] = right + yOriginal + yOffset
+                    }
+                    2 -> {
+                        fArr[i5] = left + xOriginal + xOffset
+                        fArr[i5 + 1] = right + yOriginal + yOffset
+                    }
+                    3 -> {
+                        fArr[i5] = left + xOriginal + xOffset
                         fArr[i5 + 1] = right + yOriginal - yOffset
                     }
                 }
@@ -280,12 +291,6 @@ class SkullView : FrameLayout {
         canvas.drawColor(0, PorterDuff.Mode.CLEAR)
         val left = width / 2f - bitmap.width / 2f
         val right = height / 2f - bitmap.height / 2f
-        canvas.drawBitmap(
-            bitmap,
-            left,
-            right,
-            redPaint
-        )
 
         canvas.drawBitmapMesh(
             bitmap,
@@ -295,19 +300,34 @@ class SkullView : FrameLayout {
             0,
             null,
             0,
+            redPaint
+        )
+
+        canvas.drawBitmapMesh(
+            bitmap,
+            WWIDTH,
+            WHEIGHT,
+            smudgeGhostRGB(left.toInt(), right.toInt(), 2, malpha, 1)!!,
+            0,
+            null,
+            0,
             greenPaint
         )
         canvas.drawBitmapMesh(
             bitmap,
             WWIDTH,
             WHEIGHT,
-            smudgeGhostRGB(left.toInt(), right.toInt(), 4, malpha, 1)!!,
+            smudgeGhostRGB(left.toInt(), right.toInt(), 4, malpha, 2)!!,
             0,
             null,
             0,
             bluePaint
         )
 
+        offset++
+
+        if (offset > 35)
+            offset = -15
 
         //super.draw(canvas)
         try {
