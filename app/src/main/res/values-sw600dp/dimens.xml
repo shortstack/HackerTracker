@@ -3,4 +3,13 @@
     <dimen name="activity_vertical_margin">32dp</dimen>
     <dimen name="activity_horizontal_margin">32dp</dimen>
 
+    <!--  Items  -->
+    <dimen name="item_vertical_margin">8dp</dimen>
+    <dimen name="item_horizontal_margin">32dp</dimen>
+
+    <!--  Skull  -->
+    <dimen name="item_skull_min_height">200dp</dimen>
+    <dimen name="item_skull_vertical_margin">16dp</dimen>
+
+
 </resources>

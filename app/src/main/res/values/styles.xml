@@ -166,11 +166,11 @@
     </style>
 
     <style name="Paragraph" parent="Body">
-        <item name="android:layout_marginTop">32dp</item>
-        <item name="android:layout_marginBottom">32dp</item>
-        <item name="android:layout_marginLeft">24dp</item>
-        <item name="android:layout_marginRight">24dp</item>
-        <item name="android:lineSpacingExtra">8sp</item>
+        <item name="android:layout_marginTop">@dimen/paragraph_vertical_margin</item>
+        <item name="android:layout_marginBottom">@dimen/paragraph_vertical_margin</item>
+        <item name="android:layout_marginLeft">@dimen/paragraph_horizontal_margin</item>
+        <item name="android:layout_marginRight">@dimen/paragraph_horizontal_margin</item>
+        <item name="android:lineSpacingExtra">@dimen/paragraph_line_spacing_extra</item>
         <item name="android:autoLink">all</item>
     </style>
 
@@ -286,10 +286,10 @@
     <style name="Card_Frame">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:paddingLeft">16dp</item>
-        <item name="android:paddingTop">8dp</item>
-        <item name="android:paddingRight">16dp</item>
-        <item name="android:paddingBottom">8dp</item>
+        <item name="android:paddingLeft">@dimen/item_horizontal_margin</item>
+        <item name="android:paddingTop">@dimen/item_vertical_margin</item>
+        <item name="android:paddingRight">@dimen/item_horizontal_margin</item>
+        <item name="android:paddingBottom">@dimen/item_vertical_margin</item>
     </style>
 
     <style name="Card_Container">
