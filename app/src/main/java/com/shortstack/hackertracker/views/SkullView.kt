@@ -14,6 +14,12 @@ import kotlin.random.Random
 
 class SkullView : FrameLayout {
 
+    enum class CHANNEL {
+        RED,
+        GREEN,
+        BLUE
+    }
+
     companion object {
         private const val CHANNEL_RED = 0xFFFF0000
         private const val CHANNEL_GREEN = 0xFF00FF00
@@ -98,7 +104,7 @@ class SkullView : FrameLayout {
 
     constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet)
 
-    val drawable = context.getDrawable(R.drawable.doggo)!!
+    val drawable = context.getDrawable(R.drawable.skull)!!
     val bitmap = drawable.toBitmap()
 
     var canDraw = false
@@ -129,7 +135,7 @@ class SkullView : FrameLayout {
                 // can call h again after work!
                 invalidate()
 
-                h.postDelayed(this, 30)
+                h.postDelayed(this, 150)
             }
         }, 1000) // 1 second delay (takes millis)
 
@@ -189,18 +195,26 @@ class SkullView : FrameLayout {
     var offset = 0
 
 
-    private fun smudgeGhostRGB(left: Int, right: Int, i3: Int, i4: Int, motion: Int): FloatArray? {
+    private fun smudgeGhostRGB(
+        left: Int,
+        right: Int,
+        i3: Int,
+        i4: Int,
+        channel: CHANNEL
+    ): FloatArray? {
 
-        val random = Random
+        val random = Random(offset)
 
-        var isNormal = false//offset < 0
+        val isNormal = random.nextBoolean()
 
 
-        val MAX_HORIZONTAL_OFFSET = w * .0060f
-        val MAX_VERTICAL_OFFSET = h * 0.0030f
+        val MAX_HORIZONTAL_OFFSET = w * .0060f * 40
+        val MAX_VERTICAL_OFFSET = 0//h * 0.0010f * 100
 
-        val xOffset = offset * MAX_HORIZONTAL_OFFSET//random.nextInt(MAX_HORIZONTAL_OFFSET.toInt())
-        val yOffset = offset * MAX_VERTICAL_OFFSET //random.nextInt(MAX_VERTICAL_OFFSET.toInt())
+        val xOffset =
+            random.nextFloat() * MAX_HORIZONTAL_OFFSET//random.nextInt(MAX_HORIZONTAL_OFFSET.toInt())
+        val yOffset =
+            random.nextFloat() * MAX_VERTICAL_OFFSET //random.nextInt(MAX_VERTICAL_OFFSET.toInt())
 
         Logger.d("Drawing with offset: $xOffset, $yOffset")
 
@@ -213,10 +227,6 @@ class SkullView : FrameLayout {
                 val xOriginal = matrixOriginal[i5]
                 val yOriginal = matrixOriginal[i5 + 1]
 
-                if (isNormal)
-                    continue
-
-
                 val distX = ((left.toFloat() - xOriginal) / w.toFloat()) * 10.0f
                 val distY = ((right.toFloat() - yOriginal) / h.toFloat()) * 10.0f
                 val d = ((i4.toFloat() / 255.0f).toDouble() * 3.6) + 0.4
@@ -224,51 +234,31 @@ class SkullView : FrameLayout {
                 val gaussX = Math.exp((-(distX * distX)).toDouble() / d).toFloat() * 0.4f
                 val gaussY = Math.exp((-(distY * distY)).toDouble() / d).toFloat() * 0.4f
 
-                //Log.d("DEBUG","$xOriginal $yOriginal $distX $distY $d $gaussX $gaussY")
-
-                when (motion) {
-                    0 -> {
-                        fArr[i5] = left + xOriginal - xOffset
-                        fArr[i5 + 1] = right + yOriginal - yOffset
-                    }
-                    1 -> {
-                        fArr[i5] = left + xOriginal - xOffset
-                        fArr[i5 + 1] = right + yOriginal + yOffset
-                    }
-                    2 -> {
-                        fArr[i5] = left + xOriginal + xOffset
-                        fArr[i5 + 1] = right + yOriginal + yOffset
-                    }
-                    3 -> {
-                        fArr[i5] = left + xOriginal + xOffset
-                        fArr[i5 + 1] = right + yOriginal - yOffset
-                    }
+                if (isNormal) {
+                    fArr[i5] = left + xOriginal
+                    fArr[i5 + 1] = right + yOriginal
+                    continue
                 }
 
+                //Log.d("DEBUG","$xOriginal $yOriginal $distX $distY $d $gaussX $gaussY")
 
-//                when (motion) {
-//                    0 -> {
-//                        fArr[i5] = xOriginal - (((w - i).toFloat() * gaussY) / i3.toFloat())
-//                        fArr[i5 + 1] = yOriginal
-//                    }
-//                    1 -> {
-//                        fArr[i5] = xOriginal + ((i.toFloat() * gaussY) / i3.toFloat())
-//                        fArr[i5 + 1] = yOriginal
-//                    }
-//                    2 -> {
-//                        fArr[i5] = xOriginal
-//                        fArr[i5 + 1] = yOriginal - (((h - i2).toFloat() * gaussX) / i3.toFloat())
-//                    }
-//                    3 -> {
-//                        fArr[i5] = xOriginal
-//                        fArr[i5 + 1] = yOriginal + ((i2.toFloat() * gaussX) / i3.toFloat())
-//                    }
-//                    else -> {
-//                        fArr[i5] = xOriginal
-//                        fArr[i5 + 1] = yOriginal
-//                    }
-//                }
-
+                when (channel) {
+                    CHANNEL.RED -> {
+                        // shift left
+                        fArr[i5] = left + xOriginal - xOffset
+                        fArr[i5 + 1] = right + yOriginal// - yOffset
+                    }
+                    CHANNEL.GREEN -> {
+                        // do nothing
+                        fArr[i5] = left + xOriginal
+                        fArr[i5 + 1] = right + yOriginal
+                    }
+                    CHANNEL.BLUE -> {
+                        // shift right
+                        fArr[i5] = left + xOriginal + xOffset
+                        fArr[i5 + 1] = right + yOriginal// - yOffset
+                    }
+                }
             }
 
         }
@@ -287,8 +277,11 @@ class SkullView : FrameLayout {
 
         canvas.save()
 
+        canvas.drawColor(Color.TRANSPARENT);
+
+
         // ghost
-        canvas.drawColor(0, PorterDuff.Mode.CLEAR)
+        //canvas.drawColor(0, PorterDuff.Mode.CLEAR)
         val left = width / 2f - bitmap.width / 2f
         val right = height / 2f - bitmap.height / 2f
 
@@ -296,7 +289,7 @@ class SkullView : FrameLayout {
             bitmap,
             WWIDTH,
             WHEIGHT,
-            smudgeGhostRGB(left.toInt(), right.toInt(), 2, malpha, 0)!!,
+            smudgeGhostRGB(left.toInt(), right.toInt(), 2, malpha, CHANNEL.RED)!!,
             0,
             null,
             0,
@@ -307,7 +300,7 @@ class SkullView : FrameLayout {
             bitmap,
             WWIDTH,
             WHEIGHT,
-            smudgeGhostRGB(left.toInt(), right.toInt(), 2, malpha, 1)!!,
+            smudgeGhostRGB(left.toInt(), right.toInt(), 4, malpha, CHANNEL.GREEN)!!,
             0,
             null,
             0,
@@ -317,7 +310,7 @@ class SkullView : FrameLayout {
             bitmap,
             WWIDTH,
             WHEIGHT,
-            smudgeGhostRGB(left.toInt(), right.toInt(), 4, malpha, 2)!!,
+            smudgeGhostRGB(left.toInt(), right.toInt(), 4, malpha, CHANNEL.BLUE)!!,
             0,
             null,
             0,
