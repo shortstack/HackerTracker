@@ -19,11 +19,11 @@
         app:layout_constraintGuide_percent=".80" />
 
 
-    <ImageView
+    <com.shortstack.hackertracker.views.SkullView
         android:id="@+id/icon"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/skull_lg"
+        app:skullViewDrawable="@drawable/skull_lg"
         android:tint="?android:colorForeground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@id/right_guide"
