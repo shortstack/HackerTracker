@@ -91,6 +91,25 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 title = getString(R.string.setting_user_analytics)
                 key = USER_ANALYTICS_KEY
             })
+
+            // Analytics
+            addPreference(SwitchPreference(context).apply {
+                title = "Logo Glitch"
+                key = "glitch_logo"
+                setOnPreferenceChangeListener { preference, newValue ->
+                    (context as MainActivity).recreate()
+                    true
+                }
+            })
+            addPreference(SwitchPreference(context).apply {
+                title = "Screen Glitch"
+                key = "glitch_screen"
+                setOnPreferenceChangeListener { preference, newValue ->
+                    (context as MainActivity).recreate()
+                    true
+                }
+            })
+
         }
 
         preferenceScreen = screen
