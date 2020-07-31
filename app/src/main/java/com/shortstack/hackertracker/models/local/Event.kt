@@ -21,7 +21,7 @@ data class Event(
         val link: String,
         val updated: String,
         val speakers: List<Speaker>,
-        val type: Type,
+        val types: List<Type>,
         val location: Location,
         var isBookmarked: Boolean = false,
         var key: Long = -1) : Parcelable {

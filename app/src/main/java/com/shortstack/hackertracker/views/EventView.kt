@@ -2,7 +2,6 @@ package com.shortstack.hackertracker.views
 
 import android.content.Context
 import android.graphics.Color
-import android.os.Build
 import android.util.AttributeSet
 import android.util.TypedValue
 import android.view.View
@@ -60,14 +59,12 @@ class EventView : FrameLayout, KoinComponent {
             DISPLAY_MODE_MIN -> {
                 val width = context.resources.getDimension(R.dimen.event_view_min_guideline).toInt()
                 guideline.setGuidelineBegin(width)
-                category_dot.visibility = View.GONE
-                category_text.visibility = View.GONE
+                types_container.visibility = View.GONE
             }
             DISPLAY_MODE_FULL -> {
                 val width = context.resources.getDimension(R.dimen.time_width).toInt()
                 guideline.setGuidelineBegin(width)
-                category_dot.visibility = View.VISIBLE
-                category_text.visibility = View.VISIBLE
+                types_container.visibility = View.VISIBLE
             }
         }
     }
@@ -96,9 +93,15 @@ class EventView : FrameLayout, KoinComponent {
     }
 
     private fun renderCategoryColour(event: Event) {
-        val type = event.type
+        val type = event.types.first()
 
-        category_text.text = type.name
+        type_1.render(type)
+        if (event.types.size > 1) {
+            type_2.render(event.types.last())
+            type_2.visibility = View.VISIBLE
+        } else {
+            type_2.visibility = View.GONE
+        }
 
         val value = TypedValue()
         context.theme.resolveAttribute(R.attr.category_tint, value, true)
@@ -110,14 +113,6 @@ class EventView : FrameLayout, KoinComponent {
             Color.parseColor(type.color)
         }
         category.setBackgroundColor(color)
-
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
-
-            drawable?.setTint(color)
-            category_dot.background = drawable
-        }
     }
 
 

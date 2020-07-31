@@ -120,5 +120,6 @@
     <string name="setting_user_analytics">Send anonymous usage statistics</string>
     <string name="setting_time_zone_summary_on">Showing times in conference\'s timezone</string>
     <string name="setting_time_zone_summary_off">Showing times in your timezone</string>
+    <string name="villages">Villages</string>
 
 </resources>

@@ -223,7 +223,7 @@ class EventFragment : Fragment() {
 
     private fun displayTypes(event: Event) {
 
-        val type = event.type
+        val type = event.types.first()
         val context = context ?: return
 
         val value = TypedValue()

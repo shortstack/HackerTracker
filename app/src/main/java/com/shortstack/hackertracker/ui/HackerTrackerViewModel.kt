@@ -284,7 +284,8 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
             true
         }
 
-        return bookmark && filter.find { it.id == event.type.id }?.isSelected == true
+        return bookmark &&
+                event.types.any { t -> filter.find { it.id == t.id }?.isSelected == true }
     }
 
     private fun setValue(
