@@ -3,9 +3,11 @@ package com.shortstack.hackertracker.views
 import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.*
+import android.graphics.drawable.Drawable
 import android.os.Handler
 import android.util.AttributeSet
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.R
@@ -21,10 +23,6 @@ class SkullView : FrameLayout {
     }
 
     companion object {
-        private const val CHANNEL_RED = 0xFFFF0000
-        private const val CHANNEL_GREEN = 0xFF00FF00
-        private const val CHANNEL_BLUE = 0xFF0000FF
-
         private val XFE_ADD = PorterDuffXfermode(PorterDuff.Mode.ADD)
     }
 
@@ -99,20 +97,64 @@ class SkullView : FrameLayout {
     private val greenPaint = Paint()
     private val bluePaint = Paint()
 
+    private val drawable: Drawable
+    private val bitmap: Bitmap
 
-    constructor(context: Context) : super(context)
+    constructor(context: Context) : super(context) {
+        drawable = getDrawable()
+        bitmap = drawable.toBitmap()
+        w = bitmap.width
+        h = bitmap.height
+        init()
+    }
 
-    constructor(context: Context, attributeSet: AttributeSet) : super(context, attributeSet)
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        drawable = getDrawable(attrs)
+        bitmap = drawable.toBitmap()
+        w = bitmap.width
+        h = bitmap.height
+        init()
+    }
 
-    val drawable = context.getDrawable(R.drawable.skull)!!
-    val bitmap = drawable.toBitmap()
+    constructor(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : super(
+        context,
+        attrs,
+        defStyleAttr
+    ) {
+        drawable = getDrawable(attrs)
+        bitmap = drawable.toBitmap()
+        w = bitmap.width
+        h = bitmap.height
+        init()
+    }
+
+    private fun getDrawable(attrs: AttributeSet? = null): Drawable {
+        if (attrs != null) {
+            val array = context.theme.obtainStyledAttributes(attrs, R.styleable.SkullView, 0, 0)
+
+            try {
+                if (array.hasValue(R.styleable.SkullView_skullViewDrawable))
+                    return ContextCompat.getDrawable(
+                        context,
+                        array.getResourceId(
+                            R.styleable.SkullView_skullViewDrawable,
+                            R.drawable.skull
+                        )
+                    )!!
+            } finally {
+                array.recycle()
+            }
+        }
+
+        return ContextCompat.getDrawable(context, R.drawable.skull)!!
+    }
 
     var canDraw = false
 
     private val malpha: Int = 150
 
-    var w = bitmap.width
-    var h = bitmap.height
+    val w: Int
+    val h: Int
 
     private var WWIDTH: Int = 10
     private var WHEIGHT: Int = 10
@@ -121,25 +163,21 @@ class SkullView : FrameLayout {
     private var matrixVertsMoved = kotlin.FloatArray(0)
     private var matrixOriginal = kotlin.FloatArray(0)
 
-    init {
-//        View.inflate(context, R.layout.view_skull, this)
-
+    fun init() {
         initGhost()
 
         canDraw = true
 
-        val h = Handler()
-        h.postDelayed(object : Runnable {
+        val handler = Handler()
+        handler.postDelayed(object : Runnable {
             override fun run() {
                 // do stuff then
                 // can call h again after work!
                 invalidate()
 
-                h.postDelayed(this, 150)
+                handler.postDelayed(this, 150)
             }
         }, 1000) // 1 second delay (takes millis)
-
-
     }
 
     private fun initGhost() {
