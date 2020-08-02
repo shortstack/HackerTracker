@@ -7,10 +7,8 @@ import android.os.Handler
 import android.preference.PreferenceManager
 import android.util.AttributeSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.google.gson.Gson
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.ui.glitch.Glitch
-import com.shortstack.hackertracker.utilities.Storage
 import kotlin.random.Random
 
 
@@ -21,7 +19,9 @@ class GlitchContainerView(context: Context, attrs: AttributeSet?) :
     var isRunning = true
 
     init {
-        if (PreferenceManager.getDefaultSharedPreferences(context).getBoolean("glitch_screen", false)) {
+        if (PreferenceManager.getDefaultSharedPreferences(context)
+                .getBoolean("glitch_screen", false)
+        ) {
             val handler = Handler()
             handler.postDelayed(object : Runnable {
                 override fun run() {
@@ -29,9 +29,9 @@ class GlitchContainerView(context: Context, attrs: AttributeSet?) :
                         invalidate()
 
                         val delay = if (isNormal) {
-                            18
+                            100
                         } else {
-                            18
+                            100
                         }
 
                         Logger.d("Now waiting: $delay ms")
@@ -60,17 +60,14 @@ class GlitchContainerView(context: Context, attrs: AttributeSet?) :
 
     override fun draw(canvas: Canvas?) {
         if (isDrawing || isNormal) {
-            Logger.d("Drawing normal view.")
             super.draw(canvas)
             return
         }
 
         if (canvas == null) {
-            Logger.d("Drawing normal view.")
             super.draw(canvas)
         } else {
             synchronized(this) {
-                Logger.e("Drawing corrupted view.")
                 isDrawing = true
                 isNormal = false
                 val bitmap: Bitmap? = drawingCache

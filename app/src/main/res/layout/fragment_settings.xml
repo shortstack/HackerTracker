@@ -54,6 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="16dp"
+                android:scaleType="center"
                 android:paddingBottom="?android:attr/actionBarSize"
                 android:src="?footer_icon"
                 android:tint="?footer_tint" />

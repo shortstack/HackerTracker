@@ -140,6 +140,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
         val style = when (storage.theme) {
             Dark -> R.style.AppTheme_Dark
             Light -> R.style.AppTheme
+            SafeMode -> R.style.AppTheme_SafeMode
             Developer -> R.style.AppTheme_Developer
             null -> R.style.AppTheme_Dark
         }

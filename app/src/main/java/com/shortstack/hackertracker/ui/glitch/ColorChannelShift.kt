@@ -30,7 +30,7 @@ class ColorChannelShift : GlitchEffect {
         val width = bitmap.width
         val height = bitmap.height
 
-        canvas.translate((width / 2f - bitmap.width / 2f), (height / 2f - bitmap.height / 2f))
+        canvas.translate(canvas.width / 2f - width / 2f, canvas.height / 2f - height / 2f)
 
         canvas.drawBitmap(modify(ColorChannel.RED), redPaint)
         canvas.drawBitmap(modify(ColorChannel.GREEN), greenPaint)
