@@ -84,6 +84,15 @@ data class Event(
 
             val firstUrl = urls.minBy { _description.indexOf(it.url) } ?: return _description
             val end = _description.indexOf(firstUrl.url)
-            return _description.substring(0, _description.substring(0, end).lastIndexOf("\n")).trim()
+            if (end == -1) {
+                return _description
+            }
+
+            val newLine = _description.substring(0, end).lastIndexOf("\n")
+            if (newLine == -1) {
+                return _description
+            }
+            
+            return _description.substring(0, newLine).trim()
         }
 }

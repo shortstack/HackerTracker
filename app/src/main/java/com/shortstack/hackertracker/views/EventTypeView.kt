@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.local.Type
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import kotlinx.android.synthetic.main.view_event_type.view.*
 
 class EventTypeView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
@@ -29,7 +30,14 @@ class EventTypeView(context: Context, attrs: AttributeSet) : LinearLayout(contex
             ContextCompat.getColor(context, id)
         } else {
             Logger.d("color: ${type.color}")
-            Color.parseColor(type.color)
+            if (type.color == "#FFFFFF") {
+                val theme = (context as MainActivity).theme
+                val outValue = TypedValue()
+                theme.resolveAttribute(R.attr.colorOnPrimary, outValue, true)
+                outValue.data
+            } else {
+                Color.parseColor(type.color)
+            }
         }
 
         val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()

@@ -32,7 +32,7 @@
             <com.shortstack.hackertracker.views.SkullView
                 style="@style/ToolbarBackground"
                 android:src="@drawable/skull_lg"
-                android:tint="?colorOnPrimary"
+                android:tint="?menu_tint"
                 app:layout_collapseMode="parallax"
                 app:layout_collapseParallaxMultiplier="0.85" />
 
@@ -45,7 +45,6 @@
                 android:background="@android:color/transparent"
                 app:layout_collapseMode="pin"
                 app:menu="@menu/event_bookmarked"
-                android:foregroundTint="?menu_tint"
                 app:navigationIcon="@drawable/ic_arrow_back_white_24dp" />
 
             <LinearLayout

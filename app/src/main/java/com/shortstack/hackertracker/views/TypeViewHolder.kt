@@ -32,7 +32,7 @@ class TypeViewHolder(val view: View) : RecyclerView.ViewHolder(view), KoinCompon
     fun render(type: Type) {
         view.apply {
 
-            val color = if (type.isBookmark) {
+            val color = if (type.color == "#FFFFFF") {
                 val theme = (context as MainActivity).theme
                 val outValue = TypedValue()
                 theme.resolveAttribute(R.attr.colorOnPrimary, outValue, true)
