@@ -12,9 +12,12 @@ import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Conference
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.themes.ThemesManager
+import com.shortstack.hackertracker.utilities.MyClock
 import com.shortstack.hackertracker.utilities.Storage
+import com.shortstack.hackertracker.utilities.now
 import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.ext.android.inject
+import java.util.*
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
@@ -88,8 +91,11 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 key = Storage.USER_ANALYTICS_KEY
             })
 
-            // todo: check date
-            if (storage.getPreference(Storage.EASTER_EGGS_ENABLED_KEY, false)) {
+            val calendar = Calendar.getInstance()
+            calendar.time = MyClock().now()
+
+            val dayOfYear = calendar.get(Calendar.DAY_OF_YEAR)
+            if (dayOfYear >= 219 && storage.getPreference(Storage.EASTER_EGGS_ENABLED_KEY, false)) {
                 // Safe Mode
                 addPreference(Preference(context).apply {
                     title = getString(R.string.settings_reboot)
