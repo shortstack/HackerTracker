@@ -122,5 +122,6 @@
     <string name="setting_time_zone_summary_off">Showing times in your timezone</string>
     <string name="villages">Villages</string>
     <string name="bookmark">Bookmark</string>
+    <string name="twitter">Twitter</string>
 
 </resources>

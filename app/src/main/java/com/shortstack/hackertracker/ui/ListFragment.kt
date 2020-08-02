@@ -29,13 +29,6 @@ abstract class ListFragment<T> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         list.adapter = adapter
-        (list.layoutManager as GridLayoutManager).spanSizeLookup =
-            object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    if (adapter.collection[position] is Speaker) return 1
-                    return 2
-                }
-            }
     }
 
     inline fun <reified J : ViewModel> getViewModel(): J =

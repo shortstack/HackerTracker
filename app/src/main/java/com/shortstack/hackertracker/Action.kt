@@ -8,7 +8,7 @@ data class Action(val url: String) : Parcelable {
 
     val res: Int
         get() {
-            if (url.contains("discord.com"))
+            if (url.contains("discord.com") || url.contains("discordapp.com"))
                 return R.drawable.ic_discord_logo_white
             if (url.contains("twitter.com"))
                 return R.drawable.ic_twitter
@@ -33,8 +33,8 @@ data class Action(val url: String) : Parcelable {
 
     val label: String
         get() {
-            if (url.contains("discord.com"))
-                return "discord.com"
+            if (url.contains("discord.com") || url.contains("discordapp.com"))
+                return "discordapp.com"
 
             if (url.contains("twitter.com"))
                 return "@" + url.substring(url.lastIndexOf("/") + 1)
