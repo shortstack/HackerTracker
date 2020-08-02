@@ -45,7 +45,7 @@ class ReviewBottomSheet : BottomSheetDialogFragment(), IPromptPresenter {
     override fun restoreStateFromBundle(bundle: Bundle) {}
 
     override fun notifyEventTriggered(event: IEvent) {
-        Logger.d("Review event triggered: " + event.trackingKey)
+        Logger.d("Review event_unbookmarked triggered: " + event.trackingKey)
         if (event.trackingKey == "PROMPT_DISMISSED" || event.trackingKey == "THANKS_SHOWN") {
             dismiss()
         }

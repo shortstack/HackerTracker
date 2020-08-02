@@ -1,11 +1,7 @@
 package com.shortstack.hackertracker.ui.events
 
 import android.content.Context
-import android.content.Intent
-import android.graphics.Color
-import android.net.Uri
 import android.os.Bundle
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
@@ -86,10 +82,11 @@ class EventFragment : Fragment() {
         toolbar.setNavigationOnClickListener {
             (activity as? MainActivity)?.popBackStack()
         }
+
     }
 
     private fun showEvent(event: Event) {
-        analytics.log("Viewing event ${event.title}")
+        analytics.log("Viewing event_unbookmarked ${event.title}")
 
         collapsing_toolbar.title = event.title
 
@@ -112,22 +109,9 @@ class EventFragment : Fragment() {
             empty.visibility = View.VISIBLE
         }
 
-        share.setOnClickListener {
-            onShareClick(event)
-            analytics.onEventAction(Analytics.EVENT_SHARE, event)
-        }
-
-        star.setOnClickListener {
+        toolbar.setOnMenuItemClickListener {
             onBookmarkClick(event)
-        }
-
-        if (event.location.hotel == null) {
-            map.visibility = View.GONE
-        } else {
-            map.visibility = View.VISIBLE
-            map.setOnClickListener {
-                onMapClick(event)
-            }
+            true
         }
 
         displayDescription(event)
@@ -138,23 +122,6 @@ class EventFragment : Fragment() {
 
 
         analytics.onEventAction(Analytics.EVENT_VIEW, event)
-    }
-
-    private fun onMapClick(event: Event) {
-        (context as? MainActivity)?.showMap(event.location)
-    }
-
-    private fun onLinkClick(url: String?) {
-        val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(url))
-        context?.startActivity(intent)
-    }
-
-    private fun onShareClick(event: Event) {
-        val intent = Intent(Intent.ACTION_SEND)
-        intent.putExtra(Intent.EXTRA_TEXT, getDetailsDescription(event))
-        intent.type = "text/plain"
-
-        context?.startActivity(intent)
     }
 
     private fun onBookmarkClick(event: Event) {
@@ -171,31 +138,13 @@ class EventFragment : Fragment() {
             if (event.isBookmarked) Analytics.EVENT_BOOKMARK else Analytics.EVENT_UNBOOKMARK
         analytics.onEventAction(action, event)
 
-        displayBookmark(event)
-    }
-
-    private fun getDetailsDescription(event: Event): String {
-        val context = context ?: return ""
-        return "Attending ${event.title} at ${getFullTimeStamp(
-            context,
-            event
-        )} in ${event.location.name} #hackertracker"
+        toolbar.invalidate()
     }
 
     private fun displayBookmark(event: Event) {
-
-        val context = context ?: return
-
         val isBookmarked = event.isBookmarked
-        val drawable = if (isBookmarked) {
-            R.drawable.ic_star_accent_24dp
-        } else {
-            R.drawable.ic_star_border_white_24dp
-        }
-
-        val image = ContextCompat.getDrawable(context, drawable)?.mutate()
-
-        star.setImageDrawable(image)
+        toolbar.menu.clear()
+        toolbar.inflateMenu(if (isBookmarked) R.menu.event_bookmarked else R.menu.event_unbookmarked)
     }
 
     private fun displayDescription(event: Event) {
@@ -222,24 +171,15 @@ class EventFragment : Fragment() {
 
 
     private fun displayTypes(event: Event) {
-
         val type = event.types.first()
-        val context = context ?: return
+        type_1.render(type)
+        type_1.visibility = View.VISIBLE
 
-        val value = TypedValue()
-        context.theme.resolveAttribute(R.attr.category_tint, value, true)
-        val id = value.resourceId
-
-        val color = if (id > 0) {
-            ContextCompat.getColor(context, id)
+        if (event.types.size > 1) {
+            type_2.render(event.types.last())
+            type_2.visibility = View.VISIBLE
         } else {
-            Color.parseColor(type.color)
+            type_2.visibility = View.GONE
         }
-
-        val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
-        drawable?.setTint(color)
-        category_dot.background = drawable
-
-        category_text.text = type.name
     }
 }
