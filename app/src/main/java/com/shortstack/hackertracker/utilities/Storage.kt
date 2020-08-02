@@ -4,7 +4,9 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.google.gson.Gson
+import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.ui.themes.ThemesManager
+import java.util.*
 
 class Storage(context: Context, private val gson: Gson) {
 
@@ -20,7 +22,8 @@ class Storage(context: Context, private val gson: Gson) {
         const val USER_ANALYTICS_KEY = "user_analytics"
     }
 
-    private val preferences: SharedPreferences = PreferenceManager.getDefaultSharedPreferences(context)
+    private val preferences: SharedPreferences =
+        PreferenceManager.getDefaultSharedPreferences(context)
 
     var allowAnalytics: Boolean
         get() = preferences.getBoolean(USER_ANALYTICS_KEY, true)
@@ -54,7 +57,10 @@ class Storage(context: Context, private val gson: Gson) {
         }
 
     var theme: ThemesManager.Theme?
-        get() = gson.fromJson(preferences.getString(USER_THEME, ""), ThemesManager.Theme::class.java)
+        get() = gson.fromJson(
+            preferences.getString(USER_THEME, ""),
+            ThemesManager.Theme::class.java
+        )
         set(value) {
             preferences.edit().putString(USER_THEME, gson.toJson(value)).apply()
         }
@@ -78,4 +84,37 @@ class Storage(context: Context, private val gson: Gson) {
             else -> preferences.getBoolean(key, defaultValue)
         }
     }
+
+
+    enum class CorruptionLevel {
+        NONE,
+        MINOR,
+        MEDIUM,
+        MAJOR
+    }
+
+    val corruption: CorruptionLevel
+        get() {
+            if (!getPreference(
+                    EASTER_EGGS_ENABLED_KEY,
+                    false
+                ) || theme != ThemesManager.Theme.SafeMode
+            ) {
+                return CorruptionLevel.NONE
+            }
+
+            val calendar = Calendar.getInstance()
+            calendar.time = MyClock().now()
+
+            val dayOfYear = calendar.get(Calendar.DAY_OF_YEAR)
+            if (dayOfYear < 219)
+                return CorruptionLevel.NONE
+
+            return when (dayOfYear) {
+                219 -> CorruptionLevel.MINOR
+                220 -> CorruptionLevel.MEDIUM
+                221 -> CorruptionLevel.MAJOR
+                else -> CorruptionLevel.MEDIUM
+            }
+        }
 }

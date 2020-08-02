@@ -6,36 +6,37 @@ import android.graphics.Canvas
 import android.os.Handler
 import android.util.AttributeSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.shortstack.hackertracker.ui.glitch.Glitch
-import kotlin.random.Random
 import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.ui.glitch.Glitch
 import com.shortstack.hackertracker.ui.themes.ThemesManager
+import com.shortstack.hackertracker.utilities.Storage.CorruptionLevel.*
+import kotlin.random.Random
 
 class GlitchContainerView(context: Context, attrs: AttributeSet?) :
     CoordinatorLayout(context, attrs) {
 
-    private val glitch: Boolean = App.instance.storage.theme == ThemesManager.Theme.SafeMode
+    private val storage = App.instance.storage
+    private val glitch: Boolean = storage.theme == ThemesManager.Theme.SafeMode
 
     var isNormal = true
     var isRunning = true
 
     init {
         if (glitch) {
+            val chance = when (storage.corruption) {
+                NONE -> 0
+                MINOR -> 0
+                MEDIUM -> 5 // 0.5%
+                MAJOR -> 30 // 3.0%
+            }
+
             val handler = Handler()
             handler.postDelayed(object : Runnable {
                 override fun run() {
                     if (isRunning) {
                         invalidate()
-
-                        val delay = if (isNormal) {
-                            100
-                        } else {
-                            100
-                        }
-
-                        handler.postDelayed(this, delay.toLong())
-
-                        isNormal = Random.nextInt(100) > 5
+                        handler.postDelayed(this, 100L)
+                        isNormal = Random.nextInt(1000) > chance
                     }
                 }
             }, 1000)
@@ -54,7 +55,7 @@ class GlitchContainerView(context: Context, attrs: AttributeSet?) :
     }
 
     override fun draw(canvas: Canvas?) {
-        if (isDrawing || isNormal || glitch) {
+        if (isDrawing || isNormal || !glitch) {
             super.draw(canvas)
             return
         }

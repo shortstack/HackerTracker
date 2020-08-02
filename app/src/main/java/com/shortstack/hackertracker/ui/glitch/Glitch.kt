@@ -16,6 +16,9 @@ object Glitch : KoinComponent {
         if (storage.theme != ThemesManager.Theme.SafeMode)
             return
 
+        if (storage.corruption == Storage.CorruptionLevel.NONE)
+            return
+
         val effect = ColorChannelShift(bitmap)
 
         effect.apply(canvas, bitmap)
@@ -27,8 +30,11 @@ object Glitch : KoinComponent {
         if (storage.theme != ThemesManager.Theme.SafeMode)
             return
 
+        if (storage.corruption != Storage.CorruptionLevel.MEDIUM && storage.corruption != Storage.CorruptionLevel.MAJOR)
+            return
+
         if (layout == null) {
-            layout = convert_layout(view)
+            layout = convertLayout(view)
         }
 
         val bitmap = layout
@@ -39,8 +45,9 @@ object Glitch : KoinComponent {
         }
     }
 
-    fun convert_layout(_view: View): Bitmap? {
-        _view.setDrawingCacheEnabled(true)
+
+    private fun convertLayout(_view: View): Bitmap? {
+        _view.isDrawingCacheEnabled = true
         _view.measure(
             View.MeasureSpec.makeMeasureSpec(
                 0,
@@ -51,11 +58,9 @@ object Glitch : KoinComponent {
                 View.MeasureSpec.UNSPECIFIED
             )
         )
-        _view.layout(0, 0, _view.getMeasuredWidth(), _view.getMeasuredHeight())
+        _view.layout(0, 0, _view.measuredWidth, _view.measuredHeight)
         _view.buildDrawingCache(true)
-        val drawingCache = _view.getDrawingCache()
-        if (drawingCache == null)
-            return null
+        val drawingCache = _view.drawingCache ?: return null
 
         return Bitmap.createScaledBitmap(drawingCache, 400, 780, true)
     }

@@ -13,6 +13,7 @@ import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.ui.glitch.Glitch
 import com.shortstack.hackertracker.ui.themes.ThemesManager
+import com.shortstack.hackertracker.utilities.Storage
 
 
 class SkullView : AppCompatImageView {
@@ -58,18 +59,35 @@ class SkullView : AppCompatImageView {
         return (drawable.intrinsicHeight.toFloat() * 1.25f).toInt()
     }
 
-    private val glitch: Boolean = App.instance.storage.theme == ThemesManager.Theme.SafeMode
+    private val storage = App.instance.storage
+    private val glitch: Boolean = storage.theme == ThemesManager.Theme.SafeMode
+
+    private var isRunning = true
 
     init {
         if (glitch) {
+            val delay = when (storage.corruption) {
+                Storage.CorruptionLevel.NONE -> 0
+                Storage.CorruptionLevel.MINOR -> 5_000L
+                Storage.CorruptionLevel.MEDIUM -> 1_000L
+                Storage.CorruptionLevel.MAJOR -> 150L
+            }
+
             val handler = Handler()
             handler.postDelayed(object : Runnable {
                 override fun run() {
-                    invalidate()
-                    handler.postDelayed(this, 150)
+                    if (isRunning) {
+                        invalidate()
+                        handler.postDelayed(this, delay)
+                    }
                 }
-            }, 1000)
+            }, delay)
         }
+    }
+
+    override fun onDetachedFromWindow() {
+        super.onDetachedFromWindow()
+        isRunning = false
     }
 
     companion object {
