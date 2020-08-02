@@ -44,6 +44,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:alpha="0.70"
+                android:background="?android:selectableItemBackground"
                 android:gravity="center"
                 android:padding="16dp"
                 tools:text="Version 6.0.1" />
@@ -54,8 +55,8 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
                 android:layout_margin="16dp"
-                android:scaleType="center"
                 android:paddingBottom="?android:attr/actionBarSize"
+                android:scaleType="center"
                 android:src="?footer_icon"
                 android:tint="?footer_tint" />
 

@@ -24,11 +24,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         private const val CHANGE_THEME_KEY = "change_theme"
         private const val CHANGE_CONFERENCE_KEY = "change_conference"
-
-        private const val FORCE_TIMEZONE_KEY = "force_time_zone"
-        private const val USER_ANALYTICS_KEY = "user_analytics"
-        private const val EASTER_EGG_KEY = "easter_eggs"
-        private const val BACK_BUTTON_DRAWER_KEY = "nav_drawer_on_back"
+        private const val SAFE_MODE_KEY = "safe_mode"
     }
 
     private val database: DatabaseManager by inject()
@@ -70,46 +66,41 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 title = getString(R.string.setting_time_zone)
                 summaryOn = getString(R.string.setting_time_zone_summary_on)
                 summaryOff = getString(R.string.setting_time_zone_summary_off)
-                key = FORCE_TIMEZONE_KEY
+                key = Storage.FORCE_TIME_ZONE_KEY
             })
 
             // Back Button
             addPreference(SwitchPreference(context).apply {
                 title = getString(R.string.setting_back_button_drawer)
-                key = BACK_BUTTON_DRAWER_KEY
+                key = Storage.NAV_DRAWER_ON_BACK_KEY
             })
 
             // Easter Eggs
             addPreference(SwitchPreference(context).apply {
                 title = getString(R.string.setting_easter_eggs)
                 summary = getString(R.string.setting_easter_eggs_summary)
-                key = EASTER_EGG_KEY
+                key = Storage.EASTER_EGGS_ENABLED_KEY
             })
 
             // Analytics
             addPreference(SwitchPreference(context).apply {
                 title = getString(R.string.setting_user_analytics)
-                key = USER_ANALYTICS_KEY
+                key = Storage.USER_ANALYTICS_KEY
             })
 
-            // Analytics
-            addPreference(SwitchPreference(context).apply {
-                title = "Logo Glitch"
-                key = "glitch_logo"
-                setOnPreferenceChangeListener { preference, newValue ->
-                    (context as MainActivity).recreate()
-                    true
-                }
-            })
-            addPreference(SwitchPreference(context).apply {
-                title = "Screen Glitch"
-                key = "glitch_screen"
-                setOnPreferenceChangeListener { preference, newValue ->
-                    (context as MainActivity).recreate()
-                    true
-                }
-            })
+            // todo: check date
+            if (storage.getPreference(Storage.EASTER_EGGS_ENABLED_KEY, false)) {
+                // Safe Mode
+                addPreference(Preference(context).apply {
+                    title = getString(R.string.settings_reboot)
+                    summary = getString(R.string.settings_safe_mode_summary)
+                    key = SAFE_MODE_KEY
+                    setOnPreferenceClickListener {
 
+                        true
+                    }
+                })
+            }
         }
 
         preferenceScreen = screen
@@ -130,6 +121,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
         })
 
         version.text = getString(R.string.version, BuildConfig.VERSION_NAME)
+
+        var index = 0
+        version.setOnClickListener {
+            if (index++ == 10) {
+                storage.setPreference(Storage.DEVELOPER_THEME_UNLOCKED, true)
+            }
+        }
     }
 
     private fun updateConference(conference: Conference) {
@@ -138,8 +136,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun updateTimezonePreference(conference: Conference) {
-        val preference = preferenceScreen.findPreference<SwitchPreference>(FORCE_TIMEZONE_KEY)
-        preference?.title = getString(R.string.setting_time_zone, conference.timezone)
+        val preference = preferenceScreen.findPreference<SwitchPreference>(Storage.FORCE_TIME_ZONE_KEY)
+        preference?.title = getString(R.string.setting_time_zone, conference.timezone.toUpperCase())
     }
 
 

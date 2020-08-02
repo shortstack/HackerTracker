@@ -10,8 +10,10 @@ import com.shortstack.hackertracker.models.firebase.FirebaseConferenceMap
 import com.shortstack.hackertracker.models.local.*
 import com.shortstack.hackertracker.ui.themes.ThemesManager
 import com.shortstack.hackertracker.utilities.Storage
+import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import org.koin.core.KoinComponent
 import org.koin.core.inject
+import kotlin.collections.filter
 
 class HackerTrackerViewModel : ViewModel(), KoinComponent {
 
@@ -249,17 +251,31 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
 
             result.addSource(bookmarks) {
                 val articles = articles.value?.data?.take(4) ?: emptyList()
-                result.value = Resource.success(articles + (it.data?.take(3) ?: emptyList()))
+                val bookmarks = it.data?.filter{ !it.hasFinished }?.take(3) ?: emptyList()
+                setHome(result, articles, bookmarks)
             }
 
             result.addSource(articles) {
-                val bookmarks = bookmarks.value?.data?.take(3) ?: emptyList()
-                result.value = Resource.success((it.data?.take(4) ?: emptyList()) + bookmarks)
+                val articles = it.data?.take(4) ?: emptyList()
+                val bookmarks = bookmarks.value?.data?.filter{ !it.hasFinished }?.take(3) ?: emptyList()
+                setHome(result, articles, bookmarks)
             }
 
             return@switchMap result
         }
 
+    }
+
+    private fun setHome(
+        result: MediatorLiveData<Resource<List<Any>>>,
+        articles: List<Article>,
+        bookmarks: List<Event>
+    ) {
+        if (bookmarks.isEmpty()) {
+            result.value = Resource.success(articles)
+        } else {
+            result.value = Resource.success(articles + "Bookmarks" + bookmarks)
+        }
     }
 
     private fun getSchedule(events: List<Event>, types: List<Type>): List<Event> {
