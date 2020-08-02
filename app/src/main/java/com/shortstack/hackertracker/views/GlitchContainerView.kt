@@ -4,24 +4,23 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.os.Handler
-import android.preference.PreferenceManager
 import android.util.AttributeSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.ui.glitch.Glitch
 import kotlin.random.Random
-
+import com.shortstack.hackertracker.App
+import com.shortstack.hackertracker.ui.themes.ThemesManager
 
 class GlitchContainerView(context: Context, attrs: AttributeSet?) :
     CoordinatorLayout(context, attrs) {
+
+    private val glitch: Boolean = App.instance.storage.theme == ThemesManager.Theme.SafeMode
 
     var isNormal = true
     var isRunning = true
 
     init {
-        if (PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean("glitch_screen", false)
-        ) {
+        if (glitch) {
             val handler = Handler()
             handler.postDelayed(object : Runnable {
                 override fun run() {
@@ -55,7 +54,7 @@ class GlitchContainerView(context: Context, attrs: AttributeSet?) :
     }
 
     override fun draw(canvas: Canvas?) {
-        if (isDrawing || isNormal) {
+        if (isDrawing || isNormal || glitch) {
             super.draw(canvas)
             return
         }

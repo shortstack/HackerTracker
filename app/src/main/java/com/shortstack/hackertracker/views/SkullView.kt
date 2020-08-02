@@ -5,13 +5,14 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.graphics.drawable.Drawable
 import android.os.Handler
-import android.preference.PreferenceManager
 import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.ui.glitch.Glitch
+import com.shortstack.hackertracker.ui.themes.ThemesManager
 
 
 class SkullView : AppCompatImageView {
@@ -57,10 +58,10 @@ class SkullView : AppCompatImageView {
         return (drawable.intrinsicHeight.toFloat() * 1.25f).toInt()
     }
 
+    private val glitch: Boolean = App.instance.storage.theme == ThemesManager.Theme.SafeMode
+
     init {
-        if (PreferenceManager.getDefaultSharedPreferences(context)
-                .getBoolean("glitch_logo", false)
-        ) {
+        if (glitch) {
             val handler = Handler()
             handler.postDelayed(object : Runnable {
                 override fun run() {
@@ -76,8 +77,7 @@ class SkullView : AppCompatImageView {
     }
 
     override fun draw(canvas: Canvas?) {
-
-        if (isDrawing) {
+        if (!glitch || isDrawing) {
             super.draw(canvas)
             return
         }
