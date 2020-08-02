@@ -96,7 +96,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
                     summary = getString(R.string.settings_safe_mode_summary)
                     key = SAFE_MODE_KEY
                     setOnPreferenceClickListener {
-
+                        storage.theme = ThemesManager.Theme.SafeMode
+                        storage.setPreference(Storage.SAFE_MODE_ENABLED, true)
+                        requireActivity().recreate()
                         true
                     }
                 })
@@ -136,7 +138,8 @@ class SettingsFragment : PreferenceFragmentCompat() {
     }
 
     private fun updateTimezonePreference(conference: Conference) {
-        val preference = preferenceScreen.findPreference<SwitchPreference>(Storage.FORCE_TIME_ZONE_KEY)
+        val preference =
+            preferenceScreen.findPreference<SwitchPreference>(Storage.FORCE_TIME_ZONE_KEY)
         preference?.title = getString(R.string.setting_time_zone, conference.timezone.toUpperCase())
     }
 

@@ -16,7 +16,7 @@ class GlitchContainerView(context: Context, attrs: AttributeSet?) :
     CoordinatorLayout(context, attrs) {
 
     private val storage = App.instance.storage
-    private val glitch: Boolean = storage.theme == ThemesManager.Theme.SafeMode
+    private val glitch: Boolean = storage.theme == ThemesManager.Theme.SafeMode && storage.corruption > MEDIUM
 
     var isNormal = true
     var isRunning = true

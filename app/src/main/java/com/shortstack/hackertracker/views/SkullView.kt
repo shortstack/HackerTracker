@@ -60,29 +60,34 @@ class SkullView : AppCompatImageView {
     }
 
     private val storage = App.instance.storage
-    private val glitch: Boolean = storage.theme == ThemesManager.Theme.SafeMode
+    private val glitch: Boolean =
+        storage.theme == ThemesManager.Theme.SafeMode && storage.corruption > Storage.CorruptionLevel.MINOR
 
     private var isRunning = true
 
     init {
         if (glitch) {
-            val delay = when (storage.corruption) {
-                Storage.CorruptionLevel.NONE -> 0
-                Storage.CorruptionLevel.MINOR -> 5_000L
-                Storage.CorruptionLevel.MEDIUM -> 1_000L
-                Storage.CorruptionLevel.MAJOR -> 150L
-            }
-
-            val handler = Handler()
-            handler.postDelayed(object : Runnable {
-                override fun run() {
-                    if (isRunning) {
-                        invalidate()
-                        handler.postDelayed(this, delay)
-                    }
-                }
-            }, delay)
+            initHandler()
         }
+    }
+
+    private fun initHandler() {
+        val delay = when (storage.corruption) {
+            Storage.CorruptionLevel.NONE -> return
+            Storage.CorruptionLevel.MINOR -> 5_000L
+            Storage.CorruptionLevel.MEDIUM -> 1_000L
+            Storage.CorruptionLevel.MAJOR -> 150L
+        }
+
+        val handler = Handler()
+        handler.postDelayed(object : Runnable {
+            override fun run() {
+                if (isRunning) {
+                    invalidate()
+                    handler.postDelayed(this, delay)
+                }
+            }
+        }, delay)
     }
 
     override fun onDetachedFromWindow() {
@@ -95,7 +100,7 @@ class SkullView : AppCompatImageView {
     }
 
     override fun draw(canvas: Canvas?) {
-        if (!glitch || isDrawing) {
+        if (!glitch || isDrawing || !isRunning) {
             super.draw(canvas)
             return
         }
