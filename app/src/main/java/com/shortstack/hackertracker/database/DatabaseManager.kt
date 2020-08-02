@@ -524,6 +524,9 @@ class DatabaseManager(private val preferences: Storage) {
     fun getMaps(conference: Conference): MutableLiveData<List<FirebaseConferenceMap>> {
         val mutableLiveData = MutableLiveData<List<FirebaseConferenceMap>>()
 
+        if(conference.code == "DEFCON28")
+            return mutableLiveData
+
         val list = ArrayList<FirebaseConferenceMap>()
 
         val maps = conference.maps
