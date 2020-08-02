@@ -78,6 +78,19 @@
     </style>
 
     <style name="AppTheme.Splash">
+        <item name="android:statusBarColor">@color/black</item>
+        <item name="colorPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorSecondary">@color/black</item>
+        <item name="colorSecondaryVariant">@color/black</item>
+        <item name="colorOnSecondary">#FFFFFF</item>
+        <item name="colorError">#F44336</item>
+        <item name="colorOnError">#FFFFFF</item>
+        <item name="colorSurface">@color/black</item>
+        <item name="colorOnSurface">@color/black</item>
+        <item name="android:colorBackground">@color/black</item>
+        <item name="colorOnBackground">@color/white</item>
         <item name="android:windowBackground">@drawable/splash_background</item>
     </style>
 

@@ -103,27 +103,13 @@ class EventFragment : Fragment() {
                     return adapter.getSpanSize(position, gridLayoutManager.spanCount)
                 }
             }
-        adapter.setElements(listOf("Links") + event.urls + "Speakers" + event.speakers)
-
-
+        adapter.setElements(event.urls, event.speakers)
 
         if (body.isNotBlank()) {
             empty.visibility = View.GONE
             description.text = body
         } else {
             empty.visibility = View.VISIBLE
-        }
-
-        val url = event.link
-        if (url.isBlank()) {
-            link.visibility = View.GONE
-        } else {
-            link.visibility = View.VISIBLE
-
-            link.setOnClickListener {
-                onLinkClick(url)
-                analytics.onEventAction(Analytics.EVENT_OPEN_URL, event)
-            }
         }
 
         share.setOnClickListener {

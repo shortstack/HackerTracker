@@ -213,7 +213,7 @@
                         android:overScrollMode="never"
                         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                         app:spanCount="3"
-                        tools:itemCount="25"
+                        tools:itemCount="5"
                         tools:listitem="@layout/item_event_link" />
 
 
