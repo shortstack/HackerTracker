@@ -71,7 +71,7 @@
                     style="@style/IconButton"
                     android:tint="?android:colorForeground"
                     app:srcCompat="@drawable/ic_map_white_24dp" />
-                
+
                 <ImageView
                     android:id="@+id/star"
                     style="@style/IconButton"
@@ -196,81 +196,33 @@
             </FrameLayout>
 
 
-            <TextView
-                style="@style/SectionHeader"
-                android:text="Links" />
-
-
-            <LinearLayout
+            <androidx.core.widget.NestedScrollView
                 android:layout_width="match_parent"
-                android:layout_height="90dp"
-                android:orientation="horizontal">
+                android:layout_height="match_parent">
 
-                <FrameLayout
-                    android:layout_width="0dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_weight="1">
+                    android:orientation="vertical">
 
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_discord_logo_white" />
 
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="48dp"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_baseline_forum_24" />
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:layout_width="48dp"
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/contents"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:src="@drawable/ic_twitter" />
-                </FrameLayout>
-
-                <FrameLayout
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1">
-
-                    <ImageView
-                        android:layout_width="48dp"
-                        android:layout_height="match_parent"
-                        android:layout_gravity="center"
-                        android:src="@drawable/browser"
-                        android:tint="@color/white" />
-                </FrameLayout>
+                        android:overScrollMode="never"
+                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                        app:spanCount="3"
+                        tools:itemCount="25"
+                        tools:listitem="@layout/item_event_link" />
 
 
-            </LinearLayout>
+                    <include layout="@layout/row_footer" />
 
-            <TextView
-                android:id="@+id/speakers_header"
-                style="@style/SectionHeader"
-                android:text="@string/speakers" />
 
-            <LinearLayout
-                android:id="@+id/speakers"
-                style="@style/Section"
-                android:padding="0dp" />
+                </LinearLayout>
 
-            <include layout="@layout/row_footer" />
-
+            </androidx.core.widget.NestedScrollView>
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

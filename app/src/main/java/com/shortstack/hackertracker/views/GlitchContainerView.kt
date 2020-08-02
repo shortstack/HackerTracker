@@ -34,13 +34,9 @@ class GlitchContainerView(context: Context, attrs: AttributeSet?) :
                             100
                         }
 
-                        Logger.d("Now waiting: $delay ms")
-
                         handler.postDelayed(this, delay.toLong())
 
                         isNormal = Random.nextInt(100) > 5
-
-                        Logger.d("Next frame will be ${if (isNormal) "normal" else "corrupted"}.")
                     }
                 }
             }, 1000)

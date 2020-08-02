@@ -12,6 +12,8 @@ import com.shortstack.hackertracker.utilities.now
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
+import java.util.regex.Matcher
+import java.util.regex.Pattern
 
 fun Date.isToday(): Boolean {
     val current = Calendar.getInstance().now()
@@ -114,6 +116,14 @@ fun FirebaseLocation.toLocation() = Location(
 
 fun FirebaseEvent.toEvent(): Event {
     val element = type.toType()
+    val links = if (conference == "DEFCON28") {
+        val urls = extractUrls(description)
+        urls.map { it.toAction() }
+    } else {
+        emptyList()
+    }
+
+
     val types = if (conference.equals("DEFCON28")) {
         when {
             element.isWorkshop -> {
@@ -141,8 +151,29 @@ fun FirebaseEvent.toEvent(): Event {
         updated,
         speakers.map { it.toSpeaker() },
         types,
-        location.toLocation()
+        location.toLocation(),
+        links
     )
+}
+
+private fun String.toAction() = Action(this)
+
+private fun extractUrls(text: String): List<String> {
+    val containedUrls: MutableList<String> =
+        ArrayList()
+    val urlRegex =
+        "((https?|ftp|gopher|telnet|file):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)"
+    val pattern: Pattern = Pattern.compile(urlRegex, Pattern.CASE_INSENSITIVE)
+    val urlMatcher: Matcher = pattern.matcher(text)
+    while (urlMatcher.find()) {
+        containedUrls.add(
+            text.substring(
+                urlMatcher.start(0),
+                urlMatcher.end(0)
+            )
+        )
+    }
+    return containedUrls
 }
 
 fun FirebaseSpeaker.toSpeaker() = Speaker(
