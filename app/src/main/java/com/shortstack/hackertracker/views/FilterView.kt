@@ -16,13 +16,27 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
         private const val SPAN_COUNT = 2
     }
 
+    private val adapter = FilterAdapter()
+
+
     init {
         View.inflate(context, R.layout.view_filter, this)
+        list.adapter = adapter
+        list.layoutManager =
+            GridLayoutManager(context, SPAN_COUNT, RecyclerView.VERTICAL, false).apply {
+                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        return when (adapter.getItemViewType(position)) {
+                            FilterAdapter.TYPE_HEADER -> SPAN_COUNT
+                            else -> 1
+                        }
+                    }
+                }
+            }
     }
 
     fun setTypes(types: List<Type>?) {
         if (types != null) {
-
             val collection = ArrayList<Any>()
 
             types.find { it.isBookmark }?.let {
@@ -31,7 +45,8 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
 
             collection.add(context.getString(R.string.types))
 
-            val elements = types.filter { !it.isBookmark && !it.isVillage && !it.isWorkshop }.sortedBy { it.name }
+            val elements = types.filter { !it.isBookmark && !it.isVillage && !it.isWorkshop }
+                .sortedBy { it.name }
             collection.addAll(elements)
 
             collection.add(context.getString(R.string.villages))
@@ -44,21 +59,7 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
             val workshops = types.filter { it.isWorkshop }.sortedBy { it.name }
             collection.addAll(workshops)
 
-            val adapter = FilterAdapter(collection)
-
-            list.layoutManager =
-                GridLayoutManager(context, SPAN_COUNT, RecyclerView.VERTICAL, false).apply {
-                    spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                        override fun getSpanSize(position: Int): Int {
-                            return when (adapter.getItemViewType(position)) {
-                                FilterAdapter.TYPE_HEADER -> SPAN_COUNT
-                                else -> 1
-                            }
-                        }
-                    }
-                }
-            list.adapter = adapter
-
+            adapter.setElements(collection)
         }
     }
 }

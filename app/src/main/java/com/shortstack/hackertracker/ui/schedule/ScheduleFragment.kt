@@ -112,7 +112,7 @@ class ScheduleFragment : Fragment() {
 
 
         val scheduleViewModel = ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java]
-        scheduleViewModel.schedule.observe(this, Observer {
+        scheduleViewModel.schedule.observe(viewLifecycleOwner, Observer {
             hideViews()
 
             if (it != null) {
@@ -144,7 +144,7 @@ class ScheduleFragment : Fragment() {
             }
         })
 
-        scheduleViewModel.types.observe(this, Observer {
+        scheduleViewModel.types.observe(viewLifecycleOwner, Observer {
             filters.setTypes(it.data)
         })
 
