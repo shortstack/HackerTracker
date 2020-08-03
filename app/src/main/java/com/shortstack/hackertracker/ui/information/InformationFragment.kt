@@ -74,7 +74,7 @@ class InformationFragment : Fragment() {
 
     class PagerAdapter(fm: FragmentManager, private val conference: String) : FragmentStatePagerAdapter(fm) {
         override fun getItem(position: Int): Fragment {
-            val index = if (conference == "DEFCON27") {
+            val index = if (conference.contains("DEFCON")) {
                 position
             } else {
                 position + 1
@@ -90,7 +90,7 @@ class InformationFragment : Fragment() {
         }
 
         override fun getPageTitle(position: Int): CharSequence? {
-            val index = if (conference == "DEFCON27") {
+            val index = if (conference.contains("DEFCON")) {
                 position
             } else {
                 position + 1
@@ -106,7 +106,7 @@ class InformationFragment : Fragment() {
         }
 
         override fun getCount(): Int {
-            if (conference == "DEFCON27")
+            if (conference.contains("DEFCON"))
                 return 4
             return 3
         }
