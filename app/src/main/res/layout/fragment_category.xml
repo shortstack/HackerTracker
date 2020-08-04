@@ -24,7 +24,6 @@
             app:expandedSubtitleTextAppearance="@style/Subhead"
             app:expandedTitleTextAppearance="@style/FragmentHeader"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            tools:subtitle="Hacker"
             tools:title="John Doe">
 
 
@@ -76,6 +75,14 @@
                     tools:text="My event is so fresh!\nSofresh!" />
 
             </FrameLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/links"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2" />
 
             <include layout="@layout/row_footer" />
 

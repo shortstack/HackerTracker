@@ -86,7 +86,7 @@ class EventFragment : Fragment() {
     }
 
     private fun showEvent(event: Event) {
-        analytics.log("Viewing event_unbookmarked ${event.title}")
+        analytics.log("Viewing event: ${event.title}")
 
         collapsing_toolbar.title = event.title
 

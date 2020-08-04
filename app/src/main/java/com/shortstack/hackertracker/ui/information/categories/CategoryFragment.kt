@@ -6,11 +6,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.ui.activities.MainActivity
+import com.shortstack.hackertracker.ui.events.EventDetailsAdapter
 import kotlinx.android.synthetic.main.empty_text.*
 import kotlinx.android.synthetic.main.fragment_category.*
+import kotlinx.android.synthetic.main.fragment_category.collapsing_toolbar
+import kotlinx.android.synthetic.main.fragment_category.description
+import kotlinx.android.synthetic.main.fragment_category.toolbar
+import kotlinx.android.synthetic.main.fragment_event.*
+import kotlinx.android.synthetic.main.row_vendor.*
 
 class CategoryFragment : Fragment() {
 
@@ -56,7 +63,6 @@ class CategoryFragment : Fragment() {
 
     private fun showType(type: Type) {
         collapsing_toolbar.title = type.fullName
-        collapsing_toolbar.subtitle = context?.getString(R.string.category)
 
         val body = type.description
 
@@ -66,5 +72,17 @@ class CategoryFragment : Fragment() {
         } else {
             empty.visibility = View.VISIBLE
         }
+
+        val adapter = EventDetailsAdapter()
+        adapter.setElements(type.actions, emptyList())
+        links.adapter = adapter
+        val gridLayoutManager = links.layoutManager as GridLayoutManager
+
+        gridLayoutManager.spanSizeLookup =
+            object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int {
+                    return adapter.getSpanSize(position, gridLayoutManager.spanCount)
+                }
+            }
     }
 }
