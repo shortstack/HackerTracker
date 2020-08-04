@@ -264,4 +264,8 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
 
         setMainFragment(R.id.nav_map, getString(R.string.map), true)
     }
+
+    fun navigate(type: Type) {
+
+    }
 }

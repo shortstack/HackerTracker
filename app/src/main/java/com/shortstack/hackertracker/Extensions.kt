@@ -14,6 +14,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import kotlin.collections.ArrayList
 
 fun Date.isToday(): Boolean {
     val current = Calendar.getInstance().now()
@@ -101,12 +102,24 @@ fun FirebaseConference.toConference() = Conference(
     timezone
 )
 
-fun FirebaseType.toType() = Type(
-    id,
-    name,
-    conference,
-    color
-)
+fun FirebaseType.toType(): Type {
+    val actions = ArrayList<Action>()
+    if (discord_url != null) {
+        actions.add(Action(discord_url))
+    }
+    if (subforum_url != null) {
+        actions.add(Action(subforum_url))
+    }
+
+    return Type(
+        id,
+        name,
+        conference,
+        color,
+        description,
+        actions
+    )
+}
 
 fun FirebaseLocation.toLocation() = Location(
     name,
@@ -124,13 +137,13 @@ fun FirebaseEvent.toEvent(): Event {
     }
 
 
-    val types = if (conference.equals("DEFCON28")) {
+    val types = if (conference == "DEFCON28") {
         when {
             element.isWorkshop -> {
-                listOf(Type(1, "Workshop", "DEFCON28", "#968AC8"), element)
+                listOf(Type(1, "Workshop", "DEFCON28", "#968AC8", "", emptyList()), element)
             }
             element.isVillage -> {
-                listOf(Type(45097, "Village", "DEFCON28", "#968AC8"), element)
+                listOf(Type(45097, "Village", "DEFCON28", "#968AC8", "", emptyList()), element)
             }
             else -> {
                 listOf(element)
@@ -176,7 +189,7 @@ private fun extractUrls(text: String): List<String> {
     return containedUrls
 }
 
-fun FirebaseSpeaker.toSpeaker() = Speaker(
+fun FirebaseSpeaker.toSpeaker() = Type(
     id,
     name,
     description,

@@ -18,15 +18,17 @@ import com.shortstack.hackertracker.ui.information.faq.FAQFragment
 import com.shortstack.hackertracker.ui.information.info.InfoFragment
 import com.shortstack.hackertracker.ui.information.speakers.SpeakersFragment
 import com.shortstack.hackertracker.ui.information.vendors.VendorsFragment
+import com.shortstack.hackertracker.ui.information.villages.VillagesFragment
 import kotlinx.android.synthetic.main.fragment_information.*
 
 class InformationFragment : Fragment() {
 
     companion object {
         private const val INFO = 0
-        private const val FAQ = 1
-        private const val SPEAKERS = 2
-        private const val VENDORS = 3
+        private const val VILLAGES = 1
+        private const val FAQ = 2
+        private const val SPEAKERS = 3
+        private const val VENDORS = 4
 
 
         fun newInstance(): InformationFragment {
@@ -46,7 +48,7 @@ class InformationFragment : Fragment() {
         }
 
         tabs.apply {
-            tabGravity = TabLayout.GRAVITY_FILL
+            tabGravity = TabLayout.GRAVITY_START
             setupWithViewPager(pager)
         }
 
@@ -63,7 +65,7 @@ class InformationFragment : Fragment() {
         })
 
         val viewModel = ViewModelProvider(this)[HackerTrackerViewModel::class.java]
-        viewModel.conference.observe(this, Observer {
+        viewModel.conference.observe(viewLifecycleOwner, Observer {
             val fm = activity?.supportFragmentManager ?: return@Observer
             if (it.status == Status.SUCCESS) {
                 val adapter = PagerAdapter(fm, it.data!!.code)
@@ -77,11 +79,12 @@ class InformationFragment : Fragment() {
             val index = if (conference.contains("DEFCON")) {
                 position
             } else {
-                position + 1
+                position + 2
             }
 
             return when (index) {
                 INFO -> InfoFragment.newInstance()
+                VILLAGES -> VillagesFragment.newInstance()
                 SPEAKERS -> SpeakersFragment.newInstance()
                 FAQ -> FAQFragment.newInstance()
                 VENDORS -> VendorsFragment.newInstance()
@@ -93,13 +96,14 @@ class InformationFragment : Fragment() {
             val index = if (conference.contains("DEFCON")) {
                 position
             } else {
-                position + 1
+                position + 2
             }
 
             return when (index) {
                 INFO -> "Event"
-                SPEAKERS -> "Speakers"
+                VILLAGES -> "Villages"
                 FAQ -> "FAQ"
+                SPEAKERS -> "Speakers"
                 VENDORS -> "Vendors"
                 else -> throw IndexOutOfBoundsException("Position out of bounds: $index")
             }
@@ -107,9 +111,8 @@ class InformationFragment : Fragment() {
 
         override fun getCount(): Int {
             if (conference.contains("DEFCON"))
-                return 4
+                return 5
             return 3
         }
-
     }
 }

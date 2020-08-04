@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.models.local
 
 import android.os.Parcelable
+import com.shortstack.hackertracker.Action
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -9,6 +10,8 @@ data class Type(
     private val _name: String,
     val conference: String,
     private val _color: String,
+    val description: String,
+    val actions: List<Action>,
     var isSelected: Boolean = false
 ) : Parcelable {
 
