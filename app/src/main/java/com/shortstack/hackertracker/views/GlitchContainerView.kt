@@ -6,23 +6,34 @@ import android.graphics.Canvas
 import android.os.Handler
 import android.util.AttributeSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
-import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.ui.glitch.Glitch
 import com.shortstack.hackertracker.ui.themes.ThemesManager
+import com.shortstack.hackertracker.utilities.Storage
 import com.shortstack.hackertracker.utilities.Storage.CorruptionLevel.*
+import org.koin.core.KoinComponent
+import org.koin.core.get
 import kotlin.random.Random
 
 class GlitchContainerView(context: Context, attrs: AttributeSet?) :
-    CoordinatorLayout(context, attrs) {
+    CoordinatorLayout(context, attrs), KoinComponent {
 
-    private val storage = App.instance.storage
-    private val glitch: Boolean = storage.theme == ThemesManager.Theme.SafeMode && storage.corruption > MEDIUM
+    private var isGlitch = false
+    private var isNormal = true
+    private var isRunning = true
+    private var isDrawing = false
 
-    var isNormal = true
-    var isRunning = true
+    override fun onAttachedToWindow() {
+        super.onAttachedToWindow()
 
-    init {
-        if (glitch) {
+        if (isInEditMode) {
+            isGlitch = false
+            return
+        }
+
+        val storage = get<Storage>()
+        isGlitch = false//storage.theme == ThemesManager.Theme.SafeMode && storage.corruption > MEDIUM
+
+        if (isGlitch) {
             val chance = when (storage.corruption) {
                 NONE -> 0
                 MINOR -> 0
@@ -50,29 +61,21 @@ class GlitchContainerView(context: Context, attrs: AttributeSet?) :
         isRunning = false
     }
 
-    companion object {
-        var isDrawing = false
-    }
-
-    override fun draw(canvas: Canvas?) {
-        if (isDrawing || isNormal || !glitch) {
+    override fun draw(canvas: Canvas) {
+        if (isDrawing || isNormal || !isGlitch) {
             super.draw(canvas)
             return
         }
 
-        if (canvas == null) {
-            super.draw(canvas)
-        } else {
-            synchronized(this) {
-                isDrawing = true
-                isNormal = false
-                val bitmap: Bitmap? = drawingCache
-                if (bitmap != null) {
-                    Glitch.apply(canvas, bitmap)
-                    destroyDrawingCache()
-                }
-                isDrawing = false
+        synchronized(this) {
+            isDrawing = true
+            isNormal = false
+            val bitmap: Bitmap? = drawingCache
+            if (bitmap != null) {
+                Glitch.apply(canvas, bitmap)
+                destroyDrawingCache()
             }
+            isDrawing = false
         }
     }
 }

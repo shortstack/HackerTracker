@@ -29,13 +29,16 @@
         android:gravity="center"
         android:padding="8dp"
         android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-        tools:text="DEFCON" />
+        android:textStyle="bold"
+        tools:text="DEF CON 28" />
 
     <TextView
         style="@style/TextAppearance.AppCompat.Caption"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
-        android:text="?footer_label" />
+        android:text="?footer_label"
+        android:textStyle="bold"
+        tools:text="Safe Mode" />
 
 </LinearLayout>

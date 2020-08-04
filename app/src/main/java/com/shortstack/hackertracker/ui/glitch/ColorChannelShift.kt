@@ -22,7 +22,7 @@ class ColorChannelShift : GlitchEffect {
         private var offset = 0
     }
 
-    override fun apply(canvas: Canvas, bitmap: Bitmap) {
+    override fun apply(canvas: Canvas, bitmap: Bitmap, isGlitch: Boolean) {
         canvas.save()
 
         canvas.drawColor(Color.TRANSPARENT)
@@ -32,14 +32,11 @@ class ColorChannelShift : GlitchEffect {
 
         canvas.translate(canvas.width / 2f - width / 2f, canvas.height / 2f - height / 2f)
 
-        canvas.drawBitmap(modify(ColorChannel.RED), redPaint)
-        canvas.drawBitmap(modify(ColorChannel.GREEN), greenPaint)
-        canvas.drawBitmap(modify(ColorChannel.BLUE), bluePaint)
+        canvas.drawBitmap(modify(ColorChannel.RED, isGlitch), redPaint)
+        canvas.drawBitmap(modify(ColorChannel.GREEN, isGlitch), greenPaint)
+        canvas.drawBitmap(modify(ColorChannel.BLUE, isGlitch), bluePaint)
 
         offset++
-
-        if (offset > 35)
-            offset = -15
 
         try {
             canvas.restore()
@@ -59,7 +56,6 @@ class ColorChannelShift : GlitchEffect {
         this.bitmap = bitmap
         init()
     }
-
 
     private val maxHorizontalOffset: Float
         get() = bitmap.width * 0.25f
@@ -87,26 +83,26 @@ class ColorChannelShift : GlitchEffect {
         }
     }
 
-    private fun modify(channel: ColorChannel): FloatArray {
+    private fun modify(channel: ColorChannel, isGlitch: Boolean): FloatArray {
         val random = Random(offset)
 
-        val isNormal = random.nextBoolean()
-        val areas = listOf(
-            IntRange(0, 5000) to random.nextBoolean(),
-            IntRange(5000, 10000) to random.nextBoolean(),
-            IntRange(10000, 12000) to random.nextBoolean(),
-            IntRange(12000, 18000) to random.nextBoolean()
-        )
-
-
-        val xOffset = random.nextFloat() * maxHorizontalOffset
-        val yOffset = random.nextFloat() * maxVerticalOffset
+        val isNormal = !isGlitch || random.nextBoolean()
 
         val matrix = matrixOriginal.clone()
 
         if (isNormal) {
             return matrix
         }
+
+        val areas = listOf(
+            IntRange(0, 5000) to random.nextInt(3) - 1,
+            IntRange(5000, 10000) to random.nextInt(3) - 1,
+            IntRange(10000, 12000) to random.nextInt(3) - 1,
+            IntRange(12000, 18000) to random.nextInt(3) - 1
+        )
+
+        val xOffset = random.nextFloat() * maxHorizontalOffset
+        val yOffset = random.nextFloat() * maxVerticalOffset
 
         synchronized(this) {
             for (index in 0 until (SMCOUNT * 2) step 2) {
@@ -126,12 +122,13 @@ class ColorChannelShift : GlitchEffect {
                     }
                 }
 
-                val pixelShift = areas.find { index in it.first }?.second ?: false
+                val shift = areas.find { index in it.first }?.second ?: 0
 
-                if (pixelShift) {
-                    matrix[index] = matrix[index] + Random(offset).nextInt(50)
-                    if (Random(offset).nextBoolean()) {
-                        matrix[index] = -matrix[index]
+                if (shift != 0) {
+                    if (shift > 0) {
+                        matrix[index] = matrix[index] + Random(offset).nextInt(50)
+                    } else if (shift < 0) {
+                        matrix[index] = matrix[index] - Random(offset).nextInt(50)
                     }
                 }
             }

@@ -3,36 +3,20 @@ package com.shortstack.hackertracker.ui.glitch
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
-import com.shortstack.hackertracker.ui.themes.ThemesManager
 import com.shortstack.hackertracker.utilities.Storage
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
 object Glitch : KoinComponent {
 
-    private val storage: Storage by inject()
-
-    fun apply(canvas: Canvas, bitmap: Bitmap) {
-        if (storage.theme != ThemesManager.Theme.SafeMode)
-            return
-
-        if (storage.corruption == Storage.CorruptionLevel.NONE)
-            return
-
+    fun apply(canvas: Canvas, bitmap: Bitmap, isGlitch: Boolean = false) {
         val effect = ColorChannelShift(bitmap)
-
-        effect.apply(canvas, bitmap)
+        effect.apply(canvas, bitmap, isGlitch)
     }
 
     var layout: Bitmap? = null
 
     fun apply(canvas: Canvas, view: View) {
-        if (storage.theme != ThemesManager.Theme.SafeMode)
-            return
-
-        if (storage.corruption != Storage.CorruptionLevel.MEDIUM && storage.corruption != Storage.CorruptionLevel.MAJOR)
-            return
-
         if (layout == null) {
             layout = convertLayout(view)
         }
