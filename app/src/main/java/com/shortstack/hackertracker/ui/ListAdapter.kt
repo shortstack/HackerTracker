@@ -7,7 +7,7 @@ import com.shortstack.hackertracker.models.local.*
 import com.shortstack.hackertracker.ui.information.faq.FAQViewHolder
 import com.shortstack.hackertracker.ui.information.speakers.SpeakerViewHolder
 import com.shortstack.hackertracker.ui.information.vendors.VendorViewHolder
-import com.shortstack.hackertracker.ui.information.villages.VillagesViewHolder
+import com.shortstack.hackertracker.ui.information.categories.CategoryViewHolder
 import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.search.LocationViewHolder
@@ -22,7 +22,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private const val DAY = 3
         private const val VENDOR = 5
         private const val FAQ = 6
-        private const val TYPE = 7
+        private const val CATEGORY = 7
     }
 
     private val collection = ArrayList<Any>()
@@ -35,7 +35,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             DAY -> DayViewHolder.inflate(parent)
             VENDOR -> VendorViewHolder.inflate(parent)
             FAQ -> FAQViewHolder.inflate(parent)
-            TYPE -> VillagesViewHolder.inflate(parent)
+            CATEGORY -> CategoryViewHolder.inflate(parent)
             else -> throw IllegalStateException("Unknown viewType $viewType.")
         }
     }
@@ -52,7 +52,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is DayViewHolder -> holder.render(item as Day)
             is VendorViewHolder -> holder.render(item as Vendor)
             is FAQViewHolder -> holder.render(item as FAQ)
-            is VillagesViewHolder -> holder.render(item as Type)
+            is CategoryViewHolder -> holder.render(item as Type)
         }
     }
 
@@ -64,7 +64,7 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is Day -> DAY
             is Vendor -> VENDOR
             is FAQ -> FAQ
-            is Type -> TYPE
+            is Type -> CATEGORY
             else -> throw java.lang.IllegalStateException("Unknown viewType ${collection[position].javaClass}")
         }
     }

@@ -20,7 +20,7 @@ class EventTypeView(context: Context, attrs: AttributeSet) : LinearLayout(contex
     }
 
     fun render(type: Type) {
-        event_type_text.text = type.name
+        event_type_text.text = type.shortName
 
         val value = TypedValue()
         context.theme.resolveAttribute(R.attr.category_tint, value, true)

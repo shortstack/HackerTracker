@@ -46,17 +46,17 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
             collection.add(context.getString(R.string.types))
 
             val elements = types.filter { !it.isBookmark && !it.isVillage && !it.isWorkshop }
-                .sortedBy { it.name }
+                .sortedBy { it.shortName }
             collection.addAll(elements)
 
             collection.add(context.getString(R.string.villages))
 
-            val villages = types.filter { it.isVillage }.sortedBy { it.name }
+            val villages = types.filter { it.isVillage }.sortedBy { it.shortName }
             collection.addAll(villages)
 
             collection.add(context.getString(R.string.workshops))
 
-            val workshops = types.filter { it.isWorkshop }.sortedBy { it.name }
+            val workshops = types.filter { it.isWorkshop }.sortedBy { it.shortName }
             collection.addAll(workshops)
 
             adapter.setElements(collection)

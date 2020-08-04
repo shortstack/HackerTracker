@@ -15,8 +15,11 @@ data class Type(
     var isSelected: Boolean = false
 ) : Parcelable {
 
-    val name: String
+    val shortName: String
         get() = _name.replace(" Vlg", "")
+
+    val fullName: String
+        get() = _name.replace(" Vlg", " Village")
 
     val color: String
         get() = if (isVillage || isWorkshop) "#FFFFFF" else _color

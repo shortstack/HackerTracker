@@ -41,7 +41,7 @@ class TypeViewHolder(val view: View) : RecyclerView.ViewHolder(view), KoinCompon
                 Color.parseColor(type.color)
             }
 
-            chip.text = type.name
+            chip.text = type.shortName
             chip.chipBackgroundColor = ColorStateList.valueOf(color)
             chip.isCloseIconVisible = type.isSelected
 

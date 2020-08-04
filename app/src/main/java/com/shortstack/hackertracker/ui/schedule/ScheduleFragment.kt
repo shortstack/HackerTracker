@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -64,7 +63,7 @@ class ScheduleFragment : Fragment() {
 
         val type = arguments?.getParcelable<Type>(EXTRA_TYPE)
         if (type != null) {
-            toolbar.title = type.name
+            toolbar.title = type.shortName
             filter.visibility = View.GONE
         }
 

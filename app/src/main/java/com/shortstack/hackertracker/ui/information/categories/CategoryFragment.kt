@@ -1,7 +1,5 @@
-package com.shortstack.hackertracker.ui.information.villages
+package com.shortstack.hackertracker.ui.information.categories
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,11 +9,8 @@ import androidx.fragment.app.Fragment
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.utilities.Analytics
 import kotlinx.android.synthetic.main.empty_text.*
-import kotlinx.android.synthetic.main.fragment_speakers.collapsing_toolbar
-import kotlinx.android.synthetic.main.fragment_speakers.description
-import kotlinx.android.synthetic.main.fragment_speakers.toolbar
+import kotlinx.android.synthetic.main.fragment_category.*
 
 class CategoryFragment : Fragment() {
 
@@ -38,7 +33,7 @@ class CategoryFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_speakers, container, false)
+        return inflater.inflate(R.layout.fragment_category, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -54,36 +49,14 @@ class CategoryFragment : Fragment() {
         }
 
         val type = arguments?.getParcelable(EXTRA_TYPE) as? Type
-
+        if (type != null) {
+            showType(type)
+        }
     }
 
-    private fun showSpeaker(type: Type) {
-        analytics.log("Viewing speaker ${type.name}")
-
-        collapsing_toolbar.title = type.name
-        collapsing_toolbar.subtitle = if (type.title.isEmpty()) {
-            context?.getString(R.string.speaker_default_title)
-        } else {
-            type.title
-        }
-
-        toolbar.menu.clear()
-
-        val url = type.twitter
-        if (url.isNotEmpty()) {
-            toolbar.inflateMenu(R.menu.speaker_twitter)
-
-            toolbar.setOnMenuItemClickListener {
-                val url = "https://twitter.com/" + url.replace("@", "")
-
-                val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(url))
-                context?.startActivity(intent)
-
-                analytics.onSpeakerEvent(Analytics.SPEAKER_TWITTER, type)
-                true
-            }
-        }
-
+    private fun showType(type: Type) {
+        collapsing_toolbar.title = type.fullName
+        collapsing_toolbar.subtitle = context?.getString(R.string.category)
 
         val body = type.description
 

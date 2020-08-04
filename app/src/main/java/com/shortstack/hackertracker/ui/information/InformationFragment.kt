@@ -18,14 +18,14 @@ import com.shortstack.hackertracker.ui.information.faq.FAQFragment
 import com.shortstack.hackertracker.ui.information.info.InfoFragment
 import com.shortstack.hackertracker.ui.information.speakers.SpeakersFragment
 import com.shortstack.hackertracker.ui.information.vendors.VendorsFragment
-import com.shortstack.hackertracker.ui.information.villages.VillagesFragment
+import com.shortstack.hackertracker.ui.information.categories.CategoriesFragment
 import kotlinx.android.synthetic.main.fragment_information.*
 
 class InformationFragment : Fragment() {
 
     companion object {
         private const val INFO = 0
-        private const val VILLAGES = 1
+        private const val CATEGORIES = 1
         private const val FAQ = 2
         private const val SPEAKERS = 3
         private const val VENDORS = 4
@@ -84,7 +84,7 @@ class InformationFragment : Fragment() {
 
             return when (index) {
                 INFO -> InfoFragment.newInstance()
-                VILLAGES -> VillagesFragment.newInstance()
+                CATEGORIES -> CategoriesFragment.newInstance()
                 SPEAKERS -> SpeakersFragment.newInstance()
                 FAQ -> FAQFragment.newInstance()
                 VENDORS -> VendorsFragment.newInstance()
@@ -101,7 +101,7 @@ class InformationFragment : Fragment() {
 
             return when (index) {
                 INFO -> "Event"
-                VILLAGES -> "Villages"
+                CATEGORIES -> "Categories"
                 FAQ -> "FAQ"
                 SPEAKERS -> "Speakers"
                 VENDORS -> "Vendors"

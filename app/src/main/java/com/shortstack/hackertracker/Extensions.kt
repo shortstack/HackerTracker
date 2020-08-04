@@ -189,7 +189,7 @@ private fun extractUrls(text: String): List<String> {
     return containedUrls
 }
 
-fun FirebaseSpeaker.toSpeaker() = Type(
+fun FirebaseSpeaker.toSpeaker() = Speaker(
     id,
     name,
     description,
