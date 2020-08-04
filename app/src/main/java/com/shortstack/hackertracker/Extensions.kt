@@ -104,10 +104,10 @@ fun FirebaseConference.toConference() = Conference(
 
 fun FirebaseType.toType(): Type {
     val actions = ArrayList<Action>()
-    if (discord_url != null) {
+    if (discord_url?.isNotBlank() == true) {
         actions.add(Action(discord_url))
     }
-    if (subforum_url != null) {
+    if (subforum_url?.isNotBlank() == true) {
         actions.add(Action(subforum_url))
     }
 
