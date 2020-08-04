@@ -22,6 +22,8 @@ import com.shortstack.hackertracker.utilities.TimeUtil
 import kotlinx.android.synthetic.main.empty_text.*
 import kotlinx.android.synthetic.main.fragment_event.*
 import org.koin.android.ext.android.inject
+import kotlin.math.max
+
 
 class EventFragment : Fragment() {
 
@@ -94,13 +96,17 @@ class EventFragment : Fragment() {
 
         contents.adapter = adapter
         val gridLayoutManager = contents.layoutManager as GridLayoutManager
+
+        val displayMetrics = requireContext().resources.displayMetrics
+        val dpWidth = displayMetrics.widthPixels / displayMetrics.density
+        gridLayoutManager.spanCount = max(2f, dpWidth / 200f).toInt()
         gridLayoutManager.spanSizeLookup =
             object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int {
                     return adapter.getSpanSize(position, gridLayoutManager.spanCount)
                 }
             }
-        adapter.setElements(event.urls, event.speakers)
+        adapter.setElements(event.urls.sortedBy { it.label.length }, event.speakers)
 
         if (body.isNotBlank()) {
             empty.visibility = View.GONE

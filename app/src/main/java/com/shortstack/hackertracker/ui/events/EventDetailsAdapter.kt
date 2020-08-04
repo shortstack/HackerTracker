@@ -54,7 +54,7 @@ class EventDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun getSpanSize(position: Int, span: Int): Int {
         return when (collection[position]) {
             is String -> span
-            is Action -> 1
+            is Action -> (collection[position] as Action).getSpanCount(span)
             is Speaker -> span
             else -> throw IllegalStateException("Unknown view type: ${collection[position].javaClass.simpleName}")
         }

@@ -117,6 +117,7 @@
         <item name="colorOnSurface">@color/black</item>
         <item name="android:colorBackground">@color/black</item>
         <item name="colorOnBackground">@color/white</item>
+        <item name="footer_label">SAFE MODE</item>
     </style>
 
 

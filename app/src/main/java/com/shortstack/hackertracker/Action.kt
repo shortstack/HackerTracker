@@ -6,6 +6,10 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class Action(val url: String) : Parcelable {
 
+    fun getSpanCount(max: Int): Int {
+        return Math.min(max, Math.max(1, label.length / 15))
+    }
+
     val res: Int
         get() {
             if (url.contains("discord.com") || url.contains("discordapp.com"))
@@ -33,26 +37,34 @@ data class Action(val url: String) : Parcelable {
 
     val label: String
         get() {
+            val temp = if (url.endsWith("/")) {
+                url.substring(0, url.length - 1)
+            } else {
+                url
+            }
+
+            val substring = temp.substring(temp.lastIndexOf("/") + 1)
+
             if (url.contains("discord.com") || url.contains("discordapp.com"))
                 return "discordapp.com"
 
             if (url.contains("twitter.com"))
-                return "@" + url.substring(url.lastIndexOf("/") + 1)
+                return "@$substring"
 
             if (url.contains("forum.defcon.org"))
                 return "forum.defcon.org"
 
             if (url.contains("twitch.tv"))
-                return "twitch.tv/" + url.substring(url.lastIndexOf("/") + 1)
+                return "twitch.tv/$substring"
 
             if (url.contains("youtube.com"))
                 return "youtube.com"
 
             if (url.contains("soundcloud.com"))
-                return url.substring(url.lastIndexOf("/") + 1)
+                return "@$substring"
 
             if (url.contains("facebook.com"))
-                return url.substring(url.lastIndexOf("/") + 1)
+                return "@$substring"
 
             return url
         }

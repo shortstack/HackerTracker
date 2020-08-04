@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.ui.glitch
 
 import android.graphics.*
+import kotlin.math.min
 import kotlin.random.Random
 
 class ColorChannelShift : GlitchEffect {
@@ -58,7 +59,7 @@ class ColorChannelShift : GlitchEffect {
     }
 
     private val maxHorizontalOffset: Float
-        get() = bitmap.width * 0.25f
+        get() = min(100f, bitmap.width * 0.25f)
 
     private val maxVerticalOffset: Float
         get() = bitmap.height * 0.00f
