@@ -8,6 +8,7 @@ data class FirebaseEvent(
     val id: Int = -1,
     val conference: String = "",
     val title: String = "",
+    val android_description: String = "",
     val description: String = "",
     val begin: String = "",
     val end: String = "",

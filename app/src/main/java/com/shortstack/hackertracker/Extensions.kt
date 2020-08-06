@@ -152,11 +152,17 @@ fun FirebaseEvent.toEvent(): Event {
         listOf(element)
     }
 
+    val body = if (android_description.isNotBlank()) {
+        android_description
+    } else {
+        description
+    }
+
     return Event(
         id,
         conference,
         title,
-        description,
+        body,
         SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(begin),
         SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(end),
         link,
