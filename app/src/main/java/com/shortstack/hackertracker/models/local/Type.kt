@@ -1,7 +1,6 @@
 package com.shortstack.hackertracker.models.local
 
 import android.os.Parcelable
-import com.shortstack.hackertracker.Action
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

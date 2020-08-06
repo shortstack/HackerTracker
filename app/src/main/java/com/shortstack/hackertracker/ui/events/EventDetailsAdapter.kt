@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.Action
+import com.shortstack.hackertracker.models.local.Action
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.ui.information.speakers.SpeakerViewHolder

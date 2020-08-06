@@ -105,10 +105,10 @@ fun FirebaseConference.toConference() = Conference(
 fun FirebaseType.toType(): Type {
     val actions = ArrayList<Action>()
     if (discord_url?.isNotBlank() == true) {
-        actions.add(Action(discord_url))
+        actions.add(Action(Action.getLabel(discord_url), discord_url))
     }
     if (subforum_url?.isNotBlank() == true) {
-        actions.add(Action(subforum_url))
+        actions.add(Action(Action.getLabel(subforum_url), subforum_url))
     }
 
     return Type(
@@ -129,13 +129,12 @@ fun FirebaseLocation.toLocation() = Location(
 
 fun FirebaseEvent.toEvent(): Event {
     val element = type.toType()
-    val links = if (conference == "DEFCON28") {
+    val links = if (conference == "DEFCON28" && links.isEmpty()) {
         val urls = extractUrls(description)
         urls.map { it.toAction() }
     } else {
-        emptyList()
+        links.map { it.toAction() }
     }
-
 
     val types = if (conference == "DEFCON28") {
         when {
@@ -169,7 +168,11 @@ fun FirebaseEvent.toEvent(): Event {
     )
 }
 
-private fun String.toAction() = Action(this)
+private fun String.toAction() =
+    Action(Action.getLabel(this), this)
+
+private fun FirebaseAction.toAction() =
+    Action(this.label, this.url)
 
 private fun extractUrls(text: String): List<String> {
     val containedUrls: MutableList<String> =

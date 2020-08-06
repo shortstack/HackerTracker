@@ -2,7 +2,6 @@ package com.shortstack.hackertracker.models.local
 
 import android.content.Context
 import android.os.Parcelable
-import com.shortstack.hackertracker.Action
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.utilities.MyClock
 import com.shortstack.hackertracker.utilities.TimeUtil
