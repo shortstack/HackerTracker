@@ -7,6 +7,7 @@ import android.os.Handler
 import android.util.AttributeSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import com.shortstack.hackertracker.ui.glitch.Glitch
+import com.shortstack.hackertracker.ui.themes.ThemesManager
 import com.shortstack.hackertracker.utilities.Storage
 import com.shortstack.hackertracker.utilities.Storage.CorruptionLevel.*
 import org.koin.core.KoinComponent
@@ -40,8 +41,7 @@ class GlitchContainerView(context: Context, attrs: AttributeSet?) :
         }
 
         val storage = get<Storage>()
-        isGlitch =
-            true//storage.theme == ThemesManager.Theme.SafeMode && storage.corruption > MEDIUM
+        isGlitch = storage.theme == ThemesManager.Theme.SafeMode && storage.corruption > MEDIUM
 
         if (isGlitch) {
             isDrawingCacheEnabled = true
