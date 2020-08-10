@@ -26,7 +26,7 @@
     </com.google.android.material.appbar.AppBarLayout>
 
 
-    <FrameLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
@@ -55,31 +55,30 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center" />
 
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|end"
+            android:layout_margin="16dp"
+            android:elevation="6dp"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_filter_list_white_24dp" />
 
-    </FrameLayout>
+        <com.shortstack.hackertracker.views.FilterView
+            android:id="@+id/filters"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:elevation="8dp"
+            android:outlineProvider="bounds"
+            app:behavior_hideable="true"
+            app:behavior_peekHeight="450dp"
+            app:behavior_skipCollapsed="false"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+            tools:foreground="@color/orange"
+            tools:layout_height="300dp" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/filter"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"
-        android:elevation="6dp"
-        android:visibility="visible"
-        app:srcCompat="@drawable/ic_filter_list_white_24dp" />
-
-    <com.shortstack.hackertracker.views.FilterView
-        android:id="@+id/filters"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="52dp"
-        android:elevation="8dp"
-        android:outlineProvider="bounds"
-        app:behavior_hideable="true"
-        app:behavior_peekHeight="450dp"
-        app:behavior_skipCollapsed="false"
-        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior" />
-
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

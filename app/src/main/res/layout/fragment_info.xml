@@ -10,16 +10,18 @@
 
         <com.shortstack.hackertracker.views.WiFiHelperView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <com.shortstack.hackertracker.ui.information.info.views.HelpLineView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
 
         <com.shortstack.hackertracker.ui.information.info.views.CodeOfConductView
             android:id="@+id/conduct"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content" />
 
     </LinearLayout>
 

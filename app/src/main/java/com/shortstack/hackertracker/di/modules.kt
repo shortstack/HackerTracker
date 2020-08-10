@@ -22,7 +22,7 @@ val appModule = module {
     }
     single { FirebaseJobDispatcher(GooglePlayDriver(get())) }
     single { DatabaseManager(get()) }
-    single { ThemesManager() }
+    single { ThemesManager(get()) }
 
     single { Analytics(get(), get()) }
     single { WorkManager.getInstance()!! }

@@ -51,7 +51,7 @@ class DatabaseManager(private val preferences: Storage) {
 
             val list = conferences.sortedBy { it.startDate }
 
-            val defcon = list.find { it.code == "DEFCON27" }
+            val defcon = list.find { it.code == "DEFCON28" }
             if (defcon?.hasFinished == false) {
                 return defcon
             }
@@ -62,7 +62,7 @@ class DatabaseManager(private val preferences: Storage) {
     }
 
     private val code
-        get() = conference.value?.code ?: "DEFCON27"
+        get() = conference.value?.code ?: "DEFCON28"
 
     private val firestore = FirebaseFirestore.getInstance()
     private val storage = FirebaseStorage.getInstance()
@@ -491,6 +491,7 @@ class DatabaseManager(private val preferences: Storage) {
                     val speakers = snapshot?.toObjects(FirebaseSpeaker::class.java)
                         ?.filter { !it.hidden || App.isDeveloper }
                         ?.map { it.toSpeaker() }
+                        ?.sortedBy { it.name.toLowerCase() }
                         ?: emptyList()
 
                     mutableLiveData.postValue(speakers)
@@ -522,6 +523,9 @@ class DatabaseManager(private val preferences: Storage) {
 
     fun getMaps(conference: Conference): MutableLiveData<List<FirebaseConferenceMap>> {
         val mutableLiveData = MutableLiveData<List<FirebaseConferenceMap>>()
+
+        if(conference.code == "DEFCON28")
+            return mutableLiveData
 
         val list = ArrayList<FirebaseConferenceMap>()
 

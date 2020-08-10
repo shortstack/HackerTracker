@@ -45,29 +45,28 @@
         app:layout_constraintTop_toBottomOf="@+id/title"
         tools:text="Track 1" />
 
-    <View
-        android:id="@+id/category_dot"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
-        android:layout_marginBottom="8dp"
-        android:background="@drawable/chip_background"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/guideline"
-        app:layout_constraintTop_toBottomOf="@+id/location" />
 
-    <TextView
-        android:id="@+id/category_text"
-        style="@style/TextAppearance.AppCompat.Body1"
+    <LinearLayout
+        android:id="@+id/types_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginBottom="8dp"
-        android:alpha="0.70"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/category_dot"
-        app:layout_constraintTop_toBottomOf="@+id/location"
-        tools:text="Event" />
+        app:layout_constraintStart_toEndOf="@+id/guideline"
+        app:layout_constraintTop_toBottomOf="@+id/location">
+
+        <com.shortstack.hackertracker.views.EventTypeView
+            android:id="@+id/type_1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
+        <com.shortstack.hackertracker.views.EventTypeView
+            android:id="@+id/type_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="8dp" />
+
+    </LinearLayout>
 
 
     <ImageView

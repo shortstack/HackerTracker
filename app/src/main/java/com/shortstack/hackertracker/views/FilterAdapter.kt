@@ -5,7 +5,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.ui.search.HeaderViewHolder
 
-class FilterAdapter(private val collection: ArrayList<Any>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FilterAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    private val collection = ArrayList<Any>()
 
     companion object {
         const val TYPE_HEADER = 0
@@ -34,5 +36,11 @@ class FilterAdapter(private val collection: ArrayList<Any>) : RecyclerView.Adapt
             is HeaderViewHolder -> holder.render(collection[position] as String)
             is TypeViewHolder -> holder.render(collection[position] as Type)
         }
+    }
+
+    fun setElements(elements: List<Any>) {
+            collection.clear()
+            collection.addAll(elements)
+            notifyDataSetChanged()
     }
 }

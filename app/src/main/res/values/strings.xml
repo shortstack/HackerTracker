@@ -96,9 +96,20 @@
 
     <!-- Settings -->
     <string name="version">Version %1$s</string>
-    <string name="choose_theme">Choose theme</string>
+    <string name="choose_theme">Choose Theme</string>
+    <string name="setting_change_theme">Change Theme</string>
+    <string name="setting_change_conference">Change Conference</string>
+    <string name="setting_back_button_drawer">Back button to open the drawer</string>
+    <string name="setting_easter_eggs_summary">\???</string>
+    <string name="setting_easter_eggs">Easter Eggs</string>
+    <string name="setting_user_analytics">Send anonymous usage statistics</string>
     <string name="choose_conference">Choose conference</string>
-    <string name="setting_time_zone">Events in local timezone (%1$s)</string>
+    <string name="setting_time_zone">Events in (%1$s)</string>
+    <string name="setting_time_zone_summary_on">Using conference\'s timezone</string>
+    <string name="setting_time_zone_summary_off">Using device\'s timezone</string>
+    <string name="settings_reboot">Reboot</string>
+    <string name="settings_safe_mode_summary">Enter Safe Mode</string>
+
 
     <!-- DEF CON Support Hotline -->
 
@@ -112,5 +123,12 @@
 
     <!-- Code of Conduct-->
     <string name="code_of_conduct">Code of Conduct</string>
+
+
+    <string name="villages">Villages</string>
+    <string name="bookmark">Bookmark</string>
+    <string name="twitter">Twitter</string>
+    <string name="category">Category</string>
+
 
 </resources>

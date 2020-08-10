@@ -18,13 +18,8 @@
         <attr name="evMessage" format="reference" />
     </declare-styleable>
 
-    <declare-styleable name="SettingsSwitchView">
-        <attr name="switchText" format="string" />
-        <attr name="switchKey" format="string" />
-        <attr name="switchDefaultValue" format="boolean" />
+    <declare-styleable name="SkullView">
+        <attr name="skullViewDrawable" format="reference"/>
     </declare-styleable>
 
-    <declare-styleable name="SettingsActionView">
-        <attr name="actionText" format="string" />
-    </declare-styleable>
 </resources>

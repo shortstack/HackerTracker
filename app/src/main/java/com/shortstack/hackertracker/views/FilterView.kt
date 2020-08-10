@@ -16,13 +16,27 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
         private const val SPAN_COUNT = 2
     }
 
+    private val adapter = FilterAdapter()
+
+
     init {
         View.inflate(context, R.layout.view_filter, this)
+        list.adapter = adapter
+        list.layoutManager =
+            GridLayoutManager(context, SPAN_COUNT, RecyclerView.VERTICAL, false).apply {
+                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                    override fun getSpanSize(position: Int): Int {
+                        return when (adapter.getItemViewType(position)) {
+                            FilterAdapter.TYPE_HEADER -> SPAN_COUNT
+                            else -> 1
+                        }
+                    }
+                }
+            }
     }
 
     fun setTypes(types: List<Type>?) {
         if (types != null) {
-
             val collection = ArrayList<Any>()
 
             types.find { it.isBookmark }?.let {
@@ -31,24 +45,21 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
 
             collection.add(context.getString(R.string.types))
 
-            val elements = types.filter { !it.isBookmark }
+            val elements = types.filter { !it.isBookmark && !it.isVillage && !it.isWorkshop }
+                .sortedBy { it.shortName }
             collection.addAll(elements)
 
-            val adapter = FilterAdapter(collection)
+            collection.add(context.getString(R.string.villages))
 
-            list.layoutManager =
-                GridLayoutManager(context, SPAN_COUNT, RecyclerView.VERTICAL, false).apply {
-                    spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                        override fun getSpanSize(position: Int): Int {
-                            return when (adapter.getItemViewType(position)) {
-                                FilterAdapter.TYPE_HEADER -> SPAN_COUNT
-                                else -> 1
-                            }
-                        }
-                    }
-                }
-            list.adapter = adapter
+            val villages = types.filter { it.isVillage }.sortedBy { it.shortName }
+            collection.addAll(villages)
 
+            collection.add(context.getString(R.string.workshops))
+
+            val workshops = types.filter { it.isWorkshop }.sortedBy { it.shortName }
+            collection.addAll(workshops)
+
+            adapter.setElements(collection)
         }
     }
 }

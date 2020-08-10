@@ -6,6 +6,7 @@ import com.github.stkent.amplify.feedback.DefaultEmailFeedbackCollector
 import com.github.stkent.amplify.feedback.GooglePlayStoreFeedbackCollector
 import com.github.stkent.amplify.tracking.Amplify
 import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.di.appModule
@@ -38,6 +39,7 @@ class App : Application() {
         }
 
         FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(!BuildConfig.DEBUG)
+        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
 
         initLogger()
         initFeedback()

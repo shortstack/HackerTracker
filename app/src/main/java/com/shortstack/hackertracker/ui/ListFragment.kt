@@ -7,16 +7,22 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.GridLayoutManager
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.Status
+import com.shortstack.hackertracker.models.local.Speaker
 import kotlinx.android.synthetic.main.fragment_recyclerview.*
 
 abstract class ListFragment<T> : Fragment() {
 
     private val adapter = ListAdapter()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_recyclerview, container, false)
     }
 
@@ -25,7 +31,8 @@ abstract class ListFragment<T> : Fragment() {
         list.adapter = adapter
     }
 
-    inline fun <reified J : ViewModel> getViewModel(): J = ViewModelProviders.of(this).get(J::class.java)
+    inline fun <reified J : ViewModel> getViewModel(): J =
+        ViewModelProviders.of(this).get(J::class.java)
 
     fun onResource(resource: Resource<List<Any>>?) {
         when (resource?.status) {

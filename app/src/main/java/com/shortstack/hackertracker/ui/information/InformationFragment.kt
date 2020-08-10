@@ -18,15 +18,17 @@ import com.shortstack.hackertracker.ui.information.faq.FAQFragment
 import com.shortstack.hackertracker.ui.information.info.InfoFragment
 import com.shortstack.hackertracker.ui.information.speakers.SpeakersFragment
 import com.shortstack.hackertracker.ui.information.vendors.VendorsFragment
+import com.shortstack.hackertracker.ui.information.categories.CategoriesFragment
 import kotlinx.android.synthetic.main.fragment_information.*
 
 class InformationFragment : Fragment() {
 
     companion object {
         private const val INFO = 0
-        private const val FAQ = 1
-        private const val SPEAKERS = 2
-        private const val VENDORS = 3
+        private const val CATEGORIES = 1
+        private const val FAQ = 2
+        private const val SPEAKERS = 3
+        private const val VENDORS = 4
 
 
         fun newInstance(): InformationFragment {
@@ -46,7 +48,7 @@ class InformationFragment : Fragment() {
         }
 
         tabs.apply {
-            tabGravity = TabLayout.GRAVITY_FILL
+            tabGravity = TabLayout.GRAVITY_START
             setupWithViewPager(pager)
         }
 
@@ -63,7 +65,7 @@ class InformationFragment : Fragment() {
         })
 
         val viewModel = ViewModelProvider(this)[HackerTrackerViewModel::class.java]
-        viewModel.conference.observe(this, Observer {
+        viewModel.conference.observe(viewLifecycleOwner, Observer {
             val fm = activity?.supportFragmentManager ?: return@Observer
             if (it.status == Status.SUCCESS) {
                 val adapter = PagerAdapter(fm, it.data!!.code)
@@ -74,14 +76,15 @@ class InformationFragment : Fragment() {
 
     class PagerAdapter(fm: FragmentManager, private val conference: String) : FragmentStatePagerAdapter(fm) {
         override fun getItem(position: Int): Fragment {
-            val index = if (conference == "DEFCON27") {
+            val index = if (conference.contains("DEFCON")) {
                 position
             } else {
-                position + 1
+                position + 2
             }
 
             return when (index) {
                 INFO -> InfoFragment.newInstance()
+                CATEGORIES -> CategoriesFragment.newInstance()
                 SPEAKERS -> SpeakersFragment.newInstance()
                 FAQ -> FAQFragment.newInstance()
                 VENDORS -> VendorsFragment.newInstance()
@@ -90,26 +93,26 @@ class InformationFragment : Fragment() {
         }
 
         override fun getPageTitle(position: Int): CharSequence? {
-            val index = if (conference == "DEFCON27") {
+            val index = if (conference.contains("DEFCON")) {
                 position
             } else {
-                position + 1
+                position + 2
             }
 
             return when (index) {
                 INFO -> "Event"
-                SPEAKERS -> "Speakers"
+                CATEGORIES -> "Categories"
                 FAQ -> "FAQ"
+                SPEAKERS -> "Speakers"
                 VENDORS -> "Vendors"
                 else -> throw IndexOutOfBoundsException("Position out of bounds: $index")
             }
         }
 
         override fun getCount(): Int {
-            if (conference == "DEFCON27")
-                return 4
+            if (conference.contains("DEFCON"))
+                return 5
             return 3
         }
-
     }
 }

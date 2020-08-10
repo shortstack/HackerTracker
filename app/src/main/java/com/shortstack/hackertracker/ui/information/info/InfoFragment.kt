@@ -26,11 +26,8 @@ class InfoFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        database.conference.observe(this, Observer {
+        database.conference.observe(viewLifecycleOwner, Observer {
             conduct.setText(it.conduct)
         })
-
-
     }
-
 }

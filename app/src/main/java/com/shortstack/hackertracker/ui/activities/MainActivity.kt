@@ -26,12 +26,14 @@ import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Location
 import com.shortstack.hackertracker.models.local.Speaker
+import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.information.speakers.SpeakerFragment
+import com.shortstack.hackertracker.ui.information.categories.CategoryFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.search.SearchFragment
@@ -140,6 +142,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
         val style = when (storage.theme) {
             Dark -> R.style.AppTheme_Dark
             Light -> R.style.AppTheme
+            SafeMode -> R.style.AppTheme_SafeMode
             Developer -> R.style.AppTheme_Developer
             null -> R.style.AppTheme_Dark
         }
@@ -262,5 +265,9 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
         map[R.id.nav_map] = fragment
 
         setMainFragment(R.id.nav_map, getString(R.string.map), true)
+    }
+
+    fun navigate(type: Type) {
+        replaceFragment(CategoryFragment.newInstance((type)), R.id.container_above, hasAnimation = true)
     }
 }
