@@ -1,1 +1,2 @@
-include ':hackertracker'
+include ':app'
+rootProject.name = "HackerTracker"

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="ThemeBase">
+        <item name="android:windowContentTransitions">true</item>
+        <item name="android:windowAllowEnterTransitionOverlap">true</item>
+        <item name="android:windowAllowReturnTransitionOverlap">true</item>
+        <item name="android:windowSharedElementEnterTransition">@android:transition/move</item>
+        <item name="android:windowSharedElementExitTransition">@android:transition/move</item>
+        <!--<item name="android:windowTranslucentStatus">true</item>-->
+
+
+        <!-- AppCompat Dialog Attributes -->
+        <item name="android:dialogTheme">@style/MyAlertDialogStyle</item>
+        <item name="android:alertDialogTheme">@style/MyAlertDialogStyle</item>
+    </style>
+
+
+    <style name="Base.TextAppearance.AppCompat.Body2.Label">
+        <item name="android:paddingStart">0dp</item>
+        <item name="android:paddingEnd">5dp</item>
+    </style>
+
+</resources>

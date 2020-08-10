@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.shortstack.hackertracker.views.GlitchContainerView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?android:colorBackground"
+    android:orientation="vertical">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:colorBackground">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:navigationIcon="@drawable/ic_menu_black_24dp"
+            app:title="@string/settings" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@android:id/list_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:targetApi="n" />
+            <!-- targetApi just to appease the IDE; the id is defined by the support lib. -->
+
+            <TextView
+                android:id="@+id/version"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:alpha="0.70"
+                android:background="?android:selectableItemBackground"
+                android:gravity="center"
+                android:padding="16dp"
+                tools:text="Version 6.0.1" />
+
+            <com.shortstack.hackertracker.views.SkullView
+                android:id="@+id/logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="16dp"
+                android:paddingBottom="?android:attr/actionBarSize"
+                android:scaleType="center"
+                android:src="?footer_icon"
+                android:tint="?footer_tint" />
+
+        </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
+</com.shortstack.hackertracker.views.GlitchContainerView>
