@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Card_Frame">
+
+    <LinearLayout style="@style/Card_Container">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/Card_Title"
+            tools:text="360 UNICORN TEAM" />
+
+        <TextView
+            android:id="@+id/description"
+            style="@style/Card_Body"
+            tools:text="360 Unicorn Team consists of a large team of self talk hackers that are really good at like, hacking and stuff." />
+
+
+        <TextView
+            android:id="@+id/link"
+            style="@style/Card_Action"
+            android:text="@string/website" />
+
+    </LinearLayout>
+
+</FrameLayout>

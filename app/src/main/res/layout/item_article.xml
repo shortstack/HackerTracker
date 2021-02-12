@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Card_Frame">
+
+    <LinearLayout style="@style/Card_Container">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/Card_Title"
+            tools:text="Thank You" />
+
+        <TextView
+            android:id="@+id/content"
+            style="@style/Card_Body"
+            tools:text="Thanks for being part of #io19! Keep the conversation going and remember to rate sessions you were able to attend. We'd love ot hear your feedback on the event as a whole: g.co/io/feedback" />
+
+    </LinearLayout>
+
+</FrameLayout>

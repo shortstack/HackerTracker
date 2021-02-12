@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <attr name="dark_mode" format="string" />
+
+    <attr name="footer_label" format="string" />
+    <attr name="footer_icon" format="reference" />
+    <attr name="footer_tint" format="reference" />
+
+    <attr name="border_tint" format="reference" />
+    <attr name="menu_tint" format="reference" />
+    <attr name="filter_background" format="reference"/>
+    <attr name="category_tint" format="reference"/>
+
+    <declare-styleable name="EmptyView">
+        <attr name="evIcon" format="reference" />
+        <attr name="evTitle" format="reference" />
+        <attr name="evMessage" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="SettingsSwitchView">
+        <attr name="switchText" format="string" />
+        <attr name="switchKey" format="string" />
+        <attr name="switchDefaultValue" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="SettingsActionView">
+        <attr name="actionText" format="string" />
+    </declare-styleable>
+</resources>
