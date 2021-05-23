@@ -1,5 +1,6 @@
 package com.shortstack.hackertracker.database
 
+import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
@@ -44,7 +45,7 @@ class ReminderManager(
             .addTag(TAG + event.id)
             .build()
 
-        workManager.enqueue(notify)
+        workManager.enqueueUniqueWork(event.title, ExistingWorkPolicy.REPLACE, notify)
     }
 
     fun cancel(event: Event) {

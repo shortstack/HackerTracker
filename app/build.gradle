@@ -26,6 +26,15 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
 }
 
 dependencies {
@@ -59,7 +68,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-storage:19.1.1'
     implementation 'com.google.firebase:firebase-auth:19.3.2'
     implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
-    implementation 'com.firebase:firebase-jobdispatcher:0.8.5'
+
+    // Work Manager
+    implementation "androidx.work:work-runtime-ktx:2.5.0"
 
     // UI
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
