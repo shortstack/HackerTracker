@@ -11,16 +11,17 @@ import com.shortstack.hackertracker.ui.activities.MainActivity
 
 class FAQFragment : ListFragment<FirebaseFAQ>() {
 
-    companion object {
-        fun newInstance() = FAQFragment()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java]
-        viewModel.faq.observe(this, Observer {
+        val viewModel =
+            ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java]
+        viewModel.faq.observe(viewLifecycleOwner, Observer {
             onResource(it)
         })
+    }
+
+    companion object {
+        fun newInstance() = FAQFragment()
     }
 }

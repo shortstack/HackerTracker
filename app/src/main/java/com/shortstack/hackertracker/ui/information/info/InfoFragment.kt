@@ -6,28 +6,35 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
-import kotlinx.android.synthetic.main.fragment_info.*
+import com.shortstack.hackertracker.databinding.FragmentInfoBinding
 import org.koin.android.ext.android.inject
 
 class InfoFragment : Fragment() {
 
-    companion object {
-        fun newInstance() = InfoFragment()
-    }
+    private var _binding: FragmentInfoBinding? = null
+    private val binding get() = _binding!!
 
     private val database: DatabaseManager by inject()
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_info, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentInfoBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         database.conference.observe(viewLifecycleOwner, Observer {
-            conduct.setText(it.conduct)
+            binding.conduct.setText(it.conduct)
         })
+    }
+
+    companion object {
+        fun newInstance() = InfoFragment()
     }
 }

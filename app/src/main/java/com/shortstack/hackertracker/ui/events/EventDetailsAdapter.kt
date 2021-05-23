@@ -1,17 +1,11 @@
 package com.shortstack.hackertracker.ui.events
 
-import android.content.Intent
-import android.net.Uri
-import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.models.local.Action
-import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.ui.information.speakers.SpeakerViewHolder
 import com.shortstack.hackertracker.ui.search.HeaderViewHolder
-import kotlinx.android.synthetic.main.item_event_link.view.*
 
 class EventDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -72,26 +66,5 @@ class EventDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             collection.addAll(speakers)
         }
         notifyDataSetChanged()
-    }
-
-
-    class ActionViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-
-        companion object {
-            fun inflate(parent: ViewGroup): ActionViewHolder {
-                val view = LayoutInflater.from(parent.context)
-                    .inflate(R.layout.item_event_link, parent, false)
-                return ActionViewHolder(view)
-            }
-        }
-
-        fun render(action: Action) {
-            view.action.setImageResource(action.res)
-            view.action_text.text = action.label
-            view.setOnClickListener {
-                val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(action.url))
-                view.context.startActivity(intent)
-            }
-        }
     }
 }

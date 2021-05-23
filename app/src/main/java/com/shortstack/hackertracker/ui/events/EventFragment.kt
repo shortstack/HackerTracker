@@ -14,33 +14,20 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.database.ReminderManager
+import com.shortstack.hackertracker.databinding.FragmentEventBinding
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.utilities.TimeUtil
-import kotlinx.android.synthetic.main.empty_text.*
-import kotlinx.android.synthetic.main.fragment_event.*
 import org.koin.android.ext.android.inject
 import kotlin.math.max
 
 
 class EventFragment : Fragment() {
 
-    companion object {
-
-        const val EXTRA_EVENT = "EXTRA_EVENT"
-
-        fun newInstance(event: Int): EventFragment {
-            val fragment = EventFragment()
-
-            val bundle = Bundle()
-            bundle.putInt(EXTRA_EVENT, event)
-            fragment.arguments = bundle
-
-            return fragment
-        }
-    }
+    private var _binding: FragmentEventBinding? = null
+    private val binding get() = _binding!!
 
     private val analytics: Analytics by inject()
     private val database: DatabaseManager by inject()
@@ -54,8 +41,9 @@ class EventFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_event, container, false)
+    ): View {
+        _binding = FragmentEventBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
@@ -79,9 +67,9 @@ class EventFragment : Fragment() {
             context
                 ?: return, R.drawable.ic_arrow_back_white_24dp
         )
-        toolbar.navigationIcon = drawable
+        binding.toolbar.navigationIcon = drawable
 
-        toolbar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             (activity as? MainActivity)?.popBackStack()
         }
 
@@ -90,12 +78,12 @@ class EventFragment : Fragment() {
     private fun showEvent(event: Event) {
         analytics.log("Viewing event: ${event.title}")
 
-        collapsing_toolbar.title = event.title
+        binding.collapsingToolbar.title = event.title
 
         val body = event.description
 
-        contents.adapter = adapter
-        val gridLayoutManager = contents.layoutManager as GridLayoutManager
+        binding.contents.adapter = adapter
+        val gridLayoutManager = binding.contents.layoutManager as GridLayoutManager
 
         val displayMetrics = requireContext().resources.displayMetrics
         val dpWidth = displayMetrics.widthPixels / displayMetrics.density
@@ -109,13 +97,13 @@ class EventFragment : Fragment() {
         adapter.setElements(event.urls.sortedBy { it.label.length }, event.speakers)
 
         if (body.isNotBlank()) {
-            empty.visibility = View.GONE
-            description.text = body
+            // todo: binding.empty.visibility = View.GONE
+            binding.description.text = body
         } else {
-            empty.visibility = View.VISIBLE
+            // todo: binding.empty.visibility = View.VISIBLE
         }
 
-        toolbar.setOnMenuItemClickListener {
+        binding.toolbar.setOnMenuItemClickListener {
             onBookmarkClick(event)
             true
         }
@@ -144,21 +132,21 @@ class EventFragment : Fragment() {
             if (event.isBookmarked) Analytics.EVENT_BOOKMARK else Analytics.EVENT_UNBOOKMARK
         analytics.onEventAction(action, event)
 
-        toolbar.invalidate()
+        binding.toolbar.invalidate()
     }
 
     private fun displayBookmark(event: Event) {
         val isBookmarked = event.isBookmarked
-        toolbar.menu.clear()
-        toolbar.inflateMenu(if (isBookmarked) R.menu.event_bookmarked else R.menu.event_unbookmarked)
+        binding.toolbar.menu.clear()
+        binding.toolbar.inflateMenu(if (isBookmarked) R.menu.event_bookmarked else R.menu.event_unbookmarked)
     }
 
     private fun displayDescription(event: Event) {
 
         val context = context ?: return
 
-        collapsing_toolbar.subtitle = getFullTimeStamp(context, event)
-        location.text = event.location.name
+        binding.collapsingToolbar.subtitle = getFullTimeStamp(context, event)
+        binding.location.text = event.location.name
     }
 
 
@@ -178,14 +166,29 @@ class EventFragment : Fragment() {
 
     private fun displayTypes(event: Event) {
         val type = event.types.first()
-        type_1.render(type)
-        type_1.visibility = View.VISIBLE
+        binding.type1.render(type)
+        binding.type1.visibility = View.VISIBLE
 
         if (event.types.size > 1) {
-            type_2.render(event.types.last())
-            type_2.visibility = View.VISIBLE
+            binding.type2.render(event.types.last())
+            binding.type2.visibility = View.VISIBLE
         } else {
-            type_2.visibility = View.GONE
+            binding.type2.visibility = View.GONE
+        }
+    }
+
+    companion object {
+
+        const val EXTRA_EVENT = "EXTRA_EVENT"
+
+        fun newInstance(event: Int): EventFragment {
+            val fragment = EventFragment()
+
+            val bundle = Bundle()
+            bundle.putInt(EXTRA_EVENT, event)
+            fragment.arguments = bundle
+
+            return fragment
         }
     }
 }

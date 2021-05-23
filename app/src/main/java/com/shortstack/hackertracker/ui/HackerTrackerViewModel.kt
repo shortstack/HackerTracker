@@ -10,10 +10,8 @@ import com.shortstack.hackertracker.models.firebase.FirebaseConferenceMap
 import com.shortstack.hackertracker.models.local.*
 import com.shortstack.hackertracker.ui.themes.ThemesManager
 import com.shortstack.hackertracker.utilities.Storage
-import kotlinx.android.synthetic.main.fragment_schedule.view.*
 import org.koin.core.KoinComponent
 import org.koin.core.inject
-import kotlin.collections.filter
 
 class HackerTrackerViewModel : ViewModel(), KoinComponent {
 
@@ -251,13 +249,14 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
 
             result.addSource(bookmarks) {
                 val articles = articles.value?.data?.take(4) ?: emptyList()
-                val bookmarks = it.data?.filter{ !it.hasFinished }?.take(3) ?: emptyList()
+                val bookmarks = it.data?.filter { !it.hasFinished }?.take(3) ?: emptyList()
                 setHome(result, articles, bookmarks)
             }
 
             result.addSource(articles) {
                 val articles = it.data?.take(4) ?: emptyList()
-                val bookmarks = bookmarks.value?.data?.filter{ !it.hasFinished }?.take(3) ?: emptyList()
+                val bookmarks =
+                    bookmarks.value?.data?.filter { !it.hasFinished }?.take(3) ?: emptyList()
                 setHome(result, articles, bookmarks)
             }
 

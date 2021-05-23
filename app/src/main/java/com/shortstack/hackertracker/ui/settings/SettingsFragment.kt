@@ -2,11 +2,9 @@ package com.shortstack.hackertracker.ui.settings
 
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.Observer
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
-import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Conference
@@ -15,20 +13,12 @@ import com.shortstack.hackertracker.ui.themes.ThemesManager
 import com.shortstack.hackertracker.utilities.MyClock
 import com.shortstack.hackertracker.utilities.Storage
 import com.shortstack.hackertracker.utilities.now
-import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.ext.android.inject
 import java.util.*
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
 
-    companion object {
-        fun newInstance() = SettingsFragment()
-
-        private const val CHANGE_THEME_KEY = "change_theme"
-        private const val CHANGE_CONFERENCE_KEY = "change_conference"
-        private const val SAFE_MODE_KEY = "safe_mode"
-    }
 
     private val database: DatabaseManager by inject()
     private val storage: Storage by inject()
@@ -117,25 +107,26 @@ class SettingsFragment : PreferenceFragmentCompat() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        toolbar.setNavigationOnClickListener {
-            (context as MainActivity).openNavDrawer()
-        }
-
-        database.conference.observe(viewLifecycleOwner, Observer {
-            if (it != null) {
-                updateConference(it)
-                updateTimezonePreference(it)
-            }
-        })
-
-        version.text = getString(R.string.version, BuildConfig.VERSION_NAME)
-
-        var index = 0
-        version.setOnClickListener {
-            if (index++ == 10) {
-                storage.setPreference(Storage.DEVELOPER_THEME_UNLOCKED, true)
-            }
-        }
+        // todo:
+//        toolbar.setNavigationOnClickListener {
+//            (context as MainActivity).openNavDrawer()
+//        }
+//
+//        database.conference.observe(viewLifecycleOwner, Observer {
+//            if (it != null) {
+//                updateConference(it)
+//                updateTimezonePreference(it)
+//            }
+//        })
+//
+//        version.text = getString(R.string.version, BuildConfig.VERSION_NAME)
+//
+//        var index = 0
+//        version.setOnClickListener {
+//            if (index++ == 10) {
+//                storage.setPreference(Storage.DEVELOPER_THEME_UNLOCKED, true)
+//            }
+//        }
     }
 
     private fun updateConference(conference: Conference) {
@@ -181,5 +172,13 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 dialog.dismiss()
                 (context as MainActivity).recreate()
             }.show()
+    }
+
+    companion object {
+        fun newInstance() = SettingsFragment()
+
+        private const val CHANGE_THEME_KEY = "change_theme"
+        private const val CHANGE_CONFERENCE_KEY = "change_conference"
+        private const val SAFE_MODE_KEY = "safe_mode"
     }
 }

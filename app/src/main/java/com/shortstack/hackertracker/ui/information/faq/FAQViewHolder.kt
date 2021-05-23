@@ -9,36 +9,31 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.databinding.RowFaqBinding
 import com.shortstack.hackertracker.models.local.FAQ
 import com.shortstack.hackertracker.utilities.Analytics
-import kotlinx.android.synthetic.main.row_faq.view.*
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
-class FAQViewHolder(val view: View) : RecyclerView.ViewHolder(view), KoinComponent {
+class FAQViewHolder(private val binding: RowFaqBinding) :
+    RecyclerView.ViewHolder(binding.root), KoinComponent {
 
-    companion object {
-        fun inflate(parent: ViewGroup): FAQViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.row_faq, parent, false)
-            return FAQViewHolder(view)
-        }
-    }
-
+    // todo: extract
     private val analytics: Analytics by inject()
 
     fun render(faq: FAQ) {
-        view.answer.visibility = View.GONE
+        binding.answer.visibility = View.GONE
 
-        view.question.text = faq.question
-        view.answer.text = faq.answer
+        binding.question.text = faq.question
+        binding.answer.text = faq.answer
 
-        view.setOnClickListener {
+        binding.root.setOnClickListener {
             onFAQClick(faq)
         }
     }
 
     private fun onFAQClick(faq: FAQ) {
-        val root = view.container
+        val root = binding.container
 
         val isExpanded = faq.isExpanded
 
@@ -65,5 +60,12 @@ class FAQViewHolder(val view: View) : RecyclerView.ViewHolder(view), KoinCompone
 
         TransitionManager.beginDelayedTransition(root, transition)
         constraintSet1.applyTo(root)
+    }
+
+    companion object {
+        fun inflate(parent: ViewGroup): FAQViewHolder {
+            val binding = RowFaqBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return FAQViewHolder(binding)
+        }
     }
 }

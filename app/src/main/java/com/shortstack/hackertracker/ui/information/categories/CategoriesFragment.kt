@@ -10,12 +10,7 @@ import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.ListFragment
 import com.shortstack.hackertracker.ui.activities.MainActivity
 
-
 class CategoriesFragment : ListFragment<Type>() {
-
-    companion object {
-        fun newInstance() = CategoriesFragment()
-    }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -31,6 +26,10 @@ class CategoriesFragment : ListFragment<Type>() {
             )
             onResource(resource)
         })
+    }
+
+    companion object {
+        fun newInstance() = CategoriesFragment()
     }
 }
 

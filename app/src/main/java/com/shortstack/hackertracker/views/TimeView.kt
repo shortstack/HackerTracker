@@ -2,25 +2,25 @@ package com.shortstack.hackertracker.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.widget.LinearLayout
-import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.databinding.RowHeaderTimeBinding
 import com.shortstack.hackertracker.utilities.TimeUtil
-import kotlinx.android.synthetic.main.row_header_time.view.*
 import java.util.*
 
 class TimeView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
+    private val binding = RowHeaderTimeBinding.inflate(LayoutInflater.from(context), this, true)
+
     init {
-        inflate(context, R.layout.row_header_time, this)
         orientation = VERTICAL
     }
 
     fun render(date: Date?) {
-        if(date == null) {
-            header.text = null
+        binding.header.text = if (date != null) {
+            TimeUtil.getTimeStamp(context, date)
         } else {
-            header.text = TimeUtil.getTimeStamp(context, date)
+            null
         }
     }
-
 }

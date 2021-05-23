@@ -11,63 +11,71 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.databinding.FragmentSearchBinding
 import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.search.SearchAdapter.State.*
-import kotlinx.android.synthetic.main.fragment_search.*
 
 
 class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
-    companion object {
-        fun newInstance() = SearchFragment()
-    }
+    private val viewModel by lazy { ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java] }
+
+    private var _binding: FragmentSearchBinding? = null
+    private val binding get() = _binding!!
 
     private val adapter = SearchAdapter()
-    private val viewModel by lazy { ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java] }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_search, container, false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentSearchBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        loading_progress.visibility = View.GONE
-        empty_view.showDefault()
+        binding.loadingProgress.visibility = View.GONE
+        binding.emptyView.showDefault()
 
-        list.adapter = adapter
+        binding.list.adapter = adapter
 
-        toolbar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             hideKeyboard(context as MainActivity)
             (context as MainActivity).popBackStack()
         }
 
-        search.onActionViewExpanded()
-        search.setOnCloseListener {
+        binding.search.onActionViewExpanded()
+        binding.search.setOnCloseListener {
             hideKeyboard(context as MainActivity)
             (context as MainActivity).popBackStack()
             return@setOnCloseListener true
         }
 
-        search.setOnQueryTextListener(this)
+        binding.search.setOnQueryTextListener(this)
 
 
-        viewModel.search.observe(this, Observer {
+        viewModel.search.observe(viewLifecycleOwner, Observer {
             adapter.setList(it)
 
             when (adapter.state) {
-                INIT -> empty_view.showDefault()
+                INIT -> binding.emptyView.showDefault()
                 RESULTS -> {
-                    empty_view.hide()
-                    list.layoutManager?.smoothScrollToPosition(list, RecyclerView.State(), 0)
+                    binding.emptyView.hide()
+                    binding.list.layoutManager?.smoothScrollToPosition(
+                        binding.list,
+                        RecyclerView.State(),
+                        0
+                    )
                 }
-                EMPTY -> empty_view.showNoResults(adapter.query)
+                EMPTY -> binding.emptyView.showNoResults(adapter.query)
             }
         })
     }
@@ -84,5 +92,9 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
         val view = activity.currentFocus ?: View(activity)
         imm.hideSoftInputFromWindow(view.windowToken, 0)
+    }
+
+    companion object {
+        fun newInstance() = SearchFragment()
     }
 }

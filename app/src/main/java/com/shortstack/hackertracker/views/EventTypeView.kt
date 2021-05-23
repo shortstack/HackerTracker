@@ -4,23 +4,25 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.databinding.ViewEventTypeBinding
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import kotlinx.android.synthetic.main.view_event_type.view.*
 
 class EventTypeView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
+    private val binding = ViewEventTypeBinding.inflate(LayoutInflater.from(context), this, true)
+
     init {
-        inflate(context, R.layout.view_event_type, this)
         orientation = VERTICAL
     }
 
     fun render(type: Type) {
-        event_type_text.text = type.shortName
+        binding.eventTypeText.text = type.shortName
 
         val value = TypedValue()
         context.theme.resolveAttribute(R.attr.category_tint, value, true)
@@ -43,6 +45,6 @@ class EventTypeView(context: Context, attrs: AttributeSet) : LinearLayout(contex
         val drawable = ContextCompat.getDrawable(context, R.drawable.chip_background)?.mutate()
 
         drawable?.setTint(color)
-        event_type_dot.background = drawable
+        binding.eventTypeDot.background = drawable
     }
 }

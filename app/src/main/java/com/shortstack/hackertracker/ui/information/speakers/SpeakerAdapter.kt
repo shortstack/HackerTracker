@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.models.local.Speaker
 
+// todo: replace with ListAdapter
 class SpeakerAdapter : RecyclerView.Adapter<SpeakerViewHolder>() {
 
     private val speakers = ArrayList<Speaker>()

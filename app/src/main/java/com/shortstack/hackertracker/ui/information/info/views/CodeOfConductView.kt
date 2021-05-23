@@ -2,19 +2,15 @@ package com.shortstack.hackertracker.ui.information.info.views
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.widget.FrameLayout
-import com.shortstack.hackertracker.R
-import kotlinx.android.synthetic.main.view_code_of_conduct.view.*
-
+import com.shortstack.hackertracker.databinding.ViewCodeOfConductBinding
 
 class CodeOfConductView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
-    init {
-        inflate(context, R.layout.view_code_of_conduct, this)
-    }
+    private val binding = ViewCodeOfConductBinding.inflate(LayoutInflater.from(context), this, true)
 
     fun setText(conduct: String?) {
-        content.text = conduct?.replace("\\n", "\n")
+        binding.content.text = conduct?.replace("\\n", "\n")
     }
-
 }

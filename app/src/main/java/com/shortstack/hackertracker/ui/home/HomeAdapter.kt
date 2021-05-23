@@ -8,14 +8,9 @@ import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.views.EventView
 
+// todo: replace with ListAdapter
 class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    companion object {
-        private const val SKULL = 0
-        private const val HEADER = 1
-        private const val EVENT = 2
-        private const val ARTICLE = 3
-    }
 
     private val collection = ArrayList<Any>()
 
@@ -56,7 +51,7 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
         val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                if(oldItemPosition == 0 && newItemPosition == 0)
+                if (oldItemPosition == 0 && newItemPosition == 0)
                     return true
 
                 val lhs = collection[oldItemPosition]
@@ -82,7 +77,7 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun getNewListSize() = list.size
 
             override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                if(oldItemPosition == 0 && newItemPosition == 0)
+                if (oldItemPosition == 0 && newItemPosition == 0)
                     return true
 
                 val lhs = collection[oldItemPosition]
@@ -108,5 +103,12 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         collection.clear()
         collection.addAll(list)
         result.dispatchUpdatesTo(this)
+    }
+
+    companion object {
+        private const val SKULL = 0
+        private const val HEADER = 1
+        private const val EVENT = 2
+        private const val ARTICLE = 3
     }
 }

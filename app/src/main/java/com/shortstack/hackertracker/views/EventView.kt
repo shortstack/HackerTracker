@@ -4,26 +4,25 @@ import android.content.Context
 import android.graphics.Color
 import android.util.AttributeSet
 import android.util.TypedValue
+import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.database.ReminderManager
+import com.shortstack.hackertracker.databinding.RowEventBinding
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utilities.Analytics
-import kotlinx.android.synthetic.main.row_event.view.*
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
 class EventView : FrameLayout, KoinComponent {
 
-    companion object {
-        const val DISPLAY_MODE_MIN = 0
-        const val DISPLAY_MODE_FULL = 1
-    }
+    private val binding = RowEventBinding.inflate(LayoutInflater.from(context), this, true)
 
+    // todo: extract
     private val analytics: Analytics by inject()
     private val database: DatabaseManager by inject()
     private val reminder: ReminderManager by inject()
@@ -46,7 +45,6 @@ class EventView : FrameLayout, KoinComponent {
     }
 
     private fun init() {
-        inflate(context, R.layout.row_event, this)
         setDisplayMode()
     }
 
@@ -58,25 +56,25 @@ class EventView : FrameLayout, KoinComponent {
         when (displayMode) {
             DISPLAY_MODE_MIN -> {
                 val width = context.resources.getDimension(R.dimen.event_view_min_guideline).toInt()
-                guideline.setGuidelineBegin(width)
-                types_container.visibility = View.GONE
+                binding.guideline.setGuidelineBegin(width)
+                binding.typesContainer.visibility = View.GONE
             }
             DISPLAY_MODE_FULL -> {
                 val width = context.resources.getDimension(R.dimen.time_width).toInt()
-                guideline.setGuidelineBegin(width)
-                types_container.visibility = View.VISIBLE
+                binding.guideline.setGuidelineBegin(width)
+                binding.typesContainer.visibility = View.VISIBLE
             }
         }
     }
 
     private fun render(event: Event) {
-        title.text = event.title
+        binding.title.text = event.title
 
         // Stage 2
         if (displayMode == DISPLAY_MODE_FULL) {
-            location.text = event.location.name
+            binding.location.text = event.location.name
         } else {
-            location.text = event.getFullTimeStamp(context) + " / " + event.location.name
+            binding.location.text = event.getFullTimeStamp(context) + " / " + event.location.name
         }
 
 
@@ -87,7 +85,7 @@ class EventView : FrameLayout, KoinComponent {
             (context as? MainActivity)?.navigate(event)
         }
 
-        star_bar.setOnClickListener {
+        binding.starBar.setOnClickListener {
             onBookmarkClick(event)
         }
     }
@@ -95,12 +93,12 @@ class EventView : FrameLayout, KoinComponent {
     private fun renderCategoryColour(event: Event) {
         val type = event.types.first()
 
-        type_1.render(type)
+        binding.type1.render(type)
         if (event.types.size > 1) {
-            type_2.render(event.types.last())
-            type_2.visibility = View.VISIBLE
+            binding.type2.render(event.types.last())
+            binding.type2.visibility = View.VISIBLE
         } else {
-            type_2.visibility = View.GONE
+            binding.type2.visibility = View.GONE
         }
 
         val value = TypedValue()
@@ -112,7 +110,7 @@ class EventView : FrameLayout, KoinComponent {
         } else {
             Color.parseColor(type.color)
         }
-        category.setBackgroundColor(color)
+        binding.category.setBackgroundColor(color)
     }
 
 
@@ -125,7 +123,7 @@ class EventView : FrameLayout, KoinComponent {
             R.drawable.ic_star_border_white_24dp
         }
 
-        star_bar.setImageResource(drawable)
+        binding.starBar.setImageResource(drawable)
     }
 
     private fun onBookmarkClick(event: Event) {
@@ -143,5 +141,10 @@ class EventView : FrameLayout, KoinComponent {
         analytics.onEventAction(action, event)
 
         updateBookmark(event)
+    }
+
+    companion object {
+        const val DISPLAY_MODE_MIN = 0
+        const val DISPLAY_MODE_FULL = 1
     }
 }

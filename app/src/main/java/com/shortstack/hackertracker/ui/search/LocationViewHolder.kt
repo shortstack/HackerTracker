@@ -1,23 +1,22 @@
 package com.shortstack.hackertracker.ui.search
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.databinding.ItemTypeHeaderBinding
 import com.shortstack.hackertracker.models.local.Location
-import kotlinx.android.synthetic.main.item_type_header.view.*
 
-class LocationViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class LocationViewHolder(private val binding: ItemTypeHeaderBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+
+    fun render(location: Location) {
+        binding.header.text = location.name
+    }
 
     companion object {
         fun inflate(parent: ViewGroup): LocationViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_type_header, parent, false)
-            return LocationViewHolder(view)
+            val binding = ItemTypeHeaderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return LocationViewHolder(binding)
         }
-    }
-
-    fun render(location: Location) {
-        view.header.text = location.name
     }
 }

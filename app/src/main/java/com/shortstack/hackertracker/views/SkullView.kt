@@ -20,13 +20,6 @@ import org.koin.core.get
 
 class SkullView : AppCompatImageView, KoinComponent {
 
-    companion object {
-        private const val LONG_DELAY = 5_000L
-        private const val MEDIUM_DELAY = 1_500L
-        private const val SHORT_DELAY = 150L
-        private const val GLITCH_DURATION = 150L
-    }
-
     private val bitmap: Bitmap
 
     private var isGlitch = false
@@ -128,5 +121,12 @@ class SkullView : AppCompatImageView, KoinComponent {
         synchronized(this) {
             Glitch.apply(canvas, bitmap, isGlitch)
         }
+    }
+
+    companion object {
+        private const val LONG_DELAY = 5_000L
+        private const val MEDIUM_DELAY = 1_500L
+        private const val SHORT_DELAY = 150L
+        private const val GLITCH_DURATION = 150L
     }
 }

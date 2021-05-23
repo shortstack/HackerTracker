@@ -12,18 +12,19 @@ import com.shortstack.hackertracker.ui.activities.MainActivity
 
 class VendorsFragment : ListFragment<FirebaseVendor>() {
 
-    companion object {
-        fun newInstance() = VendorsFragment()
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val viewModel = ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java]
+        val viewModel =
+            ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java]
 
-        viewModel.vendors.observe(this, Observer {
+        viewModel.vendors.observe(viewLifecycleOwner, Observer {
             onResource(it)
         })
+    }
+
+    companion object {
+        fun newInstance() = VendorsFragment()
     }
 }
 

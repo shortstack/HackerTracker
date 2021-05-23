@@ -1,24 +1,23 @@
 package com.shortstack.hackertracker.ui.home
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.databinding.ItemArticleBinding
 import com.shortstack.hackertracker.models.local.Article
-import kotlinx.android.synthetic.main.item_article.view.*
 
-class ArticleViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
+class ArticleViewHolder(private val binding: ItemArticleBinding) :
+    RecyclerView.ViewHolder(binding.root) {
+
+    fun render(article: Article) {
+        binding.title.text = article.name
+        binding.content.text = article.text
+    }
 
     companion object {
         fun inflate(parent: ViewGroup): ArticleViewHolder {
-            val view = LayoutInflater.from(parent.context).inflate(R.layout.item_article, parent, false)
-            return ArticleViewHolder(view)
+            val binding = ItemArticleBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+            return ArticleViewHolder(binding)
         }
-    }
-
-    fun render(article: Article) {
-        view.title.text = article.name
-        view.content.text = article.text
     }
 }

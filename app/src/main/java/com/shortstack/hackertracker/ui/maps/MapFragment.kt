@@ -4,14 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.shortstack.hackertracker.R
-import kotlinx.android.synthetic.main.fragment_map.*
+import com.shortstack.hackertracker.databinding.FragmentMapBinding
 import java.io.File
 
 class MapFragment : androidx.fragment.app.Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_map, container, false)
+    private var _binding: FragmentMapBinding? = null
+    private val binding get() = _binding!!
+
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+        _binding = FragmentMapBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -19,20 +26,19 @@ class MapFragment : androidx.fragment.app.Fragment() {
         val file = arguments?.getSerializable(ARG_PDF) as? File
 
         if (file == null) {
-            progress.visibility = View.VISIBLE
+            binding.progress.visibility = View.VISIBLE
         } else {
-            progress.visibility = View.VISIBLE
+            binding.progress.visibility = View.VISIBLE
 
-            viewer.fromFile(file).onLoad {
-                progress.visibility = View.GONE
+            binding.viewer.fromFile(file).onLoad {
+                binding.progress.visibility = View.GONE
             }.load()
         }
     }
 
     override fun onDestroyView() {
+        binding.viewer.recycle()
         super.onDestroyView()
-        if (viewer != null)
-            viewer.recycle()
     }
 
     companion object {
@@ -48,5 +54,4 @@ class MapFragment : androidx.fragment.app.Fragment() {
             return fragment
         }
     }
-
 }

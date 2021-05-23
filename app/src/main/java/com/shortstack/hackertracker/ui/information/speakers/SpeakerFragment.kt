@@ -1,7 +1,6 @@
 package com.shortstack.hackertracker.ui.information.speakers
 
 import android.content.Intent
-import android.graphics.Color
 import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -13,34 +12,18 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
+import com.shortstack.hackertracker.databinding.FragmentSpeakersBinding
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.views.EventView
-import kotlinx.android.synthetic.main.empty_text.*
-import kotlinx.android.synthetic.main.fragment_event.*
-import kotlinx.android.synthetic.main.fragment_speakers.*
-import kotlinx.android.synthetic.main.fragment_speakers.collapsing_toolbar
-import kotlinx.android.synthetic.main.fragment_speakers.description
-import kotlinx.android.synthetic.main.fragment_speakers.toolbar
 import org.koin.android.ext.android.inject
 
 class SpeakerFragment : Fragment() {
 
-    companion object {
-        private const val EXTRA_SPEAKER = "EXTRA_SPEAKER"
-
-        fun newInstance(speaker: Speaker): SpeakerFragment {
-            val fragment = SpeakerFragment()
-
-            val bundle = Bundle()
-            bundle.putParcelable(EXTRA_SPEAKER, speaker)
-            fragment.arguments = bundle
-
-            return fragment
-        }
-    }
+    private var _binding: FragmentSpeakersBinding? = null
+    private val binding get() = _binding!!
 
     private val database: DatabaseManager by inject()
     private val analytics: Analytics by inject()
@@ -51,20 +34,19 @@ class SpeakerFragment : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_speakers, container, false)
+    ): View {
+        _binding = FragmentSpeakersBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val context = context ?: return
+        val drawable =
+            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back_white_24dp)
+        binding.toolbar.navigationIcon = drawable
 
-
-        val drawable = ContextCompat.getDrawable(context, R.drawable.ic_arrow_back_white_24dp)
-        toolbar.navigationIcon = drawable
-
-        toolbar.setNavigationOnClickListener {
+        binding.toolbar.setNavigationOnClickListener {
             (activity as? MainActivity)?.popBackStack()
         }
 
@@ -81,20 +63,20 @@ class SpeakerFragment : Fragment() {
     private fun showSpeaker(speaker: Speaker) {
         analytics.log("Viewing speaker ${speaker.name}")
 
-        collapsing_toolbar.title = speaker.name
-        collapsing_toolbar.subtitle = if (speaker.title.isEmpty()) {
+        binding.collapsingToolbar.title = speaker.name
+        binding.collapsingToolbar.subtitle = if (speaker.title.isEmpty()) {
             context?.getString(R.string.speaker_default_title)
         } else {
             speaker.title
         }
 
-        toolbar.menu.clear()
+        binding.toolbar.menu.clear()
 
         val url = speaker.twitter
         if (url.isNotEmpty()) {
-            toolbar.inflateMenu(R.menu.speaker_twitter)
+            binding.toolbar.inflateMenu(R.menu.speaker_twitter)
 
-            toolbar.setOnMenuItemClickListener {
+            binding.toolbar.setOnMenuItemClickListener {
                 val url = "https://twitter.com/" + url.replace("@", "")
 
                 val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(url))
@@ -109,20 +91,34 @@ class SpeakerFragment : Fragment() {
         val body = speaker.description
 
         if (body.isNotBlank()) {
-            empty.visibility = View.GONE
-            description.text = body
+            // todo: binding.empty.visibility = View.GONE
+            binding.description.text = body
         } else {
-            empty.visibility = View.VISIBLE
+            // todo: binding.empty.visibility = View.VISIBLE
         }
 
 
         database.getEventsForSpeaker(speaker).observe(viewLifecycleOwner, Observer { list ->
-            events_header.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
+            binding.eventsHeader.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
             list.forEach {
-                events.addView(EventView(requireContext(), it, EventView.DISPLAY_MODE_MIN))
+                binding.events.addView(EventView(requireContext(), it, EventView.DISPLAY_MODE_MIN))
             }
         })
 
         analytics.onSpeakerEvent(Analytics.SPEAKER_VIEW, speaker)
+    }
+
+    companion object {
+        private const val EXTRA_SPEAKER = "EXTRA_SPEAKER"
+
+        fun newInstance(speaker: Speaker): SpeakerFragment {
+            val fragment = SpeakerFragment()
+
+            val bundle = Bundle()
+            bundle.putParcelable(EXTRA_SPEAKER, speaker)
+            fragment.arguments = bundle
+
+            return fragment
+        }
     }
 }

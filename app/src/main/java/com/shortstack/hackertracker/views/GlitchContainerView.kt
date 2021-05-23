@@ -16,16 +16,10 @@ import org.koin.core.get
 class GlitchContainerView(context: Context, attrs: AttributeSet?) :
     CoordinatorLayout(context, attrs), KoinComponent {
 
-    companion object {
-        private const val LONG_DELAY = 5_000L
-        private const val MEDIUM_DELAY = 1_500L
-        private const val SHORT_DELAY = 1_500L
-        private const val GLITCH_DURATION = 250L
-    }
-
     private var isGlitch = false
     private var isRunning = true
     private var isNormal = true
+
     // Keep track of if we're creating the cache or not.
     private var isDrawing = false
 
@@ -95,5 +89,12 @@ class GlitchContainerView(context: Context, attrs: AttributeSet?) :
             }
             isDrawing = false
         }
+    }
+
+    companion object {
+        private const val LONG_DELAY = 5_000L
+        private const val MEDIUM_DELAY = 1_500L
+        private const val SHORT_DELAY = 1_500L
+        private const val GLITCH_DURATION = 250L
     }
 }

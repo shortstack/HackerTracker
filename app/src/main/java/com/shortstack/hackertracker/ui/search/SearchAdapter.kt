@@ -10,14 +10,8 @@ import com.shortstack.hackertracker.ui.information.speakers.SpeakerViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.views.EventView
 
+// todo: replace with ListAdapter
 class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    companion object {
-        private const val EVENT = 0
-        private const val LOCATION = 1
-        private const val SPEAKER = 2
-        private const val HEADER = 3
-    }
 
     private val collection = ArrayList<Any>()
     var state: State = State.INIT
@@ -102,5 +96,12 @@ class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         INIT,
         RESULTS,
         EMPTY
+    }
+
+    companion object {
+        private const val EVENT = 0
+        private const val LOCATION = 1
+        private const val SPEAKER = 2
+        private const val HEADER = 3
     }
 }

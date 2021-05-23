@@ -4,6 +4,7 @@ import android.animation.ObjectAnimator
 import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
+import android.view.LayoutInflater
 import android.view.View
 import android.view.animation.AnticipateOvershootInterpolator
 import android.widget.FrameLayout
@@ -13,14 +14,15 @@ import androidx.constraintlayout.widget.ConstraintSet.END
 import androidx.constraintlayout.widget.ConstraintSet.START
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
-import com.shortstack.hackertracker.R
-import kotlinx.android.synthetic.main.view_day_selector.view.*
+import com.shortstack.hackertracker.databinding.ViewDaySelectorBinding
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
 
 class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
+
+    private val binding = ViewDaySelectorBinding.inflate(LayoutInflater.from(context), this, true)
 
     private val children = ArrayList<TextView>()
     private var listener: OnDaySelectedListener? = null
@@ -29,15 +31,13 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
     private var end: Int = -1
 
     init {
-        View.inflate(context, R.layout.view_day_selector, this)
-
-        for (i in 0..frame.childCount) {
-            val view = frame.getChildAt(i)
+        for (i in 0..binding.frame.childCount) {
+            val view = binding.frame.getChildAt(i)
             if (view is TextView) {
                 children.add(view)
                 view.setOnClickListener {
                     val tag = view.tag as? Long
-                    if( tag != null) {
+                    if (tag != null) {
                         listener?.onDaySelected(Date(tag))
                     }
                 }
@@ -47,10 +47,10 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
 
     private fun onDaySelected(view: View, position: Int) {
         val constraintSet = ConstraintSet()
-        constraintSet.clone(frame)
+        constraintSet.clone(binding.frame)
 
         constraintSet.apply {
-            connect(bubble.id, position, view.id, position)
+            connect(binding.bubble.id, position, view.id, position)
         }
 
 
@@ -59,8 +59,8 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
             duration = 500
         }
 
-        TransitionManager.beginDelayedTransition(frame, transition)
-        constraintSet.applyTo(frame)
+        TransitionManager.beginDelayedTransition(binding.frame, transition)
+        constraintSet.applyTo(binding.frame)
     }
 
     fun onScroll(begin: Date, end: Date) {
@@ -86,7 +86,7 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
 
 
         val beginIndex = getDayIndex(dates, beginDay)
-        if(beginIndex != -1) {
+        if (beginIndex != -1) {
             val view = getViewByIndex(beginIndex)
             onBeginDaySelected(view)
             setCenter(view)
@@ -96,35 +96,33 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
         if (endIndex != -1) {
             onEndDaySelected(getViewByIndex(endIndex))
         }
-
-
     }
 
     private fun setCenter(view: View) {
         val screenWidth = (context as Activity).windowManager
-                .defaultDisplay.width
+            .defaultDisplay.width
 
         val scrollX = view.left - screenWidth / 2 + view.width / 2
 
-        val animator = ObjectAnimator.ofInt(root, "scrollX", scrollX)
+        val animator = ObjectAnimator.ofInt(binding.root, "scrollX", scrollX)
         animator.duration = 300
         animator.start()
     }
 
-    private fun getViewByIndex(index: Int): View {
+    private fun getViewByIndex(index: Int): View = with(binding) {
         return when (index) {
-            0 -> day_1
-            1 -> day_2
-            2 -> day_3
-            3 -> day_4
-            4 -> day_5
-            5 -> day_6
-            6 -> day_7
-            7 -> day_8
-            8 -> day_9
-            9 -> day_10
-            10 -> day_11
-            11 -> day_12
+            0 -> day1
+            1 -> day2
+            2 -> day3
+            3 -> day4
+            4 -> day5
+            5 -> day6
+            6 -> day7
+            7 -> day8
+            8 -> day9
+            9 -> day10
+            10 -> day11
+            11 -> day12
             else -> throw ArrayIndexOutOfBoundsException("Index out of bounds: $index.")
         }
     }

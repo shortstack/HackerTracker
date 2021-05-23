@@ -7,14 +7,14 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProviders
-import androidx.recyclerview.widget.GridLayoutManager
-import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.Status
-import com.shortstack.hackertracker.models.local.Speaker
-import kotlinx.android.synthetic.main.fragment_recyclerview.*
+import com.shortstack.hackertracker.databinding.FragmentRecyclerviewBinding
 
 abstract class ListFragment<T> : Fragment() {
+
+    private var _binding: FragmentRecyclerviewBinding? = null
+    private val binding get() = _binding!!
 
     private val adapter = ListAdapter()
 
@@ -22,13 +22,14 @@ abstract class ListFragment<T> : Fragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_recyclerview, container, false)
+    ): View {
+        _binding = FragmentRecyclerviewBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        list.adapter = adapter
+        binding.list.adapter = adapter
     }
 
     inline fun <reified J : ViewModel> getViewModel(): J =
@@ -64,25 +65,25 @@ abstract class ListFragment<T> : Fragment() {
     }
 
     private fun setProgressIndicator(active: Boolean) {
-        loading_progress.visibility = if (active) View.VISIBLE else View.GONE
+        binding.loadingProgress.visibility = if (active) View.VISIBLE else View.GONE
     }
 
     private fun showInitView() {
-        empty_view.visibility = View.VISIBLE
-        empty_view.showDefault()
+        binding.emptyView.visibility = View.VISIBLE
+        binding.emptyView.showDefault()
     }
 
     private fun showEmptyView() {
-        empty_view.visibility = View.VISIBLE
-        empty_view.showNoResults()
+        binding.emptyView.visibility = View.VISIBLE
+        binding.emptyView.showNoResults()
     }
 
     private fun showErrorView(message: String?) {
-        empty_view.visibility = View.VISIBLE
-        empty_view.showError(message)
+        binding.emptyView.visibility = View.VISIBLE
+        binding.emptyView.showError(message)
     }
 
     private fun hideViews() {
-        empty_view.visibility = View.GONE
+        binding.emptyView.visibility = View.GONE
     }
 }

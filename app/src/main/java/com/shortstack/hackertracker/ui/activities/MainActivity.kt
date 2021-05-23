@@ -10,6 +10,7 @@ import android.util.TypedValue
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
@@ -23,6 +24,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.databinding.ActivityMainBinding
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Location
 import com.shortstack.hackertracker.models.local.Speaker
@@ -32,23 +34,22 @@ import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
-import com.shortstack.hackertracker.ui.information.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.information.categories.CategoryFragment
+import com.shortstack.hackertracker.ui.information.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.search.SearchFragment
 import com.shortstack.hackertracker.ui.settings.SettingsFragment
 import com.shortstack.hackertracker.ui.themes.ThemesManager.Theme.*
 import com.shortstack.hackertracker.utilities.Storage
-import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.app_bar_main.*
 import kotlinx.android.synthetic.main.nav_header_main.view.*
-import kotlinx.android.synthetic.main.row_nav_view.*
 import org.koin.android.ext.android.inject
 
 
 class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
     FragmentManager.OnBackStackChangedListener {
+
+    private lateinit var binding: ActivityMainBinding
 
     private val storage: Storage by inject()
 
@@ -62,14 +63,16 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        val view = binding.root
+        setContentView(view)
 
         initNavDrawer()
 
         viewModel = ViewModelProvider(this)[HackerTrackerViewModel::class.java]
         viewModel.conference.observe(this, Observer {
             if (it != null) {
-                nav_view.getHeaderView(0).nav_title.text = it.data?.name
+                binding.navView.getHeaderView(0).findViewById<TextView>(R.id.nav_title).text = it.data?.name
             }
         })
 
@@ -133,7 +136,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
 
 
     private fun initNavDrawer() {
-        nav_view.setNavigationItemSelectedListener(this)
+        binding.navView.setNavigationItemSelectedListener(this)
     }
 
     override fun getTheme(): Resources.Theme {
@@ -158,11 +161,11 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
     }
 
     override fun onBackPressed() {
-        val drawerOpen = drawer_layout.isDrawerOpen(GravityCompat.START)
+        val drawerOpen = binding.drawerLayout.isDrawerOpen(GravityCompat.START)
 
         when {
-            drawerOpen -> drawer_layout.closeDrawers()
-            storage.navDrawerOnBack && !drawerOpen && !secondaryVisible -> drawer_layout.openDrawer(
+            drawerOpen -> binding.drawerLayout.closeDrawers()
+            storage.navDrawerOnBack && !drawerOpen && !secondaryVisible -> binding.drawerLayout.openDrawer(
                 GravityCompat.START
             )
             else -> super.onBackPressed()
@@ -189,7 +192,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
 
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         setMainFragment(item.itemId, item.title.toString(), false)
-        drawer_layout.closeDrawers()
+        binding.drawerLayout.closeDrawers()
         return true
     }
 
@@ -241,17 +244,17 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
 
         if (last is EventFragment || last is SpeakerFragment) {
             secondaryVisible = true
-            drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-            container.visibility = View.INVISIBLE
+            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            binding.main.container.visibility = View.INVISIBLE
         } else {
             secondaryVisible = false
-            drawer_layout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-            container.visibility = View.VISIBLE
+            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            binding.main.container.visibility = View.VISIBLE
         }
     }
 
     fun openNavDrawer() {
-        drawer_layout.openDrawer(GravityCompat.START)
+        binding.drawerLayout.openDrawer(GravityCompat.START)
     }
 
     fun showSearch() {
@@ -268,6 +271,10 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
     }
 
     fun navigate(type: Type) {
-        replaceFragment(CategoryFragment.newInstance((type)), R.id.container_above, hasAnimation = true)
+        replaceFragment(
+            CategoryFragment.newInstance((type)),
+            R.id.container_above,
+            hasAnimation = true
+        )
     }
 }

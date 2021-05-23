@@ -4,26 +4,17 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.local.*
+import com.shortstack.hackertracker.ui.information.categories.CategoryViewHolder
 import com.shortstack.hackertracker.ui.information.faq.FAQViewHolder
 import com.shortstack.hackertracker.ui.information.speakers.SpeakerViewHolder
 import com.shortstack.hackertracker.ui.information.vendors.VendorViewHolder
-import com.shortstack.hackertracker.ui.information.categories.CategoryViewHolder
 import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.search.LocationViewHolder
 import com.shortstack.hackertracker.views.EventView
 
+// todo: use ListAdapter
 class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
-
-    companion object {
-        private const val EVENT = 0
-        private const val LOCATION = 1
-        private const val SPEAKER = 2
-        private const val DAY = 3
-        private const val VENDOR = 5
-        private const val FAQ = 6
-        private const val CATEGORY = 7
-    }
 
     private val collection = ArrayList<Any>()
 
@@ -80,5 +71,15 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         collection.clear()
         collection.addAll(list)
         notifyDataSetChanged()
+    }
+
+    companion object {
+        private const val EVENT = 0
+        private const val LOCATION = 1
+        private const val SPEAKER = 2
+        private const val DAY = 3
+        private const val VENDOR = 5
+        private const val FAQ = 6
+        private const val CATEGORY = 7
     }
 }
