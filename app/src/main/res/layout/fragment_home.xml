@@ -4,29 +4,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorBackground"
-    >
+    android:background="?android:colorBackground">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?android:colorBackground">
+        android:background="?android:colorBackground"
+        app:liftOnScroll="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@string/home"
-            app:navigationIcon="@drawable/ic_menu_black_24dp"/>
+            app:navigationIcon="@drawable/ic_menu_black_24dp"
+            app:title="@string/home" />
 
     </com.google.android.material.appbar.AppBarLayout>
-
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
 
         <com.shortstack.hackertracker.views.EmptyView
             android:id="@+id/empty_view"
@@ -45,7 +43,6 @@
             android:paddingTop="@dimen/recycler_view_padding_top"
             android:paddingBottom="@dimen/recycler_view_padding_bottom"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
 
         <ProgressBar
             android:id="@+id/loading_progress"

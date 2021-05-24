@@ -1,21 +1,19 @@
 package com.shortstack.hackertracker.ui.search
 
-import android.app.Activity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.databinding.FragmentSearchBinding
+import com.shortstack.hackertracker.hideKeyboard
 import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.search.SearchAdapter.State.*
-
 
 class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 
@@ -48,19 +46,19 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         binding.list.adapter = adapter
 
         binding.toolbar.setNavigationOnClickListener {
-            hideKeyboard(context as MainActivity)
-            (context as MainActivity).popBackStack()
+            requireActivity().hideKeyboard()
+            requireActivity().onBackPressed()
         }
 
         binding.search.onActionViewExpanded()
+
         binding.search.setOnCloseListener {
-            hideKeyboard(context as MainActivity)
-            (context as MainActivity).popBackStack()
+            requireActivity().hideKeyboard()
+            requireActivity().onBackPressed()
             return@setOnCloseListener true
         }
 
         binding.search.setOnQueryTextListener(this)
-
 
         viewModel.search.observe(viewLifecycleOwner, Observer {
             adapter.setList(it)
@@ -78,6 +76,15 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
                 EMPTY -> binding.emptyView.showNoResults(adapter.query)
             }
         })
+
+        binding.list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                    requireActivity().hideKeyboard()
+                }
+            }
+        })
     }
 
     override fun onQueryTextSubmit(query: String?) = true
@@ -86,12 +93,6 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
         adapter.query = newText
         viewModel.onQueryTextChange(newText)
         return false
-    }
-
-    private fun hideKeyboard(activity: Activity) {
-        val imm = activity.getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        val view = activity.currentFocus ?: View(activity)
-        imm.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     companion object {

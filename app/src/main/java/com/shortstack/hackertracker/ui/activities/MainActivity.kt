@@ -42,7 +42,6 @@ import com.shortstack.hackertracker.ui.search.SearchFragment
 import com.shortstack.hackertracker.ui.settings.SettingsFragment
 import com.shortstack.hackertracker.ui.themes.ThemesManager.Theme.*
 import com.shortstack.hackertracker.utilities.Storage
-import kotlinx.android.synthetic.main.nav_header_main.view.*
 import org.koin.android.ext.android.inject
 
 
@@ -72,7 +71,8 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
         viewModel = ViewModelProvider(this)[HackerTrackerViewModel::class.java]
         viewModel.conference.observe(this, Observer {
             if (it != null) {
-                binding.navView.getHeaderView(0).findViewById<TextView>(R.id.nav_title).text = it.data?.name
+                binding.navView.getHeaderView(0).findViewById<TextView>(R.id.nav_title).text =
+                    it.data?.name
             }
         })
 

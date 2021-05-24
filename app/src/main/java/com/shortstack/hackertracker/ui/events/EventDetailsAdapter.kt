@@ -22,7 +22,7 @@ class EventDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is String -> TYPE_HEADER
             is Action -> TYPE_ACTION
             is Speaker -> TYPE_SPEAKER
-            else -> throw IllegalStateException("Unknown view type: ${collection[position].javaClass.simpleName}")
+            else -> error("Unknown view type: ${collection[position].javaClass.simpleName}")
         }
     }
 
@@ -31,7 +31,7 @@ class EventDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             TYPE_HEADER -> HeaderViewHolder.inflate(parent)
             TYPE_ACTION -> ActionViewHolder.inflate(parent)
             TYPE_SPEAKER -> SpeakerViewHolder.inflate(parent)
-            else -> throw IllegalStateException("Unknown view type: $viewType")
+            else -> error("Unknown view type: $viewType")
         }
     }
 
@@ -46,11 +46,14 @@ class EventDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun getSpanSize(position: Int, span: Int): Int {
+        if (position == 0 && span == 1)
+            return span
+
         return when (collection[position]) {
             is String -> span
             is Action -> (collection[position] as Action).getSpanCount(span)
             is Speaker -> span
-            else -> throw IllegalStateException("Unknown view type: ${collection[position].javaClass.simpleName}")
+            else -> error("Unknown view type: ${collection[position].javaClass.simpleName}")
         }
     }
 

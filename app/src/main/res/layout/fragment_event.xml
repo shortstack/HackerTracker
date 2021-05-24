@@ -5,103 +5,48 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorBackground"
-    android:clickable="true"
-    android:focusable="true">
-
+    android:background="?colorSurface">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/header_height"
-        android:background="?colorSurface">
+        android:layout_height="wrap_content"
+        android:background="?colorSurface"
+        app:liftOnScroll="true">
 
-        <com.google.android.material.appbar.SubtitleCollapsingToolbarLayout
-            android:id="@+id/collapsing_toolbar"
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            app:collapsedSubtitleTextAppearance="@style/Subhead"
-            app:collapsedTitleTextAppearance="@style/Header"
-            app:expandedSubtitleTextAppearance="@style/Subhead"
-            app:expandedTitleTextAppearance="@style/FragmentHeader"
-            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            app:layout_collapseMode="pin"
+            app:menu="@menu/event_bookmarked"
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_new_24"
             tools:subtitle="Party/Meetup"
-            tools:title="Arcade Party">
-
-
-            <com.shortstack.hackertracker.views.SkullView
-                style="@style/ToolbarBackground"
-                android:src="@drawable/skull_lg"
-                android:tint="?menu_tint"
-                app:layout_collapseMode="parallax"
-                app:layout_collapseParallaxMultiplier="0.85" />
-
-
-            <androidx.appcompat.widget.Toolbar
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="?android:attr/actionBarSize"
-                android:layout_marginTop="0dp"
-                android:background="@android:color/transparent"
-                app:layout_collapseMode="pin"
-                app:menu="@menu/event_bookmarked"
-                app:navigationIcon="@drawable/ic_arrow_back_white_24dp" />
-
-            <LinearLayout
-                android:id="@+id/icons"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <TextView
-                    android:id="@+id/demo"
-                    style="@style/Label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/demo" />
-
-                <TextView
-                    android:id="@+id/exploit"
-                    style="@style/Label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/exploit" />
-
-                <TextView
-                    android:id="@+id/tool"
-                    style="@style/Label"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tool" />
-
-            </LinearLayout>
-
-        </com.google.android.material.appbar.SubtitleCollapsingToolbarLayout>
-
+            tools:title="Arcade Party" />
 
     </com.google.android.material.appbar.AppBarLayout>
-
 
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="?android:attr/actionBarSize"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="match_parent"
+                android:id="@+id/header"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:paddingLeft="24dp"
-                android:paddingTop="32dp"
-                android:paddingRight="24dp">
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
                     android:id="@+id/location"
@@ -109,6 +54,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
+                    android:layout_marginStart="8dp"
                     android:alpha="0.70"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/type_2"
@@ -132,6 +78,7 @@
                     android:id="@+id/type_1"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginEnd="8dp"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -142,10 +89,13 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
-
             <FrameLayout
+                android:id="@+id/body"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/header">
 
                 <include
                     layout="@layout/empty_text"
@@ -156,39 +106,34 @@
                     style="@style/Paragraph"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="My event is so fresh!\nSofresh!" />
+                    tools:text="The Bug Hunter's Methodology is an ongoing yearly installment on the newest tools and tech. for bug hunters and red teamers." />
 
             </FrameLayout>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/contents"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:overScrollMode="never"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/body"
+                app:spanCount="3"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_event_link" />
 
-            <androidx.core.widget.NestedScrollView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+            <com.shortstack.hackertracker.views.SkullView
+                style="@style/Footer"
+                android:src="?footer_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/contents"
+                app:layout_constraintVertical_bias="1.0" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
-
-                    <androidx.recyclerview.widget.RecyclerView
-                        android:id="@+id/contents"
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:overScrollMode="never"
-                        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                        app:spanCount="3"
-                        tools:itemCount="5"
-                        tools:listitem="@layout/item_event_link" />
-
-
-                    <include layout="@layout/row_footer" />
-
-
-                </LinearLayout>
-
-            </androidx.core.widget.NestedScrollView>
-
-        </LinearLayout>
     </androidx.core.widget.NestedScrollView>
+
 </com.shortstack.hackertracker.views.GlitchContainerView>

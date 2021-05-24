@@ -11,7 +11,6 @@ import com.shortstack.hackertracker.views.EventView
 // todo: replace with ListAdapter
 class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-
     private val collection = ArrayList<Any>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {

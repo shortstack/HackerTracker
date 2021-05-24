@@ -4,16 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorBackground"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
+        style="@style/AppBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:colorBackground">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            style="@style/Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentInsetStart="0dp"
@@ -22,14 +22,13 @@
             android:contentInsetRight="0dp"
             android:padding="0dp"
             app:contentInsetEnd="0dp"
-            app:contentInsetStartWithNavigation="0dp"
             app:contentInsetEndWithActions="0dp"
             app:contentInsetLeft="0dp"
             app:contentInsetRight="0dp"
             app:contentInsetStart="0dp"
-            app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
+            app:contentInsetStartWithNavigation="0dp"
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_new_24"
             app:title="@string/search">
-
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search"
@@ -41,12 +40,10 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
 
         <com.shortstack.hackertracker.views.EmptyView
             android:id="@+id/empty_view"

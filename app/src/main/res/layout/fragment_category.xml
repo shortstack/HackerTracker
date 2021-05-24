@@ -40,7 +40,7 @@
                 android:layout_height="?android:attr/actionBarSize"
                 android:background="@android:color/transparent"
                 app:layout_collapseMode="pin"
-                app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
+                app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_new_24"
                 app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 

@@ -10,7 +10,7 @@
     <dimen name="header_height">192dp</dimen>
 
     <!--  Text  -->
-    <dimen name="paragraph_vertical_margin">32dp</dimen>
+    <dimen name="paragraph_vertical_margin">16dp</dimen>
     <dimen name="paragraph_horizontal_margin">24dp</dimen>
     <dimen name="paragraph_line_spacing_extra">8dp</dimen>
 

@@ -4,13 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
-import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.FragmentCategoryBinding
 import com.shortstack.hackertracker.models.local.Type
-import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.events.EventDetailsAdapter
 
 class CategoryFragment : Fragment() {
@@ -30,19 +27,12 @@ class CategoryFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val context = context ?: return
-
-        val drawable = ContextCompat.getDrawable(context, R.drawable.ic_arrow_back_white_24dp)
-        binding.toolbar.navigationIcon = drawable
-
         binding.toolbar.setNavigationOnClickListener {
-            (activity as? MainActivity)?.popBackStack()
+            requireActivity().onBackPressed()
         }
 
-        val type = arguments?.getParcelable(EXTRA_TYPE) as? Type
-        if (type != null) {
-            showType(type)
-        }
+        val type = arguments?.getParcelable<Type>(EXTRA_TYPE) ?: error("type must not be null")
+        showType(type)
     }
 
     private fun showType(type: Type) {

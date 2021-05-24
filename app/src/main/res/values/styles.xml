@@ -1,6 +1,7 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="ThemeBase" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <!-- Custom attributes -->
         <item name="dark_mode">light</item>
         <item name="footer_icon">@drawable/skull</item>
         <item name="footer_tint">@color/black_70</item>
@@ -9,18 +10,24 @@
         <item name="filter_background">@color/white</item>
         <item name="category_tint">@null</item>
 
+        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_dark</item>
-        <item name="colorPrimaryVariant">@color/white</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimaryVariant">@color/purple_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/purple_dark</item>
         <item name="colorSecondaryVariant">@color/purple_dark</item>
-        <item name="colorOnSecondary">#FFFFFF</item>
-        <item name="colorError">#F44336</item>
-        <item name="colorOnError">#FFFFFF</item>
-        <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">@color/white</item>
-        <item name="android:colorBackground">@color/white</item>
-        <item name="colorOnBackground">@color/black_70</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
+
+        <!--        <item name="colorError">#F44336</item>-->
+        <!--        <item name="colorOnError">#FFFFFF</item>-->
+        <!--        <item name="colorSurface">@color/green</item>-->
+        <!--        <item name="colorOnSurface">@color/white</item>-->
+        <!--        <item name="android:colorBackground">@color/white</item>-->
+        <!--        <item name="colorOnBackground">@color/black_70</item>-->
 
 
         <item name="windowActionBar">false</item>
@@ -41,7 +48,7 @@
     <style name="AppTheme" parent="ThemeBase" />
 
     <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
-
+        <!-- Custom attributes -->
         <item name="dark_mode">dark</item>
         <item name="footer_icon">@drawable/skull</item>
         <item name="footer_tint">@color/white</item>
@@ -49,18 +56,17 @@
         <item name="menu_tint">@color/white</item>
         <item name="filter_background">@color/dark_background</item>
 
+        <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_dark</item>
-        <item name="colorPrimaryVariant">@color/dark_background</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
+        <item name="colorPrimaryVariant">@color/purple_dark</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/purple_dark</item>
         <item name="colorSecondaryVariant">@color/purple_dark</item>
-        <item name="colorOnSecondary">#FFFFFF</item>
-        <item name="colorError">#F44336</item>
-        <item name="colorOnError">#FFFFFF</item>
-        <item name="colorSurface">@color/dark_background</item>
-        <item name="colorOnSurface">#212121</item>
-        <item name="android:colorBackground">@color/background</item>
-        <item name="colorOnBackground">@color/white</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
 
 
         <item name="windowActionBar">false</item>
@@ -343,6 +349,24 @@
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
+    </style>
+
+    <style name="Footer">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:paddingBottom">?android:attr/actionBarSize</item>
+        <item name="android:tint">?attr/colorControlNormal</item>
+    </style>
+
+    <!--  Toolbar  -->
+    <style name="Toolbar">
+        <item name="android:background">?colorSurface</item>
+    </style>
+
+    <style name="AppBar">
+        <item name="liftOnScroll">true</item>
     </style>
 
 </resources>

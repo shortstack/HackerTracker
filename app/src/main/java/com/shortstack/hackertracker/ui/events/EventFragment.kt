@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -54,7 +53,7 @@ class EventFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val id = arguments?.getInt(EXTRA_EVENT)
+        val id = arguments?.getInt(EXTRA_EVENT) ?: error("id must not be null")
 
         viewModel.events.observe(viewLifecycleOwner, Observer {
             val target = it.data?.find { it.id == id }
@@ -63,22 +62,15 @@ class EventFragment : Fragment() {
             }
         })
 
-        val drawable = ContextCompat.getDrawable(
-            context
-                ?: return, R.drawable.ic_arrow_back_white_24dp
-        )
-        binding.toolbar.navigationIcon = drawable
-
         binding.toolbar.setNavigationOnClickListener {
-            (activity as? MainActivity)?.popBackStack()
+            requireActivity().onBackPressed()
         }
-
     }
 
     private fun showEvent(event: Event) {
         analytics.log("Viewing event: ${event.title}")
 
-        binding.collapsingToolbar.title = event.title
+        binding.toolbar.title = event.title
 
         val body = event.description
 
@@ -145,7 +137,7 @@ class EventFragment : Fragment() {
 
         val context = context ?: return
 
-        binding.collapsingToolbar.subtitle = getFullTimeStamp(context, event)
+        binding.toolbar.subtitle = getFullTimeStamp(context, event)
         binding.location.text = event.location.name
     }
 

@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -42,18 +41,15 @@ class SpeakerFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val drawable =
-            ContextCompat.getDrawable(requireContext(), R.drawable.ic_arrow_back_white_24dp)
-        binding.toolbar.navigationIcon = drawable
-
         binding.toolbar.setNavigationOnClickListener {
-            (activity as? MainActivity)?.popBackStack()
+            requireActivity().onBackPressed()
         }
 
-        val speaker = arguments?.getParcelable(EXTRA_SPEAKER) as? Speaker
+        val speaker =
+            arguments?.getParcelable(EXTRA_SPEAKER) as? Speaker ?: error("speaker must not be null")
 
         viewModel.speakers.observe(viewLifecycleOwner, Observer {
-            val target = it.data?.find { it.id == speaker?.id }
+            val target = it.data?.find { it.id == speaker.id }
             if (target != null) {
                 showSpeaker(target)
             }
@@ -63,8 +59,8 @@ class SpeakerFragment : Fragment() {
     private fun showSpeaker(speaker: Speaker) {
         analytics.log("Viewing speaker ${speaker.name}")
 
-        binding.collapsingToolbar.title = speaker.name
-        binding.collapsingToolbar.subtitle = if (speaker.title.isEmpty()) {
+        binding.toolbar.title = speaker.name
+        binding.toolbar.subtitle = if (speaker.title.isEmpty()) {
             context?.getString(R.string.speaker_default_title)
         } else {
             speaker.title
