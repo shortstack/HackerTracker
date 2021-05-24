@@ -36,7 +36,7 @@ class CategoryFragment : Fragment() {
     }
 
     private fun showType(type: Type) {
-        binding.collapsingToolbar.title = type.fullName
+        binding.toolbar.title = type.fullName
 
         val body = type.description
 

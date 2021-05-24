@@ -56,21 +56,20 @@
         <item name="menu_tint">@color/white</item>
         <item name="filter_background">@color/dark_background</item>
 
+        <!-- Background color -->
+        <item name="colorSurface">@color/black</item>
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/purple_dark</item>
         <item name="colorPrimaryVariant">@color/purple_dark</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
+        <!-- Secondary brand color -->
         <item name="colorSecondary">@color/purple_dark</item>
         <item name="colorSecondaryVariant">@color/purple_dark</item>
         <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
+        <!-- Status bar color -->
+        <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
         <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
 
-
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
 
         <item name="android:checkboxStyle">@style/AppCheckBoxStyle</item>
 
@@ -362,7 +361,7 @@
 
     <!--  Toolbar  -->
     <style name="Toolbar">
-        <item name="android:background">?colorSurface</item>
+<!--        <item name="android:background">?colorSurface</item>-->
     </style>
 
     <style name="AppBar">

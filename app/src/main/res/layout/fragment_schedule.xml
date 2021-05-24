@@ -3,17 +3,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="?android:colorBackground">
+    android:layout_height="match_parent">
 
     <com.google.android.material.appbar.AppBarLayout
+        style="@style/AppBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:colorBackground"
-        app:liftOnScroll="true">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            style="@style/Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/ic_menu_black_24dp"
@@ -36,6 +35,7 @@
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:background="?colorSurface"
             android:clipToPadding="false"
             android:paddingTop="@dimen/recycler_view_padding_top"
             android:paddingBottom="@dimen/recycler_view_padding_bottom"
@@ -76,8 +76,7 @@
             app:behavior_peekHeight="450dp"
             app:behavior_skipCollapsed="false"
             app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-            tools:foreground="@color/orange"
-            tools:layout_height="300dp" />
+            tools:layout_height="0dp" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

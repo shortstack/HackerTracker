@@ -9,17 +9,16 @@
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
+        style="@style/AppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?colorSurface"
-        app:liftOnScroll="true">
+        android:background="?colorSurface">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            style="@style/Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="0dp"
-            app:layout_collapseMode="pin"
             app:menu="@menu/event_bookmarked"
             app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_new_24"
             tools:subtitle="Party/Meetup"
