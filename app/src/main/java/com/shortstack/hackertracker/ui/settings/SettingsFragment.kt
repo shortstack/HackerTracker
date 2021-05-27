@@ -2,9 +2,11 @@ package com.shortstack.hackertracker.ui.settings
 
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
+import androidx.lifecycle.Observer
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
+import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.local.Conference
@@ -13,6 +15,7 @@ import com.shortstack.hackertracker.ui.themes.ThemesManager
 import com.shortstack.hackertracker.utilities.MyClock
 import com.shortstack.hackertracker.utilities.Storage
 import com.shortstack.hackertracker.utilities.now
+import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.ext.android.inject
 import java.util.*
 
@@ -108,25 +111,25 @@ class SettingsFragment : PreferenceFragmentCompat() {
         super.onActivityCreated(savedInstanceState)
 
         // todo:
-//        toolbar.setNavigationOnClickListener {
-//            (context as MainActivity).openNavDrawer()
-//        }
-//
-//        database.conference.observe(viewLifecycleOwner, Observer {
-//            if (it != null) {
-//                updateConference(it)
-//                updateTimezonePreference(it)
-//            }
-//        })
-//
-//        version.text = getString(R.string.version, BuildConfig.VERSION_NAME)
-//
-//        var index = 0
-//        version.setOnClickListener {
-//            if (index++ == 10) {
-//                storage.setPreference(Storage.DEVELOPER_THEME_UNLOCKED, true)
-//            }
-//        }
+        toolbar.setNavigationOnClickListener {
+            (context as MainActivity).openNavDrawer()
+        }
+
+        database.conference.observe(viewLifecycleOwner, Observer {
+            if (it != null) {
+                updateConference(it)
+                updateTimezonePreference(it)
+            }
+        })
+
+        version.text = getString(R.string.version, BuildConfig.VERSION_NAME)
+
+        var index = 0
+        version.setOnClickListener {
+            if (index++ == 10) {
+                storage.setPreference(Storage.DEVELOPER_THEME_UNLOCKED, true)
+            }
+        }
     }
 
     private fun updateConference(conference: Conference) {

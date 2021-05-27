@@ -35,7 +35,6 @@
             android:id="@+id/list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="?colorSurface"
             android:clipToPadding="false"
             android:paddingTop="@dimen/recycler_view_padding_top"
             android:paddingBottom="@dimen/recycler_view_padding_bottom"

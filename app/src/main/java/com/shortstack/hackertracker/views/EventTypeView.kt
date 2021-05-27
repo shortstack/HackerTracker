@@ -7,7 +7,6 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
-import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.ViewEventTypeBinding
 import com.shortstack.hackertracker.models.local.Type
@@ -31,7 +30,6 @@ class EventTypeView(context: Context, attrs: AttributeSet) : LinearLayout(contex
         val color = if (id > 0) {
             ContextCompat.getColor(context, id)
         } else {
-            Logger.d("color: ${type.color}")
             if (type.color == "#FFFFFF") {
                 val theme = (context as MainActivity).theme
                 val outValue = TypedValue()

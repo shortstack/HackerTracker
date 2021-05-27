@@ -1,34 +1,11 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
+<resources>
 
-    <style name="ThemeBase" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <!-- Custom attributes -->
-        <item name="dark_mode">light</item>
-        <item name="footer_icon">@drawable/skull</item>
-        <item name="footer_tint">@color/black_70</item>
-        <item name="footer_label" />
-        <item name="menu_tint">@color/black</item>
-        <item name="filter_background">@color/white</item>
-        <item name="category_tint">@null</item>
+    <style name="Theme.App" parent="Theme.MaterialComponents.DayNight.NoActionBar">
 
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_dark</item>
-        <item name="colorPrimaryVariant">@color/purple_dark</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color. -->
+        <item name="colorPrimary">@color/bubble</item>
+        <item name="colorPrimaryVariant">@color/green</item>
         <item name="colorSecondary">@color/purple_dark</item>
-        <item name="colorSecondaryVariant">@color/purple_dark</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/white</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
-
-        <!--        <item name="colorError">#F44336</item>-->
-        <!--        <item name="colorOnError">#FFFFFF</item>-->
-        <!--        <item name="colorSurface">@color/green</item>-->
-        <!--        <item name="colorOnSurface">@color/white</item>-->
-        <!--        <item name="android:colorBackground">@color/white</item>-->
-        <!--        <item name="colorOnBackground">@color/black_70</item>-->
-
+        <item name="colorSecondaryVariant">@color/purple_light</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -45,87 +22,6 @@
         <item name="checkboxStyle">@style/AppCheckBoxStyle</item>
     </style>
 
-    <style name="AppTheme" parent="ThemeBase" />
-
-    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
-        <!-- Custom attributes -->
-        <item name="dark_mode">dark</item>
-        <item name="footer_icon">@drawable/skull</item>
-        <item name="footer_tint">@color/white</item>
-        <item name="footer_label" />
-        <item name="menu_tint">@color/white</item>
-        <item name="filter_background">@color/dark_background</item>
-
-        <!-- Background color -->
-        <item name="colorSurface">@color/black</item>
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/purple_dark</item>
-        <item name="colorPrimaryVariant">@color/purple_dark</item>
-        <item name="colorOnPrimary">@color/white</item>
-        <!-- Secondary brand color -->
-        <item name="colorSecondary">@color/purple_dark</item>
-        <item name="colorSecondaryVariant">@color/purple_dark</item>
-        <item name="colorOnSecondary">@color/black</item>
-        <!-- Status bar color -->
-        <item name="android:statusBarColor" tools:targetApi="l">@color/black</item>
-        <item name="android:windowLightStatusBar" tools:targetApi="23">true</item>
-
-
-        <item name="android:checkboxStyle">@style/AppCheckBoxStyle</item>
-
-        <item name="android:buttonStyle">@style/buttonStyle</item>
-
-        <!-- AppCompat Dialog Attributes -->
-        <item name="dialogTheme">@style/AppCompatDialog</item>
-        <item name="alertDialogTheme">@style/AppCompatAlert</item>
-
-        <item name="checkboxStyle">@style/AppCheckBoxStyle</item>
-    </style>
-
-    <style name="AppTheme.Splash">
-        <item name="android:statusBarColor">@color/black</item>
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/black</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorSecondary">@color/black</item>
-        <item name="colorSecondaryVariant">@color/black</item>
-        <item name="colorOnSecondary">#FFFFFF</item>
-        <item name="colorError">#F44336</item>
-        <item name="colorOnError">#FFFFFF</item>
-        <item name="colorSurface">@color/black</item>
-        <item name="colorOnSurface">@color/black</item>
-        <item name="android:colorBackground">@color/black</item>
-        <item name="colorOnBackground">@color/white</item>
-        <item name="android:windowBackground">@drawable/splash_background</item>
-    </style>
-
-    <style name="AppTheme.Developer" parent="AppTheme.Dark">
-        <item name="footer_icon">@drawable/doggo</item>
-        <item name="colorPrimary">@color/purple_dark</item>
-        <item name="colorPrimaryDark">@color/purple_dark</item>
-        <item name="colorAccent">@color/purple_dark</item>
-        <item name="android:colorBackground">@color/dark_background</item>
-        <item name="footer_tint">@android:color/transparent</item>
-        <item name="footer_label">Developer</item>
-    </style>
-
-    <style name="AppTheme.SafeMode" parent="AppTheme.Dark">
-        <item name="colorPrimary">@color/purple_dark</item>
-        <item name="colorPrimaryVariant">@color/black</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorSecondary">@color/purple_dark</item>
-        <item name="colorSecondaryVariant">@color/purple_dark</item>
-        <item name="colorOnSecondary">#FFFFFF</item>
-        <item name="colorError">#F44336</item>
-        <item name="colorOnError">#FFFFFF</item>
-        <item name="colorSurface">@color/black</item>
-        <item name="colorOnSurface">@color/black</item>
-        <item name="android:colorBackground">@color/black</item>
-        <item name="colorOnBackground">@color/white</item>
-        <item name="footer_label">SAFE MODE</item>
-    </style>
-
-
     <style name="PrefsTheme" parent="PreferenceThemeOverlay">
         <item name="android:layout">@layout/fragment_settings</item>
         <item name="android:listPreferredItemPaddingLeft">@dimen/activity_horizontal_margin</item>
@@ -138,7 +34,7 @@
         <!-- Used for the buttons -->
         <!--<item name="colorAccent">@color/colorAccent</item>-->
         <!--Used for the title and text -->
-        <!--<item name="android:textColorPrimary">@color/white</item>-->
+        <!--<item name="android:textColorPrimary">@android:color/white</item>-->
         <!-- Used for the background -->
         <!--<item name="android:background">@color/background</item>-->
 
@@ -147,7 +43,7 @@
     </style>
 
     <style name="AlertButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="windowTitleStyle">
@@ -155,14 +51,14 @@
     </style>
 
     <style name="AppCheckBoxStyle" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 
     <!-- Generic Dialog Theme -->
     <style name="AppCompatDialog" parent="Theme.AppCompat.Dialog">
         <!-- Used for the title and text -->
-        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
         <!-- Used for the background -->
         <item name="android:background">@color/background</item>
         <!-- Used for the buttons -->
@@ -195,7 +91,7 @@
     </style>
 
     <style name="Body" parent="TextAppearance.AppCompat.Body1">
-        <!--<item name="android:textColor">@color/white_90</item>-->
+        <!--<item name="android:textColor">@android:color/white_90</item>-->
         <item name="android:alpha">0.90</item>
     </style>
 
@@ -230,7 +126,7 @@
         <item name="android:textAppearance">
             @style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored
         </item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 
@@ -277,7 +173,7 @@
         <item name="android:layout_marginEnd">8dp</item>
         <item name="android:layout_marginRight">8dp</item>
         <item name="android:alpha">.25</item>
-        <item name="android:tint">@color/white</item>
+        <item name="android:tint">@android:color/white</item>
     </style>
 
     <style name="IconButton">
@@ -361,11 +257,12 @@
 
     <!--  Toolbar  -->
     <style name="Toolbar">
-<!--        <item name="android:background">?colorSurface</item>-->
+        <!--        <item name="android:background">?colorSurface</item>-->
     </style>
 
     <style name="AppBar">
         <item name="liftOnScroll">true</item>
+        <!--        <item name="android:background">?colorSurface</item>-->
     </style>
 
 </resources>

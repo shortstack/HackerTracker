@@ -1,0 +1,51 @@
+<com.discord.panels.OverlappingPanelsLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/overlapping_panels"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <!-- Set layout_gravity on the start panel to "start" -->
+    <FrameLayout
+        android:id="@+id/start_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start">
+
+        <fragment
+            android:name="com.shortstack.hackertracker.ui.home.HomeFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+
+    </FrameLayout>
+
+    <FrameLayout
+
+        android:id="@+id/center_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment
+            android:name="com.shortstack.hackertracker.ui.schedule.ScheduleFragment"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:layout="@layout/fragment_schedule" />
+
+
+    </FrameLayout>
+
+    <!-- Set layout_gravity on the end panel to "end" -->
+    <FrameLayout
+        android:id="@+id/end_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="end">
+
+        <com.shortstack.hackertracker.views.FilterView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+</com.discord.panels.OverlappingPanelsLayout>

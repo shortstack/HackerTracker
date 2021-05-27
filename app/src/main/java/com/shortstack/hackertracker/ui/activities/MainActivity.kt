@@ -31,6 +31,7 @@ import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.HackerTrackerViewModel
+import com.shortstack.hackertracker.ui.PanelsFragment
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.home.HomeFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
@@ -71,8 +72,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
         viewModel = ViewModelProvider(this)[HackerTrackerViewModel::class.java]
         viewModel.conference.observe(this, Observer {
             if (it != null) {
-                binding.navView.getHeaderView(0).findViewById<TextView>(R.id.nav_title).text =
-                    it.data?.name
+//                binding.navView.getHeaderView(0).findViewById<TextView>(R.id.nav_title).text = it.data?.name
             }
         })
 
@@ -103,24 +103,24 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
         super.onResume()
 
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            val value = TypedValue()
-            theme.resolveAttribute(R.attr.dark_mode, value, true)
-            if (value.string == "dark") {
-                window.decorView.systemUiVisibility = 0
-                window.statusBarColor = getThemeAccentColor(this)
-            } else {
-                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-                window.statusBarColor = getThemeAccentColor(this)
-            }
-        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            val value = TypedValue()
+//            theme.resolveAttribute(R.attr.dark_mode, value, true)
+//            if (value.string == "dark") {
+//                window.decorView.systemUiVisibility = 0
+//                window.statusBarColor = getThemeAccentColor(this)
+//            } else {
+//                window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
+//                window.statusBarColor = getThemeAccentColor(this)
+//            }
+//        }
     }
 
-    private fun getThemeAccentColor(context: Context, theme: Resources.Theme = context.theme): Int {
-        val outValue = TypedValue()
-        theme.resolveAttribute(android.R.attr.colorBackground, outValue, true)
-        return outValue.data
-    }
+//    private fun getThemeAccentColor(context: Context, theme: Resources.Theme = context.theme): Int {
+//        val outValue = TypedValue()
+//        theme.resolveAttribute(android.R.attr.colorBackground, outValue, true)
+//        return outValue.data
+//    }
 
     override fun onStart() {
         super.onStart()
@@ -139,20 +139,20 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
         binding.navView.setNavigationItemSelectedListener(this)
     }
 
-    override fun getTheme(): Resources.Theme {
-        val theme = super.getTheme()
-
-        val style = when (storage.theme) {
-            Dark -> R.style.AppTheme_Dark
-            Light -> R.style.AppTheme
-            SafeMode -> R.style.AppTheme_SafeMode
-            Developer -> R.style.AppTheme_Developer
-            null -> R.style.AppTheme_Dark
-        }
-        theme.applyStyle(style, true)
-
-        return theme
-    }
+//    override fun getTheme(): Resources.Theme {
+//        val theme = super.getTheme()
+//
+//        val style = when (storage.theme) {
+//            Dark -> R.style.AppTheme_Dark
+//            Light -> R.style.AppTheme
+//            SafeMode -> R.style.AppTheme_SafeMode
+//            Developer -> R.style.AppTheme_Developer
+//            null -> R.style.AppTheme_Dark
+//        }
+//        theme.applyStyle(style, true)
+//
+//        return theme
+//    }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         val inflater = menuInflater
@@ -197,6 +197,9 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
     }
 
     private fun getFragment(id: Int): Fragment {
+//        if (BuildConfig.DEBUG)
+
+
         // TODO: Remove, this is a hacky solution for caching issue with InformationFragment's children fragments.
         if (id == R.id.nav_information)
             return InformationFragment.newInstance()
@@ -206,7 +209,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
 
         if (map[id] == null) {
             map[id] = when (id) {
-                R.id.nav_home -> HomeFragment.newInstance()
+                R.id.nav_home -> return PanelsFragment()//HomeFragment.newInstance()
                 R.id.nav_schedule -> ScheduleFragment.newInstance()
                 R.id.nav_map -> MapsFragment.newInstance()
                 R.id.nav_settings -> SettingsFragment.newInstance()
