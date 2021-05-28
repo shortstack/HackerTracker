@@ -17,6 +17,7 @@ import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.ui.HackerTrackerViewModel
+import com.shortstack.hackertracker.ui.PanelsFragment
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.views.DaySelectorView
@@ -34,7 +35,7 @@ class ScheduleFragment : Fragment() {
     private val adapter: ScheduleAdapter = ScheduleAdapter()
 
     private var shouldScroll = true
-    
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -66,9 +67,12 @@ class ScheduleFragment : Fragment() {
         binding.list.adapter = adapter
 
         binding.toolbar.setNavigationOnClickListener {
-            (context as MainActivity).openNavDrawer()
+            (parentFragment as PanelsFragment).openStartPanel()
         }
 
+        binding.filter.setOnClickListener {
+            (parentFragment as PanelsFragment).openEndPanel()
+        }
 
         val decoration = StickyRecyclerHeadersDecoration(adapter)
         binding.list.addItemDecoration(decoration)

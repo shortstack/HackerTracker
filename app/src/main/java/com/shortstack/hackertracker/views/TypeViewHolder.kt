@@ -25,7 +25,6 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
     fun render(type: Type) = with(binding) {
         val context = root.context
 
-
         val color = if (type.color == "#FFFFFF") {
             val theme = (context as MainActivity).theme
             val outValue = TypedValue()

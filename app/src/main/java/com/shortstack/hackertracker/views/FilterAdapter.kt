@@ -4,6 +4,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.ui.search.HeaderViewHolder
+import kotlin.math.min
 
 // todo: replace with ListAdapter
 class FilterAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -38,6 +39,13 @@ class FilterAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         collection.clear()
         collection.addAll(elements)
         notifyDataSetChanged()
+    }
+
+    fun getSpanCount(position: Int, spanCount: Int): Int {
+        val element = collection[position] as Type
+        val min = min(element.shortName.length / 10, spanCount)
+        return spanCount
+        //return min
     }
 
     companion object {

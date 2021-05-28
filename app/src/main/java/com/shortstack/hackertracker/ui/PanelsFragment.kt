@@ -11,6 +11,7 @@ import com.discord.panels.PanelState
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.PanelsFragmentBinding
+import com.shortstack.hackertracker.ui.activities.MainActivity
 
 class PanelsFragment : Fragment() {
 
@@ -48,17 +49,21 @@ class PanelsFragment : Fragment() {
                     binding.overlappingPanels.openStartPanel()
                     false
                 }
+                R.id.nav_information -> {
+                    showInformation()
+                    false
+                }
                 R.id.nav_schedule -> {
                     binding.overlappingPanels.closePanels()
                     false
                 }
                 R.id.nav_map -> {
-                    //showCategories()
+                    showMap()
                     false
                 }
 
                 R.id.nav_settings -> {
-                    //showSettings()
+                    showSettings()
                     false
                 }
                 else -> false
@@ -80,6 +85,18 @@ class PanelsFragment : Fragment() {
         Logger.e("Completed onCreate")
     }
 
+    private fun showInformation() {
+        (context as MainActivity).showInformation()
+    }
+
+    private fun showMap() {
+        (context as MainActivity).showMap()
+    }
+
+    private fun showSettings() {
+        (context as MainActivity).showSettings()
+    }
+
     private fun hideBottomNavigation() {
         ObjectAnimator.ofFloat(
             binding.bottomNavigation,
@@ -96,6 +113,14 @@ class PanelsFragment : Fragment() {
             duration = ANIMATION_DURATION
             start()
         }
+    }
+
+    fun openStartPanel() {
+        binding.overlappingPanels.openStartPanel()
+    }
+
+    fun openEndPanel() {
+        binding.overlappingPanels.openEndPanel()
     }
 
     companion object {

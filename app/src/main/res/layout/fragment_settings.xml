@@ -57,7 +57,7 @@
                 android:paddingBottom="?android:attr/actionBarSize"
                 android:scaleType="center"
                 android:src="?footer_icon"
-                android:tint="?footer_tint" />
+                app:tint="?colorControlNormal" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>

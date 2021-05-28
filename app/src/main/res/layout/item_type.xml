@@ -11,6 +11,7 @@
         style="@style/Widget.MaterialComponents.Chip.Filter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="end"
         android:layout_marginLeft="@dimen/item_horizontal_margin"
         android:layout_marginRight="@dimen/item_horizontal_margin"
         android:textColor="?colorSurface"

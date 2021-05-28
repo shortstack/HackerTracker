@@ -24,6 +24,7 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
                     override fun getSpanSize(position: Int): Int {
                         return when (adapter.getItemViewType(position)) {
                             FilterAdapter.TYPE_HEADER -> SPAN_COUNT
+                            FilterAdapter.TYPE_ITEM -> adapter.getSpanCount(position, SPAN_COUNT)
                             else -> 1
                         }
                     }
