@@ -5,14 +5,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.shortstack.hackertracker.databinding.FragmentHomeBinding
 import com.shortstack.hackertracker.ui.HackerTrackerViewModel
-import com.shortstack.hackertracker.ui.activities.MainActivity
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class HomeFragment : Fragment() {
+
+    private val viewModel by sharedViewModel<HackerTrackerViewModel>()
 
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
@@ -34,15 +34,14 @@ class HomeFragment : Fragment() {
         binding.list.adapter = adapter
         binding.list.layoutManager = LinearLayoutManager(context)
 
-        binding.toolbar.setNavigationOnClickListener {
-            (context as MainActivity).openNavDrawer()
-        }
-
-        val viewModel = ViewModelProvider(requireActivity())[HackerTrackerViewModel::class.java]
-        viewModel.home.observe(viewLifecycleOwner, Observer {
+        viewModel.home.observe(viewLifecycleOwner, {
             if (it.data != null) {
                 adapter.setElements(it.data)
             }
+        })
+
+        viewModel.conference.observe(viewLifecycleOwner, {
+            binding.title.text = it.data?.name
         })
 
         binding.loadingProgress.visibility = View.GONE

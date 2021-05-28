@@ -6,13 +6,10 @@ import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.advice.timehop.StickyRecyclerHeadersDecoration
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.databinding.FragmentScheduleBinding
@@ -23,10 +20,13 @@ import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.views.DaySelectorView
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
 
 
 class ScheduleFragment : Fragment() {
+
+    private val viewModel by sharedViewModel<HackerTrackerViewModel>()
 
     private var _binding: FragmentScheduleBinding? = null
     private val binding get() = _binding!!
@@ -34,10 +34,7 @@ class ScheduleFragment : Fragment() {
     private val adapter: ScheduleAdapter = ScheduleAdapter()
 
     private var shouldScroll = true
-
-    private lateinit var bottomSheet: BottomSheetBehavior<View>
-
-
+    
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -102,10 +99,7 @@ class ScheduleFragment : Fragment() {
             }
         })
 
-
-        val scheduleViewModel =
-            ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java]
-        scheduleViewModel.schedule.observe(viewLifecycleOwner, Observer {
+        viewModel.schedule.observe(viewLifecycleOwner, {
             hideViews()
 
             if (it != null) {
@@ -136,17 +130,6 @@ class ScheduleFragment : Fragment() {
                 }
             }
         })
-
-        scheduleViewModel.types.observe(viewLifecycleOwner, Observer {
-            binding.filters.setTypes(it.data)
-        })
-
-
-        bottomSheet = BottomSheetBehavior.from(binding.filters)
-        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
-
-        binding.filter.setOnClickListener { expandFilters() }
-        // todo: binding.filters.close.setOnClickListener { hideFilters() }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -217,15 +200,6 @@ class ScheduleFragment : Fragment() {
         binding.empty.showError(message)
         binding.empty.visibility = View.VISIBLE
     }
-
-    private fun expandFilters() {
-        bottomSheet.state = BottomSheetBehavior.STATE_HALF_EXPANDED
-    }
-
-    private fun hideFilters() {
-        bottomSheet.state = BottomSheetBehavior.STATE_HIDDEN
-    }
-
 
     companion object {
         private const val EXTRA_TYPE = "type"

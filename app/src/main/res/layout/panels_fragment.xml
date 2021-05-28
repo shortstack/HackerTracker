@@ -1,51 +1,73 @@
-<com.discord.panels.OverlappingPanelsLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/overlapping_panels"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
-    <!-- Set layout_gravity on the start panel to "start" -->
-    <FrameLayout
-        android:id="@+id/start_panel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="start">
-
-        <fragment
-            android:name="com.shortstack.hackertracker.ui.home.HomeFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+    <com.discord.panels.OverlappingPanelsLayout
+        android:id="@+id/overlapping_panels"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
 
-    </FrameLayout>
-
-    <FrameLayout
-
-        android:id="@+id/center_panel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <fragment
-            android:name="com.shortstack.hackertracker.ui.schedule.ScheduleFragment"
+        <!-- Set layout_gravity on the start panel to "start" -->
+        <FrameLayout
+            android:id="@+id/start_panel"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            tools:layout="@layout/fragment_schedule" />
+            android:layout_gravity="start">
+
+            <fragment
+                android:name="com.shortstack.hackertracker.ui.home.HomeFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
 
 
-    </FrameLayout>
+        </FrameLayout>
 
-    <!-- Set layout_gravity on the end panel to "end" -->
-    <FrameLayout
-        android:id="@+id/end_panel"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="end">
-
-        <com.shortstack.hackertracker.views.FilterView
+        <FrameLayout
+            android:id="@+id/center_panel"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:background="?colorSurface">
 
-    </FrameLayout>
+            <fragment
+                android:name="com.shortstack.hackertracker.ui.schedule.ScheduleFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                tools:layout="@layout/fragment_schedule" />
 
-</com.discord.panels.OverlappingPanelsLayout>
+
+        </FrameLayout>
+
+        <!-- Set layout_gravity on the end panel to "end" -->
+        <FrameLayout
+            android:id="@+id/end_panel"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="end">
+
+            <fragment
+                android:name="com.shortstack.hackertracker.ui.schedule.FilterFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
+        </FrameLayout>
+
+    </com.discord.panels.OverlappingPanelsLayout>
+
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="?colorSurface"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/activity_main_drawer" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

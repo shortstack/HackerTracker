@@ -257,12 +257,18 @@
 
     <!--  Toolbar  -->
     <style name="Toolbar">
-        <!--        <item name="android:background">?colorSurface</item>-->
+        <item name="android:background">?colorSurface</item>
     </style>
 
     <style name="AppBar">
         <item name="liftOnScroll">true</item>
-        <!--        <item name="android:background">?colorSurface</item>-->
+        <item name="android:background">?colorSurface</item>
+    </style>
+
+    <style name="Toolbar.Text" parent="Base.TextAppearance.AppCompat.Title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
     </style>
 
 </resources>

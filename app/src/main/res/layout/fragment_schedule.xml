@@ -15,13 +15,20 @@
             style="@style/Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/ic_menu_black_24dp"
-            app:title="@string/schedule" />
+            app:navigationIcon="@drawable/ic_menu_black_24dp">
+
+            <TextView
+                android:id="@+id/title"
+                style="@style/Toolbar.Text"
+                android:text="@string/schedule" />
+
+        </androidx.appcompat.widget.Toolbar>
 
         <com.shortstack.hackertracker.views.DaySelectorView
             android:id="@+id/day_selector"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:background="?colorSurface" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -64,18 +71,6 @@
             android:elevation="6dp"
             android:visibility="visible"
             app:srcCompat="@drawable/ic_filter_list_white_24dp" />
-
-        <com.shortstack.hackertracker.views.FilterView
-            android:id="@+id/filters"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:elevation="8dp"
-            android:outlineProvider="bounds"
-            app:behavior_hideable="true"
-            app:behavior_peekHeight="450dp"
-            app:behavior_skipCollapsed="false"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-            tools:layout_height="0dp" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

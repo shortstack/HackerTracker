@@ -29,7 +29,7 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
         val color = if (type.color == "#FFFFFF") {
             val theme = (context as MainActivity).theme
             val outValue = TypedValue()
-            theme.resolveAttribute(R.attr.colorOnPrimary, outValue, true)
+            theme.resolveAttribute(R.attr.colorOnSurface, outValue, true)
             outValue.data
         } else {
             Color.parseColor(type.color)
@@ -60,7 +60,13 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
 
     companion object {
         fun inflate(parent: ViewGroup): TypeViewHolder {
-            return TypeViewHolder(ItemTypeBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            return TypeViewHolder(
+                ItemTypeBinding.inflate(
+                    LayoutInflater.from(parent.context),
+                    parent,
+                    false
+                )
+            )
         }
     }
 }

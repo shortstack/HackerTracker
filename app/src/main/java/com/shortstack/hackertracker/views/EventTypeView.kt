@@ -33,7 +33,7 @@ class EventTypeView(context: Context, attrs: AttributeSet) : LinearLayout(contex
             if (type.color == "#FFFFFF") {
                 val theme = (context as MainActivity).theme
                 val outValue = TypedValue()
-                theme.resolveAttribute(R.attr.colorOnPrimary, outValue, true)
+                theme.resolveAttribute(R.attr.colorOnSurface, outValue, true)
                 outValue.data
             } else {
                 Color.parseColor(type.color)

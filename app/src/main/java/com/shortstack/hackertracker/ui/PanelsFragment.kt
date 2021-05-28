@@ -1,10 +1,15 @@
 package com.shortstack.hackertracker.ui
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.discord.panels.OverlappingPanelsLayout
+import com.discord.panels.PanelState
+import com.orhanobut.logger.Logger
+import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.PanelsFragmentBinding
 
 class PanelsFragment : Fragment() {
@@ -24,7 +29,76 @@ class PanelsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+//        window.decorView.systemUiVisibility =
+//            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            window.statusBarColor = Color.TRANSPARENT
+//        }
 
+        // force hide the bottom navigation bar
+        binding.bottomNavigation.translationY = 300f
+
+        binding.bottomNavigation.setOnNavigationItemSelectedListener { it ->
+            when (it.itemId) {
+                R.id.search -> {
+                    //showSearch()
+                    false
+                }
+                R.id.home -> {
+                    binding.overlappingPanels.openStartPanel()
+                    false
+                }
+                R.id.nav_schedule -> {
+                    binding.overlappingPanels.closePanels()
+                    false
+                }
+                R.id.nav_map -> {
+                    //showCategories()
+                    false
+                }
+
+                R.id.nav_settings -> {
+                    //showSettings()
+                    false
+                }
+                else -> false
+            }
+        }
+
+        binding.overlappingPanels.registerStartPanelStateListeners(object :
+            OverlappingPanelsLayout.PanelStateListener {
+            override fun onPanelStateChange(panelState: PanelState) {
+                when (panelState) {
+                    PanelState.Opening,
+                    PanelState.Opened -> showBottomNavigation()
+                    PanelState.Closing,
+                    PanelState.Closed -> hideBottomNavigation()
+                }
+            }
+        })
+
+        Logger.e("Completed onCreate")
     }
 
+    private fun hideBottomNavigation() {
+        ObjectAnimator.ofFloat(
+            binding.bottomNavigation,
+            "translationY",
+            binding.bottomNavigation.height.toFloat()
+        ).apply {
+            duration = ANIMATION_DURATION
+            start()
+        }
+    }
+
+    private fun showBottomNavigation() {
+        ObjectAnimator.ofFloat(binding.bottomNavigation, "translationY", 0f).apply {
+            duration = ANIMATION_DURATION
+            start()
+        }
+    }
+
+    companion object {
+        private const val ANIMATION_DURATION = 150L
+    }
 }
