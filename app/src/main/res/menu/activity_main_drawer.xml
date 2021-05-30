@@ -8,10 +8,6 @@
             android:checked="true"
             android:icon="@drawable/ic_home_white_24dp"
             android:title="@string/home" />
-        <item
-            android:id="@+id/nav_schedule"
-            android:icon="@drawable/ic_schedule_white_24dp"
-            android:title="@string/schedule" />
 
         <item
             android:id="@+id/nav_map"

@@ -38,7 +38,7 @@ class InformationFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         binding.toolbar.setNavigationOnClickListener {
-            (context as MainActivity).openNavDrawer()
+            requireActivity().onBackPressed()
         }
 
         binding.tabs.apply {

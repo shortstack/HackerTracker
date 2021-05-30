@@ -21,7 +21,7 @@ class MapsFragment : Fragment() {
 
     private var _binding: FragmentMapsBinding? = null
     private val binding get() = _binding!!
-    
+
     private val analytics: Analytics by inject()
     private var isFirstLoad: Boolean = true
 
@@ -43,7 +43,7 @@ class MapsFragment : Fragment() {
         }
 
         binding.toolbar.setNavigationOnClickListener {
-            (context as MainActivity).openNavDrawer()
+            requireActivity().onBackPressed()
         }
 
 

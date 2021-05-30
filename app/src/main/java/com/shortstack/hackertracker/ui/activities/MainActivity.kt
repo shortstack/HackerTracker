@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -125,7 +124,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
         if (map[id] == null) {
             map[id] = when (id) {
                 R.id.nav_home -> return PanelsFragment()//HomeFragment.newInstance()
-                R.id.nav_schedule -> ScheduleFragment.newInstance()
                 R.id.nav_map -> MapsFragment.newInstance()
                 R.id.nav_settings -> SettingsFragment.newInstance()
                 R.id.search -> SearchFragment.newInstance()
@@ -169,10 +167,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
             binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             binding.main.container.visibility = View.VISIBLE
         }
-    }
-
-    fun openNavDrawer() {
-        binding.drawerLayout.openDrawer(GravityCompat.START)
     }
 
     fun showSearch() {

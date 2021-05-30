@@ -46,15 +46,11 @@ class PanelsFragment : Fragment() {
                     false
                 }
                 R.id.home -> {
-                    binding.overlappingPanels.openStartPanel()
+                    binding.overlappingPanels.closePanels()
                     false
                 }
                 R.id.nav_information -> {
                     showInformation()
-                    false
-                }
-                R.id.nav_schedule -> {
-                    binding.overlappingPanels.closePanels()
                     false
                 }
                 R.id.nav_map -> {

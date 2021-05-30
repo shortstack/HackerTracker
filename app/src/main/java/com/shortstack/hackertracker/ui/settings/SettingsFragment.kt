@@ -112,7 +112,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
 
         // todo:
         toolbar.setNavigationOnClickListener {
-            (context as MainActivity).openNavDrawer()
+            requireActivity().onBackPressed()
         }
 
         database.conference.observe(viewLifecycleOwner, Observer {
