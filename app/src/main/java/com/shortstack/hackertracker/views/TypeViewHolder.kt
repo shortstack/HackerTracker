@@ -4,8 +4,11 @@ import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.TypedValue
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.color.MaterialColors
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.databinding.ItemTypeBinding
@@ -33,6 +36,33 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
         } else {
             Color.parseColor(type.color)
         }
+
+
+        text.text = type.shortName
+
+        dot.setImageDrawable(
+            ContextCompat.getDrawable(context, R.drawable.chip_background_small)?.mutate()
+                ?.apply { setTint(color) })
+        full.setImageDrawable(
+            ContextCompat.getDrawable(context, R.drawable.chip_background_rounded)?.mutate()
+                ?.apply { setTint(color) })
+
+        val color1 = MaterialColors.getColor(context, R.attr.colorOnSecondary, Color.BLACK)
+        val color2 = MaterialColors.getColor(context, R.attr.colorOnSurface, Color.BLACK)
+
+        text.setTextColor(if(type.isSelected) color1 else color2)
+
+        dot.visibility = if (!type.isSelected) View.VISIBLE else View.GONE
+        full.visibility = if (type.isSelected) View.VISIBLE else View.GONE
+
+        root.setOnClickListener {
+            val isChecked = !type.isSelected
+            GlobalScope.launch {
+                type.isSelected = isChecked
+                database.updateTypeIsSelected(type)
+            }
+        }
+
 
         chip.text = type.shortName
         chip.chipBackgroundColor = ColorStateList.valueOf(color)

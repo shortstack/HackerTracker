@@ -5,7 +5,7 @@ import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
+import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.ViewFilterBinding
 import com.shortstack.hackertracker.models.local.Type
@@ -19,16 +19,7 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
     init {
         binding.list.adapter = adapter
         binding.list.layoutManager =
-            GridLayoutManager(context, SPAN_COUNT, RecyclerView.VERTICAL, false).apply {
-                spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-                    override fun getSpanSize(position: Int): Int {
-                        return when (adapter.getItemViewType(position)) {
-                            FilterAdapter.TYPE_HEADER -> SPAN_COUNT
-                            FilterAdapter.TYPE_ITEM -> adapter.getSpanCount(position, SPAN_COUNT)
-                            else -> 1
-                        }
-                    }
-                }
+            StaggeredGridLayoutManager(SPAN_COUNT, VERTICAL).apply {
             }
     }
 
