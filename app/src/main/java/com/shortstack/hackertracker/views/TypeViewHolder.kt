@@ -1,6 +1,5 @@
 package com.shortstack.hackertracker.views
 
-import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.TypedValue
 import android.view.LayoutInflater
@@ -37,7 +36,6 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
             Color.parseColor(type.color)
         }
 
-
         text.text = type.shortName
 
         dot.setImageDrawable(
@@ -47,39 +45,19 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
             ContextCompat.getDrawable(context, R.drawable.chip_background_rounded)?.mutate()
                 ?.apply { setTint(color) })
 
+
+        val isDark = type.isSelected && type.color.isLightColor()
+
         val color1 = MaterialColors.getColor(context, R.attr.colorOnSecondary, Color.BLACK)
         val color2 = MaterialColors.getColor(context, R.attr.colorOnSurface, Color.BLACK)
 
-        text.setTextColor(if(type.isSelected) color1 else color2)
+        text.setTextColor(if (isDark) color1 else color2)
 
         dot.visibility = if (!type.isSelected) View.VISIBLE else View.GONE
         full.visibility = if (type.isSelected) View.VISIBLE else View.GONE
 
         root.setOnClickListener {
             val isChecked = !type.isSelected
-            GlobalScope.launch {
-                type.isSelected = isChecked
-                database.updateTypeIsSelected(type)
-            }
-        }
-
-
-        chip.text = type.shortName
-        chip.chipBackgroundColor = ColorStateList.valueOf(color)
-        chip.isCloseIconVisible = type.isSelected
-
-        chip.setOnCheckedChangeListener(null)
-
-        chip.isChecked = type.isSelected
-
-        chip.setOnCloseIconClickListener {
-            chip.isChecked = false
-        }
-
-        chip.setOnCheckedChangeListener { _, isChecked ->
-            chip.isCloseIconVisible = isChecked
-
-            // todo: put this on the right scope
             GlobalScope.launch {
                 type.isSelected = isChecked
                 database.updateTypeIsSelected(type)
@@ -98,4 +76,11 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
             )
         }
     }
+}
+
+// Checking hex values and averaging if it's dark or light.
+// #000000 - dark
+// #FFFFFF - light
+private fun String.isLightColor(): Boolean {
+    return sumBy { if (it.isDigit()) 1 else -1 } < 0
 }

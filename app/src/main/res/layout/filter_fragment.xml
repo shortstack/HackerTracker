@@ -6,7 +6,8 @@
     <com.shortstack.hackertracker.views.FilterView
         android:id="@+id/filters"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="?colorSurface" />
 
 </FrameLayout>
 
