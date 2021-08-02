@@ -34,16 +34,16 @@ class SettingsFragment : PreferenceFragmentCompat() {
         screen.apply {
 
             // Change Theme
-            addPreference(Preference(context).apply {
-                title = getString(R.string.setting_change_theme)
-                summary = storage.theme?.label
-                key = CHANGE_THEME_KEY
-
-                setOnPreferenceClickListener {
-                    showChangeThemeDialog()
-                    true
-                }
-            })
+//            addPreference(Preference(context).apply {
+//                title = getString(R.string.setting_change_theme)
+//                summary = storage.theme?.label
+//                key = CHANGE_THEME_KEY
+//
+//                setOnPreferenceClickListener {
+//                    showChangeThemeDialog()
+//                    true
+//                }
+//            })
 
             // Change Conference
             addPreference(Preference(context).apply {

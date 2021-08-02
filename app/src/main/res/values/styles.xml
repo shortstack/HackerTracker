@@ -1,6 +1,7 @@
 <resources>
 
-    <style name="Theme.App" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    <!-- todo: re-enable daynight  -->
+    <style name="Theme.App" parent="Theme.MaterialComponents.NoActionBar">
 
         <item name="footer_icon">@drawable/skull</item>
         <item name="footer_label">Developer</item>
