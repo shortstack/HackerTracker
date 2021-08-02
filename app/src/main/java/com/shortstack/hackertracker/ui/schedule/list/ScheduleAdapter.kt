@@ -11,6 +11,7 @@ import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.ui.schedule.DayViewHolder
 import com.shortstack.hackertracker.ui.schedule.EventViewHolder
 import com.shortstack.hackertracker.ui.schedule.TimeViewHolder
+import com.shortstack.hackertracker.utilities.TimeUtil
 import com.shortstack.hackertracker.views.EventView
 import java.util.*
 import kotlin.collections.ArrayList
@@ -89,7 +90,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     private fun getFormattedElements(elements: List<Event>): ArrayList<Any> {
         val result = ArrayList<Any>()
 
-        elements.groupBy { it.date }.toSortedMap().forEach {
+        elements.groupBy { it.adjustedDate }.toSortedMap().forEach {
             result.add(Day(it.key))
 
             it.value.groupBy { it.start }.toSortedMap().forEach {

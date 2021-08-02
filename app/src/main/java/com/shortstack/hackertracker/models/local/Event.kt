@@ -2,6 +2,7 @@ package com.shortstack.hackertracker.models.local
 
 import android.content.Context
 import android.os.Parcelable
+import com.shortstack.hackertracker.App
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.utilities.MyClock
 import com.shortstack.hackertracker.utilities.TimeUtil
@@ -64,6 +65,24 @@ data class Event(
             }.time
         }
 
+    val adjustedDate: Date
+        get() {
+            return Calendar.getInstance().apply {
+                if (App.instance.storage.forceTimeZone) {
+                    val timezone =
+                        App.instance.database.conference.value?.timezone ?: "America/Los_Angeles"
+                    timeZone = TimeZone.getTimeZone(timezone)
+                }
+
+                time = start
+
+                set(Calendar.HOUR_OF_DAY, 0)
+                set(Calendar.MINUTE, 0)
+                set(Calendar.SECOND, 0)
+                set(Calendar.MILLISECOND, 0)
+            }.time
+        }
+
     fun getFullTimeStamp(context: Context): String {
         val date = TimeUtil.getDateStamp(start)
 
@@ -91,7 +110,7 @@ data class Event(
             if (newLine == -1) {
                 return _description
             }
-            
+
             return _description.substring(0, newLine).trim()
         }
 }

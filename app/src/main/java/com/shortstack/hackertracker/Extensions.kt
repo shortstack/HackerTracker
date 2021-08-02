@@ -133,28 +133,14 @@ fun FirebaseLocation.toLocation() = Location(
 
 fun FirebaseEvent.toEvent(): Event {
     val element = type.toType()
-    val links = if (conference == "DEFCON28" && links.isEmpty()) {
+    val links = if (conference.contains("DEFCON") && links.isEmpty()) {
         val urls = extractUrls(description)
         urls.map { it.toAction() }
     } else {
         links.map { it.toAction() }
     }
 
-    val types = if (conference == "DEFCON28") {
-        when {
-            element.isWorkshop -> {
-                listOf(Type(1, "Workshop", "DEFCON28", "#968AC8", "", emptyList()), element)
-            }
-            element.isVillage -> {
-                listOf(Type(45097, "Village", "DEFCON28", "#968AC8", "", emptyList()), element)
-            }
-            else -> {
-                listOf(element)
-            }
-        }
-    } else {
-        listOf(element)
-    }
+    val types = listOf(element)
 
     val body = if (android_description.isNotBlank()) {
         android_description
