@@ -22,6 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="?actionBarSize"
+            app:tabMode="scrollable"
             app:tabSelectedTextColor="?colorPrimary"
             app:tabTextColor="?colorOnBackground" />
 

@@ -87,7 +87,7 @@ class InformationFragment : Fragment() {
             }
         }
 
-        override fun getPageTitle(position: Int): CharSequence? {
+        override fun getPageTitle(position: Int): CharSequence {
             val index = if (conference.contains("DEFCON")) {
                 position
             } else {
