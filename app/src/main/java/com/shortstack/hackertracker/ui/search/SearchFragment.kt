@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.shortstack.hackertracker.databinding.FragmentSearchBinding
 import com.shortstack.hackertracker.hideKeyboard
+import com.shortstack.hackertracker.showKeyboard
 import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.search.SearchAdapter.State.*
@@ -85,6 +86,11 @@ class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
                 }
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        requireActivity().showKeyboard()
     }
 
     override fun onQueryTextSubmit(query: String?) = true

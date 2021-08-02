@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker
 
 import android.app.Activity
+import android.content.Context
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
@@ -216,6 +217,11 @@ fun FirebaseFAQ.toFAQ() = FAQ(
     question,
     answer
 )
+
+fun FragmentActivity.showKeyboard() {
+    val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0)
+}
 
 fun FragmentActivity.hideKeyboard() {
     val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
