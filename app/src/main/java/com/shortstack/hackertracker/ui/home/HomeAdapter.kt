@@ -15,7 +15,6 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return when (viewType) {
-            SKULL -> SkullHeaderViewHolder.inflate(parent)
             HEADER -> HeaderViewHolder.inflate(parent)
             EVENT -> EventViewHolder.inflate(parent, EventView.DISPLAY_MODE_MIN)
             ARTICLE -> ArticleViewHolder.inflate(parent)
@@ -24,10 +23,6 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (position == 0)
-            return SKULL
-
-
         return when (collection[position]) {
             is Article -> ARTICLE
             is String -> HEADER
@@ -46,13 +41,8 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     fun setElements(list: List<Any>) {
-        val list = listOf(SKULL) + list
-
         val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                if (oldItemPosition == 0 && newItemPosition == 0)
-                    return true
-
                 val lhs = collection[oldItemPosition]
                 val rhs = list[newItemPosition]
 
@@ -76,9 +66,6 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             override fun getNewListSize() = list.size
 
             override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-                if (oldItemPosition == 0 && newItemPosition == 0)
-                    return true
-
                 val lhs = collection[oldItemPosition]
                 val rhs = list[newItemPosition]
 
@@ -105,9 +92,8 @@ class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     }
 
     companion object {
-        private const val SKULL = 0
-        private const val HEADER = 1
-        private const val EVENT = 2
-        private const val ARTICLE = 3
+        private const val HEADER = 0
+        private const val EVENT = 1
+        private const val ARTICLE = 2
     }
 }

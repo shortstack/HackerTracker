@@ -1,6 +1,7 @@
 package com.shortstack.hackertracker.ui.home
 
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.shortstack.hackertracker.databinding.FragmentHomeBinding
 import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import java.util.*
 
 class HomeFragment : Fragment() {
 
@@ -34,17 +36,44 @@ class HomeFragment : Fragment() {
         binding.list.adapter = adapter
         binding.list.layoutManager = LinearLayoutManager(context)
 
-        viewModel.home.observe(viewLifecycleOwner, {
+        viewModel.home.observe(viewLifecycleOwner) {
             if (it.data != null) {
                 adapter.setElements(it.data)
             }
-        })
+        }
 
-        viewModel.conference.observe(viewLifecycleOwner, {
-            binding.title.text = it.data?.name
-        })
+        viewModel.conference.observe(viewLifecycleOwner) {
+            if (it.data != null) {
+                binding.title.text = it.data.name
+                startCountdownTimer(it.data.startDate)
+            }
+        }
 
         binding.loadingProgress.visibility = View.GONE
+    }
+
+    private fun startCountdownTimer(startDate: Date) {
+        val now = startDate.time - Date().time
+
+        val timer = object : CountDownTimer(now, 1000) {
+            override fun onTick(millisUntilFinished: Long) {
+
+                val seconds: Long = millisUntilFinished / 1000
+                val minutes = seconds / 60
+                val hours = minutes / 60
+                val days = hours / 24
+                val time =
+                    "${days}days\n${hours % 24}hours\n${minutes % 60}minutes\n${seconds % 60}seconds"
+
+                binding.skull.setCountdown(time)
+            }
+
+            override fun onFinish() {
+                binding.skull.setCountdown(null)
+            }
+        }
+        timer.start()
+
     }
 
     companion object {

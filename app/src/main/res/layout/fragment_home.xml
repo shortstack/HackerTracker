@@ -40,14 +40,33 @@
             app:evTitle="@string/nothing_here"
             tools:visibility="visible" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingTop="@dimen/recycler_view_padding_top"
-            android:paddingBottom="@dimen/recycler_view_padding_bottom"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.shortstack.hackertracker.views.HeaderView
+                    android:id="@+id/skull"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:clipToPadding="false"
+                    android:paddingTop="@dimen/recycler_view_padding_top"
+                    android:paddingBottom="@dimen/recycler_view_padding_bottom"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_article" />
+            </LinearLayout>
+
+        </androidx.core.widget.NestedScrollView>
 
         <ProgressBar
             android:id="@+id/loading_progress"
