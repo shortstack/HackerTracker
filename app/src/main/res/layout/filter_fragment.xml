@@ -1,13 +1,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="end">
+    android:layout_gravity="end"
+    android:background="@color/black">
 
     <com.shortstack.hackertracker.views.FilterView
         android:id="@+id/filters"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="?colorSurface" />
+        android:layout_height="match_parent" />
 
 </FrameLayout>
 

@@ -71,7 +71,8 @@
             android:layout_margin="16dp"
             android:elevation="6dp"
             android:visibility="visible"
-            app:srcCompat="@drawable/ic_filter_list_white_24dp" />
+            app:srcCompat="@drawable/ic_filter_list_white_24dp"
+            app:tint="@android:color/white" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

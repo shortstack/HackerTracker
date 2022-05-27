@@ -103,7 +103,7 @@ class ScheduleFragment : Fragment() {
             }
         })
 
-        viewModel.schedule.observe(viewLifecycleOwner, {
+        viewModel.schedule.observe(viewLifecycleOwner) {
             hideViews()
 
             if (it != null) {
@@ -133,7 +133,7 @@ class ScheduleFragment : Fragment() {
                     }
                 }
             }
-        })
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

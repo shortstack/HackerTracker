@@ -29,7 +29,7 @@
             android:clipToPadding="false"
             android:padding="16dp"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
+            app:spanCount="1"
             tools:listitem="@layout/item_type" />
 
     </androidx.core.widget.NestedScrollView>
