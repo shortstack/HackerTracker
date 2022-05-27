@@ -86,6 +86,7 @@ class SkullView : AppCompatImageView, KoinComponent {
                 Storage.CorruptionLevel.MINOR -> LONG_DELAY
                 Storage.CorruptionLevel.MEDIUM -> MEDIUM_DELAY
                 Storage.CorruptionLevel.MAJOR -> SHORT_DELAY
+                else -> return
             }
 
             val handler = Handler()

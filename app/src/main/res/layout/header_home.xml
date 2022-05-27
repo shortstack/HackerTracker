@@ -3,9 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-
-    >
+    android:layout_height="wrap_content">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout"
@@ -52,34 +50,18 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <com.shortstack.hackertracker.views.GlitchContainerView
-        android:layout_width="match_parent"
+    <com.shortstack.hackertracker.views.CountdownView
+        android:id="@+id/countdown"
+        style="@style/TextAppearance.AppCompat.Headline"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:glitch_corruptionLevel="MAJOR"
-        app:glitch_isGlitch="true"
+        android:layout_marginLeft="@dimen/item_horizontal_margin"
+        android:layout_marginTop="@dimen/item_skull_vertical_margin"
+        android:layout_marginRight="@dimen/item_horizontal_margin"
+        android:layout_marginBottom="@dimen/item_skull_vertical_margin"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/constraintLayout">
-
-        <TextView
-            android:id="@+id/countdown"
-            style="@style/TextAppearance.AppCompat.Headline"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="24dp"
-            android:layout_marginTop="32dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="32dp"
-            android:text="?footer_label"
-            android:textAllCaps="true"
-            android:textSize="48sp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toTopOf="@+id/label"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="76days\n05hours\n56minutes\n08seconds" />
-
-    </com.shortstack.hackertracker.views.GlitchContainerView>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/constraintLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

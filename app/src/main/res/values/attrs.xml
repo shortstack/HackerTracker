@@ -9,8 +9,8 @@
 
     <attr name="border_tint" format="reference" />
     <attr name="menu_tint" format="reference" />
-    <attr name="filter_background" format="reference"/>
-    <attr name="category_tint" format="reference"/>
+    <attr name="filter_background" format="reference" />
+    <attr name="category_tint" format="reference" />
 
     <declare-styleable name="EmptyView">
         <attr name="evIcon" format="reference" />
@@ -19,7 +19,17 @@
     </declare-styleable>
 
     <declare-styleable name="SkullView">
-        <attr name="skullViewDrawable" format="reference"/>
+        <attr name="skullViewDrawable" format="reference" />
+    </declare-styleable>
+
+    <declare-styleable name="GlitchContainerView">
+        <attr name="glitch_isGlitch" format="boolean" />
+        <attr name="glitch_corruptionLevel" format="enum">
+            <enum name="NONE" value="0" />
+            <enum name="MINOR" value="1" />
+            <enum name="MEDIUM" value="2" />
+            <enum name="MAJOR" value="3" />
+        </attr>
     </declare-styleable>
 
 </resources>

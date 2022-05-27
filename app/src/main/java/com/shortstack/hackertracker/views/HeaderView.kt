@@ -10,9 +10,7 @@ class HeaderView(context: Context, attrs: AttributeSet?) : ConstraintLayout(cont
 
     private val binding = HeaderHomeBinding.inflate(LayoutInflater.from(context), this, true)
 
-    fun setCountdown(time: String?) {
-        binding.countdown.text = time
+    fun setCountdown(time: Long) {
+        binding.countdown.setCountdown(time)
     }
-
-
 }

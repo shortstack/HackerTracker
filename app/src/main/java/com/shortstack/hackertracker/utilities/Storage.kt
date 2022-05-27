@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.google.gson.Gson
-import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.ui.themes.ThemesManager
 import java.util.*
 
@@ -86,14 +85,14 @@ class Storage(context: Context, private val gson: Gson) {
     }
 
 
-    enum class CorruptionLevel {
-        NONE,
-        MINOR,
-        MEDIUM,
-        MAJOR
+    object CorruptionLevel {
+        const val NONE = 0
+        const val MINOR = 1
+        const val MEDIUM = 2
+        const val MAJOR = 3
     }
 
-    val corruption: CorruptionLevel
+    val corruption: Int
         get() {
             if (!getPreference(
                     EASTER_EGGS_ENABLED_KEY,

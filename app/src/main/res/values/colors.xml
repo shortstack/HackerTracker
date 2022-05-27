@@ -6,6 +6,7 @@
 
     <color name="background">#2a2b35</color>
 
+    <color name="black">#000000</color>
     <color name="blue_dark">#2896ff</color>
     <color name="purple_light">#5c74ff</color>
     <color name="purple_dark">#653fff</color>

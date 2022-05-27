@@ -57,23 +57,14 @@ class HomeFragment : Fragment() {
 
         val timer = object : CountDownTimer(now, 1000) {
             override fun onTick(millisUntilFinished: Long) {
-
-                val seconds: Long = millisUntilFinished / 1000
-                val minutes = seconds / 60
-                val hours = minutes / 60
-                val days = hours / 24
-                val time =
-                    "${days}days\n${hours % 24}hours\n${minutes % 60}minutes\n${seconds % 60}seconds"
-
-                binding.skull.setCountdown(time)
+                binding.skull.setCountdown(millisUntilFinished)
             }
 
             override fun onFinish() {
-                binding.skull.setCountdown(null)
+                binding.skull.setCountdown(0)
             }
         }
         timer.start()
-
     }
 
     companion object {
