@@ -142,7 +142,9 @@ class SettingsFragment : PreferenceFragmentCompat() {
     private fun updateTimezonePreference(conference: Conference) {
         val preference =
             preferenceScreen.findPreference<SwitchPreference>(Storage.FORCE_TIME_ZONE_KEY)
-        preference?.title = getString(R.string.setting_time_zone, conference.timezone.toUpperCase())
+        preference?.title = getString(R.string.setting_time_zone,
+            conference.timezone.uppercase(Locale.getDefault())
+        )
     }
 
 

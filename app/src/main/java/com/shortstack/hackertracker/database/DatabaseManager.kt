@@ -24,7 +24,9 @@ import com.shortstack.hackertracker.utilities.Storage
 import com.shortstack.hackertracker.utilities.now
 import kotlinx.coroutines.tasks.await
 import java.io.File
+import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 
 class DatabaseManager(private val preferences: Storage) {
@@ -492,7 +494,7 @@ class DatabaseManager(private val preferences: Storage) {
                     val speakers = snapshot?.toObjects(FirebaseSpeaker::class.java)
                         ?.filter { !it.hidden || App.isDeveloper }
                         ?.map { it.toSpeaker() }
-                        ?.sortedBy { it.name.toLowerCase() }
+                        ?.sortedBy { it.name.lowercase(Locale.getDefault()) }
                         ?: emptyList()
 
                     mutableLiveData.postValue(speakers)

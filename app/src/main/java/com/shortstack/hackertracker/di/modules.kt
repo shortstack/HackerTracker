@@ -27,7 +27,7 @@ val appModule = module {
     single { ThemesManager(get()) }
 
     single { Analytics(get(), get()) }
-    single { WorkManager.getInstance()!! }
+    single { WorkManager.getInstance() }
     single { ReminderManager(get(), get()) }
 
     viewModel { HackerTrackerViewModel() }

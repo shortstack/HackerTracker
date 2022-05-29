@@ -82,5 +82,5 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
 // #000000 - dark
 // #FFFFFF - light
 private fun String.isLightColor(): Boolean {
-    return sumBy { if (it.isDigit()) 1 else -1 } < 0
+    return this.sumOf({ if (it.isDigit()) 1 else -1 }) < 0
 }
