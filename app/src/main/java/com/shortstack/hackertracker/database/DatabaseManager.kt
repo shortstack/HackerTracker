@@ -12,7 +12,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.FirebaseFirestoreSettings
 import com.google.firebase.firestore.Query
-import com.google.firebase.iid.FirebaseInstanceId
+import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.storage.FirebaseStorage
 import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.*
@@ -113,7 +113,8 @@ class DatabaseManager(private val preferences: Storage) {
 
 
     private fun getFCMToken(conference: Conference) {
-        FirebaseInstanceId.getInstance().instanceId
+        FirebaseInstallations.getInstance()
+            .getToken(false)
             .addOnCompleteListener(OnCompleteListener { task ->
                 if (!task.isSuccessful) {
                     Logger.e(task.exception, "Could not get token.")
@@ -524,7 +525,7 @@ class DatabaseManager(private val preferences: Storage) {
     fun getMaps(conference: Conference): MutableLiveData<List<FirebaseConferenceMap>> {
         val mutableLiveData = MutableLiveData<List<FirebaseConferenceMap>>()
 
-        if(conference.code == "DEFCON28")
+        if (conference.code == "DEFCON28")
             return mutableLiveData
 
         val list = ArrayList<FirebaseConferenceMap>()

@@ -100,7 +100,7 @@ data class Event(
             if (urls.isEmpty())
                 return _description
 
-            val firstUrl = urls.minBy { _description.indexOf(it.url) } ?: return _description
+            val firstUrl = urls.minByOrNull { _description.indexOf(it.url) } ?: return _description
             val end = _description.indexOf(firstUrl.url)
             if (end == -1) {
                 return _description

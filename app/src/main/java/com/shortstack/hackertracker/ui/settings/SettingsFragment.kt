@@ -1,8 +1,10 @@
 package com.shortstack.hackertracker.ui.settings
 
 import android.os.Bundle
+import android.view.View
+import android.widget.TextView
+import android.widget.Toolbar
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.Observer
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
@@ -15,13 +17,11 @@ import com.shortstack.hackertracker.ui.themes.ThemesManager
 import com.shortstack.hackertracker.utilities.MyClock
 import com.shortstack.hackertracker.utilities.Storage
 import com.shortstack.hackertracker.utilities.now
-import kotlinx.android.synthetic.main.fragment_settings.*
 import org.koin.android.ext.android.inject
 import java.util.*
 
 
 class SettingsFragment : PreferenceFragmentCompat() {
-
 
     private val database: DatabaseManager by inject()
     private val storage: Storage by inject()
@@ -107,25 +107,27 @@ class SettingsFragment : PreferenceFragmentCompat() {
         preferenceScreen = screen
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         // todo:
-        toolbar.setNavigationOnClickListener {
+        view.findViewById<Toolbar>(R.id.toolbar).setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
 
-        database.conference.observe(viewLifecycleOwner, Observer {
+        database.conference.observe(viewLifecycleOwner) {
             if (it != null) {
                 updateConference(it)
                 updateTimezonePreference(it)
             }
-        })
+        }
 
-        version.text = getString(R.string.version, BuildConfig.VERSION_NAME)
+        val versionTextView = view.findViewById<TextView>(R.id.version)
+        versionTextView.text =
+            getString(R.string.version, BuildConfig.VERSION_NAME)
 
         var index = 0
-        version.setOnClickListener {
+        versionTextView.setOnClickListener {
             if (index++ == 10) {
                 storage.setPreference(Storage.DEVELOPER_THEME_UNLOCKED, true)
             }

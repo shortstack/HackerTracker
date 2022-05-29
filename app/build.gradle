@@ -3,15 +3,15 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
-apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-parcelize'
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
 
     defaultConfig {
         applicationId "com.shortstack.hackertracker"
         minSdkVersion 21
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "6.6.0"
 
@@ -43,12 +43,12 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.5.0'
-    implementation 'androidx.appcompat:appcompat:1.3.0'
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.4.1'
 
-    implementation 'com.google.android.material:material:1.4.0-beta01'
-    implementation 'androidx.recyclerview:recyclerview:1.2.0'
-    implementation 'androidx.preference:preference:1.1.1'
+    implementation 'com.google.android.material:material:1.7.0-alpha02'
+    implementation 'androidx.recyclerview:recyclerview:1.2.1'
+    implementation 'androidx.preference:preference-ktx:1.2.0'
 
     // Koin
     implementation 'org.koin:koin-android:2.1.6'
@@ -57,37 +57,38 @@ dependencies {
 
     // Arch
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
-    implementation "androidx.lifecycle:lifecycle-viewmodel:2.4.0-alpha01"
-    implementation 'androidx.work:work-runtime-ktx:2.5.0'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.0-rc01"
+    implementation 'androidx.work:work-runtime-ktx:2.7.1'
     implementation "android.arch.work:work-firebase:1.0.0-alpha11"
 
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.2.1'
 
     // Firebase
-    implementation 'com.google.firebase:firebase-analytics:17.4.4'
-    implementation 'com.google.firebase:firebase-firestore:21.5.0'
-    implementation 'com.google.firebase:firebase-storage:19.1.1'
-    implementation 'com.google.firebase:firebase-auth:19.3.2'
-    implementation 'com.google.firebase:firebase-crashlytics:17.1.1'
+    implementation 'com.google.firebase:firebase-analytics:21.0.0'
+    implementation 'com.google.firebase:firebase-firestore:24.1.2'
+    implementation 'com.google.firebase:firebase-storage:20.0.1'
+    implementation 'com.google.firebase:firebase-auth:21.0.5'
+    implementation 'com.google.firebase:firebase-crashlytics:18.2.11'
 
     // Work Manager
-    implementation "androidx.work:work-runtime-ktx:2.5.0"
+    implementation "androidx.work:work-runtime-ktx:2.7.1"
 
     // UI
     implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
     implementation 'com.github.stkent:amplify:2.2.0'
     implementation "com.hendraanggrian.material:collapsingtoolbarlayout-subtitle:1.1.0"
     implementation 'com.github.Advice-Dog:timehop:master-SNAPSHOT'
-    implementation 'com.github.discord:OverlappingPanels:0.1.2'
+    implementation 'com.github.discord:OverlappingPanels:0.1.5'
 
 
     // Utils
     implementation 'com.orhanobut:logger:1.15'
+    implementation 'com.google.code.gson:gson:2.9.0'
 
     // Testing
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
 
 }

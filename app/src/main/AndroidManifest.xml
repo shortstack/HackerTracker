@@ -23,8 +23,8 @@
         <activity
             android:name="com.shortstack.hackertracker.ui.activities.MainActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:launchMode="singleTop"
-            >
+            android:exported="true"
+            android:launchMode="singleTop">
 
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
