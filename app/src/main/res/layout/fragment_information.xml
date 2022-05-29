@@ -2,12 +2,14 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="?colorSurface">
 
     <com.google.android.material.appbar.AppBarLayout
         style="@style/AppBar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:liftOnScroll="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
@@ -15,23 +17,63 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/ic_menu_black_24dp"
-            app:title="@string/information" />
-
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tabs"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:minHeight="?actionBarSize"
-            app:tabMode="scrollable"
-            app:tabSelectedTextColor="?colorPrimary"
-            app:tabTextColor="?colorOnBackground" />
+            app:title="Information" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.viewpager.widget.ViewPager
+    <androidx.core.widget.NestedScrollView
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.shortstack.hackertracker.views.NavigationView
+                android:id="@+id/wifi"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:navigationLabel="@string/wifi_title" />
+
+            <com.shortstack.hackertracker.views.NavigationView
+                android:id="@+id/help"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:navigationLabel="@string/help_line_title" />
+
+            <com.shortstack.hackertracker.views.NavigationView
+                android:id="@+id/code_of_conduct"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:navigationLabel="@string/code_of_conduct" />
+
+            <com.shortstack.hackertracker.views.NavigationView
+                android:id="@+id/faq"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:navigationLabel="@string/faq" />
+
+            <com.shortstack.hackertracker.views.NavigationView
+                android:id="@+id/speakers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:navigationLabel="@string/speakers" />
+
+            <com.shortstack.hackertracker.views.NavigationView
+                android:id="@+id/vendors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:navigationLabel="@string/partners_vendors" />
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="32dp" />
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

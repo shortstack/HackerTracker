@@ -42,4 +42,12 @@
     <dimen name="time_width">85dp</dimen>
     <dimen name="category_bar_width">4dp</dimen>
     <dimen name="event_view_min_guideline">16dp</dimen>
+
+
+    <dimen name="navigation_view_height">64dp</dimen>
+
+
+    <dimen name="background_corner_radius">8dp</dimen>
+
+
 </resources>

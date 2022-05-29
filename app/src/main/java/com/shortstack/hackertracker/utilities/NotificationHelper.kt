@@ -94,7 +94,7 @@ class NotificationHelper(private val context: Context) : KoinComponent {
 
         if (item != null) {
             val bundle = Bundle()
-            bundle.putInt("target", item.id)
+            bundle.putLong("target", item.id)
             intent.putExtras(bundle)
         }
 
@@ -110,12 +110,12 @@ class NotificationHelper(private val context: Context) : KoinComponent {
     }
 
     fun notifyStartingSoon(event: Event) {
-        manager.notify(event.id, getStartingSoonNotification(event))
+        manager.notify(event.id.toInt(), getStartingSoonNotification(event))
     }
 
     fun updatedBookmarks(updatedBookmarks: List<Event>) {
         updatedBookmarks.forEach {
-            notify(it.id, getUpdatedEventNotification(it))
+            notify(it.id.toInt(), getUpdatedEventNotification(it))
         }
     }
 

@@ -13,7 +13,7 @@ import java.util.*
 
 @Parcelize
 data class Event(
-    val id: Int = -1,
+    val id: Long = -1,
     val conference: String,
     val title: String,
     val _description: String,

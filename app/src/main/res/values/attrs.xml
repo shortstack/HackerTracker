@@ -32,4 +32,9 @@
         </attr>
     </declare-styleable>
 
+
+    <declare-styleable name="NavigationView">
+        <attr name="navigationLabel" format="reference" />
+    </declare-styleable>
+
 </resources>

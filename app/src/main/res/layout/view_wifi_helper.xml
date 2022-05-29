@@ -1,24 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Card_Frame">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Card_Container">
 
-    <LinearLayout style="@style/Card_Container">
+    <TextView
+        style="@style/Card_Title"
+        android:text="@string/wifi_title"
+        android:visibility="gone" />
 
-        <TextView
-            style="@style/Card_Title"
-            android:text="@string/wifi_title" />
+    <TextView
+        android:id="@+id/content"
+        style="@style/Paragraph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/wifi_content" />
 
-        <TextView
-            android:id="@+id/content"
-            style="@style/Card_Body"
-            android:text="@string/wifi_content" />
+    <Button
+        android:id="@+id/save"
+        style="@style/Card_Action"
+        android:text="@string/wifi_action" />
 
-        <Button
-            android:id="@+id/save"
-            style="@style/Card_Action"
-            android:text="@string/wifi_action" />
+</LinearLayout>
 
-
-    </LinearLayout>
-
-</FrameLayout>

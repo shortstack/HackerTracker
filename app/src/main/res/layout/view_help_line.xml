@@ -1,23 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    style="@style/Card_Frame">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    style="@style/Card_Container">
 
-    <LinearLayout style="@style/Card_Container">
+    <TextView
+        style="@style/Card_Title"
+        android:text="@string/help_line_title"
+        android:visibility="gone" />
 
-        <TextView
-            style="@style/Card_Title"
-            android:text="@string/help_line_title" />
-
-        <TextView
-            style="@style/Card_Body"
-            android:text="@string/help_line_content" />
+    <TextView
+        style="@style/Paragraph"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/help_line_content" />
 
 
-        <Button
-            android:id="@+id/call"
-            style="@style/Card_Action"
-            android:text="@string/help_line_action" />
+    <Button
+        android:id="@+id/call"
+        style="@style/Card_Action"
+        android:text="@string/help_line_action" />
 
-    </LinearLayout>
-
-</FrameLayout>
+</LinearLayout>

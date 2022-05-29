@@ -18,4 +18,8 @@
 
     <color name="bubble">#653fff</color>
 
+
+    <color name="background_pressed">#e0e0e0</color>
+
+
 </resources>

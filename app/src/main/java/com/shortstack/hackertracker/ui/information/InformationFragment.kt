@@ -4,26 +4,27 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.tabs.TabLayout
-import com.shortstack.hackertracker.Status
+import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.databinding.FragmentInformationBinding
-import com.shortstack.hackertracker.ui.HackerTrackerViewModel
+import com.shortstack.hackertracker.replaceFragment
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.ui.information.categories.CategoriesFragment
 import com.shortstack.hackertracker.ui.information.faq.FAQFragment
-import com.shortstack.hackertracker.ui.information.info.InfoFragment
+import com.shortstack.hackertracker.ui.information.info.CodeOfConductFragment
+import com.shortstack.hackertracker.ui.information.info.SupportHelplineFragment
+import com.shortstack.hackertracker.ui.information.info.WiFiFragment
 import com.shortstack.hackertracker.ui.information.speakers.SpeakersFragment
 import com.shortstack.hackertracker.ui.information.vendors.VendorsFragment
+import org.koin.android.ext.android.inject
 
 class InformationFragment : Fragment() {
 
     private var _binding: FragmentInformationBinding? = null
     private val binding get() = _binding!!
+
+    private val database: DatabaseManager by inject()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,93 +35,69 @@ class InformationFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        database.conference.observe(viewLifecycleOwner) {
+            binding.codeOfConduct.isVisible = it.conduct != null
+            binding.help.isVisible = it.code.contains("DEFCON")
+            binding.wifi.isVisible = it.code.contains("DEFCON")
+        }
 
         binding.toolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
 
-        binding.tabs.apply {
-            tabGravity = TabLayout.GRAVITY_START
-            setupWithViewPager(binding.pager)
+        binding.wifi.setOnClickListener {
+            (requireActivity() as MainActivity).replaceFragment(
+                WiFiFragment.newInstance(),
+                R.id.container,
+                backStack = true
+            )
         }
 
-        binding.pager.offscreenPageLimit = 4
-
-        binding.tabs.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabReselected(tab: TabLayout.Tab) {}
-
-            override fun onTabUnselected(tab: TabLayout.Tab) {}
-
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                binding.pager.currentItem = tab.position
-            }
-        })
-
-        val viewModel = ViewModelProvider(this)[HackerTrackerViewModel::class.java]
-        viewModel.conference.observe(viewLifecycleOwner, Observer {
-            val fm = activity?.supportFragmentManager ?: return@Observer
-            if (it.status == Status.SUCCESS) {
-                val adapter = PagerAdapter(fm, it.data!!.code)
-                binding.pager.adapter = adapter
-            }
-        })
-    }
-
-    class PagerAdapter(fm: FragmentManager, private val conference: String) :
-        FragmentStatePagerAdapter(fm) {
-        override fun getItem(position: Int): Fragment {
-            val index = if (conference.contains("DEFCON")) {
-                position
-            } else {
-                position + 2
-            }
-
-            return when (index) {
-                INFO -> InfoFragment.newInstance()
-                CATEGORIES -> CategoriesFragment.newInstance()
-                SPEAKERS -> SpeakersFragment.newInstance()
-                FAQ -> FAQFragment.newInstance()
-                VENDORS -> VendorsFragment.newInstance()
-                else -> throw IndexOutOfBoundsException("Position out of bounds: $index")
-            }
+        binding.help.setOnClickListener {
+            (requireActivity() as MainActivity).replaceFragment(
+                SupportHelplineFragment.newInstance(),
+                R.id.container,
+                backStack = true
+            )
         }
 
-        override fun getPageTitle(position: Int): CharSequence {
-            val index = if (conference.contains("DEFCON")) {
-                position
-            } else {
-                position + 2
-            }
-
-            return when (index) {
-                INFO -> "Event"
-                CATEGORIES -> "Categories"
-                FAQ -> "FAQ"
-                SPEAKERS -> "Speakers"
-                VENDORS -> "Vendors"
-                else -> throw IndexOutOfBoundsException("Position out of bounds: $index")
-            }
+        binding.codeOfConduct.setOnClickListener {
+            (requireActivity() as MainActivity).replaceFragment(
+                CodeOfConductFragment.newInstance(),
+                R.id.container,
+                backStack = true
+            )
         }
 
-        override fun getCount(): Int {
-            if (conference.contains("DEFCON"))
-                return 5
-            return 3
+        binding.faq.setOnClickListener {
+            (requireActivity() as MainActivity).replaceFragment(
+                FAQFragment.newInstance(),
+                R.id.container,
+                backStack = true
+            )
+        }
+
+        binding.vendors.setOnClickListener {
+            (requireActivity() as MainActivity).replaceFragment(
+                VendorsFragment.newInstance(),
+                R.id.container,
+                backStack = true
+            )
+        }
+
+        binding.speakers.setOnClickListener {
+            (requireActivity() as MainActivity).replaceFragment(
+                SpeakersFragment.newInstance(),
+                R.id.container,
+                backStack = true
+            )
         }
     }
 
     companion object {
-        private const val INFO = 0
-        private const val CATEGORIES = 1
-        private const val FAQ = 2
-        private const val SPEAKERS = 3
-        private const val VENDORS = 4
-
-
-        fun newInstance(): InformationFragment {
-            return InformationFragment()
-        }
+        fun newInstance(): InformationFragment = InformationFragment()
     }
 }

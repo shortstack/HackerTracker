@@ -2,7 +2,6 @@ package com.shortstack.hackertracker.ui.information.categories
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.shortstack.hackertracker.Resource
 import com.shortstack.hackertracker.models.local.Type
@@ -18,14 +17,18 @@ class CategoriesFragment : ListFragment<Type>() {
         val viewModel =
             ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java]
 
-        viewModel.types.observe(viewLifecycleOwner, Observer {
+        viewModel.types.observe(viewLifecycleOwner) {
             val resource = Resource(
                 it.status,
                 it.data?.filter { !it.isBookmark }?.sortedBy { it.shortName.toLowerCase() },
                 it.message
             )
             onResource(resource)
-        })
+        }
+    }
+
+    override fun getPageTitle(): String {
+        return "Categories"
     }
 
     companion object {

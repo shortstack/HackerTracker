@@ -7,7 +7,6 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import com.shortstack.hackertracker.R
@@ -53,14 +52,14 @@ class EventFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        val id = arguments?.getInt(EXTRA_EVENT) ?: error("id must not be null")
+        val id = arguments?.getLong(EXTRA_EVENT) ?: error("id must not be null")
 
-        viewModel.events.observe(viewLifecycleOwner, Observer {
+        viewModel.events.observe(viewLifecycleOwner) {
             val target = it.data?.find { it.id == id }
             if (target != null) {
                 showEvent(target)
             }
-        })
+        }
 
         binding.toolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
@@ -173,11 +172,11 @@ class EventFragment : Fragment() {
 
         const val EXTRA_EVENT = "EXTRA_EVENT"
 
-        fun newInstance(event: Int): EventFragment {
+        fun newInstance(event: Long): EventFragment {
             val fragment = EventFragment()
 
             val bundle = Bundle()
-            bundle.putInt(EXTRA_EVENT, event)
+            bundle.putLong(EXTRA_EVENT, event)
             fragment.arguments = bundle
 
             return fragment

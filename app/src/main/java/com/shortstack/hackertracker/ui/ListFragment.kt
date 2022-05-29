@@ -30,7 +30,10 @@ abstract class ListFragment<T> : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.list.adapter = adapter
+        binding.toolbar.title = getPageTitle()
     }
+
+    abstract fun getPageTitle(): String
 
     inline fun <reified J : ViewModel> getViewModel(): J =
         ViewModelProviders.of(this).get(J::class.java)

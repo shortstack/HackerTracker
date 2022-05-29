@@ -28,7 +28,6 @@ import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.information.categories.CategoryFragment
 import com.shortstack.hackertracker.ui.information.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
-import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.search.SearchFragment
 import com.shortstack.hackertracker.ui.settings.SettingsFragment
 import com.shortstack.hackertracker.utilities.Storage
@@ -72,8 +71,8 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
 
-        val target = intent?.getIntExtra("target", -1)
-        if (target != null && target != -1) {
+        val target = intent?.getLongExtra("target", -1L)
+        if (target != null && target != -1L) {
             navigate(target)
         }
     }
@@ -137,7 +136,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
         navigate(event.id)
     }
 
-    fun navigate(id: Int) {
+    fun navigate(id: Long) {
         replaceFragment(EventFragment.newInstance(id), R.id.container_above, hasAnimation = true)
     }
 
