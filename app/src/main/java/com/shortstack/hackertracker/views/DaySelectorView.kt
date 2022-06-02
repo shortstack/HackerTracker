@@ -17,7 +17,6 @@ import androidx.transition.TransitionManager
 import com.shortstack.hackertracker.databinding.ViewDaySelectorBinding
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.collections.ArrayList
 
 
 class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
@@ -188,6 +187,11 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
             } else {
                 view.visibility = View.GONE
             }
+        }
+
+        if (begin == -1 && end == -1) {
+            onBeginDaySelected(children[0])
+            onEndDaySelected(children[0])
         }
     }
 
