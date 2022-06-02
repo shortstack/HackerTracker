@@ -44,7 +44,7 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
         }
     }
 
-    private fun onDaySelected(view: View, position: Int) {
+    private fun onDaySelected(view: View, position: Int, skipAnimation: Boolean = false) {
         val constraintSet = ConstraintSet()
         constraintSet.clone(binding.frame)
 
@@ -55,7 +55,7 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
 
         val transition = ChangeBounds().apply {
             interpolator = AnticipateOvershootInterpolator(1.0f)
-            duration = 500
+            duration = if (skipAnimation) 0 else 500
         }
 
         TransitionManager.beginDelayedTransition(binding.frame, transition)
@@ -132,22 +132,22 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
         }
     }
 
-    private fun onBeginDaySelected(view: View) {
+    private fun onBeginDaySelected(view: View, skipAnimation: Boolean = false) {
         if (begin == view.id)
             return
 
         begin = view.id
 
-        onDaySelected(view, START)
+        onDaySelected(view, START, skipAnimation)
     }
 
-    private fun onEndDaySelected(view: View) {
+    private fun onEndDaySelected(view: View, skipAnimation: Boolean = false) {
         if (end == view.id)
             return
 
         end = view.id
 
-        onDaySelected(view, END)
+        onDaySelected(view, END, skipAnimation)
     }
 
     fun addOnDaySelectedListener(listener: OnDaySelectedListener) {
@@ -190,8 +190,8 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
         }
 
         if (begin == -1 && end == -1) {
-            onBeginDaySelected(children[0])
-            onEndDaySelected(children[0])
+            onBeginDaySelected(children[0], skipAnimation = true)
+            onEndDaySelected(children[0], skipAnimation = true)
         }
     }
 
