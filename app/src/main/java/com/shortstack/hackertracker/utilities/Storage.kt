@@ -17,6 +17,7 @@ class Storage(context: Context, private val gson: Gson) {
         const val SAFE_MODE_ENABLED = "safe_mode_enabled"
         const val DEVELOPER_THEME_UNLOCKED = "developer_theme_unlocked"
         const val NAV_DRAWER_ON_BACK_KEY = "nav_drawer_on_back"
+        const val FILTER_BUTTON_SHOWN = "filter_button_shown"
         const val FORCE_TIME_ZONE_KEY = "force_time_zone"
         const val USER_ANALYTICS_KEY = "user_analytics"
     }

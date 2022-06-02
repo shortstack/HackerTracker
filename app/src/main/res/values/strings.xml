@@ -130,6 +130,7 @@
     <string name="twitter">Twitter</string>
     <string name="category">Category</string>
     <string name="faq">FAQ</string>
+    <string name="setting_filter_button_shown">Show filter button</string>
 
 
 </resources>

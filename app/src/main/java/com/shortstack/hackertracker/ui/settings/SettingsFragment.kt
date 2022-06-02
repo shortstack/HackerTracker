@@ -3,8 +3,8 @@ package com.shortstack.hackertracker.ui.settings
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import android.widget.Toolbar
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.widget.Toolbar
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
@@ -69,6 +69,12 @@ class SettingsFragment : PreferenceFragmentCompat() {
             addPreference(SwitchPreference(context).apply {
                 title = getString(R.string.setting_back_button_drawer)
                 key = Storage.NAV_DRAWER_ON_BACK_KEY
+            })
+
+            // Showing filter button
+            addPreference(SwitchPreference(context).apply {
+                title = getString(R.string.setting_filter_button_shown)
+                key = Storage.FILTER_BUTTON_SHOWN
             })
 
             // Easter Eggs
