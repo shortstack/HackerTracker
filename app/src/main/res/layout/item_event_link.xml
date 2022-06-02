@@ -6,8 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_margin="4dp"
     android:background="?android:selectableItemBackground"
-    android:gravity="center"
-    android:orientation="vertical"
+    android:gravity="center_vertical"
+    android:orientation="horizontal"
     android:padding="16dp">
 
     <ImageView
@@ -19,8 +19,8 @@
         app:tint="?colorControlNormal" />
 
     <Space
-        android:layout_width="wrap_content"
-        android:layout_height="8dp" />
+        android:layout_width="16dp"
+        android:layout_height="16dp" />
 
     <TextView
         android:id="@+id/action_text"

@@ -5,24 +5,24 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?colorSurface">
+    android:background="@color/black">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         style="@style/AppBar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="?colorSurface">
+        android:background="@drawable/bottom_sheet_background"
+        app:liftOnScroll="true">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             style="@style/Toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
             app:menu="@menu/event_bookmarked"
-            app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_new_24"
-            tools:subtitle="Party/Meetup"
-            tools:title="Arcade Party" />
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -30,6 +30,7 @@
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?colorSurface"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -37,35 +38,89 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/header"
-                android:layout_width="0dp"
+            <LinearLayout
+                android:id="@+id/head"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <TextView
-                    android:id="@+id/location"
-                    style="@style/TextAppearance.AppCompat.Body1"
-                    android:layout_width="0dp"
+                    android:id="@+id/title"
+                    style="@style/TextAppearance.MaterialComponents.Headline5"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
-                    android:layout_marginStart="8dp"
-                    android:alpha="0.70"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/type_2"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Track 1 - Ceaser's" />
+                    android:textSize="32sp"
+                    tools:text="Arcade Party" />
+
+                <Space
+                    android:layout_width="match_parent"
+                    android:layout_height="8dp" />
+
+                <FrameLayout
+                    android:id="@+id/type_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/well_background_rounded"
+                    android:padding="16dp">
+
+                    <com.shortstack.hackertracker.views.EventTypeView
+                        android:id="@+id/type_1"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Event"
+                        tools:visibility="visible" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/well_background_rounded"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/date"
+                        style="@style/TextAppearance.AppCompat.Body2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="August 6th, 9:30am - 10:30am" />
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/location_container"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:background="@drawable/well_background_rounded"
+                    android:padding="16dp">
+
+                    <TextView
+                        android:id="@+id/location"
+                        style="@style/TextAppearance.AppCompat.Body2"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/type_2"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="Track 1 - Ceaser's" />
+
+                </FrameLayout>
 
                 <com.shortstack.hackertracker.views.EventTypeView
                     android:id="@+id/type_2"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
                     android:visibility="gone"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/type_1"
@@ -73,20 +128,8 @@
                     tools:text="Event" />
 
 
-                <com.shortstack.hackertracker.views.EventTypeView
-                    android:id="@+id/type_1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginEnd="8dp"
-                    android:visibility="gone"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    tools:text="Event"
-                    tools:visibility="visible" />
+            </LinearLayout>
 
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <FrameLayout
                 android:id="@+id/body"
@@ -94,7 +137,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/header">
+                app:layout_constraintTop_toBottomOf="@id/head">
 
                 <include
                     layout="@layout/empty_text"
@@ -109,18 +152,54 @@
 
             </FrameLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/contents"
-                android:layout_width="0dp"
+            <FrameLayout
+
+                android:id="@+id/links_containers"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:overScrollMode="never"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                android:layout_margin="20dp"
+                android:background="@drawable/well_background_rounded"
+                android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/body"
-                app:spanCount="3"
-                tools:itemCount="3"
-                tools:listitem="@layout/item_event_link" />
+                app:layout_constraintTop_toBottomOf="@id/body">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/links"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="1"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/item_event_link" />
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/speakers_containers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:background="@drawable/well_background_rounded"
+                android:padding="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/links_containers">
+
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/speakers"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:overScrollMode="never"
+                    app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                    app:spanCount="1"
+                    tools:itemCount="1"
+                    tools:listitem="@layout/row_speaker" />
+
+            </FrameLayout>
 
             <com.shortstack.hackertracker.views.SkullView
                 style="@style/Footer"
@@ -128,7 +207,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/contents"
+                app:layout_constraintTop_toBottomOf="@id/speakers_containers"
                 app:layout_constraintVertical_bias="1.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
@@ -15,6 +17,7 @@ import com.shortstack.hackertracker.Status
 import com.shortstack.hackertracker.databinding.FragmentScheduleBinding
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.local.Event
+import com.shortstack.hackertracker.models.local.Location
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.PanelsFragment
@@ -49,9 +52,13 @@ class ScheduleFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val type = arguments?.getParcelable<Type>(EXTRA_TYPE)
-        if (type != null) {
-            binding.toolbar.title = type.shortName
+        val location = arguments?.getParcelable<Location>(EXTRA_LOCATION)
+
+        if (type != null || location != null) {
+            binding.toolbar.title = type?.shortName ?: location?.name
             binding.filter.visibility = View.GONE
+            binding.toolbar.invalidateMenu()
+            binding.toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_arrow_back_ios_new_24)
         }
 
         binding.toolbar.inflateMenu(R.menu.schedule)
@@ -111,8 +118,20 @@ class ScheduleFragment : Fragment() {
 
                 when (it.status) {
                     Status.SUCCESS -> {
-                        val list = adapter.setSchedule(it.data)
+
+
+                        var list1 = it.data
+                        if (type != null) {
+                            list1 = list1?.filter { it.types.any { it.id == type.id } }
+                        }
+                        if (location != null) {
+                            list1 = list1?.filter { it.location.name == location.name }
+                        }
+
+
+                        val list = adapter.setSchedule(list1)
                         val days = list.filterIsInstance<Day>()
+
                         binding.daySelector.setDays(days)
 
                         if (adapter.isEmpty()) {
@@ -207,6 +226,7 @@ class ScheduleFragment : Fragment() {
 
     companion object {
         private const val EXTRA_TYPE = "type"
+        private const val EXTRA_LOCATION = "location"
 
         fun newInstance(type: Type? = null): ScheduleFragment {
             val fragment = ScheduleFragment()
@@ -218,6 +238,14 @@ class ScheduleFragment : Fragment() {
             }
 
             return fragment
+        }
+
+        fun newInstance(location: Location): ScheduleFragment {
+            return ScheduleFragment().apply {
+                arguments = bundleOf(
+                    EXTRA_LOCATION to location
+                )
+            }
         }
     }
 }

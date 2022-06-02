@@ -28,6 +28,7 @@ import com.shortstack.hackertracker.ui.information.InformationFragment
 import com.shortstack.hackertracker.ui.information.categories.CategoryFragment
 import com.shortstack.hackertracker.ui.information.speakers.SpeakerFragment
 import com.shortstack.hackertracker.ui.maps.MapsFragment
+import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.search.SearchFragment
 import com.shortstack.hackertracker.ui.settings.SettingsFragment
 import com.shortstack.hackertracker.utilities.Storage
@@ -183,7 +184,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
 
     fun navigate(type: Type) {
         replaceFragment(
-            CategoryFragment.newInstance((type)),
+            CategoryFragment.newInstance(type),
             R.id.container_above,
             hasAnimation = true
         )
@@ -199,5 +200,21 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
 
     fun showSettings() {
         setMainFragment(R.id.nav_settings, "", true)
+    }
+
+    fun showSchedule(location: Location) {
+        replaceFragment(
+            ScheduleFragment.newInstance(location),
+            R.id.container_above,
+            hasAnimation = true
+        )
+    }
+
+    fun showSchedule(type: Type) {
+        replaceFragment(
+            ScheduleFragment.newInstance(type),
+            R.id.container_above,
+            hasAnimation = true
+        )
     }
 }

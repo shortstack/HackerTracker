@@ -60,12 +60,12 @@ class EventDetailsAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     fun setElements(actions: List<Action>, speakers: List<Speaker>) {
         collection.clear()
         if (actions.isNotEmpty()) {
-            collection.add("Links")
+//            collection.add("Links")
             collection.addAll(actions)
         }
 
         if (speakers.isNotEmpty()) {
-            collection.add("Speakers")
+//            collection.add("Speakers")
             collection.addAll(speakers)
         }
         notifyDataSetChanged()

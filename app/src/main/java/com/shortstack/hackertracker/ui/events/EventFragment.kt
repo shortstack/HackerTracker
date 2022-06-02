@@ -1,14 +1,14 @@
 package com.shortstack.hackertracker.ui.events
 
 import android.content.Context
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.GridLayoutManager
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.database.ReminderManager
@@ -19,7 +19,7 @@ import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.utilities.TimeUtil
 import org.koin.android.ext.android.inject
-import kotlin.math.max
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 
 class EventFragment : Fragment() {
@@ -27,13 +27,14 @@ class EventFragment : Fragment() {
     private var _binding: FragmentEventBinding? = null
     private val binding get() = _binding!!
 
-    private val analytics: Analytics by inject()
-    private val database: DatabaseManager by inject()
-    private val reminder: ReminderManager by inject()
+    private val analytics by inject<Analytics>()
+    private val database by inject<DatabaseManager>()
+    private val reminder by inject<ReminderManager>()
 
-    private val viewModel: HackerTrackerViewModel by lazy { ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java] }
+    private val viewModel by sharedViewModel<HackerTrackerViewModel>()
 
-    private val adapter = EventDetailsAdapter()
+    private val speakersAdapter = EventDetailsAdapter()
+    private val linksAdapter = EventDetailsAdapter()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -49,8 +50,8 @@ class EventFragment : Fragment() {
         super.onPrepareOptionsMenu(menu)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         val id = arguments?.getLong(EXTRA_EVENT) ?: error("id must not be null")
 
@@ -69,23 +70,30 @@ class EventFragment : Fragment() {
     private fun showEvent(event: Event) {
         analytics.log("Viewing event: ${event.title}")
 
-        binding.toolbar.title = event.title
+//        binding.title.text = event.title
+//        binding.date.text = event.date
 
         val body = event.description
 
-        binding.contents.adapter = adapter
-        val gridLayoutManager = binding.contents.layoutManager as GridLayoutManager
+        binding.speakers.adapter = speakersAdapter
+        binding.links.adapter = linksAdapter
 
-        val displayMetrics = requireContext().resources.displayMetrics
-        val dpWidth = displayMetrics.widthPixels / displayMetrics.density
-        gridLayoutManager.spanCount = max(2f, dpWidth / 200f).toInt()
-        gridLayoutManager.spanSizeLookup =
-            object : GridLayoutManager.SpanSizeLookup() {
-                override fun getSpanSize(position: Int): Int {
-                    return adapter.getSpanSize(position, gridLayoutManager.spanCount)
-                }
-            }
-        adapter.setElements(event.urls.sortedBy { it.label.length }, event.speakers)
+//        val gridLayoutManager = binding.contents.layoutManager as GridLayoutManager
+
+//        val displayMetrics = requireContext().resources.displayMetrics
+//        val dpWidth = displayMetrics.widthPixels / displayMetrics.density
+//        gridLayoutManager.spanCount = max(2f, dpWidth / 200f).toInt()
+//        gridLayoutManager.spanSizeLookup =
+//            object : GridLayoutManager.SpanSizeLookup() {
+//                override fun getSpanSize(position: Int): Int {
+//                    return adapter.getSpanSize(position, gridLayoutManager.spanCount)
+//                }
+//            }
+
+        speakersAdapter.setElements(emptyList(), event.speakers)
+        linksAdapter.setElements(event.urls.sortedBy { it.label.length }, emptyList())
+
+
 
         if (body.isNotBlank()) {
             // todo: binding.empty.visibility = View.GONE
@@ -136,8 +144,17 @@ class EventFragment : Fragment() {
 
         val context = context ?: return
 
-        binding.toolbar.subtitle = getFullTimeStamp(context, event)
+        binding.title.text = event.title
+        binding.date.text = getFullTimeStamp(context, event).replace("\n", " ")
         binding.location.text = event.location.name
+
+        binding.typeContainer.setOnClickListener {
+            (requireActivity() as MainActivity).showSchedule(event.types.first())
+        }
+
+        binding.locationContainer.setOnClickListener {
+            (requireActivity() as MainActivity).showSchedule(event.location)
+        }
     }
 
 
@@ -159,6 +176,12 @@ class EventFragment : Fragment() {
         val type = event.types.first()
         binding.type1.render(type)
         binding.type1.visibility = View.VISIBLE
+
+        val drawable = ContextCompat.getDrawable(context!!, R.drawable.chip_background)?.mutate()
+
+        drawable?.setTint(Color.parseColor(type.color))
+
+        binding.typeContainer.background = drawable
 
         if (event.types.size > 1) {
             binding.type2.render(event.types.last())
