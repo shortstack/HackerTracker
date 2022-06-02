@@ -4,23 +4,27 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.StaggeredGridLayoutManager
-import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.ViewFilterBinding
 import com.shortstack.hackertracker.models.local.Type
 
 class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
+    private var onClearListener: (() -> Unit)? = null
+    private var onClickListener: ((Type) -> Unit)? = null
+
+
     private val binding = ViewFilterBinding.inflate(LayoutInflater.from(context), this, true)
 
-    private val adapter = FilterAdapter()
+    private val adapter: FilterAdapter = FilterAdapter {
+        onClickListener?.invoke(it)
+    }
 
     init {
         binding.list.adapter = adapter
-        binding.list.layoutManager =
-            StaggeredGridLayoutManager(SPAN_COUNT, VERTICAL).apply {
-            }
+        binding.toolbar.setOnMenuItemClickListener {
+            onClearListener?.invoke()
+            true
+        }
     }
 
     fun setTypes(types: List<Type>?) {
@@ -51,7 +55,11 @@ class FilterView(context: Context, attrs: AttributeSet) : LinearLayout(context, 
         }
     }
 
-    companion object {
-        private const val SPAN_COUNT = 1
+    fun setOnTypeClickListener(onClickListener: (Type) -> Unit) {
+        this.onClickListener = onClickListener
+    }
+
+    fun setOnClearListener(onClearListener: () -> Unit) {
+        this.onClearListener = onClearListener
     }
 }

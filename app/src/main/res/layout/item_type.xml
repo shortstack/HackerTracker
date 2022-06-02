@@ -3,13 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="8dp"
-    tools:layout_width="150dp">
+    android:padding="8dp">
 
     <ImageView
         android:id="@+id/dot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/tag_dot_size"
+        android:layout_height="@dimen/tag_dot_size"
         android:layout_gravity="center_vertical"
         android:src="@drawable/chip_background_small" />
 
@@ -23,9 +22,10 @@
 
     <TextView
         android:id="@+id/text"
+        style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         android:padding="8dp"
         tools:text="Hardware Hacking / Soldering Village" />
 

@@ -7,7 +7,7 @@ import com.shortstack.hackertracker.ui.search.HeaderViewHolder
 import kotlin.math.min
 
 // todo: replace with ListAdapter
-class FilterAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class FilterAdapter(private val onTypeClickListener: (Type) -> Unit) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val collection = ArrayList<Any>()
 
@@ -31,7 +31,7 @@ class FilterAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         when (holder) {
             is HeaderViewHolder -> holder.render(collection[position] as String)
-            is TypeViewHolder -> holder.render(collection[position] as Type)
+            is TypeViewHolder -> holder.render(collection[position] as Type, onTypeClickListener)
         }
     }
 

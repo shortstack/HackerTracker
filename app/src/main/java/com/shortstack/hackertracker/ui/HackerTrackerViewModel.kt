@@ -350,4 +350,19 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
         query.value = text
     }
 
+    fun toggleFilter(type: Type) {
+        type.isSelected = !type.isSelected
+        database.updateTypeIsSelected(type)
+    }
+
+    fun clearFilters() {
+        val types = types.value?.data ?: emptyList()
+        types.forEach {
+            if (it.isSelected) {
+                it.isSelected = false
+                database.updateTypeIsSelected(it)
+            }
+        }
+    }
+
 }

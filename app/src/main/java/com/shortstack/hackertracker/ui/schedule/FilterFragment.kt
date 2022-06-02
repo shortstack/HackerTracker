@@ -30,6 +30,16 @@ class FilterFragment : Fragment() {
 
         viewModel.types.observe(viewLifecycleOwner) {
             binding.filters.setTypes(it.data)
+            val hasFilters = it.data?.any { it.isSelected }
+
+        }
+
+        binding.filters.setOnTypeClickListener {
+            viewModel.toggleFilter(it)
+        }
+
+        binding.filters.setOnClearListener {
+            viewModel.clearFilters()
         }
     }
 }

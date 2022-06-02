@@ -48,6 +48,7 @@
 
 
     <dimen name="background_corner_radius">8dp</dimen>
+    <dimen name="tag_dot_size">10dp</dimen>
 
 
 </resources>

@@ -9,8 +9,8 @@
 
     <View
         android:id="@+id/event_type_dot"
-        android:layout_width="10dp"
-        android:layout_height="10dp"
+        android:layout_width="@dimen/tag_dot_size"
+        android:layout_height="@dimen/tag_dot_size"
         android:background="@drawable/chip_background" />
 
     <TextView

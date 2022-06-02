@@ -13,18 +13,10 @@ import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.databinding.ItemTypeBinding
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.ui.activities.MainActivity
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import org.koin.core.KoinComponent
-import org.koin.core.inject
 
-class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHolder(binding.root),
-    KoinComponent {
+class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    // todo: move this out of here
-    private val database: DatabaseManager by inject()
-
-    fun render(type: Type) = with(binding) {
+    fun render(type: Type, onClickListener: (Type) -> Unit) = with(binding) {
         val context = root.context
 
         val color = if (type.color == "#FFFFFF") {
@@ -57,11 +49,7 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
         full.visibility = if (type.isSelected) View.VISIBLE else View.GONE
 
         root.setOnClickListener {
-            val isChecked = !type.isSelected
-            GlobalScope.launch {
-                type.isSelected = isChecked
-                database.updateTypeIsSelected(type)
-            }
+            onClickListener.invoke(type)
         }
     }
 
@@ -82,5 +70,5 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
 // #000000 - dark
 // #FFFFFF - light
 private fun String.isLightColor(): Boolean {
-    return this.sumOf({ if (it.isDigit()) 1 else -1 }) < 0
+    return this.sumOf { if (it.isDigit()) 1L else -1L } < 0L
 }

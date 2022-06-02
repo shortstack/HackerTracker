@@ -7,16 +7,26 @@
     android:background="@drawable/bottom_sheet_background"
     android:orientation="vertical">
 
-    <androidx.appcompat.widget.Toolbar
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@null"
+        app:liftOnScroll="true">
 
-        <TextView
-            android:id="@+id/title"
-            style="@style/Toolbar.Text"
-            android:text="@string/alert_filter_title" />
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:menu="@menu/filters">
 
-    </androidx.appcompat.widget.Toolbar>
+            <TextView
+                android:id="@+id/title"
+                style="@style/Toolbar.Text"
+                android:text="@string/alert_filter_title" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
