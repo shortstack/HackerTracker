@@ -8,6 +8,7 @@ import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.database.DatabaseManager
@@ -70,30 +71,15 @@ class EventFragment : Fragment() {
     private fun showEvent(event: Event) {
         analytics.log("Viewing event: ${event.title}")
 
-//        binding.title.text = event.title
-//        binding.date.text = event.date
-
         val body = event.description
 
         binding.speakers.adapter = speakersAdapter
         binding.links.adapter = linksAdapter
 
-//        val gridLayoutManager = binding.contents.layoutManager as GridLayoutManager
-
-//        val displayMetrics = requireContext().resources.displayMetrics
-//        val dpWidth = displayMetrics.widthPixels / displayMetrics.density
-//        gridLayoutManager.spanCount = max(2f, dpWidth / 200f).toInt()
-//        gridLayoutManager.spanSizeLookup =
-//            object : GridLayoutManager.SpanSizeLookup() {
-//                override fun getSpanSize(position: Int): Int {
-//                    return adapter.getSpanSize(position, gridLayoutManager.spanCount)
-//                }
-//            }
-
+        binding.speakersContainers.isVisible = event.speakers.isNotEmpty()
         speakersAdapter.setElements(emptyList(), event.speakers)
+        binding.linksContainers.isVisible = event.urls.isNotEmpty()
         linksAdapter.setElements(event.urls.sortedBy { it.label.length }, emptyList())
-
-
 
         if (body.isNotBlank()) {
             // todo: binding.empty.visibility = View.GONE

@@ -5,6 +5,8 @@ import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import com.shortstack.hackertracker.Resource
+import com.shortstack.hackertracker.Response
+import com.shortstack.hackertracker.dObj
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.models.firebase.FirebaseConferenceMap
 import com.shortstack.hackertracker.models.local.*
@@ -16,20 +18,17 @@ import org.koin.core.inject
 class HackerTrackerViewModel : ViewModel(), KoinComponent {
 
     private val database: DatabaseManager by inject()
-    private val storage: Storage by inject()
-    private val themes: ThemesManager by inject()
-
 
     val conference: LiveData<Resource<Conference>>
     val events: LiveData<Resource<List<Event>>>
     val bookmarks: LiveData<Resource<List<Event>>>
     val types: LiveData<Resource<List<Type>>>
     val locations: LiveData<Resource<List<Location>>>
-    val speakers: LiveData<Resource<List<Speaker>>>
+    val speakers: LiveData<Response<List<Speaker>>>
 
     val articles: LiveData<Resource<List<Article>>>
-    val faq: LiveData<Resource<List<FAQ>>>
-    val vendors: LiveData<Resource<List<Vendor>>>
+    val faq: LiveData<Response<List<FAQ>>>
+    val vendors: LiveData<Response<List<Vendor>>>
 
     val maps: LiveData<Resource<List<FirebaseConferenceMap>>>
 
@@ -39,11 +38,9 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
     // Schedule
     val schedule: LiveData<Resource<List<Event>>>
 
-
     // Search
     private val query = MediatorLiveData<String>()
     val search: LiveData<List<Any>>
-
 
     init {
         conference = Transformations.switchMap(database.conference) {
@@ -142,13 +139,13 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
 
 
         speakers = Transformations.switchMap(database.conference) {
-            val result = MediatorLiveData<Resource<List<Speaker>>>()
+            val result = MediatorLiveData<Response<List<Speaker>>>()
 
             if (it == null) {
-                result.value = Resource.init()
+                result.value = Response.Init
             } else {
                 result.addSource(database.getSpeakers(it)) {
-                    result.value = Resource.success(it)
+                    result.value = Response.Success(it)
                 }
             }
 
@@ -172,13 +169,13 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
         }
 
         faq = Transformations.switchMap(database.conference) {
-            val result = MediatorLiveData<Resource<List<FAQ>>>()
+            val result = MediatorLiveData<Response<List<FAQ>>>()
 
             if (it == null) {
-                result.value = Resource.init()
+                result.value = Response.Loading
             } else {
                 result.addSource(database.getFAQ(it)) {
-                    result.value = Resource.success(it)
+                    result.value = Response.Success(it)
                 }
             }
 
@@ -186,13 +183,13 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
         }
 
         vendors = Transformations.switchMap(database.conference) {
-            val result = MediatorLiveData<Resource<List<Vendor>>>()
+            val result = MediatorLiveData<Response<List<Vendor>>>()
 
             if (it == null) {
-                result.value = Resource.init()
+                result.value = Response.Init
             } else {
                 result.addSource(database.getVendors(it)) {
-                    result.value = Resource.success(it)
+                    result.value = Response.Success(it)
                 }
             }
 
@@ -216,23 +213,23 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
         search = Transformations.switchMap(query) { text ->
             val results = MediatorLiveData<List<Any>>()
 
-            results.addSource(events) {
-                val locations = locations.value?.data ?: emptyList()
-                val speakers = speakers.value?.data ?: emptyList()
-                setValue(results, text, it?.data ?: emptyList(), locations, speakers)
-            }
-
-            results.addSource(locations) {
-                val events = events.value?.data ?: emptyList()
-                val speakers = speakers.value?.data ?: emptyList()
-                setValue(results, text, events, it?.data ?: emptyList(), speakers)
-            }
-
-            results.addSource(speakers) {
-                val events = events.value?.data ?: emptyList()
-                val locations = locations.value?.data ?: emptyList()
-                setValue(results, text, events, locations, it?.data ?: emptyList())
-            }
+//            results.addSource(events) {
+//                val locations = locations.value?.data ?: emptyList()
+//                val speakers = speakers.value?.dObj ?: emptyList()
+//                setValue(results, text, it?.data ?: emptyList(), locations, speakers)
+//            }
+//
+//            results.addSource(locations) {
+//                val events = events.value?.data ?: emptyList()
+//                val speakers = speakers.value?.dObj ?: emptyList<Speaker>()
+//                setValue(results, text, events, it?.data ?: emptyList(), speakers)
+//            }
+//
+//            results.addSource(speakers) {
+//                val events = events.value?.data ?: emptyList()
+//                val locations = locations.value?.data ?: emptyList()
+//                setValue(results, text, events, locations, it?.dObj ?: emptyList())
+//            }
 
             return@switchMap results
         }
@@ -364,5 +361,4 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
             }
         }
     }
-
 }

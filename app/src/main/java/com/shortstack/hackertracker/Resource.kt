@@ -19,3 +19,23 @@ enum class Status {
     LOADING,
     NOT_INITIALIZED
 }
+
+sealed class Response<out T : Any> {
+
+    object Init : Response<Nothing>()
+
+    object Loading : Response<Nothing>()
+
+    data class Success<T : Any>(val data: T) : Response<T>()
+
+    data class Error(val exception: Exception) : Response<Nothing>()
+
+}
+
+val Response<*>.dObj: Any?
+    get() {
+        if (this is Response.Success) {
+            return this.data
+        }
+        return null
+    }

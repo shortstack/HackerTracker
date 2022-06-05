@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.shortstack.hackertracker.R
+import com.shortstack.hackertracker.Response
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.databinding.FragmentSpeakersBinding
 import com.shortstack.hackertracker.models.local.Speaker
@@ -38,8 +39,8 @@ class SpeakerFragment : Fragment() {
         return binding.root
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         binding.toolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
@@ -48,12 +49,23 @@ class SpeakerFragment : Fragment() {
         val speaker =
             arguments?.getParcelable(EXTRA_SPEAKER) as? Speaker ?: error("speaker must not be null")
 
-        viewModel.speakers.observe(viewLifecycleOwner, Observer {
-            val target = it.data?.find { it.id == speaker.id }
-            if (target != null) {
-                showSpeaker(target)
+        viewModel.speakers.observe(viewLifecycleOwner) {
+            when (it) {
+                Response.Init -> {
+
+                }
+                Response.Loading -> {
+
+                }
+                is Response.Success -> {
+                    val target = it.data.find { it.id == speaker.id }
+                    if (target != null) {
+                        showSpeaker(target)
+                    }
+                }
+                is Response.Error -> {}
             }
-        })
+        }
     }
 
     private fun showSpeaker(speaker: Speaker) {

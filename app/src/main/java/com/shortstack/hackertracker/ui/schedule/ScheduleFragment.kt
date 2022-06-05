@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.core.os.bundleOf
-import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
@@ -27,7 +26,6 @@ import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.views.DaySelectorView
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
-
 
 class ScheduleFragment : Fragment() {
 
@@ -59,8 +57,10 @@ class ScheduleFragment : Fragment() {
             binding.toolbar.title = type?.shortName ?: location?.name
             binding.title.visibility = View.GONE
             binding.filter.visibility = View.GONE
-            binding.toolbar.invalidateMenu()
-            binding.toolbar.navigationIcon = ContextCompat.getDrawable(requireContext(), R.drawable.ic_baseline_arrow_back_ios_new_24)
+            binding.toolbar.navigationIcon = ContextCompat.getDrawable(
+                requireContext(),
+                R.drawable.ic_baseline_arrow_back_ios_new_24
+            )
         }
 
         binding.toolbar.inflateMenu(R.menu.schedule)
@@ -76,7 +76,11 @@ class ScheduleFragment : Fragment() {
         binding.list.adapter = adapter
 
         binding.toolbar.setNavigationOnClickListener {
-            (parentFragment as PanelsFragment).openStartPanel()
+            if (parentFragment != null) {
+                (parentFragment as PanelsFragment).openStartPanel()
+            } else {
+                requireActivity().onBackPressed()
+            }
         }
 
         binding.filter.setOnClickListener {
@@ -230,16 +234,16 @@ class ScheduleFragment : Fragment() {
         private const val EXTRA_TYPE = "type"
         private const val EXTRA_LOCATION = "location"
 
-        fun newInstance(type: Type? = null): ScheduleFragment {
-            val fragment = ScheduleFragment()
+        fun newInstance(): ScheduleFragment {
+            return ScheduleFragment()
+        }
 
-            if (type != null) {
-                val bundle = Bundle()
-                bundle.putParcelable(EXTRA_TYPE, type)
-                fragment.arguments = bundle
+        fun newInstance(type: Type): ScheduleFragment {
+            return ScheduleFragment().apply {
+                arguments = bundleOf(
+                    EXTRA_TYPE to type
+                )
             }
-
-            return fragment
         }
 
         fun newInstance(location: Location): ScheduleFragment {

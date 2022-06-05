@@ -21,6 +21,7 @@
                 style="@style/Toolbar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_new_24"
                 tools:text="Speakers" />
         </com.google.android.material.appbar.AppBarLayout>
 
