@@ -6,19 +6,19 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.Response
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.databinding.FragmentSpeakersBinding
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.ui.HackerTrackerViewModel
-import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.views.EventView
 import org.koin.android.ext.android.inject
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class SpeakerFragment : Fragment() {
 
@@ -28,7 +28,7 @@ class SpeakerFragment : Fragment() {
     private val database: DatabaseManager by inject()
     private val analytics: Analytics by inject()
 
-    private val viewModel by lazy { ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java] }
+    private val viewModel by sharedViewModel<HackerTrackerViewModel>()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -71,12 +71,10 @@ class SpeakerFragment : Fragment() {
     private fun showSpeaker(speaker: Speaker) {
         analytics.log("Viewing speaker ${speaker.name}")
 
-        binding.toolbar.title = speaker.name
-        binding.toolbar.subtitle = if (speaker.title.isEmpty()) {
-            context?.getString(R.string.speaker_default_title)
-        } else {
-            speaker.title
-        }
+        binding.speakerName.text = speaker.name
+
+        binding.speakerTitle.isVisible = speaker.title.isNotEmpty()
+        binding.speakerTitle.text = speaker.title
 
         binding.toolbar.menu.clear()
 

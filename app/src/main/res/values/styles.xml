@@ -267,9 +267,17 @@
         <item name="android:background">?colorSurface</item>
     </style>
 
+    <style name="Toolbar.Rounded">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
     <style name="AppBar">
         <item name="liftOnScroll">true</item>
         <item name="android:background">?colorSurface</item>
+    </style>
+
+    <style name="AppBar.Rounded">
+        <item name="android:background">@drawable/bottom_sheet_background</item>
     </style>
 
     <style name="Toolbar.Text" parent="Base.TextAppearance.AppCompat.Title">

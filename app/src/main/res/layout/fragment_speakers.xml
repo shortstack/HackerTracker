@@ -5,30 +5,27 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorBackground"
-    android:clickable="true"
-    android:focusable="true">
+    android:background="@color/black">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
-        style="@style/AppBar"
+        style="@style/AppBar.Rounded"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            style="@style/Toolbar"
+            style="@style/Toolbar.Rounded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_new_24"
-            tools:subtitle="Hacker"
-            tools:title="John Doe" />
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?android:colorBackground"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
@@ -48,12 +45,50 @@
                     layout="@layout/empty_text"
                     tools:visibility="gone" />
 
-                <TextView
-                    android:id="@+id/description"
-                    style="@style/Paragraph"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    tools:text="John Doe is an expert in cyber security." />
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/speaker_name"
+                        style="@style/TextAppearance.MaterialComponents.Headline5"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="16dp"
+                        android:textSize="32sp"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
+                        tools:text="John Doe" />
+
+                    <Space
+                        android:layout_width="match_parent"
+                        android:layout_height="8dp" />
+
+                    <com.shortstack.hackertracker.views.WellView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="4dp">
+
+                        <TextView
+                            android:id="@+id/speaker_title"
+                            style="@style/TextAppearance.AppCompat.Body2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            tools:text="Expert Hacker" />
+
+                    </com.shortstack.hackertracker.views.WellView>
+
+                    <TextView
+                        android:id="@+id/description"
+                        style="@style/Paragraph"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        tools:text="John Doe is an expert in cyber security." />
+
+                </LinearLayout>
+
 
             </FrameLayout>
 
