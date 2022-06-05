@@ -189,7 +189,7 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
             }
         }
 
-        if (begin == -1 && end == -1) {
+        if (begin == -1 && end == -1 && children.size > 0) {
             onBeginDaySelected(children[0], skipAnimation = true)
             onEndDaySelected(children[0], skipAnimation = true)
         }

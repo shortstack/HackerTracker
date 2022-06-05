@@ -60,13 +60,11 @@
                     android:layout_width="match_parent"
                     android:layout_height="8dp" />
 
-                <FrameLayout
+                <com.shortstack.hackertracker.views.WellView
                     android:id="@+id/type_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/well_background_rounded"
-                    android:padding="16dp">
+                    android:layout_margin="4dp">
 
                     <com.shortstack.hackertracker.views.EventTypeView
                         android:id="@+id/type_1"
@@ -78,14 +76,12 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="Event"
                         tools:visibility="visible" />
-                </FrameLayout>
+                </com.shortstack.hackertracker.views.WellView>
 
-                <FrameLayout
+                <com.shortstack.hackertracker.views.WellView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/well_background_rounded"
-                    android:padding="16dp">
+                    android:layout_margin="4dp">
 
                     <TextView
                         android:id="@+id/date"
@@ -94,15 +90,13 @@
                         android:layout_height="wrap_content"
                         tools:text="August 6th, 9:30am - 10:30am" />
 
-                </FrameLayout>
+                </com.shortstack.hackertracker.views.WellView>
 
-                <FrameLayout
+                <com.shortstack.hackertracker.views.WellView
                     android:id="@+id/location_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="4dp"
-                    android:background="@drawable/well_background_rounded"
-                    android:padding="16dp">
+                    android:layout_margin="4dp">
 
                     <TextView
                         android:id="@+id/location"
@@ -115,7 +109,7 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="Track 1 - Ceaser's" />
 
-                </FrameLayout>
+                </com.shortstack.hackertracker.views.WellView>
 
                 <com.shortstack.hackertracker.views.EventTypeView
                     android:id="@+id/type_2"
@@ -152,18 +146,14 @@
 
             </FrameLayout>
 
-            <FrameLayout
-
+            <com.shortstack.hackertracker.views.WellView
                 android:id="@+id/links_containers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:background="@drawable/well_background_rounded"
-                android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/body">
-
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/links"
@@ -175,15 +165,13 @@
                     tools:itemCount="1"
                     tools:listitem="@layout/item_event_link" />
 
-            </FrameLayout>
+            </com.shortstack.hackertracker.views.WellView>
 
-            <FrameLayout
+            <com.shortstack.hackertracker.views.WellView
                 android:id="@+id/speakers_containers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="20dp"
-                android:background="@drawable/well_background_rounded"
-                android:padding="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/links_containers">
@@ -199,7 +187,7 @@
                     tools:itemCount="1"
                     tools:listitem="@layout/row_speaker" />
 
-            </FrameLayout>
+            </com.shortstack.hackertracker.views.WellView>
 
             <com.shortstack.hackertracker.views.SkullView
                 style="@style/Footer"

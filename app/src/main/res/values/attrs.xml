@@ -37,4 +37,8 @@
         <attr name="navigationLabel" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="WellView">
+        <attr name="wellView_hasDismiss" format="boolean"/>
+    </declare-styleable>
+
 </resources>

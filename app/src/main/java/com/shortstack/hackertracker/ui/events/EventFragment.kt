@@ -163,11 +163,11 @@ class EventFragment : Fragment() {
         binding.type1.render(type)
         binding.type1.visibility = View.VISIBLE
 
-        val drawable = ContextCompat.getDrawable(context!!, R.drawable.chip_background)?.mutate()
-
-        drawable?.setTint(Color.parseColor(type.color))
-
-        binding.typeContainer.background = drawable
+//        val drawable = ContextCompat.getDrawable(requireContext(), R.drawable.chip_background)?.mutate()
+//
+//        drawable?.setTint(Color.parseColor(type.color))
+//
+//        binding.typeContainer.background = drawable
 
         if (event.types.size > 1) {
             binding.type2.render(event.types.last())

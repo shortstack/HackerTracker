@@ -288,4 +288,8 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="WellViewStyle">
+        <item name="android:layout_margin">20dp</item>
+    </style>
+
 </resources>
