@@ -35,9 +35,6 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
     // Home
     val home: LiveData<Resource<List<Any>>>
 
-    // Schedule
-    val schedule: LiveData<Resource<List<Event>>>
-
     // Search
     private val query = MediatorLiveData<String>()
     val search: LiveData<List<Any>>
@@ -93,29 +90,6 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
                 }
             }
 
-
-            return@switchMap result
-        }
-
-        schedule = Transformations.switchMap(database.conference) { id ->
-            val result = MediatorLiveData<Resource<List<Event>>>()
-
-            if (id == null) {
-                result.value = Resource.init(null)
-                return@switchMap result
-            }
-
-            result.value = Resource.loading(null)
-
-            result.addSource(events) {
-                val types = types.value?.data ?: emptyList()
-                result.value = Resource.success(getSchedule(it?.data ?: emptyList(), types))
-            }
-
-            result.addSource(types) { types ->
-                val events = events.value?.data ?: return@addSource
-                result.value = Resource.success(getSchedule(events, types?.data ?: emptyList()))
-            }
 
             return@switchMap result
         }
@@ -272,32 +246,6 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
         } else {
             result.value = Resource.success(articles + "Bookmarks" + bookmarks)
         }
-    }
-
-    private fun getSchedule(events: List<Event>, types: List<Type>): List<Event> {
-        if (types.isEmpty())
-            return events
-
-        val requireBookmark = types.firstOrNull { it.isBookmark }?.isSelected ?: false
-        val filter = types.filter { !it.isBookmark && it.isSelected }
-        if (!requireBookmark && filter.isEmpty())
-            return events
-
-        if (requireBookmark && filter.isEmpty())
-            return events.filter { it.isBookmarked }
-
-        return events.filter { event -> isShown(event, requireBookmark, filter) }
-    }
-
-    private fun isShown(event: Event, requireBookmark: Boolean, filter: List<Type>): Boolean {
-        val bookmark = if (requireBookmark) {
-            event.isBookmarked
-        } else {
-            true
-        }
-
-        return bookmark &&
-                event.types.any { t -> filter.find { it.id == t.id }?.isSelected == true }
     }
 
     private fun setValue(

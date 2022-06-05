@@ -8,6 +8,8 @@ import com.google.gson.GsonBuilder
 import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.database.ReminderManager
 import com.shortstack.hackertracker.ui.HackerTrackerViewModel
+import com.shortstack.hackertracker.ui.information.speakers.SpeakersViewModel
+import com.shortstack.hackertracker.ui.schedule.ScheduleViewModel
 import com.shortstack.hackertracker.ui.themes.ThemesManager
 import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.utilities.NotificationHelper
@@ -30,6 +32,9 @@ val appModule = module {
     single { WorkManager.getInstance() }
     single { ReminderManager(get(), get()) }
 
+
     viewModel { HackerTrackerViewModel() }
+    viewModel { ScheduleViewModel() }
+    viewModel { SpeakersViewModel() }
 
 }

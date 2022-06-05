@@ -13,23 +13,23 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.advice.timehop.StickyRecyclerHeadersDecoration
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.Status
+import com.shortstack.hackertracker.Response
 import com.shortstack.hackertracker.databinding.FragmentScheduleBinding
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Location
 import com.shortstack.hackertracker.models.local.Type
-import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.PanelsFragment
 import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.views.DaySelectorView
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 
 class ScheduleFragment : Fragment() {
 
-    private val viewModel by sharedViewModel<HackerTrackerViewModel>()
+    //    private val viewModel by sharedViewModel<HackerTrackerViewModel>()
+    private val viewModel by viewModel<ScheduleViewModel>()
 
     private var _binding: FragmentScheduleBinding? = null
     private val binding get() = _binding!!
@@ -116,46 +116,44 @@ class ScheduleFragment : Fragment() {
             }
         })
 
-        viewModel.schedule.observe(viewLifecycleOwner) {
+
+        val liveData = when {
+            type != null -> {
+                viewModel.getSchedule(type)
+            }
+            location != null -> {
+                viewModel.getSchedule(location)
+            }
+            else -> {
+                viewModel.getSchedule()
+            }
+        }
+
+        liveData.observe(viewLifecycleOwner) { response ->
             hideViews()
 
-            if (it != null) {
-                adapter.state = it.status
+            when (response) {
+                Response.Init -> {
+                    showEmptyView()
+                }
+                Response.Loading -> {
+                    adapter.clearAndNotify()
+                    showProgress()
+                }
+                is Response.Success -> {
+                    val list = adapter.setSchedule(response.data)
+                    val days = list.filterIsInstance<Day>()
 
-                when (it.status) {
-                    Status.SUCCESS -> {
+                    binding.daySelector.setDays(days)
 
-
-                        var list1 = it.data
-                        if (type != null) {
-                            list1 = list1?.filter { it.types.any { it.id == type.id } }
-                        }
-                        if (location != null) {
-                            list1 = list1?.filter { it.location.name == location.name }
-                        }
-
-
-                        val list = adapter.setSchedule(list1)
-                        val days = list.filterIsInstance<Day>()
-
-                        binding.daySelector.setDays(days)
-
-                        if (adapter.isEmpty()) {
-                            showEmptyView()
-                        }
-
-                        scrollToCurrentPosition(list)
-                    }
-                    Status.ERROR -> {
-                        showErrorView(it.message)
-                    }
-                    Status.LOADING -> {
-                        adapter.clearAndNotify()
-                        showProgress()
-                    }
-                    Status.NOT_INITIALIZED -> {
+                    if (adapter.isEmpty()) {
                         showEmptyView()
                     }
+
+                    scrollToCurrentPosition(list)
+                }
+                is Response.Error -> {
+                    showErrorView(response.exception.message)
                 }
             }
         }
