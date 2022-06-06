@@ -61,7 +61,8 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
 
         result.addSource(events) {
             val events = (it as? Response.Success)?.data
-                ?.filter { it.types.any { it.id == type.id } } ?: emptyList()
+                ?.filter { (type.isBookmark && it.isBookmarked) || (it.types.any { it.id == type.id }) }
+                ?: emptyList()
             result.value = Response.Success(events)
         }
 
