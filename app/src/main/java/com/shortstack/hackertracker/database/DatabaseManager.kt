@@ -26,7 +26,6 @@ import kotlinx.coroutines.tasks.await
 import java.io.File
 import java.util.*
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 
 class DatabaseManager(private val preferences: Storage) {
@@ -224,7 +223,6 @@ class DatabaseManager(private val preferences: Storage) {
             .addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
                     val types = snapshot?.toObjects(FirebaseType::class.java)?.map { it.toType() }
-                    mutableLiveData.postValue(types)
 
                     val id = user?.uid
                     if (id != null) {
@@ -247,6 +245,8 @@ class DatabaseManager(private val preferences: Storage) {
                                     mutableLiveData.postValue(types)
                                 }
                             }
+                    } else {
+                        mutableLiveData.postValue(types)
                     }
                 }
             }
