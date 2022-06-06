@@ -42,9 +42,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
 
     private lateinit var binding: ActivityMainBinding
 
-    private val storage: Storage by inject()
-    private val viewModel by viewModel<HackerTrackerViewModel>()
-
     private val auth: FirebaseAuth by lazy { FirebaseAuth.getInstance() }
 
     private val map = HashMap<Int, Fragment>()

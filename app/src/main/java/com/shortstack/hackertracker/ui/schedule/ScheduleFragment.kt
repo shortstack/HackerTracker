@@ -28,7 +28,6 @@ import java.util.*
 
 class ScheduleFragment : Fragment() {
 
-    //    private val viewModel by sharedViewModel<HackerTrackerViewModel>()
     private val viewModel by viewModel<ScheduleViewModel>()
 
     private var _binding: FragmentScheduleBinding? = null
