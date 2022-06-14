@@ -10,10 +10,12 @@
         android:id="@+id/container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/action"
         app:layout_constraintStart_toStartOf="parent"
+
         app:layout_constraintTop_toTopOf="parent">
         <!--        -->
     </LinearLayout>

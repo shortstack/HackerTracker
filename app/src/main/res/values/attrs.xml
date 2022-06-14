@@ -22,6 +22,10 @@
         <attr name="skullViewDrawable" format="reference" />
     </declare-styleable>
 
+    <declare-styleable name="EventView">
+        <attr name="eventView_showDot" format="boolean" />
+    </declare-styleable>
+
     <declare-styleable name="GlitchContainerView">
         <attr name="glitch_isGlitch" format="boolean" />
         <attr name="glitch_corruptionLevel" format="enum">
@@ -38,7 +42,7 @@
     </declare-styleable>
 
     <declare-styleable name="WellView">
-        <attr name="wellView_hasDismiss" format="boolean"/>
+        <attr name="wellView_hasDismiss" format="boolean" />
     </declare-styleable>
 
 </resources>

@@ -1,10 +1,19 @@
 package com.shortstack.hackertracker.views
 
+import android.annotation.SuppressLint
+import android.annotation.TargetApi
 import android.content.Context
 import android.net.wifi.WifiConfiguration
-import android.net.wifi.WifiConfiguration.*
+import android.net.wifi.WifiConfiguration.AuthAlgorithm
+import android.net.wifi.WifiConfiguration.GroupCipher
+import android.net.wifi.WifiConfiguration.KeyMgmt
+import android.net.wifi.WifiConfiguration.PairwiseCipher
+import android.net.wifi.WifiConfiguration.Protocol
+import android.net.wifi.WifiConfiguration.Status
 import android.net.wifi.WifiEnterpriseConfig
 import android.net.wifi.WifiManager
+import android.net.wifi.WifiNetworkSuggestion
+import android.os.Build
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.view.View
@@ -22,9 +31,36 @@ class WiFiHelperView(context: Context, attrs: AttributeSet?) : FrameLayout(conte
 
     init {
         binding.save.visibility = View.VISIBLE
-        binding.save.setOnClickListener { connectWifi() }
+        binding.save.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                connectWifiNew()
+            } else {
+                connectWifi()
+            }
+        }
     }
 
+    @TargetApi(Build.VERSION_CODES.Q)
+    private fun connectWifiNew() {
+        val wifi = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
+
+        val network = WifiNetworkSuggestion.Builder()
+            .setSsid("\"DefCon\"")
+            .setIsHiddenSsid(false)
+            .setPriority(40)
+            .setWpa2EnterpriseConfig(getEnterpriseConfig())
+            .build()
+
+        val suggestions = listOf(network)
+
+        val status = wifi.addNetworkSuggestions(suggestions)
+
+        if (status != WifiManager.STATUS_NETWORK_SUGGESTIONS_SUCCESS) {
+            // do error handling here
+        }
+    }
+
+    @SuppressLint("MissingPermission")
     private fun connectWifi() {
         val wifi = context.getSystemService(Context.WIFI_SERVICE) as WifiManager
 
@@ -55,19 +91,7 @@ class WiFiHelperView(context: Context, attrs: AttributeSet?) : FrameLayout(conte
             allowedProtocols.clear()
             allowedProtocols.set(Protocol.RSN)
 
-
-            val x509Certificate = CertificateFactory.getInstance("X.509")
-                .generateCertificate(resources.openRawResource(R.raw.digirootonly)) as X509Certificate
-
-            enterpriseConfig = WifiEnterpriseConfig().apply {
-                identity = "defcon"
-                password = "defcon"
-                anonymousIdentity = "anonymous"
-                eapMethod = WifiEnterpriseConfig.Eap.PEAP
-                phase2Method = WifiEnterpriseConfig.Phase2.MSCHAPV2
-                caCertificate = x509Certificate
-                subjectMatch = "/CN=wifireg.defcon.org"
-            }
+            enterpriseConfig = getEnterpriseConfig()
         }
 
         val network = if (exists) {
@@ -81,6 +105,21 @@ class WiFiHelperView(context: Context, attrs: AttributeSet?) : FrameLayout(conte
             Toast.makeText(context, "Wifi network saved", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(context, "Could not save network", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getEnterpriseConfig(): WifiEnterpriseConfig {
+        val x509Certificate = CertificateFactory.getInstance("X.509")
+            .generateCertificate(resources.openRawResource(R.raw.digirootonly)) as X509Certificate
+
+        return WifiEnterpriseConfig().apply {
+            identity = "defcon"
+            password = "defcon"
+            anonymousIdentity = "anonymous"
+            eapMethod = WifiEnterpriseConfig.Eap.PEAP
+            phase2Method = WifiEnterpriseConfig.Phase2.MSCHAPV2
+            caCertificate = x509Certificate
+            subjectMatch = "/CN=wifireg.defcon.org"
         }
     }
 }

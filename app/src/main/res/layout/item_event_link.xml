@@ -7,8 +7,7 @@
     android:layout_margin="4dp"
     android:background="?android:selectableItemBackground"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
-    android:padding="16dp">
+    android:orientation="horizontal">
 
     <ImageView
         android:id="@+id/action"

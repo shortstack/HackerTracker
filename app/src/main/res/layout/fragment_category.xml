@@ -5,18 +5,17 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?colorSurface">
+    android:background="@color/status_bar_color">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
-        style="@style/AppBar"
+        style="@style/AppBar.Rounded"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?colorSurface">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            style="@style/Toolbar"
+            style="@style/Toolbar.Rounded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_new_24"
@@ -27,6 +26,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?colorSurface"
         android:fillViewport="true"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 

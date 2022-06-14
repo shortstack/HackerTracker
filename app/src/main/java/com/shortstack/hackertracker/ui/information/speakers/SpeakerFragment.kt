@@ -15,6 +15,7 @@ import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.databinding.FragmentSpeakersBinding
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.ui.HackerTrackerViewModel
+import com.shortstack.hackertracker.ui.activities.MainActivity
 import com.shortstack.hackertracker.utilities.Analytics
 import com.shortstack.hackertracker.views.EventView
 import org.koin.android.ext.android.inject
@@ -42,12 +43,18 @@ class SpeakerFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val speaker =
+            arguments?.getParcelable(EXTRA_SPEAKER) as? Speaker ?: error("speaker must not be null")
+
         binding.toolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
 
-        val speaker =
-            arguments?.getParcelable(EXTRA_SPEAKER) as? Speaker ?: error("speaker must not be null")
+        binding.eventsContainer.setOnClickListener {
+            (requireActivity() as MainActivity).showSchedule(speaker)
+        }
+
+
 
         viewModel.speakers.observe(viewLifecycleOwner) {
             when (it) {

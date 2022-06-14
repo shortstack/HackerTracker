@@ -5,7 +5,7 @@
     android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/black">
+    android:background="@color/status_bar_color">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -69,6 +69,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:visibility="gone"
+                        app:eventView_showDot="true"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
@@ -81,11 +82,20 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp">
 
+                    <ImageView
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_baseline_access_time_24"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+
                     <TextView
                         android:id="@+id/date"
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         tools:text="August 6th, 9:30am - 10:30am" />
 
                 </com.shortstack.hackertracker.views.WellView>
@@ -96,14 +106,24 @@
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp">
 
+                    <ImageView
+                        android:id="@+id/location_icon"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@drawable/ic_map_white_24dp"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
                     <TextView
+
                         android:id="@+id/location"
                         style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/type_2"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@+id/location_icon"
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="Track 1 - Ceaser's" />
 
@@ -165,6 +185,17 @@
 
             </com.shortstack.hackertracker.views.WellView>
 
+            <TextView
+                android:id="@+id/speakers_header"
+                style="@style/Header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="Speakers"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/links_containers" />
+
             <com.shortstack.hackertracker.views.WellView
                 android:id="@+id/speakers_containers"
                 android:layout_width="match_parent"
@@ -172,7 +203,7 @@
                 android:layout_margin="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/links_containers">
+                app:layout_constraintTop_toBottomOf="@id/speakers_header">
 
 
                 <androidx.recyclerview.widget.RecyclerView

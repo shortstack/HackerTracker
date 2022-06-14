@@ -19,8 +19,8 @@
     <string name="error_title">Error</string>
     <string name="empty_location">unknown location</string>
     <string name="error_unable_to_sync">Unable to sync</string>
-    <string name="no_maps">No Maps</string>
-    <string name="no_maps_to_show">Sorry, this conference doesn\'t have maps.</string>
+    <string name="no_maps">404</string>
+    <string name="no_maps_to_show">No Maps Found</string>
 
     <!-- Main Nav -->
     <string name="home">Home</string>
@@ -91,7 +91,6 @@
     <string name="wifi_action">Save network</string>
 
     <string name="website">Website</string>
-
 
 
     <!-- Settings -->

@@ -21,7 +21,6 @@ import com.shortstack.hackertracker.models.local.Location
 import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.replaceFragment
-import com.shortstack.hackertracker.ui.HackerTrackerViewModel
 import com.shortstack.hackertracker.ui.PanelsFragment
 import com.shortstack.hackertracker.ui.events.EventFragment
 import com.shortstack.hackertracker.ui.information.InformationFragment
@@ -31,9 +30,6 @@ import com.shortstack.hackertracker.ui.maps.MapsFragment
 import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
 import com.shortstack.hackertracker.ui.search.SearchFragment
 import com.shortstack.hackertracker.ui.settings.SettingsFragment
-import com.shortstack.hackertracker.utilities.Storage
-import org.koin.android.ext.android.inject
-import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 
 
@@ -62,6 +58,8 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
 
             setMainFragment(R.id.nav_home, getString(R.string.home), false)
         }
+
+
 
         supportFragmentManager.addOnBackStackChangedListener(this)
     }
@@ -210,6 +208,14 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
     fun showSchedule(type: Type) {
         replaceFragment(
             ScheduleFragment.newInstance(type),
+            R.id.container_above,
+            hasAnimation = true
+        )
+    }
+
+    fun showSchedule(speaker: Speaker) {
+        replaceFragment(
+            ScheduleFragment.newInstance(speaker),
             R.id.container_above,
             hasAnimation = true
         )

@@ -7,6 +7,7 @@ import android.util.TypedValue
 import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.view.isVisible
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.ViewEventTypeBinding
 import com.shortstack.hackertracker.models.local.Type
@@ -18,6 +19,15 @@ class EventTypeView(context: Context, attrs: AttributeSet) : LinearLayout(contex
 
     init {
         orientation = VERTICAL
+
+        val array = context.theme.obtainStyledAttributes(attrs, R.styleable.EventView, 0, 0)
+        try {
+            val showDot = array.getBoolean(R.styleable.EventView_eventView_showDot, true)
+            binding.eventTypeDot.isVisible = showDot
+        } finally {
+            array.recycle()
+        }
+
     }
 
     fun render(type: Type) {

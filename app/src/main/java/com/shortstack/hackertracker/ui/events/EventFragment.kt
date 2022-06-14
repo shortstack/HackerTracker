@@ -76,6 +76,7 @@ class EventFragment : Fragment() {
         binding.speakers.adapter = speakersAdapter
         binding.links.adapter = linksAdapter
 
+        binding.speakersHeader.isVisible = event.speakers.isNotEmpty()
         binding.speakersContainers.isVisible = event.speakers.isNotEmpty()
         speakersAdapter.setElements(emptyList(), event.speakers)
         binding.linksContainers.isVisible = event.urls.isNotEmpty()

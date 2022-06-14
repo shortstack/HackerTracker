@@ -18,6 +18,7 @@ import com.shortstack.hackertracker.databinding.FragmentScheduleBinding
 import com.shortstack.hackertracker.models.Day
 import com.shortstack.hackertracker.models.local.Event
 import com.shortstack.hackertracker.models.local.Location
+import com.shortstack.hackertracker.models.local.Speaker
 import com.shortstack.hackertracker.models.local.Type
 import com.shortstack.hackertracker.ui.PanelsFragment
 import com.shortstack.hackertracker.ui.activities.MainActivity
@@ -25,6 +26,8 @@ import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
 import com.shortstack.hackertracker.views.DaySelectorView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
+import kotlin.collections.ArrayList
+
 
 class ScheduleFragment : Fragment() {
 
@@ -51,9 +54,10 @@ class ScheduleFragment : Fragment() {
 
         val type = arguments?.getParcelable<Type>(EXTRA_TYPE)
         val location = arguments?.getParcelable<Location>(EXTRA_LOCATION)
+        val speaker = arguments?.getParcelable<Speaker>(EXTRA_SPEAKER)
 
-        if (type != null || location != null) {
-            binding.toolbar.title = type?.shortName ?: location?.name
+        if (type != null || location != null || speaker != null) {
+            binding.toolbar.title = type?.shortName ?: location?.name ?: speaker?.name
             binding.title.visibility = View.GONE
             binding.filter.visibility = View.GONE
             binding.toolbar.navigationIcon = ContextCompat.getDrawable(
@@ -122,6 +126,9 @@ class ScheduleFragment : Fragment() {
             }
             location != null -> {
                 viewModel.getSchedule(location)
+            }
+            speaker != null -> {
+                viewModel.getSchedule(speaker)
             }
             else -> {
                 viewModel.getSchedule()
@@ -230,6 +237,7 @@ class ScheduleFragment : Fragment() {
     companion object {
         private const val EXTRA_TYPE = "type"
         private const val EXTRA_LOCATION = "location"
+        private const val EXTRA_SPEAKER = "speaker"
 
         fun newInstance(): ScheduleFragment {
             return ScheduleFragment()
@@ -247,6 +255,14 @@ class ScheduleFragment : Fragment() {
             return ScheduleFragment().apply {
                 arguments = bundleOf(
                     EXTRA_LOCATION to location
+                )
+            }
+        }
+
+        fun newInstance(speaker: Speaker): ScheduleFragment {
+            return ScheduleFragment().apply {
+                arguments = bundleOf(
+                    EXTRA_SPEAKER to speaker
                 )
             }
         }

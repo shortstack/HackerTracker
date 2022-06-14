@@ -69,7 +69,7 @@
                     <com.shortstack.hackertracker.views.WellView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="4dp">
+                        android:layout_margin="20dp">
 
                         <TextView
                             android:id="@+id/speaker_title"
@@ -94,20 +94,29 @@
 
             <TextView
                 android:id="@+id/events_header"
-                style="@style/SectionHeader"
+                style="@style/Header"
                 android:layout_width="0dp"
+                android:gravity="center"
                 android:text="@string/events"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/body" />
 
-            <LinearLayout
-                android:id="@+id/events"
-                style="@style/Section"
-                android:padding="0dp"
+            <com.shortstack.hackertracker.views.WellView
+                android:id="@+id/events_container"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/events_header" />
+                app:layout_constraintTop_toBottomOf="@id/events_header">
+
+                <LinearLayout
+                    android:id="@+id/events"
+                    style="@style/Section"
+                    android:padding="0dp" />
+
+            </com.shortstack.hackertracker.views.WellView>
 
             <com.shortstack.hackertracker.views.SkullView
                 style="@style/Footer"
@@ -115,7 +124,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/events"
+                app:layout_constraintTop_toBottomOf="@id/events_container"
                 app:layout_constraintVertical_bias="1.0" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

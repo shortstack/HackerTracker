@@ -11,6 +11,10 @@
         <item name="colorSecondary">@color/purple_dark</item>
         <item name="colorSecondaryVariant">@color/purple_light</item>
 
+        <item name="colorPrimaryDark">@color/status_bar_color</item>
+        <item name="colorSurface">@color/background</item>
+        <item name="android:navigationBarColor">@color/background</item>
+
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
         <item name="preferenceTheme">@style/PrefsTheme</item>
@@ -24,6 +28,7 @@
         <item name="alertDialogTheme">@style/AppCompatAlert</item>
 
         <item name="checkboxStyle">@style/AppCheckBoxStyle</item>
+
     </style>
 
     <style name="PrefsTheme" parent="PreferenceThemeOverlay">

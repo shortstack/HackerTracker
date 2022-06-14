@@ -19,6 +19,7 @@
             android:id="@+id/days"
             style="@style/CountdownTextStyle"
             tools:text="76days" />
+
     </com.shortstack.hackertracker.views.GlitchContainerView>
 
     <com.shortstack.hackertracker.views.GlitchContainerView
@@ -31,8 +32,8 @@
         <TextView
             android:id="@+id/hours"
             style="@style/CountdownTextStyle"
-
             tools:text="05hours" />
+
     </com.shortstack.hackertracker.views.GlitchContainerView>
 
     <com.shortstack.hackertracker.views.GlitchContainerView
@@ -45,7 +46,6 @@
         <TextView
             android:id="@+id/minutes"
             style="@style/CountdownTextStyle"
-
             tools:text="56minutes" />
 
     </com.shortstack.hackertracker.views.GlitchContainerView>
@@ -61,6 +61,7 @@
             android:id="@+id/seconds"
             style="@style/CountdownTextStyle"
             tools:text="08seconds" />
+
     </com.shortstack.hackertracker.views.GlitchContainerView>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

@@ -4,16 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/status_bar_color"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
-        style="@style/AppBar"
+        style="@style/AppBar.Rounded"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
-            style="@style/Toolbar"
+            style="@style/Toolbar.Rounded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentInsetStart="0dp"
@@ -43,6 +44,7 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?colorSurface"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <com.shortstack.hackertracker.views.EmptyView
