@@ -81,7 +81,7 @@ class SpeakersFragment : Fragment() {
 
     private fun showEmptyView() {
         binding.emptyView.visibility = View.VISIBLE
-        binding.emptyView.showNoResults()
+        binding.emptyView.showError("Speakers not found")
     }
 
     private fun showErrorView(message: String?) {

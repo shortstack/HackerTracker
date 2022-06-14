@@ -33,12 +33,12 @@
 
             <com.shortstack.hackertracker.views.EmptyView
                 android:id="@+id/empty_view"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
                 android:visibility="gone"
-                app:evMessage="@string/nothing_to_show"
-                app:evTitle="@string/nothing_here"
+                app:evTitle="@string/error_title"
+                tools:evMessage="Speakers not found"
                 tools:visibility="visible" />
 
             <androidx.recyclerview.widget.RecyclerView

@@ -41,7 +41,7 @@ class EmptyView(context: Context, attrs: AttributeSet?) : FrameLayout(context, a
             setTitle(context.getString(R.string.no_results_for, query))
             setMessage(context.getString(R.string.no_results_message))
         } else {
-            setTitle(null)
+            setTitle("404")
             setMessage(null)
         }
     }

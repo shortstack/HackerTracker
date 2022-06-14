@@ -85,7 +85,7 @@ class FAQFragment : Fragment() {
 
     private fun showEmptyView() {
         binding.emptyView.visibility = View.VISIBLE
-        binding.emptyView.showNoResults()
+        binding.emptyView.showError("FAQ not found")
     }
 
     private fun showErrorView(message: String?) {

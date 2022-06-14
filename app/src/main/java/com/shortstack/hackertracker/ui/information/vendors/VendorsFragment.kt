@@ -85,7 +85,7 @@ class VendorsFragment : Fragment() {
 
     private fun showEmptyView() {
         binding.emptyView.visibility = View.VISIBLE
-        binding.emptyView.showNoResults()
+        binding.emptyView.showError("Vendors not found")
     }
 
     private fun showErrorView(message: String?) {
