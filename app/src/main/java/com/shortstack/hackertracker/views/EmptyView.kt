@@ -16,14 +16,6 @@ class EmptyView(context: Context, attrs: AttributeSet?) : FrameLayout(context, a
         val array = context.theme.obtainStyledAttributes(attrs, R.styleable.EmptyView, 0, 0)
 
         try {
-            if (array.hasValue(R.styleable.EmptyView_evIcon))
-                binding.icon.setImageResource(
-                    array.getResourceId(
-                        R.styleable.EmptyView_evIcon,
-                        R.drawable.skull_lg
-                    )
-                )
-
             if (array.hasValue(R.styleable.EmptyView_evTitle))
                 binding.title.text = array.getString(R.styleable.EmptyView_evTitle)
 
