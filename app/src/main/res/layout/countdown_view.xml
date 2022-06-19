@@ -4,14 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/countdown_background"
     android:orientation="vertical"
     android:padding="32dp">
 
     <com.shortstack.hackertracker.views.GlitchContainerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
         app:glitch_corruptionLevel="MINOR"
         app:glitch_isGlitch="true">
 
@@ -25,7 +23,6 @@
     <com.shortstack.hackertracker.views.GlitchContainerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
         app:glitch_corruptionLevel="MINOR"
         app:glitch_isGlitch="true">
 
@@ -39,7 +36,6 @@
     <com.shortstack.hackertracker.views.GlitchContainerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
         app:glitch_corruptionLevel="MEDIUM"
         app:glitch_isGlitch="true">
 
@@ -53,7 +49,6 @@
     <com.shortstack.hackertracker.views.GlitchContainerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/black"
         app:glitch_corruptionLevel="MAJOR"
         app:glitch_isGlitch="true">
 

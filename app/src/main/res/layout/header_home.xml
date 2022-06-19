@@ -59,6 +59,7 @@
         android:layout_marginTop="@dimen/item_skull_vertical_margin"
         android:layout_marginRight="@dimen/item_horizontal_margin"
         android:layout_marginBottom="@dimen/item_skull_vertical_margin"
+        android:background="@drawable/countdown_background"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
