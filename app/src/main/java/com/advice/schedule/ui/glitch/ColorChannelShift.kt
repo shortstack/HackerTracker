@@ -66,7 +66,7 @@ class ColorChannelShift : GlitchEffect {
     }
 
     private val maxHorizontalOffset: Float
-        get() = min(100f, bitmap.width * 0.25f)
+        get() = min(100f, 20f)
 
     private val maxVerticalOffset: Float
         get() = bitmap.height * 0.00f

@@ -45,7 +45,7 @@ class PanelsFragment : Fragment() {
                     //showSearch()
                     false
                 }
-                R.id.home -> {
+                -100 -> {
                     binding.overlappingPanels.closePanels()
                     false
                 }

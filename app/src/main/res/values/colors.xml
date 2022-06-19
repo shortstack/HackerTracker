@@ -9,7 +9,9 @@
     <color name="status_bar_color">#000000</color>
     <color name="navigation_color">#22222a</color>
 
+    <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
+    
     <color name="blue_dark">#2896ff</color>
     <color name="purple_light">#5c74ff</color>
     <color name="purple_dark">#653fff</color>

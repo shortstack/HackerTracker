@@ -3,8 +3,9 @@ package com.shortstack.hackertracker.views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
+import android.widget.Space
 
-class StatusBarSpacer(context: Context, attrs: AttributeSet?) : androidx.legacy.widget.Space(context, attrs) {
+class StatusBarSpacer(context: Context, attrs: AttributeSet?) : Space(context, attrs) {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         setMeasuredDimension(widthMeasureSpec, measureHeight(heightMeasureSpec))
@@ -15,11 +16,11 @@ class StatusBarSpacer(context: Context, attrs: AttributeSet?) : androidx.legacy.
     }
 
     private fun getMeasurement(measureSpec: Int, preferred: Int): Int {
-        val specSize = MeasureSpec.getSize(measureSpec)
+        val specSize = View.MeasureSpec.getSize(measureSpec)
 
-        return when (MeasureSpec.getMode(measureSpec)) {
-            MeasureSpec.EXACTLY -> specSize
-            MeasureSpec.AT_MOST -> Math.min(preferred, specSize)
+        return when (View.MeasureSpec.getMode(measureSpec)) {
+            View.MeasureSpec.EXACTLY -> specSize
+            View.MeasureSpec.AT_MOST -> Math.min(preferred, specSize)
             MeasureSpec.UNSPECIFIED -> preferred
             else -> preferred
         }
