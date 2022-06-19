@@ -9,7 +9,6 @@
         android:id="@+id/icon_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/black"
         app:glitch_corruptionLevel="MAJOR"
         app:glitch_isGlitch="true"
         app:layout_constraintBottom_toBottomOf="parent"

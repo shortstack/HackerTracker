@@ -1,6 +1,13 @@
 package com.shortstack.hackertracker.ui.glitch
 
-import android.graphics.*
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.Color
+import android.graphics.ColorMatrix
+import android.graphics.ColorMatrixColorFilter
+import android.graphics.Paint
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffXfermode
 import kotlin.math.min
 import kotlin.random.Random
 

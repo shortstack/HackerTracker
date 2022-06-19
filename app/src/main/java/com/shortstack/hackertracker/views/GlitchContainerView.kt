@@ -41,6 +41,8 @@ class GlitchContainerView(context: Context, attrs: AttributeSet?) :
         } finally {
             array.recycle()
         }
+
+        setWillNotDraw(false)
     }
 
     override fun onAttachedToWindow() {
