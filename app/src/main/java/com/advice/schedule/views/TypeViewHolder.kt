@@ -22,7 +22,7 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
             val color = if (type.color == "#FFFFFF") {
                 val theme = (context as MainActivity).theme
                 val outValue = TypedValue()
-                theme.resolveAttribute(R.attr.colorOnSurface, outValue, true)
+                //theme.resolveAttribute(R.attr.colorOnSurface, outValue, true)
                 outValue.data
             } else {
                 Color.parseColor(type.color)
@@ -40,10 +40,10 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
 
             val isDark = type.isSelected && type.color.isLightColor()
 
-            val color1 = MaterialColors.getColor(context, R.attr.colorOnSecondary, Color.BLACK)
-            val color2 = MaterialColors.getColor(context, R.attr.colorOnSurface, Color.BLACK)
+//            val color1 = MaterialColors.getColor(context, R.attr.colorOnSecondary, Color.BLACK)
+//            val color2 = MaterialColors.getColor(context, R.attr.colorOnSurface, Color.BLACK)
 
-            text.setTextColor(if (isDark) color1 else color2)
+//            text.setTextColor(if (isDark) color1 else color2)
 
             dot.visibility = if (!type.isSelected) View.VISIBLE else View.GONE
             full.visibility = if (type.isSelected) View.VISIBLE else View.GONE

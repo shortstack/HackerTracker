@@ -3,9 +3,9 @@ package com.shortstack.hackertracker.views
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
-import android.widget.Space
+import android.widget.FrameLayout
 
-class StatusBarSpacer(context: Context, attrs: AttributeSet?) : Space(context, attrs) {
+class StatusBarSpacer(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         setMeasuredDimension(widthMeasureSpec, measureHeight(heightMeasureSpec))
@@ -31,7 +31,8 @@ class StatusBarSpacer(context: Context, attrs: AttributeSet?) : Space(context, a
             if (view.isInEditMode) return 52
 
             var result = 0
-            val resourceId = context.resources.getIdentifier("status_bar_height", "dimen", "android")
+            val resourceId =
+                context.resources.getIdentifier("status_bar_height", "dimen", "android")
             if (resourceId > 0) {
                 result = context.resources.getDimensionPixelSize(resourceId)
             }

@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import com.github.stkent.amplify.feedback.DefaultEmailFeedbackCollector
 import com.github.stkent.amplify.feedback.GooglePlayStoreFeedbackCollector
 import com.github.stkent.amplify.tracking.Amplify
+import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.orhanobut.logger.Logger
@@ -37,6 +38,8 @@ class App : Application() {
             androidContext(this@App)
             modules(appModule)
         }
+
+        FirebaseApp.initializeApp(this)
 
         FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(!BuildConfig.DEBUG)
         FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(!BuildConfig.DEBUG)
