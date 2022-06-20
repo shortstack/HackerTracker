@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.views
+package com.advice.schedule.views
 
 import android.content.Context
 import android.graphics.Color
@@ -8,13 +8,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.widget.FrameLayout
 import androidx.core.content.ContextCompat
+import com.advice.schedule.database.DatabaseManager
+import com.advice.schedule.database.ReminderManager
+import com.advice.schedule.models.local.Event
+import com.advice.schedule.ui.activities.MainActivity
+import com.advice.schedule.utilities.Analytics
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.database.ReminderManager
 import com.shortstack.hackertracker.databinding.RowEventBinding
-import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.utilities.Analytics
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 

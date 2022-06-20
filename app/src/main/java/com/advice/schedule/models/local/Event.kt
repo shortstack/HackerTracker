@@ -1,12 +1,12 @@
-package com.shortstack.hackertracker.models.local
+package com.advice.schedule.models.local
 
 import android.content.Context
 import android.os.Parcelable
-import com.shortstack.hackertracker.App
+import com.advice.schedule.App
+import com.advice.schedule.utilities.MyClock
+import com.advice.schedule.utilities.TimeUtil
+import com.advice.schedule.utilities.now
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.utilities.MyClock
-import com.shortstack.hackertracker.utilities.TimeUtil
-import com.shortstack.hackertracker.utilities.now
 import kotlinx.android.parcel.Parcelize
 import java.text.SimpleDateFormat
 import java.util.*

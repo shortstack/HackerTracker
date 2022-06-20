@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.information.speakers
+package com.advice.schedule.ui.information.speakers
 
 import android.graphics.Color
 import android.util.TypedValue
@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.advice.schedule.models.local.Speaker
+import com.advice.schedule.ui.activities.MainActivity
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.RowSpeakerBinding
-import com.shortstack.hackertracker.models.local.Speaker
-import com.shortstack.hackertracker.ui.activities.MainActivity
 
 class SpeakerViewHolder(private val binding: RowSpeakerBinding) :
     RecyclerView.ViewHolder(binding.root) {

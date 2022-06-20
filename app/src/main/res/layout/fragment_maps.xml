@@ -26,7 +26,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.shortstack.hackertracker.views.NonSwipeableViewPager
+    <com.advice.schedule.views.NonSwipeableViewPager
         android:id="@+id/pager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -46,7 +46,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
-    <com.shortstack.hackertracker.views.EmptyView
+    <com.advice.schedule.views.EmptyView
         android:id="@+id/empty_view"
         android:layout_width="0dp"
         android:layout_height="0dp"

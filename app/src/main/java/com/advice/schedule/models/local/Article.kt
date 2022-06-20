@@ -1,3 +1,3 @@
-package com.shortstack.hackertracker.models.local
+package com.advice.schedule.models.local
 
 data class Article(val id: Int, val name: String, val text: String)

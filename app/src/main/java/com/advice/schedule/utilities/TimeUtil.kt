@@ -1,8 +1,8 @@
-package com.shortstack.hackertracker.utilities
+package com.advice.schedule.utilities
 
 import android.annotation.SuppressLint
 import android.content.Context
-import com.shortstack.hackertracker.App
+import com.advice.schedule.App
 import com.shortstack.hackertracker.R
 import java.text.SimpleDateFormat
 import java.util.*

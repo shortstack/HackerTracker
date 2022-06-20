@@ -1,7 +1,10 @@
-package com.shortstack.hackertracker
+package com.advice.schedule
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import com.advice.schedule.database.DatabaseManager
+import com.advice.schedule.di.appModule
+import com.advice.schedule.utilities.Storage
 import com.github.stkent.amplify.feedback.DefaultEmailFeedbackCollector
 import com.github.stkent.amplify.feedback.GooglePlayStoreFeedbackCollector
 import com.github.stkent.amplify.tracking.Amplify
@@ -9,9 +12,7 @@ import com.google.firebase.FirebaseApp
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.di.appModule
-import com.shortstack.hackertracker.utilities.Storage
+import com.shortstack.hackertracker.BuildConfig
 import org.koin.android.ext.android.inject
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin

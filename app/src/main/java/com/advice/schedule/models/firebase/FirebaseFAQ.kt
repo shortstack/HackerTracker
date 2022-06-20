@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.models.firebase
+package com.advice.schedule.models.firebase
 
 data class FirebaseFAQ(
     val id: Int = -1,

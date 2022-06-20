@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.activities
+package com.advice.schedule.ui.activities
 
 import android.app.Dialog
 import android.os.Bundle

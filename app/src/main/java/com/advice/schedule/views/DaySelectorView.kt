@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.views
+package com.advice.schedule.views
 
 import android.animation.ObjectAnimator
 import android.app.Activity

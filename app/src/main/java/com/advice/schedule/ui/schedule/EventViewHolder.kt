@@ -1,11 +1,11 @@
-package com.shortstack.hackertracker.ui.schedule
+package com.advice.schedule.ui.schedule
 
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.views.EventView
+import com.advice.schedule.models.local.Event
+import com.advice.schedule.ui.activities.MainActivity
+import com.advice.schedule.views.EventView
 
 class EventViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
 

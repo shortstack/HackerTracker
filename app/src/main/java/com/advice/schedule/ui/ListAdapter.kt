@@ -1,17 +1,17 @@
-package com.shortstack.hackertracker.ui
+package com.advice.schedule.ui
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.models.Day
-import com.shortstack.hackertracker.models.local.*
-import com.shortstack.hackertracker.ui.information.categories.CategoryViewHolder
-import com.shortstack.hackertracker.ui.information.faq.FAQViewHolder
-import com.shortstack.hackertracker.ui.information.speakers.SpeakerViewHolder
-import com.shortstack.hackertracker.ui.information.vendors.VendorViewHolder
-import com.shortstack.hackertracker.ui.schedule.DayViewHolder
-import com.shortstack.hackertracker.ui.schedule.EventViewHolder
-import com.shortstack.hackertracker.ui.search.LocationViewHolder
-import com.shortstack.hackertracker.views.EventView
+import com.advice.schedule.models.Day
+import com.advice.schedule.models.local.*
+import com.advice.schedule.ui.information.categories.CategoryViewHolder
+import com.advice.schedule.ui.information.faq.FAQViewHolder
+import com.advice.schedule.ui.information.speakers.SpeakerViewHolder
+import com.advice.schedule.ui.information.vendors.VendorViewHolder
+import com.advice.schedule.ui.schedule.DayViewHolder
+import com.advice.schedule.ui.schedule.EventViewHolder
+import com.advice.schedule.ui.search.LocationViewHolder
+import com.advice.schedule.views.EventView
 
 // todo: use ListAdapter
 class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

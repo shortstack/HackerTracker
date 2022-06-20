@@ -1,10 +1,10 @@
-package com.shortstack.hackertracker.ui.search
+package com.advice.schedule.ui.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.advice.schedule.models.local.Location
 import com.shortstack.hackertracker.databinding.ItemTypeHeaderBinding
-import com.shortstack.hackertracker.models.local.Location
 
 class LocationViewHolder(private val binding: ItemTypeHeaderBinding) :
     RecyclerView.ViewHolder(binding.root) {

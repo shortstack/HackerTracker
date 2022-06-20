@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui
+package com.advice.schedule.ui
 
 import android.animation.ObjectAnimator
 import android.os.Bundle
@@ -9,9 +9,9 @@ import androidx.fragment.app.Fragment
 import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.PanelState
 import com.orhanobut.logger.Logger
+import com.advice.schedule.ui.activities.MainActivity
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.PanelsFragmentBinding
-import com.shortstack.hackertracker.ui.activities.MainActivity
 
 class PanelsFragment : Fragment() {
 

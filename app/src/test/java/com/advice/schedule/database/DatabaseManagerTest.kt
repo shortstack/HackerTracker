@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.database
+package com.advice.schedule.database
 
 import com.shortstack.hackertracker.fromString
 import com.shortstack.hackertracker.models.firebase.FirebaseConference

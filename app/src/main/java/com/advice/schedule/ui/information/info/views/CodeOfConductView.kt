@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.information.info.views
+package com.advice.schedule.ui.information.info.views
 
 import android.content.Context
 import android.util.AttributeSet

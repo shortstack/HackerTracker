@@ -1,13 +1,13 @@
-package com.shortstack.hackertracker.database
+package com.advice.schedule.database
 
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.workDataOf
-import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.network.task.ReminderWorker
-import com.shortstack.hackertracker.utilities.MyClock
-import com.shortstack.hackertracker.utilities.now
+import com.advice.schedule.models.local.Event
+import com.advice.schedule.network.task.ReminderWorker
+import com.advice.schedule.utilities.MyClock
+import com.advice.schedule.utilities.now
 import java.util.concurrent.TimeUnit
 
 class ReminderManager(

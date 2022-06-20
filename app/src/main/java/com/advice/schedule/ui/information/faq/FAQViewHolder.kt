@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.information.faq
+package com.advice.schedule.ui.information.faq
 
 import android.view.LayoutInflater
 import android.view.View
@@ -8,10 +8,10 @@ import androidx.constraintlayout.widget.ConstraintSet
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.ChangeBounds
 import androidx.transition.TransitionManager
+import com.advice.schedule.models.local.FAQ
+import com.advice.schedule.utilities.Analytics
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.RowFaqBinding
-import com.shortstack.hackertracker.models.local.FAQ
-import com.shortstack.hackertracker.utilities.Analytics
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 

@@ -1,11 +1,11 @@
-package com.shortstack.hackertracker.utilities
+package com.advice.schedule.utilities
 
 
 import android.content.Context
 import android.os.Bundle
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.models.local.Speaker
+import com.advice.schedule.models.local.Event
+import com.advice.schedule.models.local.Speaker
 
 class Analytics(context: Context, private val storage: Storage) {
 

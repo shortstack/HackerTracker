@@ -1,12 +1,12 @@
-package com.shortstack.hackertracker.ui.events
+package com.advice.schedule.ui.events
 
 import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.advice.schedule.models.local.Action
 import com.shortstack.hackertracker.databinding.ItemEventLinkBinding
-import com.shortstack.hackertracker.models.local.Action
 
 class ActionViewHolder(private val binding: ItemEventLinkBinding) :
     RecyclerView.ViewHolder(binding.root) {

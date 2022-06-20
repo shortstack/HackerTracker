@@ -33,37 +33,37 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <com.shortstack.hackertracker.views.NavigationView
+            <com.advice.schedule.views.NavigationView
                 android:id="@+id/wifi"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:navigationLabel="@string/wifi_title" />
 
-            <com.shortstack.hackertracker.views.NavigationView
+            <com.advice.schedule.views.NavigationView
                 android:id="@+id/help"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:navigationLabel="@string/help_line_title" />
 
-            <com.shortstack.hackertracker.views.NavigationView
+            <com.advice.schedule.views.NavigationView
                 android:id="@+id/code_of_conduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:navigationLabel="@string/code_of_conduct" />
 
-            <com.shortstack.hackertracker.views.NavigationView
+            <com.advice.schedule.views.NavigationView
                 android:id="@+id/faq"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:navigationLabel="@string/faq" />
 
-            <com.shortstack.hackertracker.views.NavigationView
+            <com.advice.schedule.views.NavigationView
                 android:id="@+id/speakers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:navigationLabel="@string/speakers" />
 
-            <com.shortstack.hackertracker.views.NavigationView
+            <com.advice.schedule.views.NavigationView
                 android:id="@+id/vendors"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

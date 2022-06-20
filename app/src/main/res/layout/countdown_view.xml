@@ -7,7 +7,7 @@
     android:orientation="vertical"
     android:padding="32dp">
 
-    <com.shortstack.hackertracker.views.GlitchContainerView
+    <com.advice.schedule.views.GlitchContainerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:glitch_corruptionLevel="MINOR"
@@ -18,9 +18,9 @@
             style="@style/CountdownTextStyle"
             tools:text="76days" />
 
-    </com.shortstack.hackertracker.views.GlitchContainerView>
+    </com.advice.schedule.views.GlitchContainerView>
 
-    <com.shortstack.hackertracker.views.GlitchContainerView
+    <com.advice.schedule.views.GlitchContainerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:glitch_corruptionLevel="MINOR"
@@ -31,9 +31,9 @@
             style="@style/CountdownTextStyle"
             tools:text="05hours" />
 
-    </com.shortstack.hackertracker.views.GlitchContainerView>
+    </com.advice.schedule.views.GlitchContainerView>
 
-    <com.shortstack.hackertracker.views.GlitchContainerView
+    <com.advice.schedule.views.GlitchContainerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:glitch_corruptionLevel="MEDIUM"
@@ -44,9 +44,9 @@
             style="@style/CountdownTextStyle"
             tools:text="56minutes" />
 
-    </com.shortstack.hackertracker.views.GlitchContainerView>
+    </com.advice.schedule.views.GlitchContainerView>
 
-    <com.shortstack.hackertracker.views.GlitchContainerView
+    <com.advice.schedule.views.GlitchContainerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:glitch_corruptionLevel="MAJOR"
@@ -57,6 +57,6 @@
             style="@style/CountdownTextStyle"
             tools:text="08seconds" />
 
-    </com.shortstack.hackertracker.views.GlitchContainerView>
+    </com.advice.schedule.views.GlitchContainerView>
 
 </androidx.appcompat.widget.LinearLayoutCompat>

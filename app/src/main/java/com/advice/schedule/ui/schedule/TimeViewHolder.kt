@@ -1,13 +1,13 @@
-package com.shortstack.hackertracker.ui.schedule
+package com.advice.schedule.ui.schedule
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.advice.schedule.models.Day
+import com.advice.schedule.models.Time
+import com.advice.schedule.utilities.TimeUtil
 import com.shortstack.hackertracker.databinding.RowHeaderBinding
 import com.shortstack.hackertracker.databinding.RowTimeContainerBinding
-import com.shortstack.hackertracker.models.Day
-import com.shortstack.hackertracker.models.Time
-import com.shortstack.hackertracker.utilities.TimeUtil
 
 class TimeViewHolder(private val binding: RowTimeContainerBinding) :
     RecyclerView.ViewHolder(binding.root) {

@@ -1,24 +1,22 @@
-package com.shortstack.hackertracker.ui.events
+package com.advice.schedule.ui.events
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Menu
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.advice.schedule.database.DatabaseManager
+import com.advice.schedule.database.ReminderManager
+import com.advice.schedule.models.local.Event
+import com.advice.schedule.ui.HackerTrackerViewModel
+import com.advice.schedule.ui.activities.MainActivity
+import com.advice.schedule.utilities.Analytics
+import com.advice.schedule.utilities.TimeUtil
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.database.ReminderManager
 import com.shortstack.hackertracker.databinding.FragmentEventBinding
-import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.ui.HackerTrackerViewModel
-import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.utilities.Analytics
-import com.shortstack.hackertracker.utilities.TimeUtil
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

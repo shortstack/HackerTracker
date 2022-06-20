@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.maps
+package com.advice.schedule.ui.maps
 
 import android.os.Bundle
 import android.view.LayoutInflater

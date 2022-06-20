@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.views
+package com.advice.schedule.views
 
 import android.content.Context
 import android.graphics.Color
@@ -8,10 +8,10 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
+import com.advice.schedule.models.local.Type
+import com.advice.schedule.ui.activities.MainActivity
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.ViewEventTypeBinding
-import com.shortstack.hackertracker.models.local.Type
-import com.shortstack.hackertracker.ui.activities.MainActivity
 
 class EventTypeView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {
 
@@ -43,7 +43,11 @@ class EventTypeView(context: Context, attrs: AttributeSet) : LinearLayout(contex
             if (type.color == "#FFFFFF") {
                 val theme = (context as MainActivity).theme
                 val outValue = TypedValue()
-                theme.resolveAttribute(com.google.android.material.R.attr.colorOnSurface, outValue, true)
+                theme.resolveAttribute(
+                    com.google.android.material.R.attr.colorOnSurface,
+                    outValue,
+                    true
+                )
                 outValue.data
             } else {
                 Color.parseColor(type.color)

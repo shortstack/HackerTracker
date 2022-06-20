@@ -1,10 +1,10 @@
-package com.shortstack.hackertracker.ui.home
+package com.advice.schedule.ui.home
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.advice.schedule.models.local.Article
 import com.shortstack.hackertracker.databinding.ItemArticleBinding
-import com.shortstack.hackertracker.models.local.Article
 
 class ArticleViewHolder(private val binding: ItemArticleBinding) :
     RecyclerView.ViewHolder(binding.root) {

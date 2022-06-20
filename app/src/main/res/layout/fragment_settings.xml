@@ -50,7 +50,7 @@
                 android:padding="16dp"
                 tools:text="Version 6.0.1" />
 
-            <com.shortstack.hackertracker.views.SkullView
+            <com.advice.schedule.views.SkullView
                 android:id="@+id/logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

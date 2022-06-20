@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.activities
+package com.advice.schedule.ui.activities
 
 
 import android.content.Intent
@@ -13,23 +13,23 @@ import com.github.stkent.amplify.tracking.Amplify
 import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
 import com.google.firebase.auth.FirebaseAuth
 import com.orhanobut.logger.Logger
+import com.advice.schedule.models.local.Event
+import com.advice.schedule.models.local.Location
+import com.advice.schedule.models.local.Speaker
+import com.advice.schedule.models.local.Type
+import com.advice.schedule.replaceFragment
+import com.advice.schedule.ui.PanelsFragment
+import com.advice.schedule.ui.events.EventFragment
+import com.advice.schedule.ui.information.InformationFragment
+import com.advice.schedule.ui.information.categories.CategoryFragment
+import com.advice.schedule.ui.information.speakers.SpeakerFragment
+import com.advice.schedule.ui.maps.MapsFragment
+import com.advice.schedule.ui.schedule.ScheduleFragment
+import com.advice.schedule.ui.search.SearchFragment
+import com.advice.schedule.ui.settings.SettingsFragment
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.ActivityMainBinding
-import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.models.local.Location
-import com.shortstack.hackertracker.models.local.Speaker
-import com.shortstack.hackertracker.models.local.Type
-import com.shortstack.hackertracker.replaceFragment
-import com.shortstack.hackertracker.ui.PanelsFragment
-import com.shortstack.hackertracker.ui.events.EventFragment
-import com.shortstack.hackertracker.ui.information.InformationFragment
-import com.shortstack.hackertracker.ui.information.categories.CategoryFragment
-import com.shortstack.hackertracker.ui.information.speakers.SpeakerFragment
-import com.shortstack.hackertracker.ui.maps.MapsFragment
-import com.shortstack.hackertracker.ui.schedule.ScheduleFragment
-import com.shortstack.hackertracker.ui.search.SearchFragment
-import com.shortstack.hackertracker.ui.settings.SettingsFragment
 import org.koin.core.KoinComponent
 
 

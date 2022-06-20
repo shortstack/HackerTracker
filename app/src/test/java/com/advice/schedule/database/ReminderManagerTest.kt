@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.database
+package com.advice.schedule.database
 
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager

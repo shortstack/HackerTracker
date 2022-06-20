@@ -1,12 +1,12 @@
-package com.shortstack.hackertracker.ui.home
+package com.advice.schedule.ui.home
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.models.local.Article
-import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.ui.schedule.EventViewHolder
-import com.shortstack.hackertracker.views.EventView
+import com.advice.schedule.models.local.Article
+import com.advice.schedule.models.local.Event
+import com.advice.schedule.ui.schedule.EventViewHolder
+import com.advice.schedule.views.EventView
 
 // todo: replace with ListAdapter
 class HomeAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

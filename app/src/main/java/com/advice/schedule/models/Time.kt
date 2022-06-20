@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.models
+package com.advice.schedule.models
 
 import java.text.SimpleDateFormat
 import java.util.*

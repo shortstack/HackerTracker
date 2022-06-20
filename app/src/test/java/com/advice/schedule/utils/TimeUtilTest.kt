@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.utils
+package com.advice.schedule.utils
 
 import android.content.Context
 import android.text.format.DateFormat

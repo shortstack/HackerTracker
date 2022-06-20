@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.search
+package com.advice.schedule.ui.search
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,12 +9,12 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
+import com.advice.schedule.hideKeyboard
+import com.advice.schedule.showKeyboard
+import com.advice.schedule.ui.HackerTrackerViewModel
+import com.advice.schedule.ui.activities.MainActivity
+import com.advice.schedule.ui.search.SearchAdapter.State.*
 import com.shortstack.hackertracker.databinding.FragmentSearchBinding
-import com.shortstack.hackertracker.hideKeyboard
-import com.shortstack.hackertracker.showKeyboard
-import com.shortstack.hackertracker.ui.HackerTrackerViewModel
-import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.ui.search.SearchAdapter.State.*
 
 class SearchFragment : Fragment(), SearchView.OnQueryTextListener {
 

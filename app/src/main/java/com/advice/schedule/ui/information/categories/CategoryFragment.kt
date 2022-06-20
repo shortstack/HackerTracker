@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.information.categories
+package com.advice.schedule.ui.information.categories
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,9 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
+import com.advice.schedule.models.local.Type
+import com.advice.schedule.ui.events.EventDetailsAdapter
 import com.shortstack.hackertracker.databinding.FragmentCategoryBinding
-import com.shortstack.hackertracker.models.local.Type
-import com.shortstack.hackertracker.ui.events.EventDetailsAdapter
 
 class CategoryFragment : Fragment() {
 

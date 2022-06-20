@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.views
+package com.advice.schedule.views
 
 import android.annotation.SuppressLint
 import android.content.Context
@@ -10,10 +10,10 @@ import android.util.AttributeSet
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.core.content.ContextCompat
 import androidx.core.graphics.drawable.toBitmap
+import com.advice.schedule.ui.glitch.Glitch
+import com.advice.schedule.ui.themes.ThemesManager
+import com.advice.schedule.utilities.Storage
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.ui.glitch.Glitch
-import com.shortstack.hackertracker.ui.themes.ThemesManager
-import com.shortstack.hackertracker.utilities.Storage
 import org.koin.core.KoinComponent
 import org.koin.core.get
 

@@ -1,9 +1,9 @@
-package com.shortstack.hackertracker.models.local
+package com.advice.schedule.models.local
 
 import android.os.Parcelable
-import com.shortstack.hackertracker.models.firebase.FirebaseMap
-import com.shortstack.hackertracker.utilities.MyClock
-import com.shortstack.hackertracker.utilities.now
+import com.advice.schedule.models.firebase.FirebaseMap
+import com.advice.schedule.utilities.MyClock
+import com.advice.schedule.utilities.now
 import kotlinx.android.parcel.Parcelize
 import java.util.*
 import kotlin.collections.ArrayList

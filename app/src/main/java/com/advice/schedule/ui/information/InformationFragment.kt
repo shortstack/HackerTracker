@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.information
+package com.advice.schedule.ui.information
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,17 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.advice.schedule.database.DatabaseManager
+import com.advice.schedule.replaceFragment
+import com.advice.schedule.ui.activities.MainActivity
+import com.advice.schedule.ui.information.faq.FAQFragment
+import com.advice.schedule.ui.information.info.CodeOfConductFragment
+import com.advice.schedule.ui.information.info.SupportHelplineFragment
+import com.advice.schedule.ui.information.info.WiFiFragment
+import com.advice.schedule.ui.information.speakers.SpeakersFragment
+import com.advice.schedule.ui.information.vendors.VendorsFragment
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.databinding.FragmentInformationBinding
-import com.shortstack.hackertracker.replaceFragment
-import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.ui.information.faq.FAQFragment
-import com.shortstack.hackertracker.ui.information.info.CodeOfConductFragment
-import com.shortstack.hackertracker.ui.information.info.SupportHelplineFragment
-import com.shortstack.hackertracker.ui.information.info.WiFiFragment
-import com.shortstack.hackertracker.ui.information.speakers.SpeakersFragment
-import com.shortstack.hackertracker.ui.information.vendors.VendorsFragment
 import org.koin.android.ext.android.inject
 
 class InformationFragment : Fragment() {

@@ -1,18 +1,18 @@
-package com.shortstack.hackertracker.ui.schedule.list
+package com.advice.schedule.ui.schedule.list
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.advice.timehop.StickyRecyclerHeadersAdapter
-import com.shortstack.hackertracker.Status
-import com.shortstack.hackertracker.models.Day
-import com.shortstack.hackertracker.models.Time
-import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.ui.schedule.DayViewHolder
-import com.shortstack.hackertracker.ui.schedule.EventViewHolder
-import com.shortstack.hackertracker.ui.schedule.TimeViewHolder
-import com.shortstack.hackertracker.utilities.TimeUtil
-import com.shortstack.hackertracker.views.EventView
+import com.advice.schedule.Status
+import com.advice.schedule.models.Day
+import com.advice.schedule.models.Time
+import com.advice.schedule.models.local.Event
+import com.advice.schedule.ui.schedule.DayViewHolder
+import com.advice.schedule.ui.schedule.EventViewHolder
+import com.advice.schedule.ui.schedule.TimeViewHolder
+import com.advice.schedule.utilities.TimeUtil
+import com.advice.schedule.views.EventView
 import java.util.*
 import kotlin.collections.ArrayList
 

@@ -1,10 +1,10 @@
-package com.shortstack.hackertracker.utilities
+package com.advice.schedule.utilities
 
 import android.content.Context
 import android.content.SharedPreferences
 import android.preference.PreferenceManager
 import com.google.gson.Gson
-import com.shortstack.hackertracker.ui.themes.ThemesManager
+import com.advice.schedule.ui.themes.ThemesManager
 import java.util.*
 
 class Storage(context: Context, private val gson: Gson) {

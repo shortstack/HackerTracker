@@ -47,7 +47,7 @@
         android:background="?colorSurface"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <com.shortstack.hackertracker.views.EmptyView
+        <com.advice.schedule.views.EmptyView
             android:id="@+id/empty_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

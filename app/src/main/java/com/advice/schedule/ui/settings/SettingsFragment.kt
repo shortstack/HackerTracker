@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.settings
+package com.advice.schedule.ui.settings
 
 import android.os.Bundle
 import android.view.View
@@ -8,15 +8,15 @@ import androidx.appcompat.widget.Toolbar
 import androidx.preference.Preference
 import androidx.preference.PreferenceFragmentCompat
 import androidx.preference.SwitchPreference
+import com.advice.schedule.database.DatabaseManager
+import com.advice.schedule.models.local.Conference
+import com.advice.schedule.ui.activities.MainActivity
+import com.advice.schedule.ui.themes.ThemesManager
+import com.advice.schedule.utilities.MyClock
+import com.advice.schedule.utilities.Storage
+import com.advice.schedule.utilities.now
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.local.Conference
-import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.ui.themes.ThemesManager
-import com.shortstack.hackertracker.utilities.MyClock
-import com.shortstack.hackertracker.utilities.Storage
-import com.shortstack.hackertracker.utilities.now
 import org.koin.android.ext.android.inject
 import java.util.*
 

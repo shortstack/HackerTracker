@@ -1,10 +1,10 @@
-package com.shortstack.hackertracker.network.task
+package com.advice.schedule.network.task
 
 import android.content.Context
 import androidx.work.CoroutineWorker
 import androidx.work.WorkerParameters
-import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.utilities.NotificationHelper
+import com.advice.schedule.database.DatabaseManager
+import com.advice.schedule.utilities.NotificationHelper
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 

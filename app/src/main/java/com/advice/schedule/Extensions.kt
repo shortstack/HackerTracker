@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker
+package com.advice.schedule
 
 import android.app.Activity
 import android.content.Context
@@ -10,10 +10,10 @@ import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 import androidx.transition.Fade
-import com.shortstack.hackertracker.models.firebase.*
-import com.shortstack.hackertracker.models.local.*
-import com.shortstack.hackertracker.utilities.MyClock
-import com.shortstack.hackertracker.utilities.now
+import com.advice.schedule.models.firebase.*
+import com.advice.schedule.models.local.*
+import com.advice.schedule.utilities.MyClock
+import com.advice.schedule.utilities.now
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit

@@ -1,17 +1,17 @@
-package com.shortstack.hackertracker.ui
+package com.advice.schedule.ui
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.shortstack.hackertracker.Resource
-import com.shortstack.hackertracker.Response
-import com.shortstack.hackertracker.dObj
-import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.firebase.FirebaseConferenceMap
-import com.shortstack.hackertracker.models.local.*
-import com.shortstack.hackertracker.ui.themes.ThemesManager
-import com.shortstack.hackertracker.utilities.Storage
+import com.advice.schedule.Resource
+import com.advice.schedule.Response
+import com.advice.schedule.dObj
+import com.advice.schedule.database.DatabaseManager
+import com.advice.schedule.models.firebase.FirebaseConferenceMap
+import com.advice.schedule.models.local.*
+import com.advice.schedule.ui.themes.ThemesManager
+import com.advice.schedule.utilities.Storage
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 

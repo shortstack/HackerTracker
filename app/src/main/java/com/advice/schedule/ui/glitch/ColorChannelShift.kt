@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.glitch
+package com.advice.schedule.ui.glitch
 
 import android.graphics.Bitmap
 import android.graphics.Canvas

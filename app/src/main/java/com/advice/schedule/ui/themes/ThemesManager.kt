@@ -1,6 +1,6 @@
-package com.shortstack.hackertracker.ui.themes
+package com.advice.schedule.ui.themes
 
-import com.shortstack.hackertracker.utilities.Storage
+import com.advice.schedule.utilities.Storage
 
 class ThemesManager(private val storage: Storage) {
 

@@ -1,15 +1,15 @@
-package com.shortstack.hackertracker.ui.information.speakers
+package com.advice.schedule.ui.information.speakers
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.advice.schedule.Response
+import com.advice.schedule.ui.ListAdapter
+import com.advice.schedule.ui.activities.MainActivity
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.Response
 import com.shortstack.hackertracker.databinding.FragmentRecyclerviewBinding
-import com.shortstack.hackertracker.ui.ListAdapter
-import com.shortstack.hackertracker.ui.activities.MainActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SpeakersFragment : Fragment() {

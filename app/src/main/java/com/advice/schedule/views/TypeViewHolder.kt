@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.views
+package com.advice.schedule.views
 
 import android.graphics.Color
 import android.util.TypedValue
@@ -7,11 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.google.android.material.color.MaterialColors
+import com.advice.schedule.models.local.Type
+import com.advice.schedule.ui.activities.MainActivity
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.ItemTypeBinding
-import com.shortstack.hackertracker.models.local.Type
-import com.shortstack.hackertracker.ui.activities.MainActivity
 
 class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHolder(binding.root) {
 

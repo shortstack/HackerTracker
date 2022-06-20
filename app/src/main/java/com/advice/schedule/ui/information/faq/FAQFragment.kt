@@ -1,16 +1,16 @@
-package com.shortstack.hackertracker.ui.information.faq
+package com.advice.schedule.ui.information.faq
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.advice.schedule.Response
+import com.advice.schedule.models.local.FAQ
+import com.advice.schedule.ui.HackerTrackerViewModel
+import com.advice.schedule.ui.ListAdapter
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.Response
 import com.shortstack.hackertracker.databinding.FragmentRecyclerviewBinding
-import com.shortstack.hackertracker.models.local.FAQ
-import com.shortstack.hackertracker.ui.HackerTrackerViewModel
-import com.shortstack.hackertracker.ui.ListAdapter
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class FAQFragment : Fragment() {

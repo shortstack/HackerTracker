@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.information.vendors
+package com.advice.schedule.ui.information.vendors
 
 import android.content.Intent
 import android.net.Uri
@@ -6,8 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.advice.schedule.models.local.Vendor
 import com.shortstack.hackertracker.databinding.RowVendorBinding
-import com.shortstack.hackertracker.models.local.Vendor
 
 class VendorViewHolder(private val binding: RowVendorBinding) :
     RecyclerView.ViewHolder(binding.root) {

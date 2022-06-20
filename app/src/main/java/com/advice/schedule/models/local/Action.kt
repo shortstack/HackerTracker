@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.models.local
+package com.advice.schedule.models.local
 
 import android.os.Parcelable
 import com.shortstack.hackertracker.R

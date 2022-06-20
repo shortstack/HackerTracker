@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker
+package com.advice.schedule
 
 data class Resource<out T>(val status: Status, val data: T?, val message: String?) {
 

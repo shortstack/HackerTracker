@@ -1,11 +1,11 @@
-package com.shortstack.hackertracker.views
+package com.advice.schedule.views
 
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
 import android.widget.LinearLayout
+import com.advice.schedule.utilities.TimeUtil
 import com.shortstack.hackertracker.databinding.RowHeaderTimeBinding
-import com.shortstack.hackertracker.utilities.TimeUtil
 import java.util.*
 
 class TimeView(context: Context, attrs: AttributeSet) : LinearLayout(context, attrs) {

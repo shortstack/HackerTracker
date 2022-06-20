@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.schedule.list
+package com.advice.schedule.ui.schedule.list
 
 
 abstract class ScheduleInfiniteScrollListener(private val layoutManager: androidx.recyclerview.widget.LinearLayoutManager) : androidx.recyclerview.widget.RecyclerView.OnScrollListener() {

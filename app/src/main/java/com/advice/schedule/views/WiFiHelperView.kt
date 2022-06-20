@@ -1,15 +1,10 @@
-package com.shortstack.hackertracker.views
+package com.advice.schedule.views
 
 import android.annotation.SuppressLint
 import android.annotation.TargetApi
 import android.content.Context
 import android.net.wifi.WifiConfiguration
-import android.net.wifi.WifiConfiguration.AuthAlgorithm
-import android.net.wifi.WifiConfiguration.GroupCipher
-import android.net.wifi.WifiConfiguration.KeyMgmt
-import android.net.wifi.WifiConfiguration.PairwiseCipher
-import android.net.wifi.WifiConfiguration.Protocol
-import android.net.wifi.WifiConfiguration.Status
+import android.net.wifi.WifiConfiguration.*
 import android.net.wifi.WifiEnterpriseConfig
 import android.net.wifi.WifiManager
 import android.net.wifi.WifiNetworkSuggestion

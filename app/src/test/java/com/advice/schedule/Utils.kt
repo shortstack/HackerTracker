@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker
+package com.advice.schedule
 
 import com.google.firebase.Timestamp
 import com.shortstack.hackertracker.utilities.MyClock

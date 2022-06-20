@@ -1,9 +1,9 @@
-package com.shortstack.hackertracker.ui.glitch
+package com.advice.schedule.ui.glitch
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.view.View
-import com.shortstack.hackertracker.utilities.Storage
+import com.advice.schedule.utilities.Storage
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 

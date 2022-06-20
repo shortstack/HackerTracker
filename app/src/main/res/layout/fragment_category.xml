@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.shortstack.hackertracker.views.GlitchContainerView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.advice.schedule.views.GlitchContainerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
@@ -68,7 +68,7 @@
                 tools:itemCount="2"
                 tools:listitem="@layout/item_event_link" />
 
-            <com.shortstack.hackertracker.views.SkullView
+            <com.advice.schedule.views.SkullView
                 style="@style/Footer"
                 android:src="?footer_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -81,4 +81,4 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</com.shortstack.hackertracker.views.GlitchContainerView>
+</com.advice.schedule.views.GlitchContainerView>

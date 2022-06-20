@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker
+package com.advice.schedule
 
 object Constants {
 

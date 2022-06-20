@@ -1,9 +1,9 @@
-package com.shortstack.hackertracker.views
+package com.advice.schedule.views
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.models.local.Type
-import com.shortstack.hackertracker.ui.search.HeaderViewHolder
+import com.advice.schedule.models.local.Type
+import com.advice.schedule.ui.search.HeaderViewHolder
 import kotlin.math.min
 
 // todo: replace with ListAdapter

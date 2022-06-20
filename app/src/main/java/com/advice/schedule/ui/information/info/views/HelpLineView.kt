@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.information.info.views
+package com.advice.schedule.ui.information.info.views
 
 import android.app.AlertDialog
 import android.content.Context
@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.widget.FrameLayout
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.ViewHelpLineBinding
-
 
 class HelpLineView(context: Context, attrs: AttributeSet?) : FrameLayout(context, attrs) {
 

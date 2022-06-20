@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.models.firebase
+package com.advice.schedule.models.firebase
 
 import android.os.Parcelable
 import kotlinx.android.parcel.Parcelize

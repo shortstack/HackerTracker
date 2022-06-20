@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.maps
+package com.advice.schedule.ui.maps
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,12 +9,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.advice.schedule.models.firebase.FirebaseConferenceMap
+import com.advice.schedule.models.local.Location
+import com.advice.schedule.ui.HackerTrackerViewModel
+import com.advice.schedule.ui.activities.MainActivity
+import com.advice.schedule.utilities.Analytics
 import com.shortstack.hackertracker.databinding.FragmentMapsBinding
-import com.shortstack.hackertracker.models.firebase.FirebaseConferenceMap
-import com.shortstack.hackertracker.models.local.Location
-import com.shortstack.hackertracker.ui.HackerTrackerViewModel
-import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.utilities.Analytics
 import org.koin.android.ext.android.inject
 
 class MapsFragment : Fragment() {

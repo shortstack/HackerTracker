@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.utilities
+package com.advice.schedule.utilities
 
 import android.app.Notification
 import android.app.NotificationChannel
@@ -13,9 +13,9 @@ import android.os.Bundle
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
+import com.advice.schedule.models.local.Event
+import com.advice.schedule.ui.activities.MainActivity
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.ui.activities.MainActivity
 import org.koin.core.KoinComponent
 
 class NotificationHelper(private val context: Context) : KoinComponent {

@@ -8,12 +8,12 @@
     android:paddingTop="32dp"
     android:paddingBottom="32dp">
 
-    <com.shortstack.hackertracker.views.StatusBarSpacer
+    <com.advice.schedule.views.StatusBarSpacer
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
 
-    <com.shortstack.hackertracker.views.SkullView
+    <com.advice.schedule.views.SkullView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="0dp"

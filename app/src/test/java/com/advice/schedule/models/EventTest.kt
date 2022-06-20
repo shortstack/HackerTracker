@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.models
+package com.advice.schedule.models
 
 import com.shortstack.hackertracker.models.firebase.FirebaseEvent
 import com.shortstack.hackertracker.models.firebase.FirebaseSpeaker

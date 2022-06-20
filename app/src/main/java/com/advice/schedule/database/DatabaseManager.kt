@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.database
+package com.advice.schedule.database
 
 import android.util.Log
 import androidx.lifecycle.LiveData
@@ -15,13 +15,14 @@ import com.google.firebase.firestore.Query
 import com.google.firebase.installations.FirebaseInstallations
 import com.google.firebase.storage.FirebaseStorage
 import com.orhanobut.logger.Logger
-import com.shortstack.hackertracker.*
-import com.shortstack.hackertracker.models.firebase.*
-import com.shortstack.hackertracker.models.local.*
-import com.shortstack.hackertracker.network.task.ReminderWorker
-import com.shortstack.hackertracker.utilities.MyClock
-import com.shortstack.hackertracker.utilities.Storage
-import com.shortstack.hackertracker.utilities.now
+import com.advice.schedule.*
+import com.advice.schedule.models.firebase.*
+import com.advice.schedule.models.local.*
+import com.advice.schedule.network.task.ReminderWorker
+import com.advice.schedule.utilities.MyClock
+import com.advice.schedule.utilities.Storage
+import com.advice.schedule.utilities.now
+import com.shortstack.hackertracker.BuildConfig
 import kotlinx.coroutines.tasks.await
 import java.io.File
 import java.util.*

@@ -1,11 +1,11 @@
-package com.shortstack.hackertracker.ui.information.info
+package com.advice.schedule.ui.information.info
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.shortstack.hackertracker.database.DatabaseManager
+import com.advice.schedule.database.DatabaseManager
 import com.shortstack.hackertracker.databinding.FragmentCodeOfConductBinding
 import org.koin.android.ext.android.inject
 

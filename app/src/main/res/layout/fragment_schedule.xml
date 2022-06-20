@@ -25,7 +25,7 @@
 
         </androidx.appcompat.widget.Toolbar>
 
-        <com.shortstack.hackertracker.views.DaySelectorView
+        <com.advice.schedule.views.DaySelectorView
             android:id="@+id/day_selector"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -50,7 +50,7 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/row_event" />
 
-        <com.shortstack.hackertracker.views.EmptyView
+        <com.advice.schedule.views.EmptyView
             android:id="@+id/empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

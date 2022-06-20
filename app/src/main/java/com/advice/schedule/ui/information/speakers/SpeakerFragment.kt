@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.information.speakers
+package com.advice.schedule.ui.information.speakers
 
 import android.content.Intent
 import android.net.Uri
@@ -9,15 +9,15 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import com.advice.schedule.Response
+import com.advice.schedule.database.DatabaseManager
+import com.advice.schedule.models.local.Speaker
+import com.advice.schedule.ui.HackerTrackerViewModel
+import com.advice.schedule.ui.activities.MainActivity
+import com.advice.schedule.utilities.Analytics
+import com.advice.schedule.views.EventView
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.Response
-import com.shortstack.hackertracker.database.DatabaseManager
 import com.shortstack.hackertracker.databinding.FragmentSpeakersBinding
-import com.shortstack.hackertracker.models.local.Speaker
-import com.shortstack.hackertracker.ui.HackerTrackerViewModel
-import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.utilities.Analytics
-import com.shortstack.hackertracker.views.EventView
 import org.koin.android.ext.android.inject
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

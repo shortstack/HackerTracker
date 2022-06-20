@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.schedule
+package com.advice.schedule.ui.schedule
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,18 +12,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.advice.timehop.StickyRecyclerHeadersDecoration
+import com.advice.schedule.Response
+import com.advice.schedule.models.Day
+import com.advice.schedule.models.local.Event
+import com.advice.schedule.models.local.Location
+import com.advice.schedule.models.local.Speaker
+import com.advice.schedule.models.local.Type
+import com.advice.schedule.ui.PanelsFragment
+import com.advice.schedule.ui.activities.MainActivity
+import com.advice.schedule.ui.schedule.list.ScheduleAdapter
+import com.advice.schedule.views.DaySelectorView
 import com.shortstack.hackertracker.R
-import com.shortstack.hackertracker.Response
 import com.shortstack.hackertracker.databinding.FragmentScheduleBinding
-import com.shortstack.hackertracker.models.Day
-import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.models.local.Location
-import com.shortstack.hackertracker.models.local.Speaker
-import com.shortstack.hackertracker.models.local.Type
-import com.shortstack.hackertracker.ui.PanelsFragment
-import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.ui.schedule.list.ScheduleAdapter
-import com.shortstack.hackertracker.views.DaySelectorView
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.util.*
 import kotlin.collections.ArrayList

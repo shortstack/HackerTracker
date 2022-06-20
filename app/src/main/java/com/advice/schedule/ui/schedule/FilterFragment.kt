@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.schedule
+package com.advice.schedule.ui.schedule
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,11 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.advice.schedule.models.local.Type
+import com.advice.schedule.ui.HackerTrackerViewModel
+import com.advice.schedule.ui.activities.MainActivity
+import com.advice.schedule.views.FilterAdapter
 import com.shortstack.hackertracker.databinding.FilterFragmentBinding
-import com.shortstack.hackertracker.models.local.Type
-import com.shortstack.hackertracker.ui.HackerTrackerViewModel
-import com.shortstack.hackertracker.ui.activities.MainActivity
-import com.shortstack.hackertracker.views.FilterAdapter
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class FilterFragment : Fragment() {

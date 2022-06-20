@@ -1,12 +1,12 @@
-package com.shortstack.hackertracker.ui.information.speakers
+package com.advice.schedule.ui.information.speakers
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
-import com.shortstack.hackertracker.Response
-import com.shortstack.hackertracker.database.DatabaseManager
-import com.shortstack.hackertracker.models.local.Speaker
+import com.advice.schedule.Response
+import com.advice.schedule.database.DatabaseManager
+import com.advice.schedule.models.local.Speaker
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 

@@ -1,14 +1,14 @@
-package com.shortstack.hackertracker.ui.search
+package com.advice.schedule.ui.search
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.models.local.Location
-import com.shortstack.hackertracker.models.local.Speaker
-import com.shortstack.hackertracker.ui.information.speakers.SpeakerViewHolder
-import com.shortstack.hackertracker.ui.schedule.EventViewHolder
-import com.shortstack.hackertracker.views.EventView
+import com.advice.schedule.models.local.Event
+import com.advice.schedule.models.local.Location
+import com.advice.schedule.models.local.Speaker
+import com.advice.schedule.ui.information.speakers.SpeakerViewHolder
+import com.advice.schedule.ui.schedule.EventViewHolder
+import com.advice.schedule.views.EventView
 
 // todo: replace with ListAdapter
 class SearchAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {

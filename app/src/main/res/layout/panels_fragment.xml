@@ -25,7 +25,7 @@
             app:cardElevation="0dp">
 
             <fragment
-                android:name="com.shortstack.hackertracker.ui.home.HomeFragment"
+                android:name="com.advice.schedule.ui.home.HomeFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
@@ -40,7 +40,7 @@
             app:cardElevation="0dp">
 
             <fragment
-                android:name="com.shortstack.hackertracker.ui.schedule.ScheduleFragment"
+                android:name="com.advice.schedule.ui.schedule.ScheduleFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:layout="@layout/fragment_schedule" />
@@ -58,7 +58,7 @@
             app:cardElevation="0dp">
 
             <fragment
-                android:name="com.shortstack.hackertracker.ui.schedule.FilterFragment"
+                android:name="com.advice.schedule.ui.schedule.FilterFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 

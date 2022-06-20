@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.shortstack.hackertracker.views.GlitchContainerView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.advice.schedule.views.GlitchContainerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/root"
@@ -58,13 +58,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="8dp" />
 
-                <com.shortstack.hackertracker.views.WellView
+                <com.advice.schedule.views.WellView
                     android:id="@+id/type_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp">
 
-                    <com.shortstack.hackertracker.views.EventTypeView
+                    <com.advice.schedule.views.EventTypeView
                         android:id="@+id/type_1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -75,9 +75,9 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="Event"
                         tools:visibility="visible" />
-                </com.shortstack.hackertracker.views.WellView>
+                </com.advice.schedule.views.WellView>
 
-                <com.shortstack.hackertracker.views.WellView
+                <com.advice.schedule.views.WellView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="4dp">
@@ -98,9 +98,9 @@
                         android:layout_marginStart="8dp"
                         tools:text="August 6th, 9:30am - 10:30am" />
 
-                </com.shortstack.hackertracker.views.WellView>
+                </com.advice.schedule.views.WellView>
 
-                <com.shortstack.hackertracker.views.WellView
+                <com.advice.schedule.views.WellView
                     android:id="@+id/location_container"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -127,9 +127,9 @@
                         app:layout_constraintTop_toTopOf="parent"
                         tools:text="Track 1 - Ceaser's" />
 
-                </com.shortstack.hackertracker.views.WellView>
+                </com.advice.schedule.views.WellView>
 
-                <com.shortstack.hackertracker.views.EventTypeView
+                <com.advice.schedule.views.EventTypeView
                     android:id="@+id/type_2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -164,7 +164,7 @@
 
             </FrameLayout>
 
-            <com.shortstack.hackertracker.views.WellView
+            <com.advice.schedule.views.WellView
                 android:id="@+id/links_containers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -183,7 +183,7 @@
                     tools:itemCount="1"
                     tools:listitem="@layout/item_event_link" />
 
-            </com.shortstack.hackertracker.views.WellView>
+            </com.advice.schedule.views.WellView>
 
             <TextView
                 android:id="@+id/speakers_header"
@@ -196,7 +196,7 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/links_containers" />
 
-            <com.shortstack.hackertracker.views.WellView
+            <com.advice.schedule.views.WellView
                 android:id="@+id/speakers_containers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -216,9 +216,9 @@
                     tools:itemCount="1"
                     tools:listitem="@layout/row_speaker" />
 
-            </com.shortstack.hackertracker.views.WellView>
+            </com.advice.schedule.views.WellView>
 
-            <com.shortstack.hackertracker.views.SkullView
+            <com.advice.schedule.views.SkullView
                 style="@style/Footer"
                 android:src="?footer_icon"
                 app:layout_constraintBottom_toBottomOf="parent"
@@ -231,4 +231,4 @@
 
     </androidx.core.widget.NestedScrollView>
 
-</com.shortstack.hackertracker.views.GlitchContainerView>
+</com.advice.schedule.views.GlitchContainerView>

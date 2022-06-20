@@ -1,4 +1,4 @@
-package com.shortstack.hackertracker.ui.search
+package com.advice.schedule.ui.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
