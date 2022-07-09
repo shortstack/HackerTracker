@@ -20,7 +20,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <com.shortstack.hackertracker.ui.information.info.views.HelpLineView
+    <com.advice.schedule.ui.information.info.views.HelpLineView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="?colorSurface" />
