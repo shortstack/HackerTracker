@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.advice.schedule.PreferenceViewModel
 import com.advice.schedule.models.local.Type
 import com.advice.schedule.ui.HackerTrackerViewModel
 import com.advice.schedule.ui.activities.MainActivity
@@ -15,6 +16,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class FilterFragment : Fragment() {
 
+    private val preferenceViewModel by sharedViewModel<PreferenceViewModel>()
     private val viewModel by sharedViewModel<HackerTrackerViewModel>()
 
     private var _binding: FilterFragmentBinding? = null
@@ -46,13 +48,17 @@ class FilterFragment : Fragment() {
 
         binding.hint.isVisible = true
         binding.hint.setOnCloseListener {
-            // todo: save it as hidden
+            preferenceViewModel.markFiltersTutorialAsComplete()
         }
 
         viewModel.types.observe(viewLifecycleOwner) {
             setTypes(it.data)
             val hasFilters = it.data?.any { it.isSelected }
 
+        }
+
+        preferenceViewModel.getFilterTutorial().observe(viewLifecycleOwner) { shouldShowTutorial ->
+            binding.hint.isVisible = shouldShowTutorial
         }
     }
 

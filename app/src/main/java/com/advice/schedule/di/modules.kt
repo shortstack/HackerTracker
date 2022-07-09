@@ -1,6 +1,7 @@
 package com.advice.schedule.di
 
 import androidx.work.WorkManager
+import com.advice.schedule.PreferenceViewModel
 import com.firebase.jobdispatcher.FirebaseJobDispatcher
 import com.firebase.jobdispatcher.GooglePlayDriver
 import com.google.gson.FieldNamingPolicy
@@ -34,6 +35,7 @@ val appModule = module {
 
 
     viewModel { HackerTrackerViewModel() }
+    viewModel { PreferenceViewModel() }
     viewModel { ScheduleViewModel() }
     viewModel { SpeakersViewModel() }
 

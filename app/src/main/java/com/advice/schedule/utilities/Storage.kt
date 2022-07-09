@@ -20,6 +20,8 @@ class Storage(context: Context, private val gson: Gson) {
         const val FILTER_BUTTON_SHOWN = "filter_button_shown"
         const val FORCE_TIME_ZONE_KEY = "force_time_zone"
         const val USER_ANALYTICS_KEY = "user_analytics"
+
+        const val TUTORIAL_FILTERS = "tutorial_filters"
     }
 
     private val preferences: SharedPreferences =
@@ -49,6 +51,11 @@ class Storage(context: Context, private val gson: Gson) {
             preferences.edit().putBoolean(EASTER_EGGS_ENABLED_KEY, value).apply()
         }
 
+    var tutorialFilters: Boolean
+        get() = preferences.getBoolean(TUTORIAL_FILTERS, true)
+        set(value) {
+            preferences.edit().putBoolean(TUTORIAL_FILTERS, value).apply()
+        }
 
     var preferredConference: Int
         get() = preferences.getInt(USER_CONFERENCE, -1)
