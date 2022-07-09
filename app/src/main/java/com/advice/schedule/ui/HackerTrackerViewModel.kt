@@ -218,12 +218,6 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
 
             result.value = Resource.loading(null)
 
-            result.addSource(bookmarks) {
-                val articles = articles.value?.data?.take(4) ?: emptyList()
-                val bookmarks = it.data?.filter { !it.hasFinished }?.take(3) ?: emptyList()
-                setHome(result, articles, bookmarks)
-            }
-
             result.addSource(articles) {
                 val articles = it.data?.take(4) ?: emptyList()
                 val bookmarks =
