@@ -9,6 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.advice.schedule.models.local.Type
 import com.advice.schedule.ui.activities.MainActivity
+import com.google.android.material.color.MaterialColors
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.ItemTypeBinding
 
@@ -21,7 +22,7 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
             val color = if (type.color == "#FFFFFF") {
                 val theme = (context as MainActivity).theme
                 val outValue = TypedValue()
-                //theme.resolveAttribute(R.attr.colorOnSurface, outValue, true)
+                theme.resolveAttribute(com.google.android.material.R.attr.colorOnSurface, outValue, true)
                 outValue.data
             } else {
                 Color.parseColor(type.color)
@@ -29,20 +30,17 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
 
             text.text = type.shortName
 
-            dot.setImageDrawable(
-                ContextCompat.getDrawable(context, R.drawable.chip_background_small)?.mutate()
-                    ?.apply { setTint(color) })
+            dot.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.chip_background_small)?.mutate()?.apply { setTint(color) })
             full.setImageDrawable(
-                ContextCompat.getDrawable(context, R.drawable.chip_background_rounded)?.mutate()
-                    ?.apply { setTint(color) })
+                ContextCompat.getDrawable(context, R.drawable.chip_background_rounded)?.mutate()?.apply { setTint(color) })
 
 
             val isDark = type.isSelected && type.color.isLightColor()
 
-//            val color1 = MaterialColors.getColor(context, R.attr.colorOnSecondary, Color.BLACK)
-//            val color2 = MaterialColors.getColor(context, R.attr.colorOnSurface, Color.BLACK)
+            val color1 = Color.BLACK
+            val color2 = Color.WHITE
 
-//            text.setTextColor(if (isDark) color1 else color2)
+            text.setTextColor(if (isDark) color1 else color2)
 
             dot.visibility = if (!type.isSelected) View.VISIBLE else View.GONE
             full.visibility = if (type.isSelected) View.VISIBLE else View.GONE
@@ -59,13 +57,7 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
 
     companion object {
         fun inflate(parent: ViewGroup): TypeViewHolder {
-            return TypeViewHolder(
-                ItemTypeBinding.inflate(
-                    LayoutInflater.from(parent.context),
-                    parent,
-                    false
-                )
-            )
+            return TypeViewHolder(ItemTypeBinding.inflate(LayoutInflater.from(parent.context), parent, false))
         }
     }
 }
