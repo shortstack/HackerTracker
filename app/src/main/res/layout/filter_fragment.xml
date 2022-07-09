@@ -22,13 +22,18 @@
             <androidx.appcompat.widget.Toolbar
                 android:id="@+id/toolbar"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:menu="@menu/filters">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/title"
                     style="@style/Toolbar.Text"
                     android:text="@string/alert_filter_title" />
+
+                <ImageView
+                    android:id="@+id/action"
+                    style="@style/ActionStyle"
+                    android:layout_marginEnd="16dp"
+                    android:src="@drawable/ic_close_white_24dp" />
 
             </androidx.appcompat.widget.Toolbar>
 

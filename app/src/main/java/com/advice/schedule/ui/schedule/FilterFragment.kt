@@ -41,9 +41,8 @@ class FilterFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.list.adapter = adapter
-        binding.toolbar.setOnMenuItemClickListener {
+        binding.action.setOnClickListener {
             viewModel.clearFilters()
-            true
         }
 
         binding.hint.isVisible = true
@@ -53,8 +52,8 @@ class FilterFragment : Fragment() {
 
         viewModel.types.observe(viewLifecycleOwner) {
             setTypes(it.data)
-            val hasFilters = it.data?.any { it.isSelected }
-
+            val hasFilters = it.data?.any { it.isSelected } ?: false
+            binding.action.isVisible = hasFilters
         }
 
         preferenceViewModel.getFilterTutorial().observe(viewLifecycleOwner) { shouldShowTutorial ->
