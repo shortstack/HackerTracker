@@ -41,12 +41,12 @@ class PanelsFragment : Fragment() {
 
         binding.bottomNavigation.setOnNavigationItemSelectedListener { it ->
             when (it.itemId) {
-                R.id.search -> {
-                    //showSearch()
+                R.id.nav_home -> {
+                    binding.overlappingPanels.closePanels()
                     false
                 }
-                -100 -> {
-                    binding.overlappingPanels.closePanels()
+                R.id.search -> {
+                    //showSearch()
                     false
                 }
                 R.id.nav_information -> {
