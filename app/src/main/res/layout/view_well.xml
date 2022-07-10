@@ -15,17 +15,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/action"
         app:layout_constraintStart_toStartOf="parent"
-
         app:layout_constraintTop_toTopOf="parent">
         <!--        -->
     </LinearLayout>
 
     <ImageView
         android:id="@+id/action"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
-        android:layout_gravity="center_vertical|end"
-        android:padding="4dp"
+        style="@style/ActionStyle"
         android:src="@drawable/ic_close_white_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
