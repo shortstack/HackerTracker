@@ -15,6 +15,7 @@ import com.advice.schedule.ui.themes.ThemesManager
 import com.advice.schedule.utilities.Analytics
 import com.advice.schedule.utilities.NotificationHelper
 import com.advice.schedule.utilities.Storage
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 
@@ -26,8 +27,10 @@ val appModule = module {
         GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES).create()
     }
     single { FirebaseJobDispatcher(GooglePlayDriver(get())) }
-    single { DatabaseManager(get()) }
+    single { DatabaseManager(get(), get()) }
     single { ThemesManager(get()) }
+
+    single { FirebaseCrashlytics.getInstance() }
 
     single { Analytics(get(), get()) }
     single { WorkManager.getInstance() }

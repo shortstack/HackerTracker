@@ -22,6 +22,7 @@ import com.advice.schedule.network.task.ReminderWorker
 import com.advice.schedule.utilities.MyClock
 import com.advice.schedule.utilities.Storage
 import com.advice.schedule.utilities.now
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.shortstack.hackertracker.BuildConfig
 import kotlinx.coroutines.tasks.await
 import java.io.File
@@ -29,7 +30,7 @@ import java.util.*
 import java.util.concurrent.TimeUnit
 
 
-class DatabaseManager(private val preferences: Storage) {
+class DatabaseManager(private val preferences: Storage, private val firebaseCrashlytics: FirebaseCrashlytics) {
 
     companion object {
         private const val CONFERENCES = "conferences"
@@ -169,13 +170,12 @@ class DatabaseManager(private val preferences: Storage) {
         return mutableLiveData
     }
 
-    fun getEvents(id: Conference, type: Type?): LiveData<List<Event>> {
-        return getSchedule()
-    }
-
-
     fun getSchedule(): MutableLiveData<List<Event>> {
         val mutableLiveData = MutableLiveData<List<Event>>()
+
+        firebaseCrashlytics.log("fetching schedule")
+        firebaseCrashlytics.setCustomKey("code", code)
+
 
         firestore.collection(CONFERENCES)
             .document(code)
