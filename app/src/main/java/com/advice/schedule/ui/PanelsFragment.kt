@@ -17,6 +17,8 @@ class PanelsFragment : Fragment() {
     private var _binding: PanelsFragmentBinding? = null
     private val binding get() = _binding!!
 
+    private var isOpen = false
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -55,8 +57,7 @@ class PanelsFragment : Fragment() {
             }
         }
 
-        binding.overlappingPanels.registerStartPanelStateListeners(object :
-            OverlappingPanelsLayout.PanelStateListener {
+        binding.overlappingPanels.registerStartPanelStateListeners(object : OverlappingPanelsLayout.PanelStateListener {
             override fun onPanelStateChange(panelState: PanelState) {
                 when (panelState) {
                     PanelState.Opening,
@@ -81,6 +82,11 @@ class PanelsFragment : Fragment() {
     }
 
     private fun hideBottomNavigation() {
+        if (!isOpen) {
+            return
+        }
+        isOpen = false
+        binding.bottomNavigation.clearAnimation()
         ObjectAnimator.ofFloat(
             binding.bottomNavigation,
             "translationY",
@@ -92,6 +98,11 @@ class PanelsFragment : Fragment() {
     }
 
     private fun showBottomNavigation() {
+        if (isOpen) {
+            return
+        }
+        isOpen = true
+        binding.bottomNavigation.clearAnimation()
         ObjectAnimator.ofFloat(binding.bottomNavigation, "translationY", 0f).apply {
             duration = ANIMATION_DURATION
             start()
@@ -107,6 +118,6 @@ class PanelsFragment : Fragment() {
     }
 
     companion object {
-        private const val ANIMATION_DURATION = 150L
+        private const val ANIMATION_DURATION = 250L
     }
 }
