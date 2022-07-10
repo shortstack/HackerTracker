@@ -67,7 +67,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
 
         val target = intent?.getLongExtra("target", -1L)
         if (target != null && target != -1L) {
-            navigate(target)
+            showEvent(target)
         }
     }
 
@@ -91,18 +91,25 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
         return super.onOptionsItemSelected(item)
     }
 
-    private fun setMainFragment(id: Int, title: String? = null, addToBackStack: Boolean) {
-        replaceFragment(getFragment(id), R.id.container, backStack = addToBackStack)
-
-        title?.let {
-            supportActionBar?.title = it
-        }
-    }
-
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         setMainFragment(item.itemId, item.title.toString(), false)
         binding.drawerLayout.closeDrawers()
         return true
+    }
+
+    override fun onBackStackChanged() {
+        val fragments = supportFragmentManager.fragments
+        val last = fragments.lastOrNull()
+
+        if (last is EventFragment || last is SpeakerFragment) {
+            secondaryVisible = true
+            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
+            binding.main.container.visibility = View.INVISIBLE
+        } else {
+            secondaryVisible = false
+            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
+            binding.main.container.visibility = View.VISIBLE
+        }
     }
 
     private fun getFragment(id: Int): Fragment {
@@ -127,96 +134,64 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
         return map[id]!!
     }
 
-    fun navigate(event: Event) {
-        navigate(event.id)
+    fun showEvent(event: Event) {
+        showEvent(event.id)
     }
 
-    fun navigate(id: Long) {
-        replaceFragment(EventFragment.newInstance(id), R.id.container_above, hasAnimation = true)
+    fun showEvent(id: Long) {
+        setAboveFragment(EventFragment.newInstance(id))
     }
 
-    fun navigate(speaker: Speaker?) {
+    fun showSpeaker(speaker: Speaker?) {
         speaker ?: return
-        replaceFragment(
-            SpeakerFragment.newInstance(speaker),
-            R.id.container_above,
-            hasAnimation = true
-        )
-    }
-
-    fun popBackStack() {
-        supportFragmentManager.popBackStack()
-    }
-
-    override fun onBackStackChanged() {
-        val fragments = supportFragmentManager.fragments
-        val last = fragments.lastOrNull()
-
-        if (last is EventFragment || last is SpeakerFragment) {
-            secondaryVisible = true
-            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED)
-            binding.main.container.visibility = View.INVISIBLE
-        } else {
-            secondaryVisible = false
-            binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
-            binding.main.container.visibility = View.VISIBLE
-        }
+        setAboveFragment(SpeakerFragment.newInstance(speaker))
     }
 
     fun showSearch() {
-        setMainFragment(R.id.search, getString(R.string.search), true)
+        setAboveFragment(SearchFragment.newInstance())
     }
 
-    fun showMap(location: Location) {
-        supportFragmentManager.popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE)
-
-        val fragment = MapsFragment.newInstance(location)
-        map[R.id.nav_map] = fragment
-
-        setMainFragment(R.id.nav_map, getString(R.string.map), true)
-    }
-
-    fun navigate(type: Type) {
-        replaceFragment(
-            CategoryFragment.newInstance(type),
-            R.id.container_above,
-            hasAnimation = true
-        )
+    fun showCategoryType(type: Type) {
+        setAboveFragment(CategoryFragment.newInstance(type))
     }
 
     fun showInformation() {
-        setMainFragment(R.id.nav_information, "", true)
+        setAboveFragment(InformationFragment.newInstance())
     }
 
     fun showMap() {
-        setMainFragment(R.id.nav_map, "", true)
+        setAboveFragment(MapsFragment.newInstance())
     }
 
     fun showSettings() {
-        setMainFragment(R.id.nav_settings, "", true)
+        setAboveFragment(SettingsFragment.newInstance())
     }
 
     fun showSchedule(location: Location) {
-        replaceFragment(
-            ScheduleFragment.newInstance(location),
-            R.id.container_above,
-            hasAnimation = true
-        )
+        setAboveFragment(ScheduleFragment.newInstance(location))
     }
 
     fun showSchedule(type: Type) {
-        replaceFragment(
-            ScheduleFragment.newInstance(type),
-            R.id.container_above,
-            hasAnimation = true
-        )
+        setAboveFragment(ScheduleFragment.newInstance(type))
     }
 
     fun showSchedule(speaker: Speaker) {
+        setAboveFragment(ScheduleFragment.newInstance(speaker))
+    }
+
+    private fun setMainFragment(id: Int, title: String? = null, addToBackStack: Boolean) {
+        replaceFragment(getFragment(id), R.id.container, backStack = addToBackStack)
+
+        title?.let {
+            supportActionBar?.title = it
+        }
+    }
+
+    fun setAboveFragment(fragment: Fragment, hasAnimation: Boolean = true) {
         replaceFragment(
-            ScheduleFragment.newInstance(speaker),
+            fragment,
             R.id.container_above,
-            hasAnimation = true
+            hasAnimation = hasAnimation
         )
     }
 }

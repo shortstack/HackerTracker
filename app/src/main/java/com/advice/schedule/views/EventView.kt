@@ -82,7 +82,7 @@ class EventView : FrameLayout, KoinComponent {
         updateBookmark(event)
 
         setOnClickListener {
-            (context as? MainActivity)?.navigate(event)
+            (context as? MainActivity)?.showEvent(event)
         }
 
         binding.starBar.setOnClickListener {

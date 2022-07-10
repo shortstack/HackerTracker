@@ -38,7 +38,7 @@ class SpeakerView(context: Context, speaker: Speaker) : LinearLayout(context) {
         binding.category.setBackgroundColor(color)
 
         setOnClickListener {
-            (context as? MainActivity)?.navigate(speaker)
+            (context as? MainActivity)?.showSpeaker(speaker)
         }
     }
 }

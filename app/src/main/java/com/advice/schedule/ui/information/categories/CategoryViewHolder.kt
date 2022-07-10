@@ -15,7 +15,7 @@ class CategoryViewHolder(private val binding: ItemCategoryBinding) :
         binding.categoryDescription.text = type.description
 
         binding.root.setOnClickListener {
-            (binding.root.context as MainActivity).navigate(type)
+            (binding.root.context as MainActivity).showCategoryType(type)
         }
     }
 

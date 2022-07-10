@@ -18,7 +18,7 @@ class EventViewHolder(private val view: View) : RecyclerView.ViewHolder(view) {
     }
 
     private fun showEventFragment(event: Event) {
-        (view.context as? MainActivity)?.navigate(event)
+        (view.context as? MainActivity)?.showEvent(event)
     }
 
     companion object {

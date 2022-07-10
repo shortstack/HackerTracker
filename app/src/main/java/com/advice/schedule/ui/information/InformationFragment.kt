@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.advice.schedule.database.DatabaseManager
-import com.advice.schedule.replaceFragment
 import com.advice.schedule.ui.activities.MainActivity
 import com.advice.schedule.ui.information.faq.FAQFragment
 import com.advice.schedule.ui.information.info.CodeOfConductFragment
@@ -15,7 +14,6 @@ import com.advice.schedule.ui.information.info.SupportHelplineFragment
 import com.advice.schedule.ui.information.info.WiFiFragment
 import com.advice.schedule.ui.information.speakers.SpeakersFragment
 import com.advice.schedule.ui.information.vendors.VendorsFragment
-import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.FragmentInformationBinding
 import org.koin.android.ext.android.inject
 
@@ -49,51 +47,27 @@ class InformationFragment : Fragment() {
         }
 
         binding.wifi.setOnClickListener {
-            (requireActivity() as MainActivity).replaceFragment(
-                WiFiFragment.newInstance(),
-                R.id.container,
-                backStack = true
-            )
+            (requireActivity() as MainActivity).setAboveFragment(WiFiFragment.newInstance(), hasAnimation = false)
         }
 
         binding.help.setOnClickListener {
-            (requireActivity() as MainActivity).replaceFragment(
-                SupportHelplineFragment.newInstance(),
-                R.id.container,
-                backStack = true
-            )
+            (requireActivity() as MainActivity).setAboveFragment(SupportHelplineFragment.newInstance(), hasAnimation = false)
         }
 
         binding.codeOfConduct.setOnClickListener {
-            (requireActivity() as MainActivity).replaceFragment(
-                CodeOfConductFragment.newInstance(),
-                R.id.container,
-                backStack = true
-            )
+            (requireActivity() as MainActivity).setAboveFragment(CodeOfConductFragment.newInstance(), hasAnimation = false)
         }
 
         binding.faq.setOnClickListener {
-            (requireActivity() as MainActivity).replaceFragment(
-                FAQFragment.newInstance(),
-                R.id.container,
-                backStack = true
-            )
+            (requireActivity() as MainActivity).setAboveFragment(FAQFragment.newInstance(), hasAnimation = false)
         }
 
         binding.vendors.setOnClickListener {
-            (requireActivity() as MainActivity).replaceFragment(
-                VendorsFragment.newInstance(),
-                R.id.container,
-                backStack = true
-            )
+            (requireActivity() as MainActivity).setAboveFragment(VendorsFragment.newInstance(), hasAnimation = false)
         }
 
         binding.speakers.setOnClickListener {
-            (requireActivity() as MainActivity).replaceFragment(
-                SpeakersFragment.newInstance(),
-                R.id.container,
-                backStack = true
-            )
+            (requireActivity() as MainActivity).setAboveFragment(SpeakersFragment.newInstance(), hasAnimation = false)
         }
     }
 

@@ -38,7 +38,7 @@ class SpeakerViewHolder(private val binding: RowSpeakerBinding) :
         category.setBackgroundColor(color)
 
         root.setOnClickListener {
-            (context as? MainActivity)?.navigate(speaker)
+            (context as? MainActivity)?.showSpeaker(speaker)
         }
     }
 
