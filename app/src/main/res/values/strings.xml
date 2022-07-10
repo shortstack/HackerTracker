@@ -21,6 +21,7 @@
     <string name="error_unable_to_sync">Unable to sync</string>
     <string name="no_maps">404</string>
     <string name="no_maps_to_show">Maps Not Found</string>
+    <string name="events_not_found">Events Not Found</string>
 
     <!-- Main Nav -->
     <string name="home">Home</string>

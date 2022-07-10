@@ -38,7 +38,6 @@
             android:layout_height="match_parent"
             android:visibility="gone"
             app:evMessage="@string/nothing_to_show"
-            app:evTitle="@string/nothing_here"
             tools:visibility="visible" />
 
         <androidx.core.widget.NestedScrollView

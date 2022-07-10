@@ -16,8 +16,11 @@ class EmptyView(context: Context, attrs: AttributeSet?) : FrameLayout(context, a
         val array = context.theme.obtainStyledAttributes(attrs, R.styleable.EmptyView, 0, 0)
 
         try {
-            if (array.hasValue(R.styleable.EmptyView_evTitle))
+            if (array.hasValue(R.styleable.EmptyView_evTitle)) {
                 binding.title.text = array.getString(R.styleable.EmptyView_evTitle)
+            } else {
+                binding.title.setText(R.string.error_title)
+            }
 
             if (array.hasValue(R.styleable.EmptyView_evMessage))
                 binding.message.text = array.getString(R.styleable.EmptyView_evMessage)

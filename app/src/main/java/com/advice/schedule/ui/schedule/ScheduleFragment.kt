@@ -152,7 +152,7 @@ class ScheduleFragment : Fragment() {
 
                     binding.daySelector.setDays(days)
 
-                    if (adapter.isEmpty()) {
+                    if (list.isEmpty()) {
                         showEmptyView()
                     }
 

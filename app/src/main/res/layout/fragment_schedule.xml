@@ -55,8 +55,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
-            app:evMessage="@string/nothing_to_show"
-            app:evTitle="@string/nothing_here" />
+            app:evMessage="@string/events_not_found"
+            tools:visibility="visible" />
 
         <ProgressBar
             android:id="@+id/loading_progress"
