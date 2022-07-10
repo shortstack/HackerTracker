@@ -20,5 +20,36 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 
+# Preserve annotations, line numbers, and source file names
+-keepattributes *Annotation*
+-keepattributes SourceFile,LineNumberTable
+-keep public class * extends java.lang.Exception
+-keep class com.crashlytics.** { *; }
+-dontwarn com.crashlytics.**
+
+-keepattributes Signature
+-keepattributes Exceptions
+
+-keep class com.advice.schedule.network.** { *; }
+-keep class com.advice.schedule.models.** { *; }
+-keep class com.advice.schedule.ui.themes.** { *; }
+-dontwarn com.advice.schedule.views.**
+
+-keep class com.advice.schedule.ui.home.HomeFragment { *; }
+-keep class com.advice.schedule.ui.schedule.ScheduleFragment { *; }
+-keep class com.advice.schedule.ui.maps.MapsFragment { *; }
+-keep class com.advice.schedule.ui.information.faq.FAQFragment { *; }
+-keep class com.advice.schedule.ui.information.vendors.VendorsFragment { *; }
+-keep class com.advice.schedule.ui.search.SearchFragment { *; }
+-keep class com.advice.schedule.ui.settings.SettingsFragment { *; }
+
 # AndroidPdfViewer
 -keep class com.shockwave.**
+
+-keep class android.support.v7.widget.SearchView { *; }
+
+# Parceler configuration
+-keep interface org.parceler.Parcel
+-keep @org.parceler.Parcel class * { *; }
+-keep class **$$Parcelable { *; }
+-keep class org.parceler.Parceler$$Parcels
