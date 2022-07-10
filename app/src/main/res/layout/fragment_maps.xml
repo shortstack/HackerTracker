@@ -50,6 +50,7 @@
         android:id="@+id/empty_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:visibility="gone"
         app:evIcon="@drawable/skull_lg"
         app:evMessage="@string/no_maps_to_show"
         app:evTitle="@string/no_maps"

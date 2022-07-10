@@ -1,14 +1,15 @@
 package com.advice.schedule.ui.maps
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.advice.schedule.Response
 import com.advice.schedule.models.firebase.FirebaseConferenceMap
 import com.advice.schedule.models.local.Location
 import com.advice.schedule.ui.HackerTrackerViewModel
@@ -46,45 +47,41 @@ class MapsFragment : Fragment() {
             requireActivity().onBackPressed()
         }
 
-
-        val mapsViewModel =
-            ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java]
-        mapsViewModel.maps.observe(viewLifecycleOwner, Observer {
-            val maps = it.data ?: emptyList()
-
-            when (maps.size) {
-                0 -> {
-                    binding.tabLayout.visibility = View.GONE
-                    binding.emptyView.visibility = View.VISIBLE
+        val mapsViewModel = ViewModelProvider(context as MainActivity)[HackerTrackerViewModel::class.java]
+        mapsViewModel.maps.observe(viewLifecycleOwner) {
+            if (it is Response.Success) {
+                val maps = it.data
+                when (maps.size) {
+                    0 -> {
+                        binding.tabLayout.visibility = View.GONE
+                        binding.emptyView.visibility = View.VISIBLE
+                    }
+                    1 -> {
+                        binding.tabLayout.visibility = View.GONE
+                        binding.emptyView.visibility = View.GONE
+                    }
+                    else -> {
+                        binding.tabLayout.visibility = View.VISIBLE
+                        binding.emptyView.visibility = View.GONE
+                    }
                 }
-                1 -> {
-                    binding.tabLayout.visibility = View.GONE
-                    binding.emptyView.visibility = View.GONE
-                }
-                else -> {
-                    binding.tabLayout.visibility = View.VISIBLE
-                    binding.emptyView.visibility = View.GONE
+                val adapter = PagerAdapter(requireActivity().supportFragmentManager, maps)
+                binding.pager.adapter = adapter
+
+                if (isFirstLoad) {
+                    isFirstLoad = false
+                    showSelectedMap(maps)
                 }
             }
-
-            val adapter = PagerAdapter(requireActivity().supportFragmentManager, maps)
-            binding.pager.adapter = adapter
-
-            if (isFirstLoad) {
-                isFirstLoad = false
-
-                showSelectedMap(maps)
-            }
-
-        })
+        }
 
         analytics.logCustom(Analytics.CustomEvent(Analytics.MAP_VIEW))
     }
 
-    private fun showSelectedMap(it: List<FirebaseConferenceMap>) {
+    private fun showSelectedMap(maps: List<FirebaseConferenceMap>) {
         val location = arguments?.getParcelable<Location>(EXTRA_LOCATION)
         if (location != null) {
-            val position = it.indexOfFirst { it.title == location.hotel }
+            val position = maps.indexOfFirst { it.title == location.hotel }
             if (position != -1)
                 binding.pager.currentItem = position
         }

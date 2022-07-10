@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.github.barteksc.pdfviewer.util.FitPolicy
 import com.shortstack.hackertracker.databinding.FragmentMapBinding
 import java.io.File
 
@@ -30,9 +31,12 @@ class MapFragment : androidx.fragment.app.Fragment() {
         } else {
             binding.progress.visibility = View.VISIBLE
 
-            binding.viewer.fromFile(file).onLoad {
-                binding.progress.visibility = View.GONE
-            }.load()
+            binding.viewer.fromFile(file)
+                .pageFitPolicy(FitPolicy.HEIGHT)
+                .onLoad { pages ->
+                    binding.progress.visibility = View.GONE
+                }
+                .load()
         }
     }
 
