@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.advice.schedule.ui.activities.MainActivity
 import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.PanelState
-import com.orhanobut.logger.Logger
-import com.advice.schedule.ui.activities.MainActivity
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.PanelsFragmentBinding
 
@@ -30,23 +29,13 @@ class PanelsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        window.decorView.systemUiVisibility =
-//            View.SYSTEM_UI_FLAG_LAYOUT_STABLE or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            window.statusBarColor = Color.TRANSPARENT
-//        }
-
         // force hide the bottom navigation bar
         binding.bottomNavigation.translationY = 300f
 
-        binding.bottomNavigation.setOnNavigationItemSelectedListener { it ->
+        binding.bottomNavigation.setOnNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.nav_home -> {
                     binding.overlappingPanels.closePanels()
-                    false
-                }
-                R.id.search -> {
-                    //showSearch()
                     false
                 }
                 R.id.nav_information -> {
@@ -77,8 +66,6 @@ class PanelsFragment : Fragment() {
                 }
             }
         })
-
-        Logger.e("Completed onCreate")
     }
 
     private fun showInformation() {
