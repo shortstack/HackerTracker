@@ -9,10 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-import com.github.stkent.amplify.tracking.Amplify
-import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
-import com.google.firebase.auth.FirebaseAuth
-import com.orhanobut.logger.Logger
 import com.advice.schedule.models.local.Event
 import com.advice.schedule.models.local.Location
 import com.advice.schedule.models.local.Speaker
@@ -27,6 +23,10 @@ import com.advice.schedule.ui.maps.MapsFragment
 import com.advice.schedule.ui.schedule.ScheduleFragment
 import com.advice.schedule.ui.search.SearchFragment
 import com.advice.schedule.ui.settings.SettingsFragment
+import com.github.stkent.amplify.tracking.Amplify
+import com.google.android.material.navigation.NavigationView.OnNavigationItemSelectedListener
+import com.google.firebase.auth.FirebaseAuth
+import com.orhanobut.logger.Logger
 import com.shortstack.hackertracker.BuildConfig
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.ActivityMainBinding
@@ -57,8 +57,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
             }
 
             setMainFragment(R.id.nav_home, getString(R.string.home), false)
-
-            showMap()
         }
 
         supportFragmentManager.addOnBackStackChangedListener(this)
@@ -78,7 +76,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
         auth.signInAnonymously().addOnCompleteListener(this) {
             if (it.isSuccessful) {
                 Logger.d("Successfully signed in. ${it.result}")
-
             } else {
                 Logger.e("Could not sign in.")
             }
@@ -116,9 +113,11 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
         if (id == R.id.nav_map)
             return MapsFragment.newInstance()
 
+        if (id == R.id.nav_home)
+            return PanelsFragment()
+
         if (map[id] == null) {
             map[id] = when (id) {
-                R.id.nav_home -> return PanelsFragment()//HomeFragment.newInstance()
                 R.id.nav_map -> MapsFragment.newInstance()
                 R.id.nav_settings -> SettingsFragment.newInstance()
                 R.id.search -> SearchFragment.newInstance()
