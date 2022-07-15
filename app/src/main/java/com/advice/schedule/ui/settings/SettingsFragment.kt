@@ -32,31 +32,6 @@ class SettingsFragment : PreferenceFragmentCompat() {
         val screen = preferenceManager.createPreferenceScreen(context)
 
         screen.apply {
-
-            // Change Theme
-//            addPreference(Preference(context).apply {
-//                title = getString(R.string.setting_change_theme)
-//                summary = storage.theme?.label
-//                key = CHANGE_THEME_KEY
-//
-//                setOnPreferenceClickListener {
-//                    showChangeThemeDialog()
-//                    true
-//                }
-//            })
-
-            // Change Conference
-            addPreference(Preference(context).apply {
-                title = getString(R.string.setting_change_conference)
-                summary = "DEF CON 28"
-                key = CHANGE_CONFERENCE_KEY
-
-                setOnPreferenceClickListener {
-                    //showChangeConferenceDialog()
-                    true
-                }
-            })
-
             // Timezone
             addPreference(SwitchPreference(context).apply {
                 title = getString(R.string.setting_time_zone)
