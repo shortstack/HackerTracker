@@ -170,7 +170,7 @@ class DaySelectorView(context: Context, attrs: AttributeSet?) : FrameLayout(cont
 
         children.clear()
 
-        val format = SimpleDateFormat("MMM d")
+        val format = SimpleDateFormat("MMMM d")
 
 
         for (index in 0..11) {
