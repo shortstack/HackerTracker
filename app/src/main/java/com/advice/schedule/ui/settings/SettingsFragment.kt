@@ -52,7 +52,7 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 key = CHANGE_CONFERENCE_KEY
 
                 setOnPreferenceClickListener {
-                    showChangeConferenceDialog()
+                    //showChangeConferenceDialog()
                     true
                 }
             })

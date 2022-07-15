@@ -5,9 +5,11 @@ import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.advice.schedule.ui.HackerTrackerViewModel
+import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.FragmentHomeBinding
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.util.*
@@ -49,13 +51,38 @@ class HomeFragment : Fragment() {
             }
         }
 
+        binding.header.setOnClickListener {
+            showConferenceChooseDialog()
+        }
+
         binding.loadingProgress.visibility = View.GONE
     }
 
+    private fun showConferenceChooseDialog() {
+        val conferences = viewModel.conferences.value ?: emptyList()
+        val element = viewModel.conference.value?.data ?: return
+        val selected = conferences.indexOf(element)
+
+        val items = conferences.map { it.name }.toTypedArray()
+
+        AlertDialog.Builder(requireContext(), R.style.MyAlertDialogStyle)
+            .setTitle(getString(R.string.choose_conference))
+            .setSingleChoiceItems(items, selected) { dialog, which ->
+                viewModel.changeConference(conferences[which])
+                dialog.dismiss()
+            }.show()
+    }
+
+    private var timer: CountDownTimer? = null
+
     private fun startCountdownTimer(startDate: Date) {
         val now = startDate.time - Date().time
+        binding.skull.setCountdown(now)
 
-        val timer = object : CountDownTimer(now, 1000) {
+        timer?.cancel()
+        timer = null
+
+        timer = object : CountDownTimer(now, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 binding.skull.setCountdown(millisUntilFinished)
             }
@@ -64,7 +91,7 @@ class HomeFragment : Fragment() {
                 binding.skull.setCountdown(0)
             }
         }
-        timer.start()
+        timer?.start()
     }
 
     companion object {

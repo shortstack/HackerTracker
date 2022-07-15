@@ -19,6 +19,8 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
 
     private val database: DatabaseManager by inject()
 
+    val conferences = database.conferences
+
     val conference: LiveData<Resource<Conference>>
     val events: LiveData<Resource<List<Event>>>
     val bookmarks: LiveData<Resource<List<Event>>>
@@ -302,5 +304,10 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
                 database.updateTypeIsSelected(it)
             }
         }
+    }
+
+    fun changeConference(conference: Conference) {
+        database.conference.value = null
+        database.changeConference(conference.id)
     }
 }
