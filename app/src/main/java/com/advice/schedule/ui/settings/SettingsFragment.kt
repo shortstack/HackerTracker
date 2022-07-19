@@ -40,17 +40,17 @@ class SettingsFragment : PreferenceFragmentCompat() {
                 key = Storage.FORCE_TIME_ZONE_KEY
             })
 
-            // Back Button
-            addPreference(SwitchPreference(context).apply {
-                title = getString(R.string.setting_back_button_drawer)
-                key = Storage.NAV_DRAWER_ON_BACK_KEY
-            })
+//            // Back Button
+//            addPreference(SwitchPreference(context).apply {
+//                title = getString(R.string.setting_back_button_drawer)
+//                key = Storage.NAV_DRAWER_ON_BACK_KEY
+//            })
 
-            // Showing filter button
-            addPreference(SwitchPreference(context).apply {
-                title = getString(R.string.setting_filter_button_shown)
-                key = Storage.FILTER_BUTTON_SHOWN
-            })
+//            // Showing filter button
+//            addPreference(SwitchPreference(context).apply {
+//                title = getString(R.string.setting_filter_button_shown)
+//                key = Storage.FILTER_BUTTON_SHOWN
+//            })
 
             // Easter Eggs
             addPreference(SwitchPreference(context).apply {
