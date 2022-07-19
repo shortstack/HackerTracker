@@ -1,10 +1,13 @@
 package com.advice.schedule.models
 
-import com.shortstack.hackertracker.models.firebase.FirebaseEvent
-import com.shortstack.hackertracker.models.firebase.FirebaseSpeaker
-import com.shortstack.hackertracker.models.local.Event
-import com.shortstack.hackertracker.setCurrentClock
-import com.shortstack.hackertracker.toEvent
+import com.advice.schedule.models.firebase.FirebaseEvent
+import com.advice.schedule.models.firebase.FirebaseSpeaker
+import com.advice.schedule.models.local.Event
+import com.advice.schedule.parse
+import com.advice.schedule.setCurrentClock
+import com.advice.schedule.toEvent
+import com.advice.schedule.utilities.getDateMidnight
+import io.mockk.InternalPlatformDsl.toStr
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -86,5 +89,23 @@ class EventTest {
         assertEquals(true, event.hasStarted)
         assertEquals(true, event.hasFinished)
         assertEquals(1.0f, event.progress)
+    }
+
+    @Test
+    fun `converting date without timezone `() {
+        val date = parse("2022-07-18T10:00:00.000-0700")
+
+        val midnight = getDateMidnight(date)
+
+        assertEquals("Mon Jul 18 00:00:00 PDT 2022", midnight.toString())
+    }
+
+    @Test
+    fun `converting date with Chicago timezone`() {
+        val date = parse("2022-07-18T10:00:00.000-0700")
+
+        val midnight = getDateMidnight(date, "America/Chicago")
+
+        assertEquals("Mon Jul 18 00:00:00 PDT 2022", midnight.toString())
     }
 }

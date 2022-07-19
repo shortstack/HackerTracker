@@ -3,9 +3,9 @@ package com.advice.schedule.database
 import androidx.work.OneTimeWorkRequest
 import androidx.work.WorkManager
 import com.nhaarman.mockitokotlin2.*
-import com.shortstack.hackertracker.models.firebase.FirebaseEvent
-import com.shortstack.hackertracker.setCurrentClock
-import com.shortstack.hackertracker.toEvent
+import com.advice.schedule.models.firebase.FirebaseEvent
+import com.advice.schedule.setCurrentClock
+import com.advice.schedule.toEvent
 import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.runBlocking
 import org.junit.Before

@@ -2,10 +2,14 @@ package com.advice.schedule.utils
 
 import android.content.Context
 import android.text.format.DateFormat
+import com.advice.schedule.isToday
+import com.advice.schedule.isTomorrow
+import com.advice.schedule.parse
+import com.advice.schedule.setCurrentClock
+import com.advice.schedule.utilities.TimeUtil
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.whenever
 import com.shortstack.hackertracker.*
-import com.shortstack.hackertracker.utilities.TimeUtil
 import io.mockk.every
 import io.mockk.mockkStatic
 import org.junit.Assert.assertEquals

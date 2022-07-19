@@ -1,7 +1,7 @@
 package com.advice.schedule.models
 
-import com.shortstack.hackertracker.models.firebase.FirebaseVendor
-import com.shortstack.hackertracker.toVendor
+import com.advice.schedule.models.firebase.FirebaseVendor
+import com.advice.schedule.toVendor
 import org.junit.Assert.assertEquals
 import org.junit.Test
 

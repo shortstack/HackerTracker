@@ -1,10 +1,10 @@
 package com.advice.schedule.database
 
-import com.shortstack.hackertracker.fromString
-import com.shortstack.hackertracker.models.firebase.FirebaseConference
-import com.shortstack.hackertracker.models.local.Conference
-import com.shortstack.hackertracker.setCurrentClock
-import com.shortstack.hackertracker.toConference
+import com.advice.schedule.fromString
+import com.advice.schedule.models.firebase.FirebaseConference
+import com.advice.schedule.models.local.Conference
+import com.advice.schedule.setCurrentClock
+import com.advice.schedule.toConference
 import org.junit.Assert.*
 import org.junit.Test
 
