@@ -80,7 +80,7 @@
                     android:layout_height="match_parent"
                     android:clipToPadding="false"
                     android:paddingTop="@dimen/recycler_view_padding_top"
-                    android:paddingBottom="@dimen/recycler_view_padding_bottom"
+                    android:paddingBottom="52dp"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="1"
                     tools:listitem="@layout/item_article" />
