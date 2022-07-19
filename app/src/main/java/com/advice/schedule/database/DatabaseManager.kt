@@ -95,12 +95,10 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
                 .get()
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
-                        val list = it.result?.toObjects(FirebaseConference::class.java)
-                            ?.filter { !it.hidden || App.isDeveloper }
-                            ?.map { it.toConference() }
-                            ?.sortedBy { it.startDate }
-
-                            ?: emptyList()
+                        val list = it.result.toObjectsOrEmpty(FirebaseConference::class.java)
+                            .filter { !it.hidden || App.isDeveloper }
+                            .map { it.toConference() }
+                            .sortedBy { it.startDate }
 
 
                         val con = getNextConference(preferences.preferredConference, list)
@@ -146,7 +144,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
             .addOnCompleteListener {
                 if (it.isSuccessful) {
                     val selected =
-                        it.result?.toObjects(FirebaseConference::class.java)?.firstOrNull()
+                        it.result.toObjectsOrEmpty(FirebaseConference::class.java).firstOrNull()
                             ?.toConference()
                     conference.postValue(selected)
                 }
@@ -159,7 +157,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
         firestore.collection(CONFERENCES)
             .addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
-                    val cons = snapshot?.toObjects(FirebaseConference::class.java)
+                    val cons = snapshot?.toObjectsOrEmpty(FirebaseConference::class.java)
                         ?.filter { !it.hidden || App.isDeveloper }
                         ?.map { it.toConference() }
 
@@ -182,7 +180,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
             .collection(EVENTS)
             .addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
-                    val events = snapshot?.toObjects(FirebaseEvent::class.java)
+                    val events = snapshot?.toObjectsOrEmpty(FirebaseEvent::class.java)
                         ?.filter { (!it.hidden || App.isDeveloper) }
                         ?.map { it.toEvent() }
 
@@ -198,7 +196,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
                             .addSnapshotListener { snapshot, exception ->
                                 if (exception == null) {
                                     val bookmarks =
-                                        snapshot?.toObjects(FirebaseBookmark::class.java)
+                                        snapshot?.toObjectsOrEmpty(FirebaseBookmark::class.java)
 
                                     bookmarks?.forEach { bookmark ->
                                         events?.find { it.id.toString() == bookmark.id }
@@ -223,7 +221,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
             .collection(TYPES)
             .addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
-                    val types = snapshot?.toObjects(FirebaseType::class.java)?.map { it.toType() }
+                    val types = snapshot?.toObjectsOrEmpty(FirebaseType::class.java)?.map { it.toType() }
 
                     val id = user?.uid
                     if (id != null) {
@@ -235,7 +233,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
                             .addSnapshotListener { snapshot, exception ->
                                 if (exception == null) {
                                     val bookmarks =
-                                        snapshot?.toObjects(FirebaseBookmark::class.java)
+                                        snapshot?.toObjectsOrEmpty(FirebaseBookmark::class.java)
 
                                     types?.forEach { type ->
                                         type.isSelected =
@@ -266,7 +264,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
             .limit(5)
             .get()
             .addOnSuccessListener {
-                val events = it.toObjects(FirebaseEvent::class.java)
+                val events = it.toObjectsOrEmpty(FirebaseEvent::class.java)
                     .filter { !it.hidden || App.isDeveloper }
                     .map { it.toEvent() }
 
@@ -285,7 +283,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
             .orderBy("updated_at", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
-                    val articles = snapshot?.toObjects(FirebaseArticle::class.java)
+                    val articles = snapshot?.toObjectsOrEmpty(FirebaseArticle::class.java)
                         ?.filter { !it.hidden || App.isDeveloper }
                         ?.map { it.toArticle() } ?: emptyList()
 
@@ -307,7 +305,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
             .collection(EVENTS)
             .get()
             .addOnSuccessListener {
-                val events = it.toObjects(FirebaseEvent::class.java)
+                val events = it.toObjectsOrEmpty(FirebaseEvent::class.java)
                     .filter { !it.hidden || App.isDeveloper }
                     .map { it.toEvent() }
 
@@ -318,7 +316,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
                     .collection(BOOKMARKS)
                     .get()
                     .addOnSuccessListener {
-                        val bookmarks = it.toObjects(FirebaseBookmark::class.java).map { it.id }
+                        val bookmarks = it.toObjectsOrEmpty(FirebaseBookmark::class.java).map { it.id }
 
                         val bookmarked = events.filter { it.id.toString() in bookmarks }.take(3)
                         bookmarked.forEach { it.isBookmarked = true }
@@ -341,7 +339,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
             .collection(FAQS)
             .get()
             .addOnSuccessListener {
-                val faqs = it.toObjects(FirebaseFAQ::class.java)
+                val faqs = it.toObjectsOrEmpty(FirebaseFAQ::class.java)
                     .map { it.toFAQ() }
                 mutableLiveData.postValue(faqs)
             }
@@ -358,7 +356,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
             .addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
                     val list =
-                        snapshot?.toObjects(FirebaseLocation::class.java)?.map { it.toLocation() }
+                        snapshot?.toObjectsOrEmpty(FirebaseLocation::class.java)?.map { it.toLocation() }
                     mutableLiveData.postValue(list)
                 }
             }
@@ -374,7 +372,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
             .collection(VENDORS)
             .get()
             .addOnSuccessListener {
-                val vendors = it.toObjects(FirebaseVendor::class.java)
+                val vendors = it.toObjectsOrEmpty(FirebaseVendor::class.java)
                     .filter { !it.hidden || App.isDeveloper }
                     .map { it.toVendor() }
 
@@ -391,7 +389,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
             .get()
             .await()
 
-        return snapshot.toObject(FirebaseEvent::class.java)?.toEvent()
+        return snapshot.toObjectOrNull(FirebaseEvent::class.java)?.toEvent()
     }
 
     fun updateBookmark(event: Event) {
@@ -492,7 +490,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
             .collection(SPEAKERS)
             .addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
-                    val speakers = snapshot?.toObjects(FirebaseSpeaker::class.java)
+                    val speakers = snapshot?.toObjectsOrEmpty(FirebaseSpeaker::class.java)
                         ?.filter { !it.hidden || App.isDeveloper }
                         ?.map { it.toSpeaker() }
                         ?.sortedBy { it.name.lowercase(Locale.getDefault()) }
@@ -513,7 +511,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
             .collection(EVENTS)
             .addSnapshotListener { snapshot, exception ->
                 if (exception == null) {
-                    val events = snapshot?.toObjects(FirebaseEvent::class.java)
+                    val events = snapshot?.toObjectsOrEmpty(FirebaseEvent::class.java)
                     val filtered =
                         events?.filter { it.speakers.firstOrNull { it.id == speaker.id } != null }
                             ?.map { it.toEvent() }

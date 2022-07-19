@@ -2,8 +2,10 @@ package com.advice.schedule
 
 import android.app.Activity
 import android.content.Context
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
@@ -14,12 +16,13 @@ import com.advice.schedule.models.firebase.*
 import com.advice.schedule.models.local.*
 import com.advice.schedule.utilities.MyClock
 import com.advice.schedule.utilities.now
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.QuerySnapshot
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
-import kotlin.collections.ArrayList
 
 fun Date.isToday(): Boolean {
     val current = Calendar.getInstance().now()
@@ -220,11 +223,29 @@ fun FirebaseFAQ.toFAQ() = FAQ(
 
 fun FragmentActivity.showKeyboard() {
     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED,0)
+    imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
 }
 
 fun FragmentActivity.hideKeyboard() {
     val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     val view = currentFocus ?: View(this)
     imm.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+fun <T> QuerySnapshot.toObjectsOrEmpty(@NonNull clazz: Class<T>): List<T> {
+    return try {
+        toObjects(clazz)
+    } catch (ex: Exception) {
+        Log.e("Extensions", "Could not map data to objects: " + ex.message)
+        return emptyList()
+    }
+}
+
+fun <T> DocumentSnapshot.toObjectOrNull(@NonNull clazz: Class<T>): T? {
+    return try {
+        toObject(clazz)
+    } catch (ex: Exception) {
+        Log.e("Extensions", "Could not map data to objects: " + ex.message)
+        return null
+    }
 }
