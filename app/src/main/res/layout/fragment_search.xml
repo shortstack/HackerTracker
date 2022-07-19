@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/status_bar_color"
@@ -52,9 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
-            app:evMessage="@string/nothing_to_show"
-            app:evTitle="@string/nothing_here"
-            tools:visibility="visible" />
+            app:evMessage="@string/nothing_to_show" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
@@ -64,7 +61,6 @@
             android:paddingTop="@dimen/recycler_view_padding_top"
             android:paddingBottom="@dimen/recycler_view_padding_bottom"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
 
         <ProgressBar
             android:id="@+id/loading_progress"

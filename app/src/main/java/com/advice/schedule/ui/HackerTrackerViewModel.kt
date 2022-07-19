@@ -189,23 +189,23 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
         search = Transformations.switchMap(query) { text ->
             val results = MediatorLiveData<List<Any>>()
 
-//            results.addSource(events) {
-//                val locations = locations.value?.data ?: emptyList()
-//                val speakers = speakers.value?.dObj ?: emptyList()
-//                setValue(results, text, it?.data ?: emptyList(), locations, speakers)
-//            }
-//
-//            results.addSource(locations) {
-//                val events = events.value?.data ?: emptyList()
-//                val speakers = speakers.value?.dObj ?: emptyList<Speaker>()
-//                setValue(results, text, events, it?.data ?: emptyList(), speakers)
-//            }
-//
-//            results.addSource(speakers) {
-//                val events = events.value?.data ?: emptyList()
-//                val locations = locations.value?.data ?: emptyList()
-//                setValue(results, text, events, locations, it?.dObj ?: emptyList())
-//            }
+            results.addSource(events) {
+                val locations = locations.value?.data ?: emptyList()
+                val speakers = speakers.value?.dObj as? List<Speaker> ?: emptyList()
+                setValue(results, text, it?.data ?: emptyList(), locations, speakers)
+            }
+
+            results.addSource(locations) {
+                val events = events.value?.data ?: emptyList()
+                val speakers = speakers.value?.dObj as? List<Speaker> ?: emptyList<Speaker>()
+                setValue(results, text, events, it?.data ?: emptyList(), speakers)
+            }
+
+            results.addSource(speakers) {
+                val events = events.value?.data ?: emptyList()
+                val locations = locations.value?.data as? List<Location> ?: emptyList()
+                setValue(results, text, events, locations, it?.dObj as? List<Speaker> ?: emptyList())
+            }
 
             return@switchMap results
         }
