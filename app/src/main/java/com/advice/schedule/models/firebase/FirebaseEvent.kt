@@ -2,6 +2,7 @@ package com.advice.schedule.models.firebase
 
 import android.os.Parcelable
 import com.google.firebase.Timestamp
+import com.google.gson.annotations.SerializedName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
@@ -13,7 +14,7 @@ data class FirebaseEvent(
     val description: String = "",
     val begin: String = "",
     val end: String = "",
-    val link: String = "",
+    val link: String? = "",
     val updated: String = "",
     val speakers: ArrayList<FirebaseSpeaker> = ArrayList(),
     val type: FirebaseType = FirebaseType(),
@@ -28,6 +29,9 @@ data class FirebaseEvent(
     val includes: String? = null,
     val download_url: String? = null,
     val tags: String? = null,
+
+    @SerializedName("tags_ids")
+    val tagsIds: List<Long>? = null,
 
     val hidden: Boolean = false
 ) : Parcelable

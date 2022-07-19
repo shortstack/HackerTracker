@@ -19,7 +19,7 @@ data class Event(
     val _description: String,
     val start: Date,
     val end: Date,
-    val link: String,
+    val link: String?,
     val updated: String,
     val speakers: List<Speaker>,
     val types: List<Type>,
