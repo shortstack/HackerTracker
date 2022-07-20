@@ -4,7 +4,7 @@
     <style name="Theme.App" parent="Theme.MaterialComponents.NoActionBar">
 
         <item name="footer_icon">@drawable/skull</item>
-        <item name="footer_label">Developer</item>
+        <item name="footer_label"></item>
 
         <item name="colorPrimary">@color/bubble</item>
         <item name="colorPrimaryVariant">@color/green</item>

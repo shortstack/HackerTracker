@@ -15,7 +15,7 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
         <item name="footer_icon">@drawable/skull</item>
-        <item name="footer_label">Developer</item>
+        <item name="footer_label"></item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
