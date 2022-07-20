@@ -526,13 +526,11 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
     fun getMaps(conference: Conference): MutableLiveData<List<FirebaseConferenceMap>> {
         val mutableLiveData = MutableLiveData<List<FirebaseConferenceMap>>()
 
-        if (conference.code == "DEFCON28")
-            return mutableLiveData
-
         val list = ArrayList<FirebaseConferenceMap>()
 
         val maps = conference.maps
         if (maps.isEmpty()) {
+            mutableLiveData.postValue(emptyList())
             return mutableLiveData
         }
 
