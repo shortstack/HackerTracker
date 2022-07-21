@@ -40,11 +40,13 @@
         android:id="@+id/tab_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="0dp"
         android:background="?colorSurface"
         android:minHeight="?attr/actionBarSize"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:tabIndicatorGravity="top"
+        app:tabMode="auto"
+        app:tabTextColor="@color/white" />
 
     <com.advice.schedule.views.EmptyView
         android:id="@+id/empty_view"
