@@ -16,6 +16,7 @@ import com.advice.schedule.models.firebase.*
 import com.advice.schedule.models.local.*
 import com.advice.schedule.utilities.MyClock
 import com.advice.schedule.utilities.now
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
 import java.text.SimpleDateFormat
@@ -136,31 +137,18 @@ fun FirebaseLocation.toLocation() = Location(
 )
 
 fun FirebaseEvent.toEvent(): Event {
-    val element = type.toType()
-    val links = if (conference.contains("DEFCON") && links.isEmpty()) {
-        val urls = extractUrls(description)
-        urls.map { it.toAction() }
-    } else {
-        links.map { it.toAction() }
-    }
-
-    val types = listOf(element)
-
-    val body = if (android_description.isNotBlank()) {
-        android_description
-    } else {
-        description
-    }
+    val links = links.map { it.toAction() }
+    val types = listOf(type.toType())
 
     return Event(
         id,
         conference,
         title,
-        body,
-        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(begin),
-        SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").parse(end),
-        link,
-        updated,
+        android_description,
+        begin_timestamp,
+        end_timestamp,
+        //todo:
+        updated_timestamp.seconds.toString(),
         speakers.map { it.toSpeaker() },
         types,
         location.toLocation(),
@@ -168,29 +156,12 @@ fun FirebaseEvent.toEvent(): Event {
     )
 }
 
-private fun String.toAction() =
-    Action(Action.getLabel(this), this)
+fun Timestamp.toDate(): Date {
+    return Date(seconds * 1000)
+}
 
 private fun FirebaseAction.toAction() =
     Action(this.label, this.url)
-
-private fun extractUrls(text: String): List<String> {
-    val containedUrls: MutableList<String> =
-        ArrayList()
-    val urlRegex =
-        "((https?|ftp|gopher|telnet|file):((//)|(\\\\))+[\\w\\d:#@%/;$()~_?\\+-=\\\\\\.&]*)"
-    val pattern: Pattern = Pattern.compile(urlRegex, Pattern.CASE_INSENSITIVE)
-    val urlMatcher: Matcher = pattern.matcher(text)
-    while (urlMatcher.find()) {
-        containedUrls.add(
-            text.substring(
-                urlMatcher.start(0),
-                urlMatcher.end(0)
-            )
-        )
-    }
-    return containedUrls
-}
 
 fun FirebaseSpeaker.toSpeaker() = Speaker(
     id,

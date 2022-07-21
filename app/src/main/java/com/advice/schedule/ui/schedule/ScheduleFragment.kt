@@ -190,7 +190,7 @@ class ScheduleFragment : Fragment() {
         val index = data.indexOf(element)
 
         val x = data.subList(index, event).filterIsInstance<Event>()
-            .firstOrNull { it.start.time != first.start.time } == null
+            .firstOrNull { it.start.toDate().time != first.start.toDate().time } == null
         if (!x) {
             return event
         }

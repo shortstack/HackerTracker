@@ -396,7 +396,7 @@ class DatabaseManager(private val preferences: Storage, private val firebaseCras
         val tag = "reminder_" + event.id
 
         if (event.isBookmarked) {
-            val delay = event.start.time - MyClock().now().time - (1000 * 20 * 60)
+            val delay = event.start.toDate().time - MyClock().now().time - (1000 * 20 * 60)
 
             if (delay > 0) {
                 val data = workDataOf(

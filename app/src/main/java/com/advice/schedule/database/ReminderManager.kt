@@ -28,7 +28,7 @@ class ReminderManager(
         val start = event.start
         val now = MyClock().now()
 
-        val delay = start.time - now.time - TWENTY_MINUTES_BEFORE
+        val delay = start.toDate().time - now.time - TWENTY_MINUTES_BEFORE
 
         if (delay < 0) {
             return

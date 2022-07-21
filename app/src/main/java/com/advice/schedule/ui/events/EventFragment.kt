@@ -145,14 +145,14 @@ class EventFragment : Fragment() {
 
     private fun getFullTimeStamp(context: Context, event: Event): String {
         val (begin, end) = getTimeStamp(context, event)
-        val timestamp = TimeUtil.getDateStamp(event.start)
+        val timestamp = TimeUtil.getDateStamp(event.start.toDate())
 
         return String.format(context.getString(R.string.timestamp_full), timestamp, begin, end)
     }
 
     private fun getTimeStamp(context: Context, event: Event): Pair<String, String> {
-        val begin = TimeUtil.getTimeStamp(context, event.start)
-        val end = TimeUtil.getTimeStamp(context, event.end)
+        val begin = TimeUtil.getTimeStamp(context, event.start.toDate())
+        val end = TimeUtil.getTimeStamp(context, event.end.toDate())
         return Pair(begin, end)
     }
 

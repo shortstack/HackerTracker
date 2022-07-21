@@ -97,7 +97,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
                 if (it.value.isNotEmpty()) {
                     val group = it.value.sortedWith(compareBy({ it.types.first().shortName }, { it.location.name }))
 
-                    group.forEach { event -> event.key = it.key.time }
+                    group.forEach { event -> event.key = it.key.toDate().time }
 
                     result.addAll(group)
                 }
@@ -181,7 +181,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
 
     fun getDateOfPosition(index: Int): Date {
         return when (val obj = collection[index]) {
-            is Event -> obj.start
+            is Event -> obj.start.toDate()
             is Day -> Date(obj.time)
             else -> TODO()
         }

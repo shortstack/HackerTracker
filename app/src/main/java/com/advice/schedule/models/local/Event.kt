@@ -2,10 +2,11 @@ package com.advice.schedule.models.local
 
 import android.content.Context
 import android.os.Parcelable
-import com.advice.schedule.App
 import com.advice.schedule.utilities.MyClock
 import com.advice.schedule.utilities.TimeUtil
+import com.advice.schedule.utilities.getDateMidnight
 import com.advice.schedule.utilities.now
+import com.google.firebase.Timestamp
 import com.shortstack.hackertracker.R
 import kotlinx.android.parcel.Parcelize
 import java.text.SimpleDateFormat
@@ -17,9 +18,8 @@ data class Event(
     val conference: String,
     val title: String,
     val _description: String,
-    val start: Date,
-    val end: Date,
-    val link: String?,
+    val start: Timestamp,
+    val end: Timestamp,
     val updated: String,
     val speakers: List<Speaker>,
     val types: List<Type>,
@@ -31,32 +31,21 @@ data class Event(
 
     val progress: Float
         get() {
-            val currentDate = MyClock().now()
-
-            if (currentDate.before(start))
-                return -1f
-
-            if (currentDate.after(end))
-                return 1.0f
-
-            val length = ((end.time - start.time) / 1000 / 60).toFloat()
-            val p = ((end.time - currentDate.time) / 1000 / 60).toFloat()
-
-            val l = p / length
-
-            return Math.min(1.0f, 1 - l)
+            return 0f
         }
 
     val hasFinished: Boolean
-        get() = progress >= 1.0f
+        get() {
+            return end.compareTo(Timestamp.now()) == 1
+        }
 
     val hasStarted: Boolean
-        get() = progress >= 0.0f
+        get() =  start.compareTo(Timestamp.now()) == -1
 
     val date: Date
         get() {
             return Calendar.getInstance().apply {
-                time = start
+                time = start.toDate()
 
                 set(Calendar.HOUR_OF_DAY, 0)
                 set(Calendar.MINUTE, 0)
@@ -67,29 +56,16 @@ data class Event(
 
     val adjustedDate: Date
         get() {
-            return Calendar.getInstance().apply {
-                if (App.instance.storage.forceTimeZone) {
-                    val timezone =
-                        App.instance.database.conference.value?.timezone ?: "America/Los_Angeles"
-                    timeZone = TimeZone.getTimeZone(timezone)
-                }
-
-                time = start
-
-                set(Calendar.HOUR_OF_DAY, 0)
-                set(Calendar.MINUTE, 0)
-                set(Calendar.SECOND, 0)
-                set(Calendar.MILLISECOND, 0)
-            }.time
+            return getDateMidnight(start.toDate())
         }
 
     fun getFullTimeStamp(context: Context): String {
-        val date = TimeUtil.getDateStamp(start)
+        val date = TimeUtil.getDateStamp(start.toDate())
 
         val time = if (android.text.format.DateFormat.is24HourFormat(context)) {
-            SimpleDateFormat("HH:mm").format(start)
+            SimpleDateFormat("HH:mm").format(start.toDate())
         } else {
-            SimpleDateFormat("h:mm aa").format(start)
+            SimpleDateFormat("h:mm aa").format(start.toDate())
         }
 
         return String.format(context.getString(R.string.timestamp_start), date, time)

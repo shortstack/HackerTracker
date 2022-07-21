@@ -2,36 +2,35 @@ package com.advice.schedule.models.firebase
 
 import android.os.Parcelable
 import com.google.firebase.Timestamp
-import com.google.gson.annotations.SerializedName
+import com.google.firebase.firestore.PropertyName
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class FirebaseEvent(
+    @PropertyName("id")
     val id: Long = -1,
+    @PropertyName("conference")
     val conference: String = "",
+    @PropertyName("title")
     val title: String = "",
+    @PropertyName("android_description")
     val android_description: String = "",
-    val description: String = "",
-    val begin: String = "",
-    val end: String = "",
-    val link: String? = "",
-    val updated: String = "",
+
+    @PropertyName("speakers")
     val speakers: ArrayList<FirebaseSpeaker> = ArrayList(),
+    @PropertyName("type")
     val type: FirebaseType = FirebaseType(),
+    @PropertyName("location")
     val location: FirebaseLocation = FirebaseLocation(),
-    val links: List<FirebaseAction> = ArrayList(),
+    @PropertyName("links")
+    val links: List<FirebaseAction> = emptyList(),
 
-    val youtube_url: String? = null,
-    val begin_timestamp: Timestamp? = null,
-    val end_timestamp: Timestamp? = null,
-    val updated_timestamp: Timestamp? = null,
-    val internal_notes: String? = null,
-    val includes: String? = null,
-    val download_url: String? = null,
-    val tags: String? = null,
-
-    @SerializedName("tags_ids")
-    val tagsIds: List<Long>? = null,
-
+    @PropertyName("begin_timestamp")
+    val begin_timestamp: Timestamp = Timestamp.now(),
+    @PropertyName("end_timestamp")
+    val end_timestamp: Timestamp = Timestamp.now(),
+    @PropertyName("updated_timestamp")
+    val updated_timestamp: Timestamp = Timestamp.now(),
+    @PropertyName("hidden")
     val hidden: Boolean = false
 ) : Parcelable
