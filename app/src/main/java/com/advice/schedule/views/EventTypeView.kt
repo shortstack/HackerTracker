@@ -24,10 +24,11 @@ class EventTypeView(context: Context, attrs: AttributeSet) : LinearLayout(contex
         try {
             val showDot = array.getBoolean(R.styleable.EventView_eventView_showDot, true)
             binding.eventTypeDot.isVisible = showDot
+            val hasSpacer = array.getBoolean(R.styleable.EventView_eventView_spacer, false)
+            binding.spacer.isVisible = hasSpacer
         } finally {
             array.recycle()
         }
-
     }
 
     fun render(type: Type) {
