@@ -38,8 +38,7 @@
                 android:layout_gravity="center"
                 android:visibility="gone"
                 app:evTitle="@string/error_title"
-                tools:evMessage="Speakers not found"
-                tools:visibility="visible" />
+                tools:evMessage="Speakers not found" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list"
@@ -50,8 +49,7 @@
                 android:paddingBottom="@dimen/recycler_view_padding_bottom"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="1"
-                tools:listitem="@layout/row_speaker" />
-
+                tools:listitem="@layout/row_faq" />
 
             <ProgressBar
                 android:id="@+id/loading_progress"
