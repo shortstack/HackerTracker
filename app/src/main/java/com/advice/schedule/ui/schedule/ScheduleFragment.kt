@@ -40,9 +40,12 @@ class ScheduleFragment : Fragment(), KoinComponent {
     private var _binding: FragmentScheduleBinding? = null
     private val binding get() = _binding!!
 
-    private val adapter: ScheduleAdapter = ScheduleAdapter()
+    private val adapter = ScheduleAdapter()
+    private val decoration = StickyRecyclerHeadersDecoration(adapter)
 
     private var shouldScroll = true
+
+    private var forceTimeZone = storage.forceTimeZone
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -94,7 +97,6 @@ class ScheduleFragment : Fragment(), KoinComponent {
             (parentFragment as PanelsFragment).openEndPanel()
         }
 
-        val decoration = StickyRecyclerHeadersDecoration(adapter)
         binding.list.addItemDecoration(decoration)
 
         binding.list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
@@ -169,13 +171,20 @@ class ScheduleFragment : Fragment(), KoinComponent {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
+    fun invalidate() {
         if (storage.fabShown) {
             binding.filter.show()
         } else {
             binding.filter.hide()
         }
+
+        if (forceTimeZone == storage.forceTimeZone) {
+            return
+        }
+        forceTimeZone = storage.forceTimeZone
+
+        adapter.refresh()
+        decoration.invalidateHeaders()
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {

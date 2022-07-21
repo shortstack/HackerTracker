@@ -14,6 +14,7 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.transition.Fade
 import com.advice.schedule.models.firebase.*
 import com.advice.schedule.models.local.*
+import com.advice.schedule.ui.PanelsFragment
 import com.advice.schedule.utilities.MyClock
 import com.advice.schedule.utilities.now
 import com.google.firebase.Timestamp
@@ -201,6 +202,10 @@ fun FragmentActivity.hideKeyboard() {
     val imm = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
     val view = currentFocus ?: View(this)
     imm.hideSoftInputFromWindow(view.windowToken, 0)
+}
+
+fun <T> List<Fragment>.get(clazz: Class<T>): T {
+    return first { it::class.java == clazz } as T
 }
 
 fun <T> QuerySnapshot.toObjectsOrEmpty(@NonNull clazz: Class<T>): List<T> {

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
+import com.advice.schedule.get
 import com.advice.schedule.models.local.Event
 import com.advice.schedule.models.local.Location
 import com.advice.schedule.models.local.Speaker
@@ -109,6 +110,9 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
             secondaryVisible = false
             binding.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_UNLOCKED)
             binding.main.container.visibility = View.VISIBLE
+
+            val panels = fragments.get(PanelsFragment::class.java)
+            panels.invalidate()
         }
     }
 

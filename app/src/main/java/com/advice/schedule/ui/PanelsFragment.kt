@@ -6,7 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.advice.schedule.get
 import com.advice.schedule.ui.activities.MainActivity
+import com.advice.schedule.ui.schedule.ScheduleFragment
 import com.discord.panels.OverlappingPanelsLayout
 import com.discord.panels.PanelState
 import com.shortstack.hackertracker.R
@@ -57,7 +59,8 @@ class PanelsFragment : Fragment() {
             }
         }
 
-        binding.overlappingPanels.registerStartPanelStateListeners(object : OverlappingPanelsLayout.PanelStateListener {
+        binding.overlappingPanels.registerStartPanelStateListeners(object :
+            OverlappingPanelsLayout.PanelStateListener {
             override fun onPanelStateChange(panelState: PanelState) {
                 when (panelState) {
                     PanelState.Opening,
@@ -115,6 +118,11 @@ class PanelsFragment : Fragment() {
 
     fun openEndPanel() {
         binding.overlappingPanels.openEndPanel()
+    }
+
+    fun invalidate() {
+        val schedule = childFragmentManager.fragments.get(ScheduleFragment::class.java)
+        schedule.invalidate()
     }
 
     companion object {

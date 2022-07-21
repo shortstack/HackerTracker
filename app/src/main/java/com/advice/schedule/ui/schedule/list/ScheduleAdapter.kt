@@ -3,7 +3,6 @@ package com.advice.schedule.ui.schedule.list
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
-import com.advice.timehop.StickyRecyclerHeadersAdapter
 import com.advice.schedule.Status
 import com.advice.schedule.models.Day
 import com.advice.schedule.models.Time
@@ -11,10 +10,9 @@ import com.advice.schedule.models.local.Event
 import com.advice.schedule.ui.schedule.DayViewHolder
 import com.advice.schedule.ui.schedule.EventViewHolder
 import com.advice.schedule.ui.schedule.TimeViewHolder
-import com.advice.schedule.utilities.TimeUtil
 import com.advice.schedule.views.EventView
+import com.advice.timehop.StickyRecyclerHeadersAdapter
 import java.util.*
-import kotlin.collections.ArrayList
 
 class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
     StickyRecyclerHeadersAdapter<RecyclerView.ViewHolder> {
@@ -95,7 +93,10 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
 
             it.value.groupBy { it.start }.toSortedMap().forEach {
                 if (it.value.isNotEmpty()) {
-                    val group = it.value.sortedWith(compareBy({ it.types.first().shortName }, { it.location.name }))
+                    val group = it.value.sortedWith(
+                        compareBy({ it.types.first().shortName },
+                            { it.location.name })
+                    )
 
                     group.forEach { event -> event.key = it.key.toDate().time }
 
@@ -116,7 +117,12 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
         }
 
         val elements = getFormattedElements(list)
+        setElements(elements)
 
+        return collection
+    }
+
+    private fun setElements(elements: List<Any>, forceRefresh: Boolean = false) {
         val result = DiffUtil.calculateDiff(object : DiffUtil.Callback() {
             override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
                 val left = collection[oldItemPosition]
@@ -138,6 +144,10 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
                 val left = collection[oldItemPosition]
                 val right = elements[newItemPosition]
 
+                if (forceRefresh) {
+                    return false
+                }
+
                 if (left is Event && right is Event) {
                     return left.updated == right.updated && left.isBookmarked == right.isBookmarked
                             && left.title == right.title && left.location.name == right.location.name
@@ -146,15 +156,17 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
                 }
                 return false
             }
-
         })
 
         result.dispatchUpdatesTo(this)
 
         collection.clear()
         collection.addAll(elements)
+    }
 
-        return collection
+    fun refresh() {
+        val elements = collection.toList()
+        setElements(elements, forceRefresh = true)
     }
 
     fun isEmpty() = state == Status.SUCCESS && collection.isEmpty()
