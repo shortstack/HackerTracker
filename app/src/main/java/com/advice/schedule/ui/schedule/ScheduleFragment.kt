@@ -11,7 +11,6 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
-import com.advice.timehop.StickyRecyclerHeadersDecoration
 import com.advice.schedule.Response
 import com.advice.schedule.models.Day
 import com.advice.schedule.models.local.Event
@@ -21,15 +20,20 @@ import com.advice.schedule.models.local.Type
 import com.advice.schedule.ui.PanelsFragment
 import com.advice.schedule.ui.activities.MainActivity
 import com.advice.schedule.ui.schedule.list.ScheduleAdapter
+import com.advice.schedule.utilities.Storage
 import com.advice.schedule.views.DaySelectorView
+import com.advice.timehop.StickyRecyclerHeadersDecoration
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.FragmentScheduleBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.koin.core.KoinComponent
+import org.koin.core.inject
 import java.util.*
-import kotlin.collections.ArrayList
 
 
-class ScheduleFragment : Fragment() {
+class ScheduleFragment : Fragment(), KoinComponent {
+
+    private val storage by inject<Storage>()
 
     private val viewModel by viewModel<ScheduleViewModel>()
 
@@ -162,6 +166,15 @@ class ScheduleFragment : Fragment() {
                     showErrorView(response.exception.message)
                 }
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (storage.fabShown) {
+            binding.filter.show()
+        } else {
+            binding.filter.hide()
         }
     }
 

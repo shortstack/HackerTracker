@@ -39,6 +39,12 @@ class Storage(context: Context, private val gson: Gson) {
             preferences.edit().putBoolean(NAV_DRAWER_ON_BACK_KEY, value).apply()
         }
 
+    var fabShown: Boolean
+        get() = preferences.getBoolean(FILTER_BUTTON_SHOWN, true)
+        set(value) {
+            preferences.edit().putBoolean(FILTER_BUTTON_SHOWN, value).apply()
+        }
+
     var forceTimeZone: Boolean
         get() = preferences.getBoolean(FORCE_TIME_ZONE_KEY, true)
         set(value) {
