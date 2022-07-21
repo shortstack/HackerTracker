@@ -14,17 +14,13 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.transition.Fade
 import com.advice.schedule.models.firebase.*
 import com.advice.schedule.models.local.*
-import com.advice.schedule.ui.PanelsFragment
 import com.advice.schedule.utilities.MyClock
 import com.advice.schedule.utilities.now
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentSnapshot
 import com.google.firebase.firestore.QuerySnapshot
-import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.TimeUnit
-import java.util.regex.Matcher
-import java.util.regex.Pattern
 
 fun Date.isToday(): Boolean {
     val current = Calendar.getInstance().now()
@@ -100,17 +96,24 @@ fun AppCompatActivity.replaceFragment(
     }
 }
 
-fun FirebaseConference.toConference() = Conference(
-    id,
-    name,
-    description,
-    codeofconduct,
-    code,
-    maps,
-    start_timestamp.toDate(),
-    end_timestamp.toDate(),
-    timezone
-)
+fun FirebaseConference.toConference(): Conference? {
+    return try {
+        Conference(
+            id,
+            name,
+            description,
+            codeofconduct,
+            code,
+            maps,
+            start_timestamp.toDate(),
+            end_timestamp.toDate(),
+            timezone
+        )
+    } catch (ex: Exception) {
+        Log.e("Extensions", "Could not map data to Conference: " + ex.message)
+        null
+    }
+}
 
 fun FirebaseType.toType(): Type {
     val actions = ArrayList<Action>()
@@ -131,30 +134,42 @@ fun FirebaseType.toType(): Type {
     )
 }
 
-fun FirebaseLocation.toLocation() = Location(
-    name,
-    hotel,
-    conference
-)
+fun FirebaseLocation.toLocation(): Location? {
+    return try {
+        Location(
+            name,
+            hotel,
+            conference
+        )
+    } catch (ex: Exception) {
+        Log.e("Extensions", "Could not map data to Location: " + ex.message)
+        null
+    }
+}
 
-fun FirebaseEvent.toEvent(): Event {
-    val links = links.map { it.toAction() }
-    val types = listOf(type.toType())
+fun FirebaseEvent.toEvent(): Event? {
+    try {
+        val links = links.map { it.toAction() }
+        val types = listOf(type.toType())
 
-    return Event(
-        id,
-        conference,
-        title,
-        android_description,
-        begin_timestamp,
-        end_timestamp,
-        //todo:
-        updated_timestamp.seconds.toString(),
-        speakers.map { it.toSpeaker() },
-        types,
-        location.toLocation(),
-        links
-    )
+        return Event(
+            id,
+            conference,
+            title,
+            android_description,
+            begin_timestamp,
+            end_timestamp,
+            //todo:
+            updated_timestamp.seconds.toString(),
+            speakers.mapNotNull { it.toSpeaker() },
+            types,
+            location.toLocation()!!,
+            links
+        )
+    } catch (ex: Exception) {
+        Log.e("Extensions", "Could not map data to Event: " + ex.message)
+        return null
+    }
 }
 
 fun Timestamp.toDate(): Date {
@@ -164,34 +179,62 @@ fun Timestamp.toDate(): Date {
 private fun FirebaseAction.toAction() =
     Action(this.label, this.url)
 
-fun FirebaseSpeaker.toSpeaker() = Speaker(
-    id,
-    name,
-    description,
-    link,
-    twitter,
-    title
-)
+fun FirebaseSpeaker.toSpeaker(): Speaker? {
+    return try {
+        Speaker(
+            id,
+            name,
+            description,
+            link,
+            twitter,
+            title
+        )
+    } catch (ex: Exception) {
+        Log.e("Extensions", "Could not map data to Speaker: " + ex.message)
+        null
+    }
+}
 
-fun FirebaseVendor.toVendor() = Vendor(
-    id,
-    name,
-    description,
-    link,
-    partner
-)
+fun FirebaseVendor.toVendor(): Vendor? {
+    return try {
+        Vendor(
+            id,
+            name,
+            description,
+            link,
+            partner
+        )
+    } catch (ex: Exception) {
+        Log.e("Extensions", "Could not map data to Vendor: " + ex.message)
+        null
+    }
+}
 
-fun FirebaseArticle.toArticle() = Article(
-    id,
-    name,
-    text
-)
+fun FirebaseArticle.toArticle(): Article? {
+    return try {
+        Article(
+            id,
+            name,
+            text
+        )
+    } catch (ex: Exception) {
+        Log.e("Extensions", "Could not map data to Article: " + ex.message)
+        null
+    }
+}
 
-fun FirebaseFAQ.toFAQ() = FAQ(
-    id,
-    question,
-    answer
-)
+fun FirebaseFAQ.toFAQ(): FAQ? {
+    return try {
+        FAQ(
+            id,
+            question,
+            answer
+        )
+    } catch (ex: Exception) {
+        Log.e("Extensions", "Could not map data to FAQ: " + ex.message)
+        null
+    }
+}
 
 fun FragmentActivity.showKeyboard() {
     val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
