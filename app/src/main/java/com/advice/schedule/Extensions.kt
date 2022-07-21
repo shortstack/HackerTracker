@@ -115,23 +115,28 @@ fun FirebaseConference.toConference(): Conference? {
     }
 }
 
-fun FirebaseType.toType(): Type {
-    val actions = ArrayList<Action>()
-    if (discord_url?.isNotBlank() == true) {
-        actions.add(Action(Action.getLabel(discord_url), discord_url))
-    }
-    if (subforum_url?.isNotBlank() == true) {
-        actions.add(Action(Action.getLabel(subforum_url), subforum_url))
-    }
+fun FirebaseType.toType(): Type? {
+    return try {
+        val actions = ArrayList<Action>()
+        if (discord_url?.isNotBlank() == true) {
+            actions.add(Action(Action.getLabel(discord_url), discord_url))
+        }
+        if (subforum_url?.isNotBlank() == true) {
+            actions.add(Action(Action.getLabel(subforum_url), subforum_url))
+        }
 
-    return Type(
-        id,
-        name,
-        conference,
-        color,
-        description,
-        actions
-    )
+        Type(
+            id,
+            name,
+            conference,
+            color,
+            description,
+            actions
+        )
+    } catch (ex: Exception) {
+        Log.e("Extensions", "Could not map data to Location: " + ex.message)
+        null
+    }
 }
 
 fun FirebaseLocation.toLocation(): Location? {
@@ -150,7 +155,10 @@ fun FirebaseLocation.toLocation(): Location? {
 fun FirebaseEvent.toEvent(): Event? {
     try {
         val links = links.map { it.toAction() }
-        val types = listOf(type.toType())
+        val types = mutableListOf<Type>()
+        type.toType()?.also {
+            types.add(it)
+        }
 
         return Event(
             id,
