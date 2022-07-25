@@ -172,6 +172,11 @@ class ScheduleFragment : Fragment(), KoinComponent {
     }
 
     fun invalidate() {
+        // temp fix for crash when binding is null
+        if (_binding == null) {
+            return
+        }
+
         if (storage.fabShown) {
             binding.filter.show()
         } else {
