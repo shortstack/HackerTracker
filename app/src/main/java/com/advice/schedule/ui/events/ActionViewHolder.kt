@@ -2,6 +2,7 @@ package com.advice.schedule.ui.events
 
 import android.content.Intent
 import android.net.Uri
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,8 +16,12 @@ class ActionViewHolder(private val binding: ItemEventLinkBinding) :
         binding.action.setImageResource(action.res)
         binding.actionText.text = action.label
         binding.root.setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(action.url))
-            binding.root.context.startActivity(intent)
+            try {
+                val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(action.url))
+                binding.root.context.startActivity(intent)
+            } catch (ex: Exception) {
+                Log.e("ActionViewHolder", "Could not open URL: ${action.url}")
+            }
         }
     }
 
