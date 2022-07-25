@@ -37,9 +37,11 @@ class InformationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         database.conference.observe(viewLifecycleOwner) {
-            binding.codeOfConduct.isVisible = it.conduct != null
-            binding.help.isVisible = it.code.contains("DEFCON")
-            binding.wifi.isVisible = it.code.contains("DEFCON")
+            if (it != null) {
+                binding.codeOfConduct.isVisible = it.conduct != null
+                binding.help.isVisible = it.code.contains("DEFCON")
+                binding.wifi.isVisible = it.code.contains("DEFCON")
+            }
         }
 
         binding.toolbar.setNavigationOnClickListener {
