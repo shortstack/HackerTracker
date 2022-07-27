@@ -172,15 +172,15 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
     }
 
     fun showSchedule(location: Location) {
-        setAboveFragment(ScheduleFragment.newInstance(location))
+        setAboveFragment(ScheduleFragment.newInstance(location), hasAnimation = false)
     }
 
     fun showSchedule(type: Type) {
-        setAboveFragment(ScheduleFragment.newInstance(type))
+        setAboveFragment(ScheduleFragment.newInstance(type), hasAnimation = false)
     }
 
     fun showSchedule(speaker: Speaker) {
-        setAboveFragment(ScheduleFragment.newInstance(speaker))
+        setAboveFragment(ScheduleFragment.newInstance(speaker), hasAnimation = false)
     }
 
     private fun setMainFragment(id: Int, title: String? = null, addToBackStack: Boolean) {
