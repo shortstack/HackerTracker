@@ -58,6 +58,12 @@
                 app:navigationLabel="@string/faq" />
 
             <com.advice.schedule.views.NavigationView
+                android:id="@+id/locations"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:navigationLabel="@string/locations_schedule" />
+
+            <com.advice.schedule.views.NavigationView
                 android:id="@+id/speakers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

@@ -142,9 +142,11 @@ fun FirebaseType.toType(): Type? {
 fun FirebaseLocation.toLocation(): Location? {
     return try {
         Location(
+            id,
             name,
             hotel,
-            conference
+            conference,
+            default_status, hier_depth, hier_extent_left, hier_extent_right, parent_id, peer_sort_order, schedule
         )
     } catch (ex: Exception) {
         Log.e("Extensions", "Could not map data to Location: " + ex.message)

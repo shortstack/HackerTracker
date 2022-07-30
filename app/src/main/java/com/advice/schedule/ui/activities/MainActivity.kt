@@ -19,6 +19,7 @@ import com.advice.schedule.ui.PanelsFragment
 import com.advice.schedule.ui.events.EventFragment
 import com.advice.schedule.ui.information.InformationFragment
 import com.advice.schedule.ui.information.categories.CategoryFragment
+import com.advice.schedule.ui.information.locations.LocationsFragment
 import com.advice.schedule.ui.information.speakers.SpeakerFragment
 import com.advice.schedule.ui.maps.MapsFragment
 import com.advice.schedule.ui.schedule.ScheduleFragment
@@ -58,6 +59,8 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
             }
 
             setMainFragment(R.id.nav_home, getString(R.string.home), false)
+
+            setAboveFragment(LocationsFragment.newInstance())
         }
 
         supportFragmentManager.addOnBackStackChangedListener(this)
