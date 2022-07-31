@@ -27,10 +27,14 @@ class WiFiHelperView(context: Context, attrs: AttributeSet?) : FrameLayout(conte
     init {
         binding.save.visibility = View.VISIBLE
         binding.save.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                connectWifiNew()
-            } else {
-                connectWifi()
+            try {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    connectWifiNew()
+                } else {
+                    connectWifi()
+                }
+            } catch (ex: Exception) {
+                // could not connect wifi
             }
         }
     }
