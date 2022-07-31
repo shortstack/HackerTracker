@@ -12,6 +12,7 @@ import com.advice.schedule.ui.information.faq.FAQFragment
 import com.advice.schedule.ui.information.info.CodeOfConductFragment
 import com.advice.schedule.ui.information.info.SupportHelplineFragment
 import com.advice.schedule.ui.information.info.WiFiFragment
+import com.advice.schedule.ui.information.locations.LocationsFragment
 import com.advice.schedule.ui.information.speakers.SpeakersFragment
 import com.advice.schedule.ui.information.vendors.VendorsFragment
 import com.shortstack.hackertracker.databinding.FragmentInformationBinding
@@ -58,6 +59,10 @@ class InformationFragment : Fragment() {
 
         binding.codeOfConduct.setOnClickListener {
             (requireActivity() as MainActivity).setAboveFragment(CodeOfConductFragment.newInstance(), hasAnimation = false)
+        }
+
+        binding.locations.setOnClickListener {
+            (requireActivity() as MainActivity).setAboveFragment(LocationsFragment.newInstance(), hasAnimation = false)
         }
 
         binding.faq.setOnClickListener {
