@@ -28,6 +28,10 @@ class CodeOfConductFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.toolbar.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
+
         database.conference.observe(viewLifecycleOwner) {
             binding.conduct.setText(it.conduct)
         }

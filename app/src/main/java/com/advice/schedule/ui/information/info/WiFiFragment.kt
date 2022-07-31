@@ -21,6 +21,14 @@ class WiFiFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbar.setNavigationOnClickListener {
+            requireActivity().onBackPressed()
+        }
+    }
+
     companion object {
         fun newInstance() = WiFiFragment()
     }
