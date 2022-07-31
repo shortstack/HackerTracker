@@ -116,18 +116,15 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent" />
 
-                    <TextView
 
+                    <com.advice.schedule.views.LocationView
                         android:id="@+id/location"
-                        style="@style/TextAppearance.AppCompat.Body2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/location_icon"
-                        app:layout_constraintTop_toTopOf="parent"
-                        tools:text="Track 1 - Ceaser's" />
+                        app:layout_constraintTop_toTopOf="parent" />
 
                 </com.advice.schedule.views.WellView>
 

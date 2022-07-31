@@ -13,6 +13,7 @@ import com.advice.schedule.database.ReminderManager
 import com.advice.schedule.models.local.Event
 import com.advice.schedule.ui.HackerTrackerViewModel
 import com.advice.schedule.ui.activities.MainActivity
+import com.advice.schedule.ui.information.locations.toContainer
 import com.advice.schedule.utilities.Analytics
 import com.advice.schedule.utilities.TimeUtil
 import com.shortstack.hackertracker.R
@@ -126,12 +127,9 @@ class EventFragment : Fragment() {
     }
 
     private fun displayDescription(event: Event) {
-
-        val context = context ?: return
-
         binding.title.text = event.title
-        binding.date.text = getFullTimeStamp(context, event).replace("\n", " ")
-        binding.location.text = event.location.name
+        binding.date.text = getFullTimeStamp(requireContext(), event).replace("\n", " ")
+        binding.location.setLocation(event.location.toContainer())
 
         binding.typeContainer.setOnClickListener {
             (requireActivity() as MainActivity).showSchedule(event.types.first())

@@ -4,7 +4,7 @@
     android:layout_height="wrap_content"
     android:layout_marginVertical="4dp">
 
-    <com.advice.schedule.views.LocationScheduleView
+    <com.advice.schedule.views.LocationView
         android:id="@+id/location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

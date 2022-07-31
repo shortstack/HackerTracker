@@ -17,11 +17,11 @@ import kotlinx.android.parcel.Parcelize
 import java.text.SimpleDateFormat
 import java.util.*
 
-class LocationScheduleView(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
+class LocationView(context: Context, attrs: AttributeSet?) : ConstraintLayout(context, attrs) {
 
     private val binding = LocationViewBinding.inflate(LayoutInflater.from(context), this, true)
 
-    fun setLocation(location: LocationContainer, onClickListener: (LocationContainer) -> Unit) {
+    fun setLocation(location: LocationContainer, onClickListener: ((LocationContainer) -> Unit)? = null) {
         binding.title.text = location.title
 
         binding.spacer.layoutParams.width = location.depth * 16.toPx
@@ -38,8 +38,10 @@ class LocationScheduleView(context: Context, attrs: AttributeSet?) : ConstraintL
         drawable?.setTint(color)
         binding.status.background = drawable
 
-        binding.root.setOnClickListener {
-            onClickListener.invoke(location)
+        if (onClickListener != null) {
+            binding.root.setOnClickListener {
+                onClickListener.invoke(location)
+            }
         }
     }
 }
