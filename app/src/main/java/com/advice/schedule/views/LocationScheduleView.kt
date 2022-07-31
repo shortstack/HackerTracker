@@ -5,7 +5,6 @@ import android.content.res.Resources
 import android.graphics.Color
 import android.os.Parcelable
 import android.util.AttributeSet
-import android.util.Log
 import android.util.TypedValue
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
@@ -57,30 +56,55 @@ data class LocationContainer(
     val title: String,
     val depth: Int,
     val schedule: List<LocationSchedule>,
+    val isChildrenExpanded: Boolean = true,
     val isExpanded: Boolean = true
 ) : Parcelable {
 
-    val status: LocationStatus
-        get() {
-            val now = MyClock().now()
-            val isActive = schedule.any {
-                val begin = parse(it.begin)
-                val end = parse(it.end)
-                begin.before(now) && end.after(now)
-            }
-            if (isActive) {
-                return LocationStatus.Open
-            }
+    var status: LocationStatus = LocationStatus.Closed
 
-            return LocationStatus.Closed
+    fun getCurrentStatus(): LocationStatus {
+        val now = MyClock().now()
+        val isActive = schedule.any {
+            val begin = parse(it.begin)
+            val end = parse(it.end)
+            begin.before(now) && end.after(now)
         }
+        if (isActive) {
+            return LocationStatus.Open
+        }
+
+        return LocationStatus.Closed
+    }
 
     private fun parse(date: String): Date {
         return SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date)
     }
+
+    override fun equals(other: Any?): Boolean {
+        if (other is LocationContainer) {
+            return title == other.title
+        }
+        return super.equals(other)
+    }
 }
 
-fun LocationContainer.isExpanded(isExpanded: Boolean) = copy(isExpanded = isExpanded)
+fun LocationContainer.isExpanded(isExpanded: Boolean): LocationContainer {
+    val status = status
+    return copy(isExpanded = isExpanded).apply {
+        setStatus(status)
+    }
+}
+
+fun LocationContainer.isChildrenExpanded(isExpanded: Boolean): LocationContainer {
+    val status = status
+    return copy(isChildrenExpanded = isExpanded).apply {
+        setStatus(status)
+    }
+}
+
+fun LocationContainer.setStatus(status: LocationStatus) {
+    this.status = status
+}
 
 @Parcelize
 data class LocationSchedule(
