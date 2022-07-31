@@ -18,6 +18,7 @@ class LocationsViewModel : ViewModel(), KoinComponent {
 
     private val database: DatabaseManager by inject()
 
+    private var _locations = listOf<LocationContainer>()
     private val locations = MediatorLiveData<Response<List<LocationContainer>>>()
 
     init {
@@ -27,11 +28,10 @@ class LocationsViewModel : ViewModel(), KoinComponent {
             } else {
                 locations.addSource(database.getLocations(it)) {
                     val list = it.sortedWith(compareBy({ it.hier_extent_left }, { it.hier_extent_right }))
-                    val data = list.map { it.toContainer() }
                     // need to populate the list first
-                    locations.value = Response.Success(list.map { it.toContainer() })
+                    _locations = list.map { it.toContainer() }
                     // then update the status
-                    locations.value = Response.Success(updateLocations(data))
+                    locations.value = Response.Success(updateLocations())
                 }
             }
         }
@@ -39,19 +39,27 @@ class LocationsViewModel : ViewModel(), KoinComponent {
         viewModelScope.launch {
             while (isActive) {
                 delay(LOCATION_UPDATE_DELAY)
-                val list = getCurrentList()
-                locations.value = Response.Success(updateLocations(list))
+
+                val data = updateLocations()
+                _locations = data
+                locations.value = Response.Success(data)
             }
         }
     }
 
-    private fun updateLocations(list: List<LocationContainer>): List<LocationContainer> {
-        for (location in list) {
+    private fun updateLocations(): List<LocationContainer> {
+        val list = _locations
 
+        for (location in list) {
             val children = location.getChildren()
             val status = if (children.isEmpty()) {
                 location.getCurrentStatus()
             } else {
+                // updating all children
+                children.forEach {
+                    it.setStatus(it.getCurrentStatus())
+                }
+
                 when {
                     children.all { it.status == LocationStatus.Open } -> LocationStatus.Open
                     children.all { it.status == LocationStatus.Closed } -> LocationStatus.Closed
@@ -63,12 +71,8 @@ class LocationsViewModel : ViewModel(), KoinComponent {
         return list
     }
 
-    private fun getCurrentList(): List<LocationContainer> {
-        return (locations.value as? Response.Success<List<LocationContainer>>)?.data ?: emptyList()
-    }
-
     fun toggle(location: LocationContainer) {
-        val list = getCurrentList().toMutableList()
+        val list = _locations.toMutableList()
 
         val indexOf = list.indexOf(location)
         val isExpanded = !list[indexOf].isChildrenExpanded
@@ -82,11 +86,12 @@ class LocationsViewModel : ViewModel(), KoinComponent {
                 .isChildrenExpanded(isExpanded = isExpanded)
         }
 
+        _locations = list
         locations.value = Response.Success(list)
     }
 
     private fun LocationContainer.getChildren(): List<LocationContainer> {
-        val list = getCurrentList()
+        val list = _locations
 
         var index = list.indexOf(this)
         if (index == -1)
