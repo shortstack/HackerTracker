@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.LinearLayoutCompat xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="32dp">
+
+    <com.advice.schedule.views.GlitchContainerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:glitch_corruptionLevel="MINOR"
+        app:glitch_isGlitch="true">
+
+        <TextView
+            android:id="@+id/days"
+            style="@style/CountdownTextStyle"
+            tools:text="76days" />
+
+    </com.advice.schedule.views.GlitchContainerView>
+
+    <com.advice.schedule.views.GlitchContainerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:glitch_corruptionLevel="MINOR"
+        app:glitch_isGlitch="true">
+
+        <TextView
+            android:id="@+id/hours"
+            style="@style/CountdownTextStyle"
+            tools:text="05hours" />
+
+    </com.advice.schedule.views.GlitchContainerView>
+
+    <com.advice.schedule.views.GlitchContainerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:glitch_corruptionLevel="MEDIUM"
+        app:glitch_isGlitch="true">
+
+        <TextView
+            android:id="@+id/minutes"
+            style="@style/CountdownTextStyle"
+            tools:text="56minutes" />
+
+    </com.advice.schedule.views.GlitchContainerView>
+
+    <com.advice.schedule.views.GlitchContainerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:glitch_corruptionLevel="MAJOR"
+        app:glitch_isGlitch="true">
+
+        <TextView
+            android:id="@+id/seconds"
+            style="@style/CountdownTextStyle"
+            tools:text="08seconds" />
+
+    </com.advice.schedule.views.GlitchContainerView>
+
+</androidx.appcompat.widget.LinearLayoutCompat>

@@ -3,7 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground">
 
     <View
         android:id="@+id/category"
@@ -15,7 +16,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
-
 
     <TextView
         android:id="@+id/title"
@@ -50,17 +50,18 @@
         android:id="@+id/types_container"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/guideline"
         app:layout_constraintTop_toBottomOf="@+id/location">
 
-        <com.shortstack.hackertracker.views.EventTypeView
+        <com.advice.schedule.views.EventTypeView
             android:id="@+id/type_1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <com.shortstack.hackertracker.views.EventTypeView
+        <com.advice.schedule.views.EventTypeView
             android:id="@+id/type_2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -73,11 +74,11 @@
         android:id="@+id/star_bar"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginTop="8dp"
         android:focusableInTouchMode="false"
         android:paddingStart="3dp"
         android:paddingEnd="3dp"
         android:scaleType="center"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_star_border_white_24dp"

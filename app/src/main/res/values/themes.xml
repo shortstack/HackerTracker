@@ -1,0 +1,35 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <!--  todo: re-add DayNight theme  -->
+    <style name="Theme.Schedule" parent="Theme.MaterialComponents.NoActionBar">
+        <!-- Primary brand color. -->
+        <item name="colorPrimary">@color/bubble</item>
+        <item name="colorPrimaryVariant">@color/black</item>
+        <item name="colorOnPrimary">@color/black</item>
+
+        <item name="colorControlNormal">@color/white</item>
+        <!-- Secondary brand color. -->
+        <item name="colorSecondary">@color/purple_dark</item>
+        <item name="colorSecondaryVariant">@color/purple_light</item>
+        <item name="colorOnSecondary">@color/black</item>
+        <!-- Status bar color. -->
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <!-- Customize your theme here. -->
+        <item name="footer_icon">@drawable/skull</item>
+        <item name="footer_label"></item>
+
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+        <item name="preferenceTheme">@style/PrefsTheme</item>
+
+        <item name="android:checkboxStyle">@style/AppCheckBoxStyle</item>
+
+        <item name="android:buttonStyle">@style/buttonStyle</item>
+
+        <!-- AppCompat Dialog Attributes -->
+        <item name="dialogTheme">@style/AppCompatDialog</item>
+        <item name="alertDialogTheme">@style/AppCompatAlert</item>
+
+        <item name="checkboxStyle">@style/AppCheckBoxStyle</item>
+    </style>
+</resources>

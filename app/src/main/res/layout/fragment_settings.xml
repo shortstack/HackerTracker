@@ -1,20 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.shortstack.hackertracker.views.GlitchContainerView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorBackground"
-    android:orientation="vertical">
+    android:background="@color/status_bar_color">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
+        style="@style/AppBar.Rounded"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:colorBackground">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            style="@style/Toolbar.Rounded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             app:navigationIcon="@drawable/ic_menu_black_24dp"
@@ -25,6 +25,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?colorSurface"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         <LinearLayout
@@ -49,7 +50,7 @@
                 android:padding="16dp"
                 tools:text="Version 6.0.1" />
 
-            <com.shortstack.hackertracker.views.SkullView
+            <com.advice.schedule.views.SkullView
                 android:id="@+id/logo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -58,8 +59,8 @@
                 android:paddingBottom="?android:attr/actionBarSize"
                 android:scaleType="center"
                 android:src="?footer_icon"
-                android:tint="?footer_tint" />
+                app:tint="?colorControlNormal" />
 
         </LinearLayout>
     </androidx.core.widget.NestedScrollView>
-</com.shortstack.hackertracker.views.GlitchContainerView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

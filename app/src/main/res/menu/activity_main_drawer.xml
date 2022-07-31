@@ -1,34 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <group
         android:id="@+id/nav_main"
         android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
             android:checked="true"
-            android:icon="@drawable/ic_home_white_24dp"
-            android:title="@string/home" />
-        <item
-            android:id="@+id/nav_schedule"
-            android:icon="@drawable/ic_schedule_white_24dp"
-            android:title="@string/schedule" />
+            android:icon="@drawable/skull"
+            android:iconTint="@color/white"
+            android:title="@string/home"
+            app:showAsAction="always" />
 
         <item
             android:id="@+id/nav_map"
             android:icon="@drawable/ic_map_white_24dp"
-            android:title="@string/map" />
+            android:title="@string/map"
+            app:showAsAction="always" />
 
         <item
             android:id="@+id/nav_information"
             android:icon="@drawable/ic_info_outline_white_24dp"
-            android:title="@string/information" />
+            android:title="@string/information"
+            app:showAsAction="always" />
 
         <item
             android:id="@+id/nav_settings"
             android:icon="@drawable/ic_settings_white_24dp"
             android:orderInCategory="4"
-            android:title="@string/settings" />
+            android:title="@string/settings"
+            app:showAsAction="always" />
 
     </group>
-
 </menu>

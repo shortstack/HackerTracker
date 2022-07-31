@@ -16,11 +16,12 @@
     <string name="no_results_message">Try expanding your search terms.</string>
     <string name="nothing_to_show">Sorry, nothing to show</string>
     <string name="nothing_here">Nothing here</string>
-    <string name="error_title">Error</string>
+    <string name="error_title">404</string>
     <string name="empty_location">unknown location</string>
     <string name="error_unable_to_sync">Unable to sync</string>
-    <string name="no_maps">No Maps</string>
-    <string name="no_maps_to_show">Sorry, this conference doesn\'t have maps.</string>
+    <string name="no_maps">404</string>
+    <string name="no_maps_to_show">Maps Not Found</string>
+    <string name="events_not_found">Events Not Found</string>
 
     <!-- Main Nav -->
     <string name="home">Home</string>
@@ -85,13 +86,12 @@
 
 
     <!-- WiFi Helper -->
-    <string name="wifi_title">WIFI</string>
+    <string name="wifi_title">WiFi</string>
     <string name="wifi_content">Quickly connect to DEF CON\'s WiFi using Hacker Tracker.\n\nIf you run into any issues, you can try doing it yourself: wifireg.defcon.org/android.php</string>
     <string name="wifi_content_legacy">Your Android version is too low to setup. You can try doing it yourself: wifireg.defcon.org/android.php</string>
     <string name="wifi_action">Save network</string>
 
     <string name="website">Website</string>
-
 
 
     <!-- Settings -->
@@ -129,6 +129,10 @@
     <string name="bookmark">Bookmark</string>
     <string name="twitter">Twitter</string>
     <string name="category">Category</string>
+    <string name="faq">FAQ</string>
+    <string name="setting_filter_button_shown">Show filter button</string>
 
+    <string name="locations_schedule">Locations</string>
+    <string name="support_doc">Help &amp; Support</string>
 
 </resources>

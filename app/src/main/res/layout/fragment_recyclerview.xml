@@ -1,45 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.shortstack.hackertracker.views.GlitchContainerView xmlns:android="http://schemas.android.com/apk/res/android"
+<com.advice.schedule.views.GlitchContainerView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorBackground"
-    android:orientation="vertical">
+    android:background="@color/status_bar_color">
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:orientation="vertical">
 
+        <com.google.android.material.appbar.AppBarLayout
+            style="@style/AppBar.Rounded"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <com.shortstack.hackertracker.views.EmptyView
-            android:id="@+id/empty_view"
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                style="@style/Toolbar.Rounded"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_new_24"
+                tools:text="Speakers" />
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone"
-            app:evMessage="@string/nothing_to_show"
-            app:evTitle="@string/nothing_here"
-            tools:visibility="visible" />
+            android:background="?colorSurface"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:clipToPadding="false"
-            android:paddingTop="@dimen/recycler_view_padding_top"
-            android:paddingBottom="@dimen/recycler_view_padding_bottom"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="1" />
+            <com.advice.schedule.views.EmptyView
+                android:id="@+id/empty_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                app:evTitle="@string/error_title"
+                tools:evMessage="Speakers not found" />
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/list"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:clipToPadding="false"
+                android:paddingTop="@dimen/recycler_view_padding_top"
+                android:paddingBottom="@dimen/recycler_view_padding_bottom"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="1"
+                tools:listitem="@layout/row_faq" />
 
-        <ProgressBar
-            android:id="@+id/loading_progress"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            <ProgressBar
+                android:id="@+id/loading_progress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
-    </FrameLayout>
+        </FrameLayout>
 
-</com.shortstack.hackertracker.views.GlitchContainerView>
+    </LinearLayout>
+
+</com.advice.schedule.views.GlitchContainerView>
 

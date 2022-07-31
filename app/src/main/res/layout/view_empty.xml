@@ -1,60 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/left_guide"
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent=".20" />
-
-    <androidx.constraintlayout.widget.Guideline
-        android:id="@+id/right_guide"
-        android:layout_width="1dp"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        app:layout_constraintGuide_percent=".80" />
-
-
-    <com.shortstack.hackertracker.views.SkullView
-        android:id="@+id/icon"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:skullViewDrawable="@drawable/skull_lg"
-        android:tint="?android:colorForeground"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/right_guide"
-        app:layout_constraintStart_toStartOf="@id/left_guide"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.25" />
-
-    <TextView
-        android:id="@+id/title"
+    <com.advice.schedule.views.GlitchContainerView
+        android:id="@+id/icon_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:text="@string/no_results_for"
-        android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="@id/right_guide"
-        app:layout_constraintStart_toStartOf="@id/left_guide"
-        app:layout_constraintTop_toBottomOf="@+id/icon" />
+        app:glitch_corruptionLevel="MAJOR"
+        app:glitch_isGlitch="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.33">
+
+        <TextView
+            android:id="@+id/title"
+            style="@style/CountdownTextStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textSize="120sp"
+            app:layout_constraintTop_toBottomOf="@+id/icon_container"
+            tools:text="404" />
+
+    </com.advice.schedule.views.GlitchContainerView>
+
+
+    <ImageView
+        android:id="@+id/icon"
+        style="@style/Footer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="?footer_icon"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/message"
+        style="@style/CountdownTextStyle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="24dp"
         android:fontFamily="sans-serif-light"
         android:gravity="center"
-        android:text="@string/no_results_message"
-        android:textSize="14sp"
-        app:layout_constraintEnd_toEndOf="@id/right_guide"
-        app:layout_constraintStart_toStartOf="@id/left_guide"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        android:textSize="28sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/icon_container"
+        tools:text="Maps not found" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

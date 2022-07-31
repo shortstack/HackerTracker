@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?android:colorBackground"
+    android:background="@color/status_bar_color"
     android:orientation="vertical">
 
     <com.google.android.material.appbar.AppBarLayout
+        style="@style/AppBar.Rounded"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?android:colorBackground">
+        android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
+            style="@style/Toolbar.Rounded"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:contentInsetStart="0dp"
@@ -22,14 +22,13 @@
             android:contentInsetRight="0dp"
             android:padding="0dp"
             app:contentInsetEnd="0dp"
-            app:contentInsetStartWithNavigation="0dp"
             app:contentInsetEndWithActions="0dp"
             app:contentInsetLeft="0dp"
             app:contentInsetRight="0dp"
             app:contentInsetStart="0dp"
-            app:navigationIcon="@drawable/ic_arrow_back_white_24dp"
+            app:contentInsetStartWithNavigation="0dp"
+            app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_new_24"
             app:title="@string/search">
-
 
             <androidx.appcompat.widget.SearchView
                 android:id="@+id/search"
@@ -41,21 +40,18 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="?colorSurface"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-
-        <com.shortstack.hackertracker.views.EmptyView
+        <com.advice.schedule.views.EmptyView
             android:id="@+id/empty_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:visibility="gone"
-            app:evMessage="@string/nothing_to_show"
-            app:evTitle="@string/nothing_here"
-            tools:visibility="visible" />
+            app:evMessage="@string/nothing_to_show" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
@@ -65,7 +61,6 @@
             android:paddingTop="@dimen/recycler_view_padding_top"
             android:paddingBottom="@dimen/recycler_view_padding_bottom"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
 
         <ProgressBar
             android:id="@+id/loading_progress"

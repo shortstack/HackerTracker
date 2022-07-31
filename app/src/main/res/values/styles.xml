@@ -1,27 +1,19 @@
 <resources>
 
-    <style name="ThemeBase" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="dark_mode">light</item>
+    <!-- todo: re-enable daynight  -->
+    <style name="Theme.App" parent="Theme.MaterialComponents.NoActionBar">
+
         <item name="footer_icon">@drawable/skull</item>
-        <item name="footer_tint">@color/black_70</item>
-        <item name="footer_label" />
-        <item name="menu_tint">@color/black</item>
-        <item name="filter_background">@color/white</item>
-        <item name="category_tint">@null</item>
+        <item name="footer_label"></item>
 
-        <item name="colorPrimary">@color/purple_dark</item>
-        <item name="colorPrimaryVariant">@color/white</item>
-        <item name="colorOnPrimary">@color/black</item>
+        <item name="colorPrimary">@color/bubble</item>
+        <item name="colorPrimaryVariant">@color/green</item>
         <item name="colorSecondary">@color/purple_dark</item>
-        <item name="colorSecondaryVariant">@color/purple_dark</item>
-        <item name="colorOnSecondary">#FFFFFF</item>
-        <item name="colorError">#F44336</item>
-        <item name="colorOnError">#FFFFFF</item>
-        <item name="colorSurface">@color/white</item>
-        <item name="colorOnSurface">@color/white</item>
-        <item name="android:colorBackground">@color/white</item>
-        <item name="colorOnBackground">@color/black_70</item>
+        <item name="colorSecondaryVariant">@color/purple_light</item>
 
+        <item name="colorPrimaryDark">@color/status_bar_color</item>
+        <item name="colorSurface">@color/background</item>
+        <item name="android:navigationBarColor">@color/background</item>
 
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
@@ -36,90 +28,8 @@
         <item name="alertDialogTheme">@style/AppCompatAlert</item>
 
         <item name="checkboxStyle">@style/AppCheckBoxStyle</item>
+
     </style>
-
-    <style name="AppTheme" parent="ThemeBase" />
-
-    <style name="AppTheme.Dark" parent="Theme.MaterialComponents.NoActionBar">
-
-        <item name="dark_mode">dark</item>
-        <item name="footer_icon">@drawable/skull</item>
-        <item name="footer_tint">@color/white</item>
-        <item name="footer_label" />
-        <item name="menu_tint">@color/white</item>
-        <item name="filter_background">@color/dark_background</item>
-
-        <item name="colorPrimary">@color/purple_dark</item>
-        <item name="colorPrimaryVariant">@color/dark_background</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorSecondary">@color/purple_dark</item>
-        <item name="colorSecondaryVariant">@color/purple_dark</item>
-        <item name="colorOnSecondary">#FFFFFF</item>
-        <item name="colorError">#F44336</item>
-        <item name="colorOnError">#FFFFFF</item>
-        <item name="colorSurface">@color/dark_background</item>
-        <item name="colorOnSurface">#212121</item>
-        <item name="android:colorBackground">@color/background</item>
-        <item name="colorOnBackground">@color/white</item>
-
-
-        <item name="windowActionBar">false</item>
-        <item name="windowNoTitle">true</item>
-
-        <item name="android:checkboxStyle">@style/AppCheckBoxStyle</item>
-
-        <item name="android:buttonStyle">@style/buttonStyle</item>
-
-        <!-- AppCompat Dialog Attributes -->
-        <item name="dialogTheme">@style/AppCompatDialog</item>
-        <item name="alertDialogTheme">@style/AppCompatAlert</item>
-
-        <item name="checkboxStyle">@style/AppCheckBoxStyle</item>
-    </style>
-
-    <style name="AppTheme.Splash">
-        <item name="android:statusBarColor">@color/black</item>
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryVariant">@color/black</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorSecondary">@color/black</item>
-        <item name="colorSecondaryVariant">@color/black</item>
-        <item name="colorOnSecondary">#FFFFFF</item>
-        <item name="colorError">#F44336</item>
-        <item name="colorOnError">#FFFFFF</item>
-        <item name="colorSurface">@color/black</item>
-        <item name="colorOnSurface">@color/black</item>
-        <item name="android:colorBackground">@color/black</item>
-        <item name="colorOnBackground">@color/white</item>
-        <item name="android:windowBackground">@drawable/splash_background</item>
-    </style>
-
-    <style name="AppTheme.Developer" parent="AppTheme.Dark">
-        <item name="footer_icon">@drawable/doggo</item>
-        <item name="colorPrimary">@color/purple_dark</item>
-        <item name="colorPrimaryDark">@color/purple_dark</item>
-        <item name="colorAccent">@color/purple_dark</item>
-        <item name="android:colorBackground">@color/dark_background</item>
-        <item name="footer_tint">@android:color/transparent</item>
-        <item name="footer_label">Developer</item>
-    </style>
-
-    <style name="AppTheme.SafeMode" parent="AppTheme.Dark">
-        <item name="colorPrimary">@color/purple_dark</item>
-        <item name="colorPrimaryVariant">@color/black</item>
-        <item name="colorOnPrimary">#FFFFFF</item>
-        <item name="colorSecondary">@color/purple_dark</item>
-        <item name="colorSecondaryVariant">@color/purple_dark</item>
-        <item name="colorOnSecondary">#FFFFFF</item>
-        <item name="colorError">#F44336</item>
-        <item name="colorOnError">#FFFFFF</item>
-        <item name="colorSurface">@color/black</item>
-        <item name="colorOnSurface">@color/black</item>
-        <item name="android:colorBackground">@color/black</item>
-        <item name="colorOnBackground">@color/white</item>
-        <item name="footer_label">SAFE MODE</item>
-    </style>
-
 
     <style name="PrefsTheme" parent="PreferenceThemeOverlay">
         <item name="android:layout">@layout/fragment_settings</item>
@@ -133,7 +43,7 @@
         <!-- Used for the buttons -->
         <!--<item name="colorAccent">@color/colorAccent</item>-->
         <!--Used for the title and text -->
-        <!--<item name="android:textColorPrimary">@color/white</item>-->
+        <!--<item name="android:textColorPrimary">@android:color/white</item>-->
         <!-- Used for the background -->
         <!--<item name="android:background">@color/background</item>-->
 
@@ -142,7 +52,7 @@
     </style>
 
     <style name="AlertButtonStyle" parent="Widget.MaterialComponents.Button.TextButton.Dialog">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
     <style name="windowTitleStyle">
@@ -150,14 +60,14 @@
     </style>
 
     <style name="AppCheckBoxStyle" parent="Base.Widget.AppCompat.CompoundButton.CheckBox">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 
     <!-- Generic Dialog Theme -->
     <style name="AppCompatDialog" parent="Theme.AppCompat.Dialog">
         <!-- Used for the title and text -->
-        <item name="android:textColorPrimary">@color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
         <!-- Used for the background -->
         <item name="android:background">@color/background</item>
         <!-- Used for the buttons -->
@@ -190,7 +100,7 @@
     </style>
 
     <style name="Body" parent="TextAppearance.AppCompat.Body1">
-        <!--<item name="android:textColor">@color/white_90</item>-->
+        <!--<item name="android:textColor">@android:color/white_90</item>-->
         <item name="android:alpha">0.90</item>
     </style>
 
@@ -225,7 +135,7 @@
         <item name="android:textAppearance">
             @style/TextAppearance.AppCompat.Widget.Button.Borderless.Colored
         </item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@android:color/white</item>
     </style>
 
 
@@ -250,7 +160,7 @@
     <style name="SectionHeader" parent="TextAppearance.AppCompat.Subhead">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">60dp</item>
-        <item name="android:gravity">center_vertical</item>
+        <item name="android:gravity">center</item>
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
         <item name="android:alpha">0.70</item>
@@ -272,7 +182,7 @@
         <item name="android:layout_marginEnd">8dp</item>
         <item name="android:layout_marginRight">8dp</item>
         <item name="android:alpha">.25</item>
-        <item name="android:tint">@color/white</item>
+        <item name="android:tint">@android:color/white</item>
     </style>
 
     <style name="IconButton">
@@ -292,6 +202,8 @@
         <item name="android:paddingBottom">8dp</item>
         <item name="android:paddingLeft">24dp</item>
         <item name="android:paddingRight">24dp</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textStyle">bold</item>
         <item name="android:background">?android:attr/selectableItemBackground</item>
     </style>
 
@@ -324,9 +236,12 @@
     <style name="Card_Container">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:background">@drawable/article_background</item>
         <item name="android:orientation">vertical</item>
         <item name="android:padding">16dp</item>
+    </style>
+
+    <style name="Card_Container.Round">
+        <item name="android:background">@drawable/article_background</item>
     </style>
 
     <style name="Card_Title" parent="TextAppearance.MaterialComponents.Headline6">
@@ -343,6 +258,60 @@
         <item name="android:layout_marginTop">16dp</item>
         <item name="android:paddingLeft">16dp</item>
         <item name="android:paddingRight">16dp</item>
+    </style>
+
+    <style name="Footer">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+        <item name="android:layout_margin">16dp</item>
+        <item name="android:paddingBottom">?android:attr/actionBarSize</item>
+        <item name="android:tint">?attr/colorControlNormal</item>
+    </style>
+
+    <!--  Toolbar  -->
+    <style name="Toolbar">
+        <item name="android:background">?colorSurface</item>
+    </style>
+
+    <style name="Toolbar.Rounded">
+        <item name="android:background">@android:color/transparent</item>
+    </style>
+
+    <style name="AppBar">
+        <item name="liftOnScroll">true</item>
+        <item name="android:background">?colorSurface</item>
+    </style>
+
+    <style name="AppBar.Rounded">
+        <item name="android:background">@drawable/bottom_sheet_background</item>
+    </style>
+
+    <style name="Toolbar.Text" parent="Base.TextAppearance.AppCompat.Title">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_gravity">center</item>
+    </style>
+
+    <style name="CountdownTextStyle" parent="TextAppearance.AppCompat.Headline">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textAllCaps">true</item>
+        <item name="android:textSize">38sp</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="WellViewStyle">
+        <item name="android:layout_margin">20dp</item>
+    </style>
+
+    <style name="ActionStyle">
+        <item name="android:layout_width">32dp</item>
+        <item name="android:layout_height">32dp</item>
+        <item name="android:layout_gravity">center_vertical|end</item>
+        <item name="android:padding">4dp</item>
     </style>
 
 </resources>

@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    style="@style/Card_Frame">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
     <LinearLayout style="@style/Card_Container">
 
         <TextView
             style="@style/Card_Title"
-            android:text="@string/code_of_conduct" />
+            android:text="@string/code_of_conduct"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/content"
-            style="@style/Card_Body"
+            style="@style/Paragraph"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             tools:text="DEF CON provides a forum for open discussion between participants, where radical viewpoints are welcome and a high degree of skepticism is expected. However, insulting or harassing other participants is unacceptable. We want DEF CON to be a safe and productive environment for everyone. It’s not about what you look like but what’s in your mind and how you present yourself that counts at DEF CON." />
 
     </LinearLayout>
-
-</FrameLayout>
+</ScrollView>
