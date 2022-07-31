@@ -1,6 +1,5 @@
 package com.advice.schedule.ui.information.locations
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MediatorLiveData
 import androidx.lifecycle.ViewModel
@@ -39,8 +38,7 @@ class LocationsViewModel : ViewModel(), KoinComponent {
 
         viewModelScope.launch {
             while (isActive) {
-                delay(30000)
-                Log.e("LocationVIewModel", "Updating locations!")
+                delay(LOCATION_UPDATE_DELAY)
                 val list = getCurrentList()
                 locations.value = Response.Success(updateLocations(list))
             }
@@ -59,10 +57,6 @@ class LocationsViewModel : ViewModel(), KoinComponent {
                     children.all { it.status == LocationStatus.Closed } -> LocationStatus.Closed
                     else -> LocationStatus.Mixed
                 }
-            }
-
-            if (location.title == "Caesars Forum") {
-                Log.e("", "Found it! $children -- $status")
             }
             location.setStatus(status)
         }
@@ -107,6 +101,10 @@ class LocationsViewModel : ViewModel(), KoinComponent {
     }
 
     fun getLocations(): LiveData<Response<List<LocationContainer>>> = locations
+
+    companion object {
+        private const val LOCATION_UPDATE_DELAY = 30_000L
+    }
 }
 
 fun Location.toContainer(): LocationContainer {
