@@ -69,7 +69,7 @@ data class LocationContainer(
         val isActive = schedule.any {
             val begin = parse(it.begin)
             val end = parse(it.end)
-            begin.before(now) && end.after(now)
+            begin != null && end != null && begin.before(now) && end.after(now)
         }
         if (isActive) {
             return LocationStatus.Open
@@ -78,8 +78,12 @@ data class LocationContainer(
         return LocationStatus.Closed
     }
 
-    private fun parse(date: String): Date {
-        return SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date)
+    private fun parse(date: String): Date? {
+        return try {
+            SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(date)
+        } catch (ex: Exception) {
+            null
+        }
     }
 
     override fun equals(other: Any?): Boolean {
