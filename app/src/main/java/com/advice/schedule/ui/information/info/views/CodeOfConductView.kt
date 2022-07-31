@@ -12,5 +12,7 @@ class CodeOfConductView(context: Context, attrs: AttributeSet?) : FrameLayout(co
 
     fun setText(conduct: String?) {
         binding.content.text = conduct?.replace("\\n", "\n")
+            ?.replace(" ------------------------------  ", "\n\n")
+            ?.replace(" -", "\n -")
     }
 }

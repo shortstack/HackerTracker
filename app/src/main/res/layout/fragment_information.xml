@@ -52,6 +52,13 @@
                 app:navigationLabel="@string/code_of_conduct" />
 
             <com.advice.schedule.views.NavigationView
+                android:id="@+id/support"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:navigationLabel="@string/support_doc" />
+
+
+            <com.advice.schedule.views.NavigationView
                 android:id="@+id/faq"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

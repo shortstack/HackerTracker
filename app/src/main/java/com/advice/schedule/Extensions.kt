@@ -103,6 +103,7 @@ fun FirebaseConference.toConference(): Conference? {
             name,
             description,
             codeofconduct,
+            supportdoc,
             code,
             maps,
             start_timestamp.toDate(),

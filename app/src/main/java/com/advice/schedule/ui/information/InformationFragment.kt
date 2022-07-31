@@ -10,6 +10,7 @@ import com.advice.schedule.database.DatabaseManager
 import com.advice.schedule.ui.activities.MainActivity
 import com.advice.schedule.ui.information.faq.FAQFragment
 import com.advice.schedule.ui.information.info.CodeOfConductFragment
+import com.advice.schedule.ui.information.info.SupportFragment
 import com.advice.schedule.ui.information.info.SupportHelplineFragment
 import com.advice.schedule.ui.information.info.WiFiFragment
 import com.advice.schedule.ui.information.locations.LocationsFragment
@@ -40,6 +41,7 @@ class InformationFragment : Fragment() {
         database.conference.observe(viewLifecycleOwner) {
             if (it != null) {
                 binding.codeOfConduct.isVisible = it.conduct != null
+                binding.support.isVisible = it.support != null
                 binding.help.isVisible = it.code.contains("DEFCON")
                 binding.wifi.isVisible = it.code.contains("DEFCON")
             }
@@ -59,6 +61,10 @@ class InformationFragment : Fragment() {
 
         binding.codeOfConduct.setOnClickListener {
             (requireActivity() as MainActivity).setAboveFragment(CodeOfConductFragment.newInstance(), hasAnimation = false)
+        }
+
+        binding.support.setOnClickListener {
+            (requireActivity() as MainActivity).setAboveFragment(SupportFragment.newInstance(), hasAnimation = false)
         }
 
         binding.locations.setOnClickListener {
