@@ -59,8 +59,6 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
             }
 
             setMainFragment(R.id.nav_home, getString(R.string.home), false)
-
-            setAboveFragment(LocationsFragment.newInstance())
         }
 
         supportFragmentManager.addOnBackStackChangedListener(this)
