@@ -27,7 +27,15 @@ data class FirebaseTag(
     // todo: move to client model
     var isSelected: Boolean = false
 ) : Parcelable {
+
+    companion object {
+        val bookmark = FirebaseTag(-1, "Bookmark", color_background = "#FFFFFF", color_foreground = "#000000")
+    }
+
     // todo: remove default
     val color: String
         get() = color_background ?: "#FF0000"
+
+    val isBookmark: Boolean
+        get() = this == bookmark
 }

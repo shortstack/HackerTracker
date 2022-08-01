@@ -8,6 +8,7 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.advice.schedule.PreferenceViewModel
 import com.advice.schedule.Response
+import com.advice.schedule.models.firebase.FirebaseTag
 import com.advice.schedule.models.firebase.FirebaseTagType
 import com.advice.schedule.ui.HackerTrackerViewModel
 import com.advice.schedule.ui.activities.MainActivity
@@ -56,11 +57,10 @@ class FilterFragment : Fragment() {
                 is Response.Success -> {
                     val tags = it.data
                     setTypes(tags)
+                    val hasFilters = it.data.flatMap { it.tags }.any { it.isSelected }
+                    binding.action.isVisible = hasFilters
                 }
             }
-//            setTypes(it.data)
-//            val hasFilters = it.data?.any { it.isSelected } ?: false
-//            binding.action.isVisible = hasFilters
         }
 
         preferenceViewModel.getFilterTutorial().observe(viewLifecycleOwner) { shouldShowTutorial ->
@@ -71,7 +71,7 @@ class FilterFragment : Fragment() {
     private fun setTypes(types: List<FirebaseTagType>) {
         val collection = ArrayList<Any>()
 
-        // todo: add bookmark
+        collection.add(FirebaseTag.bookmark)
         types.filter { it.category == "content" && it.is_browsable }.forEach {
             collection.add(it.label)
             collection.addAll(it.tags)

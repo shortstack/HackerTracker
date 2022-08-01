@@ -11,7 +11,6 @@ import com.advice.schedule.models.firebase.FirebaseTagType
 import com.advice.schedule.models.local.Event
 import com.advice.schedule.models.local.Location
 import com.advice.schedule.models.local.Speaker
-import com.advice.schedule.models.local.Type
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -62,7 +61,7 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
 
         result.addSource(events) {
             val events = (it as? Response.Success)?.data
-                ?.filter { /*(type.isBookmark && it.isBookmarked) ||*/ (it.types.any { it.id == type.id }) }
+                ?.filter { (type.isBookmark && it.isBookmarked) || (it.types.any { it.id == type.id }) }
                 ?: emptyList()
             result.value = Response.Success(events)
         }
@@ -106,28 +105,27 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
         if (types.isEmpty())
             return events
 
-        val requireBookmark = false//types.firstOrNull { it.isBookmark }?.isSelected ?: false
-        val filter = types.flatMap { it.tags }.filter { /*!it.isBookmark && */it.isSelected }
+        val requireBookmark = types.flatMap { it.tags }.firstOrNull { it.isBookmark }?.isSelected ?: false
+        val filter = types.flatMap { it.tags }.filter { !it.isBookmark && it.isSelected }
         if (!requireBookmark && filter.isEmpty())
             return events
 
         if (requireBookmark && filter.isEmpty())
             return events.filter { it.isBookmarked }
 
-        val filter1 = events.filter { event -> isShown(event, requireBookmark, filter) }
-        return filter1
+        return events.filter { event -> isShown(event, requireBookmark, filter) }
     }
 
     private fun isShown(event: Event, requireBookmark: Boolean, filter: List<FirebaseTag>): Boolean {
+        // in the event the types are null, default to shown
+        if (event.types.isEmpty())
+            return true
+
         val bookmark = if (requireBookmark) {
             event.isBookmarked
         } else {
             true
         }
-
-        // just in case
-        if (event.types.isEmpty())
-            return true
 
         return bookmark && event.types.any { t -> filter.find { it.id == t.id }?.isSelected == true }
     }
