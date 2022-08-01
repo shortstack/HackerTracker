@@ -132,7 +132,7 @@ class EventFragment : Fragment() {
         binding.location.setLocation(event.location.toContainer())
 
         binding.typeContainer.setOnClickListener {
-            //todo: (requireActivity() as MainActivity).showSchedule(event.types.first())
+            (requireActivity() as MainActivity).showSchedule(event.types.first())
         }
 
         binding.locationContainer.setOnClickListener {

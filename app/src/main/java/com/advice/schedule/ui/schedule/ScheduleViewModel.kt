@@ -45,35 +45,6 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
         }
     }
 
-//    private val types = Transformations.switchMap(database.conference) {
-//        val result = MediatorLiveData<Response<List<FirebaseTagType>>>()
-//
-//        if (it == null) {
-//            result.value = Response.Init
-//        } else {
-//            result.addSource(database.getTags(it)) {
-//                result.value = Response.Success(it)
-//            }
-//        }
-//        return@switchMap result
-//    }
-//
-//    private val events = Transformations.switchMap(database.conference) {
-//        val result = MediatorLiveData<Response<List<Event>>>()
-//
-//        if (it == null) {
-//            result.value = Response.Init
-//        } else {
-//            result.addSource(database.getSchedule()) {
-//                val t = types.value
-//                result.value = Response.Success(it)
-//            }
-//        }
-//
-//        return@switchMap result
-//    }
-
-
     fun getSchedule(location: Location): LiveData<Response<List<Event>>> {
         val result = MediatorLiveData<Response<List<Event>>>()
 
@@ -86,12 +57,12 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
         return result
     }
 
-    fun getSchedule(type: Type): LiveData<Response<List<Event>>> {
+    fun getSchedule(type: FirebaseTag): LiveData<Response<List<Event>>> {
         val result = MediatorLiveData<Response<List<Event>>>()
 
         result.addSource(events) {
             val events = (it as? Response.Success)?.data
-                ?.filter { (type.isBookmark && it.isBookmarked) || (it.types.any { it.id == type.id }) }
+                ?.filter { /*(type.isBookmark && it.isBookmarked) ||*/ (it.types.any { it.id == type.id }) }
                 ?: emptyList()
             result.value = Response.Success(events)
         }

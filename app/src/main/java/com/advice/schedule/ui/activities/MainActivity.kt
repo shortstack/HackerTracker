@@ -10,6 +10,7 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import com.advice.schedule.get
+import com.advice.schedule.models.firebase.FirebaseTag
 import com.advice.schedule.models.local.Event
 import com.advice.schedule.models.local.Location
 import com.advice.schedule.models.local.Speaker
@@ -176,7 +177,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
         setAboveFragment(ScheduleFragment.newInstance(location), hasAnimation = false)
     }
 
-    fun showSchedule(type: Type) {
+    fun showSchedule(type: FirebaseTag) {
         setAboveFragment(ScheduleFragment.newInstance(type), hasAnimation = false)
     }
 

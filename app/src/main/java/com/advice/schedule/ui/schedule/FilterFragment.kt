@@ -10,6 +10,7 @@ import com.advice.schedule.PreferenceViewModel
 import com.advice.schedule.Response
 import com.advice.schedule.models.firebase.FirebaseTagType
 import com.advice.schedule.ui.HackerTrackerViewModel
+import com.advice.schedule.ui.activities.MainActivity
 import com.advice.schedule.views.FilterAdapter
 import com.shortstack.hackertracker.databinding.FilterFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -25,7 +26,7 @@ class FilterFragment : Fragment() {
     private val adapter: FilterAdapter = FilterAdapter({
         viewModel.toggleFilter(it)
     }, {
-        //(requireActivity() as MainActivity).showSchedule(it)
+        (requireActivity() as MainActivity).showSchedule(it)
     })
 
     override fun onCreateView(
