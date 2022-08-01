@@ -1,5 +1,8 @@
 package com.advice.schedule.models.firebase
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
 data class FirebaseTagType(
     val conference: String = "",
     val conference_id: Long = -1,
@@ -13,6 +16,7 @@ data class FirebaseTagType(
     val tags: List<FirebaseTag> = emptyList()
 )
 
+@Parcelize
 data class FirebaseTag(
     val id: Long = -1,
     val label: String = "",
@@ -22,7 +26,7 @@ data class FirebaseTag(
 
     // todo: move to client model
     var isSelected: Boolean = false
-) {
+) : Parcelable {
     // todo: remove default
     val color: String
         get() = color_background ?: "#FF0000"

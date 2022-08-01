@@ -8,10 +8,8 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.advice.schedule.PreferenceViewModel
 import com.advice.schedule.Response
-import com.advice.schedule.models.firebase.FirebaseTag
 import com.advice.schedule.models.firebase.FirebaseTagType
 import com.advice.schedule.ui.HackerTrackerViewModel
-import com.advice.schedule.ui.activities.MainActivity
 import com.advice.schedule.views.FilterAdapter
 import com.shortstack.hackertracker.databinding.FilterFragmentBinding
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -72,10 +70,8 @@ class FilterFragment : Fragment() {
     private fun setTypes(types: List<FirebaseTagType>) {
         val collection = ArrayList<Any>()
 
-
         // todo: add bookmark
-        // todo: filter out not browsable
-        types.forEach {
+        types.filter { it.category == "content" && it.is_browsable }.forEach {
             collection.add(it.label)
             collection.addAll(it.tags)
         }

@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Type(
-    val id: Int,
+    val id: Long,
     private val _name: String,
     val conference: String,
     private val _color: String,

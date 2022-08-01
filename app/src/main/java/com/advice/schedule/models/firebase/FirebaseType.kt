@@ -6,7 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class FirebaseType(
-    val id: Int = -1,
+    val id: Long = -1,
     val name: String = "",
     val description: String = "",
     val conference: String = "",

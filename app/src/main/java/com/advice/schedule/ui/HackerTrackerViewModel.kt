@@ -105,8 +105,6 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
                     result.value = Resource.success(it)
                 }
             }
-
-
             return@switchMap result
         }
 

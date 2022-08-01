@@ -2,6 +2,7 @@ package com.advice.schedule.models.local
 
 import android.content.Context
 import android.os.Parcelable
+import com.advice.schedule.models.firebase.FirebaseTag
 import com.advice.schedule.utilities.MyClock
 import com.advice.schedule.utilities.TimeUtil
 import com.advice.schedule.utilities.getDateMidnight
@@ -22,7 +23,7 @@ data class Event(
     val end: Timestamp,
     val updated: String,
     val speakers: List<Speaker>,
-    val types: List<Type>,
+    val types: List<FirebaseTag>,
     val location: Location,
     val urls: List<Action>,
     var isBookmarked: Boolean = false,

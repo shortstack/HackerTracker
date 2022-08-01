@@ -18,8 +18,7 @@ data class FirebaseEvent(
 
     @PropertyName("speakers")
     val speakers: ArrayList<FirebaseSpeaker> = ArrayList(),
-    @PropertyName("type")
-    val type: FirebaseType = FirebaseType(),
+
     @PropertyName("location")
     val location: FirebaseLocation = FirebaseLocation(),
     @PropertyName("links")

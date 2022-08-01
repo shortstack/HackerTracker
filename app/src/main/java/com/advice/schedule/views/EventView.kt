@@ -91,7 +91,7 @@ class EventView : FrameLayout, KoinComponent {
     }
 
     private fun renderCategoryColour(event: Event) {
-        val type = event.types.first()
+        val type = event.types.firstOrNull() ?: return
 
         binding.type1.render(type)
         if (event.types.size > 1) {
