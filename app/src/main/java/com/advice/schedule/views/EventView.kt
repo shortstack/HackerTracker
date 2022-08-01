@@ -94,12 +94,12 @@ class EventView : FrameLayout, KoinComponent {
         val type = event.types.firstOrNull() ?: return
 
         binding.type1.render(type)
-        if (event.types.size > 1) {
-            binding.type2.render(event.types.last())
-            binding.type2.visibility = View.VISIBLE
-        } else {
-            binding.type2.visibility = View.GONE
-        }
+//        if (event.types.size > 1) {
+//            binding.type2.render(event.types.last())
+//            binding.type2.visibility = View.VISIBLE
+//        } else {
+//            binding.type2.visibility = View.GONE
+//        }
 
         val value = TypedValue()
         context.theme.resolveAttribute(R.attr.category_tint, value, true)
