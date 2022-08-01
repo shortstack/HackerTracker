@@ -51,7 +51,7 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
             }
 
             root.setOnLongClickListener {
-                //onLongClickListener.invoke(type)
+                onLongClickListener.invoke(type)
                 true
             }
         }
