@@ -18,12 +18,13 @@ data class FirebaseEvent(
 
     @PropertyName("speakers")
     val speakers: ArrayList<FirebaseSpeaker> = ArrayList(),
-    @PropertyName("type")
-    val type: FirebaseType = FirebaseType(),
+
     @PropertyName("location")
     val location: FirebaseLocation = FirebaseLocation(),
     @PropertyName("links")
     val links: List<FirebaseAction> = emptyList(),
+
+    val tag_ids: List<Long> = emptyList(),
 
     @PropertyName("begin_timestamp")
     val begin_timestamp: Timestamp = Timestamp.now(),

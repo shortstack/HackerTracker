@@ -8,12 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import com.advice.schedule.Response
 import com.advice.schedule.database.DatabaseManager
 import com.advice.schedule.database.ReminderManager
 import com.advice.schedule.models.local.Event
-import com.advice.schedule.ui.HackerTrackerViewModel
 import com.advice.schedule.ui.activities.MainActivity
 import com.advice.schedule.ui.information.locations.toContainer
+import com.advice.schedule.ui.schedule.ScheduleViewModel
 import com.advice.schedule.utilities.Analytics
 import com.advice.schedule.utilities.TimeUtil
 import com.shortstack.hackertracker.R
@@ -31,7 +32,7 @@ class EventFragment : Fragment() {
     private val database by inject<DatabaseManager>()
     private val reminder by inject<ReminderManager>()
 
-    private val viewModel by sharedViewModel<HackerTrackerViewModel>()
+    private val viewModel by sharedViewModel<ScheduleViewModel>()
 
     private val speakersAdapter = EventDetailsAdapter()
     private val linksAdapter = EventDetailsAdapter()
@@ -55,10 +56,12 @@ class EventFragment : Fragment() {
 
         val id = arguments?.getLong(EXTRA_EVENT) ?: error("id must not be null")
 
-        viewModel.events.observe(viewLifecycleOwner) {
-            val target = it.data?.find { it.id == id }
-            if (target != null) {
-                showEvent(target)
+        viewModel.getSchedule().observe(viewLifecycleOwner) {
+            if (it is Response.Success) {
+                val target = it.data?.find { it.id == id }
+                if (target != null) {
+                    showEvent(target)
+                }
             }
         }
 

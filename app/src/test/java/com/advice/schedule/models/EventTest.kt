@@ -7,7 +7,6 @@ import com.advice.schedule.parse
 import com.advice.schedule.setCurrentClock
 import com.advice.schedule.toEvent
 import com.advice.schedule.utilities.getDateMidnight
-import io.mockk.InternalPlatformDsl.toStr
 import org.junit.Assert.assertEquals
 import org.junit.Test
 
@@ -18,7 +17,7 @@ class EventTest {
     init {
         val firebase = FirebaseEvent(title = "Test Event", begin = "2019-01-01T12:00:00.000-0000", end = "2019-01-01T13:00:00.000-0000")
         firebase.speakers.add(FirebaseSpeaker(10, "John", "Tester"))
-        event = firebase.toEvent()
+        event = firebase.toEvent(tags)
     }
 
     @Test

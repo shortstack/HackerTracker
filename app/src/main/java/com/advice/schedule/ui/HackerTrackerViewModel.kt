@@ -9,9 +9,9 @@ import com.advice.schedule.Response
 import com.advice.schedule.dObj
 import com.advice.schedule.database.DatabaseManager
 import com.advice.schedule.models.firebase.FirebaseConferenceMap
+import com.advice.schedule.models.firebase.FirebaseTag
+import com.advice.schedule.models.firebase.FirebaseTagType
 import com.advice.schedule.models.local.*
-import com.advice.schedule.ui.themes.ThemesManager
-import com.advice.schedule.utilities.Storage
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -24,6 +24,7 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
     val conference: LiveData<Resource<Conference>>
     val events: LiveData<Resource<List<Event>>>
     val bookmarks: LiveData<Resource<List<Event>>>
+    val tags: LiveData<Response<List<FirebaseTagType>>>
     val types: LiveData<Resource<List<Type>>>
     val locations: LiveData<Resource<List<Location>>>
     val speakers: LiveData<Response<List<Speaker>>>
@@ -52,6 +53,19 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
             }
 
 
+            return@switchMap result
+        }
+
+        tags = Transformations.switchMap(database.conference) {
+            val result = MediatorLiveData<Response<List<FirebaseTagType>>>()
+
+            if (it == null) {
+                result.value = Response.Init
+            } else {
+                result.addSource(database.getTags(it)) {
+                    result.value = Response.Success(it)
+                }
+            }
             return@switchMap result
         }
 
@@ -91,8 +105,6 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
                     result.value = Resource.success(it)
                 }
             }
-
-
             return@switchMap result
         }
 
@@ -291,17 +303,19 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
         query.value = text
     }
 
-    fun toggleFilter(type: Type) {
+    fun toggleFilter(type: FirebaseTag) {
         type.isSelected = !type.isSelected
         database.updateTypeIsSelected(type)
     }
 
     fun clearFilters() {
-        val types = types.value?.data ?: emptyList()
+        val types = tags.value?.dObj as? List<FirebaseTagType> ?: emptyList()
         types.forEach {
-            if (it.isSelected) {
-                it.isSelected = false
-                database.updateTypeIsSelected(it)
+            it.tags.forEach {
+                if (it.isSelected) {
+                    it.isSelected = false
+                    database.updateTypeIsSelected(it)
+                }
             }
         }
     }

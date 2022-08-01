@@ -94,7 +94,7 @@ class ScheduleAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>(),
             it.value.groupBy { it.start }.toSortedMap().forEach {
                 if (it.value.isNotEmpty()) {
                     val group = it.value.sortedWith(
-                        compareBy({ it.types.first().shortName },
+                        compareBy({ it.types.firstOrNull()?.label },
                             { it.location.name })
                     )
 

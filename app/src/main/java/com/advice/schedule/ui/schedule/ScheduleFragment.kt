@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearSmoothScroller
 import androidx.recyclerview.widget.RecyclerView
 import com.advice.schedule.Response
 import com.advice.schedule.models.Day
+import com.advice.schedule.models.firebase.FirebaseTag
 import com.advice.schedule.models.local.Event
 import com.advice.schedule.models.local.Location
 import com.advice.schedule.models.local.Speaker
@@ -25,6 +26,7 @@ import com.advice.schedule.views.DaySelectorView
 import com.advice.timehop.StickyRecyclerHeadersDecoration
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.FragmentScheduleBinding
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import org.koin.core.KoinComponent
 import org.koin.core.inject
@@ -35,7 +37,7 @@ class ScheduleFragment : Fragment(), KoinComponent {
 
     private val storage by inject<Storage>()
 
-    private val viewModel by viewModel<ScheduleViewModel>()
+    private val viewModel by sharedViewModel<ScheduleViewModel>()
 
     private var _binding: FragmentScheduleBinding? = null
     private val binding get() = _binding!!
@@ -59,12 +61,12 @@ class ScheduleFragment : Fragment(), KoinComponent {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val type = arguments?.getParcelable<Type>(EXTRA_TYPE)
+        val type = arguments?.getParcelable<FirebaseTag>(EXTRA_TYPE)
         val location = arguments?.getParcelable<Location>(EXTRA_LOCATION)
         val speaker = arguments?.getParcelable<Speaker>(EXTRA_SPEAKER)
 
         if (type != null || location != null || speaker != null) {
-            binding.toolbar.title = type?.shortName ?: location?.name ?: speaker?.name
+            binding.toolbar.title = type?.label ?: location?.name ?: speaker?.name
             binding.title.visibility = View.GONE
             binding.filter.visibility = View.GONE
             binding.toolbar.navigationIcon = ContextCompat.getDrawable(
@@ -270,7 +272,7 @@ class ScheduleFragment : Fragment(), KoinComponent {
             return ScheduleFragment()
         }
 
-        fun newInstance(type: Type): ScheduleFragment {
+        fun newInstance(type: FirebaseTag): ScheduleFragment {
             return ScheduleFragment().apply {
                 arguments = bundleOf(
                     EXTRA_TYPE to type

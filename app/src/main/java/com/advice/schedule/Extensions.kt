@@ -155,12 +155,11 @@ fun FirebaseLocation.toLocation(): Location? {
     }
 }
 
-fun FirebaseEvent.toEvent(): Event? {
+fun FirebaseEvent.toEvent(tags: List<FirebaseTagType>): Event? {
     try {
         val links = links.map { it.toAction() }
-        val types = mutableListOf<Type>()
-        type.toType()?.also {
-            types.add(it)
+        val types = tag_ids.mapNotNull { id ->
+            tags.flatMap { it.tags }.find { it.id == id }
         }
 
         return Event(
