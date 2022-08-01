@@ -25,6 +25,8 @@ data class FirebaseEvent(
     @PropertyName("links")
     val links: List<FirebaseAction> = emptyList(),
 
+    val tag_ids: List<Long> = emptyList(),
+
     @PropertyName("begin_timestamp")
     val begin_timestamp: Timestamp = Timestamp.now(),
     @PropertyName("end_timestamp")

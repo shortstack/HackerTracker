@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import com.advice.schedule.models.firebase.FirebaseTag
 import com.advice.schedule.models.local.Type
 import com.advice.schedule.ui.activities.MainActivity
 import com.google.android.material.color.MaterialColors
@@ -15,7 +16,7 @@ import com.shortstack.hackertracker.databinding.ItemTypeBinding
 
 class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun render(type: Type, onClickListener: (Type) -> Unit, onLongClickListener: (Type) -> Unit) =
+    fun render(type: FirebaseTag, onClickListener: (FirebaseTag) -> Unit, onLongClickListener: (FirebaseTag) -> Unit) =
         with(binding) {
             val context = root.context
 
@@ -28,7 +29,7 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
                 Color.parseColor(type.color)
             }
 
-            text.text = type.shortName
+            text.text = type.label
 
             dot.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.chip_background_small)?.mutate()?.apply { setTint(color) })
             full.setImageDrawable(
@@ -50,7 +51,7 @@ class TypeViewHolder(private val binding: ItemTypeBinding) : RecyclerView.ViewHo
             }
 
             root.setOnLongClickListener {
-                onLongClickListener.invoke(type)
+                //onLongClickListener.invoke(type)
                 true
             }
         }

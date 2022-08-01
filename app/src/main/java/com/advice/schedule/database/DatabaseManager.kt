@@ -216,6 +216,51 @@ class DatabaseManager(
         return mutableLiveData
     }
 
+    fun getTags(id: Conference): LiveData<List<FirebaseTagType>> {
+        val mutableLiveData = MutableLiveData<List<FirebaseTagType>>()
+
+        firestore.collection(CONFERENCES)
+            .document(id.code)
+            .collection("tagtypes")
+            .addSnapshotListener { snapshot, exception ->
+
+                if (snapshot != null && exception == null) {
+                    val tags = snapshot.toObjectsOrEmpty(FirebaseTagType::class.java)
+                    //.mapNotNull { it. }
+                    val id = user?.uid
+                    if (id != null) {
+                        firestore.collection(CONFERENCES)
+                            .document(code)
+                            .collection(USERS)
+                            .document(id)
+                            .collection(TYPES)
+                            .addSnapshotListener { snapshot, exception ->
+                                if (snapshot != null && exception == null) {
+                                    val bookmarks =
+                                        snapshot.toObjectsOrEmpty(FirebaseBookmark::class.java)
+
+                                    tags.forEach { type ->
+                                        type.tags.forEach { tag ->
+                                            tag.isSelected =
+                                                bookmarks.find { tag.id.toString() == it.id }?.value
+                                                    ?: false
+                                        }
+                                    }
+
+                                    mutableLiveData.postValue(tags)
+                                } else {
+                                    mutableLiveData.postValue(tags)
+                                }
+                            }
+                    } else {
+                        mutableLiveData.postValue(tags)
+                    }
+                }
+            }
+
+        return mutableLiveData
+    }
+
     fun getTypes(id: Conference): LiveData<List<Type>> {
         val mutableLiveData = MutableLiveData<List<Type>>()
 
@@ -445,11 +490,11 @@ class DatabaseManager(
         }
     }
 
-    fun updateTypeIsSelected(type: Type) {
+    fun updateTypeIsSelected(type: FirebaseTag) {
         val id = user?.uid ?: return
 
         val document = firestore.collection(CONFERENCES)
-            .document(type.conference)
+            .document(code)
             .collection(USERS)
             .document(id)
             .collection(TYPES)

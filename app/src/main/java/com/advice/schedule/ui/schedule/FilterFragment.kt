@@ -7,7 +7,9 @@ import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.advice.schedule.PreferenceViewModel
-import com.advice.schedule.models.local.Type
+import com.advice.schedule.Response
+import com.advice.schedule.models.firebase.FirebaseTag
+import com.advice.schedule.models.firebase.FirebaseTagType
 import com.advice.schedule.ui.HackerTrackerViewModel
 import com.advice.schedule.ui.activities.MainActivity
 import com.advice.schedule.views.FilterAdapter
@@ -25,7 +27,7 @@ class FilterFragment : Fragment() {
     private val adapter: FilterAdapter = FilterAdapter({
         viewModel.toggleFilter(it)
     }, {
-        (requireActivity() as MainActivity).showSchedule(it)
+        //(requireActivity() as MainActivity).showSchedule(it)
     })
 
     override fun onCreateView(
@@ -50,10 +52,16 @@ class FilterFragment : Fragment() {
             preferenceViewModel.markFiltersTutorialAsComplete()
         }
 
-        viewModel.types.observe(viewLifecycleOwner) {
-            setTypes(it.data)
-            val hasFilters = it.data?.any { it.isSelected } ?: false
-            binding.action.isVisible = hasFilters
+        viewModel.tags.observe(viewLifecycleOwner) {
+            when (it) {
+                is Response.Success -> {
+                    val tags = it.data
+                    setTypes(tags)
+                }
+            }
+//            setTypes(it.data)
+//            val hasFilters = it.data?.any { it.isSelected } ?: false
+//            binding.action.isVisible = hasFilters
         }
 
         preferenceViewModel.getFilterTutorial().observe(viewLifecycleOwner) { shouldShowTutorial ->
@@ -61,31 +69,17 @@ class FilterFragment : Fragment() {
         }
     }
 
-    private fun setTypes(types: List<Type>?) {
-        if (types != null) {
-            val collection = ArrayList<Any>()
+    private fun setTypes(types: List<FirebaseTagType>) {
+        val collection = ArrayList<Any>()
 
-            types.find { it.isBookmark }?.let {
-                collection.add(it)
-            }
 
-//            collection.add(context.getString(R.string.types))
-
-            val elements = types.filter { !it.isBookmark && !it.isVillage && !it.isWorkshop }
-                .sortedBy { it.shortName }
-            collection.addAll(elements)
-
-//            collection.add(context.getString(R.string.villages))
-
-            val villages = types.filter { it.isVillage }.sortedBy { it.shortName }
-            collection.addAll(villages)
-
-//            collection.add(context.getString(R.string.workshops))
-
-            val workshops = types.filter { it.isWorkshop }.sortedBy { it.shortName }
-            collection.addAll(workshops)
-
-            adapter.setElements(collection)
+        // todo: add bookmark
+        // todo: filter out not browsable
+        types.forEach {
+            collection.add(it.label)
+            collection.addAll(it.tags)
         }
+
+        adapter.setElements(collection)
     }
 }

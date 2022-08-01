@@ -2,14 +2,15 @@ package com.advice.schedule.views
 
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.advice.schedule.models.firebase.FirebaseTag
 import com.advice.schedule.models.local.Type
 import com.advice.schedule.ui.search.HeaderViewHolder
 import kotlin.math.min
 
 // todo: replace with ListAdapter
 class FilterAdapter(
-    private val onClickListener: (Type) -> Unit,
-    private val onLongClickListener: (Type) -> Unit
+    private val onClickListener: (FirebaseTag) -> Unit,
+    private val onLongClickListener: (FirebaseTag) -> Unit
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     private val collection = ArrayList<Any>()
@@ -35,7 +36,7 @@ class FilterAdapter(
         when (holder) {
             is HeaderViewHolder -> holder.render(collection[position] as String)
             is TypeViewHolder -> holder.render(
-                collection[position] as Type,
+                collection[position] as FirebaseTag,
                 onClickListener,
                 onLongClickListener
             )
