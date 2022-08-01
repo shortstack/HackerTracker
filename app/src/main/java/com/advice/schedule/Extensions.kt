@@ -157,10 +157,12 @@ fun FirebaseLocation.toLocation(): Location? {
 
 fun FirebaseEvent.toEvent(tags: List<FirebaseTagType>): Event? {
     try {
+        val list = tags.flatMap { it.tags.sortedBy { it.sort_order } }
+
         val links = links.map { it.toAction() }
         val types = tag_ids.mapNotNull { id ->
-            tags.flatMap { it.tags }.find { it.id == id }
-        }
+            list.find { it.id == id }
+        }.sortedBy { list.indexOf(it) }
 
         return Event(
             id,

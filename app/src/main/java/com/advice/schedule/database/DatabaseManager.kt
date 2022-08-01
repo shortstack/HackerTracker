@@ -213,6 +213,7 @@ class DatabaseManager(
             .addSnapshotListener { snapshot, exception ->
                 if (snapshot != null && exception == null) {
                     tags = snapshot.toObjectsOrEmpty(FirebaseTagType::class.java)
+                        .sortedBy { it.sort_order }
                     mutableLiveData.postValue(mergeTags(tags, bookmarks))
                 }
             }

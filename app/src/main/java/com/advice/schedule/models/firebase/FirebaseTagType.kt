@@ -12,6 +12,7 @@ data class FirebaseTagType(
     val is_browsable: Boolean = true,
     val is_single_valued: Boolean = false,
     val label: String = "",
+    val sort_order: Int = 0,
 
     val tags: List<FirebaseTag> = emptyList()
 )
@@ -23,6 +24,8 @@ data class FirebaseTag(
     val description: String = "",
     val color_background: String? = null,
     val color_foreground: String? = null,
+    // todo: use sort_order
+    val sort_order: Int = 0,
 
     // todo: move to client model
     var isSelected: Boolean = false
