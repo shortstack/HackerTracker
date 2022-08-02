@@ -35,7 +35,9 @@ class SupportFragment : Fragment() {
         }
 
         database.conference.observe(viewLifecycleOwner) {
-            binding.conduct.setText(it.support)
+            if (it != null) {
+                binding.conduct.setText(it.support)
+            }
         }
     }
 
