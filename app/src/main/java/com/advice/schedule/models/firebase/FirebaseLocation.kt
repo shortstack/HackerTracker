@@ -18,5 +18,6 @@ data class FirebaseLocation(
     val parent_id: Int = -1,
     val peer_sort_order: Int = -1,
     val schedule: List<LocationSchedule>? = null,
+    val short_name: String? = null,
     val updated_at: String? = null,
 ) : Parcelable

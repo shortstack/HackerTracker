@@ -145,6 +145,7 @@ fun FirebaseLocation.toLocation(): Location? {
         Location(
             id,
             name,
+            short_name,
             hotel,
             conference,
             default_status, hier_depth, hier_extent_left, hier_extent_right, parent_id, peer_sort_order, schedule

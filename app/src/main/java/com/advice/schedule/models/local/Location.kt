@@ -8,6 +8,7 @@ import kotlinx.android.parcel.Parcelize
 data class Location(
     val id: Long,
     val name: String,
+    val shortName: String?,
     val hotel: String?,
     val conference: String,
     // Schedule

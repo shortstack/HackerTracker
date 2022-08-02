@@ -33,6 +33,7 @@ class LocationView(context: Context, attrs: AttributeSet?) : ConstraintLayout(co
             LocationStatus.Open -> Color.GREEN
             LocationStatus.Closed -> Color.RED
             LocationStatus.Mixed -> Color.YELLOW
+            LocationStatus.Unknown -> Color.GRAY
         }
 
         drawable?.setTint(color)
@@ -56,6 +57,7 @@ val Number.toPx
 @Parcelize
 data class LocationContainer(
     val title: String,
+    val defaultStatus: String?,
     val depth: Int,
     val schedule: List<LocationSchedule>,
     val isChildrenExpanded: Boolean = true,
@@ -65,6 +67,14 @@ data class LocationContainer(
     var status: LocationStatus = LocationStatus.Closed
 
     fun getCurrentStatus(): LocationStatus {
+        if (schedule.isEmpty()) {
+            return when (defaultStatus) {
+                "open" -> LocationStatus.Open
+                "closed" -> LocationStatus.Closed
+                else -> LocationStatus.Unknown
+            }
+        }
+
         val now = MyClock().now()
         val isActive = schedule.any {
             val begin = parse(it.begin)
@@ -124,4 +134,5 @@ sealed class LocationStatus {
     object Open : LocationStatus()
     object Closed : LocationStatus()
     object Mixed : LocationStatus()
+    object Unknown : LocationStatus()
 }

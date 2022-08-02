@@ -63,6 +63,7 @@ class LocationsViewModel : ViewModel(), KoinComponent {
                 when {
                     children.all { it.status == LocationStatus.Open } -> LocationStatus.Open
                     children.all { it.status == LocationStatus.Closed } -> LocationStatus.Closed
+                    children.all { it.status == LocationStatus.Unknown } -> LocationStatus.Unknown
                     else -> LocationStatus.Mixed
                 }
             }
@@ -80,7 +81,6 @@ class LocationsViewModel : ViewModel(), KoinComponent {
 
         val children = location.getChildren()
         for (child in children) {
-
             list[list.indexOf(child)] = child
                 .isExpanded(isExpanded = isExpanded)
                 .isChildrenExpanded(isExpanded = isExpanded)
@@ -113,5 +113,5 @@ class LocationsViewModel : ViewModel(), KoinComponent {
 }
 
 fun Location.toContainer(): LocationContainer {
-    return LocationContainer(name, hier_depth, schedule ?: emptyList())
+    return LocationContainer(shortName ?: name, default_status, hier_depth, schedule ?: emptyList())
 }
