@@ -17,6 +17,7 @@ import com.advice.schedule.ui.information.locations.toContainer
 import com.advice.schedule.ui.schedule.ScheduleViewModel
 import com.advice.schedule.utilities.Analytics
 import com.advice.schedule.utilities.TimeUtil
+import com.advice.schedule.views.setStatus
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.FragmentEventBinding
 import org.koin.android.ext.android.inject
@@ -132,7 +133,10 @@ class EventFragment : Fragment() {
     private fun displayDescription(event: Event) {
         binding.title.text = event.title
         binding.date.text = getFullTimeStamp(requireContext(), event).replace("\n", " ")
-        binding.location.setLocation(event.location.toContainer())
+        val location = event.location.toContainer().apply {
+            setStatus(getCurrentStatus())
+        }
+        binding.location.setLocation(location)
 
         binding.typeContainer.setOnClickListener {
             (requireActivity() as MainActivity).showSchedule(event.types.first())
