@@ -7,6 +7,7 @@ import com.advice.schedule.Response
 import com.advice.schedule.dObj
 import com.advice.schedule.database.DatabaseManager
 import com.advice.schedule.models.firebase.FirebaseTag
+import com.advice.schedule.models.firebase.FirebaseTag.Companion.bookmark
 import com.advice.schedule.models.firebase.FirebaseTagType
 import com.advice.schedule.models.local.Event
 import com.advice.schedule.models.local.Location
@@ -105,7 +106,7 @@ class ScheduleViewModel : ViewModel(), KoinComponent {
         if (types.isEmpty())
             return events
 
-        val requireBookmark = types.flatMap { it.tags }.firstOrNull { it.isBookmark }?.isSelected ?: false
+        val requireBookmark = bookmark.isSelected
         val filter = types.flatMap { it.tags }.filter { !it.isBookmark && it.isSelected }
         if (!requireBookmark && filter.isEmpty())
             return events
