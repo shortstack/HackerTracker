@@ -26,7 +26,6 @@ data class FirebaseTag(
     val description: String = "",
     val color_background: String? = null,
     val color_foreground: String? = null,
-    // todo: use sort_order
     val sort_order: Int = 0,
 
     // todo: move to client model

@@ -72,9 +72,9 @@ class FilterFragment : Fragment() {
         val collection = ArrayList<Any>()
 
         collection.add(FirebaseTag.bookmark)
-        types.filter { it.category == "content" && it.is_browsable }.forEach {
+        types.filter { it.category == "content" && it.is_browsable }.sortedBy { it.sort_order }.forEach {
             collection.add(it.label)
-            collection.addAll(it.tags)
+            collection.addAll(it.tags.sortedBy { it.sort_order })
         }
 
         adapter.setElements(collection)
