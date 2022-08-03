@@ -65,14 +65,14 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
         supportFragmentManager.addOnBackStackChangedListener(this)
     }
 
-    override fun onNewIntent(intent: Intent?) {
-        super.onNewIntent(intent)
-
-        val target = intent?.getLongExtra("target", -1L)
-        if (target != null && target != -1L) {
-            showEvent(target)
-        }
-    }
+    // todo: reimplement deep linking via push notifications
+//    override fun onNewIntent(intent: Intent?) {
+//        super.onNewIntent(intent)
+//        val target = intent?.getLongExtra("target", -1L)
+//        if (target != null && target != -1L) {
+//            showEvent(target)
+//        }
+//    }
 
     override fun onStart() {
         super.onStart()
@@ -141,11 +141,7 @@ class MainActivity : AppCompatActivity(), OnNavigationItemSelectedListener,
     }
 
     fun showEvent(event: Event) {
-        showEvent(event.id)
-    }
-
-    fun showEvent(id: Long) {
-        setAboveFragment(EventFragment.newInstance(id))
+        setAboveFragment(EventFragment.newInstance(event))
     }
 
     fun showSpeaker(speaker: Speaker?) {

@@ -55,11 +55,13 @@ class EventFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val id = arguments?.getLong(EXTRA_EVENT) ?: error("id must not be null")
+        val event = arguments?.getParcelable<Event>(EXTRA_EVENT) ?: error("id must not be null")
+
+        showEvent(event)
 
         viewModel.getSchedule().observe(viewLifecycleOwner) {
             if (it is Response.Success) {
-                val target = it.data?.find { it.id == id }
+                val target = it.data?.find { it.id == event.id }
                 if (target != null) {
                     showEvent(target)
                 }
@@ -185,11 +187,11 @@ class EventFragment : Fragment() {
 
         const val EXTRA_EVENT = "EXTRA_EVENT"
 
-        fun newInstance(event: Long): EventFragment {
+        fun newInstance(event: Event): EventFragment {
             val fragment = EventFragment()
 
             val bundle = Bundle()
-            bundle.putLong(EXTRA_EVENT, event)
+            bundle.putParcelable(EXTRA_EVENT, event)
             fragment.arguments = bundle
 
             return fragment
