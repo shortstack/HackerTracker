@@ -6,8 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.advice.schedule.Response
 import com.advice.schedule.database.DatabaseManager
-import com.advice.schedule.models.local.Location
-import com.advice.schedule.views.*
+import com.advice.schedule.models.local.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch

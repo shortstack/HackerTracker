@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.advice.schedule.Response
-import com.advice.schedule.views.LocationContainer
+import com.advice.schedule.models.local.LocationContainer
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.FragmentRecyclerviewBinding
 import com.shortstack.hackertracker.databinding.LocationRowBinding

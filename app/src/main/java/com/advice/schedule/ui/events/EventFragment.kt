@@ -12,12 +12,12 @@ import com.advice.schedule.Response
 import com.advice.schedule.database.DatabaseManager
 import com.advice.schedule.database.ReminderManager
 import com.advice.schedule.models.local.Event
+import com.advice.schedule.models.local.setStatus
 import com.advice.schedule.ui.activities.MainActivity
 import com.advice.schedule.ui.information.locations.toContainer
 import com.advice.schedule.ui.schedule.ScheduleViewModel
 import com.advice.schedule.utilities.Analytics
 import com.advice.schedule.utilities.TimeUtil
-import com.advice.schedule.views.setStatus
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.FragmentEventBinding
 import org.koin.android.ext.android.inject
