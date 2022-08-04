@@ -51,7 +51,6 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
                 result.value = Resource.success(it)
             }
 
-
             return@switchMap result
         }
 
@@ -61,6 +60,7 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
             if (it == null) {
                 result.value = Response.Init
             } else {
+                result.value = Response.Loading
                 result.addSource(database.getTags(it)) {
                     result.value = Response.Success(it)
                 }
@@ -74,6 +74,7 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
             if (it == null) {
                 result.value = Resource.init()
             } else {
+                result.value = Resource.loading(null)
                 result.addSource(database.getTypes(it)) {
                     result.value = Resource.success(it)
                 }
@@ -87,6 +88,7 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
             if (it == null) {
                 result.value = Resource.init()
             } else {
+                result.value = Resource.loading(null)
                 result.addSource(database.getLocations(it)) {
                     result.value = Resource.success(it)
                 }
@@ -100,6 +102,7 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
             if (it == null) {
                 result.value = Resource.init()
             } else {
+                result.value = Resource.loading(null)
                 result.addSource(database.getSchedule()) {
                     result.value = Resource.success(it)
                 }
@@ -114,16 +117,14 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
                 result.value = Resource.init(null)
                 return@switchMap result
             } else {
+                result.value = Resource.loading(null)
                 result.addSource(database.getBookmarks(it)) {
                     result.value = Resource.success(it)
                 }
             }
 
-
-
             return@switchMap result
         }
-
 
         speakers = Transformations.switchMap(database.conference) {
             val result = MediatorLiveData<Response<List<Speaker>>>()
@@ -131,11 +132,11 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
             if (it == null) {
                 result.value = Response.Init
             } else {
+                result.value = Response.Loading
                 result.addSource(database.getSpeakers(it)) {
                     result.value = Response.Success(it)
                 }
             }
-
 
             return@switchMap result
         }
@@ -146,16 +147,14 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
             if (it == null) {
                 result.value = Resource.init()
             } else {
+                result.value = Resource.loading(null)
                 result.addSource(database.getArticles(it)) {
                     result.value = Resource.success(it)
                 }
             }
 
-
             return@switchMap result
         }
-
-
 
         vendors = Transformations.switchMap(database.conference) {
             val result = MediatorLiveData<Response<List<Vendor>>>()
@@ -163,6 +162,7 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
             if (it == null) {
                 result.value = Response.Init
             } else {
+                result.value = Response.Loading
                 result.addSource(database.getVendors(it)) {
                     result.value = Response.Success(it)
                 }
@@ -177,6 +177,7 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
             if (it == null) {
                 result.value = Response.Init
             } else {
+                result.value = Response.Loading
                 result.addSource(database.getMaps(it)) {
                     result.value = Response.Success(it)
                 }
