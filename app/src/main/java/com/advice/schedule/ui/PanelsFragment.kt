@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import com.advice.schedule.get
 import com.advice.schedule.ui.activities.MainActivity
@@ -59,6 +60,23 @@ class PanelsFragment : Fragment() {
             }
         }
 
+        val onBackPressedCallback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                when (binding.overlappingPanels.getSelectedPanel()) {
+                    OverlappingPanelsLayout.Panel.START -> {
+                        requireActivity().onBackPressed()
+                    }
+                    OverlappingPanelsLayout.Panel.CENTER -> {
+                        binding.overlappingPanels.openStartPanel()
+                    }
+                    OverlappingPanelsLayout.Panel.END -> {
+                        binding.overlappingPanels.closePanels()
+                    }
+                }
+            }
+        }
+        requireActivity().onBackPressedDispatcher.addCallback(onBackPressedCallback)
+
         binding.overlappingPanels.registerStartPanelStateListeners(object :
             OverlappingPanelsLayout.PanelStateListener {
             override fun onPanelStateChange(panelState: PanelState) {
@@ -67,6 +85,12 @@ class PanelsFragment : Fragment() {
                     PanelState.Opened -> showBottomNavigation()
                     PanelState.Closing,
                     PanelState.Closed -> hideBottomNavigation()
+                }
+
+                onBackPressedCallback.isEnabled = when (binding.overlappingPanels.getSelectedPanel()) {
+                    OverlappingPanelsLayout.Panel.START -> false
+                    OverlappingPanelsLayout.Panel.CENTER,
+                    OverlappingPanelsLayout.Panel.END -> true
                 }
             }
         })
