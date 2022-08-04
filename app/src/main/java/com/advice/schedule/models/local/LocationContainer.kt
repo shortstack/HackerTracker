@@ -20,25 +20,19 @@ data class LocationContainer(
     var status: LocationStatus = LocationStatus.Closed
 
     fun getCurrentStatus(): LocationStatus {
-        if (schedule.isEmpty()) {
-            return when (defaultStatus) {
-                "open" -> LocationStatus.Open
-                "closed" -> LocationStatus.Closed
-                else -> LocationStatus.Unknown
-            }
-        }
-
         val now = MyClock().now()
-        val isActive = schedule.any {
+
+        val status = schedule.firstOrNull {
             val begin = parse(it.begin)
             val end = parse(it.end)
             begin != null && end != null && begin.before(now) && end.after(now)
-        }
-        if (isActive) {
-            return LocationStatus.Open
-        }
+        }?.status ?: defaultStatus
 
-        return LocationStatus.Closed
+        return when (status) {
+            "open" -> LocationStatus.Open
+            "closed" -> LocationStatus.Closed
+            else -> LocationStatus.Unknown
+        }
     }
 
     private fun parse(date: String): Date? {
