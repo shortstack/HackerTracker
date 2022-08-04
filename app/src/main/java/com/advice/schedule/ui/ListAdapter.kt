@@ -5,7 +5,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.advice.schedule.models.Day
 import com.advice.schedule.models.local.*
 import com.advice.schedule.ui.information.categories.CategoryViewHolder
-import com.advice.schedule.ui.information.faq.FAQViewHolder
+import com.advice.schedule.ui.information.faq.FAQAnswerViewHolder
+import com.advice.schedule.ui.information.faq.FAQQuestionViewHolder
 import com.advice.schedule.ui.information.speakers.SpeakerViewHolder
 import com.advice.schedule.ui.information.vendors.VendorViewHolder
 import com.advice.schedule.ui.schedule.DayViewHolder
@@ -25,7 +26,6 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             LOCATION -> LocationViewHolder.inflate(parent)
             DAY -> DayViewHolder.inflate(parent)
             VENDOR -> VendorViewHolder.inflate(parent)
-            FAQ -> FAQViewHolder.inflate(parent)
             CATEGORY -> CategoryViewHolder.inflate(parent)
             else -> throw IllegalStateException("Unknown viewType $viewType.")
         }
@@ -42,7 +42,6 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is LocationViewHolder -> holder.render(item as Location)
             is DayViewHolder -> holder.render(item as Day)
             is VendorViewHolder -> holder.render(item as Vendor)
-            is FAQViewHolder -> holder.render(item as FAQ)
             is CategoryViewHolder -> holder.render(item as Type)
         }
     }
@@ -54,7 +53,6 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
             is Event -> EVENT
             is Day -> DAY
             is Vendor -> VENDOR
-            is FAQ -> FAQ
             is Type -> CATEGORY
             else -> throw java.lang.IllegalStateException("Unknown viewType ${collection[position].javaClass}")
         }
@@ -79,7 +77,6 @@ class ListAdapter : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
         private const val SPEAKER = 2
         private const val DAY = 3
         private const val VENDOR = 5
-        private const val FAQ = 6
-        private const val CATEGORY = 7
+        private const val CATEGORY = 8
     }
 }

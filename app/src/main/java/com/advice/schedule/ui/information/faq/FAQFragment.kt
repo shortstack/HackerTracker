@@ -6,21 +6,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.advice.schedule.Response
-import com.advice.schedule.models.local.FAQ
-import com.advice.schedule.ui.HackerTrackerViewModel
-import com.advice.schedule.ui.ListAdapter
+import com.advice.schedule.models.local.FAQAnswer
+import com.advice.schedule.models.local.FAQQuestion
 import com.shortstack.hackertracker.R
 import com.shortstack.hackertracker.databinding.FragmentRecyclerviewBinding
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class FAQFragment : Fragment() {
 
-    private val viewModel by sharedViewModel<HackerTrackerViewModel>()
+    private val viewModel by sharedViewModel<FAQViewModel>()
 
     private var _binding: FragmentRecyclerviewBinding? = null
     private val binding get() = _binding!!
 
-    private val adapter = ListAdapter()
+    private lateinit var adapter: FAQAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,18 +33,22 @@ class FAQFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        adapter = FAQAdapter {
+            viewModel.toggle(it)
+        }
+
         binding.list.adapter = adapter
         binding.toolbar.title = getString(R.string.faq)
         binding.toolbar.setNavigationOnClickListener {
             requireActivity().onBackPressed()
         }
 
-        viewModel.faq.observe(viewLifecycleOwner) {
+        viewModel.getFAQ().observe(viewLifecycleOwner) {
             onResource(it)
         }
     }
 
-    private fun onResource(resource: Response<List<FAQ>>) {
+    private fun onResource(resource: Response<List<Any>>) {
         when (resource) {
             is Response.Init -> {
                 setProgressIndicator(active = false)
@@ -53,15 +56,17 @@ class FAQFragment : Fragment() {
             }
             is Response.Loading -> {
                 setProgressIndicator(active = true)
-                adapter.clearAndNotify()
+                adapter.submitList(emptyList())
                 hideViews()
             }
             is Response.Success -> {
                 setProgressIndicator(active = false)
-                adapter.clearAndNotify()
+                adapter.submitList(emptyList())
 
                 if (resource.data.isNotEmpty()) {
-                    adapter.addAllAndNotify(resource.data)
+                    val list = resource.data
+                        .filter { it is FAQQuestion || (it is FAQAnswer && it.isExpanded) }
+                    adapter.submitList(list)
                     hideViews()
                 } else {
                     showEmptyView()

@@ -30,7 +30,6 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
     val speakers: LiveData<Response<List<Speaker>>>
 
     val articles: LiveData<Resource<List<Article>>>
-    val faq: LiveData<Response<List<FAQ>>>
     val vendors: LiveData<Response<List<Vendor>>>
 
     val maps: LiveData<Response<List<FirebaseConferenceMap>>>
@@ -156,19 +155,7 @@ class HackerTrackerViewModel : ViewModel(), KoinComponent {
             return@switchMap result
         }
 
-        faq = Transformations.switchMap(database.conference) {
-            val result = MediatorLiveData<Response<List<FAQ>>>()
 
-            if (it == null) {
-                result.value = Response.Loading
-            } else {
-                result.addSource(database.getFAQ(it)) {
-                    result.value = Response.Success(it)
-                }
-            }
-
-            return@switchMap result
-        }
 
         vendors = Transformations.switchMap(database.conference) {
             val result = MediatorLiveData<Response<List<Vendor>>>()

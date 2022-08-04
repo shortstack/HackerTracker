@@ -236,13 +236,9 @@ fun FirebaseArticle.toArticle(): Article? {
     }
 }
 
-fun FirebaseFAQ.toFAQ(): FAQ? {
+fun FirebaseFAQ.toFAQ(): Pair<FAQQuestion, FAQAnswer>? {
     return try {
-        FAQ(
-            id,
-            question,
-            answer
-        )
+        FAQQuestion(id, question) to FAQAnswer(id, answer)
     } catch (ex: Exception) {
         Log.e("Extensions", "Could not map data to FAQ: " + ex.message)
         null

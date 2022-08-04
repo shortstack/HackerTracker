@@ -347,8 +347,8 @@ class DatabaseManager(
     }
 
 
-    fun getFAQ(id: Conference): LiveData<List<FAQ>> {
-        val mutableLiveData = MutableLiveData<List<FAQ>>()
+    fun getFAQ(id: Conference): LiveData<List<Any>> {
+        val mutableLiveData = MutableLiveData<List<Any>>()
 
         firestore.collection(CONFERENCES)
             .document(id.code)
@@ -356,7 +356,8 @@ class DatabaseManager(
             .get()
             .addOnSuccessListener {
                 val faqs = it.toObjectsOrEmpty(FirebaseFAQ::class.java)
-                    .mapNotNull { it.toFAQ() }
+                    .mapNotNull { it.toFAQ()?.toList() }
+                    .flatten()
                 mutableLiveData.postValue(faqs)
             }
 

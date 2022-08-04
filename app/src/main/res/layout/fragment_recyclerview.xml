@@ -49,7 +49,7 @@
                 android:paddingBottom="@dimen/recycler_view_padding_bottom"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="1"
-                tools:listitem="@layout/row_faq" />
+                tools:listitem="@layout/row_faq_question" />
 
             <ProgressBar
                 android:id="@+id/loading_progress"
