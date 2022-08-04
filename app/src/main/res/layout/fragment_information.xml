@@ -40,12 +40,6 @@
                 app:navigationLabel="@string/wifi_title" />
 
             <com.advice.schedule.views.NavigationView
-                android:id="@+id/help"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:navigationLabel="@string/help_line_title" />
-
-            <com.advice.schedule.views.NavigationView
                 android:id="@+id/code_of_conduct"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
