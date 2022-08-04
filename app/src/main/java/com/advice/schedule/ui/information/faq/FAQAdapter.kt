@@ -51,7 +51,7 @@ class FAQAdapter(private val onExpandClickListener: (FAQQuestion) -> Unit) : Lis
                 if (oldItem is FAQAnswer && newItem is FAQAnswer)
                     return oldItem.answer == newItem.answer && oldItem.isExpanded == newItem.isExpanded
                 if (oldItem is FAQQuestion && newItem is FAQQuestion)
-                    return oldItem.question == newItem.question //oldItem.isExpanded == newItem.isExpanded
+                    return oldItem.question == newItem.question && oldItem.isExpanded == newItem.isExpanded
                 return false
             }
         }

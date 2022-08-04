@@ -8,8 +8,8 @@ import com.shortstack.hackertracker.databinding.RowFaqAnswerBinding
 
 class FAQAnswerViewHolder(private val binding: RowFaqAnswerBinding) : RecyclerView.ViewHolder(binding.root) {
 
-    fun render(faq: FAQAnswer) {
-        binding.answer.text = faq.answer
+    fun render(faq: FAQAnswer) = with(binding) {
+        answer.text = faq.answer
     }
 
     companion object {
