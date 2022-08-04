@@ -20,8 +20,9 @@ class FAQViewModel : ViewModel(), KoinComponent {
     init {
         faq.addSource(database.conference) {
             if (it == null) {
-                faq.value = Response.Loading
+                faq.value = Response.Init
             } else {
+                faq.value = Response.Loading
                 faq.addSource(database.getFAQ(it)) {
                     faq.value = Response.Success(it)
                 }

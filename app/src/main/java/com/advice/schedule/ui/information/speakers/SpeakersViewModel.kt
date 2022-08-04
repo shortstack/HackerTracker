@@ -20,6 +20,7 @@ class SpeakersViewModel : ViewModel(), KoinComponent {
         if (it == null) {
             result.value = Response.Init
         } else {
+            result.value = Response.Loading
             result.addSource(database.getSpeakers(it)) {
                 result.value = Response.Success(it)
             }

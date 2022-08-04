@@ -25,6 +25,7 @@ class LocationsViewModel : ViewModel(), KoinComponent {
             if (it == null) {
                 locations.value = Response.Init
             } else {
+                locations.value = Response.Loading
                 locations.addSource(database.getLocations(it)) {
                     val list = it.sortedWith(compareBy({ it.hier_extent_left }, { it.hier_extent_right }))
                     // need to populate the list first
