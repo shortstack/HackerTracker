@@ -138,7 +138,7 @@ class EventFragment : Fragment() {
         val location = event.location.toContainer().apply {
             setStatus(getCurrentStatus())
         }
-        binding.location.setLocation(location)
+        binding.location.setLocation(location, useShortLabel = false)
 
         binding.typeContainer.setOnClickListener {
             (requireActivity() as MainActivity).showSchedule(event.types.first())

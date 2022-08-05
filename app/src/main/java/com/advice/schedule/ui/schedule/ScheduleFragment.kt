@@ -66,7 +66,7 @@ class ScheduleFragment : Fragment(), KoinComponent {
         val speaker = arguments?.getParcelable<Speaker>(EXTRA_SPEAKER)
 
         if (type != null || location != null || speaker != null) {
-            binding.toolbar.title = type?.label ?: location?.name ?: speaker?.name
+            binding.toolbar.title = type?.label ?: location?.shortName ?: location?.name ?: speaker?.name
             binding.title.visibility = View.GONE
             binding.filter.visibility = View.GONE
             binding.toolbar.navigationIcon = ContextCompat.getDrawable(

@@ -140,6 +140,6 @@ class LocationViewHolder(private val binding: LocationRowBinding) : RecyclerView
     }
 
     fun render(location: LocationContainer, onClickListener: (LocationContainer) -> Unit) {
-        binding.location.setLocation(location, onClickListener)
+        binding.location.setLocation(location, useShortLabel = true, onClickListener)
     }
 }

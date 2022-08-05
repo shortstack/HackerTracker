@@ -113,5 +113,5 @@ class LocationsViewModel : ViewModel(), KoinComponent {
 }
 
 fun Location.toContainer(): LocationContainer {
-    return LocationContainer(shortName ?: name, default_status, hier_depth, schedule ?: emptyList())
+    return LocationContainer(name, shortName, default_status, hier_depth, schedule ?: emptyList())
 }

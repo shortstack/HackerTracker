@@ -10,6 +10,7 @@ import java.util.*
 @Parcelize
 data class LocationContainer(
     val title: String,
+    val shortTitle: String?,
     val defaultStatus: String?,
     val depth: Int,
     val schedule: List<LocationSchedule>,

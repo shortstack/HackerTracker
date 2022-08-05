@@ -1,10 +1,8 @@
 package com.advice.schedule.views
 
 import android.content.Context
-import android.content.res.Resources
 import android.graphics.Color
 import android.util.AttributeSet
-import android.util.TypedValue
 import android.view.LayoutInflater
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
@@ -18,8 +16,12 @@ class LocationView(context: Context, attrs: AttributeSet?) : ConstraintLayout(co
 
     private val binding = LocationViewBinding.inflate(LayoutInflater.from(context), this, true)
 
-    fun setLocation(location: LocationContainer, onClickListener: ((LocationContainer) -> Unit)? = null) {
-        binding.title.text = location.title
+    fun setLocation(location: LocationContainer, useShortLabel: Boolean = false, onClickListener: ((LocationContainer) -> Unit)? = null) {
+        binding.title.text = if (useShortLabel) {
+            location.shortTitle ?: location.title
+        } else {
+            location.title
+        }
 
         binding.spacer.layoutParams.width = location.depth * 16.toPx
         binding.spacer.requestLayout()
