@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.RecyclerView
 import com.advice.schedule.Response
+import com.advice.schedule.hideKeyboard
 import com.advice.schedule.models.local.FAQAnswer
 import com.advice.schedule.models.local.FAQQuestion
 import com.advice.schedule.onQueryTextChanged
@@ -53,6 +55,14 @@ class FAQFragment : Fragment() {
         }
 
         binding.list.adapter = adapter
+        binding.list.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrollStateChanged(recyclerView: RecyclerView, newState: Int) {
+                super.onScrollStateChanged(recyclerView, newState)
+                if (newState == RecyclerView.SCROLL_STATE_DRAGGING) {
+                    requireActivity().hideKeyboard()
+                }
+            }
+        })
 
         (requireActivity() as MainActivity).setSupportActionBar(binding.toolbar)
 
