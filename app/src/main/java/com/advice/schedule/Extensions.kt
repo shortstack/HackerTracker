@@ -9,6 +9,7 @@ import android.view.View
 import android.view.inputmethod.InputMethodManager
 import androidx.annotation.NonNull
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.fragment.app.FragmentManager
@@ -238,9 +239,9 @@ fun FirebaseArticle.toArticle(): Article? {
     }
 }
 
-fun FirebaseFAQ.toFAQ(): Pair<FAQQuestion, FAQAnswer>? {
+fun FirebaseFAQ.toFAQ(isExpanded: Boolean = false): Pair<FAQQuestion, FAQAnswer>? {
     return try {
-        FAQQuestion(id, question) to FAQAnswer(id, answer)
+        FAQQuestion(id, question, isExpanded) to FAQAnswer(id, answer, isExpanded)
     } catch (ex: Exception) {
         Log.e("Extensions", "Could not map data to FAQ: " + ex.message)
         null
@@ -280,6 +281,18 @@ fun <T> DocumentSnapshot.toObjectOrNull(@NonNull clazz: Class<T>): T? {
     }
 }
 
+inline fun SearchView.onQueryTextChanged(crossinline listener: (String) -> Unit) {
+    this.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+        override fun onQueryTextSubmit(query: String?): Boolean {
+            return true
+        }
+
+        override fun onQueryTextChange(newText: String?): Boolean {
+            listener(newText.orEmpty())
+            return true
+        }
+    })
+}
 
 val Number.toPx
     get() = TypedValue.applyDimension(

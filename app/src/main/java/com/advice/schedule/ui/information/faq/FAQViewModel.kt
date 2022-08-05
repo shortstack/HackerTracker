@@ -1,13 +1,13 @@
 package com.advice.schedule.ui.information.faq
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.ViewModel
+import androidx.lifecycle.*
 import com.advice.schedule.Response
 import com.advice.schedule.dObj
 import com.advice.schedule.database.DatabaseManager
+import com.advice.schedule.models.firebase.FirebaseFAQ
 import com.advice.schedule.models.local.FAQAnswer
 import com.advice.schedule.models.local.FAQQuestion
+import com.advice.schedule.toFAQ
 import org.koin.core.KoinComponent
 import org.koin.core.inject
 
@@ -15,19 +15,46 @@ class FAQViewModel : ViewModel(), KoinComponent {
 
     private val database: DatabaseManager by inject()
 
+    private val source: LiveData<List<FirebaseFAQ>>
+
     private val faq = MediatorLiveData<Response<List<Any>>>()
+    private val searchQuery = MutableLiveData<String?>()
 
     init {
-        faq.addSource(database.conference) {
-            if (it == null) {
-                faq.value = Response.Init
-            } else {
-                faq.value = Response.Loading
+        source = Transformations.switchMap(database.conference) {
+            val result = MutableLiveData<List<FirebaseFAQ>>()
+
+            if (it != null) {
                 faq.addSource(database.getFAQ(it)) {
-                    faq.value = Response.Success(it)
+                    result.value = it
                 }
             }
+
+            return@switchMap result
         }
+
+        faq.addSource(source) {
+            faq.value = getList(it, searchQuery.value)
+        }
+
+        faq.addSource(searchQuery) { query ->
+            faq.value = getList(source.value ?: emptyList(), query)
+        }
+    }
+
+    private fun getList(list: List<FirebaseFAQ>, query: String?): Response<List<Any>> {
+        val data = list
+            .filter { query == null || (query in it.question || query in it.answer) }
+            .mapNotNull {
+                it.toFAQ(query != null && query.isNotBlank() && query !in it.question && query in it.answer)?.toList()
+            }
+            .flatten()
+
+        return Response.Success(data)
+    }
+
+    fun setSearchQuery(query: String?) {
+        searchQuery.value = query
     }
 
     fun toggle(question: FAQQuestion) {
