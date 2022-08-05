@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.advice.schedule.Response
 import com.advice.schedule.database.DatabaseManager
 import com.advice.schedule.models.local.Speaker
@@ -54,7 +53,7 @@ class SpeakerFragment : Fragment() {
             (requireActivity() as MainActivity).showSchedule(speaker)
         }
 
-
+        showSpeaker(speaker)
 
         viewModel.speakers.observe(viewLifecycleOwner) {
             when (it) {
@@ -73,52 +72,46 @@ class SpeakerFragment : Fragment() {
                 is Response.Error -> {}
             }
         }
+
+        database.getEventsForSpeaker(speaker).observe(viewLifecycleOwner) { list ->
+            binding.eventsHeader.isVisible = list.isNotEmpty()
+            list.forEach {
+                binding.events.addView(EventView(requireContext(), it, EventView.DISPLAY_MODE_MIN))
+            }
+        }
+        analytics.log("Viewing speaker ${speaker.name}")
+        analytics.onSpeakerEvent(Analytics.SPEAKER_VIEW, speaker)
     }
 
-    private fun showSpeaker(speaker: Speaker) {
-        analytics.log("Viewing speaker ${speaker.name}")
+    private fun showSpeaker(speaker: Speaker) = with(binding) {
+        speakerName.text = speaker.name
 
-        binding.speakerName.text = speaker.name
+        titleContainer.isVisible = speaker.title.isNotEmpty()
+        speakerTitle.text = speaker.title
 
-        binding.speakerTitle.isVisible = speaker.title.isNotEmpty()
-        binding.speakerTitle.text = speaker.title
+        toolbar.menu.clear()
 
-        binding.toolbar.menu.clear()
-
-        val url = speaker.twitter
-        if (url.isNotEmpty()) {
-            binding.toolbar.inflateMenu(R.menu.speaker_twitter)
-
-            binding.toolbar.setOnMenuItemClickListener {
-                val url = "https://twitter.com/" + url.replace("@", "")
-
-                val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(url))
-                context?.startActivity(intent)
-
+        if (speaker.twitter.isNotEmpty()) {
+            toolbar.inflateMenu(R.menu.speaker_twitter)
+            toolbar.setOnMenuItemClickListener {
+                openTwitter(speaker.twitter)
                 analytics.onSpeakerEvent(Analytics.SPEAKER_TWITTER, speaker)
                 true
             }
         }
 
+        description.isVisible = speaker.description.isNotBlank()
+        description.text = speaker.description
+    }
 
-        val body = speaker.description
-
-        if (body.isNotBlank()) {
-            // todo: binding.empty.visibility = View.GONE
-            binding.description.text = body
-        } else {
-            // todo: binding.empty.visibility = View.VISIBLE
+    private fun openTwitter(url: String) {
+        try {
+            val url = "https://twitter.com/" + url.replace("@", "")
+            val intent = Intent(Intent.ACTION_VIEW).setData(Uri.parse(url))
+            context?.startActivity(intent)
+        } catch (ex: Exception) {
+            // do nothing
         }
-
-
-        database.getEventsForSpeaker(speaker).observe(viewLifecycleOwner, Observer { list ->
-            binding.eventsHeader.visibility = if (list.isEmpty()) View.GONE else View.VISIBLE
-            list.forEach {
-                binding.events.addView(EventView(requireContext(), it, EventView.DISPLAY_MODE_MIN))
-            }
-        })
-
-        analytics.onSpeakerEvent(Analytics.SPEAKER_VIEW, speaker)
     }
 
     companion object {

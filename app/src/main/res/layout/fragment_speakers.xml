@@ -67,6 +67,7 @@
                         android:layout_height="8dp" />
 
                     <com.advice.schedule.views.WellView
+                        android:id="@+id/title_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="20dp">
@@ -106,7 +107,7 @@
                 android:id="@+id/events_container"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_marginVertical="20dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/events_header">
