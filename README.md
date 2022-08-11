@@ -3,7 +3,7 @@ Official DEF CON Schedule App - Hacker Tracker
 
 You can download it from the <a href="https://play.google.com/store/apps/details?id=com.shortstack.hackertracker">Google Play Store</a>.<br/><br/>
 The Android version is currently maintained by short stack and <a href="https://github.com/Advice-Dog">Advice-Dog</a>.<br/>
-If you find any bugs with the app, please create an issue.
+If you find any bugs with the app, please create an issue or pull request on <a href="https://github.com/Advice-Dog/HackerTracker">Advice-Dog's repository</a>
 
 <h2>Android Images</h2>
 <div>
