@@ -24,7 +24,7 @@ class WifiHelperViewHolder(private val view: View) : RecyclerView.ViewHolder(vie
 
     companion object {
         private const val INSTALL_KEYSTORE_CODE = 1001
-        private const val WIFI_URL = "https://wifireg.defcon.org/android.php"
+        private const val WIFI_URL = "https://wifireg.defcon.org/android.html"
 
         fun inflate(parent: ViewGroup): WifiHelperViewHolder {
             val view = LayoutInflater.from(parent.context).inflate(R.layout.wifi_item, parent, false)
